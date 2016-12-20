@@ -1,0 +1,14 @@
+=pod
+
+=head1 Garden Design Software
+
+=begin html
+
+<br>Overview<br>
+<img src = 'http://savage.net.au/Perl-modules/html/garden.design/block.diagram.svg'>
+
+<br>The file which is converted<br>into the above image<br>
+<img src = 'http://savage.net.au/Perl-modules/html/garden.design/block.diagram.hash'>
+
+=end html
+

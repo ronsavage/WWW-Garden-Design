@@ -1,0 +1,80 @@
+<table align = 'center'>
+<tr>
+	<td align = 'center'>
+		<span class = 'red_on_gold_title'>The Flower Catalog</span>
+	</td>
+</tr>
+<tr>
+	<td>
+		<br />
+	</td>
+</tr>
+<tr>
+	<td align = 'center'>
+		<span class = 'paging'></span>
+	</td>
+</tr>
+<tr>
+	<td align = 'center'>
+		<span class = 'counter'></span>
+	</td>
+</tr>
+<tr>
+	<td>
+		<br /><hr />
+	</td>
+</tr>
+<tr>
+	<td align = 'center'>
+		Click column headings to sort<br />
+	</td>
+</tr>
+<tr>
+	<td align = 'center'>
+		Thumbnails are now clickable</span>
+	</td>
+</tr>
+<tr>
+	<td>
+		<hr><br />
+	</td>
+</tr>
+</table>
+
+<table align = 'center' class = 'datatable' id = 'result_table'>
+: for $row -> $item {
+: if $~item.is_first {
+<thead>
+: }
+: if $~item.is_last {
+<tfoot>
+: }
+<tr>
+		: include 'basic.column.tx' { column => $item };
+</tr>
+: if $~item.is_first {
+</thead>
+: }
+: if $~item.is_last {
+</tfoot>
+: }
+: }
+</table>
+
+<table align = 'center'>
+<tr>
+	<td align = 'center'>
+		<span class = 'paging'></span>
+	</td>
+</tr>
+<tr>
+	<td align = 'center'>
+		<span class = 'counter'></span>
+	</td>
+</tr>
+<tr>
+	<td>
+		<br /><hr />
+	</td>
+</tr>
+</table>

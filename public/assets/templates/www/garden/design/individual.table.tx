@@ -1,0 +1,19 @@
+<table align='center' class='datatable' id='result_table'>
+: for $row -> $item {
+: if $~item.is_first {
+<thead>
+: }
+: if $~item.is_last {
+<tfoot>
+: }
+<tr>
+		: include "basic.column.tx" { column => $item };
+</tr>
+: if $~item.is_first {
+</thead>
+: }
+: if $~item.is_last {
+</tfoot>
+: }
+: }
+</table>

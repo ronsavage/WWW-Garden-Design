@@ -1,0 +1,37 @@
+<table align = 'center'>
+	<tr>
+		<td colspan = '2'><div class = 'blue_centered'>Notes</div><br /></td>
+	</tr>
+	<tr>
+		<td align = 'centered'>Common name: </td><td><span class = 'blue_centered' id = 'note_common_name'></span></td>
+	</tr>
+	<tr>
+		<td align = 'centered'>Scientific name: </td><td><span class = 'blue_centered' id = 'note_scientific_name'></span></td>
+	</tr>
+	<tr>
+		<td colspan = '2'><hr></td>
+	</tr>
+</table>
+
+<table align = 'center'>
+	<thead>
+		<tr>
+			<th>Sequence</th>
+			<th>Note</th>
+			<th>Sequence</th>
+			<th>Note</th>
+		</tr>
+	</thead>
+	<tbody>
+	% for my $i (1 .. 20) {
+		% if ( ($i % 2) == 1) {
+		<tr>
+		% }
+			<td align = 'right'><input id = 'note_sequence_<%= $i %>' type = 'text' size = '5'></td>
+			<td align = 'left'><input id = 'note_note_<%= $i %>' type = 'text' size = '60' maxlength = '200'></td>
+		% if ( ($i % 2) == 0) {
+		</tr>
+		% }
+	% }
+	</tbody>
+</table>

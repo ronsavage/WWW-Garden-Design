@@ -1,0 +1,24 @@
+<form name = 'object_form' id = 'object_form'>
+<table align = 'center'>
+<tr>
+	<td colspan = '2'><div class = 'blue_centered'>Objects</div></td>
+</tr>
+	<td>Name:</td>
+	<td align = 'left'><input id = 'name' type = 'text' size = '50' maxlength = '100'></td>
+</tr>
+<tr>
+	<td>Color:</td>
+	<td><input type = 'text' class = 'basic' id = 'object_color' /></div></td>
+</tr>
+<tr>
+	<td>
+		<br>
+	</td>
+</tr>
+<tr>
+	<td align = 'center'><input type = 'submit' value = 'Save' /></td>
+	<td align = 'center'><input type = 'reset'  value = 'Reset' /></td>
+</tr>
+</table>
+</form>
+<div id = 'object_result_div'></div>

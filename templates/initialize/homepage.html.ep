@@ -1,0 +1,524 @@
+<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01//EN'
+'http://www.w3.org/TR/html4/strict.dtd'>
+<html>
+
+<head>
+
+	<title>Garden Design</title>
+	<meta http-equiv = 'Content-Type' content = 'text/html; charset = utf-8' />
+
+    <link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/jQuery/jquery-ui-1.12.1/jquery-ui.min.css'>
+    <link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/jQuery/datatable.2.0.0/css/datatable.min.css'>
+	<!-- Warning: The next line must not be put after the spectrum line, or the CSS in it fails to work. -->
+	<link rel = 'stylesheet' type = 'text/css' href = '/assets/css/www/garden/design/homepage.css'>
+	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/jQuery/bgrins-spectrum-98454b5/spectrum.css'
+
+</head>
+
+<body>
+
+<h3 class = 'blue_centered'>Garden Design</h3>
+
+<div id = 'global_tab_div'>
+	<ul>
+		<li><a href = '#global_search_tab'><span>Search</span></a></li>
+		<li><a href = '#global_flower_tab'><span>Flower</span></a></li>
+		<li><a href = '#global_object_tab'><span>Objects</span></a></li>
+		<li><a href = '#global_design_tab'><span>Design</span></a></li>
+		<li><a href = '#global_help_tab'><span>Help</span></a></li>
+	</ul>
+	<div id = 'global_search_tab'>
+%= include 'initialize/search'
+	</div>
+	<div id = 'global_flower_tab'>
+		<div id = 'flower_tab_div'>
+		    <ul>
+		        <li><a href = '#flower_tab'><span>Flower</span></a></li>
+		        <li><a href = '#attributes_tab'><span>Attributes</span></a></li>
+		        <li><a href = '#images_tab'><span>Images</span></a></li>
+		        <li><a href = '#notes_tab'><span>Notes</span></a></li>
+		        <li><a href = '#urls_tab'><span>URLs</span></a></li>
+		    </ul>
+		    <div id = 'flower_tab'>
+%= include 'initialize/flower'
+			</div>
+		    <div id = 'attributes_tab'>
+%= include 'initialize/attributes'
+			</div>
+		    <div id = 'images_tab'>
+%= include 'initialize/images'
+			</div>
+		    <div id = 'notes_tab'>
+%= include 'initialize/notes'
+			</div>
+		    <div id = 'urls_tab'>
+%= include 'initialize/urls'
+			</div>
+		</div>
+	</div>
+	<div id = 'global_object_tab'>
+%= include 'initialize/object'
+	</div>
+	<div id = 'global_design_tab'>
+%= include 'initialize/design'
+	</div>
+	<div id = 'global_help_tab'>
+%= include 'initialize/help'
+	</div>
+</div>
+
+</body>
+
+%= javascript 'http://127.0.0.1/assets/js/jQuery/jquery-2.1.4.min.js'
+<script>$.uiBackCompat = false;</script>
+%= javascript 'http://127.0.0.1/assets/js/jQuery/jquery-ui-1.12.1/jquery-ui.min.js'
+%= javascript 'http://127.0.0.1/assets/js/jQuery/datatable.2.0.0/js/datatable.min.js'
+%= javascript 'http://127.0.0.1/assets/js/jQuery/datatable.2.0.0/js/datatable.jquery.min.js'
+%= javascript 'http://127.0.0.1/assets/js/jQuery/bgrins-spectrum-98454b5/spectrum.js'
+
+<script type = 'text/javascript'>
+
+var attribute_types = [];
+
+// -----------------------------------------------
+
+$(function()
+{
+	$('#aliases').autocomplete
+	({
+		source:		'/AutoComplete?type=aliases',
+		minLength:	2,
+		select:		function(event, ui)
+		{
+			$('#aliases').empty().append(ui.item ? ui.item.value : '-');
+		}
+	});
+});
+
+// -----------------------------------------------
+
+$(function()
+{
+	$('#common_name').autocomplete
+	({
+		source:		'/AutoComplete?type=common_name',
+		minLength:	2,
+		select:		function(event, ui)
+		{
+			$('#common_name').empty().append(ui.item ? ui.item.value : '-');
+		}
+	});
+});
+
+// -----------------------------------------------
+
+$(function()
+{
+	$('#scientific_name').autocomplete
+	({
+		source:		'/AutoComplete?type=scientific_name',
+		minLength:	2,
+		select:		function(event, ui)
+		{
+			$('#scientific_name').empty().append(ui.item ? ui.item.value : '-');
+		}
+	});
+});
+
+// -----------------------------------------------
+
+function build_attribute_id(name, value)
+{
+	value = value.replace(/ /g, '_');
+
+	return '#attribute_' + name + '_' + value;
+}
+
+// -----------------------------------------------
+
+function build_image_ids(sequence)
+{
+	// Names are in alphabetical order.
+
+	var ids =
+	[
+		'#image_description_' + sequence,	// 0.
+		'#image_file_name_' + sequence,		// 1.
+		'#image_image_' + sequence,			// 2.
+		'#image_sequence_' + sequence		// 3.
+	];
+
+	return ids;
+}
+
+// -----------------------------------------------
+
+function build_note_ids(sequence)
+{
+	// Names are in alphabetical order.
+
+	var ids	=
+	[
+		'#note_note_' + sequence,		// 0.
+		'#note_sequence_' + sequence	// 1.
+	];
+
+	return ids;
+}
+
+// -----------------------------------------------
+
+function build_url_ids(sequence)
+{
+	// Names are in alphabetical order.
+
+	var ids	=
+	[
+		'#url_sequence_' + sequence,	// 0.
+		'#url_url_' + sequence			// 1.
+	];
+
+	return ids;
+}
+
+// -----------------------------------------------
+
+function get_attribute_types()
+{
+	$.ajax
+	({
+		dataType:	'json',
+		type:		'POST',
+		url:		'/GetAttributeTypes'
+	}).success(function(json)
+	{
+		attribute_types = json;
+	});
+}
+
+// -----------------------------------------------
+
+function populate_flower(flower_id)
+{
+	$.ajax
+	({
+		data:
+		{
+			flower_id: flower_id
+		},
+		dataType:	'json',
+		type:		'POST',
+		url:		'/GetFlower'
+	}).success(function(flower)
+	{
+		$('#global_tab_div').tabs('option', 'active', 1);
+
+		// Copy flower data to the Flower/Flower tab.
+
+		$('#flower_common_name').val(flower['common_name']);
+		$('#flower_scientific_name').val(flower['scientific_name']);
+		$('#flower_aliases').val(flower['aliases']);
+		$('#flower_height').val(flower['height']);
+		$('#flower_width').val(flower['width']);
+
+		// Copy basic flower data to the Flower/Flower's other sub-tabs.
+		// Warning: Don't include 'flower' in the tabs array, because
+		// it's fields are input fields, while all others are spans.
+
+		var tabs = ['attribute', 'note', 'image', 'url'];
+		var vars = ['common_name', 'scientific_name'];
+
+		for (i = 0; i < tabs.length; i++)
+		{
+			for (j = 0; j < vars.length; j++)
+			{
+				id = '#' + tabs[i] + '_' + vars[j];
+
+				$(id).text(flower[vars[j] ]);
+			}
+		}
+
+		// Copy attributes to the Flowers/Attributes tab.
+
+		var attribute_name;
+		var id;
+		var values			= new Array();
+		var value;
+
+		// Attributes: Copy attribute types to the Flower/Attributes tab.
+		// 1: Remove any existing attributes.
+
+		for (j = 0; j < attribute_types.length; j++)
+		{
+			attribute_name	= attribute_types[j]['name'];
+			values			= attribute_types[j]['menu'].split(', ');
+
+			for (k = 0; k < values.length; k++)
+			{
+				value	= values[k];
+				id		= build_attribute_id(attribute_name, value);
+
+				$(id).prop('checked', false);
+			}
+		}
+
+		var attribute;
+		var attribute_type_name;
+
+		// 2: Loop over all attributes owned by this flower.
+
+		for (i = 0; i < flower['attributes'].length; i++)
+		{
+			attribute		= flower['attributes'][i];
+			attribute_name	= attribute['name'];
+			values			= attribute['values'].split(', ');
+
+			// Loop over all attribute types.
+
+			for (j = 0; j < attribute_types.length; j++)
+			{
+				attribute_type_name = attribute_types[j]['name'];
+
+				// Find the attribute type whose name matches the name of the flower's attribute.
+
+				if (attribute_name != attribute_type_name)
+				{
+					continue;
+				}
+
+				for (k = 0; k < values.length; k++)
+				{
+					value	= values[k];
+					id		= build_attribute_id(attribute_name, value);
+
+					if (value != '')
+					{
+						$(id).prop('checked', true);
+					}
+				}
+			}
+		}
+
+		// Images: Copy images to the Flowers/Images tab.
+		// 1: Remove any existing images.
+
+		var ids = [];
+		var image_count = 20; // See templates/initialize/images.html.ep.
+
+		for (i = 0; i < image_count; i++)
+		{
+			ids.push(build_image_ids(i + 1) );
+
+			// For the HTML column order, see templates/initialize/images.html.ep.
+
+			$(ids[i][0]).val('');	// Description.
+			$(ids[i][1]).val('');	// File name.
+			$(ids[i][2]).text('');	// Image.
+			$(ids[i][3]).val('');	// Sequence.
+		}
+
+		// 2: Loop over all images owned by this flower.
+
+		ids = [];
+
+		var description;
+		var file_name;
+		var sequence;
+
+		for (i = 0; i < flower['images'].length; i++)
+		{
+			description	= flower['images'][i]['description'];
+			file_name	= flower['images'][i]['file_name'];
+			sequence	= flower['images'][i]['sequence'];
+			ids[i]		= build_image_ids(sequence);
+			image_path	= 'http://savage.net.au/Flowers/images/' + file_name;
+
+			// It would be nice to include a thumbnail-sized copy of the image here,
+			// but as soon as the page is loaded, it tries to retrieve an image
+			// whose URL does not exist, so JS gets 20 warning messages. No pretty.
+
+			// For the HTML column order, see templates/initialize/images.html.ep.
+
+			$(ids[i][0]).val(description);
+			$(ids[i][1]).val(file_name);
+			$(ids[i][2]).html("<img src = '" + image_path + "' width = '100' height = '100'>");
+			$(ids[i][3]).val(sequence);
+		}
+
+		// Notes: Copy notes to the Flowers/Notes tab.
+		// 1: Remove any existing notes.
+
+		ids = [];
+		var note_count = 20; // See templates/initialize/notes.html.ep.
+
+		for (i = 0; i < note_count; i++)
+		{
+			ids.push(build_note_ids(i + 1) );
+
+			// For the HTML column order, see templates/initialize/notes.html.ep.
+
+			$(ids[i][0]).val('');	// Note.
+			$(ids[i][1]).val('');	// Sequence.
+		}
+
+		// 2: Loop over all notes owned by this flower.
+
+		ids = [];
+
+		var note;
+
+		for (i = 0; i < flower['notes'].length; i++)
+		{
+			note		= flower['notes'][i]['note'];
+			sequence	= flower['notes'][i]['sequence'];
+			ids[i]		= build_note_ids(sequence);
+
+			// For the HTML column order, see templates/initialize/notes.html.ep.
+
+			$(ids[i][0]).val(note);
+			$(ids[i][1]).val(sequence);
+		}
+
+		// URLs: Copy urls to the Flowers/URLs tab.
+		// 1: Remove any existing URLs.
+
+		ids = [];
+		var url_count = 10; // See templates/initialize/urls.html.ep.
+
+		for (i = 0; i < url_count; i++)
+		{
+			ids.push(build_url_ids(i) );
+
+			// For the HTML column order, see templates/initialize/urls.html.ep.
+
+			$(ids[i][0]).val('');	// Sequence.
+			$(ids[i][1]).val('');	// URL.
+		}
+
+		// 2: Loop over all URLs owned by this flower.
+
+		var url;
+
+		ids = [];
+
+		for (i = 0; i < flower['urls'].length; i++)
+		{
+			sequence	= flower['urls'][i]['sequence'];
+			url			= flower['urls'][i]['url'];
+			ids[i]		= build_url_ids(sequence);
+
+			// For the HTML column order, see templates/initialize/urls.html.ep.
+
+			$(ids[i][0]).val(sequence);
+			$(ids[i][1]).val(url);
+		}
+	});
+}
+
+// -----------------------------------------------
+
+function submit_flower()
+{
+	$.ajax
+	({
+		data:
+		{
+			aliases:			document.aliases.value,
+			common_name:		document.common_name.value,
+			edible:				document.attributes_form.edible.value,
+			habit:				document.attributes_form.habit.value,
+			native:				document.attributes_form.native,
+			scientific_name:	document.scientific_name.value,
+			sun_tolerance:		document.attributes_form.sun_tolerance.value
+		},
+		dataType: 'text',
+		type: 'POST',
+		url:  '/AddFlower'
+	}).success(function(html)
+	{
+		// $('#flower_result_div').empty().append(html);
+		// $('#result_table').dataTable();
+
+		$('#flower_result_div').empty().text('Hi!');
+	});
+}
+
+// -----------------------------------------------
+
+function submit_search()
+{
+	$.ajax
+	({
+		data: {search_key: document.search_form.search_key.value},
+		dataType: 'html',
+		type: 'POST',
+		url:  '/Search'
+	}).success(function(html)
+	{
+		$('#search_result_div').empty().append(html);
+//		$('#search_result_table').datatable
+//		({
+//			'counterText': function (currentPage, totalPage, firstRow, lastRow, totalRow)
+//							{
+//								return 'Page ' + currentPage + ' of ' + totalPage + ', showing '
+//									+ firstRow + ' .. ' + lastRow + ' out of ' + totalRow;
+//							},
+//			'filters': [false, true, true, true, true, true],
+//			'filterText':   'Filter...',
+//			'forceStrings': true,
+//			'pageSize': 100,
+//			'sort': '*'
+//		});
+		$('#search_key').focus();
+	});
+}
+
+// -----------------------------------------------
+
+$(function()
+{
+	// Enable the tabs before trying to work with them.
+	// This is for function populate_flower() basically.
+
+	$('global_tab_div').tabs({active: 1});
+
+	$('#global_tab_div').tabs
+	({
+		activate: function(event, ui)
+		{
+			$('#search_key').focus();
+		}
+	});
+
+	$("#global_flower_tab")
+	.tabs
+	({
+		active: 0
+	});
+
+	$('#flower_form').submit(function()
+	{
+		submit_flower();
+		return false;
+	});
+
+	$('#object_color').spectrum
+	({
+		color:				'red',
+		preferredFormat:	'hex',
+		showPalette:		true
+	});
+
+	$('#search_key').focus();
+	$('#search_form').submit(function()
+	{
+		submit_search();
+		return false;
+	});
+
+	get_attribute_types();
+});
+
+</script>
+
+</html>

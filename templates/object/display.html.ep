@@ -1,0 +1,29 @@
+% if (my $error = stash 'error') {
+
+<table align = 'center'>
+<tr>
+	<td class = 'error'><br /><br />Error: <%= $error %></td>
+</tr>
+</table>
+
+% } else {
+
+<table align = 'center' class = 'datatable' id = 'result_table'>
+<thead>
+<tr>
+	<th>Name</th>
+	<th>Color</th>
+</tr>
+</thead>
+<tbody>
+%== $object
+</tbody>
+<tfoot>
+<tr>
+	<th>Name</th>
+	<th>Color</th>
+</tr>
+</tfoot>
+</table>
+
+% }

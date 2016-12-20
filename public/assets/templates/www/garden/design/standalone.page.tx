@@ -1,0 +1,70 @@
+<html>
+<head>
+<title>All Flowers</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="http://127.0.0.1/assets/js/jQuery/jquery-ui-1.12.1/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="http://127.0.0.1/assets/js/jQuery/datatable.2.0.0/css/datatable.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/www/garden/design/homepage.css">
+
+</head>
+<body>
+
+<h1 align='center'>All Flowers</h1>
+
+<table align='center'>
+<tr><td align='center'><span class="paging"></span></td></tr>
+<tr><td align='center'><span class="counter"></span></td></tr>
+<tr><td align='center'>Click column headings to sort</td></tr>
+<tr><td><hr><br></td></tr>
+</table>
+
+<table align='center' class='datatable' id='result_table'>
+: for $row -> $item {
+: if $~item.is_first {
+<thead>
+: }
+: if $~item.is_last {
+<tfoot>
+: }
+<tr>
+		: include "basic.column.tx" { column => $item };
+</tr>
+: if $~item.is_first {
+</thead>
+: }
+: if $~item.is_last {
+</tfoot>
+: }
+: }
+</table>
+
+<table align='center'>
+<tr><td><span class="paging"></span></td></tr>
+<tr><td><span class="counter"></span></td></tr>
+<tr><td><hr/></td></tr>
+</table>
+
+</body>
+<script type="text/javascript" src="http://127.0.0.1/assets/js/jquery/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="http://127.0.0.1/assets/js/jquery/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://127.0.0.1/assets/js/jquery/datatable.2.0.0/js/datatable.min.js"></script>
+<script type="text/javascript" src="http://127.0.0.1/assets/js/jquery/datatable.2.0.0/js/datatable.jquery.min.js"></script>
+<script type='text/javascript'>
+$(document).ready(function()
+{
+	$('#result_table').datatable
+	({
+		'counterText': function (currentPage, totalPage, firstRow, lastRow, totalRow)
+						{
+							return 'Page ' + currentPage + ' of ' + totalPage + ', showing '
+								+ firstRow + ' .. ' + lastRow + ' out of ' + totalRow;
+						},
+		'filters':      [false, true, true, true, true, false],
+		'filterText':   'Filter...',
+		'forceStrings': true,
+		'pageSize':     150,
+		'sort':         '*'
+	});
+});
+</script>
+</html>

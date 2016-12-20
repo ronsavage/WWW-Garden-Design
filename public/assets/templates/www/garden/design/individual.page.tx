@@ -1,0 +1,49 @@
+<html>
+  <head>
+	<title><: $title :></title>
+ 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   <link rel = 'stylesheet' type = 'text/css' href = '/assets/css/local/website/default.css' />
+  </head>
+  <body>
+
+	<div class = 'page_title'><: $title :></div>
+	<h1 align = 'center'>Scientific name: <: $scientific_name :></h1>
+	<h1 align = 'center'><: $aliases :></h1>
+
+	<h2 align = 'center'>Attributes</h1>
+	<table align = 'center'><tr><td>
+		<div class = 'simple_border'>
+			:include 'individual.table.tx' {row => $attributes, table_id => 'Attributes'};
+		</div>
+	</td></tr></table>
+
+	<br>
+
+	<table align = 'center'><tr><td>
+		<div class = 'simple_border'>
+			:include 'individual.table.tx' {row => $images, table_id => 'Images'};
+		</div>
+	</td></tr></table>
+
+	<br>
+
+	<table align = 'center'><tr><td>
+		<div class = 'simple_border'>
+			:include 'individual.table.tx' {row => $notes, table_id => 'Notes'};
+		</div>
+	</td></tr></table>
+
+	<br>
+
+	<table align = 'center'><tr><td>
+		<div class = 'simple_border'>
+			:include 'individual.table.tx' {row => $urls, table_id => 'URLs'};
+		</div>
+	</td></tr></table>
+
+	<hr>
+	<p align = 'center'>Return to <a href = '/Flowers.html'>index page</a></p>
+
+  </body>
+</html>
+

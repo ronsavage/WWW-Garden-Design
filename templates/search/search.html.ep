@@ -1,0 +1,69 @@
+% if (my $error = stash 'error') {
+
+<table align = 'center'>
+<tr>
+	<td class = 'error'><br /><br />Error: <%= $error %></td>
+</tr>
+</table>
+
+% } else {
+
+<table align = 'center'>
+<tr>
+	<td>Search time: </td>
+	<td align = 'right'>
+%== $elapsed_time
+	</td>
+	<td> seconds</td>
+</tr>
+<tr>
+	<td>Match count: </td>
+	<td align = 'right'>
+%== $match_count
+	</td>
+	<td> hits</td>
+</table>
+
+<!--
+<table align = 'center'>
+<tr>
+	<td><span class = "paging"></span></td>
+	</tr>
+<tr>
+	<td><span class = "counter"></span></td>
+	</tr>
+<tr>
+	<td><hr/></td>
+</tr>
+</table>
+-->
+
+<table align = 'center' class = 'datatable' id = 'search_result_table'>
+<thead>
+<tr>
+	<th>#</th>
+	<th>Native</th>
+	<th>Scientific name</th>
+	<th>Common name</th>
+	<th>Aliases</th>
+	<th>H x W</th>
+	<th>Edit</th>
+</tr>
+</thead>
+<tbody>
+%== $match
+</tbody>
+<tfoot>
+<tr>
+	<th>#</th>
+	<th>Native</th>
+	<th>Scientific name</th>
+	<th>Common name</th>
+	<th>Aliases</th>
+	<th>H x W</th>
+	<th>Edit</th>
+</tr>
+</tfoot>
+</table>
+
+% }

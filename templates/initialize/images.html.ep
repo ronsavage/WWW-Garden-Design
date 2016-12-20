@@ -1,0 +1,35 @@
+<table align = 'center'>
+	<tr>
+		<td colspan = '2'><div class = 'blue_centered'>Image Descriptions</div><br /></td>
+	</tr>
+	<tr>
+		<td align = 'centered'>Common name: </td><td><span class = 'blue_centered' id = 'image_common_name'></span></td>
+	</tr>
+	<tr>
+		<td align = 'centered'>Scientific name: </td><td><span class = 'blue_centered' id = 'image_scientific_name'></span></td>
+	</tr>
+	<tr>
+		<td colspan = '2'><hr></td>
+	</tr>
+</table>
+
+<table align = 'center'>
+	<thead>
+		<tr>
+			<th>Image</th>
+			<th>Sequence</th>
+			<th>Image file name</th>
+			<th>Note</th>
+		</tr>
+	</thead>
+	<tbody>
+		% for my $i (1 .. 20) {
+		<tr>
+			<td><span id = 'image_image_<%= $i %>'><%= $i %></span></td>
+			<td align = 'right'><input id = 'image_sequence_<%= $i %>' type = 'text' size = '5'></td>
+			<td align = 'left'><input id = 'image_file_name_<%= $i %>' type = 'text' size = '30' maxlength = '100'></td>
+			<td align = 'left'><input id = 'image_description_<%= $i %>' type = 'text' size = '100' maxlength = '200'></td>
+		</tr>
+		% }
+	</tbody>
+</table>

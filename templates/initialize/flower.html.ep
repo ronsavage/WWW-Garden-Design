@@ -1,0 +1,35 @@
+<table align = 'center'>
+	<tr>
+		<td colspan = '2'><div class = 'blue_centered'>Flower</div><br /></td>
+	</tr>
+	<tr>
+		<td>Common name:</td>
+		<td align = 'left'><input id = 'flower_common_name' type = 'text' size = '50' maxlength = '100'></td>
+	</tr>
+	<tr>
+		<td>Scientific name:</td>
+		<td align = 'left'><input id = 'flower_scientific_name' type = 'text' size = '50' maxlength = '100'></td>
+	</tr>
+	<tr>
+		<td>Aliases:</td>
+		<td align = 'left'><input id = 'flower_aliases' type = 'text' size = '50' maxlength = '255'></td>
+	</tr>
+	<tr>
+		<td>Height:</td>
+		<td align = 'left'><input id = 'flower_height' type = 'text' size = '10'></td>
+	</tr>
+	<tr>
+		<td>Width:</td>
+		<td align = 'left'><input id = 'flower_width' type = 'text' size = '10'></td>
+	</tr>
+	<tr>
+		<td>
+			<br>
+		</td>
+	</tr>
+	<tr>
+		<td align = 'center'><input type = 'reset'  value = 'Reset'  /></td>
+		<td align = 'center'><%= submit_button 'Save' %></td>
+	</tr>
+</table>
+<div id = 'flower_result_div'></div>

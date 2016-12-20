@@ -1,0 +1,37 @@
+[Real Garden] {color: green; penwidth: 3; shape: component}
+-> [Me or You]
+-> [Set of *.csv Files] {shape: septagon}
+-> [Import Code] {color: gold; shape: polygon}
+-> [Database] {color: blue; fixedsize: true; shape: house}
+-> [Export Code] {color: gold; shape: polygon}
+-> [Flower Catalog] {color: orange}
+
+[Export Code] {color: gold; shape: polygon}
+-> [Set of *.csv Files] {shape: septagon}
+
+[Export Code] {shape: Mcircle}
+-> [Front/Back Garden Layout] {color: orange}
+
+[Flower Catalog] {color: orange}
+-> [Flower 1.html] {color: firebrick4; fixedsize: true; height: .5; penwidth: 3; shape: rectangle; width: 1.5}
+
+[Flower Catalog] {color: orange}
+-> [Flower 2.html] {color: firebrick4; fixedsize: true; height: .5; penwidth: 3; shape: rectangle; width: 1.5}
+
+[Flower Catalog] {color: orange}
+-> [Flower 999.html] {color: firebrick4; fixedsize: true; height: .5; penwidth: 3; shape: rectangle; width: 1.5}
+
+[Front/Back Garden Layout] {color: orange}
+-> [Flower 1.html] {color: firebrick4; fixedsize: true; height: .5; penwidth: 3; shape: rectangle; width: 1.5}
+
+[Front/Back Garden Layout] {color: orange}
+-> [Flower 2.html] {color: firebrick4; fixedsize: true; height: .5; penwidth: 3; shape: rectangle; width: 1.5}
+
+[Front/Back Garden Layout] {color: orange}
+-> [Flower 999.html] {color: firebrick4; fixedsize: true; height: .5; penwidth: 3; shape: rectangle; width: 1.5}
+
+[Database] {color: blue; fixedsize: true; shape: house}
+-> {arrowhead: ediamond; arrowtail: ediamond; color: green; dir: both; penwidth: 2}
+[CGI Script] {color: purple; shape: Mdiamond}
+-> {arrowhead: ediamond; arrowtail: ediamond; color: green; dir: both; penwidth: 2}
+[You or Me]
