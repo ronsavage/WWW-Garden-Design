@@ -1,0 +1,35 @@
+digraph Perl
+{
+graph [ rankdir="TB" ]
+node [ shape="oval" ]
+edge [ color="grey" ]
+"Real Garden" [ color="green" penwidth="3" shape="component" ]
+"Me or You"
+"Set of *.csv Files" [ shape="septagon" ]
+"Import Code" [ color="gold" shape="polygon" ]
+"Database" [ color="blue" fixedsize="true" shape="house" ]
+"Export Code" [ color="gold" shape="polygon" ]
+"Flower Catalog" [ color="orange" ]
+"Front/Back Garden Layout" [ color="orange" ]
+"Flower 1.html" [ color="firebrick4" fixedsize="true" height=".5" penwidth="3" shape="rectangle" width="1.5" ]
+"Flower 2.html" [ color="firebrick4" fixedsize="true" height=".5" penwidth="3" shape="rectangle" width="1.5" ]
+"Flower 999.html" [ color="firebrick4" fixedsize="true" height=".5" penwidth="3" shape="rectangle" width="1.5" ]
+"CGI Script" [ color="purple" shape="Mdiamond" ]
+"You or Me"
+"Real Garden" -> "Me or You"
+"Me or You" -> "Set of *.csv Files"
+"Set of *.csv Files" -> "Import Code"
+"Import Code" -> "Database"
+"Database" -> "Export Code"
+"Export Code" -> "Flower Catalog"
+"Export Code" -> "Set of *.csv Files"
+"Export Code" -> "Front/Back Garden Layout"
+"Flower Catalog" -> "Flower 1.html"
+"Flower Catalog" -> "Flower 2.html"
+"Flower Catalog" -> "Flower 999.html"
+"Front/Back Garden Layout" -> "Flower 1.html"
+"Front/Back Garden Layout" -> "Flower 2.html"
+"Front/Back Garden Layout" -> "Flower 999.html"
+"Database" -> "CGI Script" [ arrowhead="ediamond" arrowtail="ediamond" color="green" dir="both" penwidth="2" ]
+"CGI Script" -> "You or Me" [ arrowhead="ediamond" arrowtail="ediamond" color="green" dir="both" penwidth="2" ]
+}
