@@ -57,14 +57,14 @@ This article discusses the search engine in more detail.
 
 =back
 
-=head2 How Data Flows thru the System
+=head2 System Flowchart
 
 =begin html
 
 <table align = 'center'>
 	<tr>
 		<td>
-			<img src = 'http://savage.net.au/Perl-modules/html/garden.design/block.diagram.svg'>
+			<img src = 'http://savage.net.au/Perl-modules/html/garden.design/Garden.Design.Software.figure.1.svg'>
 		</td>
 	</tr>
 </table>

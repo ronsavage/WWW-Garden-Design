@@ -5,7 +5,7 @@ node [ shape="oval" ]
 edge [ color="grey" ]
 "Real Garden" [ color="green" penwidth="3" shape="component" ]
 "Me or You"
-"Set of *.csv Files" [ shape="septagon" ]
+"Set of *.csv Files\ndescribing the flowers" [ shape="septagon" ]
 "Import Code" [ color="gold" shape="polygon" ]
 "Database" [ color="blue" fixedsize="true" shape="house" ]
 "Export Code" [ color="gold" shape="polygon" ]
@@ -17,12 +17,12 @@ edge [ color="grey" ]
 "CGI Script" [ color="purple" shape="Mdiamond" ]
 "You or Me"
 "Real Garden" -> "Me or You"
-"Me or You" -> "Set of *.csv Files"
-"Set of *.csv Files" -> "Import Code"
+"Me or You" -> "Set of *.csv Files\ndescribing the flowers"
+"Set of *.csv Files\ndescribing the flowers" -> "Import Code"
 "Import Code" -> "Database"
 "Database" -> "Export Code"
 "Export Code" -> "Flower Catalog"
-"Export Code" -> "Set of *.csv Files"
+"Export Code" -> "Set of *.csv Files\ndescribing the flowers"
 "Export Code" -> "Front/Back Garden Layout"
 "Flower Catalog" -> "Flower 1.html"
 "Flower Catalog" -> "Flower 2.html"

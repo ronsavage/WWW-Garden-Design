@@ -1,13 +1,13 @@
 [Real Garden] {color: green; penwidth: 3; shape: component}
 -> [Me or You]
--> [Set of *.csv Files] {shape: septagon}
+-> [Set of *.csv Files\ndescribing the flowers] {shape: septagon}
 -> [Import Code] {color: gold; shape: polygon}
 -> [Database] {color: blue; fixedsize: true; shape: house}
 -> [Export Code] {color: gold; shape: polygon}
 -> [Flower Catalog] {color: orange}
 
 [Export Code] {color: gold; shape: polygon}
--> [Set of *.csv Files] {shape: septagon}
+-> [Set of *.csv Files\ndescribing the flowers] {shape: septagon}
 
 [Export Code] {shape: Mcircle}
 -> [Front/Back Garden Layout] {color: orange}
