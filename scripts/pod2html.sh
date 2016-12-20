@@ -17,7 +17,3 @@ pod2html.pl -i lib/$INFIX/Design/Util/Create.pm						-o $DEST/Design/Util/Create
 pod2html.pl -i lib/$INFIX/Design/Util/Export.pm						-o $DEST/Design/Util/Export.html
 pod2html.pl -i lib/$INFIX/Design/Util/Import.pm						-o $DEST/Design/Util/Import.html
 pod2html.pl -i lib/$INFIX/Design/Database.pm						-o $DEST/Design/Database.html
-
-pod2html.pl -i html/overview.pod -o html/overview.html
-
-cp html/overview.html $DR/Perl-modules/html/garden.design

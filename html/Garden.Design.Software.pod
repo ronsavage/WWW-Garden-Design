@@ -1,0 +1,76 @@
+=pod
+
+=head1 Garden Design Software - Yours and Mine
+
+=head2 Introduction
+
+I'm close to releasing a free software package, written in L<Perl|https://www.perl.org/>, which will be
+available from both L<my web site|http://savage.net.au/Perl-modules.html> and from my
+L<public repository|https://metacpan.org/author/RSAVAGE>. The latter is hosted in Finland.
+
+=head2 Contents of the Package
+
+=over 4
+
+=item o The Source Code
+
+Yes. Being a standard Perl distro (distribution) you get the source code of every component. This includes the
+source code of various small Perl programs, usually just a few hundred bytes in size.
+
+There are no pre-compiled components, such as *.exe files, which you might be used to downloading.
+
+=item o A Set of *.csv Files
+
+The package includes a set of *.csv (L<Comma-Separated Variables|https://en.wikipedia.org/wiki/Comma-separated_values>)
+text files containing details of the plants in my garden. These files are imported into the database to bootstrap the
+system. The package also includes an export component which generates these:
+
+Since these files only contain partial information on my flowers, I'm hoping you can either show me a public
+database of flower data I can incorporate into my package, and thereby ship to all those who download my program,
+or perhaps everyone using the program can enter the details of a few flowers, and I can combine all your data
+into a new database for another free download.
+
+=over 4
+
+=item o The Flower Catalog
+
+This is a HTML table which the code can incorporate into a stand-alone page, or which can be embedded
+in another web page, L<as I do here|http://savage.net.au/Flowers.html>.
+
+=item o A Set of Garden Layout Pages
+
+In this case the output is one *.svg (L<Scalable Vector Graphics|https://en.wikipedia.org/wiki/Scalable_Vector_Graphics>)
+image for each garden. Here they are for L<my front garden|http://savage.net.au/Flowers/front.garden.layout.html>
+and for L<my back garden|http://savage.net.au/Flowers/back.garden.layout.html>.
+
+=back
+
+=item o Various other data files
+
+One of these is the database produced by the import component, and with which all other components interact.
+
+=item o A Search Engine
+
+Yes - You get a serch engine specifically written to work with the database.
+
+This article discusses the search engine in more detail.
+
+=back
+
+=head2 How Data Flows thru the System
+
+=begin html
+
+<table align = 'center'>
+	<tr>
+		<td>
+			<img src = 'http://savage.net.au/Perl-modules/html/garden.design/block.diagram.svg'>
+		</td>
+	</tr>
+</table>
+
+=end html
+
+The file which is converted into the above image is shipped with the package as
+html/Garden.Design.Software.figure.1.dash.
+
