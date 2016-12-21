@@ -84,7 +84,7 @@ This article discusses some details about the Search Engine component (see figur
 
 =head2 So, what is this Search Engine?
 
-Here, we step thru the process of searching - and viewing the search results.
+Here, we step thru the process of searching, and viewing the search results.
 
 =begin html
 
@@ -108,7 +108,7 @@ Here, we step thru the process of searching - and viewing the search results.
 	<tr>
 		<td align = 'center'>
 			<br />
-			<span class = 'large_text'>Figure 3 - Search Results</span>
+			<span class = 'large_text'>Figure 3 - Search Results after typing in 'Chor'</span>
 			<br /><br /><br /><hr /><hr />
 		</td>
 	</tr>
@@ -123,7 +123,7 @@ Here, we step thru the process of searching - and viewing the search results.
 			<br />
 			<span class = 'large_text'>Figure 4 - The Flower Tab (After Clicking on the First Result's Thumbnail)</span>
 			<br />
-			<span class = 'large_text'>After that click the 5 tabs 'Flowers' to 'URLs' are filled in automatically</span>
+			<span class = 'large_text'>Upon that click the 5 tabs 'Flowers' to 'URLs' are filled in automatically</span>
 			<br /><br /><br /><hr /><hr />
 		</td>
 	</tr>
