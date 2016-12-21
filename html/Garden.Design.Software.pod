@@ -2,11 +2,87 @@
 
 =head1 Garden Design Software - Yours and Mine
 
+=head2 Author
+
+L<Ron Savage|http://savage.net.au/>, aka iFlower on L<the Flower Forums|http://www.flowersforums.com/forums/>.
+
 =head2 Introduction
 
 I'm close to releasing a free software package, written in L<Perl|https://www.perl.org/>, which will be
 available from both L<my web site|http://savage.net.au/Perl-modules.html> and from my
-L<public repository|https://metacpan.org/author/RSAVAGE>. The latter is hosted in Finland.
+L<public repository|https://metacpan.org/author/RSAVAGE>. The latter is hosted in Finland even though I
+live in Melbourne, Australia.
+
+This article discusses some details about the Search Engine component (see figure 1) of the package.
+
+=head2 System Flowchart
+
+=begin html
+
+<table align = 'center'>
+	<tr>
+		<td>
+			<table>
+				<tr rowspan = '3'>
+					<td>
+						<br /><br /><br /><br />
+						<span class = 'large_text'>Data about the flowers is manually entered into text files.</span>
+						<br />
+						<span class = 'large_text'>Text files were chosen so I could bootstrap the whole system.</span>
+						<br />
+						<span class = 'large_text'>Also, I'm hopeful we could build a communal database by sharing such files.</span>
+						<br /><br />
+					</td>
+				</tr>
+				<tr rowspan = '2'>
+					<td>
+						<br /><br /><br /><br /><br /><br />
+						<span class = 'large_text'>The files are imported into a database<br />using the free program SQLite.</span>
+						<br /><br />
+						</td>
+				</tr>
+				<tr rowspan = '3'>
+					<td>
+						<br /><br />
+						<span class = 'large_text'>(On the left) The Search Engine is discussed below.</span>
+						<br />
+						<span class = 'large_text'>(On the right) The Export code can re-create the *.csv files, and it can generate:</span>
+						<br />
+						<span class = 'large_text'>o The <a href = 'http://savage.net.au/Flowers.html'>Flower Catalog</a>,</span>
+						<br />
+						<span class = 'large_text'>o The <a href = 'http://savage.net.au/Flowers/front.garden.layout.html'>Front Garden Layout</a>, and</span>
+						<br />
+						<span class = 'large_text'>o The <a href = 'http://savage.net.au/Flowers/back.garden.layout.html'>Back Garden Layout</a>.</span>
+						<br /><br />
+						<span class = 'large_text'>Each flower has its own page, and all such pages<br />are pointed to by the Catalog and the Layouts</span>
+						<br />
+						<span class = 'large_text'>via clickable thumbnail images.</span>
+					</td>
+				</tr>
+			</table>
+		</td>
+		<td>
+			<table>
+				<tr>
+					<td rowspan = '8'>
+						<img src = 'http://savage.net.au/Perl-modules/html/garden.design/Garden.Design.Software.figure.1.svg'>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align = 'center'>
+			<br /><br />
+			<span class = 'large_text'>Figure 1</span>
+		</td>
+	</tr>
+</table>
+
+=end html
+
+=head2 So, what is this Search Engine?
 
 =head2 Contents of the Package
 
@@ -14,10 +90,11 @@ L<public repository|https://metacpan.org/author/RSAVAGE>. The latter is hosted i
 
 =item o The Source Code
 
-Yes. Being a standard Perl distro (distribution) you get the source code of every component. This includes the
-source code of various small Perl programs, usually just a few hundred bytes in size.
+Yes. Being a standard Perl package (aka distro) you get the source code of every component. This includes
+the source code of various small Perl programs, each just a few hundred bytes in size.
 
-There are no pre-compiled components, such as *.exe files, which you might be used to downloading.
+There are no pre-compiled - and hence unreadable - components, such as *.exe files, which you might be used to
+downloading.
 
 =item o A Set of *.csv Files
 
@@ -53,24 +130,10 @@ One of these is the database produced by the import component, and with which al
 
 Yes - You get a serch engine specifically written to work with the database.
 
-This article discusses the search engine in more detail.
+=item o The source files which make up this article, including the images
+
+The image is shipped with the package as html/Garden.Design.Software.figure.1.svg, and the file which is
+converted into that image is shipped as html/Garden.Design.Software.figure.1.dash. See
+scripts/Garden.Design.Software.sh for the conversion process.
 
 =back
-
-=head2 System Flowchart
-
-=begin html
-
-<table align = 'center'>
-	<tr>
-		<td>
-			<img src = 'http://savage.net.au/Perl-modules/html/garden.design/Garden.Design.Software.figure.1.svg'>
-		</td>
-	</tr>
-</table>
-
-=end html
-
-The file which is converted into the above image is shipped with the package as
-html/Garden.Design.Software.figure.1.dash.
-

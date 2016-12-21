@@ -32,6 +32,6 @@
 
 [Database] {color: blue; fixedsize: true; shape: house}
 -> {arrowhead: ediamond; arrowtail: ediamond; color: green; dir: both; penwidth: 2}
-[CGI Script] {color: purple; shape: Mdiamond}
+[Search Engine] {color: purple; shape: Mdiamond}
 -> {arrowhead: ediamond; arrowtail: ediamond; color: green; dir: both; penwidth: 2}
 [You or Me]

@@ -14,7 +14,7 @@ edge [ color="grey" ]
 "Flower 1.html" [ color="firebrick4" fixedsize="true" height=".5" penwidth="3" shape="rectangle" width="1.5" ]
 "Flower 2.html" [ color="firebrick4" fixedsize="true" height=".5" penwidth="3" shape="rectangle" width="1.5" ]
 "Flower 999.html" [ color="firebrick4" fixedsize="true" height=".5" penwidth="3" shape="rectangle" width="1.5" ]
-"CGI Script" [ color="purple" shape="Mdiamond" ]
+"Search Engine" [ color="purple" shape="Mdiamond" ]
 "You or Me"
 "Real Garden" -> "Me or You"
 "Me or You" -> "Set of *.csv Files\ndescribing the flowers"
@@ -30,6 +30,6 @@ edge [ color="grey" ]
 "Front/Back Garden Layout" -> "Flower 1.html"
 "Front/Back Garden Layout" -> "Flower 2.html"
 "Front/Back Garden Layout" -> "Flower 999.html"
-"Database" -> "CGI Script" [ arrowhead="ediamond" arrowtail="ediamond" color="green" dir="both" penwidth="2" ]
-"CGI Script" -> "You or Me" [ arrowhead="ediamond" arrowtail="ediamond" color="green" dir="both" penwidth="2" ]
+"Database" -> "Search Engine" [ arrowhead="ediamond" arrowtail="ediamond" color="green" dir="both" penwidth="2" ]
+"Search Engine" -> "You or Me" [ arrowhead="ediamond" arrowtail="ediamond" color="green" dir="both" penwidth="2" ]
 }
