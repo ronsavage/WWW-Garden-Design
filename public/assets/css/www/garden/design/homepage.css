@@ -6,22 +6,23 @@
 
 .blue_centered
 {
-	background-color: #6293cd;
-	color: #ffffff;
-	font-weight: bold;
-	text-align: center;
+	background-color:	#6293cd;
+	color:				#ffffff;
+	font-weight:		bold;
+	text-align:			center;
 }
 
 body
 {
-	margin: 0;
-	padding: 0;
+	font-size:	1.2em;
+	margin:		0;
+	padding:	0;
 }
 
 .bordered
 {
-	border-style: solid;
-	border-width: 1px;
+	border-style:	solid;
+	border-width:	1px;
 }
 
 .centered
@@ -31,17 +32,17 @@ body
 
 .error
 {
-	color: red;
-	font-weight: bold;
+	color:			red;
+	font-weight:	bold;
 }
 
 .hidden_div
 {
-	background-color: #6293cd;
-	border-style: solid;
-	border-width: 1px;
-	display: none;
-	text-align: center;
+	background-color:	#6293cd;
+	border-style:		solid;
+	border-width:		1px;
+	display:			none;
+	text-align:			center;
 }
 
 .hidden_span
@@ -129,32 +130,32 @@ th.generic_padding
 
 table.datatable
 {
-	border-width: 1px;
-	border-spacing: 0px;
-	border-style: outset;
-	border-color: gray;
-	border-collapse: separate;
-	#background-color: white;
+	border-width:		1px;
+	border-spacing:		0px;
+	border-style:		outset;
+	border-color:		gray;
+	border-collapse:	separate;
+	#background-color:	white;
 }
 
 table.datatable th
 {
-	border-width: 1px;
-	padding: 1px;
-	border-style: inset;
-	border-color: gray;
-	#background-color: white;
+	border-width:		1px;
+	padding:			1px;
+	border-style:		inset;
+	border-color:		gray;
+	#background-color:	white;
 	-moz-border-radius: ;
 }
 
 table.datatable td
 {
-	border-width: 1px;
-	padding: 1px;
-	border-style: inset;
-	border-color: gray;
-	#background-color: white;
-	-moz-border-radius: ;
+	border-width:		1px;
+	padding:			1px;
+	border-style:		inset;
+	border-color:		gray;
+	#background-color:	white;
+	-moz-border-radius:	;
 }
 
 .ui-tabs-tabs .ui-tabs-nav li a
@@ -166,7 +167,7 @@ table.datatable td
 
 .white_centered
 {
-	background-color: #ffffff;
-	color: #6293cd;
-	font-weight: bold;
+	background-color:	#ffffff;
+	color:				#6293cd;
+	font-weight:		bold;
 }

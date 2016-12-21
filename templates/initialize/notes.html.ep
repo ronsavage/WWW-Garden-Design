@@ -28,7 +28,7 @@
 		<tr>
 		% }
 			<td align = 'right'><input id = 'note_sequence_<%= $i %>' type = 'text' size = '5'></td>
-			<td align = 'left'><input id = 'note_note_<%= $i %>' type = 'text' size = '60' maxlength = '200'></td>
+			<td align = 'left'><input id = 'note_note_<%= $i %>' type = 'text' size = '50' maxlength = '200'></td>
 		% if ( ($i % 2) == 0) {
 		</tr>
 		% }
