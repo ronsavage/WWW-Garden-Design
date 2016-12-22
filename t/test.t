@@ -34,7 +34,7 @@ if (! $ENV{DBI_DSN})
 }
 
 my(@opts)	= ($ENV{DBI_DSN}, $ENV{DBI_USER}, $ENV{DBI_PASS});
-my($dbh)	= DBI - >connect(@opts, {RaiseError => 1, PrintError => 0, AutoCommit => 1});
+my($dbh)	= DBI -> connect(@opts, {RaiseError => 1, PrintError => 0, AutoCommit => 1});
 
 WWW::Garden::Design::Util::Create -> new -> drop_all_tables;
 WWW::Garden::Design::Util::Create -> new -> create_all_tables;
