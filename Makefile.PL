@@ -15,7 +15,7 @@ my(%params) =
 	($] ge '5.005') ?
 	(
 		AUTHOR   => 'Ron Savage (ron@savage.net.au)',
-		ABSTRACT => 'Manage the "flowers" database',
+		ABSTRACT => 'Flower Database, Search Engine and Garden Design',
 	) : (),
 	clean =>
 	{
@@ -57,6 +57,7 @@ my(%params) =
 		'Text::CSV'					=> 1.33,
 		'Text::CSV::Encoded'		=> 0.22,
 		'Text::Xslate'				=> 1.0007,
+		'Time::HiRes'				=> 1.9741,
 		'Types::Standard'			=> 0.032,
 		'utf8'						=> 0,
 		'warnings'					=> 0,
@@ -84,7 +85,17 @@ if ($ExtUtils::MakeMaker::VERSION ge '6.46')
 		},
 		resources =>
 		{
-			license => 'http://dev.perl.org/licenses/',
+			bugtracker =>
+			{
+				web => 'https://rt.cpan.org/Public/Dist/Display.html?Name=WWW-Garden-Design',
+			},
+			license    => 'http://dev.perl.org/licenses/',
+			repository =>
+			{
+				type => 'git',
+				url  => 'https://github.com/ronsavage/WWW-Garden-Design.git',
+				web  => 'https://github.com/ronsavage/WWW-Garden-Design',
+			},
 		},
 	};
 }
