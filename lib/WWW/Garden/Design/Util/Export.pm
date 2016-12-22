@@ -259,7 +259,7 @@ sub as_html
 				column_name	=> 'aliases',
 				order		=> 5,
 			},
-			'Thumbnail <snap class = "index">(clickable)</span>' =>
+			'Thumbnail <span class = "index">(clickable)</span>' =>
 			{
 				column_name	=> 'thumbnail_file_name',
 				order		=> 6,
