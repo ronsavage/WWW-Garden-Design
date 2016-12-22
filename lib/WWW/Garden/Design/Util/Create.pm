@@ -236,6 +236,7 @@ create table $table_name
 id $primary_key,
 aliases			varchar(255) not null,
 common_name		varchar(255) not null,
+pig_latin		varchar(255) not null,
 scientific_name	varchar(255) not null,
 height			varchar(255) not null,
 width			varchar(255) not null

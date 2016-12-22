@@ -383,12 +383,16 @@ sub populate_flowers_table
 
 	$csv -> column_names($csv -> getline($io) );
 
-	my($count) = 0;
+	my($count)	= 0;
+	my($lines)	= $csv -> getline_hr_all($io);
+
+	# Stockpile some info we'll need. In particular we need %scientific_name
+	# so we can generate the pig_latin column in the flowers table.
 
 	my($common_name, %common_name);
 	my($scientific_name, %scientific_name);
 
-	for my $item (@{$csv -> getline_hr_all($io) })
+	for my $item (@$lines)
 	{
 		$count++;
 
@@ -413,14 +417,26 @@ sub populate_flowers_table
 			$self -> db -> logger -> info("$table_name. Row: $count. Duplicate scientific_name: $scientific_name");
 		}
 
-		$common_name{$common_name}			= 1;
-		$scientific_name{$scientific_name}	= 1;
-		$$flower_keys{$common_name}			= $self -> db -> insert_hashref
+		$common_name{$common_name}			= 0 if (! $common_name{$common_name});
+		$common_name{$common_name}			+= 1;
+		$scientific_name{$scientific_name}	= 0 if (! $scientific_name{$scientific_name});
+		$scientific_name{$scientific_name}	+= 1;
+	}
+
+	my($pig_latin);
+
+	for my $item (@$lines)
+	{
+		$common_name				= $$item{common_name};
+		$scientific_name			= $$item{scientific_name};
+		$pig_latin					= $self -> db -> generate_pig_latin_from_scientific_name($lines, $scientific_name, $common_name);
+		$$flower_keys{$common_name}	= $self -> db -> insert_hashref
 		(
 			$table_name,
 			{
 				aliases			=> $$item{aliases},
 				common_name		=> $common_name,
+				pig_latin		=> $pig_latin,
 				scientific_name	=> $scientific_name,
 				height			=> $$item{height},
 				width			=> $$item{width},

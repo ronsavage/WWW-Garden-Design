@@ -1,6 +1,6 @@
 =pod
 
-=head1 Garden Design Software - Yours and Mine
+=head1 Garden Design Software
 
 =head2 Author
 

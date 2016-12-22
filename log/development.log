@@ -1,0 +1,2702 @@
+[Thu Dec 22 15:35:22 2016] [info] Listening at "http://*:3008"
+[Thu Dec 22 15:35:24 2016] [info] ------------------------------
+[Thu Dec 22 15:35:24 2016] [debug] GET "/"
+[Thu Dec 22 15:35:24 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::Initialize" and action "homepage"
+[Thu Dec 22 15:35:24 2016] [debug] homepage()
+[Thu Dec 22 15:35:24 2016] [debug] Rendering template "initialize/homepage.html.ep"
+[Thu Dec 22 15:35:24 2016] [debug] Rendering template "initialize/search.html.ep"
+[Thu Dec 22 15:35:24 2016] [debug] Rendering template "initialize/flower.html.ep"
+[Thu Dec 22 15:35:24 2016] [debug] Rendering template "initialize/attributes.html.ep"
+[Thu Dec 22 15:35:24 2016] [debug] Rendering template "initialize/images.html.ep"
+[Thu Dec 22 15:35:24 2016] [debug] Rendering template "initialize/notes.html.ep"
+[Thu Dec 22 15:35:24 2016] [debug] Rendering template "initialize/urls.html.ep"
+[Thu Dec 22 15:35:24 2016] [debug] Rendering template "initialize/object.html.ep"
+[Thu Dec 22 15:35:24 2016] [debug] Rendering template "initialize/design.html.ep"
+[Thu Dec 22 15:35:24 2016] [debug] Rendering template "initialize/help.html.ep"
+[Thu Dec 22 15:35:24 2016] [debug] 200 OK (0.028891s, 34.613/s)
+[Thu Dec 22 15:35:24 2016] [info] ------------------------------
+[Thu Dec 22 15:35:24 2016] [debug] POST "/GetAttributeTypes"
+[Thu Dec 22 15:35:24 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::GetAttributeTypes" and action "display"
+[Thu Dec 22 15:35:24 2016] [debug] display()
+[Thu Dec 22 15:35:24 2016] [debug] 200 OK (0.006096s, 164.042/s)
+[Thu Dec 22 15:35:24 2016] [info] ------------------------------
+[Thu Dec 22 15:35:27 2016] [info] ------------------------------
+[Thu Dec 22 15:35:27 2016] [debug] POST "/Search"
+[Thu Dec 22 15:35:28 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::Search" and action "search"
+[Thu Dec 22 15:35:28 2016] [debug] search(grev)
+[Thu Dec 22 15:35:28 2016] [info] Flowers: {
+  aliases => "Heart-Leaf Flame Pea",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 72,
+      id => 285,
+      name => "edible",
+      sequence => 30,
+      values => "No"
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 72,
+      id => 286,
+      name => "habit",
+      sequence => 40,
+      values => "Small shrub"
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 72,
+      id => 287,
+      name => "native",
+      sequence => 10,
+      values => "Yes"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 72,
+      id => 288,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => "Part shade, Shade"
+    }
+  ],
+  common_name => "Flame pea 1",
+  flower_locations => [],
+  height => "1-2m",
+  hxw => "1-2m x 1-2m",
+  id => 72,
+  images => [
+    {
+      description => "One of the most beautiful flowers in the country",
+      file_name => "Chorizema.cordatum.1.jpg",
+      flower_id => 72,
+      id => 181,
+      sequence => 1
+    },
+    {
+      description => "Leaf",
+      file_name => "Chorizema.cordatum.2.jpg",
+      flower_id => 72,
+      id => 182,
+      sequence => 2
+    }
+  ],
+  notes => [
+    {
+      flower_id => 72,
+      id => 345,
+      note => "Provides a profusion of brilliant orange-red flowers from Winter to Summer",
+      sequence => 1
+    },
+    {
+      flower_id => 72,
+      id => 346,
+      note => "Scrambling, evergreen shrub with leathery, heart-shaped leaves",
+      sequence => 2
+    },
+    {
+      flower_id => 72,
+      id => 347,
+      note => "Easy-to-grow ornamental shrub for gardens or containers",
+      sequence => 3
+    },
+    {
+      flower_id => 72,
+      id => 348,
+      note => "Also acts as a climber if given support",
+      sequence => 4
+    },
+    {
+      flower_id => 72,
+      id => 349,
+      note => "Grows well in a partly-shaded position in moist, well-drained soil",
+      sequence => 5
+    },
+    {
+      flower_id => 72,
+      id => 350,
+      note => "Prune after flowering to maintain compact growth",
+      sequence => 6
+    },
+    {
+      flower_id => 72,
+      id => 351,
+      note => "Cultivate soil before planting. Dig hole twice the width of the container",
+      sequence => 7
+    },
+    {
+      flower_id => 72,
+      id => 352,
+      note => "Remove plant from container and place into the hole so the soil level is the same as the surrounding ground",
+      sequence => 8
+    },
+    {
+      flower_id => 72,
+      id => 353,
+      note => "Fill hole firmly and water in well even if the soil is moist",
+      sequence => 9
+    },
+    {
+      flower_id => 72,
+      id => 354,
+      note => "norwood \x{a9}",
+      sequence => 10
+    },
+    {
+      flower_id => 72,
+      id => 355,
+      note => "Supplier: Kuranga Native Nursery",
+      sequence => 11
+    },
+    {
+      flower_id => 72,
+      id => 356,
+      note => "Status: Defunct",
+      sequence => 12
+    }
+  ],
+  pig_latin => "Chorizema.cordatum",
+  scientific_name => "Chorizema cordatum",
+  thumbnail_url => "http://savage.net.au/Flowers/images/Chorizema.cordatum.0.jpg",
+  urls => [
+    {
+      flower_id => 72,
+      id => 87,
+      sequence => 1,
+      url => "https://en.wikipedia.org/wiki/Chorizema_cordatum"
+    }
+  ],
+  web_page_url => "http://savage.net.au/Flowers/Chorizema.cordatum.html",
+  width => "1-2m"
+}
+
+[Thu Dec 22 15:35:28 2016] [info] Match count: 5
+[Thu Dec 22 15:35:28 2016] [info] Search result: [
+  {
+    aliases => "'Goldfever'",
+    attributes => [
+      {
+        attribute_type_id => 3,
+        flower_id => 82,
+        id => 325,
+        name => "edible",
+        sequence => 30,
+        values => ""
+      },
+      {
+        attribute_type_id => 4,
+        flower_id => 82,
+        id => 326,
+        name => "habit",
+        sequence => 40,
+        values => ""
+      },
+      {
+        attribute_type_id => 1,
+        flower_id => 82,
+        id => 327,
+        name => "native",
+        sequence => 10,
+        values => "Yes"
+      },
+      {
+        attribute_type_id => 2,
+        flower_id => 82,
+        id => 328,
+        name => "sun_tolerance",
+        sequence => 20,
+        values => ""
+      }
+    ],
+    common_name => "Grevillea 1",
+    height => "",
+    hxw => "N/A",
+    id => 82,
+    pig_latin => "Grevillea.1",
+    scientific_name => "Grevillea",
+    thumbnail_url => "http://savage.net.au/Flowers/images/Grevillea.1.0.jpg",
+    width => ""
+  },
+  {
+    aliases => "Lady 'O'",
+    attributes => [
+      {
+        attribute_type_id => 3,
+        flower_id => 83,
+        id => 329,
+        name => "edible",
+        sequence => 30,
+        values => ""
+      },
+      {
+        attribute_type_id => 4,
+        flower_id => 83,
+        id => 330,
+        name => "habit",
+        sequence => 40,
+        values => ""
+      },
+      {
+        attribute_type_id => 1,
+        flower_id => 83,
+        id => 331,
+        name => "native",
+        sequence => 10,
+        values => "Yes"
+      },
+      {
+        attribute_type_id => 2,
+        flower_id => 83,
+        id => 332,
+        name => "sun_tolerance",
+        sequence => 20,
+        values => ""
+      }
+    ],
+    common_name => "Grevillea 2",
+    height => "",
+    hxw => "N/A",
+    id => 83,
+    pig_latin => "Grevillea.2",
+    scientific_name => "Grevillea",
+    thumbnail_url => "http://savage.net.au/Flowers/images/Grevillea.2.0.jpg",
+    width => ""
+  },
+  {
+    aliases => "'Lemon Daze'",
+    attributes => [
+      {
+        attribute_type_id => 3,
+        flower_id => 84,
+        id => 333,
+        name => "edible",
+        sequence => 30,
+        values => ""
+      },
+      {
+        attribute_type_id => 4,
+        flower_id => 84,
+        id => 334,
+        name => "habit",
+        sequence => 40,
+        values => ""
+      },
+      {
+        attribute_type_id => 1,
+        flower_id => 84,
+        id => 335,
+        name => "native",
+        sequence => 10,
+        values => "Yes"
+      },
+      {
+        attribute_type_id => 2,
+        flower_id => 84,
+        id => 336,
+        name => "sun_tolerance",
+        sequence => 20,
+        values => ""
+      }
+    ],
+    common_name => "Grevillea 3",
+    height => "",
+    hxw => "N/A",
+    id => 84,
+    pig_latin => "Grevillea.3",
+    scientific_name => "Grevillea",
+    thumbnail_url => "http://savage.net.au/Flowers/images/Grevillea.3.0.jpg",
+    width => ""
+  },
+  {
+    aliases => "'Fireworks'",
+    attributes => [
+      {
+        attribute_type_id => 3,
+        flower_id => 85,
+        id => 337,
+        name => "edible",
+        sequence => 30,
+        values => ""
+      },
+      {
+        attribute_type_id => 4,
+        flower_id => 85,
+        id => 338,
+        name => "habit",
+        sequence => 40,
+        values => ""
+      },
+      {
+        attribute_type_id => 1,
+        flower_id => 85,
+        id => 339,
+        name => "native",
+        sequence => 10,
+        values => "Yes"
+      },
+      {
+        attribute_type_id => 2,
+        flower_id => 85,
+        id => 340,
+        name => "sun_tolerance",
+        sequence => 20,
+        values => ""
+      }
+    ],
+    common_name => "Grevillea 4",
+    height => "",
+    hxw => "N/A",
+    id => 85,
+    pig_latin => "Grevillea.4",
+    scientific_name => "Grevillea",
+    thumbnail_url => "http://savage.net.au/Flowers/images/Grevillea.4.0.jpg",
+    width => ""
+  },
+  {
+    aliases => "Honeyeater Heaven",
+    attributes => [
+      {
+        attribute_type_id => 3,
+        flower_id => 86,
+        id => 341,
+        name => "edible",
+        sequence => 30,
+        values => ""
+      },
+      {
+        attribute_type_id => 4,
+        flower_id => 86,
+        id => 342,
+        name => "habit",
+        sequence => 40,
+        values => ""
+      },
+      {
+        attribute_type_id => 1,
+        flower_id => 86,
+        id => 343,
+        name => "native",
+        sequence => 10,
+        values => "Yes"
+      },
+      {
+        attribute_type_id => 2,
+        flower_id => 86,
+        id => 344,
+        name => "sun_tolerance",
+        sequence => 20,
+        values => ""
+      }
+    ],
+    common_name => "Grevillea 5",
+    height => "",
+    hxw => "N/A",
+    id => 86,
+    pig_latin => "Grevillea.lanigera",
+    scientific_name => "Grevillea lanigera",
+    thumbnail_url => "http://savage.net.au/Flowers/images/Grevillea.lanigera.0.jpg",
+    width => ""
+  }
+]
+
+[Thu Dec 22 15:35:28 2016] [debug] Rendering template "search/search.html.ep"
+[Thu Dec 22 15:35:28 2016] [debug] 200 OK (0.261884s, 3.818/s)
+[Thu Dec 22 15:35:31 2016] [info] ------------------------------
+[Thu Dec 22 15:35:31 2016] [debug] POST "/GetFlower"
+[Thu Dec 22 15:35:31 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlower" and action "display"
+[Thu Dec 22 15:35:31 2016] [debug] display(flower_id => 82)
+[Thu Dec 22 15:35:31 2016] [info] read_flower_by_id: {
+  aliases => "'Goldfever'",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 82,
+      id => 325,
+      name => "edible",
+      sequence => 30,
+      values => ""
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 82,
+      id => 326,
+      name => "habit",
+      sequence => 40,
+      values => ""
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 82,
+      id => 327,
+      name => "native",
+      sequence => 10,
+      values => "Yes"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 82,
+      id => 328,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => ""
+    }
+  ],
+  common_name => "Grevillea 1",
+  flower_locations => [
+    {
+      flower_id => 82,
+      garden_id => 2,
+      id => 124,
+      x => 10,
+      y => 27
+    }
+  ],
+  height => "",
+  id => 82,
+  images => [
+    {
+      description => "Flower",
+      file_name => "Grevillea.1.2.jpg",
+      flower_id => 82,
+      id => 208,
+      sequence => 1
+    },
+    {
+      description => "Leaf",
+      file_name => "Grevillea.1.3.jpg",
+      flower_id => 82,
+      id => 209,
+      sequence => 2
+    }
+  ],
+  notes => [
+    {
+      flower_id => 82,
+      id => 386,
+      note => "See also <a href = '/Flowers/Grevillea.Lemondaze.html'>Grevillea 'Lemon Daze'</a>",
+      sequence => 1
+    },
+    {
+      flower_id => 82,
+      id => 387,
+      note => "See also <a href = '/Flowers/Grevillea.Lady.O.html'>Grevillea Lady 'O'</a>",
+      sequence => 2
+    }
+  ],
+  pig_latin => "Grevillea.1",
+  scientific_name => "Grevillea",
+  urls => [
+    {
+      flower_id => 82,
+      id => 97,
+      sequence => 1,
+      url => "bywongnursery.com.au"
+    },
+    {
+      flower_id => 82,
+      id => 98,
+      sequence => 2,
+      url => "https://en.wikipedia.org/wiki/List_of_Grevillea_species"
+    }
+  ],
+  width => ""
+}
+
+[Thu Dec 22 15:35:31 2016] [debug] 200 OK (0.01333s, 75.019/s)
+[Thu Dec 22 15:35:35 2016] [info] ------------------------------
+[Thu Dec 22 15:35:35 2016] [debug] POST "/GetFlower"
+[Thu Dec 22 15:35:35 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlower" and action "display"
+[Thu Dec 22 15:35:35 2016] [debug] display(flower_id => 86)
+[Thu Dec 22 15:35:35 2016] [info] read_flower_by_id: {
+  aliases => "Honeyeater Heaven",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 86,
+      id => 341,
+      name => "edible",
+      sequence => 30,
+      values => ""
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 86,
+      id => 342,
+      name => "habit",
+      sequence => 40,
+      values => ""
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 86,
+      id => 343,
+      name => "native",
+      sequence => 10,
+      values => "Yes"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 86,
+      id => 344,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => ""
+    }
+  ],
+  common_name => "Grevillea 5",
+  flower_locations => [
+    {
+      flower_id => 86,
+      garden_id => 1,
+      id => 128,
+      x => 11,
+      y => 64
+    }
+  ],
+  height => "",
+  id => 86,
+  images => [
+    {
+      description => "Flowers",
+      file_name => "Grevillea.lanigera.1.jpg",
+      flower_id => 86,
+      id => 216,
+      sequence => 1
+    },
+    {
+      description => "Young plant",
+      file_name => "Grevillea.lanigera.2.jpg",
+      flower_id => 86,
+      id => 217,
+      sequence => 2
+    }
+  ],
+  notes => [
+    {
+      flower_id => 86,
+      id => 407,
+      note => "A compact evergreen shrub to 80cm high which bears an adundance of red and white flowers through Winter",
+      sequence => 1
+    },
+    {
+      flower_id => 86,
+      id => 408,
+      note => "It provides an excellent food source for honeyeaters and native bird life",
+      sequence => 2
+    },
+    {
+      flower_id => 86,
+      id => 409,
+      note => "It makes for a perfect low hedge, in gardens, rockeries or as a container specimen",
+      sequence => 3
+    },
+    {
+      flower_id => 86,
+      id => 410,
+      note => "Full sun. It is hardy in most well-drained soils. Frost tolerant",
+      sequence => 4
+    },
+    {
+      flower_id => 86,
+      id => 411,
+      note => "Supplier: Pinewood Nursery",
+      sequence => 5
+    },
+    {
+      flower_id => 86,
+      id => 412,
+      note => "See also <a href = '/Flowers/Grevillea.Fireworks.html'>Fireworks</a>",
+      sequence => 6
+    }
+  ],
+  pig_latin => "Grevillea.lanigera",
+  scientific_name => "Grevillea lanigera",
+  urls => [
+    {
+      flower_id => 86,
+      id => 104,
+      sequence => 1,
+      url => "https://en.wikipedia.org/wiki/List_of_Grevillea_species"
+    }
+  ],
+  width => ""
+}
+
+[Thu Dec 22 15:35:35 2016] [debug] 200 OK (0.006248s, 160.051/s)
+[Thu Dec 22 15:35:50 2016] [info] ------------------------------
+[Thu Dec 22 15:35:50 2016] [debug] POST "/GetFlower"
+[Thu Dec 22 15:35:50 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlower" and action "display"
+[Thu Dec 22 15:35:50 2016] [debug] display(flower_id => 85)
+[Thu Dec 22 15:35:50 2016] [info] read_flower_by_id: {
+  aliases => "'Fireworks'",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 85,
+      id => 337,
+      name => "edible",
+      sequence => 30,
+      values => ""
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 85,
+      id => 338,
+      name => "habit",
+      sequence => 40,
+      values => ""
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 85,
+      id => 339,
+      name => "native",
+      sequence => 10,
+      values => "Yes"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 85,
+      id => 340,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => ""
+    }
+  ],
+  common_name => "Grevillea 4",
+  flower_locations => [
+    {
+      flower_id => 85,
+      garden_id => 1,
+      id => 127,
+      x => 12,
+      y => 64
+    }
+  ],
+  height => "",
+  id => 85,
+  images => [
+    {
+      description => "Buds",
+      file_name => "Grevillea.4.1.jpg",
+      flower_id => 85,
+      id => 213,
+      sequence => 2
+    },
+    {
+      description => "Flowers",
+      file_name => "Grevillea.4.2.jpg",
+      flower_id => 85,
+      id => 214,
+      sequence => 3
+    },
+    {
+      description => "Young plant",
+      file_name => "Grevillea.4.3.jpg",
+      flower_id => 85,
+      id => 215,
+      sequence => 4
+    }
+  ],
+  notes => [
+    {
+      flower_id => 85,
+      id => 399,
+      note => "A cross between Grevillea 'Scarlet Sprite' and Grevillea alpina",
+      sequence => 1
+    },
+    {
+      flower_id => 85,
+      id => 400,
+      note => "'Fireworks' is a small to medium shrub, approximately 1m tall",
+      sequence => 2
+    },
+    {
+      flower_id => 85,
+      id => 401,
+      note => "It has bright red and yellow flowers and soft grey/green foliage",
+      sequence => 3
+    },
+    {
+      flower_id => 85,
+      id => 402,
+      note => "Flowers occur on the ends of short branches, and an explosion of colour is seen from Autumn to Spring",
+      sequence => 4
+    },
+    {
+      flower_id => 85,
+      id => 403,
+      note => "Plants are both frost and drought tolerant and are useful for attracting birds to your garden",
+      sequence => 5
+    },
+    {
+      flower_id => 85,
+      id => 404,
+      note => "HeightxWidth: 1m x 75cm",
+      sequence => 6
+    },
+    {
+      flower_id => 85,
+      id => 405,
+      note => "Supplier: Pinewood Nursery",
+      sequence => 7
+    },
+    {
+      flower_id => 85,
+      id => 406,
+      note => "See also <a href = '/Flowers/Grevillea.lanigera.html'>Honeyeater Heaven</a>",
+      sequence => 8
+    }
+  ],
+  pig_latin => "Grevillea.4",
+  scientific_name => "Grevillea",
+  urls => [
+    {
+      flower_id => 85,
+      id => 102,
+      sequence => 1,
+      url => "http://bywongnursery.com.au/index35be.html?page=shop.product_details&flypage=shop.flypage&product_id=53&category_id=6&manufacturer_id=0&option=com_virtuemart&Itemid=28"
+    },
+    {
+      flower_id => 85,
+      id => 103,
+      sequence => 1,
+      url => "https://en.wikipedia.org/wiki/List_of_Grevillea_species"
+    }
+  ],
+  width => ""
+}
+
+[Thu Dec 22 15:35:50 2016] [debug] 200 OK (0.007654s, 130.651/s)
+[Thu Dec 22 15:35:55 2016] [info] ------------------------------
+[Thu Dec 22 15:35:55 2016] [debug] POST "/GetFlower"
+[Thu Dec 22 15:35:55 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlower" and action "display"
+[Thu Dec 22 15:35:55 2016] [debug] display(flower_id => 84)
+[Thu Dec 22 15:35:55 2016] [info] read_flower_by_id: {
+  aliases => "'Lemon Daze'",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 84,
+      id => 333,
+      name => "edible",
+      sequence => 30,
+      values => ""
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 84,
+      id => 334,
+      name => "habit",
+      sequence => 40,
+      values => ""
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 84,
+      id => 335,
+      name => "native",
+      sequence => 10,
+      values => "Yes"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 84,
+      id => 336,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => ""
+    }
+  ],
+  common_name => "Grevillea 3",
+  flower_locations => [
+    {
+      flower_id => 84,
+      garden_id => 2,
+      id => 126,
+      x => 2,
+      y => 32
+    }
+  ],
+  height => "",
+  id => 84,
+  images => [
+    {
+      description => "Flower",
+      file_name => "Grevillea.3.2.jpg",
+      flower_id => 84,
+      id => 211,
+      sequence => 1
+    },
+    {
+      description => "Leaf",
+      file_name => "Grevillea.3.3.jpg",
+      flower_id => 84,
+      id => 212,
+      sequence => 2
+    }
+  ],
+  notes => [
+    {
+      flower_id => 84,
+      id => 397,
+      note => "See also <a href = '/Flowers/Grevillea.Goldfever.html'>Grevillea 'Goldfever'</a>",
+      sequence => 1
+    },
+    {
+      flower_id => 84,
+      id => 398,
+      note => "See also <a href = '/Flowers/Grevillea.Lady.O.html'>Grevillea Lady 'O'</a>",
+      sequence => 2
+    }
+  ],
+  pig_latin => "Grevillea.3",
+  scientific_name => "Grevillea",
+  urls => [
+    {
+      flower_id => 84,
+      id => 100,
+      sequence => 1,
+      url => "bywongnursery.com.au"
+    },
+    {
+      flower_id => 84,
+      id => 101,
+      sequence => 2,
+      url => "https://en.wikipedia.org/wiki/List_of_Grevillea_species"
+    }
+  ],
+  width => ""
+}
+
+[Thu Dec 22 15:35:55 2016] [debug] 200 OK (0.005789s, 172.741/s)
+[Thu Dec 22 15:36:00 2016] [info] ------------------------------
+[Thu Dec 22 15:36:00 2016] [debug] POST "/GetFlower"
+[Thu Dec 22 15:36:00 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlower" and action "display"
+[Thu Dec 22 15:36:00 2016] [debug] display(flower_id => 83)
+[Thu Dec 22 15:36:00 2016] [info] read_flower_by_id: {
+  aliases => "Lady 'O'",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 83,
+      id => 329,
+      name => "edible",
+      sequence => 30,
+      values => ""
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 83,
+      id => 330,
+      name => "habit",
+      sequence => 40,
+      values => ""
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 83,
+      id => 331,
+      name => "native",
+      sequence => 10,
+      values => "Yes"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 83,
+      id => 332,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => ""
+    }
+  ],
+  common_name => "Grevillea 2",
+  flower_locations => [
+    {
+      flower_id => 83,
+      garden_id => 1,
+      id => 125,
+      x => 10,
+      y => 65
+    }
+  ],
+  height => "",
+  id => 83,
+  images => [
+    {
+      description => "Very young plant",
+      file_name => "Grevillea.2.1.jpg",
+      flower_id => 83,
+      id => 210,
+      sequence => 1
+    }
+  ],
+  notes => [
+    {
+      flower_id => 83,
+      id => 388,
+      note => "This is a medium-sized spreading shrub bearing a host of bright red flowers",
+      sequence => 1
+    },
+    {
+      flower_id => 83,
+      id => 389,
+      note => "Under mild conditions plants can flower all year round",
+      sequence => 2
+    },
+    {
+      flower_id => 83,
+      id => 390,
+      note => "Attracts nectar-feeding birds",
+      sequence => 3
+    },
+    {
+      flower_id => 83,
+      id => 391,
+      note => "Responds well to regular pruning",
+      sequence => 4
+    },
+    {
+      flower_id => 83,
+      id => 392,
+      note => "Feed with a low phosphorous fertilizer",
+      sequence => 5
+    },
+    {
+      flower_id => 83,
+      id => 393,
+      note => "Height: 1 - 1.5m. Width: 1.5 - 2m",
+      sequence => 6
+    },
+    {
+      flower_id => 83,
+      id => 394,
+      note => "Full sun. Part shade. Great for pots. Long flowering",
+      sequence => 7
+    },
+    {
+      flower_id => 83,
+      id => 395,
+      note => "See also <a href = '/Flowers/Grevillea.Goldfever.html'>Grevillea 'Goldfever'</a>",
+      sequence => 8
+    },
+    {
+      flower_id => 83,
+      id => 396,
+      note => "See also <a href = '/Flowers/Grevillea.Lemondaze.html'>Grevillea 'Lemon Daze'</a>",
+      sequence => 9
+    }
+  ],
+  pig_latin => "Grevillea.2",
+  scientific_name => "Grevillea",
+  urls => [
+    {
+      flower_id => 83,
+      id => 99,
+      sequence => 1,
+      url => "https://en.wikipedia.org/wiki/List_of_Grevillea_species"
+    }
+  ],
+  width => ""
+}
+
+[Thu Dec 22 15:36:00 2016] [debug] 200 OK (0.011575s, 86.393/s)
+[Thu Dec 22 15:36:03 2016] [info] ------------------------------
+[Thu Dec 22 15:36:03 2016] [debug] POST "/GetFlower"
+[Thu Dec 22 15:36:03 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlower" and action "display"
+[Thu Dec 22 15:36:03 2016] [debug] display(flower_id => 82)
+[Thu Dec 22 15:36:03 2016] [info] read_flower_by_id: {
+  aliases => "'Goldfever'",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 82,
+      id => 325,
+      name => "edible",
+      sequence => 30,
+      values => ""
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 82,
+      id => 326,
+      name => "habit",
+      sequence => 40,
+      values => ""
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 82,
+      id => 327,
+      name => "native",
+      sequence => 10,
+      values => "Yes"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 82,
+      id => 328,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => ""
+    }
+  ],
+  common_name => "Grevillea 1",
+  flower_locations => [
+    {
+      flower_id => 82,
+      garden_id => 2,
+      id => 124,
+      x => 10,
+      y => 27
+    }
+  ],
+  height => "",
+  id => 82,
+  images => [
+    {
+      description => "Flower",
+      file_name => "Grevillea.1.2.jpg",
+      flower_id => 82,
+      id => 208,
+      sequence => 1
+    },
+    {
+      description => "Leaf",
+      file_name => "Grevillea.1.3.jpg",
+      flower_id => 82,
+      id => 209,
+      sequence => 2
+    }
+  ],
+  notes => [
+    {
+      flower_id => 82,
+      id => 386,
+      note => "See also <a href = '/Flowers/Grevillea.Lemondaze.html'>Grevillea 'Lemon Daze'</a>",
+      sequence => 1
+    },
+    {
+      flower_id => 82,
+      id => 387,
+      note => "See also <a href = '/Flowers/Grevillea.Lady.O.html'>Grevillea Lady 'O'</a>",
+      sequence => 2
+    }
+  ],
+  pig_latin => "Grevillea.1",
+  scientific_name => "Grevillea",
+  urls => [
+    {
+      flower_id => 82,
+      id => 97,
+      sequence => 1,
+      url => "bywongnursery.com.au"
+    },
+    {
+      flower_id => 82,
+      id => 98,
+      sequence => 2,
+      url => "https://en.wikipedia.org/wiki/List_of_Grevillea_species"
+    }
+  ],
+  width => ""
+}
+
+[Thu Dec 22 15:36:03 2016] [debug] 200 OK (0.006235s, 160.385/s)
+[Thu Dec 22 15:36:07 2016] [info] ------------------------------
+[Thu Dec 22 15:36:07 2016] [debug] POST "/GetFlower"
+[Thu Dec 22 15:36:07 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlower" and action "display"
+[Thu Dec 22 15:36:07 2016] [debug] display(flower_id => 86)
+[Thu Dec 22 15:36:07 2016] [info] read_flower_by_id: {
+  aliases => "Honeyeater Heaven",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 86,
+      id => 341,
+      name => "edible",
+      sequence => 30,
+      values => ""
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 86,
+      id => 342,
+      name => "habit",
+      sequence => 40,
+      values => ""
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 86,
+      id => 343,
+      name => "native",
+      sequence => 10,
+      values => "Yes"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 86,
+      id => 344,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => ""
+    }
+  ],
+  common_name => "Grevillea 5",
+  flower_locations => [
+    {
+      flower_id => 86,
+      garden_id => 1,
+      id => 128,
+      x => 11,
+      y => 64
+    }
+  ],
+  height => "",
+  id => 86,
+  images => [
+    {
+      description => "Flowers",
+      file_name => "Grevillea.lanigera.1.jpg",
+      flower_id => 86,
+      id => 216,
+      sequence => 1
+    },
+    {
+      description => "Young plant",
+      file_name => "Grevillea.lanigera.2.jpg",
+      flower_id => 86,
+      id => 217,
+      sequence => 2
+    }
+  ],
+  notes => [
+    {
+      flower_id => 86,
+      id => 407,
+      note => "A compact evergreen shrub to 80cm high which bears an adundance of red and white flowers through Winter",
+      sequence => 1
+    },
+    {
+      flower_id => 86,
+      id => 408,
+      note => "It provides an excellent food source for honeyeaters and native bird life",
+      sequence => 2
+    },
+    {
+      flower_id => 86,
+      id => 409,
+      note => "It makes for a perfect low hedge, in gardens, rockeries or as a container specimen",
+      sequence => 3
+    },
+    {
+      flower_id => 86,
+      id => 410,
+      note => "Full sun. It is hardy in most well-drained soils. Frost tolerant",
+      sequence => 4
+    },
+    {
+      flower_id => 86,
+      id => 411,
+      note => "Supplier: Pinewood Nursery",
+      sequence => 5
+    },
+    {
+      flower_id => 86,
+      id => 412,
+      note => "See also <a href = '/Flowers/Grevillea.Fireworks.html'>Fireworks</a>",
+      sequence => 6
+    }
+  ],
+  pig_latin => "Grevillea.lanigera",
+  scientific_name => "Grevillea lanigera",
+  urls => [
+    {
+      flower_id => 86,
+      id => 104,
+      sequence => 1,
+      url => "https://en.wikipedia.org/wiki/List_of_Grevillea_species"
+    }
+  ],
+  width => ""
+}
+
+[Thu Dec 22 15:36:07 2016] [debug] 200 OK (0.005822s, 171.762/s)
+[Thu Dec 22 15:36:22 2016] [info] ------------------------------
+[Thu Dec 22 15:36:22 2016] [debug] POST "/GetFlower"
+[Thu Dec 22 15:36:22 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlower" and action "display"
+[Thu Dec 22 15:36:22 2016] [debug] display(flower_id => 86)
+[Thu Dec 22 15:36:22 2016] [info] read_flower_by_id: {
+  aliases => "Honeyeater Heaven",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 86,
+      id => 341,
+      name => "edible",
+      sequence => 30,
+      values => ""
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 86,
+      id => 342,
+      name => "habit",
+      sequence => 40,
+      values => ""
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 86,
+      id => 343,
+      name => "native",
+      sequence => 10,
+      values => "Yes"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 86,
+      id => 344,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => ""
+    }
+  ],
+  common_name => "Grevillea 5",
+  flower_locations => [
+    {
+      flower_id => 86,
+      garden_id => 1,
+      id => 128,
+      x => 11,
+      y => 64
+    }
+  ],
+  height => "",
+  id => 86,
+  images => [
+    {
+      description => "Flowers",
+      file_name => "Grevillea.lanigera.1.jpg",
+      flower_id => 86,
+      id => 216,
+      sequence => 1
+    },
+    {
+      description => "Young plant",
+      file_name => "Grevillea.lanigera.2.jpg",
+      flower_id => 86,
+      id => 217,
+      sequence => 2
+    }
+  ],
+  notes => [
+    {
+      flower_id => 86,
+      id => 407,
+      note => "A compact evergreen shrub to 80cm high which bears an adundance of red and white flowers through Winter",
+      sequence => 1
+    },
+    {
+      flower_id => 86,
+      id => 408,
+      note => "It provides an excellent food source for honeyeaters and native bird life",
+      sequence => 2
+    },
+    {
+      flower_id => 86,
+      id => 409,
+      note => "It makes for a perfect low hedge, in gardens, rockeries or as a container specimen",
+      sequence => 3
+    },
+    {
+      flower_id => 86,
+      id => 410,
+      note => "Full sun. It is hardy in most well-drained soils. Frost tolerant",
+      sequence => 4
+    },
+    {
+      flower_id => 86,
+      id => 411,
+      note => "Supplier: Pinewood Nursery",
+      sequence => 5
+    },
+    {
+      flower_id => 86,
+      id => 412,
+      note => "See also <a href = '/Flowers/Grevillea.Fireworks.html'>Fireworks</a>",
+      sequence => 6
+    }
+  ],
+  pig_latin => "Grevillea.lanigera",
+  scientific_name => "Grevillea lanigera",
+  urls => [
+    {
+      flower_id => 86,
+      id => 104,
+      sequence => 1,
+      url => "https://en.wikipedia.org/wiki/List_of_Grevillea_species"
+    }
+  ],
+  width => ""
+}
+
+[Thu Dec 22 15:36:22 2016] [debug] 200 OK (0.010797s, 92.618/s)
+[Thu Dec 22 15:36:31 2016] [info] ------------------------------
+[Thu Dec 22 15:36:31 2016] [debug] POST "/GetFlower"
+[Thu Dec 22 15:36:31 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlower" and action "display"
+[Thu Dec 22 15:36:31 2016] [debug] display(flower_id => 82)
+[Thu Dec 22 15:36:31 2016] [info] read_flower_by_id: {
+  aliases => "'Goldfever'",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 82,
+      id => 325,
+      name => "edible",
+      sequence => 30,
+      values => ""
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 82,
+      id => 326,
+      name => "habit",
+      sequence => 40,
+      values => ""
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 82,
+      id => 327,
+      name => "native",
+      sequence => 10,
+      values => "Yes"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 82,
+      id => 328,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => ""
+    }
+  ],
+  common_name => "Grevillea 1",
+  flower_locations => [
+    {
+      flower_id => 82,
+      garden_id => 2,
+      id => 124,
+      x => 10,
+      y => 27
+    }
+  ],
+  height => "",
+  id => 82,
+  images => [
+    {
+      description => "Flower",
+      file_name => "Grevillea.1.2.jpg",
+      flower_id => 82,
+      id => 208,
+      sequence => 1
+    },
+    {
+      description => "Leaf",
+      file_name => "Grevillea.1.3.jpg",
+      flower_id => 82,
+      id => 209,
+      sequence => 2
+    }
+  ],
+  notes => [
+    {
+      flower_id => 82,
+      id => 386,
+      note => "See also <a href = '/Flowers/Grevillea.Lemondaze.html'>Grevillea 'Lemon Daze'</a>",
+      sequence => 1
+    },
+    {
+      flower_id => 82,
+      id => 387,
+      note => "See also <a href = '/Flowers/Grevillea.Lady.O.html'>Grevillea Lady 'O'</a>",
+      sequence => 2
+    }
+  ],
+  pig_latin => "Grevillea.1",
+  scientific_name => "Grevillea",
+  urls => [
+    {
+      flower_id => 82,
+      id => 97,
+      sequence => 1,
+      url => "bywongnursery.com.au"
+    },
+    {
+      flower_id => 82,
+      id => 98,
+      sequence => 2,
+      url => "https://en.wikipedia.org/wiki/List_of_Grevillea_species"
+    }
+  ],
+  width => ""
+}
+
+[Thu Dec 22 15:36:31 2016] [debug] 200 OK (0.006488s, 154.131/s)
+[Thu Dec 22 15:36:34 2016] [info] ------------------------------
+[Thu Dec 22 15:36:34 2016] [debug] POST "/GetFlower"
+[Thu Dec 22 15:36:34 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlower" and action "display"
+[Thu Dec 22 15:36:34 2016] [debug] display(flower_id => 83)
+[Thu Dec 22 15:36:34 2016] [info] read_flower_by_id: {
+  aliases => "Lady 'O'",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 83,
+      id => 329,
+      name => "edible",
+      sequence => 30,
+      values => ""
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 83,
+      id => 330,
+      name => "habit",
+      sequence => 40,
+      values => ""
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 83,
+      id => 331,
+      name => "native",
+      sequence => 10,
+      values => "Yes"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 83,
+      id => 332,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => ""
+    }
+  ],
+  common_name => "Grevillea 2",
+  flower_locations => [
+    {
+      flower_id => 83,
+      garden_id => 1,
+      id => 125,
+      x => 10,
+      y => 65
+    }
+  ],
+  height => "",
+  id => 83,
+  images => [
+    {
+      description => "Very young plant",
+      file_name => "Grevillea.2.1.jpg",
+      flower_id => 83,
+      id => 210,
+      sequence => 1
+    }
+  ],
+  notes => [
+    {
+      flower_id => 83,
+      id => 388,
+      note => "This is a medium-sized spreading shrub bearing a host of bright red flowers",
+      sequence => 1
+    },
+    {
+      flower_id => 83,
+      id => 389,
+      note => "Under mild conditions plants can flower all year round",
+      sequence => 2
+    },
+    {
+      flower_id => 83,
+      id => 390,
+      note => "Attracts nectar-feeding birds",
+      sequence => 3
+    },
+    {
+      flower_id => 83,
+      id => 391,
+      note => "Responds well to regular pruning",
+      sequence => 4
+    },
+    {
+      flower_id => 83,
+      id => 392,
+      note => "Feed with a low phosphorous fertilizer",
+      sequence => 5
+    },
+    {
+      flower_id => 83,
+      id => 393,
+      note => "Height: 1 - 1.5m. Width: 1.5 - 2m",
+      sequence => 6
+    },
+    {
+      flower_id => 83,
+      id => 394,
+      note => "Full sun. Part shade. Great for pots. Long flowering",
+      sequence => 7
+    },
+    {
+      flower_id => 83,
+      id => 395,
+      note => "See also <a href = '/Flowers/Grevillea.Goldfever.html'>Grevillea 'Goldfever'</a>",
+      sequence => 8
+    },
+    {
+      flower_id => 83,
+      id => 396,
+      note => "See also <a href = '/Flowers/Grevillea.Lemondaze.html'>Grevillea 'Lemon Daze'</a>",
+      sequence => 9
+    }
+  ],
+  pig_latin => "Grevillea.2",
+  scientific_name => "Grevillea",
+  urls => [
+    {
+      flower_id => 83,
+      id => 99,
+      sequence => 1,
+      url => "https://en.wikipedia.org/wiki/List_of_Grevillea_species"
+    }
+  ],
+  width => ""
+}
+
+[Thu Dec 22 15:36:34 2016] [debug] 200 OK (0.006533s, 153.069/s)
+[Thu Dec 22 15:36:36 2016] [info] ------------------------------
+[Thu Dec 22 15:36:36 2016] [debug] POST "/GetFlower"
+[Thu Dec 22 15:36:36 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlower" and action "display"
+[Thu Dec 22 15:36:36 2016] [debug] display(flower_id => 84)
+[Thu Dec 22 15:36:36 2016] [info] read_flower_by_id: {
+  aliases => "'Lemon Daze'",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 84,
+      id => 333,
+      name => "edible",
+      sequence => 30,
+      values => ""
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 84,
+      id => 334,
+      name => "habit",
+      sequence => 40,
+      values => ""
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 84,
+      id => 335,
+      name => "native",
+      sequence => 10,
+      values => "Yes"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 84,
+      id => 336,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => ""
+    }
+  ],
+  common_name => "Grevillea 3",
+  flower_locations => [
+    {
+      flower_id => 84,
+      garden_id => 2,
+      id => 126,
+      x => 2,
+      y => 32
+    }
+  ],
+  height => "",
+  id => 84,
+  images => [
+    {
+      description => "Flower",
+      file_name => "Grevillea.3.2.jpg",
+      flower_id => 84,
+      id => 211,
+      sequence => 1
+    },
+    {
+      description => "Leaf",
+      file_name => "Grevillea.3.3.jpg",
+      flower_id => 84,
+      id => 212,
+      sequence => 2
+    }
+  ],
+  notes => [
+    {
+      flower_id => 84,
+      id => 397,
+      note => "See also <a href = '/Flowers/Grevillea.Goldfever.html'>Grevillea 'Goldfever'</a>",
+      sequence => 1
+    },
+    {
+      flower_id => 84,
+      id => 398,
+      note => "See also <a href = '/Flowers/Grevillea.Lady.O.html'>Grevillea Lady 'O'</a>",
+      sequence => 2
+    }
+  ],
+  pig_latin => "Grevillea.3",
+  scientific_name => "Grevillea",
+  urls => [
+    {
+      flower_id => 84,
+      id => 100,
+      sequence => 1,
+      url => "bywongnursery.com.au"
+    },
+    {
+      flower_id => 84,
+      id => 101,
+      sequence => 2,
+      url => "https://en.wikipedia.org/wiki/List_of_Grevillea_species"
+    }
+  ],
+  width => ""
+}
+
+[Thu Dec 22 15:36:36 2016] [debug] 200 OK (0.012291s, 81.360/s)
+[Thu Dec 22 15:36:39 2016] [info] ------------------------------
+[Thu Dec 22 15:36:39 2016] [debug] POST "/GetFlower"
+[Thu Dec 22 15:36:39 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlower" and action "display"
+[Thu Dec 22 15:36:39 2016] [debug] display(flower_id => 84)
+[Thu Dec 22 15:36:39 2016] [info] read_flower_by_id: {
+  aliases => "'Lemon Daze'",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 84,
+      id => 333,
+      name => "edible",
+      sequence => 30,
+      values => ""
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 84,
+      id => 334,
+      name => "habit",
+      sequence => 40,
+      values => ""
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 84,
+      id => 335,
+      name => "native",
+      sequence => 10,
+      values => "Yes"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 84,
+      id => 336,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => ""
+    }
+  ],
+  common_name => "Grevillea 3",
+  flower_locations => [
+    {
+      flower_id => 84,
+      garden_id => 2,
+      id => 126,
+      x => 2,
+      y => 32
+    }
+  ],
+  height => "",
+  id => 84,
+  images => [
+    {
+      description => "Flower",
+      file_name => "Grevillea.3.2.jpg",
+      flower_id => 84,
+      id => 211,
+      sequence => 1
+    },
+    {
+      description => "Leaf",
+      file_name => "Grevillea.3.3.jpg",
+      flower_id => 84,
+      id => 212,
+      sequence => 2
+    }
+  ],
+  notes => [
+    {
+      flower_id => 84,
+      id => 397,
+      note => "See also <a href = '/Flowers/Grevillea.Goldfever.html'>Grevillea 'Goldfever'</a>",
+      sequence => 1
+    },
+    {
+      flower_id => 84,
+      id => 398,
+      note => "See also <a href = '/Flowers/Grevillea.Lady.O.html'>Grevillea Lady 'O'</a>",
+      sequence => 2
+    }
+  ],
+  pig_latin => "Grevillea.3",
+  scientific_name => "Grevillea",
+  urls => [
+    {
+      flower_id => 84,
+      id => 100,
+      sequence => 1,
+      url => "bywongnursery.com.au"
+    },
+    {
+      flower_id => 84,
+      id => 101,
+      sequence => 2,
+      url => "https://en.wikipedia.org/wiki/List_of_Grevillea_species"
+    }
+  ],
+  width => ""
+}
+
+[Thu Dec 22 15:36:39 2016] [debug] 200 OK (0.005949s, 168.095/s)
+[Thu Dec 22 15:36:42 2016] [info] ------------------------------
+[Thu Dec 22 15:36:42 2016] [debug] POST "/GetFlower"
+[Thu Dec 22 15:36:42 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlower" and action "display"
+[Thu Dec 22 15:36:42 2016] [debug] display(flower_id => 85)
+[Thu Dec 22 15:36:42 2016] [info] read_flower_by_id: {
+  aliases => "'Fireworks'",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 85,
+      id => 337,
+      name => "edible",
+      sequence => 30,
+      values => ""
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 85,
+      id => 338,
+      name => "habit",
+      sequence => 40,
+      values => ""
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 85,
+      id => 339,
+      name => "native",
+      sequence => 10,
+      values => "Yes"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 85,
+      id => 340,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => ""
+    }
+  ],
+  common_name => "Grevillea 4",
+  flower_locations => [
+    {
+      flower_id => 85,
+      garden_id => 1,
+      id => 127,
+      x => 12,
+      y => 64
+    }
+  ],
+  height => "",
+  id => 85,
+  images => [
+    {
+      description => "Buds",
+      file_name => "Grevillea.4.1.jpg",
+      flower_id => 85,
+      id => 213,
+      sequence => 2
+    },
+    {
+      description => "Flowers",
+      file_name => "Grevillea.4.2.jpg",
+      flower_id => 85,
+      id => 214,
+      sequence => 3
+    },
+    {
+      description => "Young plant",
+      file_name => "Grevillea.4.3.jpg",
+      flower_id => 85,
+      id => 215,
+      sequence => 4
+    }
+  ],
+  notes => [
+    {
+      flower_id => 85,
+      id => 399,
+      note => "A cross between Grevillea 'Scarlet Sprite' and Grevillea alpina",
+      sequence => 1
+    },
+    {
+      flower_id => 85,
+      id => 400,
+      note => "'Fireworks' is a small to medium shrub, approximately 1m tall",
+      sequence => 2
+    },
+    {
+      flower_id => 85,
+      id => 401,
+      note => "It has bright red and yellow flowers and soft grey/green foliage",
+      sequence => 3
+    },
+    {
+      flower_id => 85,
+      id => 402,
+      note => "Flowers occur on the ends of short branches, and an explosion of colour is seen from Autumn to Spring",
+      sequence => 4
+    },
+    {
+      flower_id => 85,
+      id => 403,
+      note => "Plants are both frost and drought tolerant and are useful for attracting birds to your garden",
+      sequence => 5
+    },
+    {
+      flower_id => 85,
+      id => 404,
+      note => "HeightxWidth: 1m x 75cm",
+      sequence => 6
+    },
+    {
+      flower_id => 85,
+      id => 405,
+      note => "Supplier: Pinewood Nursery",
+      sequence => 7
+    },
+    {
+      flower_id => 85,
+      id => 406,
+      note => "See also <a href = '/Flowers/Grevillea.lanigera.html'>Honeyeater Heaven</a>",
+      sequence => 8
+    }
+  ],
+  pig_latin => "Grevillea.4",
+  scientific_name => "Grevillea",
+  urls => [
+    {
+      flower_id => 85,
+      id => 102,
+      sequence => 1,
+      url => "http://bywongnursery.com.au/index35be.html?page=shop.product_details&flypage=shop.flypage&product_id=53&category_id=6&manufacturer_id=0&option=com_virtuemart&Itemid=28"
+    },
+    {
+      flower_id => 85,
+      id => 103,
+      sequence => 1,
+      url => "https://en.wikipedia.org/wiki/List_of_Grevillea_species"
+    }
+  ],
+  width => ""
+}
+
+[Thu Dec 22 15:36:42 2016] [debug] 200 OK (0.007491s, 133.494/s)
+[Thu Dec 22 15:36:46 2016] [info] ------------------------------
+[Thu Dec 22 15:36:46 2016] [debug] POST "/GetFlower"
+[Thu Dec 22 15:36:46 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlower" and action "display"
+[Thu Dec 22 15:36:46 2016] [debug] display(flower_id => 86)
+[Thu Dec 22 15:36:46 2016] [info] read_flower_by_id: {
+  aliases => "Honeyeater Heaven",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 86,
+      id => 341,
+      name => "edible",
+      sequence => 30,
+      values => ""
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 86,
+      id => 342,
+      name => "habit",
+      sequence => 40,
+      values => ""
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 86,
+      id => 343,
+      name => "native",
+      sequence => 10,
+      values => "Yes"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 86,
+      id => 344,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => ""
+    }
+  ],
+  common_name => "Grevillea 5",
+  flower_locations => [
+    {
+      flower_id => 86,
+      garden_id => 1,
+      id => 128,
+      x => 11,
+      y => 64
+    }
+  ],
+  height => "",
+  id => 86,
+  images => [
+    {
+      description => "Flowers",
+      file_name => "Grevillea.lanigera.1.jpg",
+      flower_id => 86,
+      id => 216,
+      sequence => 1
+    },
+    {
+      description => "Young plant",
+      file_name => "Grevillea.lanigera.2.jpg",
+      flower_id => 86,
+      id => 217,
+      sequence => 2
+    }
+  ],
+  notes => [
+    {
+      flower_id => 86,
+      id => 407,
+      note => "A compact evergreen shrub to 80cm high which bears an adundance of red and white flowers through Winter",
+      sequence => 1
+    },
+    {
+      flower_id => 86,
+      id => 408,
+      note => "It provides an excellent food source for honeyeaters and native bird life",
+      sequence => 2
+    },
+    {
+      flower_id => 86,
+      id => 409,
+      note => "It makes for a perfect low hedge, in gardens, rockeries or as a container specimen",
+      sequence => 3
+    },
+    {
+      flower_id => 86,
+      id => 410,
+      note => "Full sun. It is hardy in most well-drained soils. Frost tolerant",
+      sequence => 4
+    },
+    {
+      flower_id => 86,
+      id => 411,
+      note => "Supplier: Pinewood Nursery",
+      sequence => 5
+    },
+    {
+      flower_id => 86,
+      id => 412,
+      note => "See also <a href = '/Flowers/Grevillea.Fireworks.html'>Fireworks</a>",
+      sequence => 6
+    }
+  ],
+  pig_latin => "Grevillea.lanigera",
+  scientific_name => "Grevillea lanigera",
+  urls => [
+    {
+      flower_id => 86,
+      id => 104,
+      sequence => 1,
+      url => "https://en.wikipedia.org/wiki/List_of_Grevillea_species"
+    }
+  ],
+  width => ""
+}
+
+[Thu Dec 22 15:36:46 2016] [debug] 200 OK (0.008254s, 121.153/s)
+[Thu Dec 22 15:36:49 2016] [info] ------------------------------
+[Thu Dec 22 15:36:49 2016] [debug] POST "/GetFlower"
+[Thu Dec 22 15:36:49 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlower" and action "display"
+[Thu Dec 22 15:36:49 2016] [debug] display(flower_id => 85)
+[Thu Dec 22 15:36:49 2016] [info] read_flower_by_id: {
+  aliases => "'Fireworks'",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 85,
+      id => 337,
+      name => "edible",
+      sequence => 30,
+      values => ""
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 85,
+      id => 338,
+      name => "habit",
+      sequence => 40,
+      values => ""
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 85,
+      id => 339,
+      name => "native",
+      sequence => 10,
+      values => "Yes"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 85,
+      id => 340,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => ""
+    }
+  ],
+  common_name => "Grevillea 4",
+  flower_locations => [
+    {
+      flower_id => 85,
+      garden_id => 1,
+      id => 127,
+      x => 12,
+      y => 64
+    }
+  ],
+  height => "",
+  id => 85,
+  images => [
+    {
+      description => "Buds",
+      file_name => "Grevillea.4.1.jpg",
+      flower_id => 85,
+      id => 213,
+      sequence => 2
+    },
+    {
+      description => "Flowers",
+      file_name => "Grevillea.4.2.jpg",
+      flower_id => 85,
+      id => 214,
+      sequence => 3
+    },
+    {
+      description => "Young plant",
+      file_name => "Grevillea.4.3.jpg",
+      flower_id => 85,
+      id => 215,
+      sequence => 4
+    }
+  ],
+  notes => [
+    {
+      flower_id => 85,
+      id => 399,
+      note => "A cross between Grevillea 'Scarlet Sprite' and Grevillea alpina",
+      sequence => 1
+    },
+    {
+      flower_id => 85,
+      id => 400,
+      note => "'Fireworks' is a small to medium shrub, approximately 1m tall",
+      sequence => 2
+    },
+    {
+      flower_id => 85,
+      id => 401,
+      note => "It has bright red and yellow flowers and soft grey/green foliage",
+      sequence => 3
+    },
+    {
+      flower_id => 85,
+      id => 402,
+      note => "Flowers occur on the ends of short branches, and an explosion of colour is seen from Autumn to Spring",
+      sequence => 4
+    },
+    {
+      flower_id => 85,
+      id => 403,
+      note => "Plants are both frost and drought tolerant and are useful for attracting birds to your garden",
+      sequence => 5
+    },
+    {
+      flower_id => 85,
+      id => 404,
+      note => "HeightxWidth: 1m x 75cm",
+      sequence => 6
+    },
+    {
+      flower_id => 85,
+      id => 405,
+      note => "Supplier: Pinewood Nursery",
+      sequence => 7
+    },
+    {
+      flower_id => 85,
+      id => 406,
+      note => "See also <a href = '/Flowers/Grevillea.lanigera.html'>Honeyeater Heaven</a>",
+      sequence => 8
+    }
+  ],
+  pig_latin => "Grevillea.4",
+  scientific_name => "Grevillea",
+  urls => [
+    {
+      flower_id => 85,
+      id => 102,
+      sequence => 1,
+      url => "http://bywongnursery.com.au/index35be.html?page=shop.product_details&flypage=shop.flypage&product_id=53&category_id=6&manufacturer_id=0&option=com_virtuemart&Itemid=28"
+    },
+    {
+      flower_id => 85,
+      id => 103,
+      sequence => 1,
+      url => "https://en.wikipedia.org/wiki/List_of_Grevillea_species"
+    }
+  ],
+  width => ""
+}
+
+[Thu Dec 22 15:36:49 2016] [debug] 200 OK (0.006448s, 155.087/s)
+[Thu Dec 22 15:37:03 2016] [info] ------------------------------
+[Thu Dec 22 15:37:03 2016] [debug] POST "/Search"
+[Thu Dec 22 15:37:03 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::Search" and action "search"
+[Thu Dec 22 15:37:03 2016] [debug] search(china)
+[Thu Dec 22 15:37:04 2016] [info] Flowers: {
+  aliases => "Heart-Leaf Flame Pea",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 72,
+      id => 285,
+      name => "edible",
+      sequence => 30,
+      values => "No"
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 72,
+      id => 286,
+      name => "habit",
+      sequence => 40,
+      values => "Small shrub"
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 72,
+      id => 287,
+      name => "native",
+      sequence => 10,
+      values => "Yes"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 72,
+      id => 288,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => "Part shade, Shade"
+    }
+  ],
+  common_name => "Flame pea 1",
+  flower_locations => [],
+  height => "1-2m",
+  hxw => "1-2m x 1-2m",
+  id => 72,
+  images => [
+    {
+      description => "One of the most beautiful flowers in the country",
+      file_name => "Chorizema.cordatum.1.jpg",
+      flower_id => 72,
+      id => 181,
+      sequence => 1
+    },
+    {
+      description => "Leaf",
+      file_name => "Chorizema.cordatum.2.jpg",
+      flower_id => 72,
+      id => 182,
+      sequence => 2
+    }
+  ],
+  notes => [
+    {
+      flower_id => 72,
+      id => 345,
+      note => "Provides a profusion of brilliant orange-red flowers from Winter to Summer",
+      sequence => 1
+    },
+    {
+      flower_id => 72,
+      id => 346,
+      note => "Scrambling, evergreen shrub with leathery, heart-shaped leaves",
+      sequence => 2
+    },
+    {
+      flower_id => 72,
+      id => 347,
+      note => "Easy-to-grow ornamental shrub for gardens or containers",
+      sequence => 3
+    },
+    {
+      flower_id => 72,
+      id => 348,
+      note => "Also acts as a climber if given support",
+      sequence => 4
+    },
+    {
+      flower_id => 72,
+      id => 349,
+      note => "Grows well in a partly-shaded position in moist, well-drained soil",
+      sequence => 5
+    },
+    {
+      flower_id => 72,
+      id => 350,
+      note => "Prune after flowering to maintain compact growth",
+      sequence => 6
+    },
+    {
+      flower_id => 72,
+      id => 351,
+      note => "Cultivate soil before planting. Dig hole twice the width of the container",
+      sequence => 7
+    },
+    {
+      flower_id => 72,
+      id => 352,
+      note => "Remove plant from container and place into the hole so the soil level is the same as the surrounding ground",
+      sequence => 8
+    },
+    {
+      flower_id => 72,
+      id => 353,
+      note => "Fill hole firmly and water in well even if the soil is moist",
+      sequence => 9
+    },
+    {
+      flower_id => 72,
+      id => 354,
+      note => "norwood \x{a9}",
+      sequence => 10
+    },
+    {
+      flower_id => 72,
+      id => 355,
+      note => "Supplier: Kuranga Native Nursery",
+      sequence => 11
+    },
+    {
+      flower_id => 72,
+      id => 356,
+      note => "Status: Defunct",
+      sequence => 12
+    }
+  ],
+  pig_latin => "Chorizema.cordatum",
+  scientific_name => "Chorizema cordatum",
+  thumbnail_url => "http://savage.net.au/Flowers/images/Chorizema.cordatum.0.jpg",
+  urls => [
+    {
+      flower_id => 72,
+      id => 87,
+      sequence => 1,
+      url => "https://en.wikipedia.org/wiki/Chorizema_cordatum"
+    }
+  ],
+  web_page_url => "http://savage.net.au/Flowers/Chorizema.cordatum.html",
+  width => "1-2m"
+}
+
+[Thu Dec 22 15:37:04 2016] [info] Match count: 2
+[Thu Dec 22 15:37:04 2016] [info] Search result: [
+  {
+    aliases => "Chinese witch hazel, 'China Pink'",
+    attributes => [
+      {
+        attribute_type_id => 3,
+        flower_id => 41,
+        id => 161,
+        name => "edible",
+        sequence => 30,
+        values => ""
+      },
+      {
+        attribute_type_id => 4,
+        flower_id => 41,
+        id => 162,
+        name => "habit",
+        sequence => 40,
+        values => ""
+      },
+      {
+        attribute_type_id => 1,
+        flower_id => 41,
+        id => 163,
+        name => "native",
+        sequence => 10,
+        values => "No"
+      },
+      {
+        attribute_type_id => 2,
+        flower_id => 41,
+        id => 164,
+        name => "sun_tolerance",
+        sequence => 20,
+        values => ""
+      }
+    ],
+    common_name => "Chinese fringe flower",
+    height => "",
+    hxw => "N/A",
+    id => 41,
+    pig_latin => "Loropetalum.chinense.var.rubrum",
+    scientific_name => "Loropetalum chinense var. rubrum",
+    thumbnail_url => "http://savage.net.au/Flowers/images/Loropetalum.chinense.var.rubrum.0.jpg",
+    width => ""
+  },
+  {
+    aliases => "Glory trees",
+    attributes => [
+      {
+        attribute_type_id => 3,
+        flower_id => 79,
+        id => 313,
+        name => "edible",
+        sequence => 30,
+        values => ""
+      },
+      {
+        attribute_type_id => 4,
+        flower_id => 79,
+        id => 314,
+        name => "habit",
+        sequence => 40,
+        values => ""
+      },
+      {
+        attribute_type_id => 1,
+        flower_id => 79,
+        id => 315,
+        name => "native",
+        sequence => 10,
+        values => "No"
+      },
+      {
+        attribute_type_id => 2,
+        flower_id => 79,
+        id => 316,
+        name => "sun_tolerance",
+        sequence => 20,
+        values => ""
+      }
+    ],
+    common_name => "Glory Bush",
+    height => "",
+    hxw => "N/A",
+    id => 79,
+    pig_latin => "Tibouchina.urvilleana",
+    scientific_name => "Tibouchina urvilleana",
+    thumbnail_url => "http://savage.net.au/Flowers/images/Tibouchina.urvilleana.0.jpg",
+    width => ""
+  }
+]
+
+[Thu Dec 22 15:37:04 2016] [debug] Rendering cached template "search/search.html.ep"
+[Thu Dec 22 15:37:04 2016] [debug] 200 OK (0.398896s, 2.507/s)
+[Thu Dec 22 15:37:06 2016] [info] ------------------------------
+[Thu Dec 22 15:37:06 2016] [debug] POST "/GetFlower"
+[Thu Dec 22 15:37:06 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlower" and action "display"
+[Thu Dec 22 15:37:06 2016] [debug] display(flower_id => 41)
+[Thu Dec 22 15:37:06 2016] [info] read_flower_by_id: {
+  aliases => "Chinese witch hazel, 'China Pink'",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 41,
+      id => 161,
+      name => "edible",
+      sequence => 30,
+      values => ""
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 41,
+      id => 162,
+      name => "habit",
+      sequence => 40,
+      values => ""
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 41,
+      id => 163,
+      name => "native",
+      sequence => 10,
+      values => "No"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 41,
+      id => 164,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => ""
+    }
+  ],
+  common_name => "Chinese fringe flower",
+  flower_locations => [
+    {
+      flower_id => 41,
+      garden_id => 2,
+      id => 43,
+      x => 3,
+      y => 31
+    },
+    {
+      flower_id => 41,
+      garden_id => 2,
+      id => 44,
+      x => 5,
+      y => 32
+    }
+  ],
+  height => "",
+  id => 41,
+  images => [
+    {
+      description => "Flower",
+      file_name => "Loropetalum.chinense.var.rubrum.1.jpg",
+      flower_id => 41,
+      id => 105,
+      sequence => 2
+    },
+    {
+      description => "Classic red, green<br />and bronze leaves",
+      file_name => "Loropetalum.chinense.var.rubrum.2.jpg",
+      flower_id => 41,
+      id => 106,
+      sequence => 3
+    }
+  ],
+  notes => [
+    {
+      flower_id => 41,
+      id => 209,
+      note => "Feeding: No",
+      sequence => 1
+    },
+    {
+      flower_id => 41,
+      id => 210,
+      note => "Pruning: No",
+      sequence => 2
+    },
+    {
+      flower_id => 41,
+      id => 211,
+      note => "See also <a href = '/Flowers/Loropetalum.chinense.purple.prince.html'>Chinese witch hazel</a>",
+      sequence => 3
+    }
+  ],
+  pig_latin => "Loropetalum.chinense.var.rubrum",
+  scientific_name => "Loropetalum chinense var. rubrum",
+  urls => [
+    {
+      flower_id => 41,
+      id => 58,
+      sequence => 1,
+      url => "pga.com.au"
+    },
+    {
+      flower_id => 41,
+      id => 59,
+      sequence => 2,
+      url => "https://en.wikipedia.org/wiki/Loropetalum_chinense"
+    },
+    {
+      flower_id => 41,
+      id => 60,
+      sequence => 3,
+      url => "http://floridata.com/Plants/Hamamelidaceae/Loropetalum%20chinense/201"
+    }
+  ],
+  width => ""
+}
+
+[Thu Dec 22 15:37:06 2016] [debug] 200 OK (0.015344s, 65.172/s)
+[Thu Dec 22 15:37:10 2016] [info] ------------------------------
+[Thu Dec 22 15:37:10 2016] [debug] POST "/GetFlower"
+[Thu Dec 22 15:37:10 2016] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlower" and action "display"
+[Thu Dec 22 15:37:10 2016] [debug] display(flower_id => 79)
+[Thu Dec 22 15:37:10 2016] [info] read_flower_by_id: {
+  aliases => "Glory trees",
+  attributes => [
+    {
+      attribute_type_id => 3,
+      flower_id => 79,
+      id => 313,
+      name => "edible",
+      sequence => 30,
+      values => ""
+    },
+    {
+      attribute_type_id => 4,
+      flower_id => 79,
+      id => 314,
+      name => "habit",
+      sequence => 40,
+      values => ""
+    },
+    {
+      attribute_type_id => 1,
+      flower_id => 79,
+      id => 315,
+      name => "native",
+      sequence => 10,
+      values => "No"
+    },
+    {
+      attribute_type_id => 2,
+      flower_id => 79,
+      id => 316,
+      name => "sun_tolerance",
+      sequence => 20,
+      values => ""
+    }
+  ],
+  common_name => "Glory Bush",
+  flower_locations => [
+    {
+      flower_id => 79,
+      garden_id => 2,
+      id => 120,
+      x => 4,
+      y => 15
+    },
+    {
+      flower_id => 79,
+      garden_id => 2,
+      id => 121,
+      x => 6,
+      y => 15
+    }
+  ],
+  height => "",
+  id => 79,
+  images => [
+    {
+      description => "Flower",
+      file_name => "Tibouchina.urvilleana.1.jpg",
+      flower_id => 79,
+      id => 197,
+      sequence => 2
+    },
+    {
+      description => "Buds - From 1 side",
+      file_name => "Tibouchina.urvilleana.2.jpg",
+      flower_id => 79,
+      id => 198,
+      sequence => 3
+    },
+    {
+      description => "Same buds - From the other side",
+      file_name => "Tibouchina.urvilleana.3.jpg",
+      flower_id => 79,
+      id => 199,
+      sequence => 4
+    },
+    {
+      description => "Leaf",
+      file_name => "Tibouchina.urvilleana.4.jpg",
+      flower_id => 79,
+      id => 200,
+      sequence => 5
+    },
+    {
+      description => "Trunks",
+      file_name => "Tibouchina.urvilleana.5.jpg",
+      flower_id => 79,
+      id => 201,
+      sequence => 6
+    },
+    {
+      description => "Trunk at ground level",
+      file_name => "Tibouchina.urvilleana.6.jpg",
+      flower_id => 79,
+      id => 202,
+      sequence => 7
+    }
+  ],
+  notes => [
+    {
+      flower_id => 79,
+      id => 382,
+      note => "The flowers are not aromatic",
+      sequence => 1
+    },
+    {
+      flower_id => 79,
+      id => 383,
+      note => "Flowering: 2011-12-21, in Summer (Melbourne, Victoria, Australia)",
+      sequence => 2
+    },
+    {
+      flower_id => 79,
+      id => 384,
+      note => "Pruning: Cut well back in mid-winter after the flowers fade and tip prune as new growth appears",
+      sequence => 3
+    },
+    {
+      flower_id => 79,
+      id => 385,
+      note => "Feeding: No",
+      sequence => 4
+    }
+  ],
+  pig_latin => "Tibouchina.urvilleana",
+  scientific_name => "Tibouchina urvilleana",
+  urls => [
+    {
+      flower_id => 79,
+      id => 95,
+      sequence => 1,
+      url => "https://en.wikipedia.org/wiki/Tibouchina"
+    }
+  ],
+  width => ""
+}
+
+[Thu Dec 22 15:37:10 2016] [debug] 200 OK (0.007059s, 141.663/s)

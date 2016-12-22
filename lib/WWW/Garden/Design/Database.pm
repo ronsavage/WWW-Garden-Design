@@ -202,43 +202,6 @@ sub clean_up_icon_name
 
 } # End of clean_up_icon_name.
 
-# --------------------------------------------------
-
-sub clean_up_scientific_name
-{
-	my($self, $flowers, $scientific_name, $common_name) = @_;
-	my(@chars)				= split(//, $scientific_name);
-	my($web_page_prefix)	= '';
-
-	for (@chars)
-	{
-		$web_page_prefix .= $1 if (m|([-_. a-zA-Z0-9])|)
-	}
-
-	$web_page_prefix	=~ s!^\s!!;
-	$web_page_prefix	=~ s!\s$!!;
-	$web_page_prefix	=~ s!\s!\.!g;
-
-	my(%seen);
-
-	for my $flower (@$flowers)
-	{
-		$seen{$$flower{scientific_name} } = 0 if (! $seen{$$flower{scientific_name} });
-
-		$seen{$$flower{scientific_name} }++;
-	}
-
-	if ($seen{$scientific_name} > 1)
-	{
-		$web_page_prefix .= ".$1" if ($common_name =~ /^.+\s(\d+)$/);
-	}
-
-	$web_page_prefix =~ s!\.\.!\.!g;
-
-	return ucfirst lc $web_page_prefix;
-
-} # End of clean_up_scientific_name.
-
 # -----------------------------------------------
 
 sub cross_check
@@ -337,6 +300,43 @@ sub cross_check
 
 } # End of cross_check.
 
+# --------------------------------------------------
+
+sub generate_pig_latin_from_scientific_name
+{
+	my($self, $flowers, $scientific_name, $common_name) = @_;
+	my(@chars)		= split(//, $scientific_name);
+	my($pig_latin)	= '';
+
+	for (@chars)
+	{
+		$pig_latin .= $1 if (m|([-_. a-zA-Z0-9])|)
+	}
+
+	$pig_latin	=~ s!^\s!!;
+	$pig_latin	=~ s!\s$!!;
+	$pig_latin	=~ s!\s!\.!g;
+
+	my(%seen);
+
+	for my $flower (@$flowers)
+	{
+		$seen{$$flower{scientific_name} } = 0 if (! $seen{$$flower{scientific_name} });
+
+		$seen{$$flower{scientific_name} }++;
+	}
+
+	if ($seen{$scientific_name} > 1)
+	{
+		$pig_latin .= ".$1" if ($common_name =~ /^.+\s(\d+)$/);
+	}
+
+	$pig_latin =~ s!\.\.!\.!g;
+
+	return ucfirst lc $pig_latin;
+
+} # End of generate_pig_latin_from_scientific_name.
+
 # -----------------------------------------------
 
 sub get_autocomplete_list
@@ -376,7 +376,6 @@ sub read_flower_by_id
 	my($sql)				= "select * from flowers where id = $flower_id";
 	my($set)				= $self -> simple -> query($sql) || die $self -> db -> simple -> error;
 	my($flower)				= $set -> hash;
-	$$flower{pig_latin}		= $self -> clean_up_scientific_name([$flower], $$flower{scientific_name}, $$flower{common_name});
 
 	my(%attribute_type);
 
@@ -459,9 +458,8 @@ sub read_flowers_table
 			$$record{$key} = $$flower{$key};
 		}
 
-		$pig_latin				= $self -> clean_up_scientific_name($flowers, $$flower{scientific_name}, $$flower{common_name});
+		$pig_latin				= $$flower{pig_latin};
 		$$record{hxw}			= $self -> clean_up_height_width($$flower{height}, $$flower{width});
-		$$record{pig_latin}		= $pig_latin;
 		$$record{thumbnail_url}	= (-e "$$config{image_dir}/$pig_latin.0.jpg") ? "$$config{image_url}/$pig_latin.0.jpg" : "$$config{image_url}/growing.png";
 		$$record{web_page_url}	= "$$config{flower_url}/$pig_latin.html";
 
@@ -587,7 +585,7 @@ sub search
 			|| (uc($$flower{common_name}) =~ /$key/)
 			|| (uc($$flower{scientific_name}) =~ /$key/) )
 		{
-			$pig_latin	= $self -> clean_up_scientific_name($flowers, $$flower{scientific_name}, $$flower{common_name});
+			$pig_latin	= $$flower{pig_latin};
 			$item		=
 			{
 				aliases			=> $$flower{aliases},
