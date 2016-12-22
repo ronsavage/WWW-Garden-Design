@@ -209,6 +209,7 @@ sub as_csv
 	my($objects)		= $self -> objects2csv($csv, $color_id2hex);
 
 	$self -> object_locations2csv($csv, $objects, $garden_id2name);
+	$self -> db -> logger -> info('Finished exporting all CSV files');
 
 	# Return 0 for OK and 1 for error.
 
@@ -477,11 +478,6 @@ sub export_all_pages
 		$pig_latin			= $$flower{pig_latin};
 		@urls				= ();
 
-		if ($$flower{id} == 72)
-		{
-			$self -> db -> logger -> info('Attributes: ' . Dumper($$flower{attributes}) );
-		}
-
 		push @attributes,
 		[
 			{td => 'Attribute'},
@@ -571,6 +567,8 @@ sub export_all_pages
 					);
 		close $fh;
 	}
+
+	$self -> db -> logger -> info('Finished exporting all HTML files');
 
 } # End of export_all_pages.
 
@@ -793,6 +791,8 @@ EOS
 	print $fh map{"$_\n"} @garden_index;
 	close $fh;
 
+	$self -> db -> logger -> info("Finished exporting garden layout for the '$garden_name' garden");
+
 } # End of export_garden_layout;
 
 # -----------------------------------------------
@@ -857,7 +857,10 @@ sub export_icons
 			}
 		)
 	);
+
 	close $fh;
+
+	$self -> db -> logger -> info('Finished exporting all icons');
 
 	# Return 0 for OK and 1 for error.
 
