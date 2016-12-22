@@ -468,7 +468,7 @@ function submit_search()
 //			'filters': [false, true, true, true, true, true],
 //			'filterText':   'Filter...',
 //			'forceStrings': true,
-//			'pageSize': 100,
+//			'pageSize': 200,
 //			'sort': '*'
 //		});
 		$('#search_key').focus();

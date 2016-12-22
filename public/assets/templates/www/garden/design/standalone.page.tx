@@ -62,7 +62,7 @@ $(document).ready(function()
 		'filters':      [false, true, true, true, true, false],
 		'filterText':   'Filter...',
 		'forceStrings': true,
-		'pageSize':     150,
+		'pageSize':     200,
 		'sort':         '*'
 	});
 });
