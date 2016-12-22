@@ -876,27 +876,24 @@ sub export_layout_guide
 	my($config)	= $self -> config;
 
 	return <<EOS;
-<span class = 'red_on_gold_title'>The Garden Layouts</span>
-<br />
 <table align='center'>
+	<tr><td><span class = 'red_on_gold_title'>The Garden Layouts</span><br /></td></tr>
 	<tr><td><a href = '$$config{flower_url}/front.garden.layout.html'>The Front Garden Layout, with clickable flower thumbnails in situ</a></td></tr>
 	<tr><td><br></td></tr>
 	<tr><td><a href = '$$config{flower_url}/back.garden.layout.html'>The Back Garden Layout, with clickable flower thumbnails in situ</a></td></tr>
 	<tr><td><br></td></tr>
 </table>
 <br />
-<span class = 'red_on_gold_title'>Articles</span>
-<br />
 <table align='center'>
+	<tr><td><br /><span class = 'red_on_gold_title'>Articles</span><br /></td></tr>
 	<tr><td><a href = 'http://savage.net.au/Perl-modules/html/garden.design/Garden.Design.Software.html'>2016-12-22: Garden Design Software</a></td></tr>
 	<tr><td><a href = '$$config{flower_url}/html/How.To.Net.Dwarf.Apples.html'>2016-01-03: How To Net Dwarf Apples</a></td></tr>
 	<tr><td><a href = '$$config{flower_url}/html/Protecting.Apples.From.Possums.html'>2013-12-08: Protecting Apples From Possums</a></td></tr>
 	<tr><td><br></td></tr>
 </table>
 <br />
-<span class = 'red_on_gold_title'>Various URLs</span>
-<br />
 <table align='center'>
+	<tr><td><br /><span class = 'red_on_gold_title'>Various URLs</span><br /></td></tr>
 	<tr><td><a href = 'http://holt59.github.io/datatable/'>The URL</a> of the free Javascript package which manages the HTML table below</td></tr>
 	<tr><td><a href = 'http://bgrins.github.io/spectrum/'>The URL</a> of the free Javascript package which provides a color picker</td></tr>
 	<tr><td><br></td></tr>
