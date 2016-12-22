@@ -230,7 +230,7 @@ sub clean_up_scientific_name
 
 	if ($seen{$scientific_name} > 1)
 	{
-		$web_page_prefix .= ".$1" if ($common_name =~ /^.+(\d+)$/);
+		$web_page_prefix .= ".$1" if ($common_name =~ /^.+\s(\d+)$/);
 	}
 
 	$web_page_prefix =~ s!\.\.!\.!g;
@@ -376,6 +376,7 @@ sub read_flower_by_id
 	my($sql)				= "select * from flowers where id = $flower_id";
 	my($set)				= $self -> simple -> query($sql) || die $self -> db -> simple -> error;
 	my($flower)				= $set -> hash;
+	$$flower{pig_latin}		= $self -> clean_up_scientific_name([$flower], $$flower{scientific_name}, $$flower{common_name});
 
 	my(%attribute_type);
 
