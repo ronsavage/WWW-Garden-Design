@@ -876,7 +876,7 @@ sub export_layout_guide
 	my($config)	= $self -> config;
 
 	return <<EOS;
-<span class = 'red_on_gold_title'>The Garden Layout</span>
+<span class = 'red_on_gold_title'>The Garden Layouts</span>
 <br />
 <table align='center'>
 	<tr><td><a href = '$$config{flower_url}/front.garden.layout.html'>The Front Garden Layout, with clickable flower thumbnails in situ</a></td></tr>
