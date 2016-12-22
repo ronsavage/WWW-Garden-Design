@@ -33,6 +33,7 @@ my(%params) =
 	{
 		'Config::Tiny'				=> 2.20,
 		'Date::Simple'				=> 3.03,
+		'DBD::SQLite'				=> 1.52,
 		'DBI'						=> 1.630,
 		'DBIx::Admin::CreateTable'	=> 2.07,
 		'DBIx::Simple'				=> 1.35,

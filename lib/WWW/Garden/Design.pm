@@ -83,7 +83,7 @@ C<WWW::Garden::Design> - Flower Database, Search Engine and Garden Design
 
 =head1 Synopsis
 
-The Search Engine is started by the Mojolicious command:
+The Search Engine is started by the Mojolicious command scripts/start.sh:
 
 	#!/bin/bash
 
@@ -91,7 +91,7 @@ The Search Engine is started by the Mojolicious command:
 
 	scripts/flowers daemon -clients 2 -listen http://*:3008 &
 
-Which runs:
+Which runs scripts/flowers:
 
 	#!/usr/bin/env perl
 
@@ -119,7 +119,7 @@ These are used for bootstrapping the system.
 
 This reads the CSV files and populates the Flower Database
 
-=item o A Flower Database using SQLite
+=item o A Flower Database managed by SQLite
 
 =item o An Export Package
 
@@ -129,11 +129,14 @@ This generates:
 
 =item o A Flower Catalog as an HTML table
 
-Thus is can be embedded in any web page.
+This is can be embedded in any web page. Mine is L<online|http://savage.net.au/Flowers.html>.
 
 =item o A Garden Layout as an SVG file
 
 There is actually one (1) SVG file for each of your gardens.
+
+See my L<front garden layout|http://savage.net.au/Flowers/front.garden.layout.html> and my
+L<back garden layout|http://savage.net.au/Flowers/back.garden.layout.html>.
 
 =item o A set of updated CSV files
 

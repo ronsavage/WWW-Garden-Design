@@ -474,7 +474,7 @@ sub export_all_pages
 		@images				= ();
 		@notes				= ();
 		$scientific_name	= $$flower{scientific_name};
-		$pig_latin			= $self -> db -> clean_up_scientific_name($flowers, $scientific_name, $$flower{common_name});
+		$pig_latin			= $$flower{pig_latin};
 		@urls				= ();
 
 		if ($$flower{id} == 72)
@@ -688,7 +688,7 @@ sub export_garden_layout
 
 	for my $flower (@$flowers)
 	{
-		$pig_latin = $self -> db -> clean_up_scientific_name($flowers, $$flower{scientific_name}, $$flower{common_name});
+		$pig_latin = $$flower{pig_latin};
 
 		for my $location (@{$$flower{flower_locations} })
 		{
