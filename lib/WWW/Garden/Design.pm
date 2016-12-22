@@ -72,3 +72,138 @@ sub startup
 # ------------------------------------------------
 
 1;
+
+=pod
+
+=encoding utf8
+
+=head1 NAME
+
+C<WWW::Garden::Design> - Flower Database, Search Engine and Garden Design
+
+=head1 Synopsis
+
+The Search Engine is started by the Mojolicious command:
+
+	#!/bin/bash
+
+	cp /dev/null log/development.log
+
+	scripts/flowers daemon -clients 2 -listen http://*:3008 &
+
+Which runs:
+
+	#!/usr/bin/env perl
+
+	use strict;
+	use warnings;
+
+	use FindBin;
+	BEGIN { unshift @INC, "$FindBin::Bin/../lib" }
+
+	# Start command line interface for application
+	require Mojolicious::Commands;
+	Mojolicious::Commands->start_app('WWW::Garden::Design');
+
+=head1 Description
+
+C<WWW::Garden::Design> provides:
+
+=over 4
+
+=item o A Flower Database using CSV files
+
+These are used for bootstrapping the system.
+
+=item o An Import Package
+
+This reads the CSV files and populates the Flower Database
+
+=item o A Flower Database using SQLite
+
+=item o An Export Package
+
+This generates:
+
+=over 4
+
+=item o A Flower Catalog as an HTML table
+
+Thus is can be embedded in any web page.
+
+=item o A Garden Layout as an SVG file
+
+There is actually one (1) SVG file for each of your gardens.
+
+=item o A set of updated CSV files
+
+For when you update the database either by the Search Engine or otherwise.
+
+=back
+
+=item o A Search Engine
+
+This is a L<Mojolicious>-based program.
+
+=back
+
+For an introduction, see my article L<http://savage.net.au/Perl-modules/html/garden.design/Garden.Design.Software.html>.
+
+=head1 Distributions
+
+This module is available as a Unix-style distro (*.tgz).
+
+See L<http://savage.net.au/Perl-modules/html/installing-a-module.html>
+for help on unpacking and installing distros.
+
+=head1 Installation
+
+Install C<WWW::Garden::Design> as you would any C<Perl> module:
+
+Run:
+
+	cpanm WWW::Garden::Design
+
+or run:
+
+	sudo cpan WWW::Garden::Design
+
+	perl Makefile.PL
+	make (or dmake or nmake)
+	make test
+	make install
+
+=head1 Machine-Readable Change Log
+
+The file Changes was converted into Changelog.ini by L<Module::Metadata::Changes>.
+
+=head1 Version Numbers
+
+Version numbers < 1.00 represent development versions. From 1.00 up, they are production versions.
+
+=head1 Repository
+
+L<https://github.com/ronsavage/WWW-Garden-Design>
+
+=head1 Support
+
+Email the author, or log a bug on RT:
+
+L<https://rt.cpan.org/Public/Dist/Display.html?Name=WWW::Garden::Design>.
+
+=head1 Author
+
+L<WWW::Garden::Design> was written by Ron Savage I<E<lt>ron@savage.net.auE<gt>> in 2014.
+
+My homepage: L<http://savage.net.au/>.
+
+=head1 Copyright
+
+Australian copyright (c) 2014, Ron Savage.
+
+	All Programs of mine are 'OSI Certified Open Source Software';
+	you can redistribute them and/or modify them under the terms of
+	The Artistic License 2.0, a copy of which is available at:
+	http://opensource.org/licenses/alphabetical.
+
+=cut

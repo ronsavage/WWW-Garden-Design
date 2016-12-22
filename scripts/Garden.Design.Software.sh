@@ -9,4 +9,4 @@ pod2html.pl -i html/Garden.Design.Software.pod -o html/Garden.Design.Software.ht
 
 cp html/*.jpg						$DR/Perl-modules/html/garden.design
 cp html/Garden.Design.Software.*	$DR/Perl-modules/html/garden.design
-cp html/Garden.Design.Software.*	$HOME/savage.net.au/Perl-modules/html/garden.design
+cp html/*							$HOME/savage.net.au/Perl-modules/html/garden.design
