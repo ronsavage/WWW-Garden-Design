@@ -7,7 +7,7 @@ use WWW::Garden::Design::Util::Config;
 
 use Moo;
 
-our $VERSION = '1.06';
+our $VERSION = '1.00';
 
 # ------------------------------------------------
 # This method will run once at server start.

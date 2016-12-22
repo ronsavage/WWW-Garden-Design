@@ -6,7 +6,7 @@ use Date::Simple;
 
 use Moo;
 
-our $VERSION = '1.06';
+our $VERSION = '1.00';
 
 # -----------------------------------------------
 

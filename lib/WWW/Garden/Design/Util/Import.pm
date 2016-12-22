@@ -23,7 +23,7 @@ use Text::CSV::Encoded;
 
 extends qw/WWW::Garden::Design::Database::Base/;
 
-our $VERSION = '1.06';
+our $VERSION = '1.00';
 
 # -----------------------------------------------
 
