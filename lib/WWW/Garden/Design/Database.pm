@@ -354,22 +354,9 @@ sub get_autocomplete_list
 
 } # End of get_autocomplete_list.
 
-# -----------------------------------------------
-
-sub insert_hashref
-{
-	my($self, $table_name, $hashref) = @_;
-
-	$self -> simple -> insert($table_name, {map{($_ => $$hashref{$_})} keys %$hashref})
-		|| die $self -> simple -> error;
-
-	return $self -> simple -> last_insert_id(undef, undef, $table_name, undef);
-
-} # End of insert_hashref.
-
 # --------------------------------------------------
 
-sub read_flower_by_id
+sub get_flower_by_id
 {
 	my($self, $flower_id)	= @_;
 	my($attribute_types)	= $self -> read_table('attribute_types');
@@ -409,7 +396,20 @@ sub read_flower_by_id
 
 	return $flower;
 
-} # End of read_flower_by_id.
+} # End of get_flower_by_id.
+
+# -----------------------------------------------
+
+sub insert_hashref
+{
+	my($self, $table_name, $hashref) = @_;
+
+	$self -> simple -> insert($table_name, {map{($_ => $$hashref{$_})} keys %$hashref})
+		|| die $self -> simple -> error;
+
+	return $self -> simple -> last_insert_id(undef, undef, $table_name, undef);
+
+} # End of insert_hashref.
 
 # --------------------------------------------------
 

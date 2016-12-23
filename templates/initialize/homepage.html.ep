@@ -39,8 +39,8 @@
 		        <li><a href = '#notes_tab'><span>Notes</span></a></li>
 		        <li><a href = '#urls_tab'><span>URLs</span></a></li>
 		    </ul>
-		    <div id = 'details_tab'>
-%= include 'initialize/details'
+		    <div id = 'flower_tab'>
+%= include 'initialize/flower'
 			</div>
 		    <div id = 'attributes_tab'>
 %= include 'initialize/attributes'
@@ -215,13 +215,13 @@ function populate_details(flower_id)
 
 		// Copy flower data to the Details/Flower tab.
 
-		$('#details_common_name').val(flower['common_name']);
-		$('#details_scientific_name').val(flower['scientific_name']);
-		$('#details_aliases').val(flower['aliases']);
-		$('#details_height').val(flower['height']);
-		$('#details_width').val(flower['width']);
+		$('#flower_common_name').val(flower['common_name']);
+		$('#flower_scientific_name').val(flower['scientific_name']);
+		$('#flower_aliases').val(flower['aliases']);
+		$('#flower_height').val(flower['height']);
+		$('#flower_width').val(flower['width']);
 		image_path	= 'http://savage.net.au/Flowers/images/' + flower['pig_latin'] + '.0.jpg';
-		$('#details_thumbnail').html("<img src = '" + image_path + "' width = '100' height = '100'>");
+		$('#flower_thumbnail').html("<img src = '" + image_path + "' width = '100' height = '100'>");
 
 		// Copy basic flower data to the Details/Flower's other sub-tabs.
 		// Warning: Don't include 'details' in the tabs array, because

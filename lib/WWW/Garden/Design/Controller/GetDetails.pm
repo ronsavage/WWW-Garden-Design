@@ -22,9 +22,9 @@ sub display
 	if ($flower_id > 0)
 	{
 		my($defaults)	= $self -> app -> defaults;
-		my($json)		= $$defaults{db} -> read_flower_by_id($flower_id);
+		my($json)		= $$defaults{db} -> get_flower_by_id($flower_id);
 
-		$self -> app -> log -> info('read_flower_by_id: ' . Dumper($json) );
+		$self -> app -> log -> info('get_flower_by_id: ' . Dumper($json) );
 		$self -> stash(error => undef);
 		$self -> render(json => $json);
 	}

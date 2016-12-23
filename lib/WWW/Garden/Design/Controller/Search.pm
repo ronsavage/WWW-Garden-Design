@@ -67,8 +67,6 @@ sub format
 	my($count)				= 0;
 	my($html)				= '';
 
-	$db -> logger -> info('Search result: ' . Dumper($result) );
-
 	my($attribute);
 	my($native);
 
