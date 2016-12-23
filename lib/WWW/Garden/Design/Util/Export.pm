@@ -173,7 +173,7 @@ sub attributes2csv
 			(
 				$common_name,
 				$$attribute{name},
-				$$attribute{values},
+				$$attribute{range},
 			);
 
 			print $fh $csv -> string, "\n";
@@ -327,7 +327,7 @@ sub as_html
 
 		for (@{$$flower{attributes} })
 		{
-			$native = $$_{values} if ($$_{name} eq 'native');
+			$native = $$_{range} if ($$_{name} eq 'native');
 		}
 
 		for my $key (sort{$column{$a}{order} <=> $column{$b}{order} } keys %column)
@@ -481,7 +481,7 @@ sub export_all_pages
 		push @attributes,
 		[
 			{td => 'Attribute'},
-			{td => 'Values'},
+			{td => 'Range'},
 		];
 
 		for my $attribute (sort{$$a{sequence} <=> $$b{sequence} } @{$$flower{attributes} })
@@ -489,7 +489,7 @@ sub export_all_pages
 			push @attributes,
 			[
 				{td => $$attribute{name} },
-				{td => $$attribute{values} },
+				{td => $$attribute{range} },
 			];
 		}
 

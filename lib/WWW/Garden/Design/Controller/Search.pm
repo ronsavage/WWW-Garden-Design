@@ -80,7 +80,7 @@ sub format
 
 		for $attribute (@{$$item{attributes} })
 		{
-			$native = $$attribute{values} if ($$attribute{name} eq 'native');
+			$native = $$attribute{range} if ($$attribute{name} eq 'native');
 		}
 
 		# Note: Every time you add a column, you must update:

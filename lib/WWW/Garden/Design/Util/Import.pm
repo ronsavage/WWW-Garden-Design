@@ -199,7 +199,7 @@ sub populate_attributes_table
 			{
 				attribute_type_id	=> $$attribute_type_keys{$$item{attribute_name} },
 				flower_id			=> $$flower_keys{$$item{common_name} },
-				values				=> $$item{attribute_values},
+				range				=> $$item{attribute_values},
 			}
 		);
 	}

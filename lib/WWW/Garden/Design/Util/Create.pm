@@ -149,7 +149,7 @@ create table $table_name
 id					$primary_key,
 attribute_type_id	int references attribute_types(id),
 flower_id			int references flowers(id),
-values				varchar(255) not null
+range				varchar(255) not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);
