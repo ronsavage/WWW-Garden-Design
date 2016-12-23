@@ -62,10 +62,10 @@ sub startup
 	$r -> route('/')					-> to('Initialize#homepage');
 	$r -> route('/Flower')				-> to('Flower#display');
 	$r -> route('/GetAttributeTypes')	-> to('GetAttributeTypes#display');
-	$r -> route('/GetFlower')			-> to('GetFlower#display');
+	$r -> route('/GetDetails')			-> to('GetDetails#display');
 	$r -> route('/Object')				-> to('Object#display');
 	$r -> route('/AuoComplete')			-> to('AutoComplete#display');
-	$r -> route('/Search')				-> to('Search#search');
+	$r -> route('/Search')				-> to('Search#display');
 
 } # End of startup.
 

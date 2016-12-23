@@ -22,7 +22,7 @@
 <div id = 'global_tab_div'>
 	<ul>
 		<li><a href = '#global_search_tab'><span>Search</span></a></li>
-		<li><a href = '#global_flower_tab'><span>Flower</span></a></li>
+		<li><a href = '#global_flower_tab'><span>Details</span></a></li>
 		<li><a href = '#global_object_tab'><span>Objects</span></a></li>
 		<li><a href = '#global_design_tab'><span>Design</span></a></li>
 		<li><a href = '#global_help_tab'><span>Help</span></a></li>
@@ -39,8 +39,8 @@
 		        <li><a href = '#notes_tab'><span>Notes</span></a></li>
 		        <li><a href = '#urls_tab'><span>URLs</span></a></li>
 		    </ul>
-		    <div id = 'flower_tab'>
-%= include 'initialize/flower'
+		    <div id = 'details_tab'>
+%= include 'initialize/details'
 			</div>
 		    <div id = 'attributes_tab'>
 %= include 'initialize/attributes'
@@ -198,7 +198,7 @@ function get_attribute_types()
 
 // -----------------------------------------------
 
-function populate_flower(flower_id)
+function populate_details(flower_id)
 {
 	$.ajax
 	({
@@ -208,23 +208,23 @@ function populate_flower(flower_id)
 		},
 		dataType:	'json',
 		type:		'POST',
-		url:		'/GetFlower'
+		url:		'/GetDetails'
 	}).success(function(flower)
 	{
 		$('#global_tab_div').tabs('option', 'active', 1);
 
-		// Copy flower data to the Flower/Flower tab.
+		// Copy flower data to the Details/Flower tab.
 
-		$('#flower_common_name').val(flower['common_name']);
-		$('#flower_scientific_name').val(flower['scientific_name']);
-		$('#flower_aliases').val(flower['aliases']);
-		$('#flower_height').val(flower['height']);
-		$('#flower_width').val(flower['width']);
+		$('#details_common_name').val(flower['common_name']);
+		$('#details_scientific_name').val(flower['scientific_name']);
+		$('#details_aliases').val(flower['aliases']);
+		$('#details_height').val(flower['height']);
+		$('#details_width').val(flower['width']);
 		image_path	= 'http://savage.net.au/Flowers/images/' + flower['pig_latin'] + '.0.jpg';
-		$('#flower_thumbnail').html("<img src = '" + image_path + "' width = '100' height = '100'>");
+		$('#details_thumbnail').html("<img src = '" + image_path + "' width = '100' height = '100'>");
 
-		// Copy basic flower data to the Flower/Flower's other sub-tabs.
-		// Warning: Don't include 'flower' in the tabs array, because
+		// Copy basic flower data to the Details/Flower's other sub-tabs.
+		// Warning: Don't include 'details' in the tabs array, because
 		// it's fields are input fields, while all others are spans.
 
 		var tabs = ['attribute', 'note', 'image', 'url'];
@@ -240,7 +240,7 @@ function populate_flower(flower_id)
 			}
 		}
 
-		// Copy attributes to the Flowers/Attributes tab.
+		// Copy attributes to the Details/Attributes tab.
 
 		var attribute_name;
 		var id;
@@ -301,7 +301,7 @@ function populate_flower(flower_id)
 			}
 		}
 
-		// Images: Copy images to the Flowers/Images tab.
+		// Images: Copy images to the Details/Images tab.
 		// 1: Remove any existing images.
 
 		var ids = [];
@@ -347,7 +347,7 @@ function populate_flower(flower_id)
 			$(ids[i][3]).val(sequence);
 		}
 
-		// Notes: Copy notes to the Flowers/Notes tab.
+		// Notes: Copy notes to the Details/Notes tab.
 		// 1: Remove any existing notes.
 
 		ids = [];
@@ -381,7 +381,7 @@ function populate_flower(flower_id)
 			$(ids[i][1]).val(sequence);
 		}
 
-		// URLs: Copy urls to the Flowers/URLs tab.
+		// URLs: Copy urls to the Details/URLs tab.
 		// 1: Remove any existing URLs.
 
 		ids = [];

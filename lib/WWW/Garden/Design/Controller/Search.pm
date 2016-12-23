@@ -24,13 +24,13 @@ our $VERSION = '1.00';
 
 # -----------------------------------------------
 
-sub search
+sub display
 {
 	my($self) 		= @_;
 	my($key)  		= $self -> param('search_key') || '';
 	my($start_time)	= [gettimeofday];
 
-	$self -> app -> log -> debug("search($key)");
+	$self -> app -> log -> debug("display($key)");
 
 	if (length $key > 0)
 	{
@@ -55,7 +55,7 @@ sub search
 
 	$self -> render;
 
-} # End of search.
+} # End of display.
 
 # -----------------------------------------------
 

@@ -1,4 +1,4 @@
-package WWW::Garden::Design::Controller::GetFlower;
+package WWW::Garden::Design::Controller::GetDetails;
 
 use Mojo::Base 'Mojolicious::Controller';
 
