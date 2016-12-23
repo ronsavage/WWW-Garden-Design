@@ -47,7 +47,7 @@
 	<th>Common name</th>
 	<th>Aliases</th>
 	<th>H x W</th>
-	<th>Edit <span class = "index">(clickable)</span></th>
+	<th>Edit <span class = 'alert'>(clickable)</span></th>
 </tr>
 </thead>
 <tbody>
