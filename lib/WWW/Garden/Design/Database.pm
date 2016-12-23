@@ -477,7 +477,7 @@ sub read_flowers_table
 
 			for my $name (qw/name sequence/)
 			{
-				$$record{attributes}[$i]{$name} = $attribute_type{$id}{$name};
+				$$record{attributes}[$i]{"type_$name"} = $attribute_type{$id}{$name};
 			}
 		}
 

@@ -244,7 +244,7 @@ function populate_details(flower_id)
 
 		var attribute_name;
 		var id;
-		var values			= new Array();
+		var range = new Array();
 		var value;
 
 		// Attributes: Copy attribute types to the Flower/Attributes tab.
@@ -253,11 +253,11 @@ function populate_details(flower_id)
 		for (j = 0; j < attribute_types.length; j++)
 		{
 			attribute_name	= attribute_types[j]['name'];
-			values			= attribute_types[j]['menu'].split(', ');
+			range			= attribute_types[j]['range'].split(', ');
 
-			for (k = 0; k < values.length; k++)
+			for (k = 0; k < range.length; k++)
 			{
-				value	= values[k];
+				value	= range[k];
 				id		= build_attribute_id(attribute_name, value);
 
 				$(id).prop('checked', false);
@@ -273,7 +273,7 @@ function populate_details(flower_id)
 		{
 			attribute		= flower['attributes'][i];
 			attribute_name	= attribute['name'];
-			values			= attribute['values'].split(', ');
+			range			= attribute['range'].split(', ');
 
 			// Loop over all attribute types.
 
@@ -288,9 +288,9 @@ function populate_details(flower_id)
 					continue;
 				}
 
-				for (k = 0; k < values.length; k++)
+				for (k = 0; k < range.length; k++)
 				{
-					value	= values[k];
+					value	= range[k];
 					id		= build_attribute_id(attribute_name, value);
 
 					if (value != '')

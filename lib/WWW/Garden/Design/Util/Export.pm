@@ -124,7 +124,7 @@ sub attribute_types2csv
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 
-	$csv -> combine(qw/name sequence menu/);
+	$csv -> combine(qw/name sequence range/);
 
 	print $fh $csv -> string, "\n";
 
@@ -134,7 +134,7 @@ sub attribute_types2csv
 		(
 			$$attribute_type{name},
 			$$attribute_type{sequence},
-			$$attribute_type{menu},
+			$$attribute_type{range},
 		);
 
 		print $fh $csv -> string, "\n";
@@ -157,7 +157,7 @@ sub attributes2csv
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 
-	$csv -> combine(qw/common_name attribute_name attribute_values/);
+	$csv -> combine(qw/attribute_name common_name range/);
 
 	print $fh $csv -> string, "\n";
 

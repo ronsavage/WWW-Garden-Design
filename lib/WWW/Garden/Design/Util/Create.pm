@@ -168,7 +168,7 @@ sub create_attribute_types_table
 create table $table_name
 (
 id			$primary_key,
-menu		varchar(255) not null,
+range		varchar(255) not null,
 name		varchar(255) not null,
 sequence	integer not null
 ) $engine

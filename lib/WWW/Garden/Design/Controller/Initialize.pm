@@ -25,7 +25,7 @@ sub homepage
 	my(@check_boxes) = map
 						{
 							$name		= $$_{name};
-							@value_set	= split(/,\s+/, $$_{menu});
+							@value_set	= split(/,\s+/, $$_{range});
 							@html		= map
 											{
 												$id = "attribute_${name}_$_";

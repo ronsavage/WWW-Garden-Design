@@ -175,7 +175,7 @@ sub populate_attributes_table
 	{
 		$count++;
 
-		for my $column (qw/common_name attribute_name attribute_values/)
+		for my $column (qw/attribute_name common_name range/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -199,7 +199,7 @@ sub populate_attributes_table
 			{
 				attribute_type_id	=> $$attribute_type_keys{$$item{attribute_name} },
 				flower_id			=> $$flower_keys{$$item{common_name} },
-				range				=> $$item{attribute_values},
+				range				=> $$item{range},
 			}
 		);
 	}
@@ -228,7 +228,7 @@ sub populate_attribute_types_table
 	{
 		$count++;
 
-		for my $column (qw/menu name sequence/)
+		for my $column (qw/name range sequence/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -240,8 +240,8 @@ sub populate_attribute_types_table
 		(
 			$table_name,
 			{
-				menu		=> $$item{menu},
 				name		=> $$item{name},
+				range		=> $$item{range},
 				sequence	=> $$item{sequence},
 			}
 		);
