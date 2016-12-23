@@ -59,9 +59,9 @@ our $VERSION = '1.00';
 
 sub BUILD
 {
-	my($self)   = @_;
-	my($config) = $self -> config;
-	my($attr)   =
+	my($self)	= @_;
+	my($config)	= $self -> config;
+	my($attr)	=
 	{
 		AutoCommit => defined($$config{AutoCommit}) ? $$config{AutoCommit} : 1,
 		RaiseError => defined($$config{RaiseError}) ? $$config{RaiseError} : 1,
@@ -75,8 +75,8 @@ sub BUILD
 	(
 		DBIx::Admin::CreateTable -> new
 		(
-		dbh     => $self -> dbh,
-		verbose => 0,
+			dbh     => $self -> dbh,
+			verbose => 0,
 		)
 	);
 
