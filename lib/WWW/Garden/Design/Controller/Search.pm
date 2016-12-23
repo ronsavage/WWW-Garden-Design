@@ -96,7 +96,7 @@ sub format
 	<td>$$item{aliases}</td>
 	<td>$$item{hxw}</td>
 	<td>
-		<button class = 'button' onClick='populate_flower($$item{id})'>
+		<button class = 'button' onClick='populate_details($$item{id})'>
 			<img src = '$$item{thumbnail_url}' width = '$$config{cell_width}' height = '$$config{cell_height}'/>
 		</button>
 	</td>
