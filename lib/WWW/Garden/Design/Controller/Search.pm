@@ -62,10 +62,19 @@ sub display
 sub format
 {
 	my($self, $db, $key)	= @_;
-	my($config)				= $self -> config -> config_set;
 	my($result)				= $db -> search($key);
 	my($count)				= 0;
 	my($html)				= '';
+	my($cell_height)		= 64;
+	my($cell_width)			= 64;
+
+	for my $item (@{$db -> read_table('constants')})
+	{
+		if ($$item{name} eq 'search_thumbnail_size')
+		{
+			$cell_width = $cell_height = $$item{value};
+		}
+	}
 
 	my($attribute);
 	my($native);
@@ -95,7 +104,7 @@ sub format
 	<td>$$item{hxw}</td>
 	<td>
 		<button class = 'button' onClick='populate_details($$item{id})'>
-			<img src = '$$item{thumbnail_url}' width = '$$config{cell_width}' height = '$$config{cell_height}'/>
+			<img src = '$$item{thumbnail_url}' width = '$cell_width' height = '$cell_height'/>
 		</button>
 	</td>
 </tr>

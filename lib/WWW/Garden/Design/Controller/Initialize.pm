@@ -39,8 +39,7 @@ sub homepage
 							[ucfirst $name, join '&nbsp;&nbsp;&nbsp', @html];
 						} sort{$$a{sequence} <=> $$b{sequence} } @$attribute_types;
 
-	$self -> stash(attribute_types	=> $attribute_types);
-	$self -> stash(check_boxes		=> \@check_boxes);
+	$self -> stash(check_boxes => \@check_boxes);
 	$self -> render;
 
 } # End of homepage.

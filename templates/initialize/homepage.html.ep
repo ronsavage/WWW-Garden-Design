@@ -22,7 +22,7 @@
 <div id = 'global_tab_div'>
 	<ul>
 		<li><a href = '#global_search_tab'><span>Search</span></a></li>
-		<li><a href = '#global_flower_tab'><span>Details</span></a></li>
+		<li><a href = '#global_detail_tab'><span>Details</span></a></li>
 		<li><a href = '#global_object_tab'><span>Objects</span></a></li>
 		<li><a href = '#global_design_tab'><span>Design</span></a></li>
 		<li><a href = '#global_help_tab'><span>Help</span></a></li>
@@ -30,7 +30,7 @@
 	<div id = 'global_search_tab'>
 %= include 'initialize/search'
 	</div>
-	<div id = 'global_flower_tab'>
+	<div id = 'global_detail_tab'>
 		<div id = 'flower_tab_div'>
 		    <ul>
 		        <li><a href = '#flower_tab'><span>Flower</span></a></li>
@@ -492,7 +492,7 @@ $(function()
 		}
 	});
 
-	$("#global_flower_tab")
+	$("#global_detail_tab")
 	.tabs
 	({
 		active: 0
