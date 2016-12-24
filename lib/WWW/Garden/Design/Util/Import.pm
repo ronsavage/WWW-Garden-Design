@@ -141,6 +141,7 @@ sub populate_all_tables
 
 	$self -> populate_attribute_types_table($path, $csv, \%attribute_type_keys);
 	$self -> populate_colors_table($path, $csv, \%color_keys);
+	$self -> populate_constants_table($path, $csv);
 	$self -> populate_flowers_table($path, $csv, \%flower_keys);
 	$self -> populate_gardens_table($path, $csv, \%flower_keys, \%garden_keys);
 	$self -> populate_flower_locations_table($path, $csv, \%flower_keys, \%garden_keys);
@@ -296,6 +297,48 @@ sub populate_colors_table
 	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_colors_table.
+
+# -----------------------------------------------
+
+sub populate_constants_table
+{
+	my($self, $path, $csv) = @_;
+	my($table_name) = 'constants';
+	$path           =~ s/flowers/$table_name/;
+
+	open(my $io, '<', $path) || die "Can't open($path): $!\n";
+
+	$csv -> column_names($csv -> getline($io) );
+
+	my($count) = 0;
+
+	for my $item (@{$csv -> getline_hr_all($io) })
+	{
+		$count++;
+
+		for my $column (qw/name value/)
+		{
+			if (! defined $$item{$column})
+			{
+				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
+			}
+		}
+
+		$self -> db -> insert_hashref
+		(
+			$table_name,
+			{
+				name	=> $$item{name},
+				value	=> $$item{value},
+			}
+		);
+	}
+
+	close $io;
+
+	$self -> db -> logger -> info("Read $count records into '$table_name'");
+
+}	# End of populate_constants_table.
 
 # -----------------------------------------------
 

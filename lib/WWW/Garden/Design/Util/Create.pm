@@ -112,6 +112,7 @@ sub create_all_tables
 	for my $table_name
 (qw/
 colors
+constants
 flowers
 attribute_types
 attributes
@@ -199,6 +200,26 @@ SQL
 	$self -> report($table_name, 'Created', $result);
 
 }	# End of create_colors_table.
+
+# --------------------------------------------------
+
+sub create_constants_table
+{
+	my($self)        = @_;
+	my($table_name)  = 'constants';
+	my($primary_key) = $self -> creator -> generate_primary_key_sql($table_name);
+	my($engine)      = $self -> engine;
+	my($result)      = $self -> creator -> create_table(<<SQL);
+create table $table_name
+(
+id		$primary_key,
+name	varchar(255) not null,
+value	varchar(255) not null
+) $engine
+SQL
+	$self -> report($table_name, 'Created', $result);
+
+}	# End of create_constants_table.
 
 # --------------------------------------------------
 
@@ -392,6 +413,7 @@ gardens
 attributes
 attribute_types
 flowers
+constants
 colors
 /)
 	{
