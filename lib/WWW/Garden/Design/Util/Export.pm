@@ -157,7 +157,7 @@ sub attributes2csv
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 
-	$csv -> combine(qw/attribute_name common_name range/);
+	$csv -> combine(qw/common_name attribute_name range/);
 
 	print $fh $csv -> string, "\n";
 
@@ -208,6 +208,7 @@ sub as_csv
 	my($garden_id2name)	= $self -> gardens2csv($csv);
 	my($objects)		= $self -> objects2csv($csv, $color_id2hex);
 
+	$self -> constants2csv($csv);
 	$self -> object_locations2csv($csv, $objects, $garden_id2name);
 	$self -> db -> logger -> info('Finished exporting all CSV files');
 
@@ -434,6 +435,39 @@ sub colors2csv
 	return \%color_id2hex;
 
 } # End of colors2csv.
+
+# -----------------------------------------------
+
+sub constants2csv
+{
+	my($self, $csv)	= @_;
+	my($constants)	= $self -> db -> read_table('constants');
+	my($file_name)	= $self -> output_file =~ s/flowers.csv/constants.csv/r;
+
+	$self -> db -> logger -> info("Writing to $file_name");
+
+	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
+
+	$csv -> combine(qw/name value/);
+
+	print $fh $csv -> string, "\n";
+
+	for my $row (sort{uc($$a{name}) cmp uc($$b{name})} @$constants)
+	{
+		$csv -> combine
+		(
+			$$row{name},
+			$$row{value},
+		);
+
+		print $fh $csv -> string, "\n";
+	}
+
+	close $fh;
+
+	$self -> db -> logger -> info("Wrote $file_name");
+
+} # End of constants2csv.
 
 # -----------------------------------------------
 
