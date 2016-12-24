@@ -16,22 +16,18 @@
 <table align = 'center'>
 	<thead>
 		<tr>
-			<th>Sequence</th>
-			<th>Note</th>
+			<th>#</th>
 			<th>Sequence</th>
 			<th>Note</th>
 		</tr>
 	</thead>
 	<tbody>
-	% for my $i (1 .. 20) {
-		% if ( ($i % 2) == 1) {
+		% for my $i (1 .. $$constants{max_note_count}) {
 		<tr>
-		% }
-			<td align = 'right'><input id = 'note_sequence_<%= $i %>' type = 'text' size = '5'></td>
-			<td align = 'left'><input id = 'note_note_<%= $i %>' type = 'text' size = '50' maxlength = '200'></td>
-		% if ( ($i % 2) == 0) {
+			<td><%== $i %></td>
+			<td align = 'right'><input id = 'note_sequence_<%== $i %>' type = 'text' size = '5'></td>
+			<td align = 'left'><input id = 'note_note_<%== $i %>' type = 'text' size = '100' maxlength = '200'></td>
 		</tr>
 		% }
-	% }
 	</tbody>
 </table>

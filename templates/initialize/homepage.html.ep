@@ -46,10 +46,10 @@
 %= include 'initialize/attributes'
 			</div>
 		    <div id = 'images_tab'>
-%= include 'initialize/images'
+%= include 'initialize/images', constants => $constants
 			</div>
 		    <div id = 'notes_tab'>
-%= include 'initialize/notes'
+%= include 'initialize/notes', constants => $constants
 			</div>
 		    <div id = 'urls_tab'>
 %= include 'initialize/urls'
