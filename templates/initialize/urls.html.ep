@@ -22,9 +22,9 @@
 		</tr>
 	</thead>
 	<tbody>
-		% for my $i (1 .. $$constants{max_image_count}) {
+		% for my $i (1 .. $$constants{max_url_count}) {
 		<tr>
-			<td><%== $i %></td>
+			<td><%== $i %>.</td>
 			<td align = 'right'><input id = 'url_sequence_<%== $i %>' type = 'text' size = '5'></td>
 			<td align = 'left'><input id = 'url_url_<%== $i %>' type = 'text' size = '100' maxlength = '255'></td>
 		</tr>

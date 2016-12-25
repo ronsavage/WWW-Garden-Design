@@ -33,5 +33,10 @@
 		<td class = 'generic_border generic_padding'>Why is my data missing from the communal database?</td>
 		<td class = 'generic_border generic_padding'>In rare cases, we find strange characters in files.<br />Typically they are single- and double-quotes, but are not ISO-8859-1 (ASCII) characters.</td>
 	</tr>
+	<tr>
+		<td class = 'generic_border generic_padding'>4</td>
+		<td class = 'generic_border generic_padding'>What is CSRF?</td>
+		<td class = 'generic_border generic_padding'>Cross-site Request Forgery.</td>
+	</tr>
 </tbody>
 </table>

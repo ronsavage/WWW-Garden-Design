@@ -16,11 +16,9 @@ sub display
 
 	$self -> app -> log -> debug('display()');
 
-	my($defaults)	= $self -> app -> defaults;
-	my($json)		= $$defaults{db} -> read_table('attribute_types');
+	my($defaults) = $self -> app -> defaults;
 
-	$self -> render(json => $json);
-
+	$self -> render(json => $$defaults{db} -> read_table('attribute_types') );
 
 } # End of display.
 

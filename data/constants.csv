@@ -1,6 +1,8 @@
 "name","value"
 "detail_thumbnail_size","100"
+"image_url","'/Flowers/images'"
 "max_image_count","20"
 "max_note_count","20"
 "max_url_count","10"
+"public_homepage_url","'http://savage.net.au'"
 "search_thumbnail_size","80"

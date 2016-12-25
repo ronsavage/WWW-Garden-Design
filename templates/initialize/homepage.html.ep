@@ -78,6 +78,8 @@
 
 <script type = 'text/javascript'>
 
+// Storage for info read in below from the database.
+
 var attribute_types = [];
 
 // -----------------------------------------------
@@ -211,6 +213,8 @@ function populate_details(flower_id)
 		url:		'/GetDetails'
 	}).success(function(flower)
 	{
+		// Make the Details tab, tab 1, active.
+
 		$('#global_tab_div').tabs('option', 'active', 1);
 
 		// Copy flower data to the Details/Flower tab.
@@ -220,8 +224,15 @@ function populate_details(flower_id)
 		$('#flower_aliases').val(flower['aliases']);
 		$('#flower_height').val(flower['height']);
 		$('#flower_width').val(flower['width']);
-		image_path	= 'http://savage.net.au/Flowers/images/' + flower['pig_latin'] + '.0.jpg';
-		$('#flower_thumbnail').html("<img src = '" + image_path + "' width = '100' height = '100'>");
+
+		var thumbnail_size		= <%== $$constants{search_thumbnail_size} %>;
+		var thumbnail_string	= "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
+		var public_homepage_url	= <%== $$constants{public_homepage_url} %>;
+		var image_url			= <%== $$constants{image_url} %>;
+		var image_path			= public_homepage_url + image_url + '/' + flower['pig_latin'] + '.0.jpg';
+		var thumbnail_html		= "<img src = '" + image_path + "' " + thumbnail_string + '>';
+
+		$('#flower_thumbnail').html(thumbnail_html);
 
 		// Copy basic flower data to the Details/Flower's other sub-tabs.
 		// Warning: Don't include 'details' in the tabs array, because
@@ -305,9 +316,8 @@ function populate_details(flower_id)
 		// 1: Remove any existing images.
 
 		var ids = [];
-		var image_count = 20; // See templates/initialize/images.html.ep.
 
-		for (i = 0; i < image_count; i++)
+		for (i = 0; i < <%== $$constants{max_image_count} %>; i++)
 		{
 			ids.push(build_image_ids(i + 1) );
 
@@ -329,11 +339,12 @@ function populate_details(flower_id)
 
 		for (i = 0; i < flower['images'].length; i++)
 		{
-			description	= flower['images'][i]['description'];
-			file_name	= flower['images'][i]['file_name'];
-			sequence	= flower['images'][i]['sequence'];
-			ids[i]		= build_image_ids(sequence);
-			image_path	= 'http://savage.net.au/Flowers/images/' + file_name;
+			description		= flower['images'][i]['description'];
+			file_name		= flower['images'][i]['file_name'];
+			sequence		= flower['images'][i]['sequence'];
+			ids[i]			= build_image_ids(sequence);
+			image_path		= public_homepage_url + image_url + '/' + file_name;
+			thumbnail_html	= "<img src = '" + image_path + "' " + thumbnail_string + '>';
 
 			// It would be nice to include a thumbnail-sized copy of the image here,
 			// but as soon as the page is loaded, it tries to retrieve an image
@@ -343,7 +354,7 @@ function populate_details(flower_id)
 
 			$(ids[i][0]).val(description);
 			$(ids[i][1]).val(file_name);
-			$(ids[i][2]).html("<img src = '" + image_path + "' width = '100' height = '100'>");
+			$(ids[i][2]).html(thumbnail_html);
 			$(ids[i][3]).val(sequence);
 		}
 
@@ -351,9 +362,8 @@ function populate_details(flower_id)
 		// 1: Remove any existing notes.
 
 		ids = [];
-		var note_count = 20; // See templates/initialize/notes.html.ep.
 
-		for (i = 0; i < note_count; i++)
+		for (i = 0; i < <%== $$constants{max_note_count} %>; i++)
 		{
 			ids.push(build_note_ids(i + 1) );
 
@@ -385,9 +395,8 @@ function populate_details(flower_id)
 		// 1: Remove any existing URLs.
 
 		ids = [];
-		var url_count = 10; // See templates/initialize/urls.html.ep.
 
-		for (i = 0; i < url_count; i++)
+		for (i = 0; i < <%== $$constants{max_url_count} %>; i++)
 		{
 			ids.push(build_url_ids(i) );
 
@@ -458,19 +467,6 @@ function submit_search()
 	}).success(function(html)
 	{
 		$('#search_result_div').empty().append(html);
-//		$('#search_result_table').datatable
-//		({
-//			'counterText': function (currentPage, totalPage, firstRow, lastRow, totalRow)
-//							{
-//								return 'Page ' + currentPage + ' of ' + totalPage + ', showing '
-//									+ firstRow + ' .. ' + lastRow + ' out of ' + totalRow;
-//							},
-//			'filters': [false, true, true, true, true, true],
-//			'filterText':   'Filter...',
-//			'forceStrings': true,
-//			'pageSize': 200,
-//			'sort': '*'
-//		});
 		$('#search_key').focus();
 	});
 }
