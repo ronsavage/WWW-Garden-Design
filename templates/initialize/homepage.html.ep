@@ -315,9 +315,10 @@ function populate_details(flower_id)
 		// Images: Copy images to the Details/Images tab.
 		// 1: Remove any existing images.
 
-		var ids = [];
+		var ids			= [];
+		var image_count	= <%== $$constants{max_image_count} %>;
 
-		for (i = 0; i < <%== $$constants{max_image_count} %>; i++)
+		for (i = 0; i < image_count; i++)
 		{
 			ids.push(build_image_ids(i + 1) );
 
@@ -331,13 +332,14 @@ function populate_details(flower_id)
 
 		// 2: Loop over all images owned by this flower.
 
-		ids = [];
+		ids			= [];
+		image_count	= (flower['images'].length > image_count) ? image_count : flower['images'].length;
 
 		var description;
 		var file_name;
 		var sequence;
 
-		for (i = 0; i < flower['images'].length; i++)
+		for (i = 0; i < image_count; i++)
 		{
 			description		= flower['images'][i]['description'];
 			file_name		= flower['images'][i]['file_name'];
@@ -361,9 +363,10 @@ function populate_details(flower_id)
 		// Notes: Copy notes to the Details/Notes tab.
 		// 1: Remove any existing notes.
 
-		ids = [];
+		ids			= [];
+		note_count	= <%== $$constants{max_note_count} %>;
 
-		for (i = 0; i < <%== $$constants{max_note_count} %>; i++)
+		for (i = 0; i < note_count; i++)
 		{
 			ids.push(build_note_ids(i + 1) );
 
@@ -375,11 +378,12 @@ function populate_details(flower_id)
 
 		// 2: Loop over all notes owned by this flower.
 
-		ids = [];
+		ids			= [];
+		note_count	= (flower['notes'].length > note_count) ? note_count : flower['notes'].length;
 
 		var note;
 
-		for (i = 0; i < flower['notes'].length; i++)
+		for (i = 0; i < note_count; i++)
 		{
 			note		= flower['notes'][i]['note'];
 			sequence	= flower['notes'][i]['sequence'];
@@ -394,9 +398,10 @@ function populate_details(flower_id)
 		// URLs: Copy urls to the Details/URLs tab.
 		// 1: Remove any existing URLs.
 
-		ids = [];
+		ids			= [];
+		url_count	= <%== $$constants{max_url_count} %>;
 
-		for (i = 0; i < <%== $$constants{max_url_count} %>; i++)
+		for (i = 0; i < url_count; i++)
 		{
 			ids.push(build_url_ids(i) );
 
@@ -408,11 +413,12 @@ function populate_details(flower_id)
 
 		// 2: Loop over all URLs owned by this flower.
 
+		ids			= [];
+		url_count	= (flower['urls'].length > url_count) ? url_count : flower['urls'].length;
+
 		var url;
 
-		ids = [];
-
-		for (i = 0; i < flower['urls'].length; i++)
+		for (i = 0; i < url_count; i++)
 		{
 			sequence	= flower['urls'][i]['sequence'];
 			url			= flower['urls'][i]['url'];

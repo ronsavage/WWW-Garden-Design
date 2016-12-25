@@ -28,7 +28,7 @@ This article discusses some details about the Search Engine component (see figur
 						<br /><br /><br /><br />
 						<span class = 'large_text'>Data about the flowers is manually entered into text files.</span>
 						<br />
-						<span class = 'large_text'>Text files were chosen so I could bootstrap the whole system.</span>
+						<span class = 'large_text'>Text (*.csv) files were chosen so I could bootstrap the whole system.</span>
 						<br />
 						<span class = 'large_text'>Also, I'm hopeful we could build a communal database by sharing such files.</span>
 						<br /><br />
@@ -86,6 +86,8 @@ This article discusses some details about the Search Engine component (see figur
 
 Here, we step thru the process of searching, and viewing the search results.
 
+Note: These screenshots were rigged for clarity by using a very large font.
+
 =begin html
 
 <table align = 'center'>
@@ -121,9 +123,9 @@ Here, we step thru the process of searching, and viewing the search results.
 	<tr>
 		<td align = 'center'>
 			<br />
-			<span class = 'large_text'>Figure 4 - The Flower Tab (After Clicking on the First Result's Thumbnail)</span>
+			<span class = 'large_text'>Figure 4 - The Flower Tab (After clicking on the first result's thumbnail)</span>
 			<br />
-			<span class = 'large_text'>Upon that click the 5 tabs 'Flowers' to 'URLs' are filled in automatically</span>
+			<span class = 'large_text'>Upon that click the 5 sub-tabs 'Flower' to 'URLs' are filled in automatically</span>
 			<br /><br /><br /><hr /><hr />
 		</td>
 	</tr>
