@@ -31,7 +31,7 @@
 %= include 'initialize/search'
 	</div>
 	<div id = 'global_detail_tab'>
-		<div id = 'flower_tab_div'>
+		<div id = 'detail_tab_div'>
 		    <ul>
 		        <li><a href = '#flower_tab'><span>Flower</span></a></li>
 		        <li><a href = '#attributes_tab'><span>Attributes</span></a></li>
@@ -63,6 +63,18 @@
 %= include 'initialize/design'
 	</div>
 	<div id = 'global_help_tab'>
+		<div id = 'help_div'>
+		    <ul>
+		        <li><a href = '#search_help_tab'><span>Searching</span></a></li>
+		        <li><a href = '#faq_help_tab'><span>FAQ</span></a></li>
+		    </ul>
+		    <div id = 'search_help_tab'>
+%= include 'initialize/search_help'
+			</div>
+		    <div id = 'faq_help_tab'>
+%= include 'initialize/faq_help'
+			</div>
+		</div>
 %= include 'initialize/help'
 	</div>
 </div>
@@ -494,7 +506,15 @@ $(function()
 		}
 	});
 
+	// Active sub-tabs for Detail and Help.
+
 	$("#global_detail_tab")
+	.tabs
+	({
+		active: 0
+	});
+
+	$("#global_help_tab")
 	.tabs
 	({
 		active: 0

@@ -1,0 +1,35 @@
+<h1 align = 'center'>Searching</h1>
+
+<table align = 'center' class = 'table_striped'>
+<thead>
+	<tr>
+		<td class = 'generic_border generic_padding'>#</td>
+		<td class = 'generic_border generic_padding'>Q</td>
+		<td class = 'generic_border generic_padding'>A</td>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td class = 'generic_border generic_padding'>1</td>
+		<td class = 'generic_border generic_padding'>Can I search by attributes?</td>
+		<td class = 'generic_border generic_padding'>Yes. Just click the checkbox(es) and click search. There is no need to type anything.</td>
+	</tr>
+	<tr>
+		<td class = 'generic_border generic_padding'>2</td>
+		<td class = 'generic_border generic_padding'>Can I search for words like climber, creeper and vine?</td>
+		<td class = 'generic_border generic_padding'>Yes. Even though the Attribute for habit says 'vine', the program accepts 'climber' and 'creeper' as the same thing.</td>
+	</tr>
+	<tr>
+		<td class = 'generic_border generic_padding'>3</td>
+		<td class = 'generic_border generic_padding'>Can I search for color-like words such as whitish?</td>
+		<td class = 'generic_border generic_padding'>Yes. The program attempts to recognize all such version of the names of colors.</td>
+	</tr>
+	<tr>
+		<td class = 'generic_border generic_padding'>4</td>
+		<td class = 'generic_border generic_padding'>Can I search for any word?</td>
+		<td class = 'generic_border generic_padding'>Yes. The program searches many parts of the database attempting to find your search key.<br ?>
+			Typical words are aniseed, birds, bloom, chocolate, coast, color, container,<br />
+			evergreen, foliage, frost, hardy, hedging, masses, mulch, screen, scent. Try it!</td>
+	</tr>
+</tbody>
+</table>
