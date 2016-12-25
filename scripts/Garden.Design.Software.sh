@@ -1,6 +1,9 @@
 #!/bin/bash
+#
+# Note: You need to install dot (http://graphviz.org/) and MarpaX::Languages::Dash to get render.pl.
+# The latter is installed with shell> cpanm MarpaX::Languages::Dash.
 
-perl ../MarpaX-Demo-StringParser/scripts/render.pl	\
+perl ../MarpaX-Languages-Dash/scripts/render.pl	\
 	-i html/Garden.Design.Software.figure.1.dash	\
 	-o html/Garden.Design.Software.figure.1.svg		\
 	-dot html/Garden.Design.Software.figure.1.gv
