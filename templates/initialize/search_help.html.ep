@@ -28,8 +28,8 @@
 		<td class = 'generic_border generic_padding'>4</td>
 		<td class = 'generic_border generic_padding'>Can I search for any word?</td>
 		<td class = 'generic_border generic_padding'>Yes. The program searches many parts of the database attempting to find your search key.<br ?>
-			Typical words are aniseed, birds, bloom, chocolate, coast, color, container,<br />
-			evergreen, foliage, frost, hardy, hedging, masses, mulch, screen, scent. Try it!</td>
+			Typical words are birds, bloom, chocolate, coast, color, container, evergreen, <br />
+			foliage, frost, hardy, hedging, masses, mint, mulch, screen, scent. Try something!</td>
 	</tr>
 </tbody>
 </table>
