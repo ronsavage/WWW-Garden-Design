@@ -19,9 +19,9 @@ This article discusses some details about the Search Engine component (see figur
 
 =begin html
 
-<table align = 'center'>
+<table align = 'center' class = 'generic_border'>
 	<tr>
-		<td>
+		<td class = 'generic_border'>
 			<table>
 				<tr rowspan = '3'>
 					<td>
@@ -61,7 +61,7 @@ This article discusses some details about the Search Engine component (see figur
 				</tr>
 			</table>
 		</td>
-		<td>
+		<td class = 'generic_border'>
 			<table>
 				<tr>
 					<td rowspan = '8'>
@@ -90,7 +90,7 @@ Note: These screenshots were rigged for clarity by using a very large font.
 
 =begin html
 
-<table align = 'center'>
+<table align = 'center' class = 'generic_border'>
 	<tr>
 		<td><img src = '/Perl-modules/html/garden.design/Search.Engine.Screenshot.1.jpg'></td>
 	</tr>
@@ -101,9 +101,6 @@ Note: These screenshots were rigged for clarity by using a very large font.
 			<br /><br /><br /><hr /><hr />
 		</td>
 	</tr>
-</table>
-
-<table align = 'center'>
 	<tr>
 		<td><img src = '/Perl-modules/html/garden.design/Search.Engine.Screenshot.2.jpg'></td>
 	</tr>
@@ -114,9 +111,6 @@ Note: These screenshots were rigged for clarity by using a very large font.
 			<br /><br /><br /><hr /><hr />
 		</td>
 	</tr>
-</table>
-
-<table align = 'center'>
 	<tr>
 		<td><img src = '/Perl-modules/html/garden.design/Search.Engine.Screenshot.3.jpg'></td>
 	</tr>
@@ -129,9 +123,6 @@ Note: These screenshots were rigged for clarity by using a very large font.
 			<br /><br /><br /><hr /><hr />
 		</td>
 	</tr>
-</table>
-
-<table align = 'center'>
 	<tr>
 		<td><img src = '/Perl-modules/html/garden.design/Search.Engine.Screenshot.4.jpg'></td>
 	</tr>
@@ -142,9 +133,6 @@ Note: These screenshots were rigged for clarity by using a very large font.
 			<br /><br /><br /><hr /><hr />
 		</td>
 	</tr>
-</table>
-
-<table align = 'center'>
 	<tr>
 		<td><img src = '/Perl-modules/html/garden.design/Search.Engine.Screenshot.5.jpg'></td>
 	</tr>
@@ -155,9 +143,6 @@ Note: These screenshots were rigged for clarity by using a very large font.
 			<br /><br /><br /><hr /><hr />
 		</td>
 	</tr>
-</table>
-
-<table align = 'center'>
 	<tr>
 		<td><img src = '/Perl-modules/html/garden.design/Search.Engine.Screenshot.6.jpg'></td>
 	</tr>
@@ -168,9 +153,6 @@ Note: These screenshots were rigged for clarity by using a very large font.
 			<br /><br /><br /><hr /><hr />
 		</td>
 	</tr>
-</table>
-
-<table align = 'center'>
 	<tr>
 		<td><img src = '/Perl-modules/html/garden.design/Search.Engine.Screenshot.7.jpg'></td>
 	</tr>
