@@ -538,7 +538,7 @@ sub export_all_pages
 			push @images,
 			[
 				{td => mark_raw($$image{description})},
-				{td => mark_raw("<img src = '$$constants{homepage_url}$$constants{image_url}/$$image{file_name}'>")},
+				{td => mark_raw("<img src = '$$image{file_name}'>")},
 			];
 		}
 
@@ -728,8 +728,8 @@ sub export_garden_layout
 
 			$image_id = $image -> image_link
 			(
-				href	=> "$$constants{homepage_url}$$constants{flower_url}/$pig_latin.html",
-				image	=> "$$constants{homepage_url}$$constants{image_url}/$pig_latin.0.jpg",
+				href	=> $$flower{web_page_url},
+				image	=> $$flower{thumbnail_url},
 				target	=> 'new_window',
 				x		=> $$location{x}, # Cell co-ord.
 				y		=> $$location{y}, # Cell co-ord.
@@ -791,7 +791,7 @@ sub export_garden_layout
 			<tr><td><a href = '$$constants{homepage_url}/Flowers.html'>Part 4 : The Flower Catalog</a></td></tr>
 		</table>
 
-		<br>
+		<br />
 
 		<a name = 'part_1'>
 		<h2 align = 'center'>Part 1: The $Garden Garden Layout (SVG image), with clickable flower thumbnails in situ</h2>
@@ -802,11 +802,11 @@ sub export_garden_layout
 			</td></tr>
 		</table>
 
-		<br>
+		<br />
 
 		<table align = 'center'><tr><td align = 'center'><a href = '#top'>Top</a></td></tr></table>
 
-		<br>
+		<br />
 
 		<a name = 'part_4'>
 		<table align = 'center'>
@@ -861,7 +861,7 @@ sub export_icons
 		$image -> box(fill => $fill);
 		$self -> format_string($image, $$constants{cell_width}, $$constants{cell_height}, $name);
 
-		$image -> write(file => "$$constants{homepage_dir}$$constants{icon_dir}/$file_name.png");
+		$image -> write(file => "$$object{icon_dir}/$file_name.png");
 	}
 
 	my(@heading)	= map{ {td => $_} } (qw(Object Icon) );
@@ -911,7 +911,7 @@ sub export_layout_guide
 
 	return <<EOS;
 <table align='center'>
-	<tr><td align='center'><span class = 'red_on_gold_title'>The Garden Layouts</span><br /></td></tr>
+	<tr><td align='center'><span class = 'red_on_gold_title'>The Garden Layouts</span><br /><br /></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/front.garden.layout.html'>The Front Garden Layout, with clickable flower thumbnails in situ</a></td></tr>
 	<tr><td><br></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/back.garden.layout.html'>The Back Garden Layout, with clickable flower thumbnails in situ</a></td></tr>
@@ -919,7 +919,7 @@ sub export_layout_guide
 </table>
 <br />
 <table align='center'>
-	<tr><td align='center'><br /><span class = 'red_on_gold_title'>Articles</span><br /></td></tr>
+	<tr><td align='center'><br /><span class = 'red_on_gold_title'>Articles</span><br /><br /></td></tr>
 	<tr><td><a href = 'http://savage.net.au/Perl-modules/html/garden.design/Garden.Design.Software.html'>2016-12-22: Garden Design Software</a></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/How.To.Net.Dwarf.Apples.html'>2016-01-03: How To Net Dwarf Apples</a></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/Protecting.Apples.From.Possums.html'>2013-12-08: Protecting Apples From Possums</a></td></tr>
@@ -927,7 +927,7 @@ sub export_layout_guide
 </table>
 <br />
 <table align='center'>
-	<tr><td align='center'><br /><span class = 'red_on_gold_title'>Various URLs</span><br /></td></tr>
+	<tr><td align='center'><br /><span class = 'red_on_gold_title'>Various URLs</span><br /><br /></td></tr>
 	<tr><td><a href = 'http://holt59.github.io/datatable/'>The URL</a> of the free Javascript package which manages the HTML table below</td></tr>
 	<tr><td><a href = 'http://bgrins.github.io/spectrum/'>The URL</a> of the free Javascript package which provides a color picker</td></tr>
 	<tr><td><br></td></tr>

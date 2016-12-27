@@ -505,6 +505,13 @@ sub read_flowers_table
 			}
 		}
 
+		# Fix the image urls.
+
+		for my $i (0 .. $#{$$record{images} })
+		{
+			$$record{images}[$i]{file_name} = "$$constants{homepage_url}$$constants{image_url}/$$record{images}[$i]{file_name}";
+		}
+
 		push @records, $record;
 	}
 
