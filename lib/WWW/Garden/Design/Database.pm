@@ -484,8 +484,8 @@ sub read_flowers_table
 
 		$pig_latin				= $$flower{pig_latin};
 		$$record{hxw}			= $self -> clean_up_height_width($$flower{height}, $$flower{width});
-		$$record{thumbnail_url}	= "$$constants{image_url}/$pig_latin.0.jpg";
-		$$record{web_page_url}	= "$$constants{flower_url}/$pig_latin.html";
+		$$record{thumbnail_url}	= "$$constants{homepage_url}$$constants{image_url}/$pig_latin.0.jpg";
+		$$record{web_page_url}	= "$$constants{homepage_url}$$constants{flower_url}/$pig_latin.html";
 
 		for my $table_name (qw/attributes flower_locations images notes urls/)
 		{
@@ -557,8 +557,8 @@ sub read_objects_table
 		}
 
 		$$record{color}		= $color_map{$$record{color_id} };
-		$$record{icon_dir}	= $$constants{icon_dir};
-		$$record{icon_url}	= $$constants{icon_url};
+		$$record{icon_dir}	= "$$constants{homepage_dir}$$constants{icon_dir}";
+		$$record{icon_url}	= "$$constants{homepage_url}$$constants{icon_url}";
 
 		for my $table_name (qw/object_locations/)
 		{
@@ -620,7 +620,7 @@ sub search
 				hxw				=> $self -> clean_up_height_width($$flower{height}, $$flower{width}),
 				height			=> $$flower{height},
 				pig_latin		=> $pig_latin,
-				thumbnail_url	=> "$$constants{image_url}/$pig_latin.0.jpg",
+				thumbnail_url	=> "$$constants{homepage_url}$$constants{image_url}/$pig_latin.0.jpg",
 				width			=> $$flower{width},
 			};
 

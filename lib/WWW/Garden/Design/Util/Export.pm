@@ -538,7 +538,7 @@ sub export_all_pages
 			push @images,
 			[
 				{td => mark_raw($$image{description})},
-				{td => mark_raw("<img src = '$$constants{image_url}/$$image{file_name}'>")},
+				{td => mark_raw("<img src = '$$constants{homepage_url}$$constants{image_url}/$$image{file_name}'>")},
 			];
 		}
 
@@ -581,7 +581,7 @@ sub export_all_pages
 			];
 		}
 
-		$web_page_name = "$$constants{flower_dir}/$pig_latin.html";
+		$web_page_name = "$$constants{homepage_dir}$$constants{flower_dir}/$pig_latin.html";
 
 		$self -> db -> logger -> info("Writing $web_page_name");
 
@@ -706,7 +706,7 @@ sub export_garden_layout
 			$image_id = $image -> svg -> image
 			(
 				height	=> $$constants{cell_height},
-				href	=> "$$object{icon_url}/$file_name.png",
+				href	=> "$$constants{homepage_url}$$object{icon_url}/$file_name.png",
 				width	=> $$constants{cell_width},
 				x		=> $x_offset + $$constants{cell_width} * $$feature{x}, # Cell co-ord.
 				y		=> $y_offset + $$constants{cell_height} * $$feature{y}, # Cell co-ord.
@@ -728,8 +728,8 @@ sub export_garden_layout
 
 			$image_id = $image -> image_link
 			(
-				href	=> "$$constants{flower_url}/$pig_latin.html",
-				image	=> "$$constants{image_url}/$pig_latin.0.jpg",
+				href	=> "$$constants{homepage_url}$$constants{flower_url}/$pig_latin.html",
+				image	=> "$$constants{homepage_url}$$constants{image_url}/$pig_latin.0.jpg",
 				target	=> 'new_window',
 				x		=> $$location{x}, # Cell co-ord.
 				y		=> $$location{y}, # Cell co-ord.
@@ -786,9 +786,9 @@ sub export_garden_layout
 		<br />
 		<table align = 'center'>
 			<tr><td>Part 1: The $Garden Garden Layout (SVG image), with clickable flower thumbnails in situ</td></tr>
-			<tr><td><a href = '$$constants{flower_url}/$other_garden.garden.layout.html'>Part 2: The $Other_garden Garden Layout (separate page)</a></td></tr>
+			<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/$other_garden.garden.layout.html'>Part 2: The $Other_garden Garden Layout (separate page)</a></td></tr>
 			<tr><td><a href = '#part_4'>Part 3: The Database Schema</a></td></tr>
-			<tr><td><a href = '$$constants{public_homepage_url}/Flowers.html'>Part 4 : The Flower Catalog</a></td></tr>
+			<tr><td><a href = '$$constants{homepage_url}/Flowers.html'>Part 4 : The Flower Catalog</a></td></tr>
 		</table>
 
 		<br>
@@ -798,7 +798,7 @@ sub export_garden_layout
 
 		<table align = 'center'>
 			<tr><td align = 'center'>
-				<object data = '$$constants{flower_url}/$garden_name.garden.layout.svg'></object>
+				<object data = '$$constants{homepage_url}$$constants{flower_url}/$garden_name.garden.layout.svg'></object>
 			</td></tr>
 		</table>
 
@@ -812,7 +812,7 @@ sub export_garden_layout
 		<table align = 'center'>
 			<tr><td align = 'center'>The Database Schema</td></tr>
 			<tr><td align = 'center'>
-				<object data = '$$constants{flower_url}/flowers.schema.svg'></object>
+				<object data = '$$constants{homepage_url}$$constants{flower_url}/flowers.schema.svg'></object>
 			</td></tr>
 		</table>
 
@@ -861,7 +861,7 @@ sub export_icons
 		$image -> box(fill => $fill);
 		$self -> format_string($image, $$constants{cell_width}, $$constants{cell_height}, $name);
 
-		$image -> write(file => "$$constants{icon_dir}/$file_name.png");
+		$image -> write(file => "$$constants{homepage_dir}$$constants{icon_dir}/$file_name.png");
 	}
 
 	my(@heading)	= map{ {td => $_} } (qw(Object Icon) );
@@ -874,12 +874,12 @@ sub export_icons
 
 	for my $item (@file_names)
 	{
-		push @row, [{td => $$item[0]}, {td => mark_raw("<object data = '$$constants{icon_url}/$$item[1].png'></object>")}];
+		push @row, [{td => $$item[0]}, {td => mark_raw("<object data = '$$constants{homepage_url}$$constants{icon_url}/$$item[1].png'></object>")}];
 	}
 
 	push @row, [@heading];
 
-	$file_name = "$$constants{icon_dir}/objects.html";
+	$file_name = "$$constants{homepage_dir}$$constants{icon_dir}/objects.html";
 
 	open(my $fh, '>', $file_name) || die "Can't open: $file_name: $!\n";
 	print $fh $tx -> render
@@ -912,17 +912,17 @@ sub export_layout_guide
 	return <<EOS;
 <table align='center'>
 	<tr><td align='center'><span class = 'red_on_gold_title'>The Garden Layouts</span><br /></td></tr>
-	<tr><td><a href = '$$constants{flower_url}/front.garden.layout.html'>The Front Garden Layout, with clickable flower thumbnails in situ</a></td></tr>
+	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/front.garden.layout.html'>The Front Garden Layout, with clickable flower thumbnails in situ</a></td></tr>
 	<tr><td><br></td></tr>
-	<tr><td><a href = '$$constants{flower_url}/back.garden.layout.html'>The Back Garden Layout, with clickable flower thumbnails in situ</a></td></tr>
+	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/back.garden.layout.html'>The Back Garden Layout, with clickable flower thumbnails in situ</a></td></tr>
 	<tr><td><br></td></tr>
 </table>
 <br />
 <table align='center'>
 	<tr><td align='center'><br /><span class = 'red_on_gold_title'>Articles</span><br /></td></tr>
 	<tr><td><a href = 'http://savage.net.au/Perl-modules/html/garden.design/Garden.Design.Software.html'>2016-12-22: Garden Design Software</a></td></tr>
-	<tr><td><a href = '$$constants{flower_url}/html/How.To.Net.Dwarf.Apples.html'>2016-01-03: How To Net Dwarf Apples</a></td></tr>
-	<tr><td><a href = '$$constants{flower_url}/html/Protecting.Apples.From.Possums.html'>2013-12-08: Protecting Apples From Possums</a></td></tr>
+	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/How.To.Net.Dwarf.Apples.html'>2016-01-03: How To Net Dwarf Apples</a></td></tr>
+	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/Protecting.Apples.From.Possums.html'>2013-12-08: Protecting Apples From Possums</a></td></tr>
 	<tr><td><br></td></tr>
 </table>
 <br />
