@@ -110,7 +110,7 @@ td.generic_border_margin
 
 td.generic_padding
 {
-	padding: 6px 0px 3px 2em;
+	padding: 4px 4px 2px 2em;
 }
 
 th.generic_border
@@ -130,7 +130,7 @@ th.generic_border_margin
 
 th.generic_padding
 {
-	padding: 6px 0px 3px 2em;
+	padding: 4px 4px 2px 2em;
 }
 
 table.datatable

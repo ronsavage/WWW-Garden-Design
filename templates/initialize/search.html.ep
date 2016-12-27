@@ -1,16 +1,29 @@
 <form name = 'search_form' id = 'search_form'>
 <table align = 'center'>
-<tr>
-	<td colspan = '2'><div class = 'blue_centered'>Search</div></td>
-</tr>
-<tr>
-	<td>Common name, scientific name or alias:</td>
-	<td align = 'left'><input id = 'search_key' type = 'text' size = '30' maxlength = '100' value = ''></td>
-</tr>
-<tr>
-	<td align = 'center'><input type = 'reset'  value = 'Reset'  /></td>
-	<td align = 'center'><input type = 'submit' value = 'Search' /></td>
-</tr>
+	<tr>
+		<td colspan = '2'><div class = 'blue_centered'>Search</div></td>
+	</tr>
+	% for my $check_box (@$search_check_boxes) {
+	<tr>
+		<td><%== $$check_box[0] %>:</td>
+		<td>
+			<%== $$check_box[1] %>
+		</td>
+	</tr>
+	<tr>
+		<td colspan = '2'><hr></td>
+	</tr>
+	% }
+</table>
+<table align = 'center'>
+	<tr>
+		<td>Search text:</td>
+		<td align = 'left'><input id = 'search_key' type = 'text' size = '30' maxlength = '100' value = ''></td>
+	</tr>
+	<tr>
+		<td align = 'center'><input type = 'reset'  value = 'Reset'  /></td>
+		<td align = 'center'><input type = 'submit' value = 'Search' /></td>
+	</tr>
 </table>
 </form>
 <div id = 'search_result_div'></div>

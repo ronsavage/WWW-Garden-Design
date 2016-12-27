@@ -86,7 +86,15 @@ This article discusses some details about the Search Engine component (see figur
 
 Here, we step thru the process of searching, and viewing the search results.
 
-Note: These screenshots were rigged for clarity by using a very large font.
+Notes:
+
+=over 4
+
+=item o These screenshots were rigged for clarity by using a very large font
+
+=item o The Objects and Design tabs don't do anything yet
+
+=back
 
 =begin html
 
