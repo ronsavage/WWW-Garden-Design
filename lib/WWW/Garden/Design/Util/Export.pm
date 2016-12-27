@@ -30,14 +30,6 @@ use Types::Standard qw/Any Int HashRef Str/;
 
 extends qw/WWW::Garden::Design::Database::Base/;
 
-has constants =>
-(
-	default		=> sub{return {} },
-	is			=> 'rw',
-	isa			=> HashRef,
-	required	=> 0,
-);
-
 has export_type =>
 (
 	default		=> sub{return 0},
@@ -117,8 +109,6 @@ sub BUILD
 			logger => Mojo::Log -> new(path => $log_path)
 		)
 	);
-
-	$self -> constants($self -> db -> read_constants_table);
 
 }	# End of BUILD.
 
@@ -388,11 +378,11 @@ sub as_html
 
 	push @row, [@heading];
 
-	my($config)	= $self -> config;
-	my($tx)		= Text::Xslate -> new
+	my($constants)	= $self -> db -> read_constants_table;
+	my($tx)			= Text::Xslate -> new
 	(
 		input_layer => '',
-		path        => $$config{template_path},
+		path        => $$constants{template_path},
 	);
 
 	return encode('utf-8', $tx -> render
@@ -451,7 +441,7 @@ sub colors2csv
 sub constants2csv
 {
 	my($self, $csv)	= @_;
-	my($constants)	= $self -> constants;
+	my($constants)	= $self -> db -> constants;
 	my($file_name)	= $self -> output_file =~ s/flowers.csv/constants.csv/r;
 
 	$self -> db -> logger -> info("Writing to $file_name");
@@ -486,10 +476,10 @@ sub export_all_pages
 {
 	my($self)				= @_;
 	my($attribute_types)	= $self -> db -> read_table('attribute_types');
-	my($constants)			= $self -> constants;
+	my($constants)			= $self -> db -> constants;
 	my($flowers)			= $self -> db -> read_flowers_table;
 
-	$self -> db -> logger -> info("flower_dir: $$config{flower_dir}");
+	$self -> db -> logger -> info("flower_dir: $$constants{flower_dir}");
 
 	my(%attribute_sequence);
 
@@ -549,7 +539,7 @@ sub export_all_pages
 			push @images,
 			[
 				{td => mark_raw($$image{description})},
-				{td => mark_raw("<img src = '$$config{image_url}/$$image{file_name}'>")},
+				{td => mark_raw("<img src = '$$constants{image_url}/$$image{file_name}'>")},
 			];
 		}
 
@@ -592,7 +582,7 @@ sub export_all_pages
 			];
 		}
 
-		$web_page_name = "$$config{flower_dir}/$pig_latin.html";
+		$web_page_name = "$$constants{flower_dir}/$pig_latin.html";
 
 		$self -> db -> logger -> info("Writing $web_page_name");
 
@@ -622,15 +612,15 @@ sub export_all_pages
 sub export_garden_layout
 {
 	my($self, $garden_name)	= @_;
-	my($config)				= $self -> config;
+	my($constants)			= $self -> db -> constants;
 	my($flowers)			= $self -> db -> read_flowers_table;
 	my($Garden)				= ucfirst($garden_name);
 	my($gardens)			= $self -> db -> read_table('gardens');
 	my($objects)			= $self -> db -> read_objects_table;
 	my($max_x)				= 0;
 	my($max_y)				= 0;
-	my($x_offset)			= ${$self -> config}{x_offset};
-	my($y_offset)			= ${$self -> config}{y_offset};
+	my($x_offset)			= $$constants{x_offset};
+	my($y_offset)			= $$constants{y_offset};
 
 	my(%garden_name);
 
@@ -691,12 +681,12 @@ sub export_garden_layout
 	my($y_cell_count)	= $max_y;
 	my($image)			= SVG::Grid -> new
 	(
-		cell_width		=> $$config{cell_width},
-		cell_height		=> $$config{cell_height},
+		cell_width		=> $$constants{cell_width},
+		cell_height		=> $$constants{cell_height},
 		x_cell_count	=> $x_cell_count,
 		y_cell_count	=> $y_cell_count,
-		x_offset		=> $$config{x_offset},
-		y_offset		=> $$config{y_offset},
+		x_offset		=> $$constants{x_offset},
+		y_offset		=> $$constants{y_offset},
 	);
 
 	$image -> grid(stroke => 'blue');
@@ -716,11 +706,11 @@ sub export_garden_layout
 
 			$image_id = $image -> svg -> image
 			(
-				height	=> $$config{cell_height},
+				height	=> $$constants{cell_height},
 				href	=> "$$object{icon_url}/$file_name.png",
-				width	=> $$config{cell_width},
-				x		=> $x_offset + $$config{cell_width} * $$feature{x}, # Cell co-ord.
-				y		=> $y_offset + $$config{cell_height} * $$feature{y}, # Cell co-ord.
+				width	=> $$constants{cell_width},
+				x		=> $x_offset + $$constants{cell_width} * $$feature{x}, # Cell co-ord.
+				y		=> $y_offset + $$constants{cell_height} * $$feature{y}, # Cell co-ord.
 			);
 		}
 	}
@@ -739,8 +729,8 @@ sub export_garden_layout
 
 			$image_id = $image -> image_link
 			(
-				href	=> "$$config{flower_url}/$pig_latin.html",
-				image	=> "$$config{image_url}/$pig_latin.0.jpg",
+				href	=> "$$constants{flower_url}/$pig_latin.html",
+				image	=> "$$constants{image_url}/$pig_latin.0.jpg",
 				target	=> 'new_window',
 				x		=> $$location{x}, # Cell co-ord.
 				y		=> $$location{y}, # Cell co-ord.
@@ -797,9 +787,9 @@ sub export_garden_layout
 		<br />
 		<table align = 'center'>
 			<tr><td>Part 1: The $Garden Garden Layout (SVG image), with clickable flower thumbnails in situ</td></tr>
-			<tr><td><a href = '$$config{flower_url}/$other_garden.garden.layout.html'>Part 2: The $Other_garden Garden Layout (separate page)</a></td></tr>
+			<tr><td><a href = '$$constants{flower_url}/$other_garden.garden.layout.html'>Part 2: The $Other_garden Garden Layout (separate page)</a></td></tr>
 			<tr><td><a href = '#part_4'>Part 3: The Database Schema</a></td></tr>
-			<tr><td><a href = '$$config{public_homepage_url}/Flowers.html'>Part 4 : The Flower Catalog</a></td></tr>
+			<tr><td><a href = '$$constants{public_homepage_url}/Flowers.html'>Part 4 : The Flower Catalog</a></td></tr>
 		</table>
 
 		<br>
@@ -809,7 +799,7 @@ sub export_garden_layout
 
 		<table align = 'center'>
 			<tr><td align = 'center'>
-				<object data = '$$config{flower_url}/$garden_name.garden.layout.svg'></object>
+				<object data = '$$constants{flower_url}/$garden_name.garden.layout.svg'></object>
 			</td></tr>
 		</table>
 
@@ -823,7 +813,7 @@ sub export_garden_layout
 		<table align = 'center'>
 			<tr><td align = 'center'>The Database Schema</td></tr>
 			<tr><td align = 'center'>
-				<object data = '$$config{flower_url}/flowers.schema.svg'></object>
+				<object data = '$$constants{flower_url}/flowers.schema.svg'></object>
 			</td></tr>
 		</table>
 
@@ -844,10 +834,10 @@ EOS
 
 sub export_icons
 {
-	my($self)	= @_;
-	my($config)	= $self -> config;
+	my($self)		= @_;
+	my($constants)	= $self -> db -> constants;
 
-	$self -> db -> logger -> info("flower_dir: $$config{flower_dir}");
+	$self -> db -> logger -> info("flower_dir: $$constants{flower_dir}");
 
 	my($objects) = $self -> db -> read_objects_table;
 
@@ -863,16 +853,16 @@ sub export_icons
 		$color		= Imager::Color -> new($$object{color}{hex});
 		$fill		= Imager::Fill -> new(fg => $color, hatch => 'dots16');
 		$id			= $$object{id};
-		$image		= Imager -> new(xsize => $$config{cell_width}, ysize => $$config{cell_height});
+		$image		= Imager -> new(xsize => $$constants{cell_width}, ysize => $$constants{cell_height});
 		$name		= $$object{name};
 		$file_name	= $self -> db -> clean_up_icon_name($name);
 
 		push @file_names, [$name, $file_name];
 
 		$image -> box(fill => $fill);
-		$self -> format_string($image, $$config{cell_width}, $$config{cell_height}, $name);
+		$self -> format_string($image, $$constants{cell_width}, $$constants{cell_height}, $name);
 
-		$image -> write(file => "$$config{icon_dir}/$file_name.png");
+		$image -> write(file => "$$constants{icon_dir}/$file_name.png");
 	}
 
 	my(@heading)	= map{ {td => $_} } (qw(Object Icon) );
@@ -880,17 +870,17 @@ sub export_icons
 	my($tx)			= Text::Xslate -> new
 	(
 		input_layer	=> '',
-		path		=> $$config{template_path},
+		path		=> $$constants{template_path},
 	);
 
 	for my $item (@file_names)
 	{
-		push @row, [{td => $$item[0]}, {td => mark_raw("<object data = '$$config{icon_url}/$$item[1].png'></object>")}];
+		push @row, [{td => $$item[0]}, {td => mark_raw("<object data = '$$constants{icon_url}/$$item[1].png'></object>")}];
 	}
 
 	push @row, [@heading];
 
-	$file_name = "$$config{icon_dir}/objects.html";
+	$file_name = "$$constants{icon_dir}/objects.html";
 
 	open(my $fh, '>', $file_name) || die "Can't open: $file_name: $!\n";
 	print $fh $tx -> render
@@ -917,23 +907,23 @@ sub export_icons
 
 sub export_layout_guide
 {
-	my($self)	= @_;
-	my($config)	= $self -> config;
+	my($self)		= @_;
+	my($constants)	= $self -> constants;
 
 	return <<EOS;
 <table align='center'>
 	<tr><td align='center'><span class = 'red_on_gold_title'>The Garden Layouts</span><br /></td></tr>
-	<tr><td><a href = '$$config{flower_url}/front.garden.layout.html'>The Front Garden Layout, with clickable flower thumbnails in situ</a></td></tr>
+	<tr><td><a href = '$$constants{flower_url}/front.garden.layout.html'>The Front Garden Layout, with clickable flower thumbnails in situ</a></td></tr>
 	<tr><td><br></td></tr>
-	<tr><td><a href = '$$config{flower_url}/back.garden.layout.html'>The Back Garden Layout, with clickable flower thumbnails in situ</a></td></tr>
+	<tr><td><a href = '$$constants{flower_url}/back.garden.layout.html'>The Back Garden Layout, with clickable flower thumbnails in situ</a></td></tr>
 	<tr><td><br></td></tr>
 </table>
 <br />
 <table align='center'>
 	<tr><td align='center'><br /><span class = 'red_on_gold_title'>Articles</span><br /></td></tr>
 	<tr><td><a href = 'http://savage.net.au/Perl-modules/html/garden.design/Garden.Design.Software.html'>2016-12-22: Garden Design Software</a></td></tr>
-	<tr><td><a href = '$$config{flower_url}/html/How.To.Net.Dwarf.Apples.html'>2016-01-03: How To Net Dwarf Apples</a></td></tr>
-	<tr><td><a href = '$$config{flower_url}/html/Protecting.Apples.From.Possums.html'>2013-12-08: Protecting Apples From Possums</a></td></tr>
+	<tr><td><a href = '$$constants{flower_url}/html/How.To.Net.Dwarf.Apples.html'>2016-01-03: How To Net Dwarf Apples</a></td></tr>
+	<tr><td><a href = '$$constants{flower_url}/html/Protecting.Apples.From.Possums.html'>2013-12-08: Protecting Apples From Possums</a></td></tr>
 	<tr><td><br></td></tr>
 </table>
 <br />

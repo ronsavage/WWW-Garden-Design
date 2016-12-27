@@ -20,6 +20,14 @@ use Types::Standard qw/Object HashRef/;
 
 extends qw/WWW::Garden::Design::Util::Config/;
 
+has constants =>
+(
+	default		=> sub{return {} },
+	is			=> 'rw',
+	isa			=> HashRef,
+	required	=> 0,
+);
+
 has dbh =>
 (
 	is       => 'rw',
@@ -73,6 +81,7 @@ sub BUILD
 	$self -> dbh -> do('PRAGMA foreign_keys = ON') if ($$config{dsn} =~ /SQLite/i);
 
 	$self -> simple(DBIx::Simple -> new($self -> dbh) );
+	$self -> constants($self -> read_constants_table); # Warning. Empty at start of import.
 
 }	# End of BUILD.
 
@@ -425,12 +434,10 @@ sub read_constants_table
 
 	for my $item (@{$self -> read_table('constants')})
 	{
-		$name							= $$item{name};
-		$$constants{$name}				= {};
-		$$constants{$name}{description} = $$item{description};
-		$$constants{$name}{value}		= $$item{value};
-		$homepage{dir}					= $$item{value} if ($name eq 'homepage_dir');
-		$homepage{url}					= $$item{value} if ($name eq 'homepage_url');
+		$name				= $$item{name};
+		$$constants{$name}	= $$item{value};
+		$homepage{dir}		= $$item{value} if ($name eq 'homepage_dir');
+		$homepage{url}		= $$item{value} if ($name eq 'homepage_url');
 	}
 
 	# Prepend some values with homepage stuff, but don't prepend things to themselves.
@@ -464,7 +471,7 @@ sub read_flower_dependencies
 sub read_flowers_table
 {
 	my($self)				= @_;
-	my($config)				= $self -> config_set;
+	my($constants)			= $self -> constants;
 	my($attribute_types)	= $self -> read_table('attribute_types');
 	my($flowers)			= $self -> read_table('flowers'); # Avoid 'Deep Recursion'! Don't call read_flowers_table()!
 
@@ -494,8 +501,8 @@ sub read_flowers_table
 
 		$pig_latin				= $$flower{pig_latin};
 		$$record{hxw}			= $self -> clean_up_height_width($$flower{height}, $$flower{width});
-		$$record{thumbnail_url}	= (-e "$$config{image_dir}/$pig_latin.0.jpg") ? "$$config{image_url}/$pig_latin.0.jpg" : "$$config{image_url}/growing.png";
-		$$record{web_page_url}	= "$$config{flower_url}/$pig_latin.html";
+		$$record{thumbnail_url}	= "$$constants{image_url}/$pig_latin.0.jpg";
+		$$record{web_page_url}	= "$$constants{flower_url}/$pig_latin.html";
 
 		for my $table_name (qw/attributes flower_locations images notes urls/)
 		{
