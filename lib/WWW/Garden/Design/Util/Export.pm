@@ -314,7 +314,6 @@ sub as_html
  		);
 	}
 
-	my($config)		= $self -> config_set;
 	my($count)		= 0;
 	my($flowers)	= $self -> db -> read_flowers_table;
 	my(@heading)	= map{ {td => mark_raw($_)} } sort{$column{$a}{order} <=> $column{$b}{order} } keys %column;
@@ -389,7 +388,8 @@ sub as_html
 
 	push @row, [@heading];
 
-	my($tx) = Text::Xslate -> new
+	my($config)	= $self -> config;
+	my($tx)		= Text::Xslate -> new
 	(
 		input_layer => '',
 		path        => $$config{template_path},
@@ -458,7 +458,7 @@ sub constants2csv
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 
-	$csv -> combine(qw/name value/);
+	$csv -> combine(qw/name value description/);
 
 	print $fh $csv -> string, "\n";
 
@@ -467,7 +467,8 @@ sub constants2csv
 		$csv -> combine
 		(
 			$name,
-			$$constants{$name},
+			$$constants{$name}{value},
+			$$constants{$name}{description},
 		);
 
 		print $fh $csv -> string, "\n";
@@ -484,8 +485,8 @@ sub constants2csv
 sub export_all_pages
 {
 	my($self)				= @_;
-	my($config)				= $self -> config_set;
 	my($attribute_types)	= $self -> db -> read_table('attribute_types');
+	my($constants)			= $self -> constants;
 	my($flowers)			= $self -> db -> read_flowers_table;
 
 	$self -> db -> logger -> info("flower_dir: $$config{flower_dir}");
@@ -500,7 +501,7 @@ sub export_all_pages
 	my($tx) = Text::Xslate -> new
 	(
 		input_layer => '',
-		path        => $$config{template_path},
+		path        => $$constants{template_path},
 	);
 
 	my(@attributes, $aliases);
@@ -621,7 +622,7 @@ sub export_all_pages
 sub export_garden_layout
 {
 	my($self, $garden_name)	= @_;
-	my($config)				= $self -> config_set;
+	my($config)				= $self -> config;
 	my($flowers)			= $self -> db -> read_flowers_table;
 	my($Garden)				= ucfirst($garden_name);
 	my($gardens)			= $self -> db -> read_table('gardens');
@@ -844,7 +845,7 @@ EOS
 sub export_icons
 {
 	my($self)	= @_;
-	my($config)	= $self -> config_set;
+	my($config)	= $self -> config;
 
 	$self -> db -> logger -> info("flower_dir: $$config{flower_dir}");
 

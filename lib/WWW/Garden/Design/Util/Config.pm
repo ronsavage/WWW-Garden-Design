@@ -36,14 +36,6 @@ has config_path =>
 	required => 0,
 );
 
-has config_set =>
-(
-	default  => sub{return {} },
-	is       => 'rw',
-	isa      => HashRef,
-	required => 0,
-);
-
 our $VERSION = '1.00';
 
 # -----------------------------------------------
@@ -54,24 +46,6 @@ sub BUILD
 	my($path) = "$ENV{HOME}/perl.modules/WWW-Garden-Design/config/" . $self -> config_name;
 
 	$self -> config($self -> _init_config($path) );
-
-	my($config) = $self -> config;
-
-	$self -> config_set
-	({
-		flower_dir			=> "$$config{homepage_dir}$$config{flower_url}",
-		flower_url			=> "$$config{public_homepage_url}$$config{flower_url}",
-		homepage_dir		=> $$config{homepage_dir},
-		icon_dir			=> "$$config{homepage_dir}$$config{icon_url}",
-		icon_url			=> $$config{icon_url},
-		image_url			=> "$$config{public_homepage_url}$$config{image_url}",
-		image_dir			=> "$$config{homepage_dir}$$config{image_url}",
-		local_homepage_url	=> $$config{local_homepage_url},
-		public_homepage_url	=> $$config{public_homepage_url},
-		template_path		=> $$config{template_path},
-		x_offset			=> $$config{x_offset},
-		y_offset			=> $$config{y_offset},
-	});
 
 } # End of BUILD.
 

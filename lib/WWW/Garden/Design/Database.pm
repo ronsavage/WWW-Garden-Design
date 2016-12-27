@@ -418,9 +418,27 @@ sub read_constants_table
 	my($self)		= @_;
 	my($constants)	= {};
 
+	# Reorder so we can return a hashref and not an arrayref.
+
+	my(%homepage);
+	my($name);
+
 	for my $item (@{$self -> read_table('constants')})
 	{
-		$$constants{$$item{name} } = $$item{value};
+		$name							= $$item{name};
+		$$constants{$name}				= {};
+		$$constants{$name}{description} = $$item{description};
+		$$constants{$name}{value}		= $$item{value};
+		$homepage{dir}					= $$item{value} if ($name eq 'homepage_dir');
+		$homepage{url}					= $$item{value} if ($name eq 'homepage_url');
+	}
+
+	# Prepend some values with homepage stuff, but don't prepend things to themselves.
+
+	for $name (%$constants)
+	{
+		$$constants{$name} = "$homepage{dir}$$constants{$name}"	if ($name =~ /^[^h].*_dir$/);
+		$$constants{$name} = "$homepage{url}$$constants{$name}"	if ($name =~ /^[^h].*_url$/);
 	}
 
 	return $constants;
@@ -549,8 +567,8 @@ sub read_objects_table
 		}
 
 		$$record{color}		= $color_map{$$record{color_id} };
-		$$record{icon_dir}	= "$$config{homepage_dir}$$config{icon_url}";
-		$$record{icon_url}	= "$$config{public_homepage_url}$$config{icon_url}";
+		$$record{icon_dir}	= $$config{icon_dir};
+		$$record{icon_url}	= $$config{icon_url};
 
 		for my $table_name (qw/object_locations/)
 		{
