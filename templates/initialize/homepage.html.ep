@@ -239,9 +239,9 @@ function populate_details(flower_id)
 
 		var thumbnail_size		= <%== $$constants{search_thumbnail_size} %>;
 		var thumbnail_string	= "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
-		var public_homepage_url	= <%== $$constants{public_homepage_url} %>;
-		var image_url			= <%== $$constants{image_url} %>;
-		var image_path			= public_homepage_url + image_url + '/' + flower['pig_latin'] + '.0.jpg';
+		var homepage_url		= <%== $$constants{homepage_url4js} %>;
+		var image_url			= <%== $$constants{image_url4js} %>;
+		var image_path			= homepage_url + image_url + '/' + flower['pig_latin'] + '.0.jpg';
 		var thumbnail_html		= "<img src = '" + image_path + "' " + thumbnail_string + '>';
 
 		$('#flower_thumbnail').html(thumbnail_html);
@@ -357,12 +357,8 @@ function populate_details(flower_id)
 			file_name		= flower['images'][i]['file_name'];
 			sequence		= flower['images'][i]['sequence'];
 			ids[i]			= build_image_ids(sequence);
-			image_path		= public_homepage_url + image_url + '/' + file_name;
+			image_path		= homepage_url + image_url + '/' + file_name;
 			thumbnail_html	= "<img src = '" + image_path + "' " + thumbnail_string + '>';
-
-			// It would be nice to include a thumbnail-sized copy of the image here,
-			// but as soon as the page is loaded, it tries to retrieve an image
-			// whose URL does not exist, so JS gets 20 warning messages. No pretty.
 
 			// For the HTML column order, see templates/initialize/images.html.ep.
 
