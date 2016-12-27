@@ -429,24 +429,7 @@ sub read_constants_table
 
 	# Reorder so we can return a hashref and not an arrayref.
 
-	my(%homepage);
-	my($name);
-
-	for my $item (@{$self -> read_table('constants')})
-	{
-		$name				= $$item{name};
-		$$constants{$name}	= $$item{value};
-		$homepage{dir}		= $$item{value} if ($name eq 'homepage_dir');
-		$homepage{url}		= $$item{value} if ($name eq 'homepage_url');
-	}
-
-	# Prepend some values with homepage stuff, but don't prepend things to themselves.
-
-	for $name (%$constants)
-	{
-		$$constants{$name} = "$homepage{dir}$$constants{$name}"	if ($name =~ /^[^h].*_dir$/);
-		$$constants{$name} = "$homepage{url}$$constants{$name}"	if ($name =~ /^[^h].*_url$/);
-	}
+	$$constants{$$_{name} } = $$_{value} for (@{$self -> read_table('constants')});
 
 	return $constants;
 
@@ -549,9 +532,9 @@ sub read_object_dependencies
 
 sub read_objects_table
 {
-	my($self)	= @_;
-	my($config)	= $self -> config_set;
-	my($colors)	= $self -> read_table('colors');
+	my($self)		= @_;
+	my($constants)	= $self -> constants;
+	my($colors)		= $self -> read_table('colors');
 
 	my(%color_map);
 
@@ -574,8 +557,8 @@ sub read_objects_table
 		}
 
 		$$record{color}		= $color_map{$$record{color_id} };
-		$$record{icon_dir}	= $$config{icon_dir};
-		$$record{icon_url}	= $$config{icon_url};
+		$$record{icon_dir}	= $$constants{icon_dir};
+		$$record{icon_url}	= $$constants{icon_url};
 
 		for my $table_name (qw/object_locations/)
 		{
@@ -610,7 +593,7 @@ sub read_table
 sub search
 {
 	my($self, $key)	= @_;
-	my($config)		= $self -> config_set;
+	my($constants)	= $self -> constants;
 	my($flowers)	= $self -> read_flowers_table;
 	$key			= uc $key;
 	my($list)		= [];
@@ -637,7 +620,7 @@ sub search
 				hxw				=> $self -> clean_up_height_width($$flower{height}, $$flower{width}),
 				height			=> $$flower{height},
 				pig_latin		=> $pig_latin,
-				thumbnail_url	=> "$$config{image_url}/$pig_latin.0.jpg",
+				thumbnail_url	=> "$$constants{image_url}/$pig_latin.0.jpg",
 				width			=> $$flower{width},
 			};
 

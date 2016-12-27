@@ -448,7 +448,7 @@ sub constants2csv
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 
-	$csv -> combine(qw/name value description/);
+	$csv -> combine(qw/name value/);
 
 	print $fh $csv -> string, "\n";
 
@@ -457,8 +457,7 @@ sub constants2csv
 		$csv -> combine
 		(
 			$name,
-			$$constants{$name}{value},
-			$$constants{$name}{description},
+			$$constants{$name},
 		);
 
 		print $fh $csv -> string, "\n";
