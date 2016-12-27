@@ -94,6 +94,11 @@ Notes:
 
 =item o The Objects and Design tabs don't do anything yet
 
+Objects refers to passive tiles which are used to represent garden features, and Design refers
+to the act of placing thumbnails of flowers and objects' tiles within a grid laid over each garden.
+
+The tiles are passive in contradistinction to the thumbnails, which are clickable.
+
 =back
 
 =begin html
