@@ -30,36 +30,41 @@ use Types::Standard qw/Any Int HashRef Str/;
 
 extends qw/WWW::Garden::Design::Database::Base/;
 
+has constants =>
+(
+	default
+);
+
 has export_type =>
 (
-	default  => sub{return 0},
-	is       => 'rw',
-	isa      => Int,
-	required => 0,
+	default		=> sub{return {} },
+	is			=> 'rw',
+	isa			=> HashRef,
+	required	=> 0,
 );
 
 has output_file =>
 (
-	default  => sub{return ''},
-	is       => 'rw',
-	isa      => Str,
-	required => 1,
+	default		=> sub{return ''},
+	is			=> 'rw',
+	isa			=> Str,
+	required	=> 1,
 );
 
 has standalone_page =>
 (
-	default  => sub{return 0},
-	is       => 'rw',
-	isa      => Int,
-	required => 0,
+	default		=> sub{return 0},
+	is			=> 'rw',
+	isa			=> Int,
+	required	=> 0,
 );
 
 has title_font =>
 (
-	default  => sub{return ''},
-	is       => 'rw',
-	isa      => Any,
-	required => 0,
+	default		=> sub{return ''},
+	is			=> 'rw',
+	isa			=> Any,
+	required	=> 0,
 );
 
 our $VERSION = '1.00';
@@ -109,6 +114,8 @@ sub BUILD
 			logger => Mojo::Log -> new(path => $log_path)
 		)
 	);
+
+	$self -> constants($self -> db -> read_constants_table);
 
 }	# End of BUILD.
 
@@ -441,7 +448,7 @@ sub colors2csv
 sub constants2csv
 {
 	my($self, $csv)	= @_;
-	my($constants)	= $self -> db -> read_table('constants');
+	my($constants)	= $self -> constants;
 	my($file_name)	= $self -> output_file =~ s/flowers.csv/constants.csv/r;
 
 	$self -> db -> logger -> info("Writing to $file_name");
@@ -452,12 +459,12 @@ sub constants2csv
 
 	print $fh $csv -> string, "\n";
 
-	for my $row (sort{uc($$a{name}) cmp uc($$b{name})} @$constants)
+	for my $name (sort keys %$constants)
 	{
 		$csv -> combine
 		(
-			$$row{name},
-			$$row{value},
+			$name,
+			$$constants{$name},
 		);
 
 		print $fh $csv -> string, "\n";

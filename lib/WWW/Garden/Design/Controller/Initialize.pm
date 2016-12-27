@@ -40,26 +40,9 @@ sub homepage
 						} sort{$$a{sequence} <=> $$b{sequence} } @$attribute_types;
 
 	$self -> stash(check_boxes => \@check_boxes);
-	$self -> render(constants => $self -> read_constants_table($$defaults{db}) );
+	$self -> render(constants => $$defaults{db} -> read_constants_table);
 
 } # End of homepage.
-
-# -----------------------------------------------
-
-sub read_constants_table
-{
-	my($self, $db) = @_;
-
-	my(%constants);
-
-	for my $item (@{$db -> read_table('constants')})
-	{
-		$constants{$$item{name} } = $$item{value};
-	}
-
-	return \%constants;
-
-} # End of read_constants_table.
 
 # -----------------------------------------------
 

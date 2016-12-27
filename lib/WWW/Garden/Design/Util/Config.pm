@@ -59,8 +59,6 @@ sub BUILD
 
 	$self -> config_set
 	({
-		cell_width			=> $$config{cell_width},
-		cell_height			=> $$config{cell_height},
 		flower_dir			=> "$$config{homepage_dir}$$config{flower_url}",
 		flower_url			=> "$$config{public_homepage_url}$$config{flower_url}",
 		homepage_dir		=> $$config{homepage_dir},

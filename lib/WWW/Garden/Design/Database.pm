@@ -411,6 +411,22 @@ sub insert_hashref
 
 } # End of insert_hashref.
 
+# -----------------------------------------------
+
+sub read_constants_table
+{
+	my($self)		= @_;
+	my($constants)	= {};
+
+	for my $item (@{$self -> read_table('constants')})
+	{
+		$$constants{$$item{name} } = $$item{value};
+	}
+
+	return $constants;
+
+} # End of read_constants_table.
+
 # --------------------------------------------------
 
 sub read_flower_dependencies
