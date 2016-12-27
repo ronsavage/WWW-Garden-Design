@@ -32,14 +32,17 @@ extends qw/WWW::Garden::Design::Database::Base/;
 
 has constants =>
 (
-	default
+	default		=> sub{return {} },
+	is			=> 'rw',
+	isa			=> HashRef,
+	required	=> 0,
 );
 
 has export_type =>
 (
-	default		=> sub{return {} },
+	default		=> sub{return 0},
 	is			=> 'rw',
-	isa			=> HashRef,
+	isa			=> Int,
 	required	=> 0,
 );
 
