@@ -2,8 +2,6 @@ package WWW::Garden::Design::Controller::GetDetails;
 
 use Mojo::Base 'Mojolicious::Controller';
 
-use Data::Dumper::Concise; # For Dumper().
-
 use Date::Simple;
 
 use Moo;
@@ -24,7 +22,6 @@ sub display
 		my($defaults)	= $self -> app -> defaults;
 		my($json)		= $$defaults{db} -> get_flower_by_id($flower_id);
 
-		$self -> app -> log -> info('get_flower_by_id: ' . Dumper($json) );
 		$self -> stash(error => undef);
 		$self -> render(json => $json);
 	}

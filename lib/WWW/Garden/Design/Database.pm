@@ -4,8 +4,6 @@ use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
-use Data::Dumper::Concise; # For Dumper().
-
 use DBI;
 
 use DBIx::Simple;
@@ -610,8 +608,6 @@ sub search
 
 	for my $flower (@$flowers)
 	{
-		$self -> logger -> info('Flowers: ' . Dumper($flower) ) if ($$flower{id} == 72);
-
 		if ( (uc($$flower{aliases}) =~ /$key/)
 			|| (uc($$flower{common_name}) =~ /$key/)
 			|| (uc($$flower{scientific_name}) =~ /$key/) )

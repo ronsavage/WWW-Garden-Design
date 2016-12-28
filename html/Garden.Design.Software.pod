@@ -175,6 +175,15 @@ The tiles are passive in contradistinction to the thumbnails, which are clickabl
 			<span class = 'large_text'>Figure 8 - The URLs Tab</span>
 		</td>
 	</tr>
+	<tr>
+		<td><img src = '/Perl-modules/html/garden.design/Search.Engine.Screenshot.8.jpg'></td>
+	</tr>
+	<tr>
+		<td align = 'center'>
+			<br />
+			<span class = 'large_text'>Figure 9 - The Help Tab for Searching</span>
+		</td>
+	</tr>
 </table>
 
 =end html

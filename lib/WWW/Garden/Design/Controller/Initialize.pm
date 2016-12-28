@@ -2,8 +2,6 @@ package WWW::Garden::Design::Controller::Initialize;
 
 use Mojo::Base 'Mojolicious::Controller';
 
-use Data::Dumper::Concise; # For Dumper().
-
 use Moo;
 
 our $VERSION = '1.00';
@@ -35,8 +33,6 @@ sub build_check_boxes
 
 							[ucfirst $name, join '&nbsp;&nbsp;&nbsp', @html];
 						} sort{$$a{sequence} <=> $$b{sequence} } @$attribute_types;
-
-	$db -> logger -> info(Dumper(@check_boxes) );
 
 	return [@check_boxes];
 

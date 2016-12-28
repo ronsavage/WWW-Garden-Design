@@ -6,8 +6,6 @@ use utf8;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
-use Data::Dumper::Concise; # For Dumper().
-
 use Encode 'encode';
 
 use Imager;
