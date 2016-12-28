@@ -905,7 +905,7 @@ sub export_icons
 sub export_layout_guide
 {
 	my($self)		= @_;
-	my($constants)	= $self -> constants;
+	my($constants)	= $self -> db -> constants;
 
 	return <<EOS;
 <table align='center'>
