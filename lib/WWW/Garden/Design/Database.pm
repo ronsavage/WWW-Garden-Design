@@ -507,7 +507,8 @@ sub read_flowers_table
 
 		for my $i (0 .. $#{$$record{images} })
 		{
-			$$record{images}[$i]{file_name} = "$$constants{homepage_url}$$constants{image_url}/$$record{images}[$i]{file_name}";
+			$$record{images}[$i]{raw_name}	= $$record{images}[$i]{file_name};
+			$$record{images}[$i]{file_name}	= "$$constants{homepage_url}$$constants{image_url}/$$record{images}[$i]{file_name}";
 		}
 
 		push @records, $record;

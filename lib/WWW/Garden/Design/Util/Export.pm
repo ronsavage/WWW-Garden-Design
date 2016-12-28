@@ -1165,7 +1165,7 @@ sub images2csv
 				$common_name,
 				$$image{sequence},
 				$$image{description},
-				$$image{file_name},
+				$$image{raw_name}, # We don't want the whole domain/url!
 			);
 
 			print $fh $csv -> string, "\n";
