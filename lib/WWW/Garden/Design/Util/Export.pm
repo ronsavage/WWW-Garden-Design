@@ -761,7 +761,12 @@ sub export_garden_layout
 		x				=> $image -> width - 6 * $image -> cell_width,	# Pixel co-ord.
 		y				=> $image -> height,							# Pixel co-ord.
 	);
-	$image -> write(output_file_name => "$$constants{homepage_dir}$$constants{flower_url}/$garden_name.garden.layout.html");
+
+	my($file_name) = "$$constants{homepage_dir}$$constants{flower_url}/$garden_name.garden.layout.svg";
+
+	$self -> db -> logger -> info("Writing to $file_name");
+
+	$image -> write(output_file_name => $file_name);
 
 	# 4: Output some HTML.
 
@@ -819,7 +824,11 @@ sub export_garden_layout
 </html>
 EOS
 
-	open(my $fh, '>:encoding(UTF-8)', "$$constants{homepage_dir}$$constants{flower_url}/$garden_name.garden.layout.html");
+	$file_name = "$$constants{homepage_dir}$$constants{flower_url}/$garden_name.garden.layout.html";
+
+	$self -> db -> logger -> info("Writing to $file_name");
+
+	open(my $fh, '>:encoding(UTF-8)', $file_name);
 	print $fh map{"$_\n"} @garden_index;
 	close $fh;
 
