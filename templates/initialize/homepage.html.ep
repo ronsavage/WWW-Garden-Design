@@ -462,7 +462,6 @@ function submit_flower()
 	}).success(function(html)
 	{
 		// $('#flower_result_div').empty().append(html);
-		// $('#result_table').dataTable();
 
 		$('#flower_result_div').empty().text('Hi!');
 	});

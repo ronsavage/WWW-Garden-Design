@@ -13,25 +13,27 @@
 	</tr>
 </table>
 
-<table align = 'center'>
-	<tr>
-		<td colspan = '2'>
-			<span class = 'alert'>Poison Alert!</span>
-			You should of course double-check if not triple-check any suggestion that any part of a plant is edible
-		</td>
-	</tr>
-	<tr>
-		<td colspan = '2'><hr></td>
-	</tr>
-	% for my $check_box (@$attribute_check_boxes) {
-	<tr>
-		<td><%== $$check_box[0] %>:</td>
-		<td>
-			<%== $$check_box[1] %>
-		</td>
-	</tr>
-	<tr>
-		<td colspan = '2'><hr></td>
-	</tr>
-	% }
-</table>
+<div id = 'attributes_div'>
+	<table align = 'center'>
+		<tr>
+			<td colspan = '2'>
+				<span class = 'alert'>Poison Alert!</span>
+				You should of course double-check if not triple-check any suggestion that any part of a plant is edible
+			</td>
+		</tr>
+		<tr>
+			<td colspan = '2'><hr></td>
+		</tr>
+		% for my $check_box (@$attribute_check_boxes) {
+		<tr>
+			<td><%== $$check_box[0] %>:</td>
+			<td>
+				<%== $$check_box[1] %>
+			</td>
+		</tr>
+		<tr>
+			<td colspan = '2'><hr></td>
+		</tr>
+		% }
+	</table>
+</div>

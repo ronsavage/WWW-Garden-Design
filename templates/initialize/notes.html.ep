@@ -13,21 +13,23 @@
 	</tr>
 </table>
 
-<table align = 'center'>
-	<thead>
-		<tr>
-			<th>#</th>
-			<th>Sequence</th>
-			<th>Note</th>
-		</tr>
-	</thead>
-	<tbody>
-		% for my $i (1 .. $$constants{max_note_count}) {
-		<tr>
-			<td><%== $i %>.</td>
-			<td align = 'right'><input id = 'note_sequence_<%== $i %>' type = 'text' size = '5'></td>
-			<td align = 'left'><input id = 'note_note_<%== $i %>' type = 'text' size = '100' maxlength = '255'></td>
-		</tr>
-		% }
-	</tbody>
-</table>
+<div id = 'notes_div'>
+	<table align = 'center'>
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Sequence</th>
+				<th>Note</th>
+			</tr>
+		</thead>
+		<tbody>
+			% for my $i (1 .. $$constants{max_note_count}) {
+			<tr>
+				<td><%== $i %>.</td>
+				<td align = 'right'><input id = 'note_sequence_<%== $i %>' type = 'text' size = '5'></td>
+				<td align = 'left'><input id = 'note_note_<%== $i %>' type = 'text' size = '100' maxlength = '255'></td>
+			</tr>
+			% }
+		</tbody>
+	</table>
+</div>

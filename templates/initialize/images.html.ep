@@ -13,25 +13,27 @@
 	</tr>
 </table>
 
-<table align = 'center'>
-	<thead>
-		<tr>
-			<th>#</th>
-			<th>Image</th>
-			<th>Sequence</th>
-			<th>Image file name</th>
-			<th>Note</th>
-		</tr>
-	</thead>
-	<tbody>
-		% for my $i (1 .. $$constants{max_image_count}) {
-		<tr>
-			<td><%== $i %>.</td>
-			<td><span id = 'image_image_<%== $i %>'></span></td>
-			<td align = 'right'><input id = 'image_sequence_<%== $i %>' type = 'text' size = '5'></td>
-			<td align = 'left'><input id = 'image_file_name_<%== $i %>' type = 'text' size = '30' maxlength = '255'></td>
-			<td align = 'left'><input id = 'image_description_<%== $i %>' type = 'text' size = '50' maxlength = '255'></td>
-		</tr>
-		% }
-	</tbody>
-</table>
+<div id = 'images_div'>
+	<table align = 'center'>
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Image</th>
+				<th>Sequence</th>
+				<th>Image file name</th>
+				<th>Note</th>
+			</tr>
+		</thead>
+		<tbody>
+			% for my $i (1 .. $$constants{max_image_count}) {
+			<tr>
+				<td><%== $i %>.</td>
+				<td><span id = 'image_image_<%== $i %>'></span></td>
+				<td align = 'right'><input id = 'image_sequence_<%== $i %>' type = 'text' size = '5'></td>
+				<td align = 'left'><input id = 'image_file_name_<%== $i %>' type = 'text' size = '30' maxlength = '255'></td>
+				<td align = 'left'><input id = 'image_description_<%== $i %>' type = 'text' size = '50' maxlength = '255'></td>
+			</tr>
+			% }
+		</tbody>
+	</table>
+</div>
