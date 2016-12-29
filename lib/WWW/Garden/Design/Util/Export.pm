@@ -761,7 +761,7 @@ sub export_garden_layout
 		x				=> $image -> width - 6 * $image -> cell_width,	# Pixel co-ord.
 		y				=> $image -> height,							# Pixel co-ord.
 	);
-	$image -> write(output_file_name => "data/$garden_name.garden.layout.svg");
+	$image -> write(output_file_name => "$$constants{homepage_dir}$$constants{flower_url}/$garden_name.garden.layout.html");
 
 	# 4: Output some HTML.
 
