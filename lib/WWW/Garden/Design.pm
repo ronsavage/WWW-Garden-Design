@@ -150,7 +150,7 @@ This is a L<Mojolicious>-based program.
 
 =back
 
-For an introduction, see my article L<https://savage.net.au/Perl-modules/html/garden.design/Garden.Design.Software.html>.
+For an introduction, see my article L<https://savage.net.au/Flowers/html/Garden.Design.Software.html>.
 
 =head1 Distributions
 
