@@ -1,4 +1,5 @@
 <div id = 'flower_div'>
+	%= csrf_field
 	<table align = 'center'>
 		<tr>
 			<td colspan = '3'><div class = 'blue_centered'>Flower</div><br /></td>

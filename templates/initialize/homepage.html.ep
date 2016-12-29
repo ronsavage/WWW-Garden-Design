@@ -22,7 +22,7 @@
 <div id = 'global_tab_div'>
 	<ul>
 		<li><a href = '#global_search_tab'><span>Search</span></a></li>
-		<li><a href = '#global_detail_tab'><span>Details</span></a></li>
+		<li><a href = '#global_details_tab'><span>Details</span></a></li>
 		<li><a href = '#global_object_tab'><span>Objects</span></a></li>
 		<li><a href = '#global_design_tab'><span>Design</span></a></li>
 		<li><a href = '#global_help_tab'><span>Help</span></a></li>
@@ -30,31 +30,31 @@
 	<div id = 'global_search_tab'>
 %= include 'initialize/search'
 	</div>
-	<div id = 'global_detail_tab'>
-		<div id = 'detail_tab_div'>
-		    <ul>
-		        <li><a href = '#flower_tab'><span>Flower</span></a></li>
-		        <li><a href = '#attributes_tab'><span>Attributes</span></a></li>
-		        <li><a href = '#images_tab'><span>Images</span></a></li>
-		        <li><a href = '#notes_tab'><span>Notes</span></a></li>
-		        <li><a href = '#urls_tab'><span>URLs</span></a></li>
-		    </ul>
-		    <div id = 'flower_tab'>
+	<div id = 'global_details_tab'>
+%= form_for '/details' => (method => 'POST') => begin
+	    <ul>
+	        <li><a href = '#flower_tab'><span>Flower</span></a></li>
+	        <li><a href = '#attributes_tab'><span>Attributes</span></a></li>
+	        <li><a href = '#images_tab'><span>Images</span></a></li>
+	        <li><a href = '#notes_tab'><span>Notes</span></a></li>
+	        <li><a href = '#urls_tab'><span>URLs</span></a></li>
+	    </ul>
+	    <div id = 'flower_tab'>
 %= include 'initialize/flower'
-			</div>
-		    <div id = 'attributes_tab'>
-%= include 'initialize/attributes'
-			</div>
-		    <div id = 'images_tab'>
-%= include 'initialize/images', constants => $constants
-			</div>
-		    <div id = 'notes_tab'>
-%= include 'initialize/notes', constants => $constants
-			</div>
-		    <div id = 'urls_tab'>
-%= include 'initialize/urls'
-			</div>
 		</div>
+	    <div id = 'attributes_tab'>
+%= include 'initialize/attributes'
+		</div>
+	    <div id = 'images_tab'>
+%= include 'initialize/images', constants => $constants
+		</div>
+	    <div id = 'notes_tab'>
+%= include 'initialize/notes', constants => $constants
+		</div>
+	    <div id = 'urls_tab'>
+%= include 'initialize/urls'
+		</div>
+%=end
 	</div>
 	<div id = 'global_object_tab'>
 %= include 'initialize/object'
@@ -503,7 +503,7 @@ $(function()
 
 	// Active sub-tabs for Detail and Help.
 
-	$("#global_detail_tab")
+	$("#global_details_tab")
 	.tabs
 	({
 		active: 0
