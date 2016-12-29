@@ -819,7 +819,7 @@ sub export_garden_layout
 </html>
 EOS
 
-	open(my $fh, '>:encoding(UTF-8)', "data/$garden_name.garden.layout.html");
+	open(my $fh, '>:encoding(UTF-8)', "$$constants{homepage_dir}$$constants{flower_url}/$garden_name.garden.layout.html");
 	print $fh map{"$_\n"} @garden_index;
 	close $fh;
 
