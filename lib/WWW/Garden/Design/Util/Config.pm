@@ -128,7 +128,7 @@ See L<WWW::Garden::Design/Support>.
 
 C<WWW::Garden::Design> was written by Ron Savage I<E<lt>ron@savage.net.auE<gt>> in 2013.
 
-L<Home page|http://savage.net.au/index.html>.
+L<Home page|https://savage.net.au/index.html>.
 
 =head1 Copyright
 

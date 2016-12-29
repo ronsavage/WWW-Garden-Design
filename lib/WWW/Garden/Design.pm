@@ -129,14 +129,14 @@ This generates:
 
 =item o A Flower Catalog as an HTML table
 
-This is can be embedded in any web page. Mine is L<online|http://savage.net.au/Flowers.html>.
+This is can be embedded in any web page. Mine is L<online|https://savage.net.au/Flowers.html>.
 
 =item o A Garden Layout as an SVG file
 
 There is actually one (1) SVG file for each of your gardens.
 
-See my L<front garden layout|http://savage.net.au/Flowers/front.garden.layout.html> and my
-L<back garden layout|http://savage.net.au/Flowers/back.garden.layout.html>.
+See my L<front garden layout|https://savage.net.au/Flowers/front.garden.layout.html> and my
+L<back garden layout|https://savage.net.au/Flowers/back.garden.layout.html>.
 
 =item o A set of updated CSV files
 
@@ -150,13 +150,13 @@ This is a L<Mojolicious>-based program.
 
 =back
 
-For an introduction, see my article L<http://savage.net.au/Perl-modules/html/garden.design/Garden.Design.Software.html>.
+For an introduction, see my article L<https://savage.net.au/Perl-modules/html/garden.design/Garden.Design.Software.html>.
 
 =head1 Distributions
 
 This module is available as a Unix-style distro (*.tgz).
 
-See L<http://savage.net.au/Perl-modules/html/installing-a-module.html>
+See L<https://savage.net.au/Perl-modules/html/installing-a-module.html>
 for help on unpacking and installing distros.
 
 =head1 Installation
@@ -198,7 +198,7 @@ L<https://rt.cpan.org/Public/Dist/Display.html?Name=WWW::Garden::Design>.
 
 L<WWW::Garden::Design> was written by Ron Savage I<E<lt>ron@savage.net.auE<gt>> in 2014.
 
-My homepage: L<http://savage.net.au/>.
+My homepage: L<https://savage.net.au/>.
 
 =head1 Copyright
 
