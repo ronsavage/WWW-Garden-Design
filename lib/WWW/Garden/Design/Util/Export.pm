@@ -762,7 +762,7 @@ sub export_garden_layout
 		y				=> $image -> height,							# Pixel co-ord.
 	);
 
-	my($file_name) = "$$constants{homepage_dir}$$constants{flower_url}/$garden_name.garden.layout.svg";
+	$file_name = "$$constants{homepage_dir}$$constants{flower_url}/$garden_name.garden.layout.svg";
 
 	$self -> db -> logger -> info("Writing to $file_name");
 
