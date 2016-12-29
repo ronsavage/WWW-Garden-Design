@@ -7,7 +7,7 @@ pod2html.pl -i lib/$INFIX/Design.pm									-o $DEST/Design.html
 pod2html.pl -i lib/$INFIX/Design/Controller/AutoComplete.pm			-o $DEST/Design/Controller/AutoComplete.html
 pod2html.pl -i lib/$INFIX/Design/Controller/Flower.pm				-o $DEST/Design/Controller/Flower.html
 pod2html.pl -i lib/$INFIX/Design/Controller/GetAttributeTypes.pm	-o $DEST/Design/Controller/GetAttributeTypes.html
-pod2html.pl -i lib/$INFIX/Design/Controller/GetFlower.pm			-o $DEST/Design/Controller/GetFlower.html
+pod2html.pl -i lib/$INFIX/Design/Controller/GetDetails.pm			-o $DEST/Design/Controller/GetDetails.html
 pod2html.pl -i lib/$INFIX/Design/Controller/Initialize.pm			-o $DEST/Design/Controller/Initialize.html
 pod2html.pl -i lib/$INFIX/Design/Controller/Object.pm				-o $DEST/Design/Controller/Object.html
 pod2html.pl -i lib/$INFIX/Design/Controller/Search.pm				-o $DEST/Design/Controller/Search.html
