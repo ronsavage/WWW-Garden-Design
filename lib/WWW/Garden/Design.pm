@@ -5,8 +5,6 @@ use Mojo::Base 'Mojolicious';
 use WWW::Garden::Design::Database;
 use WWW::Garden::Design::Util::Config;
 
-use Data::Dumper::Concise; # For Dumper().
-
 use Moo;
 
 our $VERSION = '1.00';
@@ -17,6 +15,7 @@ sub build_attribute_ids
 {
 	my($self, $kind, $attribute_type_fields, $attribute_type_names) = @_;
 
+	my($id);
 	my($name);
 
 	return
@@ -27,7 +26,10 @@ sub build_attribute_ids
 			[
 				map
 				{
-					"${kind}_${name}_$_";
+					$id = "${kind}_${name}_$_" =~ s/ /_/gr;
+					$id	=~ s/-/_/g;
+
+					$id;
 				} @{$$attribute_type_fields[$_]}
 			]
 		} 0 .. $#$attribute_type_names

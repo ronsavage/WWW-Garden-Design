@@ -26,10 +26,14 @@ our $VERSION = '1.00';
 
 sub display
 {
-	my($self)	= @_;
-	my($key)	= $self -> param('search_key') || '';
+	my($self)		= @_;
+	my($defaults)	= $self -> app -> defaults;
+	my($ids)		= $$defaults{search_attribute_ids};
+	my(%keys)		= map{($_ => ($self -> param($_) || '') )} map{@$_} @$ids;
+	my($key)		= $self -> param('search_key');
 
-	$self -> app -> log -> debug("display($key)");
+	$self -> app -> log -> debug('body_params: ' . Dumper($self -> res -> body_params -> to_hash) );
+	$self -> app -> log -> debug("search keys: '$key' and \n" . Dumper(\%keys) );
 
 	if (length $key > 0)
 	{

@@ -24,8 +24,8 @@ sub build_check_boxes
 							@html		= map
 											{
 												$id_index	= $_;
-												$field			= $$fields[$name_index][$id_index] =~ s/_/&nbsp;/gr;
-												$id				= $$ids[$name_index][$id_index];
+												$field		= $$fields[$name_index][$id_index] =~ s/_/&nbsp;/gr;
+												$id			= $$ids[$name_index][$id_index];
 
 												"<input id = '$id' type = 'checkbox'>"
 												. "<label for = '$id'>$field</label>";

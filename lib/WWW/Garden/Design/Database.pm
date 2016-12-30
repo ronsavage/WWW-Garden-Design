@@ -190,7 +190,7 @@ sub clean_up_height_width
 		}
 		else
 		{
-			$result = 'N/A';
+			$result = '';
 		}
 	}
 
