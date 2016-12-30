@@ -9,6 +9,35 @@ use Moo;
 
 our $VERSION = '1.00';
 
+# -----------------------------------------------
+
+sub build_attribute_fields
+{
+	my($self, $attribute_types) = @_;
+
+	my(@fields);
+	my($id);
+	my($name);
+	my(@value_set);
+
+	return [map
+			{
+				$name		= $$_{name};
+				@value_set	= split(/,\s+/, $$_{range});
+				@fields		= map
+								{
+									$id = "${name}_$_";
+									$id =~ s/ /_/g;
+
+									$id;
+								} @value_set;
+
+				[@fields];
+			} sort{$$a{sequence} <=> $$b{sequence} } @$attribute_types
+			];
+
+} # End of build_attribute_fields.
+
 # ------------------------------------------------
 # This method will run once at server start.
 
@@ -32,12 +61,14 @@ sub startup
 
 	# Stash some gobal variables.
 
-	my($default);
+	my($defaults);
 
-	$$default{config} = WWW::Garden::Design::Util::Config -> new -> config;
-	$$default{db}     = WWW::Garden::Design::Database -> new(logger => $self -> app -> log);
+	$$defaults{config}				= WWW::Garden::Design::Util::Config -> new -> config;
+	$$defaults{db}					= WWW::Garden::Design::Database -> new(logger => $self -> app -> log);
+	$$defaults{attribute_types}		= $$defaults{db} -> read_table('attribute_types');
+	$$defaults{attribute_fields}	= $self -> build_attribute_fields($$defaults{attribute_types});
 
-	$self -> defaults($default);
+	$self -> defaults($defaults);
 
 	# Documentation browser under '/perldoc'.
 

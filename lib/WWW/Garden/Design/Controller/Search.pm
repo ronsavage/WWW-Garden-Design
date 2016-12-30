@@ -26,18 +26,17 @@ our $VERSION = '1.00';
 
 sub display
 {
-	my($self) 		= @_;
-	my($key)  		= $self -> param('search_key') || '';
-	my($start_time)	= [gettimeofday];
+	my($self)	= @_;
+	my($key)	= $self -> param('search_key') || '';
 
 	$self -> app -> log -> debug("display($key)");
 
 	if (length $key > 0)
 	{
-		my($defaults)				= $self -> app -> defaults;
-		my($match_count, $result)	= $self -> format($$defaults{db}, $key);
+		my($defaults)							= $self -> app -> defaults;
+		my($time_taken, $match_count, $result)	= $self -> format($$defaults{db}, $key);
 
-		$self -> stash(elapsed_time	=> sprintf('%.2f', tv_interval($start_time) ) );
+		$self -> stash(elapsed_time	=> sprintf('%.2f', $time_taken) );
 		$self -> stash(error		=> undef);
 		$self -> stash(match		=> $result);
 		$self -> stash(match_count	=> $match_count);
@@ -65,7 +64,9 @@ sub format
 	my($constants)			= $db -> read_constants_table;
 	my($count)				= 0;
 	my($html)				= '';
+	my($start_time)			= [gettimeofday];
 	my($result)				= $db -> search($key);
+	my($time_taken)			= tv_interval($start_time);
 
 	my($attribute);
 	my($native);
@@ -102,7 +103,7 @@ sub format
 EOS
 	}
 
-	return ($count, $html);
+	return ($time_taken, $count, $html);
 
 } # End of format.
 
