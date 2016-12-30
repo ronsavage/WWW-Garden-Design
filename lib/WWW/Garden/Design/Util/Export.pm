@@ -783,9 +783,8 @@ sub export_garden_layout
 		<link rel = 'stylesheet' type = 'text/css' href = '/assets/css/www/garden/design/homepage.css'>
 	</head>
 	<body>
-		<a name = 'top'></a>
 		<br />
-		<div class = 'centered'><span class = 'red_on_gold_title'>The $Garden Garden Layout</span></div>
+		<div class = 'centered'><span class = 'red_on_gold_title' id = 'top'>The $Garden Garden Layout</span></div>
 		<br />
 		<table align = 'center'>
 			<tr><td>Part 1: The $Garden Garden Layout (SVG image), with clickable flower thumbnails in situ</td></tr>
@@ -796,8 +795,7 @@ sub export_garden_layout
 
 		<br />
 
-		<a name = 'part_1'>
-		<h2 align = 'center'>Part 1: The $Garden Garden Layout (SVG image), with clickable flower thumbnails in situ</h2>
+		<h2 align = 'center' id = 'part_1'>Part 1: The $Garden Garden Layout (SVG image), with clickable flower thumbnails in situ</h2>
 
 		<table align = 'center'>
 			<tr><td align = 'center'>
@@ -811,9 +809,9 @@ sub export_garden_layout
 
 		<br />
 
-		<a name = 'part_4'>
+		<a>
 		<table align = 'center'>
-			<tr><td align = 'center'>The Database Schema</td></tr>
+			<tr><td align = 'center'><span id = 'part_4'The Database Schema</span></td></tr>
 			<tr><td align = 'center'>
 				<object data = '$$constants{homepage_url}$$constants{flower_url}/flowers.schema.svg'></object>
 			</td></tr>
@@ -918,7 +916,7 @@ sub export_layout_guide
 
 	return <<EOS;
 <table align='center'>
-	<tr><td align='center'><span class = 'red_on_gold_title'><a name = 'garden_layouts'>The Garden Layouts</span></td></tr>
+	<tr><td align='center'><span class = 'red_on_gold_title' id = 'garden_layouts'>The Garden Layouts</span></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/front.garden.layout.html'>The Front Garden Layout, with clickable flower thumbnails in situ</a></td></tr>
 	<tr><td><br></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/back.garden.layout.html'>The Back Garden Layout, with clickable flower thumbnails in situ</a></td></tr>
@@ -926,7 +924,7 @@ sub export_layout_guide
 </table>
 <br />
 <table align='center'>
-	<tr><td align='center'><br /><span class = 'red_on_gold_title'><a name = 'articles'>Articles</span></td></tr>
+	<tr><td align='center'><br /><span class = 'red_on_gold_title' id = 'articles'>Articles</span></td></tr>
 	<tr><td><a href = 'https://savage.net.au/Flowers/html/Garden.Design.Software.html'>2016-12-29: Garden Design Software</a></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/How.To.Net.Dwarf.Apples.html'>2016-01-03: How To Net Dwarf Apples</a></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/Protecting.Apples.From.Possums.html'>2013-12-08: Protecting Apples From Possums</a></td></tr>
@@ -934,7 +932,7 @@ sub export_layout_guide
 </table>
 <br />
 <table align='center'>
-	<tr><td align='center'><br /><span class = 'red_on_gold_title'><a name = 'various_urls'>Various URLs</span></td></tr>
+	<tr><td align='center'><br /><span class = 'red_on_gold_title' id = 'various_urls'>Various URLs</span></td></tr>
 	<tr><td><a href = 'http://holt59.github.io/datatable/'>The URL</a> of the free Javascript package which manages the HTML table below</td></tr>
 	<tr><td><a href = 'http://bgrins.github.io/spectrum/'>The URL</a> of the free Javascript package which provides a color picker</td></tr>
 	<tr><td><br></td></tr>

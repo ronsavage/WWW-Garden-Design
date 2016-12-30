@@ -226,7 +226,7 @@ Details (so far) for: native, habit, edibleness and sub tolerance.
 =item o The 'Flower Catalog' as an HTML table
 
 This can be generated as a stand-alone page, or as a HTML table to be embedded in any web page.
-Mine is L<online|https://savage.net.au/Flowers.html>.
+Mine is L<online|https://savage.net.au/Flowers.html#the_flower_catalog>.
 
 Each row in the table displays:
 
