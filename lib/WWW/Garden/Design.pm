@@ -169,40 +169,99 @@ Which runs scripts/flowers:
 
 =head1 Description
 
+An L<article|https://savage.net.au/Flowers/html/Garden.Design.Software.html> about the package is
+on-line.
+
 C<WWW::Garden::Design> provides:
 
 =over 4
 
-=item o A Flower Database using CSV files
+=item o A Flower Database stored in CSV files
 
-These are used for bootstrapping the system.
+These are used for bootstrapping the system into the SQLite database (below).
 
 =item o An Import Package
 
-This reads the CSV files and populates the Flower Database
+This reads the CSV files and populates the Flower Database.
 
 =item o A Flower Database managed by SQLite
 
+For testing, a copy ships in data/flowers.sqlite.
+
 =item o An Export Package
 
-This generates:
+There are a number of simple Perl scripts involved, and some bash scripts to tie them together.
+
+They generate:
 
 =over 4
 
-=item o A Flower Catalog as an HTML table
+=item o A web page for every flower
 
-This is can be embedded in any web page. Mine is L<online|https://savage.net.au/Flowers.html>.
+These are pointed to be clickable thumbnails on the 'Flower Catalog' (next) and the 'Garden Layouts'
+(below).
 
-=item o A Garden Layout as an SVG file
+These pages consist of a set of details per flower:
 
-There is actually one (1) SVG file for each of your gardens.
+=over 4
 
-See my L<front garden layout|https://savage.net.au/Flowers/front.garden.layout.html> and my
+=item o Scientific name
+
+=item o Common name
+
+=item o Aliases
+
+=item o Attributes
+
+Details (so far) for: native, habit, edibleness and sub tolerance.
+
+=item o A set of images
+
+=item o A set of notes
+
+=item o A set of URLs
+
+=back
+
+=item o The 'Flower Catalog' as an HTML table
+
+This can be generated as a stand-alone page, or as a HTML table to be embedded in any web page.
+Mine is L<online|https://savage.net.au/Flowers.html>.
+
+Each row in the table displays:
+
+=over 4
+
+=item o A native (to Australia) flag (Yes or No)
+
+=item o The Scientific name
+
+=item o The Common name
+
+Actually, I've fiddled some of these to make flowers which have significantly different scientific
+names end up on successive rows of the table. Likewise, flowers with very similar names are forced
+to appear together in the table.
+
+=item o A list of the flower's aliases
+
+Search for 'pansy' to see a ridiculous list as a sample.
+
+=item o A clickable thumbnail
+
+Clicking opens up, in a new browser tab, a page dedicated to the flower whose thumbnail was clciked.
+
+=back
+
+=item o 'Garden Layouts' as SVG files
+
+One SVG file is created for each of your gardens.
+
+See my L<front garden layout|https://savage.net.au/Flowers/front.garden.layout.html> and
 L<back garden layout|https://savage.net.au/Flowers/back.garden.layout.html>.
 
 =item o A set of updated CSV files
 
-For when you update the database either by the Search Engine or otherwise.
+For when you update the database either via the Search Engine or otherwise.
 
 =back
 
@@ -211,8 +270,6 @@ For when you update the database either by the Search Engine or otherwise.
 This is a L<Mojolicious>-based program.
 
 =back
-
-For an introduction, see my article L<https://savage.net.au/Flowers/html/Garden.Design.Software.html>.
 
 =head1 Distributions
 
