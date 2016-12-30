@@ -5,38 +5,64 @@ use Mojo::Base 'Mojolicious';
 use WWW::Garden::Design::Database;
 use WWW::Garden::Design::Util::Config;
 
+use Data::Dumper::Concise; # For Dumper().
+
 use Moo;
 
 our $VERSION = '1.00';
 
 # -----------------------------------------------
 
-sub build_attribute_fields
+sub build_attribute_ids
+{
+	my($self, $kind, $attribute_type_fields, $attribute_type_names) = @_;
+
+	my($name);
+
+	return
+	[
+		map
+		{
+			$name = $$attribute_type_names[$_];
+			[
+				map
+				{
+					"${kind}_${name}_$_";
+				} @{$$attribute_type_fields[$_]}
+			]
+		} 0 .. $#$attribute_type_names
+	];
+
+} # End of build_attribute_ids.
+
+# -----------------------------------------------
+
+sub build_attribute_type_fields
+{
+	my($self, $attribute_types) = @_;
+
+	return
+	[
+		map
+		{
+			[split(/\s*,\s+/, $$_{range})];
+		} sort{$$a{sequence} <=> $$b{sequence} } @$attribute_types
+	];
+
+} # End of build_attribute_type_fields.
+
+# -----------------------------------------------
+
+sub build_attribute_type_names
 {
 	my($self, $attribute_types) = @_;
 
 	my(@fields);
-	my($id);
 	my($name);
-	my(@value_set);
 
-	return [map
-			{
-				$name		= $$_{name};
-				@value_set	= split(/,\s+/, $$_{range});
-				@fields		= map
-								{
-									$id = "${name}_$_";
-									$id =~ s/ /_/g;
+	return [map{$$_{name} } sort{$$a{sequence} <=> $$b{sequence} } @$attribute_types];
 
-									$id;
-								} @value_set;
-
-				[@fields];
-			} sort{$$a{sequence} <=> $$b{sequence} } @$attribute_types
-			];
-
-} # End of build_attribute_fields.
+} # End of build_attribute_type_names.
 
 # ------------------------------------------------
 # This method will run once at server start.
@@ -63,10 +89,13 @@ sub startup
 
 	my($defaults);
 
-	$$defaults{config}				= WWW::Garden::Design::Util::Config -> new -> config;
-	$$defaults{db}					= WWW::Garden::Design::Database -> new(logger => $self -> app -> log);
-	$$defaults{attribute_types}		= $$defaults{db} -> read_table('attribute_types');
-	$$defaults{attribute_fields}	= $self -> build_attribute_fields($$defaults{attribute_types});
+	$$defaults{config}					= WWW::Garden::Design::Util::Config -> new -> config;
+	$$defaults{db}						= WWW::Garden::Design::Database -> new(logger => $self -> app -> log);
+	$$defaults{attribute_types}			= $$defaults{db} -> read_table('attribute_types');
+	$$defaults{attribute_type_names}	= $self -> build_attribute_type_names($$defaults{attribute_types});
+	$$defaults{attribute_type_fields}	= $self -> build_attribute_type_fields($$defaults{attribute_types});
+	$$defaults{attribute_attribute_ids}	= $self -> build_attribute_ids('attribute', $$defaults{attribute_type_fields}, $$defaults{attribute_type_names});
+	$$defaults{search_attribute_ids}	= $self -> build_attribute_ids('search', $$defaults{attribute_type_fields}, $$defaults{attribute_type_names});
 
 	$self -> defaults($defaults);
 
