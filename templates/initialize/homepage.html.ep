@@ -141,11 +141,11 @@ $(function()
 
 // -----------------------------------------------
 
-function build_attribute_id(name, value)
+function build_attribute_id(kind, name, value)
 {
 	value = value.replace(/ /g, '_');
 
-	return '#attribute_' + name + '_' + value;
+	return '#' + kind + '_' + name + '_' + value;
 }
 
 // -----------------------------------------------
@@ -281,7 +281,7 @@ function populate_details(flower_id)
 			for (k = 0; k < range.length; k++)
 			{
 				value	= range[k];
-				id		= build_attribute_id(attribute_name, value);
+				id		= build_attribute_id('attribute', attribute_name, value);
 
 				$(id).prop('checked', false);
 			}
@@ -314,7 +314,7 @@ function populate_details(flower_id)
 				for (k = 0; k < range.length; k++)
 				{
 					value	= range[k];
-					id		= build_attribute_id(attribute_name, value);
+					id		= build_attribute_id('attribute', attribute_name, value);
 
 					if (value != '')
 					{
