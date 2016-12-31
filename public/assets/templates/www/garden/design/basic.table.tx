@@ -1,7 +1,7 @@
 <table align = 'center'>
 <tr>
 	<td align = 'center'>
-		<span class = 'red_on_gold_title' name = 'the_flower_catalog'>The Flower Catalog</span>
+		<span class = 'red_on_gold_title'><a id = 'the_flower_catalog'>The Flower Catalog</a></span>
 	</td>
 </tr>
 <tr>
