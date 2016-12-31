@@ -107,7 +107,8 @@ $(function()
 			$('#aliases').empty().append(ui.item ? ui.item.value : '-');
 		}
 	});
-});
+
+}); // End of autocomplete function.
 
 // -----------------------------------------------
 
@@ -122,7 +123,8 @@ $(function()
 			$('#common_name').empty().append(ui.item ? ui.item.value : '-');
 		}
 	});
-});
+
+}); // End of autocomplete function.
 
 // -----------------------------------------------
 
@@ -137,7 +139,8 @@ $(function()
 			$('#scientific_name').empty().append(ui.item ? ui.item.value : '-');
 		}
 	});
-});
+
+}); // End of autocomplete function.
 
 // -----------------------------------------------
 
@@ -146,7 +149,8 @@ function build_attribute_id(kind, name, value)
 	value = value.replace(/ /g, '_');
 
 	return '#' + kind + '_' + name + '_' + value;
-}
+
+} // End of build_attribute_id.
 
 // -----------------------------------------------
 
@@ -163,7 +167,8 @@ function build_image_ids(sequence)
 	];
 
 	return ids;
-}
+
+} // End of build_image_ids.
 
 // -----------------------------------------------
 
@@ -178,7 +183,8 @@ function build_note_ids(sequence)
 	];
 
 	return ids;
-}
+
+} // End of build_note_ids.
 
 // -----------------------------------------------
 
@@ -193,7 +199,8 @@ function build_url_ids(sequence)
 	];
 
 	return ids;
-}
+
+} // End of build_url_ids.
 
 // -----------------------------------------------
 
@@ -208,7 +215,8 @@ function get_attribute_types()
 	{
 		attribute_types = json;
 	});
-}
+
+} // End of get_attribute_types.
 
 // -----------------------------------------------
 
@@ -438,7 +446,8 @@ function populate_details(flower_id)
 			$(ids[i][1]).val(url);
 		}
 	});
-}
+
+} // End of populate_details.
 
 // -----------------------------------------------
 
@@ -465,15 +474,42 @@ function submit_flower()
 
 		$('#flower_result_div').empty().text('Hi!');
 	});
-}
+
+} // End of submit_flower.
 
 // -----------------------------------------------
 
 function submit_search()
 {
+	var fields = new Object();
+
+	fields['search_key'] = $('#search_key').val();
+
+	// Copy attributes from the search form.
+
+	var attribute_name;
+	var id;
+	var name;
+	var range = new Array();
+	var value;
+
+	for (j = 0; j < attribute_types.length; j++)
+	{
+		attribute_name	= attribute_types[j]['name'];
+		range			= attribute_types[j]['range'].split(', ');
+
+		for (k = 0; k < range.length; k++)
+		{
+			value			= range[k];
+			id				= build_attribute_id('search', attribute_name, value);
+			name			= id.substr(1); // Discard leading '#' to get the name to submit.
+			fields[name]	= $(id).prop('checked');
+		}
+	}
+
 	$.ajax
 	({
-		data: {search_key: document.search_form.search_key.value},
+		data: fields,
 		dataType: 'html',
 		type: 'POST',
 		url:  '/Search'
@@ -482,7 +518,8 @@ function submit_search()
 		$('#search_result_div').empty().append(html);
 		$('#search_key').focus();
 	});
-}
+
+} // End of submit_search.
 
 // -----------------------------------------------
 

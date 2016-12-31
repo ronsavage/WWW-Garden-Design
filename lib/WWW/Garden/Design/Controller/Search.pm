@@ -29,14 +29,14 @@ sub display
 	my($self)		= @_;
 	my($defaults)	= $self -> app -> defaults;
 	my($ids)		= $$defaults{search_attribute_ids};
-	my(%keys)		= map{($_ => ($self -> param($_) || '') )} map{@$_} @$ids;
-	my($key)		= $self -> param('search_key');
+	my(%attributes)	= map{($_ => ($self -> param($_) || '') )} map{@$_} @$ids;
+	my($key)		= $self -> param('search_key') || '';
+	my($must_have)	= $key . join('', values %attributes);
 
-	$self -> app -> log -> debug('body_params: ' . Dumper($self -> res -> body_params -> to_hash) );
-	$self -> app -> log -> debug("search keys: '$key' and \n" . Dumper(\%keys) );
-
-	if (length $key > 0)
+	if (length $must_have > 0)
 	{
+		my($attributes) = $self -> extract_attributes(\%attributes);
+
 		my($defaults)							= $self -> app -> defaults;
 		my($time_taken, $match_count, $result)	= $self -> format($$defaults{db}, $key);
 
@@ -59,6 +59,29 @@ sub display
 	$self -> render;
 
 } # End of display.
+
+# -----------------------------------------------
+
+sub extract_attributes
+{
+	my($self, $attributes) = @_;
+
+	my($name);
+	my(%result);
+
+	for my $key (keys %$attributes)
+	{
+		# Strip off the leading 'search_'.
+
+		$name			= substr($key, 7);
+		$result{$name}	= 1 if ($$attributes{$key} eq 'true');
+	}
+
+	$self -> app -> log -> debug('resut: ' . Dumper(\%result) );
+
+	return \%result;
+
+} # End of extract_attributes.
 
 # -----------------------------------------------
 
