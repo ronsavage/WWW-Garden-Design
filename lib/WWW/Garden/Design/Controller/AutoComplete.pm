@@ -15,7 +15,7 @@ sub display
 	my($type) = $self -> param('type') || '';
 	my($key)  = $self -> param('term') || ''; # jquery forces use of 'term'.
 
-	$self -> app -> log -> debug("display(key => '$key', type => '$type')");
+	$self -> app -> log -> debug("AutoComplete.display(key => '$key', type => '$type')");
 
 	my(%table) =
 	(	#					Column				Table

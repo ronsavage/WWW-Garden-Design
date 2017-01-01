@@ -14,7 +14,7 @@ sub display
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('display()');
+	$self -> app -> log -> debug('Flower.display()');
 
 	my($item) =
 	{
@@ -53,7 +53,7 @@ sub format
 {
 	my($self, $item) = @_;
 
-	$self -> app -> log -> debug('format(...)');
+	$self -> app -> log -> debug('Flower.format(...)');
 
 	my($html) = <<EOS;
 <tr>

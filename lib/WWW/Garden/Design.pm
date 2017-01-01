@@ -73,7 +73,7 @@ sub startup
 {
 	my $self = shift;
 
-	$self -> secrets(['Passchar']);
+	$self -> secrets(['dde68453e7475755a9d15']);
 
 	# Log a special line to make the start of each request easy to find in the log.
 	# Of course, nothing is logged by this just because the server restarted.

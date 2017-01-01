@@ -15,7 +15,7 @@ sub display
 	my($self)		= @_;
 	my($flower_id)	= $self -> param('flower_id') || 0;
 
-	$self -> app -> log -> debug("display(flower_id => $flower_id)");
+	$self -> app -> log -> debug("GetDetails.display(flower_id => $flower_id)");
 
 	if ($flower_id > 0)
 	{

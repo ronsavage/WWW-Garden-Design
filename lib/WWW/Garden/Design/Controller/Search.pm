@@ -26,19 +26,22 @@ our $VERSION = '1.00';
 
 sub display
 {
-	my($self)		= @_;
-	my($defaults)	= $self -> app -> defaults;
-	my($ids)		= $$defaults{search_attribute_ids};
-	my(%attributes)	= map{($_ => ($self -> param($_) || '') )} map{@$_} @$ids;
-	my($key)		= $self -> param('search_key') || '';
-	my($must_have)	= $key . join('', values %attributes);
+	my($self)				= @_;
+	my($csrf_token)			= $self -> param('csrf_token') || '';
+	my($search_key)			= $self -> param('search_key') || '';
+	my($defaults)			= $self -> app -> defaults;
+	my($ids)				= $$defaults{search_attribute_ids};
+	my(%search_attributes)	= map{($_ => ($self -> param($_) || '') )} map{@$_} @$ids;
+	my($must_have)			= $search_key . join('', values %search_attributes);
+
+	$self -> app -> log -> info("Search.display(). csrf_token: $csrf_token. search_key: $search_key.");
 
 	if (length $must_have > 0)
 	{
-		my($attributes) = $self -> extract_attributes(\%attributes);
+		my($search_attributes) = $self -> extract_attributes(\%search_attributes);
 
 		my($defaults)							= $self -> app -> defaults;
-		my($time_taken, $match_count, $result)	= $self -> format($$defaults{db}, $key);
+		my($time_taken, $match_count, $result)	= $self -> format($$defaults{db}, $search_key);
 
 		$self -> stash(elapsed_time	=> sprintf('%.2f', $time_taken) );
 		$self -> stash(error		=> undef);
@@ -64,20 +67,25 @@ sub display
 
 sub extract_attributes
 {
-	my($self, $attributes) = @_;
+	my($self, $search_attributes) = @_;
 
 	my($name);
+	my($prefix);
 	my(%result);
 
-	for my $key (keys %$attributes)
+	for my $key (keys %$search_attributes)
 	{
 		# Strip off the leading 'search_'.
 
+		$prefix = substr($key, 7);
+
+		next if ($prefix ne 'search_');
+
 		$name			= substr($key, 7);
-		$result{$name}	= 1 if ($$attributes{$key} eq 'true');
+		$result{$name}	= 1 if ($$search_attributes{$key} eq 'true');
 	}
 
-	$self -> app -> log -> debug('resut: ' . Dumper(\%result) );
+	$self -> app -> log -> debug('result: ' . Dumper(\%result) );
 
 	return \%result;
 

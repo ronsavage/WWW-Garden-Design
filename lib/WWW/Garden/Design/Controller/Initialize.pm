@@ -44,7 +44,7 @@ sub homepage
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('homepage()');
+	$self -> app -> log -> debug('Initialize.homepage()');
 
 	my($defaults) = $self -> app -> defaults;
 

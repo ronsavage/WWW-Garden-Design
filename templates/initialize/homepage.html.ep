@@ -465,9 +465,9 @@ function submit_flower()
 			scientific_name:	document.scientific_name.value,
 			sun_tolerance:		document.attributes_form.sun_tolerance.value
 		},
-		dataType: 'text',
-		type: 'POST',
-		url:  '/AddFlower'
+		dataType:	'text',
+		type:		'POST',
+		url:		'/AddFlower'
 	}).success(function(html)
 	{
 		// $('#flower_result_div').empty().append(html);
@@ -483,7 +483,10 @@ function submit_search()
 {
 	var fields = new Object();
 
-	fields['search_key'] = $('#search_key').val();
+	fields['csrf_token']	= $('#csrf_token').val();
+	fields['search_key']	= $('#search_key').val();
+
+	alert('csrf_token: ' + fields['csrf_token'] + '.');
 
 	// Copy attributes from the search form.
 
@@ -509,10 +512,10 @@ function submit_search()
 
 	$.ajax
 	({
-		data: fields,
-		dataType: 'html',
-		type: 'POST',
-		url:  '/Search'
+		data:		fields,
+		dataType:	'html',
+		type:		'POST',
+		url:		'/Search'
 	}).success(function(html)
 	{
 		$('#search_result_div').empty().append(html);

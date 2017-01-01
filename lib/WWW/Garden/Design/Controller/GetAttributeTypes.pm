@@ -14,7 +14,7 @@ sub display
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('display()');
+	$self -> app -> log -> debug('GetAttributeTypes.display()');
 
 	my($defaults) = $self -> app -> defaults;
 
