@@ -486,8 +486,6 @@ function submit_search()
 	fields['csrf_token']	= $('#csrf_token').val();
 	fields['search_key']	= $('#search_key').val();
 
-	alert('csrf_token: ' + fields['csrf_token'] + '.');
-
 	// Copy attributes from the search form.
 
 	var attribute_name;
@@ -569,11 +567,11 @@ $(function()
 	});
 
 	$('#search_key').focus();
-	$('#search_form').submit(function()
-	{
-		submit_search();
-		return false;
-	});
+//	$('#search_form').submit(function()
+//	{
+//		submit_search();
+//		return false;
+//	});
 
 	get_attribute_types();
 });

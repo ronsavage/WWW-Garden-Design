@@ -31,4 +31,4 @@
 	</table>
 </form>
 
-<div id = 'search_result_div'></div>
+<div class = '<%== $search_result_class %>' id = 'search_result_div'>No results yet...</div>

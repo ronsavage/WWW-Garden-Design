@@ -48,9 +48,10 @@ sub homepage
 
 	my($defaults) = $self -> app -> defaults;
 
-	$self -> stash(attribute_check_boxes => $self -> build_check_boxes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields}, $$defaults{attribute_attribute_ids}) );
-	$self -> stash(search_check_boxes => $self -> build_check_boxes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields}, $$defaults{search_attribute_ids}) );
-	$self -> render(constants => $$defaults{db} -> read_constants_table);
+	$self -> stash(attribute_check_boxes	=> $self -> build_check_boxes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields}, $$defaults{attribute_attribute_ids}) );
+	$self -> stash(search_check_boxes		=> $self -> build_check_boxes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields}, $$defaults{search_attribute_ids}) );
+	$self -> stash(search_result_class		=> 'search_result_hidden');
+	$self -> render(constants				=> $$defaults{db} -> read_constants_table);
 
 } # End of homepage.
 
