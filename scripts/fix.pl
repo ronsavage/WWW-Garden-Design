@@ -42,31 +42,27 @@ sub fix
 
 	for my $attribute (@{$data{attributes} })
 	{
-		$common_name = $$attribute{common_name};
+		$attribute_name	= $$attribute_type{name};
+		$common_name	= $$attribute{common_name};
+		$range			= $$attribute{range};
 
-		for my $attribute_type (sort{$$a{name} cmp $$b{name} } @{$data{attribute_types} })
+		if ($attribute_name eq 'edible')
 		{
-			$attribute_name	= $$attribute_type{name};
-			$range			= $$attribute{range};
-
-			if ($attribute_name eq 'edible')
-			{
-				$range = 'No' if ($range eq '');
-			}
-			else
-			{
-				$range = 'Unknown' if ($range eq '');
-			}
-
-			$csv -> combine
-			(
-				$common_name,
-				$attribute_name,
-				$range,
-			);
-
-			print $fh $csv -> string, "\n";
+			$range = 'No' if ($range eq '');
 		}
+		else
+		{
+			$range = 'Unknown' if ($range eq '');
+		}
+
+		$csv -> combine
+		(
+			$common_name,
+			$attribute_name,
+			$range,
+		);
+
+		print $fh $csv -> string, "\n";
 	}
 
 	close($fh);
