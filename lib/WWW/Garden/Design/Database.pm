@@ -601,69 +601,91 @@ sub read_table
 sub search
 {
 	my($self, $attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_key)	= @_;
-	my(@search_type_names)		= keys %$search_attributes;
-	my($flowers)				= $self -> read_flowers_table;
-	$search_key					= uc $search_key;
-	my($search_key_provided)	= $search_key ne '';
-	my($result_set)				= [];
+	my($flowers)			= $self -> read_flowers_table;
+	$search_key				= uc $search_key;
+	my($text_provided)		= $search_key ne '';
+	my(@type_names)			= keys %$search_attributes;
+	my($type_name_count)	= scalar @type_names;
+	my($attribute_provided) = ($type_name_count > 0) ? 1 : 0;
 
 	$self -> logger -> debug('Database.search() parameters:');
-	$self -> logger -> debug('constants_table: ' . Dumper($constants_table) );
 	$self -> logger -> debug('search_key: ' . Dumper($search_key) );
 	$self -> logger -> debug('search_attributes: ' . Dumper($search_attributes) );
 
+	my(%candidate_flower_ids);
 	my($item);
 	my($pig_latin);
-	my($search_attribute_provided);
-	my(%wanted_flower_ids);
 
 	# Did the user provide attributes?
 
-	for my $search_type_name (@search_type_names)
+	for my $type_name (@type_names)
 	{
-		my($attribute_type_id)		= 0;
-		$search_attribute_provided	= 1;
+		my($attribute_type_id);
 
 		for my $attribute_type (@$attribute_types_table)
 		{
-			if ($$attribute_type{name} eq $search_type_name)
+			if ($$attribute_type{name} eq $type_name)
 			{
 				$attribute_type_id = $$attribute_type{id};
 			}
 		}
 
-		if ($attribute_type_id > 0)
+		if ($attribute_type_id)
 		{
 			for my $attribute (@$attributes_table)
 			{
-				if ( ($$attribute{attribute_type_id} == $attribute_type_id) && ($$attribute{range} =~ /$$search_attributes{$search_type_name}/) )
+				if ( ($$attribute{attribute_type_id} == $attribute_type_id) && ($$attribute{range} =~ /$$search_attributes{$type_name}/) )
 				{
-					$wanted_flower_ids{$$attribute{flower_id} } = 1;
+					$candidate_flower_ids{$$attribute{flower_id} }				= {} if (!$candidate_flower_ids{$$attribute{flower_id} });
+					$candidate_flower_ids{$$attribute{flower_id} }{$type_name}	= 1;
 				}
 			}
 		}
 	}
 
-	my($attribute_match);
+	# Did the user provide more that one attribute type?
+	# If so, they must all match.
+
 	my($flower_id);
-	my($key_match);
+	my($type_match_count);
+	my(%wanted_flower_ids);
+
+	for $flower_id (keys %candidate_flower_ids)
+	{
+		$type_match_count = 0;
+
+		for my $type_name (@type_names)
+		{
+			$type_match_count++ if ($candidate_flower_ids{$flower_id}{$type_name});
+		}
+
+		$wanted_flower_ids{$flower_id} = 1 if ($type_name_count == $type_match_count);
+	}
+
+	my($result_set) = [];
+
+	my($attribute_match);
 	my($match);
+	my($text_match);
 
 	for my $flower (@$flowers)
 	{
 		$flower_id			= $$flower{id};
-		$attribute_match	= $wanted_flower_ids{$flower_id};
-		$key_match			= ( (uc($$flower{aliases}) =~ /$search_key/)
+		$attribute_match	= $wanted_flower_ids{$flower_id} || 0;
+		$text_match			= $text_provided && ( (uc($$flower{aliases}) =~ /$search_key/)
 								|| (uc($$flower{common_name}) =~ /$search_key/)
 								|| (uc($$flower{scientific_name}) =~ /$search_key/) );
 
-		if ($attribute_match)
+#		$self -> logger -> debug("attribute_provided: $attribute_provided. attribute_match: $attribute_match. "
+#			. "text_provided: $text_provided. text_match: $text_match.");
+
+		if ($attribute_provided)
 		{
-			$match = $search_key_provided ? $key_match : 1;
+			$match = $text_provided ? $attribute_match && $text_match : $attribute_match;
 		}
 		else
 		{
-			$match = $search_attribute_provided ? 0 : $search_key_provided ? 0 : $key_match;
+			$match = $text_provided ? $text_match : 0;
 		}
 
 		if ($match)

@@ -1,0 +1,247 @@
+[Mon Jan  2 18:28:33 2017] [info] ------------------------------
+[Mon Jan  2 18:28:33 2017] [debug] POST "/Search"
+[Mon Jan  2 18:28:33 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::Search" and action "display"
+[Mon Jan  2 18:28:33 2017] [debug] Database.search() parameters:
+[Mon Jan  2 18:28:33 2017] [debug] search_key: "ALOHA"
+
+[Mon Jan  2 18:28:33 2017] [debug] search_attributes: {
+  habit => "Vine",
+  native => "Yes"
+}
+
+[Mon Jan  2 18:28:33 2017] [debug] flower_id: 29 matches all attribute types
+[Mon Jan  2 18:28:33 2017] [debug] flower_id: 3 matches all attribute types
+[Mon Jan  2 18:28:33 2017] [debug] flower_id: 2 matches all attribute types
+[Mon Jan  2 18:28:33 2017] [info] Match count: 2
+[Mon Jan  2 18:28:33 2017] [debug] Rendering cached template "search/display.html.ep"
+[Mon Jan  2 18:28:33 2017] [debug] 200 OK (0.237482s, 4.211/s)
+[Mon Jan  2 18:28:41 2017] [info] ------------------------------
+[Mon Jan  2 18:28:41 2017] [debug] POST "/Search"
+[Mon Jan  2 18:28:41 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::Search" and action "display"
+[Mon Jan  2 18:28:41 2017] [debug] Database.search() parameters:
+[Mon Jan  2 18:28:41 2017] [debug] search_key: "ALOHA"
+
+[Mon Jan  2 18:28:41 2017] [debug] search_attributes: {
+  native => "Yes"
+}
+
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 22 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 13 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 86 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 143 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 57 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 146 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 113 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 114 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 11 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 103 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 112 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 67 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 150 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 61 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 117 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 73 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 93 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 55 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 29 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 62 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 53 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 58 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 159 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 85 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 134 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 68 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 83 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 115 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 54 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 33 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 12 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 151 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 111 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 119 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 66 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 96 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 106 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 94 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 95 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 135 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 10 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 21 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 3 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 31 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 30 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 14 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 32 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 69 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 72 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 116 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 84 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 2 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [debug] flower_id: 87 matches all attribute types
+[Mon Jan  2 18:28:41 2017] [info] Match count: 2
+[Mon Jan  2 18:28:41 2017] [debug] Rendering cached template "search/display.html.ep"
+[Mon Jan  2 18:28:41 2017] [debug] 200 OK (0.23192s, 4.312/s)
+[Mon Jan  2 18:28:45 2017] [info] ------------------------------
+[Mon Jan  2 18:28:45 2017] [debug] POST "/Search"
+[Mon Jan  2 18:28:45 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::Search" and action "display"
+[Mon Jan  2 18:28:45 2017] [debug] Database.search() parameters:
+[Mon Jan  2 18:28:45 2017] [debug] search_key: "ALOHA"
+
+[Mon Jan  2 18:28:45 2017] [debug] search_attributes: {}
+
+[Mon Jan  2 18:28:45 2017] [info] Match count: 2
+[Mon Jan  2 18:28:45 2017] [debug] Rendering cached template "search/display.html.ep"
+[Mon Jan  2 18:28:45 2017] [debug] 200 OK (0.205173s, 4.874/s)
+[Mon Jan  2 18:29:16 2017] [info] ------------------------------
+[Mon Jan  2 18:29:16 2017] [debug] POST "/Search"
+[Mon Jan  2 18:29:16 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::Search" and action "display"
+[Mon Jan  2 18:29:16 2017] [debug] Database.search() parameters:
+[Mon Jan  2 18:29:16 2017] [debug] search_key: "ALOHA"
+
+[Mon Jan  2 18:29:16 2017] [debug] search_attributes: {
+  native => "No"
+}
+
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 136 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 47 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 132 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 102 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 4 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 77 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 45 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 155 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 40 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 39 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 60 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 8 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 157 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 100 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 128 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 82 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 74 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 147 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 41 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 81 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 7 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 19 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 25 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 65 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 52 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 44 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 89 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 51 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 20 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 49 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 6 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 42 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 129 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 16 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 78 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 43 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 36 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 92 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 118 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 91 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 145 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 138 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 50 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 110 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 59 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 56 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 48 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 144 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 27 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 24 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 80 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 105 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 63 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 99 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 156 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 161 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 90 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 124 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 127 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 75 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 121 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 37 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 9 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 38 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 64 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 18 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 46 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 162 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 160 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 109 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 104 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 126 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 15 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 153 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 154 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 107 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 101 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 141 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 158 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 122 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 148 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 123 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 35 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 23 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 79 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 71 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 5 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 98 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 97 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 125 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 34 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 142 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 108 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 88 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 133 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 17 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 26 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 120 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 152 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 140 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 130 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 131 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 1 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 137 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 139 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 149 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 70 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [debug] flower_id: 28 matches all attribute types
+[Mon Jan  2 18:29:16 2017] [info] Match count: 0
+[Mon Jan  2 18:29:16 2017] [debug] Rendering cached template "search/display.html.ep"
+[Mon Jan  2 18:29:16 2017] [debug] 200 OK (0.211967s, 4.718/s)
+[Mon Jan  2 18:29:22 2017] [info] ------------------------------
+[Mon Jan  2 18:29:22 2017] [debug] POST "/Search"
+[Mon Jan  2 18:29:22 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::Search" and action "display"
+[Mon Jan  2 18:29:23 2017] [debug] Database.search() parameters:
+[Mon Jan  2 18:29:23 2017] [debug] search_key: "ALOHA"
+
+[Mon Jan  2 18:29:23 2017] [debug] search_attributes: {
+  habit => "Vine",
+  native => "No"
+}
+
+[Mon Jan  2 18:29:23 2017] [debug] flower_id: 39 matches all attribute types
+[Mon Jan  2 18:29:23 2017] [info] Match count: 0
+[Mon Jan  2 18:29:23 2017] [debug] Rendering cached template "search/display.html.ep"
+[Mon Jan  2 18:29:23 2017] [debug] 200 OK (0.222581s, 4.493/s)
+[Mon Jan  2 18:29:27 2017] [info] ------------------------------
+[Mon Jan  2 18:29:27 2017] [debug] POST "/Search"
+[Mon Jan  2 18:29:27 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::Search" and action "display"
+[Mon Jan  2 18:29:28 2017] [debug] Database.search() parameters:
+[Mon Jan  2 18:29:28 2017] [debug] search_key: "ALOHA"
+
+[Mon Jan  2 18:29:28 2017] [debug] search_attributes: {
+  habit => "Vine",
+  native => "Yes"
+}
+
+[Mon Jan  2 18:29:28 2017] [debug] flower_id: 2 matches all attribute types
+[Mon Jan  2 18:29:28 2017] [debug] flower_id: 3 matches all attribute types
+[Mon Jan  2 18:29:28 2017] [debug] flower_id: 29 matches all attribute types
+[Mon Jan  2 18:29:28 2017] [info] Match count: 2
+[Mon Jan  2 18:29:28 2017] [debug] Rendering cached template "search/display.html.ep"
+[Mon Jan  2 18:29:28 2017] [debug] 200 OK (0.241785s, 4.136/s)
