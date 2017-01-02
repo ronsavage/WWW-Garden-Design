@@ -601,10 +601,11 @@ sub read_table
 sub search
 {
 	my($self, $attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_key)	= @_;
-	my(@search_type_names)	= keys %$search_attributes;
-	my($flowers)			= $self -> read_flowers_table;
-	$search_key				= uc $search_key;
-	my($result_set)			= [];
+	my(@search_type_names)		= keys %$search_attributes;
+	my($flowers)				= $self -> read_flowers_table;
+	$search_key					= uc $search_key;
+	my($search_key_provided)	= $search_key ne '';
+	my($result_set)				= [];
 
 	$self -> logger -> debug('Database.search() parameters:');
 	$self -> logger -> debug('constants_table: ' . Dumper($constants_table) );
@@ -613,19 +614,18 @@ sub search
 
 	my($item);
 	my($pig_latin);
+	my($search_attribute_provided);
+	my(%wanted_flower_ids);
 
 	# Did the user provide attributes?
 
 	for my $search_type_name (@search_type_names)
 	{
-		my($attribute_type_id) = 0;
-
-		my(@flower_ids);
+		my($attribute_type_id)		= 0;
+		$search_attribute_provided	= 1;
 
 		for my $attribute_type (@$attribute_types_table)
 		{
-			$self -> logger -> debug("Compare $$attribute_type{name} eq $search_type_name.");
-
 			if ($$attribute_type{name} eq $search_type_name)
 			{
 				$attribute_type_id = $$attribute_type{id};
@@ -638,42 +638,52 @@ sub search
 			{
 				if ( ($$attribute{attribute_type_id} == $attribute_type_id) && ($$attribute{range} =~ /$$search_attributes{$search_type_name}/) )
 				{
-					push @flower_ids, $$attribute{flower_id};
+					$wanted_flower_ids{$$attribute{flower_id} } = 1;
 				}
 			}
-
-			$self -> logger -> debug('Found flower_ids: ' . join(', ', @flower_ids) . '.');
 		}
-
 	}
 
-	# Did the user provide text?
+	my($attribute_match);
+	my($flower_id);
+	my($key_match);
+	my($match);
 
-	if ($search_key ne '')
+	for my $flower (@$flowers)
 	{
-		for my $flower (@$flowers)
-		{
-			if ( (uc($$flower{aliases}) =~ /$search_key/)
-				|| (uc($$flower{common_name}) =~ /$search_key/)
-				|| (uc($$flower{scientific_name}) =~ /$search_key/) )
-			{
-				$pig_latin	= $$flower{pig_latin};
-				$item		=
-				{
-					aliases			=> $$flower{aliases},
-					attributes		=> $$flower{attributes},
-					common_name		=> $$flower{common_name},
-					id				=> $$flower{id},
-					scientific_name	=> $$flower{scientific_name},
-					hxw				=> $self -> clean_up_height_width($$flower{height}, $$flower{width}),
-					height			=> $$flower{height},
-					pig_latin		=> $pig_latin,
-					thumbnail_url	=> "$$constants_table{homepage_url}$$constants_table{image_url}/$pig_latin.0.jpg",
-					width			=> $$flower{width},
-				};
+		$flower_id			= $$flower{id};
+		$attribute_match	= $wanted_flower_ids{$flower_id};
+		$key_match			= ( (uc($$flower{aliases}) =~ /$search_key/)
+								|| (uc($$flower{common_name}) =~ /$search_key/)
+								|| (uc($$flower{scientific_name}) =~ /$search_key/) );
 
-				push @$result_set, $item;
-			}
+		if ($attribute_match)
+		{
+			$match = $search_key_provided ? $key_match : 1;
+		}
+		else
+		{
+			$match = $search_attribute_provided ? 0 : $search_key_provided ? 0 : $key_match;
+		}
+
+		if ($match)
+		{
+			$pig_latin	= $$flower{pig_latin};
+			$item		=
+			{
+				aliases			=> $$flower{aliases},
+				attributes		=> $$flower{attributes},
+				common_name		=> $$flower{common_name},
+				id				=> $flower_id,
+				scientific_name	=> $$flower{scientific_name},
+				hxw				=> $self -> clean_up_height_width($$flower{height}, $$flower{width}),
+				height			=> $$flower{height},
+				pig_latin		=> $pig_latin,
+				thumbnail_url	=> "$$constants_table{homepage_url}$$constants_table{image_url}/$pig_latin.0.jpg",
+				width			=> $$flower{width},
+			};
+
+			push @$result_set, $item;
 		}
 	}
 
