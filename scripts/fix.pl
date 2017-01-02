@@ -18,7 +18,7 @@ sub fix
 
 	my(%data);
 
-	for my $kind (qw/attributes attribute_types flower_locations flowers images notes urls/)
+	for my $kind (qw/attribute_types attributes flower_locations flowers images notes urls/)
 	{
 		$data{$kind} = read_csv_file($csv, $kind);
 	}
@@ -32,12 +32,13 @@ sub fix
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 
-	$csv -> combine(qw/common_name attribute_name attribute_values/);
+	$csv -> combine(qw/common_name attribute_name range/);
 
 	print $fh $csv -> string, "\n";
 
 	my($attribute_name);
 	my($common_name);
+	my($range);
 
 	for my $attribute (@{$data{attributes} })
 	{
@@ -45,13 +46,23 @@ sub fix
 
 		for my $attribute_type (sort{$$a{name} cmp $$b{name} } @{$data{attribute_types} })
 		{
-			$attribute_name = $$attribute_type{name};
+			$attribute_name	= $$attribute_type{name};
+			$range			= $$attribute{range};
+
+			if ($attribute_name eq 'edible')
+			{
+				$range = 'No' if ($range eq '');
+			}
+			else
+			{
+				$range = 'Unknown' if ($range eq '');
+			}
 
 			$csv -> combine
 			(
 				$common_name,
 				$attribute_name,
-				$$attribute{$attribute_name},
+				$range,
 			);
 
 			print $fh $csv -> string, "\n";

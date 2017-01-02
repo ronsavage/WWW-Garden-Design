@@ -1,5 +1,5 @@
 "name","sequence","range"
-"native","10","Yes, No"
-"sun_tolerance","20","Full sun, Part shade, Shade"
+"native","10","Yes, No, Unknown"
+"sun_tolerance","20","Full sun, Part shade, Shade, Unknown"
 "edible","30","No, Bean, Flower, Fruit, Leaf, Stem, Rhizome"
-"habit","40","Columnar, Dwarf, Semi-dwarf, Prostrate, Small shrub, Large shrub, Tree, Vine"
+"habit","40","Columnar, Dwarf, Semi-dwarf, Prostrate, Shrub, Tree, Vine, Unknown"
