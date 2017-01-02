@@ -67,10 +67,18 @@ sub display
 
 sub extract_attributes
 {
-	my($self, $search_attributes) = @_;
+	my($self, $search_attributes)	= @_;
+	my($defaults)					= $self -> app -> defaults;
+	my($attribute_type_names)		= $$defaults{attribute_type_names};
+	my($attribute_type_fields)		= $$defaults{attribute_type_fields};
 
+	my($attribute_name, $attribute_value);
 	my($name);
 	my(%result);
+
+	# Ensure every checkbox has a value of 'true' and a name like:
+	# 'A known attribute type' . '_' . 'A value',
+	# where the value is one of the known values for the given type.
 
 	for my $key (keys %$search_attributes)
 	{
@@ -78,8 +86,27 @@ sub extract_attributes
 
 		next if (substr($key, 0, 7) ne 'search_');
 
-		$name			= substr($key, 7);
-		$result{$name}	= 1 if ($$search_attributes{$key} eq 'true');
+		$name = substr($key, 7);
+
+		next if ($$search_attributes{$key} ne 'true');
+
+		for my $type_name (@$attribute_type_names)
+		{
+			if ($name =~ /^($type_name)_(.+)$/)
+			{
+				# Warning: Because of the s/// you cannot combine these into 1 line
+				# such as $result{$1} = $2 =~ s/_/ /gr. I know - I tried.
+
+				$attribute_name		= $1;
+				$attribute_value	= $2;
+				$attribute_value	=~ s/_/ /g;
+
+				for my $type_value (@{$$attribute_type_fields{$type_name} })
+				{
+					$result{$attribute_name} = $attribute_value if ($attribute_value eq $type_value);
+				}
+			}
+		}
 	}
 
 	$self -> app -> log -> debug('result: ' . Dumper(\%result) );

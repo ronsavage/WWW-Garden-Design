@@ -10,21 +10,23 @@ our $VERSION = '1.00';
 
 sub build_check_boxes
 {
-	my($self, $names, $fields, $ids) = @_;
+	my($self, $type_names, $fields, $ids) = @_;
 
 	my($field);
 	my(@html);
 	my($id_index, $id);
 	my($name_index, $name);
+	my($type_name);
 
 	my(@check_boxes) = map
 						{
 							$name_index	= $_;
-							$name		= ucfirst $$names[$name_index] =~ s/_/&nbsp;/gr;
+							$type_name	= $$type_names[$name_index];
+							$name		= ucfirst $$type_names[$name_index] =~ s/_/&nbsp;/gr;
 							@html		= map
 											{
 												$id_index	= $_;
-												$field		= $$fields[$name_index][$id_index] =~ s/_/&nbsp;/gr;
+												$field		= $$fields{$type_name}[$id_index] =~ s/_/&nbsp;/gr;
 												$id			= $$ids[$name_index][$id_index];
 
 												"<input id = '$id' type = 'checkbox'>"
@@ -32,7 +34,7 @@ sub build_check_boxes
 											} 0 .. $#{$$ids[$name_index]};
 
 							[$name, join('&nbsp;&nbsp;&nbsp', @html)];
-						} 0 .. $#$names;
+						} 0 .. $#$type_names;
 
 	return [@check_boxes];
 

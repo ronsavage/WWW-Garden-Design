@@ -30,7 +30,7 @@ sub build_attribute_ids
 					$id	=~ s/-/_/g;
 
 					$id;
-				} @{$$attribute_type_fields[$_]}
+				} @{$$attribute_type_fields{$name} }
 			]
 		} 0 .. $#$attribute_type_names
 	];
@@ -43,13 +43,14 @@ sub build_attribute_type_fields
 {
 	my($self, $attribute_type_table) = @_;
 
-	return
-	[
-		map
-		{
-			[split(/\s*,\s+/, $$_{range})];
-		} sort{$$a{sequence} <=> $$b{sequence} } @$attribute_type_table
-	];
+	my(%attribute_type_fields);
+
+	for (sort{$$a{sequence} <=> $$b{sequence} } @$attribute_type_table)
+	{
+		$attribute_type_fields{$$_{name} } = [split(/\s*,\s+/, $$_{range})];
+	}
+
+	return \%attribute_type_fields;
 
 } # End of build_attribute_type_fields.
 
@@ -73,7 +74,7 @@ sub startup
 {
 	my $self = shift;
 
-	$self -> secrets(['dde68453e7475755a9d15']);
+	$self -> secrets(['757d76331dc264f21ae97b861189bd9d8aa74647']);
 
 	# Log a special line to make the start of each request easy to find in the log.
 	# Of course, nothing is logged by this just because the server restarted.
@@ -93,7 +94,7 @@ sub startup
 
 	$$defaults{config}					= WWW::Garden::Design::Util::Config -> new -> config;
 	$$defaults{db}						= WWW::Garden::Design::Database -> new(logger => $self -> app -> log);
-	$$defaults{attribute_type_table}		= $$defaults{db} -> read_table('attribute_types');
+	$$defaults{attribute_type_table}	= $$defaults{db} -> read_table('attribute_types');
 	$$defaults{attribute_type_names}	= $self -> build_attribute_type_names($$defaults{attribute_type_table});
 	$$defaults{attribute_type_fields}	= $self -> build_attribute_type_fields($$defaults{attribute_type_table});
 	$$defaults{attribute_attribute_ids}	= $self -> build_attribute_ids('attribute', $$defaults{attribute_type_fields}, $$defaults{attribute_type_names});

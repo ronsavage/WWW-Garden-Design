@@ -203,7 +203,7 @@ function build_url_ids(sequence)
 
 // -----------------------------------------------
 
-function attribute_type_table()
+function get_attribute_type_table()
 {
 	$.ajax
 	({
@@ -215,7 +215,7 @@ function attribute_type_table()
 		attribute_type_table = json;
 	});
 
-} // End of attribute_type_table.
+} // End of get_attribute_type_table.
 
 // -----------------------------------------------
 
@@ -503,7 +503,7 @@ function submit_search()
 			value			= range[k];
 			id				= build_attribute_id('search', attribute_name, value);
 			name			= id.substr(1); // Discard leading '#' to get the name to submit.
-			fields[name]	= $(id).prop('checked');
+			fields[name]	= $(id).prop('checked'); // Returns 'true' or 'false'.
 		}
 	}
 
