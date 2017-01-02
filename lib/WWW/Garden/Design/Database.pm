@@ -365,15 +365,15 @@ sub get_autocomplete_list
 
 sub get_flower_by_id
 {
-	my($self, $flower_id)	= @_;
-	my($attribute_types)	= $self -> read_table('attribute_types');
-	my($sql)				= "select * from flowers where id = $flower_id";
-	my($set)				= $self -> simple -> query($sql) || die $self -> db -> simple -> error;
+	my($self, $flower_id)		= @_;
+	my($attribute_type_table)	= $self -> read_table('attribute_types');
+	my($sql)					= "select * from flowers where id = $flower_id";
+	my($set)						= $self -> simple -> query($sql) || die $self -> db -> simple -> error;
 	my($flower)				= $set -> hash;
 
 	my(%attribute_type);
 
-	for (@$attribute_types)
+	for (@$attribute_type_table)
 	{
 		$attribute_type{$$_{id} } = $_;
 	}
@@ -451,14 +451,14 @@ sub read_flower_dependencies
 
 sub read_flowers_table
 {
-	my($self)				= @_;
-	my($constants)			= $self -> constants;
-	my($attribute_types)	= $self -> read_table('attribute_types');
-	my($flowers)			= $self -> read_table('flowers'); # Avoid 'Deep Recursion'! Don't call read_flowers_table()!
+	my($self)					= @_;
+	my($constants)				= $self -> constants;
+	my($attribute_type_table)	= $self -> read_table('attribute_types');
+	my($flower_table)			= $self -> read_table('flowers'); # Avoid 'Deep Recursion'! Don't call read_flowers_table()!
 
 	my(%attribute_type);
 
-	for (@$attribute_types)
+	for (@$attribute_type_table)
 	{
 		$attribute_type{$$_{id} } = $_;
 	}
@@ -469,7 +469,7 @@ sub read_flowers_table
 	my($record, @records);
 	my($thumbnail);
 
-	for my $flower (@$flowers)
+	for my $flower (@$flower_table)
 	{
 		# Phase 1: Transfer the flower data.
 
@@ -538,13 +538,13 @@ sub read_object_dependencies
 
 sub read_objects_table
 {
-	my($self)		= @_;
-	my($constants)	= $self -> constants;
-	my($colors)		= $self -> read_table('colors');
+	my($self)			= @_;
+	my($constants)		= $self -> constants;
+	my($color_table)	= $self -> read_table('colors');
 
 	my(%color_map);
 
-	for my $color (@$colors)
+	for my $color (@$color_table)
 	{
 		$color_map{$$color{id} } = $color;
 	}

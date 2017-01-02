@@ -114,9 +114,9 @@ sub BUILD
 
 sub attribute_types2csv
 {
-	my($self, $csv)			= @_;
-	my($attribute_types)	= $self -> db -> read_table('attribute_types');
-	my($file_name)			= $self -> output_file =~ s/flowers.csv/attribute_types.csv/r;
+	my($self, $csv)				= @_;
+	my($attribute_type_table)	= $self -> db -> read_table('attribute_types');
+	my($file_name)				= $self -> output_file =~ s/flowers.csv/attribute_types.csv/r;
 
 	$self -> db -> logger -> info("Writing to $file_name");
 
@@ -126,7 +126,7 @@ sub attribute_types2csv
 
 	print $fh $csv -> string, "\n";
 
-	for my $attribute_type (@$attribute_types)
+	for my $attribute_type (@$attribute_type_table)
 	{
 		$csv -> combine
 		(
@@ -397,9 +397,9 @@ sub as_html
 
 sub colors2csv
 {
-	my($self, $csv)	= @_;
-	my($colors)		= $self -> db -> read_table('colors');
-	my($file_name)	= $self -> output_file =~ s/flowers.csv/colors.csv/r;
+	my($self, $csv)		= @_;
+	my($color_table)	= $self -> db -> read_table('colors');
+	my($file_name)		= $self -> output_file =~ s/flowers.csv/colors.csv/r;
 
 	$self -> db -> logger -> info("Writing to $file_name");
 
@@ -411,7 +411,7 @@ sub colors2csv
 
 	my(%color_id2hex);
 
-	for my $row (sort{uc($$a{color}) cmp uc($$b{color}) || $$a{hex} cmp $$b{hex} } @$colors)
+	for my $row (sort{uc($$a{color}) cmp uc($$b{color}) || $$a{hex} cmp $$b{hex} } @$color_table)
 	{
 		$color_id2hex{$$row{id} } = $$row{hex};
 
@@ -471,16 +471,16 @@ sub constants2csv
 
 sub export_all_pages
 {
-	my($self)				= @_;
-	my($attribute_types)	= $self -> db -> read_table('attribute_types');
-	my($constants)			= $self -> db -> constants;
-	my($flowers)			= $self -> db -> read_flowers_table;
+	my($self)					= @_;
+	my($attribute_type_table)	= $self -> db -> read_table('attribute_types');
+	my($constants)				= $self -> db -> constants;
+	my($flowers)				= $self -> db -> read_flowers_table;
 
 	$self -> db -> logger -> info("flower_dir: $$constants{flower_dir}");
 
 	my(%attribute_sequence);
 
-	for (values @$attribute_types)
+	for (values @$attribute_type_table)
 	{
 		$attribute_sequence{$$_{name} } = $$_{sequence};
 	}
@@ -612,7 +612,7 @@ sub export_garden_layout
 	my($constants)			= $self -> db -> constants;
 	my($flowers)			= $self -> db -> read_flowers_table;
 	my($Garden)				= ucfirst($garden_name);
-	my($gardens)			= $self -> db -> read_table('gardens');
+	my($garden_table)		= $self -> db -> read_table('gardens');
 	my($objects)			= $self -> db -> read_objects_table;
 	my($max_x)				= 0;
 	my($max_y)				= 0;
@@ -621,7 +621,7 @@ sub export_garden_layout
 
 	my(%garden_name);
 
-	for my $garden (@$gardens)
+	for my $garden (@$garden_table)
 	{
 		$garden_name{$$garden{id} } = $$garden{name};
 	}
@@ -960,13 +960,13 @@ sub flower_locations2csv
 {
 	my($self, $csv, $flowers)	= @_;
 	my($file_name)				= $self -> output_file =~ s/flowers.csv/flower_locations.csv/r;
-	my($gardens)				= $self -> db -> read_table('gardens');
+	my($garden_table)			= $self -> db -> read_table('gardens');
 
 	# Build look-up table so we can export gardens names instead of the primary keys.
 
 	my(%gardens);
 
-	for my $item (@$gardens)
+	for my $item (@$garden_table)
 	{
 		$gardens{$$item{id} } = $$item{name};
 	}
@@ -1109,9 +1109,9 @@ sub format_string
 
 sub gardens2csv
 {
-	my($self, $csv)	= @_;
-	my($gardens)	= $self -> db -> read_table('gardens');
-	my($file_name)	= $self -> output_file =~ s/flowers.csv/gardens.csv/r;
+	my($self, $csv)		= @_;
+	my($file_name)		= $self -> output_file =~ s/flowers.csv/gardens.csv/r;
+	my($garden_table)	= $self -> db -> read_table('gardens');
 
 	$self -> db -> logger -> info("Writing to $file_name");
 
@@ -1123,7 +1123,7 @@ sub gardens2csv
 
 	my(%garden_id2name);
 
-	for my $garden (sort{$$a{name} cmp $$b{name} } @$gardens)
+	for my $garden (sort{$$a{name} cmp $$b{name} } @$garden_table)
 	{
 		$garden_id2name{$$garden{id} } = $$garden{name};
 

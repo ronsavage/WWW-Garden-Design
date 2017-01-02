@@ -91,7 +91,7 @@
 
 // Storage for info read in below from the database.
 
-var attribute_types = [];
+var attribute_type_table = [];
 
 // -----------------------------------------------
 
@@ -203,7 +203,7 @@ function build_url_ids(sequence)
 
 // -----------------------------------------------
 
-function get_attribute_types()
+function attribute_type_table()
 {
 	$.ajax
 	({
@@ -212,10 +212,10 @@ function get_attribute_types()
 		url:		'/GetAttributeTypes'
 	}).success(function(json)
 	{
-		attribute_types = json;
+		attribute_type_table = json;
 	});
 
-} // End of get_attribute_types.
+} // End of attribute_type_table.
 
 // -----------------------------------------------
 
@@ -280,10 +280,10 @@ function populate_details(flower_id)
 		// Attributes: Copy attribute types to the Flower/Attributes tab.
 		// 1: Remove any existing attributes.
 
-		for (j = 0; j < attribute_types.length; j++)
+		for (j = 0; j < attribute_type_table.length; j++)
 		{
-			attribute_name	= attribute_types[j]['name'];
-			range			= attribute_types[j]['range'].split(', ');
+			attribute_name	= attribute_type_table[j]['name'];
+			range			= attribute_type_table[j]['range'].split(', ');
 
 			for (k = 0; k < range.length; k++)
 			{
@@ -307,9 +307,9 @@ function populate_details(flower_id)
 
 			// Loop over all attribute types.
 
-			for (j = 0; j < attribute_types.length; j++)
+			for (j = 0; j < attribute_type_table.length; j++)
 			{
-				attribute_type_name = attribute_types[j]['name'];
+				attribute_type_name = attribute_type_table[j]['name'];
 
 				// Find the attribute type whose name matches the name of the flower's attribute.
 
@@ -493,10 +493,10 @@ function submit_search()
 	var range = new Array();
 	var value;
 
-	for (j = 0; j < attribute_types.length; j++)
+	for (j = 0; j < attribute_type_table.length; j++)
 	{
-		attribute_name	= attribute_types[j]['name'];
-		range			= attribute_types[j]['range'].split(', ');
+		attribute_name	= attribute_type_table[j]['name'];
+		range			= attribute_type_table[j]['range'].split(', ');
 
 		for (k = 0; k < range.length; k++)
 		{
@@ -572,7 +572,7 @@ $(function()
 		return false;
 	});
 
-	get_attribute_types();
+	get_attribute_type_table();
 });
 
 </script>
