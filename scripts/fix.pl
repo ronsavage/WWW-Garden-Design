@@ -42,7 +42,7 @@ sub fix
 
 	for my $attribute (@{$data{attributes} })
 	{
-		$attribute_name	= $$attribute_type{name};
+		$attribute_name	= $$attribute{attribute_name};
 		$common_name	= $$attribute{common_name};
 		$range			= $$attribute{range};
 
