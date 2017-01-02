@@ -2,6 +2,8 @@ package WWW::Garden::Design;
 
 use Mojo::Base 'Mojolicious';
 
+use Data::Dumper::Concise; # For Dumper().
+
 use WWW::Garden::Design::Database;
 use WWW::Garden::Design::Util::Config;
 
@@ -41,11 +43,11 @@ sub build_attribute_ids
 
 sub build_attribute_type_fields
 {
-	my($self, $attribute_type_table) = @_;
+	my($self, $attribute_types_table) = @_;
 
 	my(%attribute_type_fields);
 
-	for (sort{$$a{sequence} <=> $$b{sequence} } @$attribute_type_table)
+	for (sort{$$a{sequence} <=> $$b{sequence} } @$attribute_types_table)
 	{
 		$attribute_type_fields{$$_{name} } = [split(/\s*,\s+/, $$_{range})];
 	}
@@ -58,12 +60,12 @@ sub build_attribute_type_fields
 
 sub build_attribute_type_names
 {
-	my($self, $attribute_type_table) = @_;
+	my($self, $attribute_types_table) = @_;
 
 	my(@fields);
 	my($name);
 
-	return [map{$$_{name} } sort{$$a{sequence} <=> $$b{sequence} } @$attribute_type_table];
+	return [map{$$_{name} } sort{$$a{sequence} <=> $$b{sequence} } @$attribute_types_table];
 
 } # End of build_attribute_type_names.
 
@@ -94,9 +96,11 @@ sub startup
 
 	$$defaults{config}					= WWW::Garden::Design::Util::Config -> new -> config;
 	$$defaults{db}						= WWW::Garden::Design::Database -> new(logger => $self -> app -> log);
-	$$defaults{attribute_type_table}	= $$defaults{db} -> read_table('attribute_types');
-	$$defaults{attribute_type_names}	= $self -> build_attribute_type_names($$defaults{attribute_type_table});
-	$$defaults{attribute_type_fields}	= $self -> build_attribute_type_fields($$defaults{attribute_type_table});
+	$$defaults{constants_table}			= $$defaults{db} -> read_constants_table; # Warning: Not read_table('constants').
+	$$defaults{attributes_table}		= $$defaults{db} -> read_table('attributes');
+	$$defaults{attribute_types_table}	= $$defaults{db} -> read_table('attribute_types');
+	$$defaults{attribute_type_names}	= $self -> build_attribute_type_names($$defaults{attribute_types_table});
+	$$defaults{attribute_type_fields}	= $self -> build_attribute_type_fields($$defaults{attribute_types_table});
 	$$defaults{attribute_attribute_ids}	= $self -> build_attribute_ids('attribute', $$defaults{attribute_type_fields}, $$defaults{attribute_type_names});
 	$$defaults{search_attribute_ids}	= $self -> build_attribute_ids('search', $$defaults{attribute_type_fields}, $$defaults{attribute_type_names});
 

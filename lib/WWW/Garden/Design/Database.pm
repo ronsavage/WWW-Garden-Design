@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
+use Data::Dumper::Concise; # For Dumper().
+
 use DBI;
 
 use DBIx::Simple;
@@ -366,14 +368,14 @@ sub get_autocomplete_list
 sub get_flower_by_id
 {
 	my($self, $flower_id)		= @_;
-	my($attribute_type_table)	= $self -> read_table('attribute_types');
+	my($attribute_types_table)	= $self -> read_table('attribute_types');
 	my($sql)					= "select * from flowers where id = $flower_id";
 	my($set)						= $self -> simple -> query($sql) || die $self -> db -> simple -> error;
 	my($flower)				= $set -> hash;
 
 	my(%attribute_type);
 
-	for (@$attribute_type_table)
+	for (@$attribute_types_table)
 	{
 		$attribute_type{$$_{id} } = $_;
 	}
@@ -453,12 +455,12 @@ sub read_flowers_table
 {
 	my($self)					= @_;
 	my($constants)				= $self -> constants;
-	my($attribute_type_table)	= $self -> read_table('attribute_types');
+	my($attribute_types_table)	= $self -> read_table('attribute_types');
 	my($flower_table)			= $self -> read_table('flowers'); # Avoid 'Deep Recursion'! Don't call read_flowers_table()!
 
 	my(%attribute_type);
 
-	for (@$attribute_type_table)
+	for (@$attribute_types_table)
 	{
 		$attribute_type{$$_{id} } = $_;
 	}
@@ -598,43 +600,86 @@ sub read_table
 
 sub search
 {
-	my($self, $key)	= @_;
-	my($constants)	= $self -> constants;
-	my($flowers)	= $self -> read_flowers_table;
-	$key			= uc $key;
-	my($list)		= [];
+	my($self, $attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_key)	= @_;
+	my(@search_type_names)	= keys %$search_attributes;
+	my($flowers)			= $self -> read_flowers_table;
+	$search_key				= uc $search_key;
+	my($result_set)			= [];
+
+	$self -> logger -> debug('Database.search() parameters:');
+	$self -> logger -> debug('constants_table: ' . Dumper($constants_table) );
+	$self -> logger -> debug('search_key: ' . Dumper($search_key) );
+	$self -> logger -> debug('search_attributes: ' . Dumper($search_attributes) );
 
 	my($item);
 	my($pig_latin);
 
-	for my $flower (@$flowers)
-	{
-		if ( (uc($$flower{aliases}) =~ /$key/)
-			|| (uc($$flower{common_name}) =~ /$key/)
-			|| (uc($$flower{scientific_name}) =~ /$key/) )
-		{
-			$pig_latin	= $$flower{pig_latin};
-			$item		=
-			{
-				aliases			=> $$flower{aliases},
-				attributes		=> $$flower{attributes},
-				common_name		=> $$flower{common_name},
-				id				=> $$flower{id},
-				scientific_name	=> $$flower{scientific_name},
-				hxw				=> $self -> clean_up_height_width($$flower{height}, $$flower{width}),
-				height			=> $$flower{height},
-				pig_latin		=> $pig_latin,
-				thumbnail_url	=> "$$constants{homepage_url}$$constants{image_url}/$pig_latin.0.jpg",
-				width			=> $$flower{width},
-			};
+	# Did the user provide attributes?
 
-			push @$list, $item;
+	for my $search_type_name (@search_type_names)
+	{
+		my($attribute_type_id) = 0;
+
+		my(@flower_ids);
+
+		for my $attribute_type (@$attribute_types_table)
+		{
+			$self -> logger -> debug("Compare $$attribute_type{name} eq $search_type_name.");
+
+			if ($$attribute_type{name} eq $search_type_name)
+			{
+				$attribute_type_id = $$attribute_type{id};
+			}
+		}
+
+		if ($attribute_type_id > 0)
+		{
+			for my $attribute (@$attributes_table)
+			{
+				if ( ($$attribute{attribute_type_id} == $attribute_type_id) && ($$attribute{range} =~ /$$search_attributes{$search_type_name}/) )
+				{
+					push @flower_ids, $$attribute{flower_id};
+				}
+			}
+
+			$self -> logger -> debug('Found flower_ids: ' . join(', ', @flower_ids) . '.');
+		}
+
+	}
+
+	# Did the user provide text?
+
+	if ($search_key ne '')
+	{
+		for my $flower (@$flowers)
+		{
+			if ( (uc($$flower{aliases}) =~ /$search_key/)
+				|| (uc($$flower{common_name}) =~ /$search_key/)
+				|| (uc($$flower{scientific_name}) =~ /$search_key/) )
+			{
+				$pig_latin	= $$flower{pig_latin};
+				$item		=
+				{
+					aliases			=> $$flower{aliases},
+					attributes		=> $$flower{attributes},
+					common_name		=> $$flower{common_name},
+					id				=> $$flower{id},
+					scientific_name	=> $$flower{scientific_name},
+					hxw				=> $self -> clean_up_height_width($$flower{height}, $$flower{width}),
+					height			=> $$flower{height},
+					pig_latin		=> $pig_latin,
+					thumbnail_url	=> "$$constants_table{homepage_url}$$constants_table{image_url}/$pig_latin.0.jpg",
+					width			=> $$flower{width},
+				};
+
+				push @$result_set, $item;
+			}
 		}
 	}
 
-	$self -> logger -> info("Match count: @{[$#$list + 1]}");
+	$self -> logger -> info("Match count: @{[$#$result_set + 1]}");
 
-	return [sort{$$a{common_name} cmp $$b{common_name} } @$list];
+	return [sort{$$a{common_name} cmp $$b{common_name} } @$result_set];
 
 } # End of search.
 

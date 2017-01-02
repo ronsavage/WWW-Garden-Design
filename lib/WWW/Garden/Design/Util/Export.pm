@@ -115,7 +115,7 @@ sub BUILD
 sub attribute_types2csv
 {
 	my($self, $csv)				= @_;
-	my($attribute_type_table)	= $self -> db -> read_table('attribute_types');
+	my($attribute_types_table)	= $self -> db -> read_table('attribute_types');
 	my($file_name)				= $self -> output_file =~ s/flowers.csv/attribute_types.csv/r;
 
 	$self -> db -> logger -> info("Writing to $file_name");
@@ -126,7 +126,7 @@ sub attribute_types2csv
 
 	print $fh $csv -> string, "\n";
 
-	for my $attribute_type (@$attribute_type_table)
+	for my $attribute_type (@$attribute_types_table)
 	{
 		$csv -> combine
 		(
@@ -472,7 +472,7 @@ sub constants2csv
 sub export_all_pages
 {
 	my($self)					= @_;
-	my($attribute_type_table)	= $self -> db -> read_table('attribute_types');
+	my($attribute_types_table)	= $self -> db -> read_table('attribute_types');
 	my($constants)				= $self -> db -> constants;
 	my($flowers)				= $self -> db -> read_flowers_table;
 
@@ -480,7 +480,7 @@ sub export_all_pages
 
 	my(%attribute_sequence);
 
-	for (values @$attribute_type_table)
+	for (values @$attribute_types_table)
 	{
 		$attribute_sequence{$$_{name} } = $$_{sequence};
 	}

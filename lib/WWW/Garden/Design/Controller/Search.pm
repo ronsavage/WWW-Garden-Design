@@ -34,14 +34,17 @@ sub display
 	my(%search_attributes)	= map{($_ => ($self -> param($_) || '') )} map{@$_} @$ids;
 	my($must_have)			= $search_key . join('', values %search_attributes);
 
-	$self -> app -> log -> info("Search.display(). csrf_token: $csrf_token. search_key: $search_key.");
-
 	if (length $must_have > 0)
 	{
-		my($search_attributes) = $self -> extract_attributes(\%search_attributes);
-
-		my($defaults)							= $self -> app -> defaults;
-		my($time_taken, $match_count, $result)	= $self -> format($$defaults{db}, $search_key);
+		my($attributes_table)		= $$defaults{attributes_table};
+		my($attribute_types_table)	= $$defaults{attribute_types_table};
+		my($constants_table)		= $$defaults{constants_table};
+		my($db)						= $$defaults{db};
+		my($search_attributes)		= $self -> extract_attributes(\%search_attributes);
+		my($start_time)				= [gettimeofday];
+		my($search_results)			= $db -> search($attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_key);
+		my($time_taken)				= tv_interval($start_time);
+		my($match_count, $result)	= $self -> format($constants_table, $db, $search_results);
 
 		$self -> stash(elapsed_time	=> sprintf('%.2f', $time_taken) );
 		$self -> stash(error		=> undef);
@@ -109,8 +112,6 @@ sub extract_attributes
 		}
 	}
 
-	$self -> app -> log -> debug('result: ' . Dumper(\%result) );
-
 	return \%result;
 
 } # End of extract_attributes.
@@ -119,18 +120,14 @@ sub extract_attributes
 
 sub format
 {
-	my($self, $db, $key)	= @_;
-	my($constants)			= $db -> read_constants_table;
-	my($count)				= 0;
-	my($html)				= '';
-	my($start_time)			= [gettimeofday];
-	my($result)				= $db -> search($key);
-	my($time_taken)			= tv_interval($start_time);
+	my($self, $constants_table, $db, $search_results) = @_;
+	my($count)	= 0;
+	my($html)	= '';
 
 	my($attribute);
 	my($native);
 
-	for my $item (@$result)
+	for my $item (@$search_results)
 	{
 		$count++;
 
@@ -155,14 +152,14 @@ sub format
 	<td>$$item{hxw}</td>
 	<td>
 		<button class = 'button' onClick='populate_details($$item{id})'>
-			<img src = '$$item{thumbnail_url}' width = '$$constants{cell_width}' height = '$$constants{cell_height}'/>
+			<img src = '$$item{thumbnail_url}' width = '$$constants_table{cell_width}' height = '$$constants_table{cell_height}'/>
 		</button>
 	</td>
 </tr>
 EOS
 	}
 
-	return ($time_taken, $count, $html);
+	return ($count, $html);
 
 } # End of format.
 
