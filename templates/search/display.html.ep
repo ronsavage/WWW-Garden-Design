@@ -21,7 +21,7 @@
 		<td align = 'right'>
 		%== $match_count
 		</td>
-		<td> hits</td>
+		<td> hit<%= $match_count == 1 ? '' : 's' %></td>
 </table>
 
 <!--
