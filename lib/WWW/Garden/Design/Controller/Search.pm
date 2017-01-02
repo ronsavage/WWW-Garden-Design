@@ -70,16 +70,13 @@ sub extract_attributes
 	my($self, $search_attributes) = @_;
 
 	my($name);
-	my($prefix);
 	my(%result);
 
 	for my $key (keys %$search_attributes)
 	{
 		# Strip off the leading 'search_'.
 
-		$prefix = substr($key, 7);
-
-		next if ($prefix ne 'search_');
+		next if (substr($key, 0, 7) ne 'search_');
 
 		$name			= substr($key, 7);
 		$result{$name}	= 1 if ($$search_attributes{$key} eq 'true');

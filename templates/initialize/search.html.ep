@@ -1,5 +1,5 @@
 <form name = 'search_form' id = 'search_form'>
-	%= csrf_field
+	<input id = 'csrf_token' type = 'hidden' value = '<%= $csrf_token %>'>
 	<table align = 'center'>
 		<tr>
 			<td colspan = '2'><div class = 'blue_centered'>Search</div></td>
@@ -31,4 +31,4 @@
 	</table>
 </form>
 
-<div class = '<%== $search_result_class %>' id = 'search_result_div'>No results yet...</div>
+<div id = 'search_result_div'></div>

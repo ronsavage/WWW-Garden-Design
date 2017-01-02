@@ -75,7 +75,6 @@
 %= include 'initialize/faq_help'
 			</div>
 		</div>
-%= include 'initialize/help'
 	</div>
 </div>
 
@@ -567,11 +566,11 @@ $(function()
 	});
 
 	$('#search_key').focus();
-//	$('#search_form').submit(function()
-//	{
-//		submit_search();
-//		return false;
-//	});
+	$('#search_form').submit(function()
+	{
+		submit_search();
+		return false;
+	});
 
 	get_attribute_types();
 });

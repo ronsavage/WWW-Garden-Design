@@ -76,16 +76,6 @@ body
 	width:				20em;
 }
 
-.search_result_hidden
-{
-	display: none;
-}
-
-.search_result_visible
-{
-	display: contents;
-}
-
 table
 {
 	border-spacing: 0;
