@@ -36,7 +36,7 @@ has config_path =>
 	required => 0,
 );
 
-our $VERSION = '1.00';
+our $VERSION = '0.95';
 
 # -----------------------------------------------
 

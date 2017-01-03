@@ -9,7 +9,7 @@ use WWW::Garden::Design::Util::Config;
 
 use Moo;
 
-our $VERSION = '1.00';
+our $VERSION = '0.95';
 
 # -----------------------------------------------
 
