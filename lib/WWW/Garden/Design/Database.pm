@@ -690,16 +690,17 @@ sub search
 
 	my($text_is_clean);
 
-	($search_text, $text_is_clean)	= $self -> parse_search_text($search_text);
-	my($text_provided)				= $search_text ne '';
-	my(@type_names)					= keys %$search_attributes;
-	my($type_name_count)			= scalar @type_names;
-	my($attribute_provided) 		= ($type_name_count > 0) ? 1 : 0;
+	($search_text, $text_is_clean) = $self -> parse_search_text($search_text);
 
-	$self -> logger -> debug('Database.search() parameters:');
-	$self -> logger -> debug('search_text: ' . Dumper($search_text) );
-	$self -> logger -> debug('search_attributes: ' . Dumper($search_attributes) );
+	if ($text_is_clean -> isFalse)
+	{
+		return ([], $text_is_clean);
+	}
 
+	my($text_provided)		= $search_text ne '';
+	my(@type_names)			= keys %$search_attributes;
+	my($type_name_count)	= scalar @type_names;
+	my($attribute_provided)	= ($type_name_count > 0) ? 1 : 0;
 	my($wanted_flower_ids)	= $self -> parse_search_attributes($attribute_types_table, $attributes_table, $search_attributes, \@type_names, $type_name_count);
 	my($flowers)			= $self -> read_flowers_table;
 	my($result_set)			= [];
@@ -718,9 +719,6 @@ sub search
 		$text_match			= $text_provided && ( (uc($$flower{aliases}) =~ /$search_text/)
 								|| (uc($$flower{common_name}) =~ /$search_text/)
 								|| (uc($$flower{scientific_name}) =~ /$search_text/) );
-
-#		$self -> logger -> debug("attribute_provided: $attribute_provided. attribute_match: $attribute_match. "
-#			. "text_provided: $text_provided. text_match: $text_match.");
 
 		if ($attribute_provided)
 		{
@@ -754,7 +752,7 @@ sub search
 
 	$self -> logger -> info("Match count: @{[$#$result_set + 1]}");
 
-	return [sort{$$a{common_name} cmp $$b{common_name} } @$result_set];
+	return ([sort{$$a{common_name} cmp $$b{common_name} } @$result_set], $text_is_clean);
 
 } # End of search.
 

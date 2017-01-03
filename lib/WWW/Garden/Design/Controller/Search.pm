@@ -2,6 +2,8 @@ package WWW::Garden::Design::Controller::Search;
 
 use Mojo::Base 'Mojolicious::Controller';
 
+use boolean;
+
 use Data::Dumper::Concise; # For Dumper().
 
 use WWW::Garden::Design::Util::Config;
@@ -38,20 +40,26 @@ sub display
 
 	if (length $must_have > 0)
 	{
-		my($attributes_table)		= $$defaults{attributes_table};
-		my($attribute_types_table)	= $$defaults{attribute_types_table};
-		my($constants_table)		= $$defaults{constants_table};
-		my($db)						= $$defaults{db};
-		my($search_attributes)		= $self -> extract_attributes(\%search_attributes);
-		my($start_time)				= [gettimeofday];
-		my($search_results)			= $db -> search($attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_text);
-		my($time_taken)				= tv_interval($start_time);
-		my($match_count, $result)	= $self -> format($constants_table, $db, $search_results);
+		my($attributes_table)				= $$defaults{attributes_table};
+		my($attribute_types_table)			= $$defaults{attribute_types_table};
+		my($constants_table)				= $$defaults{constants_table};
+		my($db)								= $$defaults{db};
+		my($search_attributes)				= $self -> extract_attributes(\%search_attributes);
+		my($start_time)						= [gettimeofday];
+		my($search_results, $text_is_clean)	= $db -> search($attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_text);
+		my($time_taken)						= tv_interval($start_time);
+		my($match_count)					= 0;
+		my($result_html)					= '';
+
+		if ($text_is_clean -> isTrue)
+		{
+			($match_count, $result_html) = $self -> format($constants_table, $db, $search_results);
+		}
 
 		$self -> stash(elapsed_time	=> sprintf('%.2f', $time_taken) );
 		$self -> stash(error		=> undef);
-		$self -> stash(match		=> $result);
 		$self -> stash(match_count	=> $match_count);
+		$self -> stash(result_html	=> $result_html);
 	}
 	else
 	{
@@ -59,8 +67,8 @@ sub display
 
 		$self -> stash(elapsed_time	=> 0);
 		$self -> stash(error		=> $message);
-		$self -> stash(match		=> undef);
 		$self -> stash(match_count	=> 0);
+		$self -> stash(result_html	=> undef);
 		$self -> app -> log -> error($message);
 	}
 
