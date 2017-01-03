@@ -51,13 +51,22 @@ sub display
 		my($match_count)					= 0;
 		my($result_html)					= '';
 
+		my($message);
+
 		if ($text_is_clean -> isTrue)
 		{
 			($match_count, $result_html) = $self -> format($constants_table, $db, $search_results);
 		}
+		else
+		{
+			$message		= "The search text '$search_text' can't be used!";
+			$result_html	= '';
+
+			$self -> app -> log -> error($message);
+		}
 
 		$self -> stash(elapsed_time	=> sprintf('%.2f', $time_taken) );
-		$self -> stash(error		=> undef);
+		$self -> stash(error		=> $message);
 		$self -> stash(match_count	=> $match_count);
 		$self -> stash(result_html	=> $result_html);
 	}

@@ -687,14 +687,16 @@ sub read_table
 sub search
 {
 	my($self, $attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_text) = @_;
+	my($text_is_clean) = true;
 
-	my($text_is_clean);
-
-	($search_text, $text_is_clean) = $self -> parse_search_text($search_text);
-
-	if ($text_is_clean -> isFalse)
+	if ($search_text ne '')
 	{
-		return ([], $text_is_clean);
+		($search_text, $text_is_clean) = $self -> parse_search_text($search_text);
+
+		if ($text_is_clean -> isFalse)
+		{
+			return ([], $text_is_clean);
+		}
 	}
 
 	my($text_provided)		= $search_text ne '';
