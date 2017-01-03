@@ -36,9 +36,10 @@ sub display
 	my($defaults)			= $self -> app -> defaults;
 	my($ids)				= $$defaults{search_attribute_ids};
 	my(%search_attributes)	= map{($_ => ($self -> param($_) || '') )} map{@$_} @$ids;
-	my($must_have)			= $search_text . join('', values %search_attributes);
+	my($search_attributes)	= join('', values %search_attributes);
+	my($must_have)			= ( (length($search_text) > 0) || ($search_attributes =~ /true/) ) ? true : false;
 
-	if (length $must_have > 0)
+	if ($must_have -> isTrue)
 	{
 		my($attributes_table)				= $$defaults{attributes_table};
 		my($attribute_types_table)			= $$defaults{attribute_types_table};
