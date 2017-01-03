@@ -1,5 +1,6 @@
 package WWW::Garden::Design::Database;
 
+use boolean;
 use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
@@ -480,6 +481,20 @@ sub parse_search_attributes
 
 # -----------------------------------------------
 
+sub parse_search_text
+{
+	my($self, $search_text)	= @_;
+	$search_text			=~ s/^\s+//;
+	$search_text			=~ s/\s+$//;
+	$search_text			= uc $search_text;
+	my($text_is_clean)		= true;
+
+	return ($search_text, $text_is_clean);
+
+} # End of parse_search_text.
+
+# -----------------------------------------------
+
 sub read_constants_table
 {
 	my($self)		= @_;
@@ -658,19 +673,22 @@ sub read_table
 
 sub search
 {
-	my($self, $attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_key)	= @_;
-	my($flowers)			= $self -> read_flowers_table;
-	$search_key				= uc $search_key;
-	my($text_provided)		= $search_key ne '';
-	my(@type_names)			= keys %$search_attributes;
-	my($type_name_count)	= scalar @type_names;
-	my($attribute_provided) = ($type_name_count > 0) ? 1 : 0;
+	my($self, $attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_text)	= @_;
+
+	my($text_is_clean);
+
+	($search_text, $text_is_clean)	= $self -> parse_search_text($search_text);
+	my($text_provided)				= $search_text ne '';
+	my(@type_names)					= keys %$search_attributes;
+	my($type_name_count)			= scalar @type_names;
+	my($attribute_provided) 		= ($type_name_count > 0) ? 1 : 0;
 
 	$self -> logger -> debug('Database.search() parameters:');
-	$self -> logger -> debug('search_key: ' . Dumper($search_key) );
+	$self -> logger -> debug('search_text: ' . Dumper($search_text) );
 	$self -> logger -> debug('search_attributes: ' . Dumper($search_attributes) );
 
 	my($wanted_flower_ids)	= $self -> parse_search_attributes($attribute_types_table, $attributes_table, $search_attributes, \@type_names, $type_name_count);
+	my($flowers)			= $self -> read_flowers_table;
 	my($result_set)			= [];
 
 	my($attribute_match);
@@ -684,9 +702,9 @@ sub search
 	{
 		$flower_id			= $$flower{id};
 		$attribute_match	= $$wanted_flower_ids{$flower_id} || 0;
-		$text_match			= $text_provided && ( (uc($$flower{aliases}) =~ /$search_key/)
-								|| (uc($$flower{common_name}) =~ /$search_key/)
-								|| (uc($$flower{scientific_name}) =~ /$search_key/) );
+		$text_match			= $text_provided && ( (uc($$flower{aliases}) =~ /$search_text/)
+								|| (uc($$flower{common_name}) =~ /$search_text/)
+								|| (uc($$flower{scientific_name}) =~ /$search_text/) );
 
 #		$self -> logger -> debug("attribute_provided: $attribute_provided. attribute_match: $attribute_match. "
 #			. "text_provided: $text_provided. text_match: $text_match.");
