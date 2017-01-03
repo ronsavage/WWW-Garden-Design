@@ -20,7 +20,7 @@
 	<table align = 'center'>
 		<tr>
 			<td>Search text:</td>
-			<td align = 'left'><input id = 'search_key' type = 'text' size = '30' maxlength = '100' value = ''></td>
+			<td align = 'left'><input id = 'search_text' type = 'text' size = '30' maxlength = '100' value = ''></td>
 		</tr>
 		<tr>
 			<td colspan = '2'><br /></td>

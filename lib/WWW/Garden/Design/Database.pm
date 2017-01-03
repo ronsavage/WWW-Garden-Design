@@ -484,10 +484,23 @@ sub parse_search_attributes
 sub parse_search_text
 {
 	my($self, $search_text)	= @_;
-	$search_text			=~ s/^\s+//;
-	$search_text			=~ s/\s+$//;
 	$search_text			= uc $search_text;
 	my($text_is_clean)		= true;
+
+	if ($search_text =~ /^[-A-Z0-9. ']+$/) # Use ' for UltraEdit syntax hiliter.
+	{
+	}
+	elsif ($search_text =~ /^(?:HEIGHT|WIDTH)\s*[<=>]\s*(?:CM|M)$/)
+	{
+		# o The first word must be HEIGHT or WIDTH.
+		# o Only 1 of the set [<=>] can appear.
+		# o Only 1 occurance of the char can appear.
+		# o The last word must be cm or m.
+	}
+	else
+	{
+		$text_is_clean = false;
+	}
 
 	return ($search_text, $text_is_clean);
 
@@ -673,7 +686,7 @@ sub read_table
 
 sub search
 {
-	my($self, $attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_text)	= @_;
+	my($self, $attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_text) = @_;
 
 	my($text_is_clean);
 

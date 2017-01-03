@@ -27,12 +27,14 @@ our $VERSION = '0.95';
 sub display
 {
 	my($self)				= @_;
-	my($csrf_token)			= $self -> param('csrf_token') || '';
-	my($search_key)			= $self -> param('search_key') || '';
+	my($csrf_token)			= $self -> param('csrf_token')	|| '';
+	my($search_text)		= $self -> param('search_text')	|| '';
+	$search_text			=~ s/^\s+//;
+	$search_text			=~ s/\s+$//;
 	my($defaults)			= $self -> app -> defaults;
 	my($ids)				= $$defaults{search_attribute_ids};
 	my(%search_attributes)	= map{($_ => ($self -> param($_) || '') )} map{@$_} @$ids;
-	my($must_have)			= $search_key . join('', values %search_attributes);
+	my($must_have)			= $search_text . join('', values %search_attributes);
 
 	if (length $must_have > 0)
 	{
@@ -42,7 +44,7 @@ sub display
 		my($db)						= $$defaults{db};
 		my($search_attributes)		= $self -> extract_attributes(\%search_attributes);
 		my($start_time)				= [gettimeofday];
-		my($search_results)			= $db -> search($attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_key);
+		my($search_results)			= $db -> search($attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_text);
 		my($time_taken)				= tv_interval($start_time);
 		my($match_count, $result)	= $self -> format($constants_table, $db, $search_results);
 
@@ -53,7 +55,7 @@ sub display
 	}
 	else
 	{
-		my($message) = 'Please supply a search key';
+		my($message) = 'Please supply some search text or select some attributes';
 
 		$self -> stash(elapsed_time	=> 0);
 		$self -> stash(error		=> $message);
