@@ -431,6 +431,7 @@ sub populate_flowers_table
 	# so we can generate the pig_latin column in the flowers table.
 
 	my($common_name, %common_name);
+	my($max_height, $min_height, $max_width, $min_width);
 	my($scientific_name, %scientific_name);
 
 	for my $item (@$lines)
@@ -462,6 +463,8 @@ sub populate_flowers_table
 		$common_name{$common_name}			+= 1;
 		$scientific_name{$scientific_name}	= 0 if (! $scientific_name{$scientific_name});
 		$scientific_name{$scientific_name}	+= 1;
+		($max_height, $min_height)			= $self -> validate_dimension(lc $self -> trim($$item{height}), lc $self -> trim($$item{height}) );
+		($max_width, $min_width)			= $self -> validate_dimension(lc $self -> trim($$item{width}), lc $self -> trim($$item{width}) );
 	}
 
 	my($pig_latin);
@@ -480,6 +483,8 @@ sub populate_flowers_table
 				pig_latin		=> $pig_latin,
 				scientific_name	=> $scientific_name,
 				height			=> $$item{height},
+				max_height		=> $max_height,
+				min_height		=> $min_height,
 				width			=> $$item{width},
 			}
 		);
@@ -791,6 +796,45 @@ sub populate_urls_table
 	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_urls_table.
+
+# -----------------------------------------------
+
+sub trim
+{
+	my($self, $value) = @_;
+	$value	=~ s/^\s+//;
+	$value	=~ s/\s+$//;
+	$value	=~ s/\s{2,}/ /g;
+
+	return $value;
+
+} # End of trim.
+
+# -----------------------------------------------
+
+sub validate_dimension
+{
+	my($self, $value)	= @_;
+	my($max_value)		= '';
+	my($min_value)		= '';
+
+	if ($value ne '')
+	{
+		if ($value =~ /^([0-9]{0,3}(?:[.][0-9]{0,2})?)\s*-\s*([0-9]{0,3}(?:[.][0-9]{0,2})?)\s*(cm|m)$/)
+		{
+			$max_value	= $2;
+			$min_value	= "$1$3";
+		}
+		elsif ($value =~ /^([0-9]{0,3}(?:[.][0-9]{0,2})?)\s*(cm|m)$/)
+		{
+			$max_value	= $1;
+			$min_value	= "$1$2";
+		}
+	}
+
+	return ($max_value, $min_value);
+
+} # End of validate_dimension.
 
 # -----------------------------------------------
 
