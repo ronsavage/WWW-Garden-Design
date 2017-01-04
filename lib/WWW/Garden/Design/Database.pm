@@ -485,30 +485,52 @@ sub parse_search_text
 {
 	my($self, $search_text)	= @_;
 	$search_text			= uc $search_text;
-	my($search_status)		= {search_text => $search_text, text_is_clean => true, text_provided => true};
+	$search_text			=~ s/\s{2,}/ /g;
+	my($search_status)		=
+	{
+		error_message	=> '',
+		search_text		=> $search_text,
+		text_is_clean	=> true,
+		text_provided	=> true,
+	};
 
 	# Test input and return structured result.
 
-	if ($search_text =~ /^[-A-Z0-9. ']+$/) # Use another ' to reset the UltraEdit syntax hiliter.
+	if ($search_text eq '')
+	{
+		$$search_status{text_provided} = false;
+	}
+	elsif ($search_text =~ /^[-A-Z0-9. ']+$/) # Use another ' to reset the UltraEdit syntax hiliter.
 	{
 	}
-	elsif ($search_text =~ /^(?:HEIGHT|WIDTH)\s*[<=>]\s*(?:CM|M)$/)
+	elsif ($search_text =~ /^(HEIGHT|WIDTH)\s*([<=>])\s*([0-9]{0,3}(?:[.][0-9]{0,2})?)\s*(CM|M)$/)
 	{
 		# o The first word must be HEIGHT or WIDTH.
 		# o Only 1 of the set [<=>] can appear.
 		# o The last word must be CM or M.
 
-		$$search_status{dimension}	= $1;
+		$$search_status{direction}	= $1;
 		$$search_status{operator}	= $2;
-		$$search_status{unit}		= $3;
-	}
-	elsif ($search_text eq '')
-	{
-		$$search_status{text_provided} = false;
+		$$search_status{size}		= $3;
+		$$search_status{unit}		= lc $4;
+
+		$self -> logger -> debug("Captured '$$search_status{direction}' & '$$search_status{operator}' & '$$search_status{size}' & '$$search_status{unit}'");
+
+		if ($$search_status{size} == 0)
+		{
+			$$search_status{size} = 1;
+			$$search_status{unit} = 'm';
+		}
+
+		if ( ($$search_status{unit} eq 'cm') && ($$search_status{size} >= 100) )
+		{
+			$$search_status{size} /= 100;
+		}
 	}
 	else
 	{
-		$$search_status{text_is_clean} = false;
+		$$search_status{error_message}	= 'Unknown chars in text. Check Search FAQ for help with dimensions';
+		$$search_status{text_is_clean}	= false;
 	}
 
 	return $search_status;

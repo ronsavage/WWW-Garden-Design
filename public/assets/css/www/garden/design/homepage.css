@@ -50,6 +50,11 @@ body
 	display: none;
 }
 
+.italic
+{
+	font-style: italic;
+}
+
 .purple_on_red_title
 {
 	background-color:	red;

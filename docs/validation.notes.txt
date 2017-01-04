@@ -2,6 +2,9 @@ Importing from *.csv files
 ==========================
 Date: 2017-01-03.
 
+General rules:
+1. Multiple contiguous spaces are reduced to a single space.
+
 attribute_types.csv
 -------------------
 1. The column names are name, sequence, range.
@@ -63,3 +66,18 @@ Details:
 16. template_path is the location of the *.tx files, the HTML templates used to generate various web pages.
 17. x_offset is the distance from the left edge for the garden layout SVGs.
 18. y_offset is the distance from the top edge for the garden layout SVGs.
+
+flower_locations.csv
+--------------------
+
+flowers.csv
+-----------
+This is the most important of all *.csv files.
+
+1. The column names are common_name, scientific_name, aliases, height, width.
+2. The rows are in common_name order.
+
+8. Height and width are stored as 99cm or 99m, where 99 means 1 or more digits, with or without a decimal point.
+9. Each may be specified as a range. E.g. 1-2m.
+9: A space before the 'cm' or 'm' is optional. It is removed upon importing.
+10. 'cm' and 'm' are stored in lower-case.
