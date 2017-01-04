@@ -485,24 +485,33 @@ sub parse_search_text
 {
 	my($self, $search_text)	= @_;
 	$search_text			= uc $search_text;
-	my($text_is_clean)		= true;
+	my($search_status)		= {search_text => $search_text, text_is_clean => true, text_provided => true};
 
-	if ($search_text =~ /^[-A-Z0-9. ']+$/) # Use ' for UltraEdit syntax hiliter.
+	# Test input and return structured result.
+
+	if ($search_text =~ /^[-A-Z0-9. ']+$/) # Use another ' to reset the UltraEdit syntax hiliter.
 	{
 	}
 	elsif ($search_text =~ /^(?:HEIGHT|WIDTH)\s*[<=>]\s*(?:CM|M)$/)
 	{
 		# o The first word must be HEIGHT or WIDTH.
 		# o Only 1 of the set [<=>] can appear.
-		# o Only 1 occurance of the char can appear.
-		# o The last word must be cm or m.
+		# o The last word must be CM or M.
+
+		$$search_status{dimension}	= $1;
+		$$search_status{operator}	= $2;
+		$$search_status{unit}		= $3;
+	}
+	elsif ($search_text eq '')
+	{
+		$$search_status{text_provided} = false;
 	}
 	else
 	{
-		$text_is_clean = false;
+		$$search_status{text_is_clean} = false;
 	}
 
-	return ($search_text, $text_is_clean);
+	return $search_status;
 
 } # End of parse_search_text.
 
@@ -687,19 +696,13 @@ sub read_table
 sub search
 {
 	my($self, $attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_text) = @_;
-	my($text_is_clean) = true;
+	my($search_status) = $self -> parse_search_text($search_text);
 
-	if ($search_text ne '')
+	if ($$search_status{text_is_clean} -> isFalse)
 	{
-		($search_text, $text_is_clean) = $self -> parse_search_text($search_text);
-
-		if ($text_is_clean -> isFalse)
-		{
-			return ([], $text_is_clean);
-		}
+		return ([], $$search_status{text_is_clean});
 	}
 
-	my($text_provided)		= $search_text ne '';
 	my(@type_names)			= keys %$search_attributes;
 	my($type_name_count)	= scalar @type_names;
 	my($attribute_provided)	= ($type_name_count > 0) ? 1 : 0;
@@ -718,17 +721,17 @@ sub search
 	{
 		$flower_id			= $$flower{id};
 		$attribute_match	= $$wanted_flower_ids{$flower_id} || 0;
-		$text_match			= $text_provided && ( (uc($$flower{aliases}) =~ /$search_text/)
-								|| (uc($$flower{common_name}) =~ /$search_text/)
-								|| (uc($$flower{scientific_name}) =~ /$search_text/) );
+		$text_match			= $$search_status{text_provided} && ( (uc($$flower{aliases}) =~ /$$search_status{search_text}/)
+								|| (uc($$flower{common_name}) =~ /$$search_status{search_text}/)
+								|| (uc($$flower{scientific_name}) =~ /$$search_status{search_text}/) );
 
 		if ($attribute_provided)
 		{
-			$match = $text_provided ? $attribute_match && $text_match : $attribute_match;
+			$match = $$search_status{text_provided} ? $attribute_match && $text_match : $attribute_match;
 		}
 		else
 		{
-			$match = $text_provided ? $text_match : 0;
+			$match = $$search_status{text_provided} ? $text_match : 0;
 		}
 
 		if ($match)
@@ -754,7 +757,7 @@ sub search
 
 	$self -> logger -> info("Match count: @{[$#$result_set + 1]}");
 
-	return ([sort{$$a{common_name} cmp $$b{common_name} } @$result_set], $text_is_clean);
+	return ([sort{$$a{common_name} cmp $$b{common_name} } @$result_set], $search_status);
 
 } # End of search.
 

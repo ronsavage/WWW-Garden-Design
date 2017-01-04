@@ -47,16 +47,16 @@ sub display
 		my($db)								= $$defaults{db};
 		my($search_attributes)				= $self -> extract_attributes(\%search_attributes);
 		my($start_time)						= [gettimeofday];
-		my($search_results, $text_is_clean)	= $db -> search($attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_text);
+		my($search_result, $search_status)	= $db -> search($attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_text);
 		my($time_taken)						= tv_interval($start_time);
 		my($match_count)					= 0;
 		my($result_html)					= '';
 
 		my($message);
 
-		if ($text_is_clean -> isTrue)
+		if ($$search_status{text_is_clean} -> isTrue)
 		{
-			($match_count, $result_html) = $self -> format($constants_table, $db, $search_results);
+			($match_count, $result_html) = $self -> format($constants_table, $db, $search_result);
 		}
 		else
 		{
