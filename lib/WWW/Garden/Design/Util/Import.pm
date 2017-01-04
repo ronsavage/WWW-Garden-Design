@@ -463,8 +463,8 @@ sub populate_flowers_table
 		$common_name{$common_name}			+= 1;
 		$scientific_name{$scientific_name}	= 0 if (! $scientific_name{$scientific_name});
 		$scientific_name{$scientific_name}	+= 1;
-		($max_height, $min_height)			= $self -> validate_dimension(lc $self -> trim($$item{height}), lc $self -> trim($$item{height}) );
-		($max_width, $min_width)			= $self -> validate_dimension(lc $self -> trim($$item{width}), lc $self -> trim($$item{width}) );
+		($max_height, $min_height)			= $self -> validate_dimension($table_name, $count, lc $self -> trim($$item{height}), lc $self -> trim($$item{height}) );
+		($max_width, $min_width)			= $self -> validate_dimension($table_name, $count, lc $self -> trim($$item{width}), lc $self -> trim($$item{width}) );
 	}
 
 	my($pig_latin);
@@ -485,6 +485,8 @@ sub populate_flowers_table
 				height			=> $$item{height},
 				max_height		=> $max_height,
 				min_height		=> $min_height,
+				max_width		=> $max_width,
+				min_width		=> $min_width,
 				width			=> $$item{width},
 			}
 		);
@@ -814,9 +816,9 @@ sub trim
 
 sub validate_dimension
 {
-	my($self, $value)	= @_;
-	my($max_value)		= '';
-	my($min_value)		= '';
+	my($self, $table_name, $count, $value) = @_;
+	my($max_value)	= '';
+	my($min_value)	= '';
 
 	if ($value ne '')
 	{
@@ -829,6 +831,10 @@ sub validate_dimension
 		{
 			$max_value	= $1;
 			$min_value	= "$1$2";
+		}
+		else
+		{
+			$self -> db -> logger -> info("$table_name. Row: $count. Cannot interpret height or width");
 		}
 	}
 
