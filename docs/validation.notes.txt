@@ -4,6 +4,7 @@ Date: 2017-01-03.
 
 General rules:
 1. Multiple contiguous spaces are reduced to a single space.
+2. All dates are in Australian Standard Date Format. E.g.: 2017-06-21.
 
 attribute_types.csv
 -------------------
