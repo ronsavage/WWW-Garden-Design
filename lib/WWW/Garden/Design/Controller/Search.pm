@@ -123,6 +123,7 @@ sub extract_attributes
 				$attribute_name		= $1;
 				$attribute_value	= $2;
 				$attribute_value	=~ s/_/ /g;
+				$attribute_value	= 'Semi-dwarf' if ($attribute_value eq 'Semi dwarf');
 
 				for my $type_value (@{$$attribute_type_fields{$type_name} })
 				{

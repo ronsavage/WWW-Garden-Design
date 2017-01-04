@@ -433,7 +433,7 @@ sub parse_search_attributes
 
 	for my $type_name (@$type_names)
 	{
-		my($attribute_type_id);
+		my($attribute_type_id) = 0;
 
 		for my $attribute_type (@$attribute_types_table)
 		{
