@@ -463,8 +463,6 @@ sub populate_flowers_table
 		$common_name{$common_name}			+= 1;
 		$scientific_name{$scientific_name}	= 0 if (! $scientific_name{$scientific_name});
 		$scientific_name{$scientific_name}	+= 1;
-		($max_height, $min_height)			= $self -> validate_dimension($table_name, $count, lc $self -> trim($$item{height}), lc $self -> trim($$item{height}) );
-		($max_width, $min_width)			= $self -> validate_dimension($table_name, $count, lc $self -> trim($$item{width}), lc $self -> trim($$item{width}) );
 	}
 
 	my($pig_latin);
@@ -474,6 +472,8 @@ sub populate_flowers_table
 		$common_name				= $$item{common_name};
 		$scientific_name			= $$item{scientific_name};
 		$pig_latin					= $self -> db -> generate_pig_latin_from_scientific_name($lines, $scientific_name, $common_name);
+		($max_height, $min_height)	= $self -> validate_dimension($table_name, $count, lc $self -> trim($$item{height}), lc $self -> trim($$item{height}) );
+		($max_width, $min_width)	= $self -> validate_dimension($table_name, $count, lc $self -> trim($$item{width}), lc $self -> trim($$item{width}) );
 		$$flower_keys{$common_name}	= $self -> db -> insert_hashref
 		(
 			$table_name,
@@ -822,19 +822,31 @@ sub validate_dimension
 
 	if ($value ne '')
 	{
+		my($unit) = '';
+
 		if ($value =~ /^([0-9]{0,3}(?:[.][0-9]{0,2})?)\s*-\s*([0-9]{0,3}(?:[.][0-9]{0,2})?)\s*(cm|m)$/)
 		{
 			$max_value	= $2;
-			$min_value	= "$1$3";
+			$min_value	= $1;
+			$unit		= $3;
 		}
 		elsif ($value =~ /^([0-9]{0,3}(?:[.][0-9]{0,2})?)\s*(cm|m)$/)
 		{
 			$max_value	= $1;
-			$min_value	= "$1$2";
+			$min_value	= $1;
+			$unit		= $2;
 		}
 		else
 		{
 			$self -> db -> logger -> info("$table_name. Row: $count. Cannot interpret height or width");
+		}
+
+		if ($unit eq 'm')
+		{
+			# Format as whole cd, i. e. with no decimal places.
+
+			$max_value = sprintf('%.0f', $max_value * 100);
+			$min_value = sprintf('%.0f', $min_value * 100);
 		}
 	}
 

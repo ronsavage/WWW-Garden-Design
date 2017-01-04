@@ -168,41 +168,6 @@ qq|<response>
 
 # --------------------------------------------------
 
-sub clean_up_height_width
-{
-	my($self, $height, $width) = @_;
-
-	my($result);
-
-	if ($height)
-	{
-		if ($width)
-		{
-			$result = "$height x $width";
-		}
-		else
-		{
-			$result = "Height: $height";
-		}
-	}
-	else
-	{
-		if ($width)
-		{
-			$result = "Width: $width";
-		}
-		else
-		{
-			$result = '';
-		}
-	}
-
-	return $result;
-
-} # End of clean_up_height_width.
-
-# --------------------------------------------------
-
 sub clean_up_icon_name
 {
 	my($self, $name)	= @_;
@@ -309,6 +274,41 @@ sub cross_check
 	return 0;
 
 } # End of cross_check.
+
+# --------------------------------------------------
+
+sub format_height_width
+{
+	my($self, $height, $width) = @_;
+
+	my($result);
+
+	if ($height)
+	{
+		if ($width)
+		{
+			$result = "$height x $width";
+		}
+		else
+		{
+			$result = "Height: $height";
+		}
+	}
+	else
+	{
+		if ($width)
+		{
+			$result = "Width: $width";
+		}
+		else
+		{
+			$result = '';
+		}
+	}
+
+	return $result;
+
+} # End of format_height_width.
 
 # --------------------------------------------------
 
@@ -600,7 +600,7 @@ sub read_flowers_table
 		}
 
 		$pig_latin				= $$flower{pig_latin};
-		$$record{hxw}			= $self -> clean_up_height_width($$flower{height}, $$flower{width});
+		$$record{hxw}			= $self -> format_height_width($$flower{height}, $$flower{width});
 		$$record{thumbnail_url}	= "$$constants{homepage_url}$$constants{image_url}/$pig_latin.0.jpg";
 		$$record{web_page_url}	= "$$constants{homepage_url}$$constants{flower_url}/$pig_latin.html";
 
@@ -766,7 +766,7 @@ sub search
 				common_name		=> $$flower{common_name},
 				id				=> $flower_id,
 				scientific_name	=> $$flower{scientific_name},
-				hxw				=> $self -> clean_up_height_width($$flower{height}, $$flower{width}),
+				hxw				=> $self -> format_height_width($$flower{height}, $$flower{width}),
 				height			=> $$flower{height},
 				pig_latin		=> $pig_latin,
 				thumbnail_url	=> "$$constants_table{homepage_url}$$constants_table{image_url}/$pig_latin.0.jpg",
