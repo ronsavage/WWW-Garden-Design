@@ -29,9 +29,10 @@ our $VERSION = '0.95';
 sub display
 {
 	my($self)				= @_;
-	my($csrf_token)			= $self -> param('csrf_token')	|| '';
-	my($search_text)		= $self -> db -> trim($self -> param('search_text')	|| '');
 	my($defaults)			= $self -> app -> defaults;
+	my($db)					= $$defaults{db};
+	my($csrf_token)			= $self -> param('csrf_token')	|| '';
+	my($search_text)		= $db -> trim($self -> param('search_text')	|| '');
 	my($ids)				= $$defaults{search_attribute_ids};
 	my(%search_attributes)	= map{($_ => ($self -> param($_) || '') )} map{@$_} @$ids;
 	my($search_attributes)	= join('', values %search_attributes);
@@ -42,7 +43,6 @@ sub display
 		my($attributes_table)				= $$defaults{attributes_table};
 		my($attribute_types_table)			= $$defaults{attribute_types_table};
 		my($constants_table)				= $$defaults{constants_table};
-		my($db)								= $$defaults{db};
 		my($search_attributes)				= $self -> extract_attributes(\%search_attributes);
 		my($start_time)						= [gettimeofday];
 		my($search_result, $search_status)	= $db -> search($attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_text);
