@@ -17,6 +17,8 @@ use Lingua::EN::Inflect qw/inflect PL_N/; # PL_N: plural of a singular noun.
 
 use Moo;
 
+use Time::HiRes qw/gettimeofday tv_interval/;
+
 use Types::Standard qw/Object HashRef/;
 
 extends qw/WWW::Garden::Design::Util::Config/;
@@ -423,15 +425,89 @@ sub insert_hashref
 
 # -----------------------------------------------
 
+sub parse_attribute_checkboxes
+{
+	my($self, $defaults, $search_attributes)	= @_;
+
+	$self -> logger -> debug('Entered Database.parse_attribute_checkboxes()');
+
+	my($attribute_type_names)					= $$defaults{attribute_type_names};
+	my($attribute_type_fields)					= $$defaults{attribute_type_fields};
+
+	my($attribute_name, $attribute_value);
+	my(%checkboxes);
+	my($name);
+
+	# Ensure every checkbox has a value of 'true' and a name like:
+	# 'A known attribute type' . '_' . 'A value',
+	# where the value is one of the known values for the given type.
+
+	for my $key (keys %$search_attributes)
+	{
+		# Strip off the leading 'search_'.
+
+		next if (substr($key, 0, 7) ne 'search_');
+
+		$name = substr($key, 7);
+
+		next if ($$search_attributes{$key} ne 'true');
+
+		for my $type_name (@$attribute_type_names)
+		{
+			if ($name =~ /^($type_name)_(.+)$/)
+			{
+				# Warning: Because of the s/// you cannot combine these into 1 line
+				# such as $result{$1} = $2 =~ s/_/ /gr. I know - I tried.
+
+				$attribute_name		= $1;
+				$attribute_value	= $2;
+				$attribute_value	=~ s/_/ /g;
+				$attribute_value	= 'Semi-dwarf' if ($attribute_value eq 'Semi dwarf');
+
+				for my $type_value (@{$$attribute_type_fields{$type_name} })
+				{
+					$checkboxes{$attribute_name} = [] if (! $checkboxes{$attribute_name});
+
+					push @{$checkboxes{$attribute_name} }, $attribute_value if ($attribute_value eq $type_value);
+				}
+			}
+		}
+	}
+
+	$self -> logger -> debug('Leaving Database.parse_attribute_checkboxes()');
+
+	return \%checkboxes;
+
+} # End of parse_attribute_checkboxes.
+
+# -----------------------------------------------
+
 sub parse_search_attributes
 {
-	my($self, $attribute_types_table, $attributes_table, $search_attributes, $type_names, $type_name_count) = @_;
+	my($self, $defaults, $search_attributes) = @_;
 
+	$self -> logger -> debug('Entered Database.parse_search_attributes()');
+
+	my($checkboxes)			= $self -> parse_attribute_checkboxes($defaults, $search_attributes);
+	my(@type_names)			= keys %$checkboxes;
+	my($type_name_count)	= scalar @type_names;
+
+	$self -> logger -> debug('checkboxes: ' . Dumper($checkboxes) );
+
+	if ($type_name_count == 0)
+	{
+		return (false, {});
+	}
+
+	my($attributes_table)		= $$defaults{attributes_table};
+	my($attribute_types_table)	= $$defaults{attribute_types_table};
+
+	my($all_match);
 	my(%candidate_flower_ids);
 
 	# Did the user provide attributes?
 
-	for my $type_name (@$type_names)
+	for my $type_name (@type_names)
 	{
 		my($attribute_type_id) = 0;
 
@@ -447,35 +523,38 @@ sub parse_search_attributes
 		{
 			for my $attribute (@$attributes_table)
 			{
-				if ( ($$attribute{attribute_type_id} == $attribute_type_id) && ($$attribute{range} =~ /$$search_attributes{$type_name}/) )
+				next if ($$attribute{attribute_type_id} != $attribute_type_id);
+
+				$all_match = true;
+				my($count) = 0;
+
+				for my $candidate (@{$$checkboxes{$type_name} })
 				{
-					$candidate_flower_ids{$$attribute{flower_id} }				= {} if (!$candidate_flower_ids{$$attribute{flower_id} });
-					$candidate_flower_ids{$$attribute{flower_id} }{$type_name}	= 1;
+					if ($$attribute{range} !~ /$candidate/)
+					{
+						$all_match = false;
+
+						last;
+					}
+
+					$count++;
+				}
+
+#				$self -> logger -> debug("attribute type: $type_name. range: $$attribute{range}. "
+#					. "Matches: $count. Checkboxes: " . join(', ', @{$$checkboxes{$type_name} }) )
+#					if ($count > 0);
+
+				if ($all_match -> isTrue)
+				{
+					$candidate_flower_ids{$$attribute{flower_id} } = 1;
 				}
 			}
 		}
 	}
 
-	# Did the user provide more that one attribute type?
-	# If so, they must all match.
+	$self -> logger -> debug('Leaving Database.parse_search_attributes()');
 
-	my($flower_id);
-	my($type_match_count);
-	my(%wanted_flower_ids);
-
-	for $flower_id (keys %candidate_flower_ids)
-	{
-		$type_match_count = 0;
-
-		for my $type_name (@$type_names)
-		{
-			$type_match_count++ if ($candidate_flower_ids{$flower_id}{$type_name});
-		}
-
-		$wanted_flower_ids{$flower_id} = 1 if ($type_name_count == $type_match_count);
-	}
-
-	return \%wanted_flower_ids;
+	return (true, \%candidate_flower_ids);
 
 } # End of parse_search_attributes.
 
@@ -484,6 +563,9 @@ sub parse_search_attributes
 sub parse_search_text
 {
 	my($self, $search_text)	= @_;
+
+	$self -> logger -> debug('Entered Database.parse_search_text()');
+
 	my($request) =
 	{
 		error_message	=> '',
@@ -531,6 +613,8 @@ sub parse_search_text
 		$$request{error_message}	= 'Unknown chars in text. Check Search FAQ for help with sizes';
 		$$request{text_is_clean}	= false;
 	}
+
+	$self -> logger -> debug('Leaving Database.parse_search_text()');
 
 	return $request;
 
@@ -716,20 +800,24 @@ sub read_table
 
 sub search
 {
-	my($self, $defaults, $attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_text) = @_;
+	my($self, $defaults, $constants_table, $search_attributes, $search_text) = @_;
+
+	$self -> logger -> debug('Entered Database.search()');
+
 	my($request) = $self -> parse_search_text($self -> trim($search_text) );
+
+#	$self -> logger -> debug('request: ' . Dumper($request) );
 
 	if ($$request{text_is_clean} -> isFalse)
 	{
-		return ([], $$request{text_is_clean});
+		$$request{time_taken} = 0;
+
+		return ([], $request);
 	}
 
-	my(@type_names)			= keys %$search_attributes;
-	my($type_name_count)	= scalar @type_names;
-	my($attribute_provided)	= ($type_name_count > 0) ? 1 : 0;
-	my($wanted_flower_ids)	= $self -> parse_search_attributes($attribute_types_table, $attributes_table, $search_attributes, \@type_names, $type_name_count);
-	my($flowers)			= $self -> read_flowers_table;
-	my($result_set)			= [];
+	my($attribute_provided, $wanted_flower_ids)	= $self -> parse_search_attributes($defaults, $search_attributes);
+	my($flowers)								= $self -> read_flowers_table;
+	my($result_set)								= [];
 
 	my($attribute_match);
 	my($flower_id);
@@ -737,6 +825,8 @@ sub search
 	my($match);
 	my($pig_latin);
 	my($text_match);
+
+	my($start_time) = [gettimeofday];
 
 	for my $flower (@$flowers)
 	{
@@ -780,7 +870,10 @@ sub search
 		}
 	}
 
+	$$request{time_taken} = tv_interval($start_time);
+
 	$self -> logger -> info("Match count: @{[$#$result_set + 1]}");
+	$self -> logger -> debug('Leaving Database.search()');
 
 	return ([sort{$$a{common_name} cmp $$b{common_name} } @$result_set], $request);
 
