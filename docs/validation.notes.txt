@@ -6,7 +6,7 @@ General rules:
 1. Multiple contiguous spaces are reduced to a single space.
 2. All dates are in Australian Standard Date Format. E.g.: 2017-06-21.
 3. All plant max and min heights and widths are stored in cm without decimal places.
-	See Import.validate_dimension(). Also, the original imput is stored as entered.
+	See Import.validate_size(). Also, the original imput is stored as entered.
 
 attribute_types.csv
 -------------------

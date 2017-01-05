@@ -488,6 +488,7 @@ sub parse_search_text
 	{
 		error_message	=> '',
 		search_text		=> $search_text, # Save in original case for display to the user.
+		size_provided	=> false,
 		text_is_clean	=> true,
 		text_provided	=> true,
 	};
@@ -501,30 +502,32 @@ sub parse_search_text
 	}
 	elsif ($search_text =~ /^[-a-z0-9. ']+$/) # Use another ' to reset the UltraEdit syntax hiliter.
 	{
-	}
+	}					#		Direction		Operator		Size					Unit
 	elsif ($search_text =~ /^(height|width)\s*([<=>])\s*([0-9]{0,3}(?:[.][0-9]{0,2})?)\s*(cm|m)$/)
 	{
-		$$search_status{direction}	= $1;
-		$$search_status{operator}	= $2;
-		$$search_status{size}		= $3;
-		$$search_status{unit}		= $4;
+		$$search_status{direction}		= $1;
+		$$search_status{operator}		= $2;
+		$$search_status{size}			= $3;
+		$$search_status{size_provided}	= true;
+		$$search_status{unit}			= $4;
 
 		$self -> logger -> debug("Captured '$$search_status{direction}' & '$$search_status{operator}' & '$$search_status{size}' & '$$search_status{unit}'");
 
 		if ($$search_status{size} == 0)
 		{
-			$$search_status{size} = 100;
-			$$search_status{unit} = 'cm';
+			$$search_status{size}	= 100;
+			$$search_status{unit}	= 'cm';
 		}
 
 		if ($$search_status{unit} eq 'm')
 		{
-			$$search_status{size} *= 100;
+			$$search_status{size}	*= 100;
+			$$search_status{unit}	= 'cm';
 		}
 	}
 	else
 	{
-		$$search_status{error_message}	= 'Unknown chars in text. Check Search FAQ for help with dimensions';
+		$$search_status{error_message}	= 'Unknown chars in text. Check Search FAQ for help with sizes';
 		$$search_status{text_is_clean}	= false;
 	}
 

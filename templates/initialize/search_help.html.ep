@@ -30,7 +30,7 @@
 					<td>(1) "width<90cm", (2) "height = 1.1m", (3) "height > 2m".</td>
 				</tr>
 				<tr>
-					<td>o A dimension of >= 100cm is converted into m. Samples:</td>
+					<td>o A size of >= 100cm is converted into m. Samples:</td>
 					<td>(1) "width < 200cm" is the same as "width < 2m".</td>
 				</tr>
 			</table>
