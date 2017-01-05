@@ -488,6 +488,7 @@ sub parse_search_text
 	{
 		error_message	=> '',
 		height_provided	=> false,
+		lc_search_text	=> lc $search_text,
 		search_text		=> $search_text, # Save in original case for display to the user.
 		size_provided	=> false,
 		text_is_clean	=> true,
@@ -860,9 +861,9 @@ sub test_text
 {
 	my($self, $flower, $request) = @_;
 
-	return ( (lc($$flower{aliases}) =~ /$$request{search_text}/)
-			|| (lc($$flower{common_name}) =~ /$$request{search_text}/)
-			|| (lc($$flower{scientific_name}) =~ /$$request{search_text}/) );
+	return ( (lc($$flower{aliases}) =~ /$$request{lc_search_text}/)
+			|| (lc($$flower{common_name}) =~ /$$request{lc_search_text}/)
+			|| (lc($$flower{scientific_name}) =~ /$$request{lc_search_text}/) );
 
 } # End of test_text.
 
