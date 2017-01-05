@@ -30,9 +30,7 @@ sub display
 {
 	my($self)				= @_;
 	my($csrf_token)			= $self -> param('csrf_token')	|| '';
-	my($search_text)		= $self -> param('search_text')	|| '';
-	$search_text			=~ s/^\s+//;
-	$search_text			=~ s/\s+$//;
+	my($search_text)		= $self -> db -> trim($self -> param('search_text')	|| '');
 	my($defaults)			= $self -> app -> defaults;
 	my($ids)				= $$defaults{search_attribute_ids};
 	my(%search_attributes)	= map{($_ => ($self -> param($_) || '') )} map{@$_} @$ids;

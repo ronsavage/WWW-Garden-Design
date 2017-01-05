@@ -484,15 +484,14 @@ sub parse_search_attributes
 sub parse_search_text
 {
 	my($self, $search_text)	= @_;
-	$search_text			= uc $search_text;
-	$search_text			=~ s/\s{2,}/ /g;
 	my($search_status)		=
 	{
 		error_message	=> '',
-		search_text		=> $search_text,
+		search_text		=> $search_text, # Save in original case for display to the user.
 		text_is_clean	=> true,
 		text_provided	=> true,
 	};
+	$search_text = lc $search_text;
 
 	# Test input and return structured result.
 
@@ -500,31 +499,27 @@ sub parse_search_text
 	{
 		$$search_status{text_provided} = false;
 	}
-	elsif ($search_text =~ /^[-A-Z0-9. ']+$/) # Use another ' to reset the UltraEdit syntax hiliter.
+	elsif ($search_text =~ /^[-a-z0-9. ']+$/) # Use another ' to reset the UltraEdit syntax hiliter.
 	{
 	}
-	elsif ($search_text =~ /^(HEIGHT|WIDTH)\s*([<=>])\s*([0-9]{0,3}(?:[.][0-9]{0,2})?)\s*(CM|M)$/)
+	elsif ($search_text =~ /^(height|width)\s*([<=>])\s*([0-9]{0,3}(?:[.][0-9]{0,2})?)\s*(cm|m)$/)
 	{
-		# o The first word must be HEIGHT or WIDTH.
-		# o Only 1 of the set [<=>] can appear.
-		# o The last word must be CM or M.
-
 		$$search_status{direction}	= $1;
 		$$search_status{operator}	= $2;
 		$$search_status{size}		= $3;
-		$$search_status{unit}		= lc $4;
+		$$search_status{unit}		= $4;
 
 		$self -> logger -> debug("Captured '$$search_status{direction}' & '$$search_status{operator}' & '$$search_status{size}' & '$$search_status{unit}'");
 
 		if ($$search_status{size} == 0)
 		{
-			$$search_status{size} = 1;
-			$$search_status{unit} = 'm';
+			$$search_status{size} = 100;
+			$$search_status{unit} = 'cm';
 		}
 
-		if ( ($$search_status{unit} eq 'cm') && ($$search_status{size} >= 100) )
+		if ($$search_status{unit} eq 'm')
 		{
-			$$search_status{size} /= 100;
+			$$search_status{size} *= 100;
 		}
 	}
 	else
@@ -718,7 +713,7 @@ sub read_table
 sub search
 {
 	my($self, $attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_text) = @_;
-	my($search_status) = $self -> parse_search_text($search_text);
+	my($search_status) = $self -> parse_search_text($self -> trim($search_text) );
 
 	if ($$search_status{text_is_clean} -> isFalse)
 	{
@@ -743,9 +738,9 @@ sub search
 	{
 		$flower_id			= $$flower{id};
 		$attribute_match	= $$wanted_flower_ids{$flower_id} || 0;
-		$text_match			= $$search_status{text_provided} && ( (uc($$flower{aliases}) =~ /$$search_status{search_text}/)
-								|| (uc($$flower{common_name}) =~ /$$search_status{search_text}/)
-								|| (uc($$flower{scientific_name}) =~ /$$search_status{search_text}/) );
+		$text_match			= $$search_status{text_provided} && ( (lc($$flower{aliases}) =~ /$$search_status{search_text}/)
+								|| (lc($$flower{common_name}) =~ /$$search_status{search_text}/)
+								|| (lc($$flower{scientific_name}) =~ /$$search_status{search_text}/) );
 
 		if ($attribute_provided)
 		{
@@ -782,6 +777,19 @@ sub search
 	return ([sort{$$a{common_name} cmp $$b{common_name} } @$result_set], $search_status);
 
 } # End of search.
+
+# -----------------------------------------------
+
+sub trim
+{
+	my($self, $value) = @_;
+	$value	=~ s/^\s+//;
+	$value	=~ s/\s+$//;
+	$value	=~ s/\s{2,}/ /g;
+
+	return $value;
+
+} # End of trim.
 
 # --------------------------------------------------
 

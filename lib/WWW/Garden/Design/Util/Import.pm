@@ -472,8 +472,8 @@ sub populate_flowers_table
 		$common_name				= $$item{common_name};
 		$scientific_name			= $$item{scientific_name};
 		$pig_latin					= $self -> db -> generate_pig_latin_from_scientific_name($lines, $scientific_name, $common_name);
-		($max_height, $min_height)	= $self -> validate_dimension($table_name, $count, lc $self -> trim($$item{height}), lc $self -> trim($$item{height}) );
-		($max_width, $min_width)	= $self -> validate_dimension($table_name, $count, lc $self -> trim($$item{width}), lc $self -> trim($$item{width}) );
+		($max_height, $min_height)	= $self -> validate_dimension($table_name, $count, lc $self -> db -> trim($$item{height}), lc $self -> db -> trim($$item{height}) );
+		($max_width, $min_width)	= $self -> validate_dimension($table_name, $count, lc $self -> db -> trim($$item{width}), lc $self -> db -> trim($$item{width}) );
 		$$flower_keys{$common_name}	= $self -> db -> insert_hashref
 		(
 			$table_name,
@@ -798,19 +798,6 @@ sub populate_urls_table
 	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_urls_table.
-
-# -----------------------------------------------
-
-sub trim
-{
-	my($self, $value) = @_;
-	$value	=~ s/^\s+//;
-	$value	=~ s/\s+$//;
-	$value	=~ s/\s{2,}/ /g;
-
-	return $value;
-
-} # End of trim.
 
 # -----------------------------------------------
 
