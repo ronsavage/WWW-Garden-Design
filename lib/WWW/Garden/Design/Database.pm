@@ -512,18 +512,12 @@ sub parse_search_text
 		$$request{direction}		= ($direction eq 'height') ? 'h' : ($direction eq 'width') ? 'w' : $direction;
 		$$request{height_provided}	= true if ($$request{direction} eq 'h');
 		$$request{operator}			= $2;
-		$$request{size}				= $3;
+		$$request{size}				= $3 || 1;
 		$$request{size_provided}	= true;
 		$$request{unit}				= $4 || 'm';
 		$$request{width_provided}	= true if ($$request{direction} eq 'w');
 
 		$self -> logger -> debug("Captured '$$request{direction}' & '$$request{operator}' & '$$request{size}' & '$$request{unit}'");
-
-		if ($$request{size} == 0)
-		{
-			$$request{size}	= 100;
-			$$request{unit}	= 'cm';
-		}
 
 		if ($$request{unit} eq 'm')
 		{
@@ -748,7 +742,11 @@ sub search
 		$flower_id			= $$flower{id};
 		$attribute_match	= $$wanted_flower_ids{$flower_id} || 0;
 		$text_match			= $$request{size_provided}
-								? $self -> test_size($defaults, $flower, $request)
+								? $$flower{height} && $$request{height_provided} -> isTrue
+									? $self -> test_size($defaults, $flower, $request)
+									: $$flower{width} && $$request{width_provided} -> isTrue
+										? $self -> test_size($defaults, $flower, $request)
+										: false # Impossible, presumably.
 								: $self -> test_text($flower, $request);
 
 		if ($attribute_provided)
@@ -792,58 +790,63 @@ sub search
 sub test_size
 {
 	my($self, $defaults, $flower, $request) = @_;
-	my($result) = false;
+	my($height_latitude)	= $$defaults{constants_table}{height_latitude};
+	my($result)				= false;
+	my($width_latitude)		= $$defaults{constants_table}{width_latitude};
 
-	if ($$flower{height})
+	my($lower_bound);
+	my($upper_bound);
+
+	if ($$request{height_provided} -> isTrue)
 	{
-		if ($$request{height_provided} -> isTrue)
+		if ($$request{operator} eq '<')
 		{
-			if ($$request{operator} eq '<')
-			{
-				if ($$flower{max_height} < $$request{size})
-				{
-					$result = true;
-				}
-			}
-			elsif ($$request{operator} eq '=')
-			{
-				# TODO: Factor in height_latitude.
-
-				if ($$flower{max_height} == $$request{size})
-				{
-					$result = true;
-				}
-			}
-			elsif ($$flower{min_height} > $$request{size})
+			if ($$flower{max_height} < $$request{size})
 			{
 				$result = true;
 			}
 		}
-	}
-	elsif ($$flower{width})
-	{
-		if ($$request{width_provided} -> isTrue)
+		elsif ($$request{operator} eq '=')
 		{
-			if ($$request{operator} eq '<')
-			{
-				if ($$flower{max_width} < $$request{size})
-				{
-					$result = true;
-				}
-			}
-			elsif ($$request{operator} eq '=')
-			{
-				# TODO: Factor in width_latitude.
+			$height_latitude	= 30 if ($height_latitude <= 0);
+			$lower_bound		= $$request{size} - ($$request{size} * $height_latitude / 100);
+			$lower_bound		= 0 if ($lower_bound < 0);
+			$upper_bound		= $$request{size} + ($$request{size} * $height_latitude / 100);
 
-				if ($$flower{max_width} == $$request{size})
-				{
-					$result = true;
-				}
-			}
-			elsif ($$flower{min_width} > $$request{size})
+			if ( ($$flower{min_height} >= $lower_bound) && ($$flower{max_height} <= $upper_bound) )
 			{
 				$result = true;
 			}
+		}
+		elsif ($$flower{min_height} > $$request{size})
+		{
+			$result = true;
+		}
+	}
+	elsif ($$request{width_provided} -> isTrue)
+	{
+		if ($$request{operator} eq '<')
+		{
+			if ($$flower{max_width} < $$request{size})
+			{
+				$result = true;
+			}
+		}
+		elsif ($$request{operator} eq '=')
+		{
+			$width_latitude	= 30 if ($width_latitude <= 0);
+			$lower_bound	= $$request{size} - ($$request{size} * $width_latitude / 100);
+			$lower_bound	= 0 if ($lower_bound < 0);
+			$upper_bound	= $$request{size} + ($$request{size} * $width_latitude / 100);
+
+			if ( ($$flower{min_width} >= $lower_bound) && ($$flower{max_width} <= $upper_bound) )
+			{
+				$result = true;
+			}
+		}
+		elsif ($$flower{min_width} > $$request{size})
+		{
+			$result = true;
 		}
 	}
 
