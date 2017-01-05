@@ -484,13 +484,15 @@ sub parse_search_attributes
 sub parse_search_text
 {
 	my($self, $search_text)	= @_;
-	my($search_status)		=
+	my($request) =
 	{
 		error_message	=> '',
+		height_provided	=> false,
 		search_text		=> $search_text, # Save in original case for display to the user.
 		size_provided	=> false,
 		text_is_clean	=> true,
 		text_provided	=> true,
+		width_provided	=> false,
 	};
 	$search_text = lc $search_text;
 
@@ -498,40 +500,44 @@ sub parse_search_text
 
 	if ($search_text eq '')
 	{
-		$$search_status{text_provided} = false;
+		$$request{text_provided} = false;
 	}
 	elsif ($search_text =~ /^[-a-z0-9. ']+$/) # Use another ' to reset the UltraEdit syntax hiliter.
 	{
 	}					#		Direction		Operator		Size					Unit
-	elsif ($search_text =~ /^(height|width)\s*([<=>])\s*([0-9]{0,3}(?:[.][0-9]{0,2})?)\s*(cm|m)$/)
+	elsif ($search_text =~ /^(h|height|w|width)\s*([<=>])\s*([0-9]{0,3}(?:[.][0-9]{0,2})?)\s*(cm|m)?$/)
 	{
-		$$search_status{direction}		= $1;
-		$$search_status{operator}		= $2;
-		$$search_status{size}			= $3;
-		$$search_status{size_provided}	= true;
-		$$search_status{unit}			= $4;
+		my($direction) = $1;
 
-		$self -> logger -> debug("Captured '$$search_status{direction}' & '$$search_status{operator}' & '$$search_status{size}' & '$$search_status{unit}'");
+		$$request{direction}		= ($direction eq 'height') ? 'h' : ($direction eq 'width') ? 'w' : $direction;
+		$$request{height_provided}	= true if ($$request{direction} eq 'h');
+		$$request{operator}			= $2;
+		$$request{size}				= $3;
+		$$request{size_provided}	= true;
+		$$request{unit}				= $4 || 'm';
+		$$request{width_provided}	= true if ($$request{direction} eq 'w');
 
-		if ($$search_status{size} == 0)
+		$self -> logger -> debug("Captured '$$request{direction}' & '$$request{operator}' & '$$request{size}' & '$$request{unit}'");
+
+		if ($$request{size} == 0)
 		{
-			$$search_status{size}	= 100;
-			$$search_status{unit}	= 'cm';
+			$$request{size}	= 100;
+			$$request{unit}	= 'cm';
 		}
 
-		if ($$search_status{unit} eq 'm')
+		if ($$request{unit} eq 'm')
 		{
-			$$search_status{size}	*= 100;
-			$$search_status{unit}	= 'cm';
+			$$request{size}	*= 100;
+			$$request{unit}	= 'cm';
 		}
 	}
 	else
 	{
-		$$search_status{error_message}	= 'Unknown chars in text. Check Search FAQ for help with sizes';
-		$$search_status{text_is_clean}	= false;
+		$$request{error_message}	= 'Unknown chars in text. Check Search FAQ for help with sizes';
+		$$request{text_is_clean}	= false;
 	}
 
-	return $search_status;
+	return $request;
 
 } # End of parse_search_text.
 
@@ -715,12 +721,12 @@ sub read_table
 
 sub search
 {
-	my($self, $attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_text) = @_;
-	my($search_status) = $self -> parse_search_text($self -> trim($search_text) );
+	my($self, $defaults, $attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_text) = @_;
+	my($request) = $self -> parse_search_text($self -> trim($search_text) );
 
-	if ($$search_status{text_is_clean} -> isFalse)
+	if ($$request{text_is_clean} -> isFalse)
 	{
-		return ([], $$search_status{text_is_clean});
+		return ([], $$request{text_is_clean});
 	}
 
 	my(@type_names)			= keys %$search_attributes;
@@ -741,17 +747,17 @@ sub search
 	{
 		$flower_id			= $$flower{id};
 		$attribute_match	= $$wanted_flower_ids{$flower_id} || 0;
-		$text_match			= $$search_status{text_provided} && ( (lc($$flower{aliases}) =~ /$$search_status{search_text}/)
-								|| (lc($$flower{common_name}) =~ /$$search_status{search_text}/)
-								|| (lc($$flower{scientific_name}) =~ /$$search_status{search_text}/) );
+		$text_match			= $$request{size_provided}
+								? $self -> test_size($defaults, $flower, $request)
+								: $self -> test_text($flower, $request);
 
 		if ($attribute_provided)
 		{
-			$match = $$search_status{text_provided} ? $attribute_match && $text_match : $attribute_match;
+			$match = $$request{text_provided} ? $attribute_match && $text_match : $attribute_match;
 		}
 		else
 		{
-			$match = $$search_status{text_provided} ? $text_match : 0;
+			$match = $$request{text_provided} ? $text_match : 0;
 		}
 
 		if ($match)
@@ -777,9 +783,85 @@ sub search
 
 	$self -> logger -> info("Match count: @{[$#$result_set + 1]}");
 
-	return ([sort{$$a{common_name} cmp $$b{common_name} } @$result_set], $search_status);
+	return ([sort{$$a{common_name} cmp $$b{common_name} } @$result_set], $request);
 
 } # End of search.
+
+# -----------------------------------------------
+
+sub test_size
+{
+	my($self, $defaults, $flower, $request) = @_;
+	my($result) = false;
+
+	if ($$flower{height})
+	{
+		if ($$request{height_provided} -> isTrue)
+		{
+			if ($$request{operator} eq '<')
+			{
+				if ($$flower{max_height} < $$request{size})
+				{
+					$result = true;
+				}
+			}
+			elsif ($$request{operator} eq '=')
+			{
+				# TODO: Factor in height_latitude.
+
+				if ($$flower{max_height} == $$request{size})
+				{
+					$result = true;
+				}
+			}
+			elsif ($$flower{min_height} > $$request{size})
+			{
+				$result = true;
+			}
+		}
+	}
+	elsif ($$flower{width})
+	{
+		if ($$request{width_provided} -> isTrue)
+		{
+			if ($$request{operator} eq '<')
+			{
+				if ($$flower{max_width} < $$request{size})
+				{
+					$result = true;
+				}
+			}
+			elsif ($$request{operator} eq '=')
+			{
+				# TODO: Factor in width_latitude.
+
+				if ($$flower{max_width} == $$request{size})
+				{
+					$result = true;
+				}
+			}
+			elsif ($$flower{min_width} > $$request{size})
+			{
+				$result = true;
+			}
+		}
+	}
+
+	return $result;
+
+} # End of test_size.
+
+# -----------------------------------------------
+
+sub test_text
+{
+	my($self, $flower, $request) = @_;
+
+	return ( (lc($$flower{aliases}) =~ /$$request{search_text}/)
+			|| (lc($$flower{common_name}) =~ /$$request{search_text}/)
+			|| (lc($$flower{scientific_name}) =~ /$$request{search_text}/) );
+
+} # End of test_text.
 
 # -----------------------------------------------
 

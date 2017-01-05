@@ -40,19 +40,19 @@ sub display
 
 	if ($must_have -> isTrue)
 	{
-		my($attributes_table)				= $$defaults{attributes_table};
-		my($attribute_types_table)			= $$defaults{attribute_types_table};
-		my($constants_table)				= $$defaults{constants_table};
-		my($search_attributes)				= $self -> extract_attributes(\%search_attributes);
-		my($start_time)						= [gettimeofday];
-		my($search_result, $search_status)	= $db -> search($attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_text);
-		my($time_taken)						= tv_interval($start_time);
-		my($match_count)					= 0;
-		my($result_html)					= '';
+		my($attributes_table)			= $$defaults{attributes_table};
+		my($attribute_types_table)		= $$defaults{attribute_types_table};
+		my($constants_table)			= $$defaults{constants_table};
+		my($search_attributes)			= $self -> extract_attributes(\%search_attributes);
+		my($start_time)					= [gettimeofday];
+		my($search_result, $request)	= $db -> search($defaults, $attributes_table, $attribute_types_table, $constants_table, $search_attributes, $search_text);
+		my($time_taken)					= tv_interval($start_time);
+		my($match_count)				= 0;
+		my($result_html)				= '';
 
 		my($message);
 
-		if ($$search_status{text_is_clean} -> isTrue)
+		if ($$request{text_is_clean} -> isTrue)
 		{
 			($match_count, $result_html) = $self -> format($constants_table, $db, $search_result);
 		}
