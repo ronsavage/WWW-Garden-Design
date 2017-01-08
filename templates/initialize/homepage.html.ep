@@ -143,6 +143,21 @@ $(function()
 
 // -----------------------------------------------
 
+$(function()
+{
+	$("#search_text").autocomplete
+	({
+		source: "/AutoComplete?type=search",
+		minLength: 2,
+		select: function(event, ui)
+		{
+			$("#search_text").empty().append(ui.item ? ui.item.value : "-");
+		}
+	});
+});
+
+// -----------------------------------------------
+
 function build_attribute_id(kind, name, value)
 {
 	// We must allow for range values like 'Full sun' and 'Semi-dwarf'.

@@ -353,16 +353,44 @@ sub generate_pig_latin_from_scientific_name
 
 sub get_autocomplete_list
 {
-	my($self, $search_column, $table_name, $key) = @_;
-	$key =~ s/\'/\'\'/g;
+	my($self, $context, $type, $key) = @_;
+	$key =~ s/\'/\'\'/g; # Since we're using Pg.
 
-	# Warning: Do not use 'distinct' in this particular SQL. It then only ever returns 1 row.
+	my($result, @result);
+	my($sql, %seen);
+	my(@value, $value);
 
-	my($sql)    = "select $search_column from $table_name where $search_column ilike '%$key%' order by $search_column";
-	my($result) = $self -> simple -> query($sql)
-					|| die $self -> simple -> error;
+	for my $index (keys %$context)
+	{
+		my($search_column)	= $$context{$index}[0];
+		my($table_name)		= $$context{$index}[1];
 
-	return [$result -> flat];
+		# If we're not searching then we're processing the Add screen.
+		# In that case, we're only interested in one $index at a time.
+
+		if ( ($type ne 'search') && ($index ne $type) )
+		{
+			next;
+		}
+
+		$sql	= "select $search_column from $table_name where upper($search_column) like '%$key%'";
+		$result	= $self -> simple -> query($sql) || die $self -> simple -> error;
+		@value	= $result -> flat;
+
+		for $value (@value)
+		{
+			next if (! defined $value);
+
+			if (! $seen{$value})
+			{
+				push @result, $value;
+
+				$seen{$value} = 1;
+			}
+		}
+	}
+
+	return [@result];
 
 } # End of get_autocomplete_list.
 
