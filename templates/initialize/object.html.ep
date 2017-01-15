@@ -3,12 +3,45 @@
 <tr>
 	<td colspan = '2'><div class = 'blue_centered'>Objects</div></td>
 </tr>
-	<td>Name:</td>
-	<td align = 'left'><input id = 'name' type = 'text' size = '50' maxlength = '100'></td>
+<tr>
+	<td>Object name:</td>
+	<td align = 'left'><input id = 'object_name' type = 'text' size = '50' maxlength = '100'></td>
 </tr>
 <tr>
-	<td>Color:</td>
-	<td><input type = 'text' class = 'basic' id = 'object_color' /></div></td>
+	<td></td>
+	<td>Choose any one of the following to specify color.</td>
+</tr>
+<tr>
+	<td></td>
+	<td>Note: Color codes are '#' + 6 hex digits.</td>
+</tr>
+<tr>
+	<td></td>
+	<td>If you provide more than 1 color, priority goes down as you go down the page.</td>
+</tr>
+<tr>
+	<td>Color name:</td>
+	<td align = 'left'><input id = 'color_name' type = 'text' size = '50' maxlength = '100'></td>
+</tr>
+<tr>
+	<td>Swatch by name:</td>
+	<td align = 'left'><div class = 'color_name_swatch' id = 'color_name_chosen'></div></td>
+</tr>
+<tr>
+	<td>Color code:</td>
+	<td align = 'left'><input id = 'color_code' type = 'text' size = '50' maxlength = '100'></td>
+</tr>
+<tr>
+	<td>Swatch by code:</td>
+	<td align = 'left'><div class = 'color_code_swatch' id = 'color_code_chosen'></div></td>
+</tr>
+<tr>
+	<td>Color from spectrum:</td>
+	<td><input type = 'text' class = 'basic' id = 'color_spectrum' /></div></td>
+</tr>
+<tr>
+	<td>Swatch chosen:</td>
+	<td align = 'left'><span id = 'color_spectrum_chosen'></span></td>
 </tr>
 <tr>
 	<td>

@@ -113,6 +113,48 @@ $(function()
 
 $(function()
 {
+	$('#color_code').autocomplete
+	({
+		source:		'/AutoComplete?type=color_code',
+		minLength:	2,
+		select:		function(event, ui)
+		{
+			if (ui.item)
+			{
+				$('#color_code').empty().append(ui.item.value);
+
+				$('#color_code_chosen').css('background-color', ui.item.value);
+			}
+		}
+	});
+
+}); // End of autocomplete function.
+
+// -----------------------------------------------
+
+$(function()
+{
+	$('#color_name').autocomplete
+	({
+		source:		'/AutoComplete?type=color_name',
+		minLength:	2,
+		select:		function(event, ui)
+		{
+			if (ui.item)
+			{
+				$('#color_name').empty().append(ui.item.value);
+
+				$('#color_name_chosen').css('background-color', "'" + ui.item.value + "'");
+			}
+		}
+	});
+
+}); // End of autocomplete function.
+
+// -----------------------------------------------
+
+$(function()
+{
 	$('#common_name').autocomplete
 	({
 		source:		'/AutoComplete?type=common_name',
@@ -120,6 +162,22 @@ $(function()
 		select:		function(event, ui)
 		{
 			$('#common_name').empty().append(ui.item ? ui.item.value : '-');
+		}
+	});
+
+}); // End of autocomplete function.
+
+// -----------------------------------------------
+
+$(function()
+{
+	$('#object_name').autocomplete
+	({
+		source:		'/AutoComplete?type=object_name',
+		minLength:	2,
+		select:		function(event, ui)
+		{
+			$('#object_name').empty().append(ui.item ? ui.item.value : '-');
 		}
 	});
 
@@ -575,7 +633,7 @@ $(function()
 		return false;
 	});
 
-	$('#object_color').spectrum
+	$('#color_spectrum').spectrum
 	({
 		color:				'red',
 		preferredFormat:	'hex',

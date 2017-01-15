@@ -42,33 +42,19 @@ sub BUILD
 
 # -----------------------------------------------
 
-sub parse_imagemagick_color_names
+sub parse_web_safe_colors
 {
 	my($self)		= @_;
-	my($in_file)	= 'data/ImageMagick.Color.Names.html';
+	my($in_file)	= 'data/web.safe.colors.html';
 	my($dom)		= Mojo::DOM -> new(read_text($in_file) );
-
-	my($td_count);
-
-	for my $node ($dom -> at('table[class="table table-condensed table-striped"]') -> descendant_nodes -> each)
-	{
-		# Select the heading's tr.
-
-		if ($node -> matches('tr') )
-		{
-			$td_count = $node -> children -> size;
-
-			last;
-		}
-	}
-
-	my($codes)	= [];
-	my($count)	= -1;
+	my($td_count)	= 4;
+	my($codes)		= [];
+	my($count)		= -1;
 
 	my($content, $code);
 	my($nodule);
 
-	for my $node ($dom -> at('table[class="table table-condensed table-striped"]') -> descendant_nodes -> each)
+	for my $node ($dom -> at('table[class="dtable"]') -> descendant_nodes -> each)
 	{
 		next if (! $node -> matches('td') );
 
@@ -76,40 +62,32 @@ sub parse_imagemagick_color_names
 
 		if ( ($count % $td_count) == 0)
 		{
-			$content	= $node -> content;
-			$content	=~ s/[\s]+/ /g;
-			$code		= {color => $content, name => '', rbg => '', hex => 0};
 		}
 		elsif ( ($count % $td_count) == 1)
 		{
-			$$code{name}	= $node -> content;
-			$$code{name}	=~ s/[\s]+/ /g;
+			$content	= $node -> content;
+			$content	=~ s/[\s]+/ /g;
+			$code		= {hex => $content, name => '', rbg => ''};
 		}
 		elsif ( ($count % $td_count) == 2)
 		{
 			$$code{rbg}	= $node -> content;
 			$$code{rbg}	=~ s/[\s]+/ /g;
-			$$code{rbg}	=~ s/\(\s(\d)/\($1/;
 		}
 		elsif ( ($count % $td_count) == 3)
 		{
-			$$code{hex}	= $node -> content;
-			$$code{hex}	=~ s/[\s]+/ /g;
+			$$code{name}	= $node -> content;
+			$$code{name}	= '' if (ord($$code{name}) == 160);
+			my($i)			= index($$code{name}, ' ');
+			$$code{name}	= substr($$code{name}, 0, $i) if ($i > 0);
 
 			push @$codes, $code;
 		}
 	}
 
-	@$codes = sort{$$a{name} cmp $$b{name} } @$codes;
-
-	for my $item (@$codes)
-	{
-		say "Mismatch. name: $$item{name}. color: $$item{color}" if ($$item{name} ne $$item{color});
-	}
-
 	open(my $fh, '>', 'data/colors.csv');
-	print $fh qq|"color","hex","name","rgb"\n|;
-	print $fh map{qq|"$$_{color}","$$_{hex}","$$_{name}","$$_{rbg}"\n|} @$codes;
+	print $fh qq|"hex","name","rgb"\n|;
+	print $fh map{qq|"$$_{hex}","$$_{name}","$$_{rbg}"\n|} @$codes;
 	close $fh;
 
 	return $codes;

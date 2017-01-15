@@ -189,8 +189,7 @@ sub create_colors_table
 	my($result)      = $self -> creator -> create_table(<<SQL);
 create table $table_name
 (
-id $primary_key,
-color	varchar(255) not null,
+id		$primary_key,
 hex		varchar(255) not null,
 name	varchar(255) not null,
 rgb		varchar(255) not null

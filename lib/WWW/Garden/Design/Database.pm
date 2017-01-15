@@ -350,6 +350,77 @@ sub generate_pig_latin_from_scientific_name
 } # End of generate_pig_latin_from_scientific_name.
 
 # -----------------------------------------------
+# Return the shortest item in the list.
+
+sub get_autocomplete_item
+{
+	my($self, $context, $type, $key) = @_;
+	$key =~ s/\'/\'\'/g; # Since we're using Pg.
+
+	my($result, @result);
+	my($sql, %seen);
+	my(@values, $value);
+
+	for my $index (keys %$context)
+	{
+		my($search_column)	= $$context{$index}[0];
+		my($table_name)		= $$context{$index}[1];
+
+		# If we're not searching then we're processing the Add screen.
+		# In that case, we're only interested in one $index at a time.
+
+		if ( ($type ne 'search') && ($index ne $type) )
+		{
+			next;
+		}
+
+		$sql	= "select $search_column from $table_name where upper($search_column) like '%$key%'";
+		$result	= $self -> simple -> query($sql) || die $self -> simple -> error;
+		@values	= $result -> flat;
+
+		for $value (@values)
+		{
+			next if (! defined $value);
+
+			if (! $seen{$value})
+			{
+				push @result, $value;
+
+				$seen{$value} = 1;
+			}
+		}
+	}
+
+	my($min_length) = 999;
+
+	my($min_value);
+
+	$self -> logger -> info('@values: <' . join('>, <', @values) . '>');
+
+	for (@values)
+	{
+		if (length($_) < $min_length)
+		{
+			$min_length	= length($_);
+			$min_value	= $_;
+		}
+	}
+
+	if ($min_value)
+	{
+		$self -> logger -> info("Return <$min_value>");
+
+		return [$min_value];
+	}
+	else
+	{
+		return [];
+	}
+
+} # End of get_autocomplete_item.
+
+# -----------------------------------------------
+# Return a list.
 
 sub get_autocomplete_list
 {

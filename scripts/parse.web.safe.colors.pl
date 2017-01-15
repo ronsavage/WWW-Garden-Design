@@ -25,7 +25,7 @@ if ($option_parser -> getoptions
 {
 	pod2usage(1) if ($option{'help'});
 
-	exit WWW::Garden::Design::Util::Import -> new(%option) -> parse_imagemagick_color_names;
+	exit WWW::Garden::Design::Util::Import -> new(%option) -> parse_web_safe_colors;
 }
 else
 {
