@@ -13,15 +13,19 @@
 </tr>
 <tr>
 	<td></td>
-	<td>Note: Color codes are '#' + 6 hex digits.</td>
+	<td>Color codes are '#' + 6 hex digits.</td>
 </tr>
 <tr>
-	<td>Color name:</td>
-	<td align = 'left'><input id = 'color_name' type = 'text' size = '50' maxlength = '100'></td>
+	<td></td>
+	<td>There are 216 web-safe color codes, of which 8 have names.</td>
 </tr>
 <tr>
 	<td>Color code:</td>
-	<td align = 'left'><input id = 'color_code' type = 'text' size = '50' maxlength = '100'></td>
+	<td><input id = 'color_code' type = 'text' size = '50' maxlength = '100'></td>
+</tr>
+<tr>
+	<td>Color name:</td>
+	<td><input id = 'color_name' type = 'text' size = '50' maxlength = '100'></td>
 </tr>
 <tr>
 	<td>Color spectrum:</td>
@@ -29,7 +33,7 @@
 </tr>
 <tr>
 	<td>Color chosen:</td>
-	<td align = 'left'><div class = 'color_swatch_chosen' id = 'color_swatch_chosen'></div></div></td>
+	<td><div class = 'color_swatch_chosen' id = 'color_swatch_chosen'></div></td>
 </tr>
 <tr>
 	<td>

@@ -653,9 +653,13 @@ $(function()
 
 	$('#color_spectrum').spectrum
 	({
-		change:				function(color){$('#color_swatch_chosen').css('background-color', color.toHexString() )},
+		change:				function(color)
+							{
+								$('#color_swatch_chosen').css('background-color', color.toHexString() );
+							},
 		color:				'white',
 		preferredFormat:	'hex',
+		showInput:			true,
 		showPalette:		true
 	});
 
