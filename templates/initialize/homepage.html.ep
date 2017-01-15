@@ -127,6 +127,7 @@ $(function()
 			{
 				$('#color_code').empty().append(ui.item.value);
 				$('#color_swatch_chosen').css('background-color', ui.item.value);
+				$('#real_color').val(ui.item.value);
 			}
 		}
 	});
@@ -147,6 +148,7 @@ $(function()
 			{
 				$('#color_name').empty().append(ui.item.value);
 				$('#color_swatch_chosen').css('background-color', ui.item.value);
+				$('#real_color').val(ui.item.value);
 			}
 		}
 	});
@@ -679,6 +681,7 @@ $(function()
 		change:				function(color)
 							{
 								$('#color_swatch_chosen').css('background-color', color.toHexString() );
+								$('#real_color').val(color.toHexString() );
 							},
 		color:				'white',
 		preferredFormat:	'hex',

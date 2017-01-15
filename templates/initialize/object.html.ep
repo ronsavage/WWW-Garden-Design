@@ -45,5 +45,6 @@
 	<td align = 'center'><input type = 'reset'  value = 'Reset' /></td>
 </tr>
 </table>
+<input id = 'real_color' type = 'hidden' />
 </form>
 <div id = 'object_result_div'></div>

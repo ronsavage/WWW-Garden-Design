@@ -18,17 +18,17 @@ sub display
 
 	my($item) =
 	{
-		hidden_color	=> $self -> param('hidden_color'), # No defaults. See 'if' below.
 		object_name		=> $self -> param('object_name'),
+		real_color		=> $self -> param('real_color'),
 	};
 
 	$self -> app -> log -> debug("param($_) => $$item{$_}") for sort keys %$item;
 
-	if ($$item{object_name} && $$item{hidden_color})
+	if ($$item{object_name} && $$item{real_color})
 	{
 		my($defaults)  = $self -> app -> defaults;
 
-		$$defaults{db} -> add($item);
+		$$defaults{db} -> add_object($item);
 
 		$self -> stash(error	=> undef);
 		$self -> stash(object	=> $self -> format($item) );
