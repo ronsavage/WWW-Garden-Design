@@ -17,7 +17,7 @@ sub display
 	(	#					Column				Table
 		aliases			=> ['aliases',			'flowers'],
 		color_code		=> ['hex',				'colors'],
-		color_name		=> ['color',			'colors'],
+		color_name		=> ['name',				'colors'],
 		common_name		=> ['common_name',		'flowers'],
 		object_name		=> ['name',				'objects'],
 		scientific_name	=> ['scientific_name',	'flowers'],

@@ -122,8 +122,7 @@ $(function()
 			if (ui.item)
 			{
 				$('#color_code').empty().append(ui.item.value);
-
-				$('#color_code_chosen').css('background-color', ui.item.value);
+				$('#color_swatch_chosen').css('background-color', ui.item.value);
 			}
 		}
 	});
@@ -143,8 +142,7 @@ $(function()
 			if (ui.item)
 			{
 				$('#color_name').empty().append(ui.item.value);
-
-				$('#color_name_chosen').css('background-color', "'" + ui.item.value + "'");
+				$('#color_swatch_chosen').css('background-color', ui.item.value);
 			}
 		}
 	});
@@ -601,15 +599,34 @@ function submit_search()
 $(function()
 {
 	// Enable the tabs before trying to work with them.
-	// This is for function populate_flower() basically.
 
-	$('global_tab_div').tabs({active: 1});
+	$('global_tab_div')
+	.tabs
+	({
+		active: 1
+	});
 
-	$('#global_tab_div').tabs
+	$('#search_text').focus();
+
+	// If the Search tab is selected, give the focus to the search text.
+
+	$('#global_tab_div')
+	.tabs
 	({
 		activate: function(event, ui)
 		{
 			$('#search_text').focus();
+		}
+	});
+
+	// If the Objects tab is selected, giv the focus to the object name.
+
+	$('#global_object_tab')
+	.tabs
+	({
+		activate: function(event, ui)
+		{
+			$('#object_name').focus();
 		}
 	});
 
@@ -630,20 +647,22 @@ $(function()
 	$('#flower_form').submit(function()
 	{
 		submit_flower();
+
 		return false;
 	});
 
 	$('#color_spectrum').spectrum
 	({
-		color:				'red',
+		change:				function(color){$('#color_swatch_chosen').css('background-color', color.toHexString() )},
+		color:				'white',
 		preferredFormat:	'hex',
 		showPalette:		true
 	});
 
-	$('#search_text').focus();
 	$('#search_form').submit(function()
 	{
 		submit_search();
+
 		return false;
 	});
 

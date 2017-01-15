@@ -92,7 +92,7 @@ sub parse_web_safe_colors
 
 	return $codes;
 
-} # End of parse_imagemagick_color_names.
+} # End of parse_web_safe_colors.
 
 # -----------------------------------------------
 
@@ -248,7 +248,7 @@ sub populate_colors_table
 	{
 		$count++;
 
-		for my $column (qw/color hex name rgb/)
+		for my $column (qw/hex name rgb/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -260,7 +260,6 @@ sub populate_colors_table
 		(
 			$table_name,
 			{
-				color	=> $$item{color},
 				hex		=> $$item{hex},
 				name	=> $$item{name},
 				rgb		=> $$item{rgb},

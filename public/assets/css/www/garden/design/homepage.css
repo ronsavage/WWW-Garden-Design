@@ -30,16 +30,7 @@ body
 	text-align: center;
 }
 
-.color_code_swatch
-{
-	background-color:	white;
-	border-style:		solid;
-	border-width:		1px;
-	height:				20px;
-	width:				20px;
-}
-
-.color_name_swatch
+.color_swatch_chosen
 {
 	background-color:	white;
 	border-style:		solid;
