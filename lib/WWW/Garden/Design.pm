@@ -128,7 +128,7 @@ sub startup
 
 	$r -> route('/')					-> to('Initialize#homepage');
 	$r -> route('/AutoComplete')		-> to('AutoComplete#display');
-	$r -> route('/Flower')				-> to('Flower#display');
+	$r -> route('/Details')				-> to('Details#display');
 	$r -> route('/Garden')				-> to('Garden#display');
 	$r -> route('/GetAttributeTypes')	-> to('GetAttributeTypes#display');
 	$r -> route('/GetDetails')			-> to('GetDetails#display');

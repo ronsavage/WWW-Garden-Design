@@ -32,7 +32,7 @@
 %= include 'initialize/search'
 	</div>
 	<div id = 'global_details_tab'>
-%= form_for '/details' => (method => 'POST') => begin
+%= form_for '/Details' => (method => 'POST') => begin
 	    <ul>
 	        <li><a href = '#flower_tab'><span>Flower</span></a></li>
 	        <li><a href = '#attributes_tab'><span>Attributes</span></a></li>
@@ -55,7 +55,7 @@
 	    <div id = 'urls_tab'>
 %= include 'initialize/urls'
 		</div>
-%=end
+% end
 	</div>
 	<div id = 'global_garden_tab'>
 %= include 'initialize/garden'

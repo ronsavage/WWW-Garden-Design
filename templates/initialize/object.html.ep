@@ -1,50 +1,51 @@
-<form name = 'object_form' id = 'object_form'>
-<table align = 'center'>
-<tr>
-	<td colspan = '2'><div class = 'blue_centered'>Objects</div></td>
-</tr>
-<tr>
-	<td>Object name:</td>
-	<td align = 'left'><input id = 'object_name' type = 'text' size = '50' maxlength = '100'></td>
-</tr>
-<tr>
-	<td></td>
-	<td>Choose any one of the following to specify color.</td>
-</tr>
-<tr>
-	<td></td>
-	<td>Color codes are '#' + 6 hex digits.</td>
-</tr>
-<tr>
-	<td></td>
-	<td>There are 216 web-safe color codes, of which 8 have names.</td>
-</tr>
-<tr>
-	<td>Color code:</td>
-	<td><input id = 'color_code' type = 'text' size = '50' maxlength = '100'></td>
-</tr>
-<tr>
-	<td>Color name:</td>
-	<td><input id = 'color_name' type = 'text' size = '50' maxlength = '100'></td>
-</tr>
-<tr>
-	<td>Color spectrum:</td>
-	<td><input type = 'text' class = 'color_spectrum' id = 'color_spectrum' /></div></td>
-</tr>
-<tr>
-	<td>Color chosen:</td>
-	<td><div class = 'color_swatch_chosen' id = 'color_swatch_chosen'></div></td>
-</tr>
-<tr>
-	<td>
-		<br>
-	</td>
-</tr>
-<tr>
-	<td align = 'center'><input type = 'submit' value = 'Save' /></td>
-	<td align = 'center'><input type = 'reset'  value = 'Reset' /></td>
-</tr>
-</table>
-<input id = 'real_color' type = 'hidden' />
-</form>
+%= form_for '/Object' => (method => 'POST') => begin
+	%= csrf_field
+	<table align = 'center'>
+	<tr>
+		<td colspan = '2'><div class = 'blue_centered'>Objects</div></td>
+	</tr>
+	<tr>
+		<td>Object name:</td>
+		<td align = 'left'><input id = 'object_name' type = 'text' size = '50' maxlength = '100'></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>Choose any one of the following to specify color.</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>Color codes are '#' + 6 hex digits.</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>There are 216 web-safe color codes, of which 8 have names.</td>
+	</tr>
+	<tr>
+		<td>Color code:</td>
+		<td><input id = 'color_code' type = 'text' size = '50' maxlength = '100'></td>
+	</tr>
+	<tr>
+		<td>Color name:</td>
+		<td><input id = 'color_name' type = 'text' size = '50' maxlength = '100'></td>
+	</tr>
+	<tr>
+		<td>Color spectrum:</td>
+		<td><input type = 'text' class = 'color_spectrum' id = 'color_spectrum' /></div></td>
+	</tr>
+	<tr>
+		<td>Color chosen:</td>
+		<td><div class = 'color_swatch_chosen' id = 'color_swatch_chosen'></div></td>
+	</tr>
+	<tr>
+		<td>
+			<br>
+		</td>
+	</tr>
+	<tr>
+		<td align = 'center'><input type = 'submit' value = 'Save' /></td>
+		<td align = 'center'><input type = 'reset'  value = 'Reset' /></td>
+	</tr>
+	</table>
+	<input id = 'real_color' type = 'hidden' />
+% end
 <div id = 'object_result_div'></div>

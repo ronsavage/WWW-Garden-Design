@@ -1,4 +1,4 @@
-package WWW::Garden::Design::Controller::Flower;
+package WWW::Garden::Design::Controller::Details;
 
 use Mojo::Base 'Mojolicious::Controller';
 
@@ -14,7 +14,7 @@ sub display
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('Flower.display()');
+	$self -> app -> log -> debug('Details.display()');
 
 	my($item) =
 	{
@@ -32,14 +32,14 @@ sub display
 		$$defaults{db} -> add($item);
 
 		$self -> stash(error	=> undef);
-		$self -> stash(flower	=> $self -> format($item) );
+		$self -> stash(details	=> $self -> format($item) );
 	}
 	else
 	{
 		my($message) = 'Missing common name or scientific name';
 
 		$self -> stash(error	=> $message);
-		$self -> stash(flower	=> undef);
+		$self -> stash(details	=> undef);
 		$self -> app -> log -> error($message);
 	}
 
@@ -53,7 +53,7 @@ sub format
 {
 	my($self, $item) = @_;
 
-	$self -> app -> log -> debug('Flower.format(...)');
+	$self -> app -> log -> debug('Details.format(...)');
 
 	my($html) = <<EOS;
 <tr>
