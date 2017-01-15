@@ -23,6 +23,7 @@
 	<ul>
 		<li><a href = '#global_search_tab'><span>Search</span></a></li>
 		<li><a href = '#global_details_tab'><span>Details</span></a></li>
+		<li><a href = '#global_garden_tab'><span>Gardens</span></a></li>
 		<li><a href = '#global_object_tab'><span>Objects</span></a></li>
 		<li><a href = '#global_design_tab'><span>Design</span></a></li>
 		<li><a href = '#global_help_tab'><span>Help</span></a></li>
@@ -55,6 +56,9 @@
 %= include 'initialize/urls'
 		</div>
 %=end
+	</div>
+	<div id = 'global_garden_tab'>
+%= include 'initialize/garden'
 	</div>
 	<div id = 'global_object_tab'>
 %= include 'initialize/object'
@@ -160,6 +164,25 @@ $(function()
 		select:		function(event, ui)
 		{
 			$('#common_name').empty().append(ui.item ? ui.item.value : '-');
+		}
+	});
+
+}); // End of autocomplete function.
+
+// -----------------------------------------------
+
+$(function()
+{
+	$('#garden_name').autocomplete
+	({
+		source:		'/AutoComplete?type=garden_name',
+		minLength:	2,
+		select:		function(event, ui)
+		{
+			if (ui.item)
+			{
+				$('#garden_name').empty().append(ui.item.value);
+			}
 		}
 	});
 

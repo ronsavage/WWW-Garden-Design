@@ -391,7 +391,7 @@ sub get_autocomplete_item
 		}
 	}
 
-	my($min_length) = 999;
+	my($min_length) = 99;
 
 	my($min_value);
 

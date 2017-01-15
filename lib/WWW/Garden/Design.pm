@@ -127,8 +127,9 @@ sub startup
 	$r -> namespaces(['WWW::Garden::Design::Controller']);
 
 	$r -> route('/')					-> to('Initialize#homepage');
-	$r -> route('/AutoComplete')			-> to('AutoComplete#display');
+	$r -> route('/AutoComplete')		-> to('AutoComplete#display');
 	$r -> route('/Flower')				-> to('Flower#display');
+	$r -> route('/Garden')				-> to('Garden#display');
 	$r -> route('/GetAttributeTypes')	-> to('GetAttributeTypes#display');
 	$r -> route('/GetDetails')			-> to('GetDetails#display');
 	$r -> route('/Object')				-> to('Object#display');

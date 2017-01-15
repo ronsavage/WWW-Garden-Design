@@ -1,4 +1,4 @@
-package WWW::Garden::Design::Controller::Object;
+package WWW::Garden::Design::Controller::Garden;
 
 use Mojo::Base 'Mojolicious::Controller';
 
@@ -14,31 +14,31 @@ sub display
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('Object.display()');
+	$self -> app -> log -> debug('Garden.display()');
 
 	my($item) =
 	{
-		hidden_color	=> $self -> param('hidden_color'), # No defaults. See 'if' below.
-		object_name		=> $self -> param('object_name'),
+		description => $self -> param('description'),
+		garden_name => $self -> param('garden_name'),
 	};
 
 	$self -> app -> log -> debug("param($_) => $$item{$_}") for sort keys %$item;
 
-	if ($$item{object_name} && $$item{hidden_color})
+	if ($$item{description} && $$item{garden_name})
 	{
 		my($defaults)  = $self -> app -> defaults;
 
 		$$defaults{db} -> add($item);
 
 		$self -> stash(error	=> undef);
-		$self -> stash(object	=> $self -> format($item) );
+		$self -> stash(garden	=> $self -> format($item) );
 	}
 	else
 	{
-		my($message) = 'Missing object name or color';
+		my($message) = 'Missing garden name or description';
 
 		$self -> stash(error	=> $message);
-		$self -> stash(object	=> undef);
+		$self -> stash(garden	=> undef);
 		$self -> app -> log -> error($message);
 	}
 
@@ -52,12 +52,12 @@ sub format
 {
 	my($self, $item) = @_;
 
-	$self -> app -> log -> debug('Object.format(...)');
+	$self -> app -> log -> debug('Garden.format(...)');
 
 	my($html) = <<EOS;
 <tr>
 	<td>$$item{name}</td>
-	<td>$$item{color}</td>
+	<td>$$item{description}</td>
 </tr>
 EOS
 
