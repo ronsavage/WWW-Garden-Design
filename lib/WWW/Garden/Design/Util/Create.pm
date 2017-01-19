@@ -111,7 +111,6 @@ sub create_all_tables
 
 	for my $table_name
 (qw/
-colors
 constants
 flowers
 attribute_types
@@ -178,28 +177,6 @@ SQL
 	$self -> report($table_name, 'Created', $result);
 
 }	# End of create_attribute_types_table.
-
-# --------------------------------------------------
-
-sub create_colors_table
-{
-	my($self)        = @_;
-	my($table_name)  = 'colors';
-	my($primary_key) = $self -> creator -> generate_primary_key_sql($table_name);
-	my($engine)      = $self -> engine;
-	my($result)      = $self -> creator -> create_table(<<SQL);
-create table $table_name
-(
-id		$primary_key,
-hex		varchar(255) not null,
-name	varchar(255) not null,
-rgb		varchar(255) not null
-
-) $engine
-SQL
-	$self -> report($table_name, 'Created', $result);
-
-}	# End of create_colors_table.
 
 # --------------------------------------------------
 
@@ -368,9 +345,9 @@ sub create_objects_table
 	my($result)      = $self -> creator -> create_table(<<SQL);
 create table $table_name
 (
-id $primary_key,
-color_id int references colors(id),
-name varchar(255) not null
+id			$primary_key,
+hex_color	varchar(255) not null,
+name		varchar(255) not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);
@@ -440,7 +417,6 @@ attributes
 attribute_types
 flowers
 constants
-colors
 /)
 	{
 		$self -> drop_table($table_name);

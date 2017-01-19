@@ -42,60 +42,6 @@ sub BUILD
 
 # -----------------------------------------------
 
-sub parse_web_safe_colors
-{
-	my($self)		= @_;
-	my($in_file)	= 'data/web.safe.colors.html';
-	my($dom)		= Mojo::DOM -> new(read_text($in_file) );
-	my($td_count)	= 4;
-	my($codes)		= [];
-	my($count)		= -1;
-
-	my($content, $code);
-	my($nodule);
-
-	for my $node ($dom -> at('table[class="dtable"]') -> descendant_nodes -> each)
-	{
-		next if (! $node -> matches('td') );
-
-		$count++;
-
-		if ( ($count % $td_count) == 0)
-		{
-		}
-		elsif ( ($count % $td_count) == 1)
-		{
-			$content	= $node -> content;
-			$content	=~ s/[\s]+/ /g;
-			$code		= {hex => $content, name => '', rbg => ''};
-		}
-		elsif ( ($count % $td_count) == 2)
-		{
-			$$code{rbg}	= $node -> content;
-			$$code{rbg}	=~ s/[\s]+/ /g;
-		}
-		elsif ( ($count % $td_count) == 3)
-		{
-			$$code{name}	= $node -> content;
-			$$code{name}	= '' if (ord($$code{name}) == 160);
-			my($i)			= index($$code{name}, ' ');
-			$$code{name}	= substr($$code{name}, 0, $i) if ($i > 0);
-
-			push @$codes, $code;
-		}
-	}
-
-	open(my $fh, '>', 'data/colors.csv');
-	print $fh qq|"hex","name","rgb"\n|;
-	print $fh map{qq|"$$_{hex}","$$_{name}","$$_{rbg}"\n|} @$codes;
-	close $fh;
-
-	return $codes;
-
-} # End of parse_web_safe_colors.
-
-# -----------------------------------------------
-
 sub populate_all_tables
 {
 	my($self) = @_;
@@ -110,20 +56,18 @@ sub populate_all_tables
 	});
 
 	my(%attribute_type_keys);
-	my(%color_keys);
 	my(%flower_keys);
 	my(%garden_keys);
 	my(%object_keys);
 	my(%property_keys);
 
 	$self -> populate_attribute_types_table($path, $csv, \%attribute_type_keys);
-	$self -> populate_colors_table($path, $csv, \%color_keys);
 	$self -> populate_constants_table($path, $csv);
 	$self -> populate_flowers_table($path, $csv, \%flower_keys);
 	$self -> populate_properties_table($path, $csv, \%property_keys);
 	$self -> populate_gardens_table($path, $csv, \%garden_keys, \%property_keys);
 	$self -> populate_flower_locations_table($path, $csv, \%flower_keys, \%garden_keys);
-	$self -> populate_objects_table($path, $csv, \%color_keys, \%object_keys);
+	$self -> populate_objects_table($path, $csv, \%object_keys);
 	$self -> populate_object_locations_table($path, $csv, \%garden_keys, \%object_keys);
 	$self -> populate_attributes_table($path, $csv, \%attribute_type_keys, \%flower_keys);
 	$self -> populate_notes_table($path, $csv, \%flower_keys);
@@ -231,49 +175,6 @@ sub populate_attribute_types_table
 	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_attribute_types_table.
-
-# -----------------------------------------------
-
-sub populate_colors_table
-{
-	my($self, $path, $csv, $color_keys) = @_;
-	my($table_name) = 'colors';
-	$path           =~ s/flowers/$table_name/;
-
-	open(my $io, '<', $path) || die "Can't open($path): $!\n";
-
-	$csv -> column_names($csv -> getline($io) );
-
-	my($count) = 0;
-
-	for my $item (@{$csv -> getline_hr_all($io) })
-	{
-		$count++;
-
-		for my $column (qw/hex name rgb/)
-		{
-			if (! defined $$item{$column})
-			{
-				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
-			}
-		}
-
-		$$color_keys{$$item{hex} } = $self -> db -> insert_hashref
-		(
-			$table_name,
-			{
-				hex		=> $$item{hex},
-				name	=> $$item{name},
-				rgb		=> $$item{rgb},
-			}
-		);
-	}
-
-	close $io;
-
-	$self -> db -> logger -> info("Read $count records into '$table_name'");
-
-}	# End of populate_colors_table.
 
 # -----------------------------------------------
 
@@ -691,7 +592,7 @@ sub populate_object_locations_table
 
 sub populate_objects_table
 {
-	my($self, $path, $csv, $color_keys, $object_keys) = @_;
+	my($self, $path, $csv, $object_keys) = @_;
 	my($table_name) = 'objects';
 	$path           =~ s/flowers/$table_name/;
 
@@ -717,7 +618,7 @@ sub populate_objects_table
 		(
 			$table_name,
 			{
-				color_id	=> $$color_keys{$$item{hex} },
+				hex_color	=> $$item{hex_color},
 				name		=> $$item{name},
 			}
 		);
