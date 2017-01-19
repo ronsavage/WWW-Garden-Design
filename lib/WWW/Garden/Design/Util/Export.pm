@@ -1110,7 +1110,7 @@ sub format_string
 
 sub gardens2csv
 {
-	my($self, $csv, property_id2name)	= @_;
+	my($self, $csv, $property_id2name)	= @_;
 	my($file_name)						= $self -> output_file =~ s/flowers.csv/gardens.csv/r;
 	my($garden_table)					= $self -> db -> read_table('gardens');
 
