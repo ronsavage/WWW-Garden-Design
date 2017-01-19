@@ -203,10 +203,10 @@ sub as_csv
 	$self -> notes2csv($csv, $flowers);
 	$self -> urls2csv($csv, $flowers);
 
-	my($color_id2hex)	= $self -> colors2csv($csv);
-	my($objects)		= $self -> objects2csv($csv, $color_id2hex);
-	my($property_table)	= $self -> properties2csv($csv);
-	my($garden_id2name)	= $self -> gardens2csv($csv, $property_id2name);
+	my($color_id2hex)		= $self -> colors2csv($csv);
+	my($objects)			= $self -> objects2csv($csv, $color_id2hex);
+	my($property_id2name)	= $self -> properties2csv($csv);
+	my($garden_id2name)		= $self -> gardens2csv($csv, $property_id2name);
 
 	$self -> object_locations2csv($csv, $objects, $garden_id2name);
 	$self -> db -> logger -> info('Finished exporting all CSV files');
@@ -1122,12 +1122,16 @@ sub gardens2csv
 
 	print $fh $csv -> string, "\n";
 
+	my(%garden_id2name);
+
 	for my $garden (sort{$$a{name} cmp $$b{name} } @$garden_table)
 	{
+		$garden_id2name{$$garden{id} } = $$garden{name};
+
 		$csv -> combine
 		(
 			$$property_id2name{$$garden{property_id} },
-			$$garden{garden_name},
+			$$garden{name},
 			$$garden{description},
 		);
 
