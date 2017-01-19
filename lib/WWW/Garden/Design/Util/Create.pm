@@ -116,6 +116,7 @@ constants
 flowers
 attribute_types
 attributes
+properties
 gardens
 flower_locations
 objects
@@ -282,6 +283,7 @@ sub create_gardens_table
 create table $table_name
 (
 id $primary_key,
+property_id int references properties(id),
 description varchar(255) not null,
 name varchar(255) not null
 ) $engine
@@ -377,6 +379,26 @@ SQL
 
 # --------------------------------------------------
 
+sub create_properties_table
+{
+	my($self)        = @_;
+	my($table_name)  = 'properties';
+	my($primary_key) = $self -> creator -> generate_primary_key_sql($table_name);
+	my($engine)      = $self -> engine;
+	my($result)      = $self -> creator -> create_table(<<SQL);
+create table $table_name
+(
+id $primary_key,
+description varchar(255) not null,
+name varchar(255) not null
+) $engine
+SQL
+	$self -> report($table_name, 'Created', $result);
+
+}	# End of create_properties_table.
+
+# --------------------------------------------------
+
 sub create_urls_table
 {
 	my($self)        = @_;
@@ -413,6 +435,7 @@ object_locations
 objects
 flower_locations
 gardens
+properties
 attributes
 attribute_types
 flowers

@@ -114,12 +114,14 @@ sub populate_all_tables
 	my(%flower_keys);
 	my(%garden_keys);
 	my(%object_keys);
+	my(%property_keys);
 
 	$self -> populate_attribute_types_table($path, $csv, \%attribute_type_keys);
 	$self -> populate_colors_table($path, $csv, \%color_keys);
 	$self -> populate_constants_table($path, $csv);
 	$self -> populate_flowers_table($path, $csv, \%flower_keys);
-	$self -> populate_gardens_table($path, $csv, \%flower_keys, \%garden_keys);
+	$self -> populate_properties_table($path, $csv, \%property_keys);
+	$self -> populate_gardens_table($path, $csv, \%garden_keys, \%property_keys);
 	$self -> populate_flower_locations_table($path, $csv, \%flower_keys, \%garden_keys);
 	$self -> populate_objects_table($path, $csv, \%color_keys, \%object_keys);
 	$self -> populate_object_locations_table($path, $csv, \%garden_keys, \%object_keys);
@@ -479,7 +481,7 @@ sub populate_flowers_table
 
 sub populate_gardens_table
 {
-	my($self, $path, $csv, $flower_keys, $garden_keys) = @_;
+	my($self, $path, $csv, $garden_keys, $property_keys) = @_;
 	my($table_name) = 'gardens';
 	$path           =~ s/flowers/$table_name/;
 
@@ -498,7 +500,7 @@ sub populate_gardens_table
 	{
 		$count++;
 
-		for my $column (qw/garden_name description/)
+		for my $column (qw/property_name garden_name description/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -512,6 +514,7 @@ sub populate_gardens_table
 			{
 				description	=> $$item{description},
 				name		=> $$item{garden_name},
+				property_id	=> $$property_keys{$$item{property_name} },
 			}
 		);
 	}
@@ -725,6 +728,53 @@ sub populate_objects_table
 	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_objects_table.
+
+# -----------------------------------------------
+
+sub populate_properties_table
+{
+	my($self, $path, $csv, $property_keys) = @_;
+	my($table_name) = 'properties';
+	$path           =~ s/flowers/$table_name/;
+
+	open(my $io, '<', $path) || die "Can't open($path): $!\n";
+
+	$csv -> column_names($csv -> getline($io) );
+
+	my($count)	= 0;
+	my($max_x)	= 0;
+	my($max_y)	= 0;
+
+	my(@xy, $x);
+	my($y);
+
+	for my $item (@{$csv -> getline_hr_all($io) })
+	{
+		$count++;
+
+		for my $column (qw/name description/)
+		{
+			if (! defined $$item{$column})
+			{
+				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
+			}
+		}
+
+		$$property_keys{$$item{name} } = $self -> db -> insert_hashref
+		(
+			$table_name,
+			{
+				description	=> $$item{description},
+				name		=> $$item{name},
+			}
+		);
+	}
+
+	close $io;
+
+	$self -> db -> logger -> info("Read $count records into '$table_name'");
+
+}	# End of populate_properties_table.
 
 # -----------------------------------------------
 
