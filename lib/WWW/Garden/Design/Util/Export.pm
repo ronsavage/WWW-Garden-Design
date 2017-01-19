@@ -406,19 +406,18 @@ sub colors2csv
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 
-	$csv -> combine(qw/color hex name rgb/);
+	$csv -> combine(qw/hex name rgb/);
 
 	print $fh $csv -> string, "\n";
 
 	my(%color_id2hex);
 
-	for my $row (sort{uc($$a{color}) cmp uc($$b{color}) || $$a{hex} cmp $$b{hex} } @$color_table)
+	for my $row (sort{$$a{hex} cmp $$b{hex} } @$color_table)
 	{
 		$color_id2hex{$$row{id} } = $$row{hex};
 
 		$csv -> combine
 		(
-			$$row{color},
 			$$row{hex},
 			$$row{name},
 			$$row{rgb},
