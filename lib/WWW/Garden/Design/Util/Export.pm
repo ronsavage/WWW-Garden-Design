@@ -195,18 +195,19 @@ sub as_csv
 	my($csv)		= Text::CSV -> new({always_quote => 1, binary => 1});
 	my($flowers)	= $self -> flowers2csv($csv);
 
-	$self -> attributes2csv($csv, $flowers);
-	$self -> flower_locations2csv($csv, $flowers);
-	$self -> notes2csv($csv, $flowers);
-	$self -> images2csv($csv, $flowers);
-	$self -> urls2csv($csv, $flowers);
 	$self -> attribute_types2csv($csv);
+	$self -> attributes2csv($csv, $flowers);
+	$self -> constants2csv($csv);
+	$self -> flower_locations2csv($csv, $flowers);
+	$self -> images2csv($csv, $flowers);
+	$self -> notes2csv($csv, $flowers);
+	$self -> urls2csv($csv, $flowers);
 
 	my($color_id2hex)	= $self -> colors2csv($csv);
-	my($garden_id2name)	= $self -> gardens2csv($csv);
 	my($objects)		= $self -> objects2csv($csv, $color_id2hex);
+	my($property_table)	= $self -> properties2csv($csv);
+	my($garden_id2name)	= $self -> gardens2csv($csv, $property_id2name);
 
-	$self -> constants2csv($csv);
 	$self -> object_locations2csv($csv, $objects, $garden_id2name);
 	$self -> db -> logger -> info('Finished exporting all CSV files');
 
@@ -1109,27 +1110,24 @@ sub format_string
 
 sub gardens2csv
 {
-	my($self, $csv)		= @_;
-	my($file_name)		= $self -> output_file =~ s/flowers.csv/gardens.csv/r;
-	my($garden_table)	= $self -> db -> read_table('gardens');
+	my($self, $csv, property_id2name)	= @_;
+	my($file_name)						= $self -> output_file =~ s/flowers.csv/gardens.csv/r;
+	my($garden_table)					= $self -> db -> read_table('gardens');
 
 	$self -> db -> logger -> info("Writing to $file_name");
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 
-	$csv -> combine(qw/garden_name description/);
+	$csv -> combine(qw/property_name garden_name description/);
 
 	print $fh $csv -> string, "\n";
 
-	my(%garden_id2name);
-
 	for my $garden (sort{$$a{name} cmp $$b{name} } @$garden_table)
 	{
-		$garden_id2name{$$garden{id} } = $$garden{name};
-
 		$csv -> combine
 		(
-			$$garden{name},
+			$$property_id2name{$$garden{property_id} },
+			$$garden{garden_name},
 			$$garden{description},
 		);
 
@@ -1282,7 +1280,7 @@ sub object_locations2csv
 sub objects2csv
 {
 	my($self, $csv, $color_id2hex) = @_;
-	my($objects)	= $self -> db -> read_objects_table;
+	my($objects)	= $self -> db -> read_objects_table; # Returns a sorted array ref.
 	my($file_name)	= $self -> output_file =~ s/flowers.csv/objects.csv/r;
 
 	$self -> db -> logger -> info("Writing to $file_name");
@@ -1311,6 +1309,45 @@ sub objects2csv
 	return $objects;
 
 } # End of objects2csv.
+
+# -----------------------------------------------
+
+sub properties2csv
+{
+	my($self, $csv)		= @_;
+	my($property_table)	= $self -> db -> read_table('properties');
+	my($file_name)		= $self -> output_file =~ s/flowers.csv/properties.csv/r;
+
+	$self -> db -> logger -> info("Writing to $file_name");
+
+	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
+
+	$csv -> combine(qw/name description/);
+
+	print $fh $csv -> string, "\n";
+
+	my(%property_id2name);
+
+	for my $row (sort{uc($$a{name}) cmp uc($$b{name})} @$property_table)
+	{
+		$property_id2name{$$row{id} } = $$row{name};
+
+		$csv -> combine
+		(
+			$$row{name},
+			$$row{description},
+		);
+
+		print $fh $csv -> string, "\n";
+	}
+
+	close $fh;
+
+	$self -> db -> logger -> info("Wrote $file_name");
+
+	return \%property_id2name;
+
+} # End of properties2csv.
 
 # -----------------------------------------------
 
