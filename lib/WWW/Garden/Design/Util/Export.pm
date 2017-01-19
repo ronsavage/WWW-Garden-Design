@@ -203,8 +203,7 @@ sub as_csv
 	$self -> notes2csv($csv, $flowers);
 	$self -> urls2csv($csv, $flowers);
 
-	my($color_id2hex)		= $self -> colors2csv($csv);
-	my($objects)			= $self -> objects2csv($csv, $color_id2hex);
+	my($objects)			= $self -> objects2csv($csv);
 	my($property_id2name)	= $self -> properties2csv($csv);
 	my($garden_id2name)		= $self -> gardens2csv($csv, $property_id2name);
 
@@ -393,46 +392,6 @@ sub as_html
 	) );
 
 } # End of as_html.
-
-# -----------------------------------------------
-
-sub colors2csv
-{
-	my($self, $csv)		= @_;
-	my($color_table)	= $self -> db -> read_table('colors');
-	my($file_name)		= $self -> output_file =~ s/flowers.csv/colors.csv/r;
-
-	$self -> db -> logger -> info("Writing to $file_name");
-
-	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
-
-	$csv -> combine(qw/hex name rgb/);
-
-	print $fh $csv -> string, "\n";
-
-	my(%color_id2hex);
-
-	for my $row (sort{$$a{hex} cmp $$b{hex} } @$color_table)
-	{
-		$color_id2hex{$$row{id} } = $$row{hex};
-
-		$csv -> combine
-		(
-			$$row{hex},
-			$$row{name},
-			$$row{rgb},
-		);
-
-		print $fh $csv -> string, "\n";
-	}
-
-	close $fh;
-
-	$self -> db -> logger -> info("Wrote $file_name");
-
-	return \%color_id2hex;
-
-} # End of colors2csv.
 
 # -----------------------------------------------
 
@@ -1282,7 +1241,7 @@ sub object_locations2csv
 
 sub objects2csv
 {
-	my($self, $csv, $color_id2hex) = @_;
+	my($self, $csv) = @_;
 	my($objects)	= $self -> db -> read_objects_table; # Returns a sorted array ref.
 	my($file_name)	= $self -> output_file =~ s/flowers.csv/objects.csv/r;
 
@@ -1290,7 +1249,7 @@ sub objects2csv
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 
-	$csv -> combine(qw/name hex/);
+	$csv -> combine(qw/name hex_color/);
 
 	print $fh $csv -> string, "\n";
 
@@ -1299,7 +1258,7 @@ sub objects2csv
 		$csv -> combine
 		(
 			$$object{name},
-			$$color_id2hex{$$object{color_id} },
+			$$object{hex_color},
 		);
 
 		print $fh $csv -> string, "\n";

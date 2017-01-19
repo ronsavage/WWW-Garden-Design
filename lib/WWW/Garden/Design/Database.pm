@@ -839,16 +839,8 @@ sub read_object_dependencies
 
 sub read_objects_table
 {
-	my($self)			= @_;
-	my($constants)		= $self -> constants;
-	my($color_table)	= $self -> read_table('colors');
-
-	my(%color_map);
-
-	for my $color (@$color_table)
-	{
-		$color_map{$$color{id} } = $color;
-	}
+	my($self)		= @_;
+	my($constants)	= $self -> constants;
 
 	my($record, @records);
 
@@ -863,7 +855,6 @@ sub read_objects_table
 			$$record{$key} = $$object{$key};
 		}
 
-		$$record{color}		= $color_map{$$record{color_id} };
 		$$record{icon_dir}	= "$$constants{homepage_dir}$$constants{icon_dir}";
 		$$record{icon_url}	= "$$constants{homepage_url}$$constants{icon_url}";
 
