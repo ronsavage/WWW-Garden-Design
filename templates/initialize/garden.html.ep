@@ -1,11 +1,11 @@
 <form name = 'garden_form' id = 'garden_form'>
-<table align = 'center'>
+<table align = 'center' class = 'generic_border generic_padding'>
+	<tr>
+		<td colspan = '2'><div class = 'blue_centered'>Properties and Gardens</div></td>
+	</tr>
 	<tr>
 		<td>
 			<table align = 'center'>
-				<tr>
-					<td colspan = '2'><div class = 'blue_centered'>Properties and Gardens</div></td>
-				</tr>
 				<tr>
 					<td>
 					<td>Auto-complete works for both property names and garden names.</td>
@@ -32,24 +32,24 @@
 					</td>
 				</tr>
 				<tr>
-					<td align = 'center'><input type = 'submit' value = 'Save' /></td>
 					<td align = 'center'><input type = 'reset'  value = 'Reset' /></td>
+					<td align = 'center'><input type = 'submit' value = 'Save' /></td>
 				</tr>
 			</table>
 		</td>
 		<td>
-			<table align = 'center' class = 'generic_border generic_padding'>
+			<table align = 'center'>
 			<thead>
 				<tr>
-					<td class = 'generic_border generic_padding'>Property</td>
-					<td class = 'generic_border generic_padding'>Garden</td>
+					<td align = 'center' class = 'generic_border generic_padding'>Property</td>
+					<td align = 'center' class = 'generic_border generic_padding'>Garden</td>
 				</tr>
 			</thead>
 			<tbody>
 				% for my $garden (@$gardens) {
 				<tr>
-					<td align = 'left' class = 'generic_border generic_padding'>Property</td>
-					<td align = 'left' class = 'generic_border generic_padding'><%== $$garden{name} %></td>
+					<td class = 'generic_border generic_padding'><%== $$garden{property_name} %></td>
+					<td class = 'generic_border generic_padding'><%== $$garden{name} %></td>
 				</tr>
 				% }
 			</tbody>

@@ -839,12 +839,21 @@ sub read_garden_dependencies
 
 sub read_gardens_table
 {
-	my($self)			= @_;
-	my($constants)		= $self -> constants;
-	my($garden_table)	= $self -> read_table('gardens'); # Avoid 'Deep Recursion'! Don't call read_gardens_table()!
+	my($self)				= @_;
+	my($constants)			= $self -> constants;
+	my($garden_table)		= $self -> read_table('gardens'); # Avoid 'Deep Recursion'! Don't call read_gardens_table()!
+	my($properties_table)	= $self -> read_table('properties');
 
 	my($id);
+	my($property_id);
 	my($record, @records);
+
+	my(%property);
+
+	for (@$properties_table)
+	{
+		$property{$$_{id} } = $_;
+	}
 
 	for my $garden (@$garden_table)
 	{
@@ -863,12 +872,16 @@ sub read_gardens_table
 			$$record{$table_name} = $self -> read_garden_dependencies($table_name, $$record{id});
 		}
 
+		# Annotate the records with their properties.
+
+		$$record{property_name} = $property{$$record{property_id} }{name};
+
 		push @records, $record;
 	}
 
 	# Return an arrayref of hashrefs.
 
-	return [sort{$$a{name} cmp $$b{name} } @records];
+	return [sort{$$a{property_name} cmp $$b{property_name} || $$a{name} cmp $$b{name}} @records];
 
 } # End of read_gardens_table.
 
