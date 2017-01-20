@@ -16,18 +16,16 @@ sub display
 	my(%context)	=
 	(	# Form field		Table column		Table name.
 		aliases			=> ['aliases',			'flowers'],
-		color_code		=> ['hex',				'colors'],
-		color_name		=> ['name',				'colors'],
 		common_name		=> ['common_name',		'flowers'],
 		garden_name		=> ['name',				'gardens'],
 		object_name		=> ['name',				'objects'],
+		property_name	=> ['name',				'properties'],
 		scientific_name	=> ['scientific_name',	'flowers'],
 	);
 	my(%want_single_item) =
 	(
-		color_code	=> 1,
-		color_name	=> 1,
-		garden_name	=> 1,
+		garden_name		=> 1,
+		property_name	=> 1,
 	);
 
 	my($defaults) = $self -> app -> defaults;

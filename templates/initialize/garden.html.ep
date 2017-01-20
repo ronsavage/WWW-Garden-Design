@@ -1,25 +1,62 @@
 <form name = 'garden_form' id = 'garden_form'>
 <table align = 'center'>
-<tr>
-	<td colspan = '2'><div class = 'blue_centered'>Gardens</div></td>
-</tr>
-<tr>
-	<td>Garden name:</td>
-	<td align = 'left'><input id = 'garden_name' type = 'text' size = '50' maxlength = '100'></td>
-</tr>
-<tr>
-	<td>Description:</td>
-	<td align = 'left'><input id = 'description' type = 'text' size = '50' maxlength = '100'></td>
-</tr>
-<tr>
-	<td>
-		<br>
-	</td>
-</tr>
-<tr>
-	<td align = 'center'><input type = 'submit' value = 'Save' /></td>
-	<td align = 'center'><input type = 'reset'  value = 'Reset' /></td>
-</tr>
+	<tr>
+		<td>
+			<table align = 'center'>
+				<tr>
+					<td colspan = '2'><div class = 'blue_centered'>Properties and Gardens</div></td>
+				</tr>
+				<tr>
+					<td>
+					<td>Auto-complete works for both property names and garden names.</td>
+				</tr>
+				<tr>
+					<td>Property name:</td>
+					<td align = 'left'><input id = 'property_name' type = 'text' size = '50' maxlength = '100'></td>
+				</tr>
+				<tr>
+					<td>Description:</td>
+					<td align = 'left'><input id = 'property_description' type = 'text' size = '50' maxlength = '100'></td>
+				</tr>
+				<tr>
+					<td>Garden name:</td>
+					<td align = 'left'><input id = 'garden_name' type = 'text' size = '50' maxlength = '100'></td>
+				</tr>
+				<tr>
+					<td>Description:</td>
+					<td align = 'left'><input id = 'garden_description' type = 'text' size = '50' maxlength = '100'></td>
+				</tr>
+				<tr>
+					<td>
+						<br>
+					</td>
+				</tr>
+				<tr>
+					<td align = 'center'><input type = 'submit' value = 'Save' /></td>
+					<td align = 'center'><input type = 'reset'  value = 'Reset' /></td>
+				</tr>
+			</table>
+		</td>
+		<td>
+			<table align = 'center' class = 'generic_border generic_padding'>
+			<thead>
+				<tr>
+					<td class = 'generic_border generic_padding'>Property</td>
+					<td class = 'generic_border generic_padding'>Garden</td>
+				</tr>
+			</thead>
+			<tbody>
+				% for my $garden (@$gardens) {
+				<tr>
+					<td align = 'left' class = 'generic_border generic_padding'>Property</td>
+					<td align = 'left' class = 'generic_border generic_padding'><%== $$garden{name} %></td>
+				</tr>
+				% }
+			</tbody>
+			</table>
+		</td>
+	</tr>
 </table>
 </form>
+
 <div id = 'garden_result_div'></div>

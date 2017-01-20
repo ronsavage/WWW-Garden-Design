@@ -117,48 +117,6 @@ $(function()
 
 $(function()
 {
-	$('#color_code').autocomplete
-	({
-		source:		'/AutoComplete?type=color_code',
-		minLength:	2,
-		select:		function(event, ui)
-		{
-			if (ui.item)
-			{
-				$('#color_code').empty().append(ui.item.value);
-				$('#color_swatch_chosen').css('background-color', ui.item.value);
-				$('#real_color').val(ui.item.value);
-			}
-		}
-	});
-
-}); // End of autocomplete function.
-
-// -----------------------------------------------
-
-$(function()
-{
-	$('#color_name').autocomplete
-	({
-		source:		'/AutoComplete?type=color_name',
-		minLength:	2,
-		select:		function(event, ui)
-		{
-			if (ui.item)
-			{
-				$('#color_name').empty().append(ui.item.value);
-				$('#color_swatch_chosen').css('background-color', ui.item.value);
-				$('#real_color').val(ui.item.value);
-			}
-		}
-	});
-
-}); // End of autocomplete function.
-
-// -----------------------------------------------
-
-$(function()
-{
 	$('#common_name').autocomplete
 	({
 		source:		'/AutoComplete?type=common_name',
@@ -201,6 +159,25 @@ $(function()
 		select:		function(event, ui)
 		{
 			$('#object_name').empty().append(ui.item ? ui.item.value : '-');
+		}
+	});
+
+}); // End of autocomplete function.
+
+// -----------------------------------------------
+
+$(function()
+{
+	$('#property_name').autocomplete
+	({
+		source:		'/AutoComplete?type=property_name',
+		minLength:	2,
+		select:		function(event, ui)
+		{
+			if (ui.item)
+			{
+				$('#property_name').empty().append(ui.item.value);
+			}
 		}
 	});
 

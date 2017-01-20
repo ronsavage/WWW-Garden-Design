@@ -823,6 +823,57 @@ sub read_flowers_table
 
 # --------------------------------------------------
 
+sub read_garden_dependencies
+{
+	my($self, $table_name, $garden_id) = @_;
+	my($sql)	= "select * from $table_name where garden_id = $garden_id";
+	my($set)	= $self -> simple -> query($sql) || die $self -> db -> simple -> error;
+
+	# Return an arrayref of hashrefs.
+
+	return [$set -> hashes];
+
+} # End of read_garden_dependencies.
+
+# --------------------------------------------------
+
+sub read_gardens_table
+{
+	my($self)			= @_;
+	my($constants)		= $self -> constants;
+	my($garden_table)	= $self -> read_table('gardens'); # Avoid 'Deep Recursion'! Don't call read_gardens_table()!
+
+	my($id);
+	my($record, @records);
+
+	for my $garden (@$garden_table)
+	{
+		# Phase 1: Transfer the garden data.
+
+		$record	= {};
+
+		for my $key (keys %$garden)
+		{
+			$$record{$key} = $$garden{$key};
+		}
+
+
+		for my $table_name (qw/flower_locations object_locations/)
+		{
+			$$record{$table_name} = $self -> read_garden_dependencies($table_name, $$record{id});
+		}
+
+		push @records, $record;
+	}
+
+	# Return an arrayref of hashrefs.
+
+	return [sort{$$a{name} cmp $$b{name} } @records];
+
+} # End of read_gardens_table.
+
+# --------------------------------------------------
+
 sub read_object_dependencies
 {
 	my($self, $table_name, $object_id) = @_;

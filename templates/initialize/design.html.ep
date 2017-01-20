@@ -1,20 +1,21 @@
 <form name = 'design_form' id = 'design_form'>
 <table align = 'center'>
-<tr>
-	<td colspan = '2'><div class = 'blue_centered'>Design</div></td>
-</tr>
-	<td>Choose a garden:</td>
-	<td align = 'left'><input id = 'name' type = 'text' size = '50' maxlength = '100'></td>
-</tr>
-<tr>
-	<td>
-		<br>
-	</td>
-</tr>
-<tr>
-	<td align = 'center'><input type = 'submit' value = 'Save' /></td>
-	<td align = 'center'><input type = 'reset'  value = 'Reset' /></td>
-</tr>
+	<tr>
+		<td colspan = '2'><div class = 'blue_centered'>Design</div></td>
+	</tr>
+		<td>Choose a garden:</td>
+		<td align = 'left'><input id = 'name' type = 'text' size = '50' maxlength = '100'></td>
+	</tr>
+	<tr>
+		<td>
+			<br>
+		</td>
+	</tr>
+	<tr>
+		<td align = 'center'><input type = 'submit' value = 'Save' /></td>
+		<td align = 'center'><input type = 'reset'  value = 'Reset' /></td>
+	</tr>
 </table>
 </form>
+
 <div id = 'design_result_div'></div>

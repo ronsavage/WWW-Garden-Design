@@ -55,7 +55,8 @@ sub homepage
 	$self -> stash(attribute_check_boxes	=> $self -> build_check_boxes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields}, $$defaults{attribute_attribute_ids}) );
 	$self -> stash(csrf_token				=> $self -> session('csrf_token') );
 	$self -> stash(search_check_boxes		=> $self -> build_check_boxes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields}, $$defaults{search_attribute_ids}) );
-	$self -> render(constants				=> $$defaults{db} -> read_constants_table);
+
+	$self -> render(constants => $$defaults{constants_table}, gardens => $$defaults{gardens_table});
 
 } # End of homepage.
 
