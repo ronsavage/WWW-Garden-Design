@@ -97,7 +97,8 @@ table
 
 table.generic_border
 {
-	border: 1px solid #00aa00;
+	border:				1px solid #00aa00;
+	border-collapse:	collapse;
 }
 
 .table_margin_auto
