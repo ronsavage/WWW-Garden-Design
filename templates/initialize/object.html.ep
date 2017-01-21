@@ -10,7 +10,7 @@
 		</tr>
 		<tr>
 			<td></td>
-			<td>Choose any one of the following to specify color.</td>
+			<td>Choose any one of the following to specify the color of the object's tile.</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -18,7 +18,7 @@
 		</tr>
 		<tr>
 			<td></td>
-			<td>There are 216 web-safe color codes, of which 8 have names.</td>
+			<td>Auto-complete does not work in this page.</td>
 		</tr>
 		<tr>
 			<td>Color code:</td>

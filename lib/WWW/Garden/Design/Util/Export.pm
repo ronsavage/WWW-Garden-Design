@@ -813,7 +813,7 @@ sub export_icons
 
 	for my $object (sort{$$a{name} cmp $$b{name} } @$objects)
 	{
-		$color		= Imager::Color -> new($$object{color}{hex});
+		$color		= Imager::Color -> new($$object{hex_color});
 		$fill		= Imager::Fill -> new(fg => $color, hatch => 'dots16');
 		$id			= $$object{id};
 		$image		= Imager -> new(xsize => $$constants{cell_width}, ysize => $$constants{cell_height});

@@ -606,7 +606,7 @@ sub populate_objects_table
 	{
 		$count++;
 
-		for my $column (qw/hex name/)
+		for my $column (qw/hex_color name/)
 		{
 			if (! defined $$item{$column})
 			{

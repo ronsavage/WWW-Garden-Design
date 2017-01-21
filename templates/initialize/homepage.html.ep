@@ -58,7 +58,7 @@
 % end
 	</div>
 	<div id = 'global_garden_tab'>
-%= include 'initialize/garden'
+%= include 'initialize/garden', gardens => $gardens
 	</div>
 	<div id = 'global_object_tab'>
 %= include 'initialize/object'
