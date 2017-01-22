@@ -31,6 +31,7 @@ my(%params) =
 	PL_FILES  => {},
 	PREREQ_PM =>
 	{
+		'boolean'					=> 0.46,
 		'Config::Tiny'				=> 2.20,
 		'Date::Simple'				=> 3.03,
 		'DBD::SQLite'				=> 1.52,
