@@ -36,9 +36,25 @@ has export_type =>
 	required	=> 0,
 );
 
+has garden_name =>
+(
+	default		=> sub{return 'front'},
+	is			=> 'rw',
+	isa			=> Str,
+	required	=> 1,
+);
+
 has output_file =>
 (
 	default		=> sub{return ''},
+	is			=> 'rw',
+	isa			=> Str,
+	required	=> 1,
+);
+
+has property_name =>
+(
+	default		=> sub{return 'home'},
 	is			=> 'rw',
 	isa			=> Str,
 	required	=> 1,
@@ -906,10 +922,13 @@ EOS
 
 sub export_layouts
 {
-	my($self) = @_;
+	my($self)			= @_;
+	my($gardens_table)	= $self -> db -> read_gardens_table; # Warning: Not read_table('gardens').
 
-	$self -> export_garden_layout('front');
-	$self -> export_garden_layout('back');
+	for my $garden (@$gardens_table)
+	{
+		$self -> export_garden_layout($$garden{name}) if ($self -> property_name eq $$garden{property_name});
+	}
 
 } # End of export_layouts.
 

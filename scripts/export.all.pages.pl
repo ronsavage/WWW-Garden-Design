@@ -54,7 +54,7 @@ Exit value: 0.
 
 =over 4
 
-=item -help
+=item o help
 
 Print help and exit.
 

@@ -56,11 +56,11 @@ Exit value: 0.
 
 =over 4
 
-=item o -help
+=item o help
 
 Print help and exit.
 
-=item o -output_file aCSVFileName
+=item o output_file => aCSVFileName
 
 The name of a CSV file to write.
 

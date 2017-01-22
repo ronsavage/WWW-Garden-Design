@@ -20,11 +20,12 @@ if ($option_parser -> getoptions
 (
  \%option,
 	'help',
+	'property_name=s'
 ) )
 {
 	pod2usage(1) if ($option{'help'});
 
-	exit WWW::Garden::Design::Util::Export -> new -> export_layouts;
+	exit WWW::Garden::Design::Util::Export -> new(%option) -> export_layouts;
 }
 else
 {
@@ -45,6 +46,7 @@ export.layouts.pl [options]
 
 	Options:
 	-help
+	-property_name aName
 
 All switches can be reduced to a single letter.
 
@@ -54,9 +56,15 @@ Exit value: 0.
 
 =over 4
 
-=item -help
+=item o help
 
 Print help and exit.
+
+=item o property_name => aName
+
+The name of the property for which all gardens will have their layouts exported.
+
+Default: 'home'.
 
 =back
 

@@ -109,11 +109,11 @@ Values for the C<export_type> parameter:
 
 Default: 0.
 
-=item -help
+=item o help
 
 Print help and exit.
 
-=item -standalone_page => $integer
+=item o standalone_page => $integer
 
 Output a standalone web page.
 
