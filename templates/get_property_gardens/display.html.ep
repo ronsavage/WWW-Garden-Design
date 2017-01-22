@@ -1,0 +1,14 @@
+<table align = 'center' class = 'generic_border'>
+	<thead>
+		<tr>
+			<td align = 'center' class = 'generic_padding' colspan = '2'>On file</td>
+		</tr>
+		<tr>
+			<td align = 'center' class = 'generic_border generic_padding'>Property</td>
+			<td align = 'center' class = 'generic_border generic_padding'>Garden</td>
+		</tr>
+	</thead>
+	<tbody>
+%== $property_gardens
+	</tbody>
+</table>
