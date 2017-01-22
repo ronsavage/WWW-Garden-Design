@@ -754,15 +754,15 @@ sub export_garden_layout
 		<div class = 'centered'><span class = 'purple_on_red_title' id = 'top'>The $Garden Garden Layout</span></div>
 		<br />
 		<table align = 'center'>
-			<tr><td>Part 1: The $property_name $Garden Garden Layout (SVG image), with clickable flower thumbnails in situ</td></tr>
-			<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/$other_garden.garden.layout.html'>Part 2: The $property_name $Other_garden Garden Layout (separate page)</a></td></tr>
-			<tr><td><a href = '#part_4'>Part 3: The Database Schema</a></td></tr>
-			<tr><td><a href = '$$constants{homepage_url}/Flowers.html'>Part 4 : The Flower Catalog</a></td></tr>
+			<tr><td>The $property_name $Garden Garden Layout (SVG image), with clickable flower thumbnails in situ</td></tr>
+			<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/$other_garden.garden.layout.html'>The $property_name $Other_garden Garden Layout (separate page)</a></td></tr>
+			<tr><td><a href = '#schema'>The Database Schema</a></td></tr>
+			<tr><td><a href = '$$constants{homepage_url}/Flowers.html'>The Flower Catalog</a></td></tr>
 		</table>
 
 		<br />
 
-		<h2 align = 'center' id = 'part_1'>Part 1: The $property_name $Garden Garden Layout (SVG image), with clickable flower thumbnails in situ</h2>
+		<h2 align = 'center'>The $property_name $Garden Garden Layout (SVG image), with clickable flower thumbnails in situ</h2>
 
 		<table align = 'center'>
 			<tr><td align = 'center'>
@@ -778,7 +778,7 @@ sub export_garden_layout
 
 		<a>
 		<table align = 'center'>
-			<tr><td align = 'center'><span id = 'part_4'The Database Schema</span></td></tr>
+			<tr><td align = 'center'><span id = 'schema'The Database Schema</span></td></tr>
 			<tr><td align = 'center'>
 				<object data = '$$constants{homepage_url}$$constants{flower_url}/flowers.schema.svg'></object>
 			</td></tr>
