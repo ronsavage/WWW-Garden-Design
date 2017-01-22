@@ -36,14 +36,6 @@ has export_type =>
 	required	=> 0,
 );
 
-has garden_name =>
-(
-	default		=> sub{return 'front'},
-	is			=> 'rw',
-	isa			=> Str,
-	required	=> 1,
-);
-
 has output_file =>
 (
 	default		=> sub{return ''},
@@ -583,20 +575,19 @@ sub export_all_pages
 
 sub export_garden_layout
 {
-	my($self, $garden_name)	= @_;
-	my($constants)			= $self -> db -> constants;
-	my($flowers)			= $self -> db -> read_flowers_table;
-	my($Garden)				= ucfirst($garden_name);
-	my($garden_table)		= $self -> db -> read_table('gardens');
-	my($objects)			= $self -> db -> read_objects_table;
-	my($max_x)				= 0;
-	my($max_y)				= 0;
-	my($x_offset)			= $$constants{x_offset};
-	my($y_offset)			= $$constants{y_offset};
+	my($self, $gardens_table, $garden_name) = @_;
+	my($constants)		= $self -> db -> constants;
+	my($flowers)		= $self -> db -> read_flowers_table;
+	my($Garden)			= ucfirst($garden_name);
+	my($objects)		= $self -> db -> read_objects_table;
+	my($max_x)			= 0;
+	my($max_y)			= 0;
+	my($x_offset)		= $$constants{x_offset};
+	my($y_offset)		= $$constants{y_offset};
 
 	my(%garden_name);
 
-	for my $garden (@$garden_table)
+	for my $garden (@$gardens_table)
 	{
 		$garden_name{$$garden{id} } = $$garden{name};
 	}
@@ -747,6 +738,7 @@ sub export_garden_layout
 
 	my($other_garden)	= ($garden_name eq 'front') ? 'back' : 'front';
 	my($Other_garden)	= ucfirst $other_garden;
+	my($property_name)	= $self -> property_name;
 
 	my(@garden_index);
 
@@ -754,7 +746,7 @@ sub export_garden_layout
 <html>
 	<head>
 		<title>$Garden Garden Layout</title>
-		<meta http-equiv = "Content-Type" content = "text/html; charset=utf-8" />
+		<meta http-equiv = 'Content-Type' content = 'text/html; charset=utf-8' />
 		<link rel = 'stylesheet' type = 'text/css' href = '/assets/css/www/garden/design/homepage.css'>
 	</head>
 	<body>
@@ -762,15 +754,15 @@ sub export_garden_layout
 		<div class = 'centered'><span class = 'purple_on_red_title' id = 'top'>The $Garden Garden Layout</span></div>
 		<br />
 		<table align = 'center'>
-			<tr><td>Part 1: The $Garden Garden Layout (SVG image), with clickable flower thumbnails in situ</td></tr>
-			<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/$other_garden.garden.layout.html'>Part 2: The $Other_garden Garden Layout (separate page)</a></td></tr>
+			<tr><td>Part 1: The $property_name $Garden Garden Layout (SVG image), with clickable flower thumbnails in situ</td></tr>
+			<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/$other_garden.garden.layout.html'>Part 2: The $propery_name $Other_garden Garden Layout (separate page)</a></td></tr>
 			<tr><td><a href = '#part_4'>Part 3: The Database Schema</a></td></tr>
 			<tr><td><a href = '$$constants{homepage_url}/Flowers.html'>Part 4 : The Flower Catalog</a></td></tr>
 		</table>
 
 		<br />
 
-		<h2 align = 'center' id = 'part_1'>Part 1: The $Garden Garden Layout (SVG image), with clickable flower thumbnails in situ</h2>
+		<h2 align = 'center' id = 'part_1'>Part 1: The $property_name $Garden Garden Layout (SVG image), with clickable flower thumbnails in situ</h2>
 
 		<table align = 'center'>
 			<tr><td align = 'center'>
@@ -927,7 +919,7 @@ sub export_layouts
 
 	for my $garden (@$gardens_table)
 	{
-		$self -> export_garden_layout($$garden{name}) if ($self -> property_name eq $$garden{property_name});
+		$self -> export_garden_layout($gardens_table, $$garden{name}) if ($self -> property_name eq $$garden{property_name});
 	}
 
 } # End of export_layouts.
