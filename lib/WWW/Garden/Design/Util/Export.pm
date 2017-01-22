@@ -755,7 +755,7 @@ sub export_garden_layout
 		<br />
 		<table align = 'center'>
 			<tr><td>Part 1: The $property_name $Garden Garden Layout (SVG image), with clickable flower thumbnails in situ</td></tr>
-			<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/$other_garden.garden.layout.html'>Part 2: The $propery_name $Other_garden Garden Layout (separate page)</a></td></tr>
+			<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/$other_garden.garden.layout.html'>Part 2: The $property_name $Other_garden Garden Layout (separate page)</a></td></tr>
 			<tr><td><a href = '#part_4'>Part 3: The Database Schema</a></td></tr>
 			<tr><td><a href = '$$constants{homepage_url}/Flowers.html'>Part 4 : The Flower Catalog</a></td></tr>
 		</table>
