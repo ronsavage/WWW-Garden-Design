@@ -893,19 +893,19 @@ sub export_layout_guide
 	my($html)			= '';
 	my($property_name)	= $self -> property_name;
 
-	$html .= EOS;
+	$html .= <<EOS;
 <table align='center'>
 	<tr><td align='center'><span class = 'purple_on_red_title' id = 'garden_layouts'>The Garden Layouts</span></td></tr>
 EOS
 
 	for my $garden (@$gardens_table)
 	{
-		$html .= EOS;
+		$html .= <<EOS;
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/$$garden{name}.garden.layout.html'>The '$property_name - $$garden{name} Garden' Layout, with clickable flower thumbnails in situ</a></td></tr>
 EOS
 	}
 
-	$html .= EOS;
+	$html .= <<EOS;
 	<tr><td><br></td></tr>
 </table>
 <br />
