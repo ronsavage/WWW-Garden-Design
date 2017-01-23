@@ -3,10 +3,10 @@
 		<td colspan = '2'><div class = 'blue_centered'>Notes</div><br /></td>
 	</tr>
 	<tr>
-		<td align = 'centered'>Common name: </td><td><span class = 'blue_centered' id = 'note_common_name'></span></td>
+		<td align = 'center'>Common name: </td><td><span class = 'blue_centered' id = 'note_common_name'></span></td>
 	</tr>
 	<tr>
-		<td align = 'centered'>Scientific name: </td><td><span class = 'blue_centered' id = 'note_scientific_name'></span></td>
+		<td align = 'center'>Scientific name: </td><td><span class = 'blue_centered' id = 'note_scientific_name'></span></td>
 	</tr>
 	<tr>
 		<td colspan = '2'><hr></td>

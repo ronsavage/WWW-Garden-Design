@@ -46,7 +46,7 @@ has output_file =>
 
 has property_name =>
 (
-	default		=> sub{return 'home'},
+	default		=> sub{return 'Home'},
 	is			=> 'rw',
 	isa			=> Str,
 	required	=> 1,
@@ -578,10 +578,10 @@ sub export_garden_layout
 	my($self, $gardens_table, $garden_name) = @_;
 	my($constants)		= $self -> db -> constants;
 	my($flowers)		= $self -> db -> read_flowers_table;
-	my($Garden)			= ucfirst($garden_name);
 	my($objects)		= $self -> db -> read_objects_table;
 	my($max_x)			= 0;
 	my($max_y)			= 0;
+	my($property_name)	= $self -> property_name;
 	my($x_offset)		= $$constants{x_offset};
 	my($y_offset)		= $$constants{y_offset};
 
@@ -707,7 +707,7 @@ sub export_garden_layout
 	(
 		'font-size'		=> 32,
 		'font-weight'	=> '400',
-		text			=> "$Garden Garden",
+		text			=> "'$property_name - $garden_name Garden'",
 		x				=> $image -> x_offset + 8,		# Pixel co-ord.
 		y				=> $image -> y_offset / 2 + 8,	# Pixel co-ord.
 	);
@@ -736,33 +736,43 @@ sub export_garden_layout
 
 	# 4: Output some HTML.
 
-	my($other_garden)	= ($garden_name eq 'front') ? 'back' : 'front';
-	my($Other_garden)	= ucfirst $other_garden;
-	my($property_name)	= $self -> property_name;
-
 	my(@garden_index);
 
 	push @garden_index, <<EOS;
 <html>
 	<head>
-		<title>$Garden Garden Layout</title>
+		<title>$property_name - $garden_name Garden Layout</title>
 		<meta http-equiv = 'Content-Type' content = 'text/html; charset=utf-8' />
 		<link rel = 'stylesheet' type = 'text/css' href = '/assets/css/www/garden/design/homepage.css'>
 	</head>
 	<body>
 		<br />
-		<div class = 'centered'><span class = 'purple_on_red_title' id = 'top'>The $Garden Garden Layout</span></div>
+		<div class = 'centered'><span class = 'purple_on_red_title' id = 'top'>The '$property_name - $garden_name Garden' Layout</span></div>
 		<br />
 		<table align = 'center'>
-			<tr><td>The $property_name $Garden Garden Layout (SVG image), with clickable flower thumbnails in situ</td></tr>
-			<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/$other_garden.garden.layout.html'>The $property_name $Other_garden Garden Layout (separate page)</a></td></tr>
+			<tr><td>Links</td></tr>
+EOS
+
+	for my $garden (@$gardens_table)
+	{
+		# Skip other properties and skip the current garden.
+
+		next if ($self -> property_name ne $$garden{property_name});
+		next if ($garden_name eq $$garden{name});
+
+		push @garden_index, <<EOS;
+			<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/$$garden{name}.garden.layout.html'>The '$property_name - $$garden{name} Garden' Layout</a></td></tr>
+EOS
+	}
+
+	push @garden_index, <<EOS;
 			<tr><td><a href = '#schema'>The Database Schema</a></td></tr>
 			<tr><td><a href = '$$constants{homepage_url}/Flowers.html'>The Flower Catalog</a></td></tr>
 		</table>
 
 		<br />
 
-		<h2 align = 'center'>The $property_name $Garden Garden Layout (SVG image), with clickable flower thumbnails in situ</h2>
+		<h2 align = 'center'>The '$property_name - $garden_name Garden Layout' (SVG image), with clickable flower thumbnails in situ</h2>
 
 		<table align = 'center'>
 			<tr><td align = 'center'>
@@ -878,15 +888,24 @@ sub export_icons
 
 sub export_layout_guide
 {
-	my($self)		= @_;
-	my($constants)	= $self -> db -> constants;
+	my($self)			= @_;
+	my($constants)		= $self -> db -> constants;
+	my($html)			= '';
+	my($property_name)	= $self -> property_name;
 
-	return <<EOS;
+	$html .= EOS;
 <table align='center'>
 	<tr><td align='center'><span class = 'purple_on_red_title' id = 'garden_layouts'>The Garden Layouts</span></td></tr>
-	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/front.garden.layout.html'>The Front Garden Layout, with clickable flower thumbnails in situ</a></td></tr>
-	<tr><td><br></td></tr>
-	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/back.garden.layout.html'>The Back Garden Layout, with clickable flower thumbnails in situ</a></td></tr>
+EOS
+
+	for my $garden (@$gardens_table)
+	{
+		$html .= EOS;
+	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/$$garden{name}.garden.layout.html'>The '$property_name - $$garden{name} Garden' Layout, with clickable flower thumbnails in situ</a></td></tr>
+EOS
+	}
+
+	$html .= EOS;
 	<tr><td><br></td></tr>
 </table>
 <br />
@@ -907,6 +926,8 @@ sub export_layout_guide
 </table>
 <br /><br />
 EOS
+
+	return $html;
 
 } # End of export_layout_guide.
 
