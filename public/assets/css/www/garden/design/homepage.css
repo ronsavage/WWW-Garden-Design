@@ -4,6 +4,19 @@
 	background-color:	yellow;
 }
 
+.black_on_reddish_title
+{
+	background-color:	#f08f8f; // Reddish.
+	border-color:		black;
+	border-style:		solid;
+	border-width:		2px;
+	color:				black;
+	font-family:		Verdana, Helvetica, Arial, sans-serif;
+	font-size:			30px;
+	text-align:			center;
+	width:				20em;
+}
+
 .blue_centered
 {
 	background-color:	#6293cd;
@@ -62,6 +75,19 @@ body
 .italic
 {
 	font-style: italic;
+}
+
+.black_on_reddish_title
+{
+	background-color:	#f08f8f; // Reddish.
+	border-color:		black;
+	border-style:		solid;
+	border-width:		2px;
+	color:				black;
+	font-family:		Verdana, Helvetica, Arial, sans-serif;
+	font-size:			30px;
+	text-align:			center;
+	width:				20em;
 }
 
 .purple_on_red_title

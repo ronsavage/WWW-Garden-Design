@@ -746,7 +746,7 @@ sub export_garden_layout
 		<link rel = 'stylesheet' type = 'text/css' href = '/assets/css/www/garden/design/homepage.css'>
 	</head>
 	<body>
-		<h1 class = 'centered'><span class = 'purple_on_red_title' id = 'top'>The '$property_name - $garden_name Garden' Layout</span></h1>
+		<h1 class = 'centered'><span class = '$$constants{css_class4headings}' id = 'top'>The '$property_name - $garden_name Garden' Layout</span></h1>
 		<br />
 		<table align = 'center'>
 			<tr><td>Links</td></tr>
@@ -895,7 +895,7 @@ sub export_layout_guide
 
 	$html .= <<EOS;
 <table align='center'>
-	<tr><td align='center'><span class = 'purple_on_red_title' id = 'garden_layouts'>The Garden Layouts</span></td></tr>
+	<tr><td align='center'><span class = '$$constants{css_class4headings}' id = 'garden_layouts'>The Garden Layouts</span></td></tr>
 EOS
 
 	for my $garden (@$gardens_table)
@@ -910,7 +910,7 @@ EOS
 </table>
 <br />
 <table align='center'>
-	<tr><td align='center'><br /><span class = 'purple_on_red_title' id = 'articles'>Articles</span></td></tr>
+	<tr><td align='center'><br /><span class = '$$constants{css_class4headings}' id = 'articles'>Articles</span></td></tr>
 	<tr><td><a href = 'https://savage.net.au/Flowers/html/Garden.Design.Software.html'>2016-12-29: Garden Design Software</a></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/How.To.Net.Dwarf.Apples.html'>2016-01-03: How To Net Dwarf Apples</a></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/Protecting.Apples.From.Possums.html'>2013-12-08: Protecting Apples From Possums</a></td></tr>
@@ -918,7 +918,7 @@ EOS
 </table>
 <br />
 <table align='center'>
-	<tr><td align='center'><br /><span class = 'purple_on_red_title' id = 'various_urls'>Various URLs</span></td></tr>
+	<tr><td align='center'><br /><span class = '$$constants{css_class4headings}' id = 'various_urls'>Various URLs</span></td></tr>
 	<tr><td><a href = 'http://holt59.github.io/datatable/'>The URL</a> of the free Javascript package which manages the HTML table below</td></tr>
 	<tr><td><a href = 'http://bgrins.github.io/spectrum/'>The URL</a> of the free Javascript package which provides a color picker</td></tr>
 	<tr><td><br></td></tr>
