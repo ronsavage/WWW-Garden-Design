@@ -746,8 +746,7 @@ sub export_garden_layout
 		<link rel = 'stylesheet' type = 'text/css' href = '/assets/css/www/garden/design/homepage.css'>
 	</head>
 	<body>
-		<br />
-		<div class = 'centered'><span class = 'purple_on_red_title' id = 'top'>The '$property_name - $garden_name Garden' Layout</span></div>
+		<h1 class = 'centered'><span class = 'purple_on_red_title' id = 'top'>The '$property_name - $garden_name Garden' Layout</span></h1>
 		<br />
 		<table align = 'center'>
 			<tr><td>Links</td></tr>
