@@ -890,6 +890,7 @@ sub export_layout_guide
 {
 	my($self)			= @_;
 	my($constants)		= $self -> db -> constants;
+	my($gardens_table)	= $self -> db -> read_gardens_table; # Warning: Not read_table('gardens').
 	my($html)			= '';
 	my($property_name)	= $self -> property_name;
 
