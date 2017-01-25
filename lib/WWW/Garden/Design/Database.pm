@@ -38,11 +38,27 @@ has dbh =>
 	required => 0,
 );
 
+has garden_map =>
+(
+	default  => sub{return {} },
+	is       => 'rw',
+	isa      => HashRef,
+	required => 0,
+);
+
 has logger =>
 (
 	is       => 'rw',
 	isa      => Object,
 	required => 1,
+);
+
+has property_map =>
+(
+	default  => sub{return {} },
+	is       => 'rw',
+	isa      => HashRef,
+	required => 0,
 );
 
 has simple =>
@@ -85,8 +101,56 @@ sub BUILD
 
 	$self -> simple(DBIx::Simple -> new($self -> dbh) );
 	$self -> constants($self -> read_constants_table); # Warning. Empty at start of import.
+	$self -> garden_map($self -> upper_name2id_map('gardens') );
+	$self -> property_map($self -> upper_name2id_map('properties') );
 
 }	# End of BUILD.
+
+# --------------------------------------------------
+
+sub add_garden
+{
+	my($self, $item) = @_;
+
+	$self -> logger -> debug('Database.add_garden(...)');
+
+	my(%map) =
+	(
+		property => $self -> property_map,
+	);
+
+	my($id);
+	my($name);
+	my($uc_name, %uc_name);
+
+	for my $key (keys %map)
+	{
+		$name          = $$item{"${key}_name"};
+		$uc_name       = uc $name;
+		$uc_name{$key} = $uc_name;
+		$id            = $map{$key}{$uc_name} || 'undef';
+
+		$self -> logger -> debug(inflect "Table: PL_N($key). name: $name. id: $id");
+
+		if (! $map{$key}{$uc_name})
+		{
+			$map{$key}{$uc_name} = $self -> insert_hashref("${key}s", {description => $$item{'property_description'}, name => $name});
+
+			$self -> logger -> debug("id now: $map{$key}{$uc_name}");
+		}
+	}
+
+	$self -> insert_hashref
+	(
+		'gardens',
+		{
+			description	=> $$item{garden_description},
+			name		=> $$item{garden_name},
+			property_id	=> $map{property}{$uc_name{'property'} },
+		}
+	);
+
+} # End of add_garden.
 
 # -----------------------------------------------
 
@@ -140,7 +204,7 @@ sub build_ok_xml
 {
 	my($self, $html) = @_;
 
-	$self -> logger -> debug('Database::Library.build_ok_xml(...)');
+	$self -> logger -> debug('Database.build_ok_xml(...)');
 
 	return
 qq|<response>
@@ -157,7 +221,7 @@ sub build_simple_error_xml
 {
 	my($self, $error, $html) = @_;
 
-	$self -> logger -> debug("Database::Library.build_simple_error_xml($error, ...)");
+	$self -> logger -> debug("Database.build_simple_error_xml($error, ...)");
 
 	return
 qq|<response>
@@ -528,7 +592,7 @@ sub parse_attribute_checkboxes
 {
 	my($self, $defaults, $search_attributes)	= @_;
 
-	$self -> logger -> debug('Entered Database.parse_attribute_checkboxes()');
+	$self -> logger -> debug('Database.parse_attribute_checkboxes()');
 
 	my($attribute_type_names)					= $$defaults{attribute_type_names};
 	my($attribute_type_fields)					= $$defaults{attribute_type_fields};
@@ -573,8 +637,6 @@ sub parse_attribute_checkboxes
 		}
 	}
 
-	$self -> logger -> debug('Leaving Database.parse_attribute_checkboxes()');
-
 	return \%checkboxes;
 
 } # End of parse_attribute_checkboxes.
@@ -585,13 +647,13 @@ sub parse_search_attributes
 {
 	my($self, $defaults, $search_attributes) = @_;
 
-	$self -> logger -> debug('Entered Database.parse_search_attributes()');
+	$self -> logger -> debug('Database.parse_search_attributes()');
 
 	my($checkboxes)			= $self -> parse_attribute_checkboxes($defaults, $search_attributes);
 	my(@type_names)			= keys %$checkboxes;
 	my($type_name_count)	= scalar @type_names;
 
-	$self -> logger -> debug('checkboxes: ' . Dumper($checkboxes) );
+	#$self -> logger -> debug('checkboxes: ' . Dumper($checkboxes) );
 
 	if ($type_name_count == 0)
 	{
@@ -651,8 +713,6 @@ sub parse_search_attributes
 		}
 	}
 
-	$self -> logger -> debug('Leaving Database.parse_search_attributes()');
-
 	return (true, \%candidate_flower_ids);
 
 } # End of parse_search_attributes.
@@ -663,7 +723,7 @@ sub parse_search_text
 {
 	my($self, $search_text)	= @_;
 
-	$self -> logger -> debug('Entered Database.parse_search_text()');
+	$self -> logger -> debug('Database.parse_search_text()');
 
 	my($request) =
 	{
@@ -699,8 +759,6 @@ sub parse_search_text
 		$$request{unit}				= $4 || 'm';
 		$$request{width_provided}	= true if ($$request{direction} eq 'w');
 
-		$self -> logger -> debug("Captured '$$request{direction}' & '$$request{operator}' & '$$request{size}' & '$$request{unit}'");
-
 		if ($$request{unit} eq 'm')
 		{
 			$$request{size}	*= 100;
@@ -712,8 +770,6 @@ sub parse_search_text
 		$$request{error_message}	= 'Unknown chars in text. Check Search FAQ for help with sizes';
 		$$request{text_is_clean}	= false;
 	}
-
-	$self -> logger -> debug('Leaving Database.parse_search_text()');
 
 	return $request;
 
@@ -956,11 +1012,9 @@ sub search
 {
 	my($self, $defaults, $constants_table, $search_attributes, $search_text) = @_;
 
-	$self -> logger -> debug('Entered Database.search()');
+	$self -> logger -> debug('Database.search()');
 
 	my($request) = $self -> parse_search_text($self -> trim($search_text) );
-
-#	$self -> logger -> debug('request: ' . Dumper($request) );
 
 	if ($$request{text_is_clean} -> isFalse)
 	{
@@ -1027,7 +1081,6 @@ sub search
 	$$request{time_taken} = tv_interval($start_time);
 
 	$self -> logger -> info("Match count: @{[$#$result_set + 1]}");
-	$self -> logger -> debug('Leaving Database.search()');
 
 	return ([sort{$$a{common_name} cmp $$b{common_name} } @$result_set], $request);
 
@@ -1126,6 +1179,18 @@ sub trim
 	return $value;
 
 } # End of trim.
+
+# -----------------------------------------------
+
+sub upper_name2id_map
+{
+	my($self, $table_name) = @_;
+	my($result)   = $self -> simple -> query("select upper(name), id from $table_name")
+					|| die $self -> simple -> error;
+
+	return {$result -> map};
+
+} # End of upper_name2id_map.
 
 # --------------------------------------------------
 

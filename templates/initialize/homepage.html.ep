@@ -84,8 +84,8 @@
 
 </body>
 
-%= javascript 'http://127.0.0.1/assets/js/jQuery/jquery-2.1.4.min.js'
-<script>$.uiBackCompat = false;</script>
+%= javascript 'http://127.0.0.1/assets/js/jQuery/jquery-3.1.1.min.js'
+%= javascript 'http://127.0.0.1/assets/js/jQuery/jquery-migrate-3.0.0.js'
 %= javascript 'http://127.0.0.1/assets/js/jQuery/jquery-ui-1.12.1/jquery-ui.min.js'
 %= javascript 'http://127.0.0.1/assets/js/jQuery/datatable.2.0.0/js/datatable.min.js'
 %= javascript 'http://127.0.0.1/assets/js/jQuery/datatable.2.0.0/js/datatable.jquery.min.js'
@@ -569,6 +569,35 @@ function submit_flower()
 
 // -----------------------------------------------
 
+function submit_garden()
+{
+	alert('1');
+
+	$.ajax
+	({
+		data:
+		{
+			garden_description:		document.garden_description.value,
+			garden_name:			document.garden_name.value,
+			property_description:	document.property_description.edible.value,
+			property_name:			document.property_name.value,
+		},
+		dataType:	'text',
+		type:		'POST',
+		url:		'/AddGarden'
+	}).success(function(message)
+	{
+		alert('2');
+
+		$('#garden_result_div').empty().text(message);
+	});
+
+	alert('3');
+
+} // End of submit_garden.
+
+// -----------------------------------------------
+
 function submit_search()
 {
 	var fields = new Object();
@@ -662,13 +691,6 @@ $(function()
 		active: 0
 	});
 
-	$('#flower_form').submit(function()
-	{
-		submit_flower();
-
-		return false;
-	});
-
 	$('#color_spectrum').spectrum
 	({
 		change:				function(color)
@@ -680,6 +702,20 @@ $(function()
 		preferredFormat:	'hex',
 		showInput:			true,
 		showPalette:		true
+	});
+
+	$('#flower_form').submit(function()
+	{
+		submit_flower();
+
+		return false;
+	});
+
+	$('#garden_form').submit(function()
+	{
+		submit_garden();
+
+		return false;
 	});
 
 	$('#search_form').submit(function()
