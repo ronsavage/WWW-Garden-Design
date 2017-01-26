@@ -280,15 +280,10 @@ function build_url_ids(sequence)
 
 function get_attribute_types()
 {
-	$.ajax
-	({
-		dataType:	'json',
-		method:		'POST',
-		url:		'/GetAttributeTypes'
-	}).done(function(json)
+	$.get('/GetAttributeTypes', function(json)
 	{
 		attribute_types_table = json;
-	});
+	}, 'json');
 
 } // End of get_attribute_types.
 
