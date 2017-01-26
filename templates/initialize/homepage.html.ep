@@ -579,8 +579,6 @@ function submit_flower()
 
 function submit_garden()
 {
-	 alert('Entered');
-
 	$.ajax
 	({
 		data:
@@ -590,20 +588,14 @@ function submit_garden()
 			property_description:	$('#property_description').val(),
 			property_name:			$('#property_name').val()
 		},
-		dataType:	'text',
+		dataType:	'html',
 		method:		'POST',
 		url:		'/AddGarden'
-	}).done(function(message)
+	}).done(function(html)
 	{
-		alert('done: ' + message);
-
-		$('#garden_result_div').empty().text(message);
-	}). fail(function(message)
-	{
-		alert('fail' + message);
+		$('#garden_result_div').empty().append(html);
+		get_property_gardens();
 	});
-
-	alert('Leaving');
 
 } // End of submit_garden.
 
