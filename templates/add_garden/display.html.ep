@@ -6,12 +6,4 @@
 </tr>
 </table>
 
-% } else {
-
-<table align = 'center'>
-<tr>
-	<td><%= $message %></td>
-</tr>
-</table>
-
 % }

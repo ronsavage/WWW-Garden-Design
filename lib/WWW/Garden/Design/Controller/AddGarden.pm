@@ -30,15 +30,13 @@ sub display
 
 		$$defaults{db} -> add_garden($item);
 
-		$self -> stash(error	=> undef);
-		$self -> stash(message	=> 'Data saved');
+		$self -> stash(error => undef);
 	}
 	else
 	{
 		my($message) = 'Missing property or garden name';
 
-		$self -> stash(error	=> $message);
-		$self -> stash(message	=> undef);
+		$self -> stash(error => $message);
 		$self -> app -> log -> error($message);
 	}
 
