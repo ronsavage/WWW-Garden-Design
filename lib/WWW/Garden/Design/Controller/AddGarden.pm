@@ -28,7 +28,7 @@ sub display
 	{
 		my($defaults) = $self -> app -> defaults;
 
-		$$defaults{db} -> add($item);
+		$$defaults{db} -> add_garden($item);
 
 		$self -> stash(error	=> undef);
 		$self -> stash(message	=> 'Data saved');

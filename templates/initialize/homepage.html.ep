@@ -283,9 +283,9 @@ function get_attribute_types()
 	$.ajax
 	({
 		dataType:	'json',
-		type:		'POST',
+		method:		'POST',
 		url:		'/GetAttributeTypes'
-	}).success(function(json)
+	}).done(function(json)
 	{
 		attribute_types_table = json;
 	});
@@ -299,9 +299,9 @@ function get_property_gardens()
 	$.ajax
 	({
 		dataType:	'html',
-		type:		'POST',
+		method:		'POST',
 		url:		'/GetPropertyGardens'
-	}).success(function(property_gardens)
+	}).done(function(property_gardens)
 	{
 		$('#property_gardens').html(property_gardens);
 	});
@@ -319,9 +319,9 @@ function populate_details(flower_id)
 			flower_id: flower_id
 		},
 		dataType:	'json',
-		type:		'POST',
+		method:		'POST',
 		url:		'/GetDetails'
-	}).success(function(flower)
+	}).done(function(flower)
 	{
 		// Make the Details tab, tab 1, active.
 
@@ -541,6 +541,15 @@ function populate_details(flower_id)
 
 // -----------------------------------------------
 
+function sleep(delay)
+{
+	var now = new Date().getTime();
+
+	while(new Date().getTime() < now + delay){ /* do nothing */ }
+}
+
+// -----------------------------------------------
+
 function submit_flower()
 {
 	$.ajax
@@ -556,13 +565,12 @@ function submit_flower()
 			sun_tolerance:		document.attributes_form.sun_tolerance.value
 		},
 		dataType:	'text',
-		type:		'POST',
+		method:		'POST',
 		url:		'/AddFlower'
-	}).success(function(html)
+	}).done(function(html)
 	{
 		// $('#flower_result_div').empty().append(html);
-
-		$('#flower_result_div').empty().text('Hi!');
+			$('#flower_result_div').empty().text('Hi!');
 	});
 
 } // End of submit_flower.
@@ -571,28 +579,31 @@ function submit_flower()
 
 function submit_garden()
 {
-	alert('1');
+	 alert('Entered');
 
 	$.ajax
 	({
 		data:
 		{
-			garden_description:		document.garden_description.value,
-			garden_name:			document.garden_name.value,
-			property_description:	document.property_description.edible.value,
-			property_name:			document.property_name.value,
+			garden_description:		$('#garden_description').val(),
+			garden_name:			$('#garden_name').val(),
+			property_description:	$('#property_description').val(),
+			property_name:			$('#property_name').val()
 		},
 		dataType:	'text',
-		type:		'POST',
+		method:		'POST',
 		url:		'/AddGarden'
-	}).success(function(message)
+	}).done(function(message)
 	{
-		alert('2');
+		alert('done: ' + message);
 
 		$('#garden_result_div').empty().text(message);
+	}). fail(function(message)
+	{
+		alert('fail' + message);
 	});
 
-	alert('3');
+	alert('Leaving');
 
 } // End of submit_garden.
 
@@ -633,7 +644,7 @@ function submit_search()
 		dataType:	'html',
 		type:		'POST',
 		url:		'/Search'
-	}).success(function(html)
+	}).done(function(html)
 	{
 		$('#search_result_div').empty().append(html);
 		$('#search_text').focus();
@@ -654,6 +665,17 @@ $(function()
 	});
 
 	$('#search_text').focus();
+
+	// If the Gardens tab is selected, give the focus to the property name.
+
+	$('#global_garden_tab')
+	.tabs
+	({
+		activate: function(event, ui)
+		{
+			$('#property_name').focus();
+		}
+	});
 
 	// If the Search tab is selected, give the focus to the search text.
 

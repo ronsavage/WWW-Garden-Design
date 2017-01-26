@@ -130,13 +130,9 @@ sub add_garden
 		$uc_name{$key} = $uc_name;
 		$id            = $map{$key}{$uc_name} || 'undef';
 
-		$self -> logger -> debug(inflect "Table: PL_N($key). name: $name. id: $id");
-
 		if (! $map{$key}{$uc_name})
 		{
-			$map{$key}{$uc_name} = $self -> insert_hashref("${key}s", {description => $$item{'property_description'}, name => $name});
-
-			$self -> logger -> debug("id now: $map{$key}{$uc_name}");
+			$map{$key}{$uc_name} = $self -> insert_hashref(PL_N($key), {description => $$item{'property_description'}, name => $name});
 		}
 	}
 
