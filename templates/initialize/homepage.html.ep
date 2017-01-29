@@ -295,10 +295,20 @@ function get_property_gardens()
 	({
 		dataType:	'html',
 		method:		'POST',
-		url:		'/GetPropertyGardens'
-	}).done(function(property_gardens)
+		url:		'/GetPropertyMenu'
+	}).done(function(property_menu)
 	{
-		$('#property_gardens').html(property_gardens);
+		$('#property_menu').html(property_menu);
+	});
+
+	$.ajax
+	({
+		dataType:	'html',
+		method:		'POST',
+		url:		'/GetGardenMenu'
+	}).done(function(garden_menu)
+	{
+		$('#garden_menu').html(garden_menu);
 	});
 
 } // End of get_property_gardens.
@@ -735,7 +745,7 @@ $(function()
 	});
 
 	get_attribute_types();
-	get_property_gardens();
+	//get_property_gardens();
 });
 
 </script>

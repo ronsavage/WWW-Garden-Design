@@ -5,7 +5,15 @@
 		<td colspan = '3'><div class = 'blue_centered'>Properties and Gardens</div></td>
 	</tr>
 	<tr>
-		<td><span id = 'property_gardens'></span></td>
+		<td>
+			<fieldset>
+				<label for 'property'>Property</label>
+				<span id = 'property_menu'>
+
+				<label for 'garden'>Garden</label>
+				<span id = 'garden_menu'>
+			</fieldset>
+		</td>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		<td>
 			<table align = 'center'>
