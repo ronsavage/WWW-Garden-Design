@@ -133,7 +133,8 @@ sub startup
 	$r -> route('/Garden')				-> to('Garden#display');
 	$r -> route('/GetAttributeTypes')	-> to('GetAttributeTypes#display');
 	$r -> route('/GetDetails')			-> to('GetDetails#display');
-	$r -> route('/GetPropertyGardens')	-> to('GetPropertyGardens#display');
+	$r -> route('/GetGardenMenu')		-> to('GetGardenMenu#display');
+	$r -> route('/GetPropertyMenu')		-> to('GetPropertyMenu#display');
 	$r -> route('/Object')				-> to('Object#display');
 	$r -> route('/Search')				-> to('Search#display');
 

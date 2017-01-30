@@ -11,7 +11,7 @@
     <link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/jQuery/datatable.2.0.0/css/datatable.min.css'>
 	<!-- Warning: The next line must not be put after the spectrum line, or the CSS in it fails to work. -->
 	<link rel = 'stylesheet' type = 'text/css' href = '/assets/css/www/garden/design/homepage.css'>
-	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/jQuery/bgrins-spectrum-98454b5/spectrum.css'
+	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/jQuery/bgrins-spectrum-98454b5/spectrum.css'>
 
 </head>
 
@@ -289,7 +289,23 @@ function get_attribute_types()
 
 // -----------------------------------------------
 
-function get_property_gardens()
+function get_garden_menu()
+{
+	$.ajax
+	({
+		dataType:	'html',
+		method:		'POST',
+		url:		'/GetGardenMenu'
+	}).done(function(garden_menu)
+	{
+		$('#garden_menu').html(garden_menu);
+	});
+
+} // End of get_garden_menu.
+
+// -----------------------------------------------
+
+function get_property_menu()
 {
 	$.ajax
 	({
@@ -301,6 +317,8 @@ function get_property_gardens()
 		$('#property_menu').html(property_menu);
 	});
 
+	// It's much slower to call get_garden_menu() :-(.
+
 	$.ajax
 	({
 		dataType:	'html',
@@ -311,7 +329,7 @@ function get_property_gardens()
 		$('#garden_menu').html(garden_menu);
 	});
 
-} // End of get_property_gardens.
+} // End of get_property_menu.
 
 // -----------------------------------------------
 
@@ -745,7 +763,7 @@ $(function()
 	});
 
 	get_attribute_types();
-	//get_property_gardens();
+	get_property_menu();
 });
 
 </script>

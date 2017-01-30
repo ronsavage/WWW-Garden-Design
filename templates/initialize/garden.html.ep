@@ -7,11 +7,28 @@
 	<tr>
 		<td>
 			<fieldset>
-				<label for 'property'>Property</label>
-				<span id = 'property_menu'>
-
-				<label for 'garden'>Garden</label>
-				<span id = 'garden_menu'>
+			<table>
+				<tr>
+					<td>
+						<label for 'property'>Property</label>
+					</td>
+					<td>
+						<span id = 'property_menu'></span>
+					</td>
+				</tr>
+				<tr>
+					<td colspan = '2'><br />
+					</td>
+				<tr>
+					<td>
+						<label for 'garden'>Garden</label>
+					</td>
+					<td>
+						<span id = 'garden_menu'></span>
+					</td>
+				</tr>
+				</div>
+			</table>
 			</fieldset>
 		</td>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
