@@ -1,5 +1,0 @@
-[Mon Jan 30 13:39:26 2017] [info] ------------------------------
-[Mon Jan 30 13:39:26 2017] [debug] GET "/GetAttributeTypes"
-[Mon Jan 30 13:39:26 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::GetAttributeTypes" and action "display"
-[Mon Jan 30 13:39:26 2017] [debug] GetAttributeTypes.display()
-[Mon Jan 30 13:39:26 2017] [debug] 200 OK (0.001723s, 580.383/s)

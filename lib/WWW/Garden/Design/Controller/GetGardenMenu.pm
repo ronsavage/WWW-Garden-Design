@@ -19,7 +19,7 @@ sub display
 	my($defaults)			= $self -> app -> defaults;
 	my($property_gardens)	= $$defaults{db} -> read_gardens_table; # Warning: Not read_table('gardens').
 
-	$self -> stash(garden_menu => $self -> format($property_gardens) );
+	$self -> stash(garden_menu => $$defaults{garden_menu});
 	$self -> render;
 
 } # End of display.

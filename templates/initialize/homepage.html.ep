@@ -280,10 +280,16 @@ function build_url_ids(sequence)
 
 function get_attribute_types()
 {
-	$.get('/GetAttributeTypes', function(json)
-	{
-		attribute_types_table = json;
-	}, 'json');
+	$.get
+	(
+		'/GetAttributeTypes',
+		null,
+		function(json)
+		{
+			attribute_types_table = json;
+		},
+		'json'
+	);
 
 } // End of get_attribute_types.
 
@@ -291,15 +297,16 @@ function get_attribute_types()
 
 function get_garden_menu()
 {
-	$.ajax
-	({
-		dataType:	'html',
-		method:		'POST',
-		url:		'/GetGardenMenu'
-	}).done(function(garden_menu)
-	{
-		$('#garden_menu').html(garden_menu);
-	});
+	$.get
+	(
+		'/GetGardenMenu',
+		null,
+		function(garden_menu)
+		{
+			$('#garden_menu').html(garden_menu);
+		},
+		'html'
+	);
 
 } // End of get_garden_menu.
 
@@ -307,27 +314,16 @@ function get_garden_menu()
 
 function get_property_menu()
 {
-	$.ajax
-	({
-		dataType:	'html',
-		method:		'POST',
-		url:		'/GetPropertyMenu'
-	}).done(function(property_menu)
-	{
-		$('#property_menu').html(property_menu);
-	});
-
-	// It's much slower to call get_garden_menu() :-(.
-
-	$.ajax
-	({
-		dataType:	'html',
-		method:		'POST',
-		url:		'/GetGardenMenu'
-	}).done(function(garden_menu)
-	{
-		$('#garden_menu').html(garden_menu);
-	});
+	$.get
+	(
+		'/GetPropertyMenu',
+		null,
+		function(property_menu)
+		{
+			$('#property_menu').html(property_menu, status);
+		},
+		'html'
+	);
 
 } // End of get_property_menu.
 
@@ -703,7 +699,7 @@ $(function()
 		}
 	});
 
-	// If the Objects tab is selected, giv the focus to the object name.
+	// If the Objects tab is selected, give the focus to the object name.
 
 	$('#global_object_tab')
 	.tabs
@@ -740,7 +736,6 @@ $(function()
 		showInput:			true,
 		showPalette:		true
 	});
-
 	$('#flower_form').submit(function()
 	{
 		submit_flower();
@@ -760,10 +755,12 @@ $(function()
 		submit_search();
 
 		return false;
-	});
 
+	$('#property_menu').load('/GetPropertyMenu');
+	$('#garden_menu').load('/GetGardenMenu');
 	get_attribute_types();
-	get_property_menu();
+
+	});
 });
 
 </script>

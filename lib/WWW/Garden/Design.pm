@@ -69,6 +69,58 @@ sub build_attribute_type_names
 
 } # End of build_attribute_type_names.
 
+# -----------------------------------------------
+
+sub build_garden_menu
+{
+	my($self, $property_gardens) = @_;
+	my($html)		= "<select name = 'garden' id = 'garden'>";
+	my($last_name)	= '';
+	my $property_id	= $self -> session('default_property_id');
+
+	$self -> app -> log -> debug("Getting default_property_id => $property_id");
+
+	for my $garden (@$property_gardens)
+	{
+		# This test assumes that within a property, all garden names are unique.
+		# For the other type of test, see GetPropertyMenu.pm.
+
+		next if ($property_id ne $$garden{property_id});
+
+		$html		.= "<option value = '$$garden{id}'>$$garden{name}</option>";
+		$last_name	= $$garden{name};
+	}
+
+	return $html;
+
+} # End of build_garden_menu.
+
+# -----------------------------------------------
+
+sub build_property_menu
+{
+	my($self, $property_gardens) = @_;
+	my($html)		= "<select name = 'property' id = 'property'>";
+	my($last_name)	= '';
+
+	for my $garden (@$property_gardens)
+	{
+		if ($last_name eq '')
+		{
+			$self -> session(default_property_id => $$garden{property_id});
+			$self -> app -> log -> debug("Setting default_property_id => $$garden{property_id}");
+		}
+
+		next if ($last_name eq $$garden{property_name});
+
+		$html		.= "<option value = '$$garden{property_id}'>$$garden{property_name}</option>";
+		$last_name	= $$garden{property_name};
+	}
+
+	return $html;
+
+} # End of build_property_menu.
+
 # ------------------------------------------------
 # This method will run once at server start.
 
@@ -90,6 +142,18 @@ sub startup
 		}
 	);
 
+	# Documentation browser under '/perldoc'.
+
+	$self -> plugin('PODRenderer');
+	$self -> plugin('ServerStatus' =>
+				{
+					allow       => ['127.0.0.1'],
+					counterfile => '/tmp/mojolicious/counter.flowers.txt',
+					path        => '/server-status',
+					scoreboard  => '/tmp/mojolicious',
+				});
+	$self -> plugin('TagHelpers');
+
 	# Stash some gobal variables.
 
 	my($defaults);
@@ -102,21 +166,15 @@ sub startup
 	$$defaults{attribute_type_names}	= $self -> build_attribute_type_names($$defaults{attribute_types_table});
 	$$defaults{attribute_type_fields}	= $self -> build_attribute_type_fields($$defaults{attribute_types_table});
 	$$defaults{attribute_attribute_ids}	= $self -> build_attribute_ids('attribute', $$defaults{attribute_type_fields}, $$defaults{attribute_type_names});
+	$$defaults{gardens_table}			= $$defaults{db} -> read_gardens_table; # Warning: Not read_table('gardens').
+
+	# Must precede build_garden_menu because it stores the default property id in the session..
+
+	$$defaults{property_menu}			= $self -> build_property_menu($$defaults{gardens_table});
+	$$defaults{garden_menu}				= $self -> build_garden_menu($$defaults{gardens_table});
 	$$defaults{search_attribute_ids}	= $self -> build_attribute_ids('search', $$defaults{attribute_type_fields}, $$defaults{attribute_type_names});
 
 	$self -> defaults($defaults);
-
-	# Documentation browser under '/perldoc'.
-
-	$self -> plugin('PODRenderer');
-	$self -> plugin('ServerStatus' =>
-				{
-					allow       => ['127.0.0.1'],
-					counterfile => '/tmp/mojolicious/counter.flowers.txt',
-					path        => '/server-status',
-					scoreboard  => '/tmp/mojolicious',
-				});
-	$self -> plugin('TagHelpers');
 
 	# Router.
 

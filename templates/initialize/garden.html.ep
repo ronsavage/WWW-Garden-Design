@@ -10,7 +10,7 @@
 			<table>
 				<tr>
 					<td>
-						<label for 'property'>Property</label>
+						<label for 'property'>Property: </label>
 					</td>
 					<td>
 						<span id = 'property_menu'></span>
@@ -21,7 +21,7 @@
 					</td>
 				<tr>
 					<td>
-						<label for 'garden'>Garden</label>
+						<label for 'garden'>Garden: </label>
 					</td>
 					<td>
 						<span id = 'garden_menu'></span>
