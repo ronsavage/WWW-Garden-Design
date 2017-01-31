@@ -44,19 +44,90 @@ sub build_check_boxes
 
 # -----------------------------------------------
 
+sub build_garden_menu
+{
+	my($self, $property_gardens) = @_;
+	my($html)			= "<label for 'garden_menu'>Garden: </label><br />"
+							. "<select name = 'garden_menu' id = 'garden_menu'>";
+	my($last_name)		= '';
+	my($property_id)	= $self -> session('default_property_id');
+
+	$self -> app -> log -> debug("Getting default_property_id => $property_id");
+
+	for my $garden (@$property_gardens)
+	{
+		# This test assumes that within a property, all garden names are unique.
+		# For the other type of test, see GetPropertyMenu.pm.
+
+		next if ($property_id ne $$garden{property_id});
+
+		$html		.= "<option value = '$$garden{id}'>$$garden{name}</option>";
+		$last_name	= $$garden{name};
+	}
+
+	$html .= '</select>';
+
+	return $html;
+
+} # End of build_garden_menu.
+
+# -----------------------------------------------
+
+sub build_property_menu
+{
+	my($self, $property_gardens) = @_;
+	my($html)		= "<label for 'property_menu'>Property: </label><br />"
+						. "<select name = 'property_menu' id = 'property_menu'>";
+	my($last_name)	= '';
+
+	for my $garden (@$property_gardens)
+	{
+		if ($last_name eq '')
+		{
+			$self -> session(default_property_id => $$garden{property_id});
+			$self -> app -> log -> debug('Setting default_property_id => ' . $self -> session('default_property_id') );
+		}
+
+		next if ($last_name eq $$garden{property_name});
+
+		$html		.= "<option value = '$$garden{property_id}'>$$garden{property_name}</option>";
+		$last_name	= $$garden{property_name};
+	}
+
+	$html .= '</select>';
+
+	return $html;
+
+} # End of build_property_menu.
+
+# -----------------------------------------------
+
 sub homepage
 {
 	my($self) = @_;
 
 	$self -> app -> log -> debug('Initialize.homepage()');
 
-	my($defaults) = $self -> app -> defaults;
+	my($defaults)				= $self -> app -> defaults;
+	$$defaults{gardens_table}	= $$defaults{db} -> read_gardens_table; # Warning: Not read_table('gardens').
 
+	# Must precede build_garden_menu because it stores the default property id in the session..
+	# And this code must appear in Initialize.pm because sessions don't exist in Design.pm.
+
+	$$defaults{property_menu}	= $self -> build_property_menu($$defaults{gardens_table});
+	$$defaults{garden_menu}		= $self -> build_garden_menu($$defaults{gardens_table});
+
+	$self -> app -> defaults($defaults);
 	$self -> stash(attribute_check_boxes	=> $self -> build_check_boxes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields}, $$defaults{attribute_attribute_ids}) );
 	$self -> stash(csrf_token				=> $self -> session('csrf_token') );
 	$self -> stash(search_check_boxes		=> $self -> build_check_boxes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields}, $$defaults{search_attribute_ids}) );
 
-	$self -> render(constants => $$defaults{constants_table});
+	$self -> render
+	(
+		constants		=> $$defaults{constants_table},
+		garden_menu		=> $$defaults{garden_menu},
+		property_menu	=> $$defaults{property_menu}
+	);
 
 } # End of homepage.
 

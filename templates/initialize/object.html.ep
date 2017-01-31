@@ -2,7 +2,7 @@
 	%= csrf_field
 	<table align = 'center'>
 		<tr>
-			<td colspan = '2'><div class = 'blue_centered'>Objects</div></td>
+			<td colspan = '2'><div class = 'blue_centered'>Objects</div><br /></td>
 		</tr>
 		<tr>
 			<td>Object name:</td>

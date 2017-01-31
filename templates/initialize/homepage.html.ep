@@ -7,8 +7,8 @@
 	<title>Garden Design</title>
 	<meta http-equiv = 'Content-Type' content = 'text/html; charset = utf-8' />
 
-    <link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/jQuery/jquery-ui-1.12.1/jquery-ui.min.css'>
-    <link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/jQuery/datatable.2.0.0/css/datatable.min.css'>
+	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/jQuery/jquery-ui-1.12.1/jquery-ui.min.css'>
+	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/jQuery/datatable.2.0.0/css/datatable.min.css'>
 	<!-- Warning: The next line must not be put after the spectrum line, or the CSS in it fails to work. -->
 	<link rel = 'stylesheet' type = 'text/css' href = '/assets/css/www/garden/design/homepage.css'>
 	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/jQuery/bgrins-spectrum-98454b5/spectrum.css'>
@@ -58,7 +58,7 @@
 % end
 	</div>
 	<div id = 'global_garden_tab'>
-%= include 'initialize/garden'
+%= include 'initialize/garden', garden_menu => $garden_menu, property_menu => $property_menu
 	</div>
 	<div id = 'global_object_tab'>
 %= include 'initialize/object'
@@ -297,16 +297,7 @@ function get_attribute_types()
 
 function get_garden_menu()
 {
-	$.get
-	(
-		'/GetGardenMenu',
-		null,
-		function(garden_menu)
-		{
-			$('#garden_menu').html(garden_menu);
-		},
-		'html'
-	);
+	$('#garden_menu_placeholder').load('/GetGardenMenu');
 
 } // End of get_garden_menu.
 
@@ -314,16 +305,7 @@ function get_garden_menu()
 
 function get_property_menu()
 {
-	$.get
-	(
-		'/GetPropertyMenu',
-		null,
-		function(property_menu)
-		{
-			$('#property_menu').html(property_menu, status);
-		},
-		'html'
-	);
+	$('#property_menu_placeholder').load('/GetPropertyMenu');
 
 } // End of get_property_menu.
 
@@ -667,6 +649,10 @@ function submit_search()
 
 $(function()
 {
+	//get_property_menu();
+	//get_garden_menu();
+	get_attribute_types();
+
 	// Enable the tabs before trying to work with them.
 
 	$('global_tab_div')
@@ -736,6 +722,7 @@ $(function()
 		showInput:			true,
 		showPalette:		true
 	});
+
 	$('#flower_form').submit(function()
 	{
 		submit_flower();
@@ -750,16 +737,37 @@ $(function()
 		return false;
 	});
 
+	// When the user changes the selection on the property or garden menus, react.
+	// But why do the next 2 not do anything?
+
+	$('#garden_menu')
+	.selectmenu
+	({
+		change: function(event, data)
+		{
+//			for( key in data )
+//			{
+//	  			alert( "key is " + [ key ] + ", value is " + data[ key ] );
+//			}
+
+			$('#garden_name').val(data.item.label);
+		}
+	});
+
+	$('#property_menu')
+	.selectmenu
+	({
+		change: function(event, data)
+		{
+			$('#property_name').val(data.item.label);
+		}
+	});
+
 	$('#search_form').submit(function()
 	{
 		submit_search();
 
 		return false;
-
-	$('#property_menu').load('/GetPropertyMenu');
-	$('#garden_menu').load('/GetGardenMenu');
-	get_attribute_types();
-
 	});
 });
 

@@ -3,7 +3,7 @@
 	<input id = 'csrf_token' type = 'hidden' value = '<%= $csrf_token %>'>
 	<table align = 'center'>
 		<tr>
-			<td colspan = '2'><div class = 'blue_centered'>Search</div></td>
+			<td colspan = '2'><div class = 'blue_centered'>Search</div><br /></td>
 		</tr>
 		% for my $check_box (@$search_check_boxes) {
 		<tr>

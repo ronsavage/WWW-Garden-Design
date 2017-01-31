@@ -32,14 +32,14 @@ sub format
 
 	$self -> app -> log -> debug('GetPropertyMenu.format(...)');
 
-	my($html)		= "<select name = 'property' id = 'property'>";
+	my($html)		= "<select name = 'property_menu' id = 'property_menu'>";
 	my($last_name)	= '';
 
 	for my $garden (@$property_gardens)
 	{
 		if ($last_name eq '')
 		{
-			$self -> session(default_property_id => $$garden{property_id});
+			$self -> app -> session(default_property_id => $$garden{property_id});
 			$self -> app -> log -> debug("Setting default_property_id => $$garden{property_id}");
 		}
 

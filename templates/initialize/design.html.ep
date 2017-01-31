@@ -2,7 +2,7 @@
 	%= csrf_field
 	<table align = 'center'>
 		<tr>
-			<td colspan = '2'><div class = 'blue_centered'>Design</div></td>
+			<td colspan = '2'><div class = 'blue_centered'>Design</div><br /></td>
 		</tr>
 			<td>Property:</td>
 			<td align = 'left'><input id = 'property_name' type = 'text' size = '50' maxlength = '100'>Dropdown?</td>

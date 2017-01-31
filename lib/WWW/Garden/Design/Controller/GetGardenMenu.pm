@@ -32,9 +32,9 @@ sub format
 
 	$self -> app -> log -> debug('GetGardenMenu.format(...)');
 
-	my($html)			= "<select name = 'garden' id = 'garden'>";
+	my($html)			= "<select name = 'garden_menu' id = 'garden_menu'>";
 	my($last_name)		= '';
-	my($property_id)	= $self -> session('default_property_id');
+	my($property_id)	= $self -> app -> session('default_property_id');
 
 	$self -> app -> log -> debug("Getting default_property_id => $property_id");
 
