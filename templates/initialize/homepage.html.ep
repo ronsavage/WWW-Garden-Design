@@ -277,6 +277,26 @@ function build_url_ids(sequence)
 } // End of build_url_ids.
 
 // -----------------------------------------------
+// Note: Here, changed means the user changed the selected item.
+// Elsewhere, changed involves overwriting the menu from disk.
+// For that case, see get_garden_menu().
+
+function garden_menu_changed(data)
+{
+//	for( key in data )
+//	{
+//		alert( "key is " + [ key ] + ", value is " + data[ key ] );
+//	}
+
+// Typical keys for data.item are:
+//	o label => The item's text (name column).
+//	o value => The item's # (primary key column).
+
+	$('#garden_name').val(data.item.label);
+
+} // End of garden_menu_changed.
+
+// -----------------------------------------------
 
 function get_attribute_types()
 {
@@ -541,6 +561,26 @@ function populate_details(flower_id)
 } // End of populate_details.
 
 // -----------------------------------------------
+// Note: Here, changed means the user changed the selected item.
+// Elsewhere, changed involves overwriting the menu from disk.
+// For that case, see get_property_menu().
+
+function property_menu_changed(data)
+{
+//	for( key in data )
+//	{
+//		alert( "key is " + [ key ] + ", value is " + data[ key ] );
+//	}
+
+// Typical keys for data.item are:
+//	o label => The item's text (name column).
+//	o value => The item's # (primary key column).
+
+	$('#property_name').val(data.item.label);
+
+} // End of property_menu_changed.
+
+// -----------------------------------------------
 
 function sleep(delay)
 {
@@ -649,8 +689,8 @@ function submit_search()
 
 $(function()
 {
-	//get_property_menu();
-	//get_garden_menu();
+	//get_property_menu();	# Does not work since it changes the DOM, but $('#garden_menu')
+	//get_garden_menu();	# and $('#property_menu') are not seen as being in the DOM.
 	get_attribute_types();
 
 	// Enable the tabs before trying to work with them.
@@ -745,12 +785,7 @@ $(function()
 	({
 		change: function(event, data)
 		{
-//			for( key in data )
-//			{
-//	  			alert( "key is " + [ key ] + ", value is " + data[ key ] );
-//			}
-
-			$('#garden_name').val(data.item.label);
+			garden_menu_changed(data);
 		}
 	});
 
@@ -759,7 +794,7 @@ $(function()
 	({
 		change: function(event, data)
 		{
-			$('#property_name').val(data.item.label);
+			property_menu_changed(data);
 		}
 	});
 
