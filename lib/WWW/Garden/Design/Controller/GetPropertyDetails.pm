@@ -1,4 +1,4 @@
-package WWW::Garden::Design::Controller::GetPropertyMenu;
+package WWW::Garden::Design::Controller::GetPropertyDetails;
 
 use Mojo::Base 'Mojolicious::Controller';
 
@@ -14,7 +14,7 @@ sub display
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('GetPropertyMenu.display()');
+	$self -> app -> log -> debug('GetPropertyDetails.display()');
 
 	my($defaults)			= $self -> app -> defaults;
 	my($property_gardens)	= $$defaults{db} -> read_gardens_table; # Warning: Not read_table('gardens').
@@ -30,7 +30,7 @@ sub format
 {
 	my($self, $property_gardens) = @_;
 
-	$self -> app -> log -> debug('GetPropertyMenu.format(...)');
+	$self -> app -> log -> debug('GetPropertyDetails.format(...)');
 
 	my($html)		= "<select name = 'property_menu' id = 'property_menu'>";
 	my($last_name)	= '';
@@ -39,8 +39,8 @@ sub format
 	{
 		if ($last_name eq '')
 		{
-			$self -> app -> session(default_property_id => $$garden{property_id});
-			$self -> app -> log -> debug("Setting default_property_id => $$garden{property_id}");
+			$self -> app -> session(current_property_id => $$garden{property_id});
+			$self -> app -> log -> debug("Setting current_property_id => $$garden{property_id}");
 		}
 
 		next if ($last_name eq $$garden{property_name});

@@ -1,4 +1,4 @@
-package WWW::Garden::Design::Controller::GetGardenMenu;
+package WWW::Garden::Design::Controller::GetGardenDetails;
 
 use Mojo::Base 'Mojolicious::Controller';
 
@@ -14,7 +14,7 @@ sub display
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('GetGardenMenu.display()');
+	$self -> app -> log -> debug('GetGardenDetails.display()');
 
 	my($defaults)			= $self -> app -> defaults;
 	my($property_gardens)	= $$defaults{db} -> read_gardens_table; # Warning: Not read_table('gardens').
@@ -30,18 +30,18 @@ sub format
 {
 	my($self, $property_gardens) = @_;
 
-	$self -> app -> log -> debug('GetGardenMenu.format(...)');
+	$self -> app -> log -> debug('GetGardenDetails.format(...)');
 
 	my($html)			= "<select name = 'garden_menu' id = 'garden_menu'>";
 	my($last_name)		= '';
-	my($property_id)	= $self -> app -> session('default_property_id');
+	my($property_id)	= $self -> app -> session('current_property_id');
 
-	$self -> app -> log -> debug("Getting default_property_id => $property_id");
+	$self -> app -> log -> debug("Getting current_property_id => $property_id");
 
 	for my $garden (@$property_gardens)
 	{
 		# This test assumes that within a property, all garden names are unique.
-		# For the other type of test, see GetPropertyMenu.pm.
+		# For the other type of test, see GetPropertyDetails.pm.
 
 		next if ($property_id ne $$garden{property_id});
 

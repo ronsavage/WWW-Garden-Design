@@ -32,7 +32,7 @@
 %= include 'initialize/search'
 	</div>
 	<div id = 'global_details_tab'>
-%= form_for '/Details' => (method => 'POST') => begin
+%= form_for '/SaveFlowerDetails' => (method => 'POST') => begin
 	    <ul>
 	        <li><a href = '#flower_tab'><span>Flower</span></a></li>
 	        <li><a href = '#attributes_tab'><span>Attributes</span></a></li>
@@ -95,7 +95,9 @@
 
 // Storage for info read in below from the database.
 
-var attribute_types_table = [];
+var attribute_types_table	= [];
+var garden_table			= [];
+var property_table			= [];
 
 // -----------------------------------------------
 
@@ -303,7 +305,7 @@ function get_attribute_types()
 {
 	$.get
 	(
-		'/GetAttributeTypes',
+		'/GetAttributeTypesTable',
 		null,
 		function(json)
 		{
@@ -318,17 +320,57 @@ function get_attribute_types()
 
 function get_garden_menu()
 {
-	$('#garden_menu_placeholder').load('/GetGardenMenu');
+	$('#garden_menu_placeholder').load('/GetGardenDetails');
 
 } // End of get_garden_menu.
+
+// -----------------------------------------------
+// Warning: This function cannot be used to populate garden_menu_placeholder
+// since that involves changing the DOM, but the function is called from within
+// the document ready context which assumes the DOM has stopped changing.
+
+function get_garden_table()
+{
+	$.get
+	(
+		'/GetGardenTable',
+		null,
+		function(json)
+		{
+			garden_table = json;
+		},
+		'json'
+	);
+
+} // End of get_garden_table.
 
 // -----------------------------------------------
 
 function get_property_menu()
 {
-	$('#property_menu_placeholder').load('/GetPropertyMenu');
+	$('#property_menu_placeholder').load('/GetPropertyDetails');
 
 } // End of get_property_menu.
+
+// -----------------------------------------------
+// Warning: This function cannot be used to populate property_menu_placeholder
+// since that involves changing the DOM, but the function is called from within
+// the document ready context which assumes the DOM has stopped changing.
+
+function get_property_table()
+{
+	$.get
+	(
+		'/GetPropertyTable',
+		null,
+		function(json)
+		{
+			property_table = json;
+		},
+		'json'
+	);
+
+} // End of get_property_table.
 
 // -----------------------------------------------
 
@@ -342,7 +384,7 @@ function populate_details(flower_id)
 		},
 		dataType:	'json',
 		method:		'POST',
-		url:		'/GetDetails'
+		url:		'/GetFlowerDetails'
 	}).done(function(flower)
 	{
 		// Make the Details tab, tab 1, active.
@@ -691,8 +733,8 @@ function submit_search()
 
 $(function()
 {
-	//get_property_menu();	# Does not work since it changes the DOM, but $('#garden_menu')
-	//get_garden_menu();	# and $('#property_menu') are not seen as being in the DOM.
+	get_property_table();
+	get_garden_table();
 	get_attribute_types();
 
 	// Enable the tabs before trying to work with them.
@@ -778,9 +820,6 @@ $(function()
 
 		return false;
 	});
-
-	// When the user changes the selection on the property or garden menus, react.
-	// But why do the next 2 not do anything?
 
 	$('#garden_menu')
 	.selectmenu

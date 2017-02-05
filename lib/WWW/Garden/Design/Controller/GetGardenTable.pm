@@ -1,4 +1,4 @@
-package WWW::Garden::Design::Controller::GetAttributeTypes;
+package WWW::Garden::Design::Controller::GetGardenTable;
 
 use Mojo::Base 'Mojolicious::Controller';
 
@@ -14,11 +14,11 @@ sub display
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('GetAttributeTypes.display()');
+	$self -> app -> log -> debug('GetGardenTable.display()');
 
 	my($defaults) = $self -> app -> defaults;
 
-	$self -> render(json => $$defaults{db} -> read_table('attribute_types') );
+	$self -> render(json => $$defaults{db} -> read_table('gardens') );
 
 } # End of display.
 

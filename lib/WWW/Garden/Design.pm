@@ -126,17 +126,19 @@ sub startup
 
 	$r -> namespaces(['WWW::Garden::Design::Controller']);
 
-	$r -> route('/')					-> to('Initialize#homepage');
-	$r -> route('/AddGarden')			-> to('AddGarden#display');
-	$r -> route('/AutoComplete')		-> to('AutoComplete#display');
-	$r -> route('/Details')				-> to('Details#display');
-	$r -> route('/Garden')				-> to('Garden#display');
-	$r -> route('/GetAttributeTypes')	-> to('GetAttributeTypes#display');
-	$r -> route('/GetDetails')			-> to('GetDetails#display');
-	$r -> route('/GetGardenMenu')		-> to('GetGardenMenu#display');
-	$r -> route('/GetPropertyMenu')		-> to('GetPropertyMenu#display');
-	$r -> route('/Object')				-> to('Object#display');
-	$r -> route('/Search')				-> to('Search#display');
+	$r -> route('/')						-> to('Initialize#homepage');
+	$r -> route('/AddGarden')				-> to('AddGarden#display');
+	$r -> route('/AutoComplete')			-> to('AutoComplete#display');
+	$r -> route('/Garden')					-> to('Garden#display');
+	$r -> route('/GetAttributeTypesTable')	-> to('GetAttributeTypesTable#display');
+	$r -> route('/GetFlowerDetails')		-> to('GetFlowerDetails#display');
+	$r -> route('/GetGardenDetails')		-> to('GetGardenDetails#display');
+	$r -> route('/GetGardenTable')			-> to('GetGardenTable#display');
+	$r -> route('/GetPropertyDetails')		-> to('GetPropertyDetails#display');
+	$r -> route('/GetPropertyTable')		-> to('GetPropertyTable#display');
+	$r -> route('/Object')					-> to('Object#display');
+	$r -> route('/SaveFlowerDetails')		-> to('SaveFlowerDetails#display');
+	$r -> route('/Search')					-> to('Search#display');
 
 } # End of startup.
 
