@@ -129,14 +129,12 @@ sub startup
 	$r -> route('/')						-> to('Initialize#homepage');
 	$r -> route('/AddGarden')				-> to('AddGarden#display');
 	$r -> route('/AutoComplete')			-> to('AutoComplete#display');
-	$r -> route('/Garden')					-> to('Garden#display');
 	$r -> route('/GetAttributeTypesTable')	-> to('GetAttributeTypesTable#display');
 	$r -> route('/GetFlowerDetails')		-> to('GetFlowerDetails#display');
 	$r -> route('/GetGardenDetails')		-> to('GetGardenDetails#display');
 	$r -> route('/GetGardenTable')			-> to('GetGardenTable#display');
 	$r -> route('/GetPropertyDetails')		-> to('GetPropertyDetails#display');
 	$r -> route('/GetPropertyTable')		-> to('GetPropertyTable#display');
-	$r -> route('/Object')					-> to('Object#display');
 	$r -> route('/SaveFlowerDetails')		-> to('SaveFlowerDetails#display');
 	$r -> route('/Search')					-> to('Search#display');
 
