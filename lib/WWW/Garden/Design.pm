@@ -122,8 +122,6 @@ sub startup
 
 	my($r) = $self -> routes;
 
-	# Normal route to controller.
-
 	$r -> namespaces(['WWW::Garden::Design::Controller']);
 
 	$r -> route('/')							-> to('Initialize#homepage');
@@ -131,8 +129,6 @@ sub startup
 	$r -> route('/AutoComplete')				-> to('AutoComplete#display');
 	$r -> route('/GetAttributeTypesTable')		-> to('GetAttributeTypesTable#display');
 	$r -> route('/GetFlowerDetails')			-> to('GetFlowerDetails#display');
-	$r -> route('/GetGardenDetails')			-> to('GetGardenDetails#display');
-	$r -> route('/GetPropertyDetails')			-> to('GetPropertyDetails#display');
 	$r -> route('/GetTable/attribute_types')	-> to('GetTable#attribute_types');
 	$r -> route('/GetTable/gardens')			-> to('GetTable#gardens');
 	$r -> route('/GetTable/properties')			-> to('GetTable#properties');

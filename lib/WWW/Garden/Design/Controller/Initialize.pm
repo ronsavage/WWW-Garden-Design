@@ -55,13 +55,14 @@ sub build_garden_menu
 	for my $garden (@$property_gardens)
 	{
 		# This test assumes that within a property, all garden names are unique.
-		# For the other type of test, see GetPropertyDetails.pm.
 
 		next if ($property_id ne $$garden{property_id});
 
 		if ($last_name eq '')
 		{
-			$self -> session(current_garden_id => $$garden{id});
+			$self -> session(current_garden_id			=> $$garden{id});
+			$self -> session(current_garden_description	=> $$garden{description});
+			$self -> session(current_garden_name		=> $$garden{name});
 			$self -> app -> log -> debug('Setting current_garden_id => ' . $self -> session('current_garden_id') );
 		}
 
@@ -88,7 +89,9 @@ sub build_property_menu
 	{
 		if ($last_name eq '')
 		{
-			$self -> session(current_property_id => $$garden{property_id});
+			$self -> session(current_property_id		=> $$garden{property_id});
+			$self -> session(current_garden_description	=> $$garden{property_description});
+			$self -> session(current_garden_name		=> $$garden{property_name});
 			$self -> app -> log -> debug('Setting current_property_id => ' . $self -> session('current_property_id') );
 		}
 

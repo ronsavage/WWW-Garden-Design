@@ -279,9 +279,7 @@ function build_url_ids(sequence)
 } // End of build_url_ids.
 
 // -----------------------------------------------
-// Note: Here, changed means the user changed the selected item.
-// Elsewhere, changed involves overwriting the menu from disk.
-// For that case, see get_garden_menu().
+// Note: Changed means the user changed the selected item.
 
 function garden_menu_changed(data)
 {
@@ -294,8 +292,20 @@ function garden_menu_changed(data)
 //	o label => The item's text (name column).
 //	o value => The item's # (primary key column).
 
-	$('#garden_name').val(data.item.label);
-	$('#garden_description').val(data.item.value);
+	var description	= 'Unknown';
+	var name		= 'Unknown';
+
+	for (i = 0; i < garden_table.length; i++)
+	{
+		if (garden_table[i]['id'] == data.item.value)
+		{
+			description	= garden_table[i]['description'];
+			name		= garden_table[i]['name'];
+		}
+	}
+
+	$('#garden_description').val(description);
+	$('#garden_name').val(name);
 
 } // End of garden_menu_changed.
 
@@ -317,14 +327,6 @@ function get_attribute_types()
 } // End of get_attribute_types.
 
 // -----------------------------------------------
-
-function get_garden_menu()
-{
-	$('#garden_menu_placeholder').load('/GetGardenDetails');
-
-} // End of get_garden_menu.
-
-// -----------------------------------------------
 // Warning: This function cannot be used to populate garden_menu_placeholder
 // since that involves changing the DOM, but the function is called from within
 // the document ready context which assumes the DOM has stopped changing.
@@ -343,14 +345,6 @@ function get_garden_table()
 	);
 
 } // End of get_garden_table.
-
-// -----------------------------------------------
-
-function get_property_menu()
-{
-	$('#property_menu_placeholder').load('/GetPropertyDetails');
-
-} // End of get_property_menu.
 
 // -----------------------------------------------
 // Warning: This function cannot be used to populate property_menu_placeholder
@@ -435,14 +429,14 @@ function populate_details(flower_id)
 		// Attributes: Copy attribute types to the Flower/Attributes tab.
 		// 1: Remove any existing attributes.
 
-		for (j = 0; j < attribute_types_table.length; j++)
+		for (i = 0; i < attribute_types_table.length; i++)
 		{
-			attribute_name	= attribute_types_table[j]['name'];
-			range			= attribute_types_table[j]['range'].split(', ');
+			attribute_name	= attribute_types_table[i]['name'];
+			range			= attribute_types_table[i]['range'].split(', ');
 
-			for (k = 0; k < range.length; k++)
+			for (j = 0; j < range.length; j++)
 			{
-				value	= range[k];
+				value	= range[j];
 				id		= build_attribute_id('attribute', attribute_name, value);
 
 				$(id).prop('checked', false);
@@ -604,23 +598,35 @@ function populate_details(flower_id)
 } // End of populate_details.
 
 // -----------------------------------------------
-// Note: Here, changed means the user changed the selected item.
-// Elsewhere, changed involves overwriting the menu from disk.
-// For that case, see get_property_menu().
+// Note: Changed means the user changed the selected item.
 
 function property_menu_changed(data)
 {
-//	for( key in data )
-//	{
-//		alert( "key is " + [ key ] + ", value is " + data[ key ] );
-//	}
+	//	for( key in data )
+	//	{
+	//		alert( "key is " + [ key ] + ", value is " + data[ key ] );
+	//	}
 
-// Typical keys for data.item are:
-//	o label => The item's text (name column).
-//	o value => The item's # (primary key column).
+	// Typical keys for data.item are:
+	//	o label => The item's text (name column).
+	//	o value => The item's # (primary key column).
 
-	$('#property_name').val(data.item.label);
-	$('#property_description').val(data.item.value);
+	var description	= 'Unknown';
+	var name		= 'Unknown';
+
+	for (i = 0; i < property_table.length; i++)
+	{
+		if (property_table[i]['id'] == data.item.value)
+		{
+			description	= property_table[i]['description'];
+			name			= property_table[i]['name'];
+		}
+	}
+
+	$('#property_description').val(description);
+	$('#property_name').val(name);
+
+	// Having updated the property's attributes, we now have to update the garden menu.
 
 } // End of property_menu_changed.
 
@@ -701,14 +707,14 @@ function submit_search()
 	var range = new Array();
 	var value;
 
-	for (j = 0; j < attribute_types_table.length; j++)
+	for (i = 0; i < attribute_types_table.length; i++)
 	{
-		attribute_name	= attribute_types_table[j]['name'];
-		range			= attribute_types_table[j]['range'].split(', ');
+		attribute_name	= attribute_types_table[i]['name'];
+		range			= attribute_types_table[i]['range'].split(', ');
 
-		for (k = 0; k < range.length; k++)
+		for (j = 0; j < range.length; j++)
 		{
-			value			= range[k];
+			value			= range[j];
 			id				= build_attribute_id('search', attribute_name, value);
 			name			= id.substr(1); // Discard leading '#' to get the name to submit.
 			fields[name]	= $(id).prop('checked'); // Returns 'true' or 'false'.
