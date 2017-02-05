@@ -305,7 +305,7 @@ function get_attribute_types()
 {
 	$.get
 	(
-		'/GetAttributeTypesTable',
+		'/GetTable/attribute_types',
 		null,
 		function(json)
 		{
@@ -333,7 +333,7 @@ function get_garden_table()
 {
 	$.get
 	(
-		'/GetGardenTable',
+		'/GetTable/gardens',
 		null,
 		function(json)
 		{
@@ -361,7 +361,7 @@ function get_property_table()
 {
 	$.get
 	(
-		'/GetPropertyTable',
+		'/GetTable/properties',
 		null,
 		function(json)
 		{
