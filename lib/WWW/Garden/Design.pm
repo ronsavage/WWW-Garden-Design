@@ -127,11 +127,11 @@ sub startup
 	$r -> route('/')							-> to('Initialize#homepage');
 	$r -> route('/AddGarden')					-> to('AddGarden#display');
 	$r -> route('/AutoComplete')				-> to('AutoComplete#display');
-	$r -> route('/GetAttributeTypesTable')		-> to('GetAttributeTypesTable#display');
 	$r -> route('/GetFlowerDetails')			-> to('GetFlowerDetails#display');
 	$r -> route('/GetTable/attribute_types')	-> to('GetTable#attribute_types');
 	$r -> route('/GetTable/gardens')			-> to('GetTable#gardens');
 	$r -> route('/GetTable/properties')			-> to('GetTable#properties');
+	$r -> route('/GetTable/switch_gardens')		-> to('GetTable#switch_gardens');
 	$r -> route('/SaveFlowerDetails')			-> to('SaveFlowerDetails#display');
 	$r -> route('/Search')						-> to('Search#display');
 
