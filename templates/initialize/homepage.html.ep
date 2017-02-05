@@ -293,6 +293,7 @@ function garden_menu_changed(data)
 //	o value => The item's # (primary key column).
 
 	$('#garden_name').val(data.item.label);
+	$('#garden_description').val(data.item.value);
 
 } // End of garden_menu_changed.
 
@@ -577,6 +578,7 @@ function property_menu_changed(data)
 //	o value => The item's # (primary key column).
 
 	$('#property_name').val(data.item.label);
+	$('#property_description').val(data.item.value);
 
 } // End of property_menu_changed.
 

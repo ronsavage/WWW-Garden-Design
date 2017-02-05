@@ -723,8 +723,8 @@ sub export_garden_layout
 	(
 		'font-size'		=> 32,
 		'font-weight'	=> '400',
-		text			=> 'Block is 11.7m wide',
-		x				=> $image -> width - 6 * $image -> cell_width,	# Pixel co-ord.
+		text			=> 'Block size: Width: 11.7m. Height: 46m',
+		x				=> $image -> width - 20 * $image -> cell_width,	# Pixel co-ord.
 		y				=> $image -> height,							# Pixel co-ord.
 	);
 
