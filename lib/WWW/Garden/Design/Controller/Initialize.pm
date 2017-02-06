@@ -53,8 +53,8 @@ sub homepage
 	my($defaults)				= $self -> app -> defaults;
 	$$defaults{gardens_table}	= $$defaults{db} -> read_gardens_table; # Warning: Not read_table('gardens').
 
-	# build_property_menu() must precede build_garden_menu() because it stores current_property_id in the session.
-	# And this code must appear in Initialize.pm because sessions don't exist in the main app, Design.pm.
+	# Warning: build_property_menu() sets a value in the session read by build_garden_menu(),
+	# so it must be called first.
 
 	$$defaults{property_menu}	= $$defaults{db} -> build_property_menu($$defaults{gardens_table}, $self);
 	$$defaults{garden_menu}		= $$defaults{db} -> build_garden_menu($$defaults{gardens_table}, $self);
@@ -68,7 +68,7 @@ sub homepage
 	(
 		constants		=> $$defaults{constants_table},
 		garden_menu		=> $$defaults{garden_menu},
-		property_menu	=> $$defaults{property_menu}
+		property_menu	=> $$defaults{property_menu},
 	);
 
 } # End of homepage.
