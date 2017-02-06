@@ -415,8 +415,21 @@ function get_garden_table()
 		null,
 		function(json)
 		{
-			garden_table		= json;
-			current_garden_id	= garden_table[0]['id'];
+			garden_table	= json;
+			var description	= garden_table[0]['description'];
+			var name		= garden_table[0]['name'];
+
+			for (i = 1; i < garden_table.length; i++)
+			{
+				if (garden_table[i]['id'] == current_garden_id)
+				{
+					description	= garden_table[i]['description'];
+					name		= garden_table[i]['name'];
+				}
+			}
+
+			$('#garden_description').val(description);
+			$('#garden_name').val(name);
 		},
 		'json'
 	);
@@ -436,8 +449,22 @@ function get_property_table()
 		null,
 		function(json)
 		{
-			property_table		= json;
-			current_property_id	= property_table[0]['id'];
+			property_table	= json;
+			var description	= property_table[0]['description'];
+			var name		= property_table[0]['name'];
+
+			for (i = 1; i < property_table.length; i++)
+			{
+				if (property_table[i]['id'] == current_property_id)
+				{
+					description	= property_table[i]['description'];
+					name		= property_table[i]['name'];
+				}
+			}
+
+			$('#property_description').val(description);
+			$('#property_name').val(name);
+			//$('#property_name').focus(); // This triggers /AutoComplete!
 		},
 		'json'
 	);
@@ -704,12 +731,69 @@ function property_menu_changed(data)
 
 	$('#property_description').val(description);
 	$('#property_name').val(name);
+	$('#property_name').focus();
 
 	// Having updated the property's attributes, we now have to update the garden menu.
 
 	///switch_gardens(current_property_id);
 
 } // End of property_menu_changed.
+
+// -----------------------------------------------
+
+function scan_garden_menu()
+{
+	$('#garden_menu')
+	.children('option')
+	.map
+	(
+		function(index, element)
+		{
+			if (current_garden_id == 0)
+			{
+				// Available data:
+				// o element.innerText	=> The name.
+				// o element.value		=> The primary key.
+
+				current_garden_id = element.value;
+
+				$('#garden_description').val(element.innerText);
+				$('#garden_name').val(element.value);
+			}
+		}
+	);
+
+	//get_garden_table();
+
+} // End of scan_garden_menu.
+
+// -----------------------------------------------
+
+function scan_property_menu()
+{
+	$('#property_menu')
+	.children('option')
+	.map
+	(
+		function(index, element)
+		{
+			if (current_property_id == 0)
+			{
+				// Available data:
+				// o element.innerText	=> The name.
+				// o element.value		=> The primary key.
+
+				current_property_id = element.value;
+
+				$('#property_description').val(element.innerText);
+				$('#property_name').val(element.value);
+		}
+		}
+	);
+
+	//get_property_table();
+
+} // End of scan_property_menu.
 
 // -----------------------------------------------
 
@@ -864,8 +948,8 @@ function switch_gardens(property_id)
 $(function()
 {
 	get_attribute_types();
-	get_property_table();
-	get_garden_table();
+	scan_property_menu();
+	scan_garden_menu();
 
 	// Enable the tabs before trying to work with them.
 
@@ -875,16 +959,7 @@ $(function()
 		active: 1
 	});
 
-	// If the Gardens tab is selected, give the focus to the property name.
-
-	$('#global_garden_tab')
-	.tabs
-	({
-		activate: function(event, ui)
-		{
-			$('#property_name').focus();
-		}
-	});
+	// If the property tab is selected, give the focus to the property name.
 
 	$('#property_menu')
 	.selectmenu
