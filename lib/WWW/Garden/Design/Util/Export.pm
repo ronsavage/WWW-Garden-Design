@@ -327,9 +327,11 @@ sub as_html
 
 	for my $flower (@$flowers)
 	{
-		$$flower{'count'}	= ++$count;
-		@aliases			= ();
-		@line				= ();
+		next if ($$flower{publish} eq 'No');
+
+		$$flower{count}	= ++$count;
+		@aliases		= ();
+		@line			= ();
 
 		for (@{$$flower{attributes} })
 		{
@@ -469,6 +471,8 @@ sub export_all_pages
 
 	for my $flower (@$flowers)
 	{
+		next if ($$flower{publish} eq 'No');
+
 		$aliases			= $$flower{aliases};
 		@attributes			= ();
 		@images				= ();
@@ -940,6 +944,8 @@ sub export_layouts
 
 	for my $garden (@$gardens_table)
 	{
+		next if ($$garden{publish} eq 'No');
+
 		$self -> export_garden_layout($gardens_table, $$garden{name}) if ($self -> property_name eq $$garden{property_name});
 	}
 
