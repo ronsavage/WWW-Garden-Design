@@ -166,9 +166,9 @@ sub build_garden_menu
 
 		if ($last_name eq '')
 		{
-			$controller -> session(current_garden_id                        => $$garden{id});
-			$controller -> session(current_garden_description       => $$garden{description});
-			$controller -> session(current_garden_name                      => $$garden{name});
+			$controller -> session(current_garden_id			=> $$garden{id});
+			$controller -> session(current_garden_description	=> $$garden{description});
+			$controller -> session(current_garden_name			=> $$garden{name});
 			$self -> logger -> debug('Setting current_garden_id => ' . $controller -> session('current_garden_id') );
 		}
 
@@ -258,9 +258,9 @@ sub build_property_menu
 	{
 		if ($last_name eq '')
 		{
-			$controller -> session(current_property_id                      => $$garden{property_id});
-			$controller -> session(current_property_description     => $$garden{property_description});
-			$controller -> session(current_property_name            => $$garden{property_name});
+			$controller -> session(current_property_id			=> $$garden{property_id});
+			$controller -> session(current_property_description	=> $$garden{property_description});
+			$controller -> session(current_property_name		=> $$garden{property_name});
 			$self -> logger -> debug('Setting current_property_id => ' . $controller -> session('current_property_id') );
 		}
 
@@ -597,8 +597,8 @@ sub get_flower_by_id
 	my($self, $flower_id)		= @_;
 	my($attribute_types_table)	= $self -> read_table('attribute_types');
 	my($sql)					= "select * from flowers where id = $flower_id";
-	my($set)						= $self -> simple -> query($sql) || die $self -> db -> simple -> error;
-	my($flower)				= $set -> hash;
+	my($set)					= $self -> simple -> query($sql) || die $self -> db -> simple -> error;
+	my($flower)					= $set -> hash;
 
 	my(%attribute_type);
 
@@ -1127,11 +1127,12 @@ sub search
 				aliases			=> $$flower{aliases},
 				attributes		=> $$flower{attributes},
 				common_name		=> $$flower{common_name},
-				id				=> $flower_id,
-				scientific_name	=> $$flower{scientific_name},
-				hxw				=> $self -> format_height_width($$flower{height}, $$flower{width}),
 				height			=> $$flower{height},
+				hxw				=> $self -> format_height_width($$flower{height}, $$flower{width}),
+				id				=> $flower_id,
 				pig_latin		=> $pig_latin,
+				publish			=> $$flower{publish},
+				scientific_name	=> $$flower{scientific_name},
 				thumbnail_url	=> "$$constants_table{homepage_url}$$constants_table{image_url}/$pig_latin.0.jpg",
 				width			=> $$flower{width},
 			};

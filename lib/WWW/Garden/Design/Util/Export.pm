@@ -1018,7 +1018,7 @@ sub flowers2csv
 
 	open(my $fh, '>:encoding(utf-8)', $output_file) || die "Can't open(> $output_file): $!";
 
-	$csv -> combine(qw/common_name scientific_name aliases height width/);
+	$csv -> combine(qw/common_name scientific_name aliases height width publish/);
 
 	print $fh $csv -> string, "\n";
 
@@ -1031,6 +1031,7 @@ sub flowers2csv
 			$$flower{aliases},
 			$$flower{height},
 			$$flower{width},
+			$$flower{publish},
 		);
 
 		print $fh $csv -> string, "\n";
@@ -1123,6 +1124,7 @@ sub gardens2csv
 			$$property_id2name{$$garden{property_id} },
 			$$garden{name},
 			$$garden{description},
+			$$flower{publish},
 		);
 
 		print $fh $csv -> string, "\n";
