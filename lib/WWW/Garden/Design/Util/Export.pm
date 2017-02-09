@@ -1124,7 +1124,7 @@ sub gardens2csv
 			$$property_id2name{$$garden{property_id} },
 			$$garden{name},
 			$$garden{description},
-			$$flower{publish},
+			$$garden{publish},
 		);
 
 		print $fh $csv -> string, "\n";
