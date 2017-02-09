@@ -209,11 +209,11 @@ sub create_flower_locations_table
 	my($result)      = $self -> creator -> create_table(<<SQL);
 create table $table_name
 (
-id $primary_key,
-flower_id int references flowers(id),
-garden_id int references gardens(id),
-x integer not null,
-y integer not null
+id			$primary_key,
+flower_id 	int references flowers(id),
+garden_id	int references gardens(id),
+x			integer not null,
+y			integer not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);
@@ -231,16 +231,17 @@ sub create_flowers_table
 	my($result)      = $self -> creator -> create_table(<<SQL);
 create table $table_name
 (
-id $primary_key,
+id				$primary_key,
 aliases			varchar(255) not null,
 common_name		varchar(255) not null,
+height			varchar(255) not null,
 max_height		varchar(255) not null,
-min_height		varchar(255) not null,
 max_width		varchar(255) not null,
+min_height		varchar(255) not null,
 min_width		varchar(255) not null,
 pig_latin		varchar(255) not null,
+publish			varchar(255) not null,
 scientific_name	varchar(255) not null,
-height			varchar(255) not null,
 width			varchar(255) not null
 ) $engine
 SQL
@@ -259,10 +260,11 @@ sub create_gardens_table
 	my($result)      = $self -> creator -> create_table(<<SQL);
 create table $table_name
 (
-id $primary_key,
-property_id int references properties(id),
-description varchar(255) not null,
-name varchar(255) not null
+id			$primary_key,
+property_id	int references properties(id),
+description	varchar(255) not null,
+name		varchar(255) not null,
+publish		varchar(255) not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);
@@ -280,11 +282,11 @@ sub create_images_table
 	my($result)      = $self -> creator -> create_table(<<SQL);
 create table $table_name
 (
-id $primary_key,
-flower_id int references flowers(id),
-description varchar(255) not null,
-file_name varchar(255) not null,
-sequence integer not null
+id			$primary_key,
+flower_id	int references flowers(id),
+description	varchar(255) not null,
+file_name	varchar(255) not null,
+sequence	integer not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);
@@ -302,10 +304,10 @@ sub create_notes_table
 	my($result)      = $self -> creator -> create_table(<<SQL);
 create table $table_name
 (
-id $primary_key,
-flower_id int references flowers(id),
-note text not null,
-sequence integer not null
+id			$primary_key,
+flower_id	int references flowers(id),
+note		text not null,
+sequence	integer not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);
@@ -323,11 +325,11 @@ sub create_object_locations_table
 	my($result)      = $self -> creator -> create_table(<<SQL);
 create table $table_name
 (
-id $primary_key,
-garden_id int references gardens(id),
-object_id int references objects(id),
-x integer not null,
-y integer not null
+id			$primary_key,
+garden_id	int references gardens(id),
+object_id	int references objects(id),
+x			integer not null,
+y			integer not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);
@@ -365,9 +367,9 @@ sub create_properties_table
 	my($result)      = $self -> creator -> create_table(<<SQL);
 create table $table_name
 (
-id $primary_key,
-description varchar(255) not null,
-name varchar(255) not null
+id			$primary_key,
+description	varchar(255) not null,
+name		varchar(255) not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);
@@ -385,10 +387,10 @@ sub create_urls_table
 	my($result)      = $self -> creator -> create_table(<<SQL);
 create table $table_name
 (
-id $primary_key,
-flower_id int references flowers(id),
-sequence integer not null,
-url varchar(255) not null
+id			$primary_key,
+flower_id	int references flowers(id),
+sequence	integer not null,
+url			varchar(255) not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);

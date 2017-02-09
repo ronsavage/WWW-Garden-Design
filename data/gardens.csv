@@ -1,3 +1,3 @@
-"property_name","garden_name","description"
-"Home","Back","Back garden"
-"Home","Front","Front garden"
+"property_name","garden_name","description","publish"
+"Home","Back","Back garden","Yes"
+"Home","Front","Front garden","Yes"

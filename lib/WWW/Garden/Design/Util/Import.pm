@@ -318,7 +318,7 @@ sub populate_flowers_table
 	{
 		$count++;
 
-		for my $column (qw/aliases common_name scientific_name height width/)
+		for my $column (qw/aliases common_name height publish scientific_name width/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -367,6 +367,7 @@ sub populate_flowers_table
 				min_height		=> $min_height,
 				max_width		=> $max_width,
 				min_width		=> $min_width,
+				publish			=> $$item{publish},
 				width			=> $$item{width},
 			}
 		);
@@ -401,7 +402,7 @@ sub populate_gardens_table
 	{
 		$count++;
 
-		for my $column (qw/property_name garden_name description/)
+		for my $column (qw/garden_name description property_name publish/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -416,6 +417,7 @@ sub populate_gardens_table
 				description	=> $$item{description},
 				name		=> $$item{garden_name},
 				property_id	=> $$property_keys{$$item{property_name} },
+				publish		=> $$item{publish},
 			}
 		);
 	}
@@ -550,7 +552,7 @@ sub populate_object_locations_table
 	{
 		$count++;
 
-		for my $column (qw/name garden_name xy/)
+		for my $column (qw/garden_name name xy/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -653,7 +655,7 @@ sub populate_properties_table
 	{
 		$count++;
 
-		for my $column (qw/name description/)
+		for my $column (qw/description name/)
 		{
 			if (! defined $$item{$column})
 			{

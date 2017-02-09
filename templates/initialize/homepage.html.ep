@@ -484,7 +484,8 @@ function populate_details(flower_id)
 		dataType:	'json',
 		method:		'POST',
 		url:		'/GetFlowerDetails'
-	}).done(function(flower)
+	})
+	.done(function(flower)
 	{
 		// Make the Details tab, tab 1, active.
 
@@ -698,6 +699,10 @@ function populate_details(flower_id)
 			$(ids[i][0]).val(sequence);
 			$(ids[i][1]).val(url);
 		}
+	})
+	.fail(function(jqxhr, textStatus, error)
+	{
+		alert('Ajax status: ' + textStatus + ', ' + error);
 	});
 
 } // End of populate_details.
@@ -823,10 +828,15 @@ function submit_flower()
 		dataType:	'text',
 		method:		'POST',
 		url:		'/AddFlower'
-	}).done(function(html)
+	})
+	.done(function(html)
 	{
 		// $('#flower_result_div').empty().append(html);
 			$('#flower_result_div').empty().text('Hi!');
+	})
+	.fail(function(jqxhr, textStatus, error)
+	{
+		alert('Ajax status: ' + textStatus + ', ' + error);
 	});
 
 } // End of submit_flower.
@@ -847,10 +857,15 @@ function submit_garden()
 		dataType:	'html',
 		method:		'POST',
 		url:		'/AddGarden'
-	}).done(function(html)
+	})
+	.done(function(html)
 	{
 		$('#garden_result_div').empty().append(html);
 		get_property_gardens();
+	})
+	.fail(function(jqxhr, textStatus, error)
+	{
+		alert('Ajax status: ' + textStatus + ', ' + error);
 	});
 
 } // End of submit_garden.
@@ -892,10 +907,15 @@ function submit_search()
 		dataType:	'html',
 		type:		'POST',
 		url:		'/Search'
-	}).done(function(html)
+	})
+	.done(function(html)
 	{
 		$('#search_result_div').empty().append(html);
 		$('#search_text').focus();
+	})
+	.fail(function(jqxhr, textStatus, error)
+	{
+		alert('Ajax status: ' + textStatus + ', ' + error);
 	});
 
 } // End of submit_search.
