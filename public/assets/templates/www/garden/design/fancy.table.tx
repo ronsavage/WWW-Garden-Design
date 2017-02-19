@@ -1,4 +1,4 @@
-<table align="center" cellspacing="0" cellpadding="0">
+<table align="center" cellspacing="0" cellpadding="0" summary = 'Generic table'>
 : for $data -> $item {
 <tr>
 <!-- Left -->

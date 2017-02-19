@@ -11,7 +11,8 @@
 	<h1 align = 'center'><: $aliases :></h1>
 
 	<h2 align = 'center'>Attributes</h1>
-	<table align = 'center'><tr><td>
+	<table align = 'center' summary = 'Table for flower attributes'>
+	<tr><td>
 		<div class = 'simple_border'>
 			:include 'individual.table.tx' {row => $attributes, table_id => 'Attributes'};
 		</div>
@@ -19,7 +20,8 @@
 
 	<br>
 
-	<table align = 'center'><tr><td>
+	<table align = 'center' summary = 'Table for flower images'>
+	<tr><td>
 		<div class = 'simple_border'>
 			:include 'individual.table.tx' {row => $images, table_id => 'Images'};
 		</div>
@@ -27,7 +29,8 @@
 
 	<br>
 
-	<table align = 'center'><tr><td>
+	<table align = 'center' summary = 'Table for flower notes'>
+	<tr><td>
 		<div class = 'simple_border'>
 			:include 'individual.table.tx' {row => $notes, table_id => 'Notes'};
 		</div>
@@ -35,7 +38,8 @@
 
 	<br>
 
-	<table align = 'center'><tr><td>
+	<table align = 'center' summary = 'Table for flower urls'>
+	<tr><td>
 		<div class = 'simple_border'>
 			:include 'individual.table.tx' {row => $urls, table_id => 'URLs'};
 		</div>

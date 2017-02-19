@@ -1,4 +1,4 @@
-<table align = 'center'>
+<table align = 'center' summary = 'Table for various headings and navigation'>
 	<tr>
 		<td align = 'center'>
 			<span class = 'black_on_reddish_title'><a id = 'the_flower_catalog'>The Flower Catalog</a></span>
@@ -41,7 +41,7 @@
 	</tr>
 </table>
 
-<table align = 'center' class = 'datatable' id = 'result_table'>
+<table align = 'center' class = 'datatable' id = 'result_table' summary = 'Result table' summary = 'The Flower Catalog'>
 	: for $row -> $item {
 	<tr>
 			: include 'basic.column.tx' { column => $item };
@@ -49,7 +49,7 @@
 	: }
 </table>
 
-<table align = 'center'>
+<table align = 'center' summary = 'Bottom table for navigation'>
 	<tr>
 		<td align = 'center'>
 			<span class = 'paging'></span>
