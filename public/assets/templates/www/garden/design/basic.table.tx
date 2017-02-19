@@ -41,7 +41,7 @@
 	</tr>
 </table>
 
-<table align = 'center' class = 'datatable' id = 'result_table' summary = 'Result table' summary = 'The Flower Catalog'>
+<table align = 'center' class = 'datatable' id = 'result_table' summary = 'The Flower Catalog'>
 	: for $row -> $item {
 	<tr>
 			: include 'basic.column.tx' { column => $item };
