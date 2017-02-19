@@ -27,9 +27,9 @@
 
 body
 {
-	font-size:			1.2em; // Normally 1.2em. Use 1.5em for screen captures.
-	margin:				0;
-	padding:			0;
+	//font-size:	1.5em; // Use 1.5em for screen captures.
+	margin:		0;
+	padding:	0;
 }
 
 .bordered
@@ -207,13 +207,6 @@ table.datatable td
 	border-color:		gray;
 	#background-color:	white;
 	-moz-border-radius:	;
-}
-
-.ui-tabs-tabs .ui-tabs-nav li a
-{
-	font-size:			12pt !important;
-	padding:			.25em 1em;	/* Vertical and horizontal. Does nothing. */
-	text-decoration:	none;		/* Does nothing. */
 }
 
 .white_centered
