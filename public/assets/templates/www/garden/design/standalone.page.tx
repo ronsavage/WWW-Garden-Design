@@ -11,14 +11,14 @@
 
 <h1 align='center'>All Flowers</h1>
 
-<table align='center'>
+<table align='center' summary = 'Top navigation table'>
 <tr><td align='center'><span class="paging"></span></td></tr>
 <tr><td align='center'><span class="counter"></span></td></tr>
 <tr><td align='center'>Click column headings to sort</td></tr>
 <tr><td><hr><br></td></tr>
 </table>
 
-<table align='center' class='datatable' id='result_table'>
+<table align='center' class='datatable' id='result_table' summary = 'Result table'>
 : for $row -> $item {
 : if $~item.is_first {
 <thead>
@@ -38,7 +38,7 @@
 : }
 </table>
 
-<table align='center'>
+<table align='center' summary = 'Bottom navigation table'>
 <tr><td><span class="paging"></span></td></tr>
 <tr><td><span class="counter"></span></td></tr>
 <tr><td><hr/></td></tr>
