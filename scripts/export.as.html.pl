@@ -73,37 +73,23 @@ Values for the C<export_type> parameter:
 
 =over 4
 
-=item o 0 => Limited export for inclusion into Flowers.html
+=item o 0
 
-=over 4
+	'#'
+	'Native'
+	'Scientific name'
+	'Common name'
+	'Aliases'
+	'Thumbnail <span class = "index">(clickable)</span>'
 
-=item o Count
+=item o 1
 
-=item o Common name
-
-=item o Alias
-
-=item o Scientific name
-
-=item o Web page
-
-=back
-
-=item o 1 => All columns
-
-=over 4
-
-=item o Count
-
-=item o Common name
-
-=item o Alias
-
-=item o Scientific name
-
-=item o Web page
-
-=back
+	'#'
+	'Native'
+	'Scientific name'
+	'Common name'
+	'Aliases'
+	'Thumbnail <span class = "index">(clickable)</span>'
 
 =back
 

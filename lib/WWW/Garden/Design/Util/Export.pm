@@ -28,6 +28,14 @@ use Types::Standard qw/Any Int HashRef Str/;
 
 extends qw/WWW::Garden::Design::Database::Base/;
 
+has export_columns =>
+(
+	default		=> sub{return {} },
+	is			=> 'rw',
+	isa			=> HashRef,
+	required	=> 0,
+);
+
 has export_type =>
 (
 	default		=> sub{return 0},
@@ -87,6 +95,38 @@ sub BUILD
 			size	=> 16,
 		) || die "Error. Can't define title font: " . Imager -> errstr
 	);
+
+	# Warning: The line in web.site.xml which runs this script must not use command line options.
+	# That means, that whatever options that code needs must be the defaults.
+
+	$self -> export_columns
+	({
+		'Native' =>
+			{
+				column_name	=> 'native',
+				order		=> 2,
+			},
+		'Scientific name' =>
+			{
+				column_name	=> 'scientific_name',
+				order		=> 3,
+			},
+		'Common name' =>
+			{
+				column_name	=> 'common_name',
+				order		=> 4,
+			},
+		'Aliases' =>
+			{
+				column_name	=> 'aliases',
+				order		=> 5,
+			},
+		'Thumbnail <span class = "index">(clickable)</span>' =>
+			{
+				column_name	=> 'thumbnail_file_name',
+				order		=> 6,
+			},
+	});
 
 	if ($export_type < 0)
 	{
@@ -228,93 +268,13 @@ sub as_csv
 
 sub as_html
 {
-	my($self)        = @_;
-	my($export_type) = $self -> export_type;
-
-	my(%column);
-
-	# Warning: The line in web.site.xml which runs this script must not use command line options.
-	# That means, that whatever options that code needs must be the defaults.
-	# Warning: These options are documented in scripts/export.as.html.pl Be consistent!
-
-	if ($export_type == 0)
-	{
-		%column =
-		(
-			'#' =>
-			{
-				column_name	=> 'count', # I.e. database column name.
-				order		=> 1,
-			},
-			'Native' =>
-			{
-				column_name	=> 'native',
-				order		=> 2,
-			},
-			'Scientific name' =>
-			{
-				column_name	=> 'scientific_name',
-				order		=> 3,
-			},
-			'Common name' =>
-			{
-				column_name	=> 'common_name',
-				order		=> 4,
-			},
-			'Aliases' =>
-			{
-				column_name	=> 'aliases',
-				order		=> 5,
-			},
-			'Thumbnail <span class = "index">(clickable)</span>' =>
-			{
-				column_name	=> 'thumbnail_file_name',
-				order		=> 6,
-			},
-		);
-	}
-	else
-	{
-		%column =
-		(
-			'#' =>
-			{
-				column_name	=> 'count',
-				order		=> 1,
-			},
-			'Native' =>
-			{
-				column_name	=> 'native',
-				order		=> 2,
-			},
-			'Scientific name' =>
-			{
-				column_name	=> 'scientific_name',
-				order		=> 3,
-			},
-			'Common name' =>
-			{
-				column_name	=> 'common_name',
-				order		=> 4,
-			},
-			'Aliases' =>
-			{
-				column_name	=> 'aliases',
-				order		=> 5,
-			},
-			'Thumbnail' =>
-			{
-				column_name	=> 'thumbnail_file_name',
-				order		=> 6,
-			},
- 		);
-	}
-
-	my($count)		= 0;
-	my($flowers)	= $self -> db -> read_flowers_table;
-	my(@heading)	= map{ {td => mark_raw($_)} } sort{$column{$a}{order} <=> $column{$b}{order} } keys %column;
-	my(@row)		= [@heading];
-	my($width)		= 40;
+	my($self)			= @_;
+	my($export_type)	= $self -> export_type;
+	my(%columns)		= %{$self -> export_columns};
+	my($count)			= 0;
+	my($flowers)		= $self -> db -> read_flowers_table;
+	my(@heading)		= map{ {td => mark_raw($_)} } sort{$columns{$a}{order} <=> $columns{$b}{order} } keys %columns;
+	my($width)			= 40;
 
 	my(@aliases);
 	my($column_name);
@@ -322,7 +282,7 @@ sub as_html
 	my(@line);
 	my($native, $name);
 	my($offset);
-	my($thumbnail);
+	my($thumbnail, @tbody);
 	my($text);
 
 	for my $flower (@$flowers)
@@ -338,9 +298,9 @@ sub as_html
 			$native = $$_{range} if ($$_{name} eq 'native');
 		}
 
-		for my $key (sort{$column{$a}{order} <=> $column{$b}{order} } keys %column)
+		for my $key (sort{$columns{$a}{order} <=> $columns{$b}{order} } keys %columns)
 		{
-			$column_name	= $column{$key}{column_name};
+			$column_name	= $columns{$key}{column_name};
 			$name			= ($column_name eq 'native') ? $native : $$flower{$column_name};
 
 			if ($key eq 'Aliases')
@@ -381,13 +341,13 @@ sub as_html
 				)
 			};
 
-		push @row, [@line];
+		push @tbody, [@line];
 	}
 
-	push @row, [@heading];
-
-	my($constants)	= $self -> db -> read_constants_table;
-	my($tx)			= Text::Xslate -> new
+	my(@thead)			= [@heading];
+	my($constants)		= $self -> db -> read_constants_table;
+	my($js4datatable)	= mark_raw($self -> init_datatable);
+	my($tx)				= Text::Xslate -> new
 	(
 		input_layer => '',
 		path        => $$constants{template_path},
@@ -397,7 +357,9 @@ sub as_html
 	(
 		$self -> standalone_page ? 'standalone.page.tx' : 'basic.table.tx',
 		{
-			row => \@row,
+			js4datatable	=> $js4datatable,
+			thead			=> \@thead,
+			tbody			=> \@tbody,
 		}
 	) );
 
