@@ -1,69 +1,68 @@
 <form name = 'garden_form' id = 'garden_form'>
-%= csrf_field
-<table align = 'center'>
-	<tr>
-		<td colspan = '3'><div class = 'blue_centered'>Properties and Gardens</div><br /></td>
-	</tr>
-	<tr>
-		<td>
-			<fieldset>
-			<table>
-				<tr>
-					<td class = 'centered' colspan = '2'>
-						On file<br /><hr />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<span id = 'property_menu_placeholder'><%== $property_menu %></span>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<br />
-					</td>
-				<tr>
-					<td>
-						<span id = 'garden_menu_placeholder'><%== $garden_menu %></span>
-					</td>
-				</tr>
-				</div>
-			</table>
-			</fieldset>
-		</td>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		<td>
-			<table align = 'center'>
-				<tr>
-					<td>Property name:</td>
-					<td align = 'left' colspan = '2'><input id = 'property_name' type = 'text' size = '50' maxlength = '100'></td>
-				</tr>
-				<tr>
-					<td>Description:</td>
-					<td align = 'left' colspan = '2'><input id = 'property_description' type = 'text' size = '50' maxlength = '100'></td>
-				</tr>
-				<tr>
-					<td>Garden name:</td>
-					<td align = 'left' colspan = '2'><input id = 'garden_name' type = 'text' size = '50' maxlength = '100'></td>
-				</tr>
-				<tr>
-					<td>Description:</td>
-					<td align = 'left' colspan = '2'><input id = 'garden_description' type = 'text' size = '50' maxlength = '100'></td>
-				</tr>
-				<tr>
-					<td colspan = '3'>
-						<br>
-					</td>
-				</tr>
-				<tr>
-					<td align = 'center'><input type = 'reset'  value = 'Reset' /></td>
-					<td align = 'center'><input type = 'submit'  value = 'Delete' /></td>
-					<td align = 'center'><input type = 'submit' value = 'Save' /></td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-</table>
+	%= csrf_field
+	<table align = 'center'>
+		<tr>
+			<td colspan = '3'><div class = 'blue_centered'>Properties and Gardens</div><br /></td>
+		</tr>
+		<tr>
+			<td>
+				<fieldset>
+				<table>
+					<tr>
+						<td class = 'centered' colspan = '2'>
+							On file<br /><hr />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span id = 'property_menu_placeholder'><%== $property_menu %></span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<br />
+						</td>
+					<tr>
+						<td>
+							<span id = 'garden_menu_placeholder'><%== $garden_menu %></span>
+						</td>
+					</tr>
+				</table>
+				</fieldset>
+			</td>
+			<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td>
+				<table align = 'center'>
+					<tr>
+						<td>Property name:</td>
+						<td align = 'left' colspan = '2'><input id = 'property_name' type = 'text' size = '50' maxlength = '100'></td>
+					</tr>
+					<tr>
+						<td>Description:</td>
+						<td align = 'left' colspan = '2'><input id = 'property_description' type = 'text' size = '50' maxlength = '100'></td>
+					</tr>
+					<tr>
+						<td>Garden name:</td>
+						<td align = 'left' colspan = '2'><input id = 'garden_name' type = 'text' size = '50' maxlength = '100'></td>
+					</tr>
+					<tr>
+						<td>Description:</td>
+						<td align = 'left' colspan = '2'><input id = 'garden_description' type = 'text' size = '50' maxlength = '100'></td>
+					</tr>
+					<tr>
+						<td colspan = '3'>
+							<br>
+						</td>
+					</tr>
+					<tr>
+						<td align = 'center'><input type = 'reset'  value = 'Reset' /></td>
+						<td align = 'center'><input type = 'submit'  value = 'Delete' /></td>
+						<td align = 'center'><input type = 'submit' value = 'Save' /></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
 </form>
 
 <div id = 'garden_result_div'></div>

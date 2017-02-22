@@ -83,9 +83,9 @@ sub BUILD
 	};
 	my(%driver) =
 	(
-		mysql_enable_utf8 => qr/dbi:MySQL/i,
-		pg_enable_utf8    => qr/dbi:Pg/i,
-		sqlite_unicode    => qr/dbi:SQLite/i,
+		mysql_enable_utf8	=> qr/dbi:MySQL/i,
+		pg_enable_utf8		=> qr/dbi:Pg/i,
+		sqlite_unicode		=> qr/dbi:SQLite/i,
 	);
 
 	for my $db (keys %driver)
@@ -125,10 +125,10 @@ sub add_garden
 
 	for my $key (keys %map)
 	{
-		$name          = $$item{"${key}_name"};
-		$uc_name       = uc $name;
-		$uc_name{$key} = $uc_name;
-		$id            = $map{$key}{$uc_name} || 'undef';
+		$name			= $$item{"${key}_name"};
+		$uc_name		= uc $name;
+		$uc_name{$key}	= $uc_name;
+		$id				= $map{$key}{$uc_name} || 'undef';
 
 		if (! $map{$key}{$uc_name})
 		{
@@ -167,12 +167,9 @@ sub build_garden_menu
 
 		if ($last_name eq '')
 		{
-			$selected = "selected = 'selected'";
+			# Set this on the 1st menu item.
 
-			$controller -> session(current_garden_id			=> $$garden{id});
-			$controller -> session(current_garden_description	=> $$garden{description});
-			$controller -> session(current_garden_name			=> $$garden{name});
-			$self -> logger -> debug('Setting current_garden_id => ' . $controller -> session('current_garden_id') );
+			$selected = "selected = 'selected'";
 		}
 
 		$html		.= "<option $selected value = '$$garden{id}'>$$garden{name}</option>";
@@ -251,24 +248,57 @@ qq|<response>
 
 # -----------------------------------------------
 
+sub build_object_menu
+{
+	my($self, $objects, $controller) = @_;
+	my($html)		= "<label for 'object_menu'>Object: </label><br />"
+						. "<select name = 'object_menu' id = 'object_menu'>";
+	my($last_name)  = '';
+	my($selected)	= '';
+
+	for my $object (@$objects)
+	{
+		if ($last_name eq '')
+		{
+			# Set this on the 1st menu item.
+
+			$selected = "selected = 'selected'";
+		}
+
+		next if ($last_name eq $$object{name});
+
+		$html		.= "<option $selected value = '$$object{id}'>$$object{name}</option>";
+		$last_name	= $$object{name};
+		$selected	= '';
+	}
+
+	$html .= '</select>';
+
+	return $html;
+
+} # End of build_object_menu.
+
+# -----------------------------------------------
+
 sub build_property_menu
 {
 	my($self, $property_gardens, $controller) = @_;
-	my($html)               = "<label for 'property_menu'>Property: </label><br />"
-			                        . "<select name = 'property_menu' id = 'property_menu'>";
-	my($last_name)  = '';
+	my($html)		= "<label for 'property_menu'>Property: </label><br />"
+						. "<select name = 'property_menu' id = 'property_menu'>";
+	my($last_name)	= '';
 	my($selected)	= '';
 
 	for my $garden (@$property_gardens)
 	{
 		if ($last_name eq '')
 		{
+			# Set this on the 1st menu item.
+
 			$selected = "selected = 'selected'";
 
-			$controller -> session(current_property_id			=> $$garden{property_id});
-			$controller -> session(current_property_description	=> $$garden{property_description});
-			$controller -> session(current_property_name		=> $$garden{property_name});
-			$self -> logger -> debug('Setting current_property_id => ' . $controller -> session('current_property_id') );
+			# current_property_id is used in build_garden_menu().
+
+			$controller -> session(current_property_id => $$garden{property_id});
 		}
 
 		next if ($last_name eq $$garden{property_name});

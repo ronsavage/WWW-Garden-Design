@@ -52,12 +52,14 @@ sub homepage
 
 	my($defaults)				= $self -> app -> defaults;
 	$$defaults{gardens_table}	= $$defaults{db} -> read_gardens_table; # Warning: Not read_table('gardens').
+	$$defaults{objects_table}	= $$defaults{db} -> read_objects_table; # Warning: Not read_table('objects').
 
 	# Warning: build_property_menu() sets a value in the session read by build_garden_menu(),
 	# so it must be called first.
 
 	$$defaults{property_menu}	= $$defaults{db} -> build_property_menu($$defaults{gardens_table}, $self);
 	$$defaults{garden_menu}		= $$defaults{db} -> build_garden_menu($$defaults{gardens_table}, $self);
+	$$defaults{object_menu}		= $$defaults{db} -> build_object_menu($$defaults{objects_table}, $self);
 
 	$self -> app -> defaults($defaults);
 	$self -> stash(attribute_check_boxes	=> $self -> build_check_boxes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields}, $$defaults{attribute_attribute_ids}) );
@@ -68,6 +70,7 @@ sub homepage
 	(
 		constants		=> $$defaults{constants_table},
 		garden_menu		=> $$defaults{garden_menu},
+		object_menu		=> $$defaults{object_menu},
 		property_menu	=> $$defaults{property_menu},
 	);
 
