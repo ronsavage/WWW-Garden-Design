@@ -29,6 +29,10 @@
 						<td align = 'left'><input id = 'object_name' type = 'text' size = '50' maxlength = '100'></td>
 					</tr>
 					<tr>
+						<td>Icon:</td>
+						<td align = 'left'><span id ='object_icon'></span></td>
+					</tr>
+					<tr>
 						<td></td>
 						<td>Choose any one of the following to specify the color of the object's tile.</td>
 					</tr>

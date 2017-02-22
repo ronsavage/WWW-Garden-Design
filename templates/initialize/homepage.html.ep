@@ -106,7 +106,8 @@ var property_table			= [];
 
 $(function()
 {
-	$('#aliases').autocomplete
+	$('#aliases')
+	.autocomplete
 	({
 		source:		'/AutoComplete?type=aliases',
 		minLength:	2,
@@ -122,7 +123,8 @@ $(function()
 
 $(function()
 {
-	$('#common_name').autocomplete
+	$('#common_name')
+	.autocomplete
 	({
 		source:		'/AutoComplete?type=common_name',
 		minLength:	2,
@@ -138,7 +140,8 @@ $(function()
 
 $(function()
 {
-	$('#garden_name').autocomplete
+	$('#garden_name')
+	.autocomplete
 	({
 		source:		'/AutoComplete?type=garden_name',
 		minLength:	2,
@@ -157,7 +160,8 @@ $(function()
 
 $(function()
 {
-	$('#object_name').autocomplete
+	$('#object_name')
+	.autocomplete
 	({
 		source:		'/AutoComplete?type=object_name',
 		minLength:	2,
@@ -173,7 +177,8 @@ $(function()
 
 $(function()
 {
-	$('#property_name').autocomplete
+	$('#property_name')
+	.autocomplete
 	({
 		source:		'/AutoComplete?type=property_name',
 		minLength:	2,
@@ -192,7 +197,8 @@ $(function()
 
 $(function()
 {
-	$('#scientific_name').autocomplete
+	$('#scientific_name')
+	.autocomplete
 	({
 		source:		'/AutoComplete?type=scientific_name',
 		minLength:	2,
@@ -208,13 +214,16 @@ $(function()
 
 $(function()
 {
-	$("#search_text").autocomplete
+	$("#search_text")
+	.autocomplete
 	({
 		source: "/AutoComplete?type=search",
 		minLength: 2,
 		select: function(event, ui)
 		{
-			$("#search_text").empty().append(ui.item ? ui.item.value : "-");
+			$("#search_text")
+			.empty()
+			.append(ui.item ? ui.item.value : "-");
 		}
 	});
 });
@@ -259,7 +268,9 @@ function build_garden_menu(property_id)
 
 	html += '</select>';
 
-	$('#garden_menu_placeholder').html(html);
+	$('#garden_menu_placeholder')
+	.append(html);
+
 	$('#garden_menu')
 	.selectmenu
 	({
@@ -333,9 +344,11 @@ function build_property_menu()
 
 	html += '</select>';
 
-	$('#property_menu_placeholder').html(html);
+	$('#property_menu_placeholder')
+	.append(html);
 
-	$('#property_name').focus();
+	$('#property_name')
+	.focus();
 
 	$('#property_menu')
 	.selectmenu
@@ -429,8 +442,11 @@ function get_garden_table()
 				}
 			}
 
-			$('#garden_description').val(description);
-			$('#garden_name').val(name);
+			$('#garden_description')
+			.val(description);
+
+			$('#garden_name')
+			.val(name);
 		},
 		'json'
 	);
@@ -451,6 +467,8 @@ function get_object_table()
 		function(json)
 		{
 			object_table = json;
+
+			scan_object_menu();
 		},
 		'json'
 	);
@@ -483,8 +501,12 @@ function get_property_table()
 				}
 			}
 
-			$('#property_description').val(description);
-			$('#property_name').val(name);
+			$('#property_description')
+			.val(description);
+
+			$('#property_name')
+			.val(name);
+
 			//$('#property_name').focus(); // This triggers /AutoComplete!
 		},
 		'json'
@@ -510,15 +532,25 @@ function populate_details(flower_id)
 	{
 		// Make the Details tab, tab 1, active.
 
-		$('#global_tab_div').tabs('option', 'active', 1);
+		$('#global_tab_div')
+		.tabs('option', 'active', 1);
 
 		// Copy flower data to the Details/Flower tab.
 
-		$('#flower_common_name').val(flower['common_name']);
-		$('#flower_scientific_name').val(flower['scientific_name']);
-		$('#flower_aliases').val(flower['aliases']);
-		$('#flower_height').val(flower['height']);
-		$('#flower_width').val(flower['width']);
+		$('#flower_common_name')
+		.val(flower['common_name']);
+
+		$('#flower_scientific_name')
+		.val(flower['scientific_name']);
+
+		$('#flower_aliases')
+		.val(flower['aliases']);
+
+		$('#flower_height')
+		.val(flower['height']);
+
+		$('#flower_width')
+		.val(flower['width']);
 
 		var thumbnail_size		= <%== $$constants{search_thumbnail_size} %>;
 		var thumbnail_string	= "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
@@ -527,7 +559,8 @@ function populate_details(flower_id)
 		var image_path			= homepage_url + image_url + '/' + flower['pig_latin'] + '.0.jpg';
 		var thumbnail_html		= "<img src = '" + image_path + "' " + thumbnail_string + '>';
 
-		$('#flower_thumbnail').html(thumbnail_html);
+		$('#flower_thumbnail')
+		.html(thumbnail_html);
 
 		// Copy basic flower data to the Details/Flower's other sub-tabs.
 		// Warning: Don't include 'details' in the tabs array, because
@@ -542,7 +575,8 @@ function populate_details(flower_id)
 			{
 				id = '#' + tabs[i] + '_' + vars[j];
 
-				$(id).text(flower[vars[j] ]);
+				$(id)
+				.text(flower[vars[j] ]);
 			}
 		}
 
@@ -566,7 +600,8 @@ function populate_details(flower_id)
 				value	= range[j];
 				id		= build_attribute_id('attribute', attribute_name, value);
 
-				$(id).prop('checked', false);
+				$(id)
+				.prop('checked', false);
 			}
 		}
 
@@ -601,7 +636,8 @@ function populate_details(flower_id)
 
 					if (value != '')
 					{
-						$(id).prop('checked', true);
+						$(id)
+						.prop('checked', true);
 					}
 				}
 			}
@@ -619,10 +655,17 @@ function populate_details(flower_id)
 
 			// For the HTML column order, see templates/initialize/images.html.ep.
 
-			$(ids[i][0]).val('');	// Description.
-			$(ids[i][1]).val('');	// File name.
-			$(ids[i][2]).text('');	// Image.
-			$(ids[i][3]).val('');	// Sequence.
+			$(ids[i][0])
+			.val('');	// Description.
+
+			$(ids[i][1])
+			.val('');	// File name.
+
+			$(ids[i][2])
+			.text('');	// Image.
+
+			$(ids[i][3])
+			.val('');	// Sequence.
 		}
 
 		// 2: Loop over all images owned by this flower.
@@ -645,10 +688,17 @@ function populate_details(flower_id)
 
 			// For the HTML column order, see templates/initialize/images.html.ep.
 
-			$(ids[i][0]).val(description);
-			$(ids[i][1]).val(file_name);
-			$(ids[i][2]).html(thumbnail_html);
-			$(ids[i][3]).val(sequence);
+			$(ids[i][0])
+			.val(description);
+
+			$(ids[i][1])
+			.val(file_name);
+
+			$(ids[i][2])
+			.html(thumbnail_html);
+
+			$(ids[i][3])
+			.val(sequence);
 		}
 
 		// Notes: Copy notes to the Details/Notes tab.
@@ -663,8 +713,11 @@ function populate_details(flower_id)
 
 			// For the HTML column order, see templates/initialize/notes.html.ep.
 
-			$(ids[i][0]).val('');	// Note.
-			$(ids[i][1]).val('');	// Sequence.
+			$(ids[i][0])
+			.val('');	// Note.
+
+			$(ids[i][1])
+			.val('');	// Sequence.
 		}
 
 		// 2: Loop over all notes owned by this flower.
@@ -682,8 +735,11 @@ function populate_details(flower_id)
 
 			// For the HTML column order, see templates/initialize/notes.html.ep.
 
-			$(ids[i][0]).val(note);
-			$(ids[i][1]).val(sequence);
+			$(ids[i][0])
+			.val(note);
+
+			$(ids[i][1])
+			.val(sequence);
 		}
 
 		// URLs: Copy urls to the Details/URLs tab.
@@ -698,8 +754,11 @@ function populate_details(flower_id)
 
 			// For the HTML column order, see templates/initialize/urls.html.ep.
 
-			$(ids[i][0]).val('');	// Sequence.
-			$(ids[i][1]).val('');	// URL.
+			$(ids[i][0])
+			.val('');	// Sequence.
+
+			$(ids[i][1])
+			.val('');	// URL.
 		}
 
 		// 2: Loop over all URLs owned by this flower.
@@ -717,8 +776,11 @@ function populate_details(flower_id)
 
 			// For the HTML column order, see templates/initialize/urls.html.ep.
 
-			$(ids[i][0]).val(sequence);
-			$(ids[i][1]).val(url);
+			$(ids[i][0])
+			.val(sequence);
+
+			$(ids[i][1])
+			.val(url);
 		}
 	})
 	.fail(function(jqxhr, textStatus, error)
@@ -786,7 +848,9 @@ function property_menu_changed(data)
 		}
 	}
 
-	$('#property_description').val(description);
+	$('#property_description')
+	.val(description);
+
 	$('#property_name')
 	.val(name)
 	.focus();
@@ -835,20 +899,25 @@ function scan_object_menu()
 	(
 		function(index, element)
 		{
-			if (current_object_id == 0)
+			// Available data:
+			// o element.innerText	=> The name.
+			// o element.value		=> The primary key.
+
+			current_object_id = element.value;
+
+			$('#object_name').val(element.innerText);
+
+			for (i = 0; i < object_table.length; i++)
 			{
-				// Available data:
-				// o element.innerText	=> The name.
-				// o element.value		=> The primary key.
-
-				current_object_id = element.value;
-
-				$('#object_name').val(element.innerText);
+				if (current_object_id == object_table[i]['id'])
+				{
+					$('#object_icon')
+					.empty()
+					.append('<img src = "' + object_table[i]['icon_url'] + '" />');
+				}
 			}
 		}
 	);
-
-	//get_object_table();
 
 } // End of scan_object_menu.
 
@@ -870,8 +939,11 @@ function scan_property_menu()
 
 				current_property_id = element.value;
 
-				$('#property_description').val(element.innerText);
-				$('#property_name').val(element.value);
+				$('#property_description')
+				.val(element.innerText);
+
+				$('#property_name')
+				.val(element.value);
 			}
 		}
 	);
@@ -881,13 +953,16 @@ function scan_property_menu()
 } // End of scan_property_menu.
 
 // -----------------------------------------------
+// This function is never called.
 
 function sleep(delay)
 {
-	var now = new Date().getTime();
+	var now = new Date()
+				.getTime();
 
 	while(new Date().getTime() < now + delay){ /* do nothing */ }
-}
+
+} // End of sleep.
 
 // -----------------------------------------------
 
@@ -911,8 +986,13 @@ function submit_flower()
 	})
 	.done(function(html)
 	{
-		// $('#flower_result_div').empty().append(html);
-			$('#flower_result_div').empty().text('Hi!');
+		// $('#flower_result_div')
+		//	.empty()
+		//	.append(html);
+
+			$('#flower_result_div')
+			.empty()
+			.text('Hi!');
 	})
 	.fail(function(jqxhr, textStatus, error)
 	{
@@ -940,7 +1020,10 @@ function submit_garden()
 	})
 	.done(function(html)
 	{
-		$('#garden_result_div').empty().append(html);
+		$('#garden_result_div')
+		.empty()
+		.append(html);
+
 		get_property_gardens();
 	})
 	.fail(function(jqxhr, textStatus, error)
@@ -990,8 +1073,12 @@ function submit_search()
 	})
 	.done(function(html)
 	{
-		$('#search_result_div').empty().append(html);
-		$('#search_text').focus();
+		$('#search_result_div')
+		.empty()
+		.append(html);
+
+		$('#search_text')
+		.focus();
 	})
 	.fail(function(jqxhr, textStatus, error)
 	{
@@ -1023,8 +1110,11 @@ function switch_garden_menu_item(garden_id)
 		}
 	}
 
-	$('#garden_description').val(description);
-	$('#garden_name').val(name);
+	$('#garden_description')
+	.val(description);
+
+	$('#garden_name')
+	.val(name);
 
 } // End of switch_garden_menu_item.
 
@@ -1049,9 +1139,8 @@ $(function()
 {
 	get_attribute_types();
 	get_object_table();
-	scan_property_menu(); // Must be before scan_garden_menu().
+	scan_property_menu();
 	scan_garden_menu();
-	scan_object_menu();
 
 	// Enable the tabs before trying to work with them.
 
@@ -1097,7 +1186,8 @@ $(function()
 	({
 		activate: function(event, ui)
 		{
-			$('#search_text').focus();
+			$('#search_text')
+			.focus();
 		}
 	});
 
@@ -1108,7 +1198,8 @@ $(function()
 	({
 		activate: function(event, ui)
 		{
-			$('#object_name').focus();
+			$('#object_name')
+			.focus();
 		}
 	});
 
@@ -1126,7 +1217,8 @@ $(function()
 		active: 0
 	});
 
-	$('#color_spectrum').spectrum
+	$('#color_spectrum')
+	.spectrum
 	({
 		change:				function(color)
 							{
@@ -1139,28 +1231,32 @@ $(function()
 		showPalette:		true
 	});
 
-	$('#flower_form').submit(function()
+	$('#flower_form')
+	.submit(function()
 	{
 		submit_flower();
 
 		return false;
 	});
 
-	$('#garden_form').submit(function()
+	$('#garden_form')
+	.submit(function()
 	{
 		submit_garden();
 
 		return false;
 	});
 
-	$('#search_form').submit(function()
+	$('#search_form')
+	.submit(function()
 	{
 		submit_search();
 
 		return false;
 	});
 
-	$('#search_text').focus();
+	$('#search_text')
+	.focus();
 });
 
 </script>

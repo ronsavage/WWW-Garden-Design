@@ -1,0 +1,34 @@
+[Wed Feb 22 17:12:42 2017] [info] Listening at "http://localhost:3008"
+[Wed Feb 22 17:12:52 2017] [info] ------------------------------
+[Wed Feb 22 17:12:52 2017] [debug] GET "/"
+[Wed Feb 22 17:12:52 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::Initialize" and action "homepage"
+[Wed Feb 22 17:12:52 2017] [debug] Initialize.homepage()
+[Wed Feb 22 17:12:52 2017] [debug] Rendering template "initialize/homepage.html.ep"
+[Wed Feb 22 17:12:52 2017] [debug] Rendering template "initialize/search.html.ep"
+[Wed Feb 22 17:12:52 2017] [debug] Rendering template "initialize/flower.html.ep"
+[Wed Feb 22 17:12:52 2017] [debug] Rendering template "initialize/attributes.html.ep"
+[Wed Feb 22 17:12:52 2017] [debug] Rendering template "initialize/images.html.ep"
+[Wed Feb 22 17:12:52 2017] [debug] Rendering template "initialize/notes.html.ep"
+[Wed Feb 22 17:12:52 2017] [debug] Rendering template "initialize/urls.html.ep"
+[Wed Feb 22 17:12:52 2017] [debug] Rendering template "initialize/garden.html.ep"
+[Wed Feb 22 17:12:52 2017] [debug] Rendering template "initialize/object.html.ep"
+[Wed Feb 22 17:12:52 2017] [debug] Rendering template "initialize/design.html.ep"
+[Wed Feb 22 17:12:52 2017] [debug] Rendering template "initialize/search_help.html.ep"
+[Wed Feb 22 17:12:52 2017] [debug] Rendering template "initialize/faq_help.html.ep"
+[Wed Feb 22 17:12:52 2017] [debug] 200 OK (0.072526s, 13.788/s)
+[Wed Feb 22 17:12:52 2017] [info] ------------------------------
+[Wed Feb 22 17:12:52 2017] [debug] GET "/GetTable/attribute_types"
+[Wed Feb 22 17:12:52 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::GetTable" and action "attribute_types"
+[Wed Feb 22 17:12:52 2017] [debug] GetTable.attribute_types()
+[Wed Feb 22 17:12:52 2017] [debug] 200 OK (0.007863s, 127.178/s)
+[Wed Feb 22 17:12:52 2017] [info] ------------------------------
+[Wed Feb 22 17:12:52 2017] [debug] GET "/GetTable/objects"
+[Wed Feb 22 17:12:52 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::GetTable" and action "objects"
+[Wed Feb 22 17:12:52 2017] [debug] GetTable.objects()
+[Wed Feb 22 17:12:52 2017] [debug] GetTable.objects(). Size of object_table: 28
+[Wed Feb 22 17:12:52 2017] [debug] 200 OK (0.056692s, 17.639/s)
+[Wed Feb 22 17:12:52 2017] [info] ------------------------------
+[Wed Feb 22 17:13:02 2017] [info] ------------------------------
+[Wed Feb 22 17:13:02 2017] [debug] GET "/AutoComplete"
+[Wed Feb 22 17:13:02 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::AutoComplete" and action "display"
+[Wed Feb 22 17:13:02 2017] [debug] 200 OK (0.004743s, 210.837/s)
