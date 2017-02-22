@@ -903,17 +903,32 @@ function scan_object_menu()
 			// o element.innerText	=> The name.
 			// o element.value		=> The primary key.
 
-			current_object_id = element.value;
-
-			$('#object_name').val(element.innerText);
+			var id = element.value;
 
 			for (i = 0; i < object_table.length; i++)
 			{
-				if (current_object_id == object_table[i]['id'])
+				alert('id: ' + id + '. object.id: ' + object_table[i]['id'] + '.');
+
+				if (id == object_table[i]['id'])
 				{
+					alert('Match');
+
+					$('#color_code')
+					.val(object_table[i]['hex_color']);
+
+					$('#object_name')
+					.val(object_table[i]['name']);
+
 					$('#object_icon')
-					.empty()
-					.append('<img src = "' + object_table[i]['icon_url'] + '" />');
+					.attr('src', object_table[i]['icon_url']);
+
+//					alert('current_object_id: ' + current_object_id
+//						+ '. i: ' + i
+//						+ '. hex: ' + object_table[i]['hex']
+//						+ '. name: ' + object_table[i]['name']
+//						+ '. src: ' + object_table[i]['icon_url'] + '.');
+
+					current_object_id = id;
 				}
 			}
 		}
