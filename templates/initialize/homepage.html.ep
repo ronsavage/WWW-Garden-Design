@@ -438,6 +438,26 @@ function get_garden_table()
 } // End of get_garden_table.
 
 // -----------------------------------------------
+// Warning: This function cannot be used to populate object_menu_placeholder
+// since that involves changing the DOM, but the function is called from within
+// the document ready context which assumes the DOM has stopped changing.
+
+function get_object_table()
+{
+	$.get
+	(
+		'/GetTable/objects',
+		null,
+		function(json)
+		{
+			object_table = json;
+		},
+		'json'
+	);
+
+} // End of get_object_table.
+
+// -----------------------------------------------
 // Warning: This function cannot be used to populate property_menu_placeholder
 // since that involves changing the DOM, but the function is called from within
 // the document ready context which assumes the DOM has stopped changing.
@@ -821,15 +841,14 @@ function scan_object_menu()
 				// o element.innerText	=> The name.
 				// o element.value		=> The primary key.
 
-				current_property_id = element.value;
+				current_object_id = element.value;
 
-				$('#property_description').val(element.innerText);
-				$('#property_name').val(element.value);
-		}
+				$('#object_name').val(element.innerText);
+			}
 		}
 	);
 
-	//get_property_table();
+	//get_object_table();
 
 } // End of scan_object_menu.
 
@@ -853,7 +872,7 @@ function scan_property_menu()
 
 				$('#property_description').val(element.innerText);
 				$('#property_name').val(element.value);
-		}
+			}
 		}
 	);
 
@@ -1029,6 +1048,7 @@ function switch_gardens(property_id)
 $(function()
 {
 	get_attribute_types();
+	get_object_table();
 	scan_property_menu(); // Must be before scan_garden_menu().
 	scan_garden_menu();
 	scan_object_menu();

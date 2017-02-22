@@ -40,6 +40,22 @@ sub gardens
 
 # -----------------------------------------------
 
+sub objects
+{
+	my($self) = @_;
+
+	$self -> app -> log -> debug('GetTable.objects()');
+
+	my($defaults)		= $self -> app -> defaults;
+	my($object_table)	= $$defaults{db} -> read_objects_table;
+
+	$self -> app -> log -> debug('GetTable.objects(). Size of object_table: ' . scalar @$object_table);
+	$self -> render(json => $object_table);
+
+} # End of objects.
+
+# -----------------------------------------------
+
 sub properties
 {
 	my($self) = @_;
