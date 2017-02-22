@@ -157,6 +157,7 @@ sub build_garden_menu
 							. "<select name = 'garden_menu' id = 'garden_menu'>";
 	my($last_name)		= '';
 	my($property_id)	= $controller -> session('current_property_id');
+	my($selected)		= '';
 
 	for my $garden (@$property_gardens)
 	{
@@ -166,14 +167,17 @@ sub build_garden_menu
 
 		if ($last_name eq '')
 		{
+			$selected = "selected = 'selected'";
+
 			$controller -> session(current_garden_id			=> $$garden{id});
 			$controller -> session(current_garden_description	=> $$garden{description});
 			$controller -> session(current_garden_name			=> $$garden{name});
 			$self -> logger -> debug('Setting current_garden_id => ' . $controller -> session('current_garden_id') );
 		}
 
-		$html           .= "<option value = '$$garden{id}'>$$garden{name}</option>";
-		$last_name      = $$garden{name};
+		$html		.= "<option $selected value = '$$garden{id}'>$$garden{name}</option>";
+		$last_name	= $$garden{name};
+		$selected	= '';
 	}
 
 	$html .= '</select>';
@@ -253,11 +257,14 @@ sub build_property_menu
 	my($html)               = "<label for 'property_menu'>Property: </label><br />"
 			                        . "<select name = 'property_menu' id = 'property_menu'>";
 	my($last_name)  = '';
+	my($selected)	= '';
 
 	for my $garden (@$property_gardens)
 	{
 		if ($last_name eq '')
 		{
+			$selected = "selected = 'selected'";
+
 			$controller -> session(current_property_id			=> $$garden{property_id});
 			$controller -> session(current_property_description	=> $$garden{property_description});
 			$controller -> session(current_property_name		=> $$garden{property_name});
@@ -266,8 +273,9 @@ sub build_property_menu
 
 		next if ($last_name eq $$garden{property_name});
 
-		$html           .= "<option value = '$$garden{property_id}'>$$garden{property_name}</option>";
-		$last_name      = $$garden{property_name};
+		$html		.= "<option $selected value = '$$garden{property_id}'>$$garden{property_name}</option>";
+		$last_name	= $$garden{property_name};
+		$selected	= '';
 	}
 
 	$html .= '</select>';
