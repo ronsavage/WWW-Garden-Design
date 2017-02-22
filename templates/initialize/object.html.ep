@@ -71,6 +71,6 @@
 	</table>
 
 	<input id = 'real_color' type = 'hidden' />
-% end
+</form>
 
 <div id = 'object_result_div'></div>

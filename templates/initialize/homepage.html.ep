@@ -96,8 +96,10 @@
 
 var attribute_types_table	= [];
 var current_garden_id		= 0;
+var current_object_id		= 0;
 var current_property_id		= 0;
 var garden_table			= [];
+var object_table			= [];
 var property_table			= [];
 
 // -----------------------------------------------
@@ -709,6 +711,37 @@ function populate_details(flower_id)
 // -----------------------------------------------
 // Note: Changed means the user changed the selected item.
 
+function object_menu_changed(data)
+{
+	//	for( key in data )
+	//	{
+	//		alert( "key is " + [ key ] + ", value is " + data[ key ] );
+	//	}
+
+	// Typical keys for data.item are:
+	//	o label => The object item's text (name column).
+	//	o value => The object item's # (primary key column).
+
+	var name			= object_table[0]['name'];
+	current_object_id	= data.item.value;
+
+	for (i = 1; i < object_table.length; i++)
+	{
+		if (object_table[i]['id'] == current_object_id)
+		{
+			name = object_table[i]['name'];
+		}
+	}
+
+	$('#object_name')
+	.val(name)
+	.focus();
+
+} // End of object_menu_changed.
+
+// -----------------------------------------------
+// Note: Changed means the user changed the selected item.
+
 function property_menu_changed(data)
 {
 	//	for( key in data )
@@ -734,8 +767,9 @@ function property_menu_changed(data)
 	}
 
 	$('#property_description').val(description);
-	$('#property_name').val(name);
-	$('#property_name').focus();
+	$('#property_name')
+	.val(name)
+	.focus();
 
 	// Having updated the property's attributes, we now have to update the garden menu.
 
@@ -770,6 +804,34 @@ function scan_garden_menu()
 	//get_garden_table();
 
 } // End of scan_garden_menu.
+
+// -----------------------------------------------
+
+function scan_object_menu()
+{
+	$('#object_menu')
+	.children('option')
+	.map
+	(
+		function(index, element)
+		{
+			if (current_object_id == 0)
+			{
+				// Available data:
+				// o element.innerText	=> The name.
+				// o element.value		=> The primary key.
+
+				current_property_id = element.value;
+
+				$('#property_description').val(element.innerText);
+				$('#property_name').val(element.value);
+		}
+		}
+	);
+
+	//get_property_table();
+
+} // End of scan_object_menu.
 
 // -----------------------------------------------
 
@@ -967,8 +1029,9 @@ function switch_gardens(property_id)
 $(function()
 {
 	get_attribute_types();
-	scan_property_menu();
+	scan_property_menu(); // Must be before scan_garden_menu().
 	scan_garden_menu();
+	scan_object_menu();
 
 	// Enable the tabs before trying to work with them.
 
@@ -986,6 +1049,15 @@ $(function()
 		change: function(event, data)
 		{
 			property_menu_changed(data);
+		}
+	});
+
+	$('#object_menu')
+	.selectmenu
+	({
+		change: function(event, data)
+		{
+			object_menu_changed(data);
 		}
 	});
 

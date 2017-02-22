@@ -1076,7 +1076,8 @@ sub read_objects_table
 		}
 
 		$$record{icon_dir}	= "$$constants{homepage_dir}$$constants{icon_dir}";
-		$$record{icon_url}	= "$$constants{homepage_url}$$constants{icon_url}";
+		$$record{icon_file}	= $self -> clean_up_icon_name($$object{name});
+		$$record{icon_url}	= "$$constants{homepage_url}$$constants{icon_url}/$$record{icon_file}.png";
 
 		for my $table_name (qw/object_locations/)
 		{
