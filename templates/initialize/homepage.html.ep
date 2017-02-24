@@ -468,7 +468,7 @@ function get_object_table()
 		{
 			object_table = json;
 
-			scan_object_menu();
+			//scan_object_menu();
 		},
 		'json'
 	);
@@ -804,20 +804,23 @@ function object_menu_changed(data)
 	//	o label => The object item's text (name column).
 	//	o value => The object item's # (primary key column).
 
-	var name			= object_table[0]['name'];
-	current_object_id	= data.item.value;
+	current_object_id = data.item.value;
 
 	for (i = 1; i < object_table.length; i++)
 	{
 		if (object_table[i]['id'] == current_object_id)
 		{
-			name = object_table[i]['name'];
+			$('#color_code')
+			.val(object_table[i]['hex_color']);
+
+			$('#object_name')
+			.val(object_table[i]['name'])
+			.focus();
+
+			$('#object_icon')
+			.attr('src', object_table[i]['icon_url']);
 		}
 	}
-
-	$('#object_name')
-	.val(name)
-	.focus();
 
 } // End of object_menu_changed.
 
@@ -907,11 +910,11 @@ function scan_object_menu()
 
 			for (i = 0; i < object_table.length; i++)
 			{
-				alert('id: ' + id + '. object.id: ' + object_table[i]['id'] + '.');
+				alert('index: ' + index + '. id: ' + id + '. object.id: ' + object_table[i]['id'] + '.');
 
 				if (id == object_table[i]['id'])
 				{
-					alert('Match');
+//					alert('Match');
 
 					$('#color_code')
 					.val(object_table[i]['hex_color']);
