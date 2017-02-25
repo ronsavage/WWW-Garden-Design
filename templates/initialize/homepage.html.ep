@@ -819,6 +819,17 @@ function object_menu_changed(data)
 
 			$('#object_icon')
 			.attr('src', object_table[i]['icon_url']);
+
+			$('#color_spectrum')
+			.spectrum('set', object_table[i]['hex_color']);
+
+			$('#color_swatch_chosen')
+			.css('background-color', object_table[i]['hex_color']);
+
+			// Put color in hidden form field for submit.
+
+			$('#real_color')
+			.val(object_table[i]['hex_color']);
 		}
 	}
 
@@ -1241,7 +1252,7 @@ $(function()
 		change:				function(color)
 							{
 								$('#color_swatch_chosen').css('background-color', color.toHexString() );
-								$('#real_color').val(color.toHexString() );
+								$('#real_color').val(color.toHexString() ); // Put color in hidden form field for submit.
 							},
 		color:				'white',
 		preferredFormat:	'hex',
