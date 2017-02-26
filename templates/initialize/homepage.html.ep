@@ -810,7 +810,7 @@ function object_menu_changed(data)
 	{
 		if (object_table[i]['id'] == current_object_id)
 		{
-			set_object_attributes(i);
+			set_object_fields(i);
 		}
 	}
 
@@ -951,16 +951,31 @@ function set_object_fields(i)
 } // End of set_object_fields.
 
 // -----------------------------------------------
-// This function is never called.
 
-function sleep(delay)
+function set_object_fields(i)
 {
-	var now = new Date()
-				.getTime();
+	$('#color_code')
+	.val(object_table[i]['hex_color']);
 
-	while(new Date().getTime() < now + delay){ /* do nothing */ }
+	$('#object_name')
+	.val(object_table[i]['name'])
+	.focus();
 
-} // End of sleep.
+	$('#object_icon')
+	.attr('src', object_table[i]['icon_url']);
+
+	$('#color_spectrum')
+	.spectrum('set', object_table[i]['hex_color']);
+
+	$('#color_swatch_chosen')
+	.css('background-color', object_table[i]['hex_color']);
+
+	// Put color in hidden form field for submit.
+
+	$('#real_color')
+	.val(object_table[i]['hex_color']);
+
+} // End of set_object_fields.
 
 // -----------------------------------------------
 
