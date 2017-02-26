@@ -265,6 +265,7 @@ function build_garden_menu(property_id)
 	html += '</select>';
 
 	$('#garden_menu_placeholder')
+	.empty()
 	.append(html);
 
 	$('#garden_menu')
@@ -338,6 +339,7 @@ function build_property_menu()
 	html += '</select>';
 
 	$('#property_menu_placeholder')
+	.empty()
 	.append(html);
 
 	$('#property_name')
@@ -787,6 +789,7 @@ function property_menu_changed(data)
 		if (garden_table[i]['property_id'] == current_property_id)
 		{
 			set_property_fields(i);
+			build_garden_menu(current_property_id);
 			set_garden_fields(i);
 
 			break;
