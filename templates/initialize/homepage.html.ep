@@ -247,7 +247,7 @@ function build_garden_menu(property_id)
 	var id;
 	var name;
 
-	for (i = 0; i < garden_table.length; i++)
+	for (var i = 0; i < garden_table.length; i++)
 	{
 		if (garden_table[i]['property_id'] == property_id)
 		{
@@ -324,7 +324,7 @@ function build_property_menu()
 	var id;
 	var name;
 
-	for (i = 0; i < property_table.length; i++)
+	for (var i = 0; i < property_table.length; i++)
 	{
 		id		= property_table[i]['id'];
 		name	= property_table[i]['name'];
@@ -388,7 +388,7 @@ function garden_menu_changed(data)
 
 	current_garden_id = data.item.value;
 
-	for (i = 0; i < garden_table.length; i++)
+	for (var i = 0; i < garden_table.length; i++)
 	{
 		if (garden_table[i]['id'] == current_garden_id)
 		{
@@ -519,9 +519,9 @@ function populate_details(flower_id)
 		var tabs = ['attribute', 'note', 'image', 'url'];
 		var vars = ['common_name', 'scientific_name'];
 
-		for (i = 0; i < tabs.length; i++)
+		for (var i = 0; i < tabs.length; i++)
 		{
-			for (j = 0; j < vars.length; j++)
+			for (var j = 0; j < vars.length; j++)
 			{
 				id = '#' + tabs[i] + '_' + vars[j];
 
@@ -540,12 +540,12 @@ function populate_details(flower_id)
 		// Attributes: Copy attribute types to the Flower/Attributes tab.
 		// 1: Remove any existing attributes.
 
-		for (i = 0; i < attribute_types_table.length; i++)
+		for (var i = 0; i < attribute_types_table.length; i++)
 		{
 			attribute_name	= attribute_types_table[i]['name'];
 			range			= attribute_types_table[i]['range'].split(', ');
 
-			for (j = 0; j < range.length; j++)
+			for (var j = 0; j < range.length; j++)
 			{
 				value	= range[j];
 				id		= build_attribute_id('attribute', attribute_name, value);
@@ -560,7 +560,7 @@ function populate_details(flower_id)
 
 		// 2: Loop over all attributes owned by this flower.
 
-		for (i = 0; i < flower['attributes'].length; i++)
+		for (var i = 0; i < flower['attributes'].length; i++)
 		{
 			attribute		= flower['attributes'][i];
 			attribute_name	= attribute['name'];
@@ -568,7 +568,7 @@ function populate_details(flower_id)
 
 			// Loop over all attribute types.
 
-			for (j = 0; j < attribute_types_table.length; j++)
+			for (var j = 0; j < attribute_types_table.length; j++)
 			{
 				attribute_type_name = attribute_types_table[j]['name'];
 
@@ -579,7 +579,7 @@ function populate_details(flower_id)
 					continue;
 				}
 
-				for (k = 0; k < range.length; k++)
+				for (var k = 0; k < range.length; k++)
 				{
 					value	= range[k];
 					id		= build_attribute_id('attribute', attribute_name, value);
@@ -599,7 +599,7 @@ function populate_details(flower_id)
 		var ids			= [];
 		var image_count	= <%== $$constants{max_image_count} %>;
 
-		for (i = 0; i < image_count; i++)
+		for (var i = 0; i < image_count; i++)
 		{
 			ids.push(build_image_ids(i + 1) );
 
@@ -627,7 +627,7 @@ function populate_details(flower_id)
 		var file_name;
 		var sequence;
 
-		for (i = 0; i < image_count; i++)
+		for (var i = 0; i < image_count; i++)
 		{
 			description		= flower['images'][i]['description'];
 			file_name		= flower['images'][i]['file_name'];
@@ -657,7 +657,7 @@ function populate_details(flower_id)
 		ids			= [];
 		note_count	= <%== $$constants{max_note_count} %>;
 
-		for (i = 0; i < note_count; i++)
+		for (var i = 0; i < note_count; i++)
 		{
 			ids.push(build_note_ids(i + 1) );
 
@@ -677,7 +677,7 @@ function populate_details(flower_id)
 
 		var note;
 
-		for (i = 0; i < note_count; i++)
+		for (var i = 0; i < note_count; i++)
 		{
 			note		= flower['notes'][i]['note'];
 			sequence	= flower['notes'][i]['sequence'];
@@ -698,7 +698,7 @@ function populate_details(flower_id)
 		ids			= [];
 		url_count	= <%== $$constants{max_url_count} %>;
 
-		for (i = 0; i < url_count; i++)
+		for (var i = 0; i < url_count; i++)
 		{
 			ids.push(build_url_ids(i) );
 
@@ -718,7 +718,7 @@ function populate_details(flower_id)
 
 		var url;
 
-		for (i = 0; i < url_count; i++)
+		for (var i = 0; i < url_count; i++)
 		{
 			sequence	= flower['urls'][i]['sequence'];
 			url			= flower['urls'][i]['url'];
@@ -756,7 +756,7 @@ function object_menu_changed(data)
 
 	current_object_id = data.item.value;
 
-	for (i = 0; i < object_table.length; i++)
+	for (var i = 0; i < object_table.length; i++)
 	{
 		if (object_table[i]['id'] == current_object_id)
 		{
@@ -784,7 +784,7 @@ function property_menu_changed(data)
 
 	current_property_id = data.item.value;
 
-	for (i = 0; i < garden_table.length; i++)
+	for (var i = 0; i < garden_table.length; i++)
 	{
 		if (garden_table[i]['property_id'] == current_property_id)
 		{
@@ -802,6 +802,8 @@ function property_menu_changed(data)
 
 function set_garden_fields(i)
 {
+	alert('set_garden_fields(i): ' + i);
+
 	$('#garden_description')
 	.val(garden_table[i]['description']);
 
@@ -935,12 +937,12 @@ function submit_search()
 	var range = new Array();
 	var value;
 
-	for (i = 0; i < attribute_types_table.length; i++)
+	for (var i = 0; i < attribute_types_table.length; i++)
 	{
 		attribute_name	= attribute_types_table[i]['name'];
 		range			= attribute_types_table[i]['range'].split(', ');
 
-		for (j = 0; j < range.length; j++)
+		for (var j = 0; j < range.length; j++)
 		{
 			value			= range[j];
 			id				= build_attribute_id('search', attribute_name, value);
