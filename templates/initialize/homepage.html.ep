@@ -802,8 +802,6 @@ function property_menu_changed(data)
 
 function set_garden_fields(i)
 {
-	alert('set_garden_fields(i): ' + i);
-
 	$('#garden_description')
 	.val(garden_table[i]['description']);
 
