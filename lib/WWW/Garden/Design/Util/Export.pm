@@ -886,7 +886,7 @@ EOS
 <table align='center' summary = 'Table for a list of URLs'>
 	<tr><td align='center'><br /><span class = '$$constants{css_class4headings}' id = 'various_urls'>Various URLs</span></td></tr>
 	<tr><td><a href = 'https://datatables.net/'>The URL</a> of the free Javascript package which manages the HTML table below</td></tr>
-	<tr><td><a href = 'http://bgrins.github.io/spectrum/'>The github repo</a> of the free Javascript package which provides a color spectrum...</td></tr>
+	<tr><td><a href = 'https://github.com/bgrins/spectrum'>The github repo</a> of the free Javascript package which provides a color spectrum...</td></tr>
 	<tr><td>... and the corresponding <a href = 'https://bgrins.github.io/spectrum/'>on-line docs.</a></td></tr>
 	<tr><td><br></td></tr>
 	<tr><td><a href = 'http://www.theplantlist.org/'>The Plant List - A working list of all plant species</a></td></tr>
