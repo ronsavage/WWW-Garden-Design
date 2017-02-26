@@ -95,12 +95,8 @@
 // Storage for info read in below from the database.
 
 var attribute_types_table	= [];
-var current_garden_id		= 0;
-var current_object_id		= 0;
-var current_property_id		= 0;
 var garden_table			= [];
 var object_table			= [];
-var property_table			= [];
 
 // -----------------------------------------------
 
@@ -261,7 +257,7 @@ function build_garden_menu(property_id)
 
 			if (first_id == 0)
 			{
-				current_garden_id = first_id = id;
+				first_id = id;
 			}
 		}
 	}
@@ -320,9 +316,6 @@ function build_note_ids(sequence)
 
 function build_property_menu()
 {
-	///get_property_table();
-	///get_garden_table();
-
 	var first_id	= 0;
 	var html		= "<label for 'property_menu'>Property: </label><br />"
 						+ "<select name = 'property_menu' id = 'property_menu'>";
@@ -338,7 +331,7 @@ function build_property_menu()
 
 		if (first_id == 0)
 		{
-			current_property_id = first_id = id;
+			first_id = id;
 		}
 	}
 
@@ -358,8 +351,6 @@ function build_property_menu()
 			property_menu_changed(data);
 		}
 	});
-
-	///build_garden_menu(current_property_id);
 
 } // End of build_property_menu.
 
@@ -393,9 +384,17 @@ function garden_menu_changed(data)
 //	o label => The garden item's text (name column).
 //	o value => The garden item's # (primary key column).
 
-	alert('garden_menu_changed(). garden id: ' + data.item.value);
+	current_garden_id = data.item.value;
 
-	switch_garden_menu_item(data.item.value);
+	for (i = 0; i < garden_table.length; i++)
+	{
+		if (garden_table[i]['id'] == current_garden_id)
+		{
+			set_garden_fields(i);
+
+			break;
+		}
+	}
 
 } // End of garden_menu_changed.
 
@@ -417,43 +416,6 @@ function get_attribute_types()
 } // End of get_attribute_types.
 
 // -----------------------------------------------
-// Warning: This function cannot be used to populate garden_menu_placeholder
-// since that involves changing the DOM, but the function is called from within
-// the document ready context which assumes the DOM has stopped changing.
-
-function get_garden_table()
-{
-	$.get
-	(
-		'/GetTable/gardens',
-		null,
-		function(json)
-		{
-			garden_table	= json;
-			var description	= garden_table[0]['description'];
-			var name		= garden_table[0]['name'];
-
-			for (i = 1; i < garden_table.length; i++)
-			{
-				if (garden_table[i]['id'] == current_garden_id)
-				{
-					description	= garden_table[i]['description'];
-					name		= garden_table[i]['name'];
-				}
-			}
-
-			$('#garden_description')
-			.val(description);
-
-			$('#garden_name')
-			.val(name);
-		},
-		'json'
-	);
-
-} // End of get_garden_table.
-
-// -----------------------------------------------
 // Warning: This function cannot be used to populate object_menu_placeholder
 // since that involves changing the DOM, but the function is called from within
 // the document ready context which assumes the DOM has stopped changing.
@@ -469,6 +431,8 @@ function get_object_table()
 			object_table = json;
 
 			set_object_fields(0);
+
+			get_garden_table();
 		},
 		'json'
 	);
@@ -476,43 +440,27 @@ function get_object_table()
 } // End of get_object_table.
 
 // -----------------------------------------------
-// Warning: This function cannot be used to populate property_menu_placeholder
+// Warning: This function cannot be used to populate garden_menu_placeholder
 // since that involves changing the DOM, but the function is called from within
 // the document ready context which assumes the DOM has stopped changing.
 
-function get_property_table()
+function get_garden_table()
 {
 	$.get
 	(
-		'/GetTable/properties',
+		'/GetTable/gardens',
 		null,
 		function(json)
 		{
-			property_table	= json;
-			var description	= property_table[0]['description'];
-			var name		= property_table[0]['name'];
+			garden_table = json;
 
-			for (i = 1; i < property_table.length; i++)
-			{
-				if (property_table[i]['id'] == current_property_id)
-				{
-					description	= property_table[i]['description'];
-					name		= property_table[i]['name'];
-				}
-			}
-
-			$('#property_description')
-			.val(description);
-
-			$('#property_name')
-			.val(name);
-
-			//$('#property_name').focus(); // This triggers /AutoComplete!
+			set_property_fields(0);
+			set_garden_fields(0);
 		},
 		'json'
 	);
 
-} // End of get_property_table.
+} // End of get_garden_table.
 
 // -----------------------------------------------
 
@@ -806,11 +754,13 @@ function object_menu_changed(data)
 
 	current_object_id = data.item.value;
 
-	for (i = 1; i < object_table.length; i++)
+	for (i = 0; i < object_table.length; i++)
 	{
 		if (object_table[i]['id'] == current_object_id)
 		{
 			set_object_fields(i);
+
+			break;
 		}
 	}
 
@@ -830,125 +780,32 @@ function property_menu_changed(data)
 	//	o label => The property item's text (name column).
 	//	o value => The property item's # (primary key column).
 
-	var description		= property_table[0]['description'];
-	var name			= property_table[0]['name'];
 	current_property_id = data.item.value;
 
-	for (i = 1; i < property_table.length; i++)
+	for (i = 0; i < garden_table.length; i++)
 	{
-		if (property_table[i]['id'] == current_property_id)
+		if (garden_table[i]['property_id'] == current_property_id)
 		{
-			description	= property_table[i]['description'];
-			name		= property_table[i]['name'];
+			set_property_fields(i);
+			set_garden_fields(i);
+
+			break;
 		}
 	}
-
-	$('#property_description')
-	.val(description);
-
-	$('#property_name')
-	.val(name)
-	.focus();
-
-	// Having updated the property's attributes, we now have to update the garden menu.
-
-	///switch_gardens(current_property_id);
 
 } // End of property_menu_changed.
 
 // -----------------------------------------------
 
-function scan_garden_menu()
+function set_garden_fields(i)
 {
-	$('#garden_menu')
-	.children('option')
-	.map
-	(
-		function(index, element)
-		{
-			if (current_garden_id == 0)
-			{
-				// Available data:
-				// o element.innerText	=> The name.
-				// o element.value		=> The primary key.
+	$('#garden_description')
+	.val(garden_table[i]['description']);
 
-				current_garden_id = element.value;
+	$('#garden_name')
+	.val(garden_table[i]['name']);
 
-				$('#garden_description').val(element.innerText);
-				$('#garden_name').val(element.value);
-			}
-		}
-	);
-
-	//get_garden_table();
-
-} // End of scan_garden_menu.
-
-// -----------------------------------------------
-
-function scan_object_table()
-{
-	set_object_fields(0);
-
-} // End of scan_object_table.
-
-// -----------------------------------------------
-
-function scan_property_menu()
-{
-	$('#property_menu')
-	.children('option')
-	.map
-	(
-		function(index, element)
-		{
-			if (current_property_id == 0)
-			{
-				// Available data:
-				// o element.innerText	=> The name.
-				// o element.value		=> The primary key.
-
-				current_property_id = element.value;
-
-				$('#property_description')
-				.val(element.innerText);
-
-				$('#property_name')
-				.val(element.value);
-			}
-		}
-	);
-
-	//get_property_table();
-
-} // End of scan_property_menu.
-
-/// -----------------------------------------------
-
-function set_object_fields(i)
-{
-	$('#color_code')
-	.val(object_table[i]['hex_color']);
-
-	$('#object_name')
-	.val(object_table[i]['name'])
-	.focus();
-
-	$('#object_icon')
-	.attr('src', object_table[i]['icon_url']);
-
-	$('#color_spectrum')
-	.spectrum('set', object_table[i]['hex_color']);
-
-	$('#color_swatch_chosen')
-	.css('background-color', object_table[i]['hex_color']);
-
-	// Put color in hidden form field for submit.
-
-	$('#real_color')
-	.val(object_table[i]['hex_color']);
-
-} // End of set_object_fields.
+} // End of set_garden_fields.
 
 // -----------------------------------------------
 
@@ -976,6 +833,18 @@ function set_object_fields(i)
 	.val(object_table[i]['hex_color']);
 
 } // End of set_object_fields.
+
+// -----------------------------------------------
+
+function set_property_fields(i)
+{
+	$('#property_description')
+	.val(garden_table[i]['property_description']);
+
+	$('#property_name')
+	.val(garden_table[i]['property_name']);
+
+} // End of set_property_fields.
 
 // -----------------------------------------------
 
@@ -1101,59 +970,11 @@ function submit_search()
 } // End of submit_search.
 
 // -----------------------------------------------
-// Note: Changed means the user changed the selected item.
-
-function switch_garden_menu_item(garden_id)
-{
-	alert('current_property_id: ' + current_property_id + '. garden_id: ' + garden_id);
-
-	var description	= 'Unknown';
-	var name		= 'Unknown';
-
-	for (i = 0; i < garden_table.length; i++)
-	{
-		if (garden_table[i]['property_id'] == current_property_id)
-		{
-			if (garden_table[i]['id'] == garden_id)
-			{
-				current_garden_id	= garden_id;
-				description			= garden_table[i]['description'];
-				name				= garden_table[i]['name'];
-			}
-		}
-	}
-
-	$('#garden_description')
-	.val(description);
-
-	$('#garden_name')
-	.val(name);
-
-} // End of switch_garden_menu_item.
-
-// -----------------------------------------------
-
-function switch_gardens(property_id)
-{
-	// Convert the garden table into a drop-down list.
-	// The original menu was generated in Perl.
-
-	build_garden_menu(property_id);
-
-	// Update the form with the first garden's details.
-
-	switch_garden_menu_item(current_garden_id);
-
-} // End of switch_gardens.
-
-// -----------------------------------------------
 
 $(function()
 {
 	get_attribute_types();
 	get_object_table();
-	scan_property_menu();
-	scan_garden_menu();
 
 	// Enable the tabs before trying to work with them.
 

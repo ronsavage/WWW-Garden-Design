@@ -131,7 +131,6 @@ sub startup
 	$r -> route('/GetTable/attribute_types')	-> to('GetTable#attribute_types');
 	$r -> route('/GetTable/gardens')			-> to('GetTable#gardens');
 	$r -> route('/GetTable/objects')			-> to('GetTable#objects');
-	$r -> route('/GetTable/properties')			-> to('GetTable#properties');
 	$r -> route('/SaveFlowerDetails')			-> to('SaveFlowerDetails#display');
 	$r -> route('/Search')						-> to('Search#display');
 

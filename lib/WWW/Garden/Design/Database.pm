@@ -1029,7 +1029,7 @@ sub read_gardens_table
 
 		# Annotate the records with their properties.
 
-		$$record{property_desciption}	= $property{$$record{property_id} }{desciption};
+		$$record{property_description}	= $property{$$record{property_id} }{description};
 		$$record{property_name}			= $property{$$record{property_id} }{name};
 
 		push @records, $record;
