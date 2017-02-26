@@ -468,7 +468,7 @@ function get_object_table()
 		{
 			object_table = json;
 
-			//scan_object_menu();
+			set_object_fields(0);
 		},
 		'json'
 	);
@@ -810,26 +810,7 @@ function object_menu_changed(data)
 	{
 		if (object_table[i]['id'] == current_object_id)
 		{
-			$('#color_code')
-			.val(object_table[i]['hex_color']);
-
-			$('#object_name')
-			.val(object_table[i]['name'])
-			.focus();
-
-			$('#object_icon')
-			.attr('src', object_table[i]['icon_url']);
-
-			$('#color_spectrum')
-			.spectrum('set', object_table[i]['hex_color']);
-
-			$('#color_swatch_chosen')
-			.css('background-color', object_table[i]['hex_color']);
-
-			// Put color in hidden form field for submit.
-
-			$('#real_color')
-			.val(object_table[i]['hex_color']);
+			set_object_attributes(i);
 		}
 	}
 
@@ -905,50 +886,11 @@ function scan_garden_menu()
 
 // -----------------------------------------------
 
-function scan_object_menu()
+function scan_object_table()
 {
-	$('#object_menu')
-	.children('option')
-	.map
-	(
-		function(index, element)
-		{
-			// Available data:
-			// o element.innerText	=> The name.
-			// o element.value		=> The primary key.
+	set_object_fields(0);
 
-			var id = element.value;
-
-			for (i = 0; i < object_table.length; i++)
-			{
-				alert('index: ' + index + '. id: ' + id + '. object.id: ' + object_table[i]['id'] + '.');
-
-				if (id == object_table[i]['id'])
-				{
-//					alert('Match');
-
-					$('#color_code')
-					.val(object_table[i]['hex_color']);
-
-					$('#object_name')
-					.val(object_table[i]['name']);
-
-					$('#object_icon')
-					.attr('src', object_table[i]['icon_url']);
-
-//					alert('current_object_id: ' + current_object_id
-//						+ '. i: ' + i
-//						+ '. hex: ' + object_table[i]['hex']
-//						+ '. name: ' + object_table[i]['name']
-//						+ '. src: ' + object_table[i]['icon_url'] + '.');
-
-					current_object_id = id;
-				}
-			}
-		}
-	);
-
-} // End of scan_object_menu.
+} // End of scan_object_table.
 
 // -----------------------------------------------
 
@@ -980,6 +922,33 @@ function scan_property_menu()
 	//get_property_table();
 
 } // End of scan_property_menu.
+
+/// -----------------------------------------------
+
+function set_object_fields(i)
+{
+	$('#color_code')
+	.val(object_table[i]['hex_color']);
+
+	$('#object_name')
+	.val(object_table[i]['name'])
+	.focus();
+
+	$('#object_icon')
+	.attr('src', object_table[i]['icon_url']);
+
+	$('#color_spectrum')
+	.spectrum('set', object_table[i]['hex_color']);
+
+	$('#color_swatch_chosen')
+	.css('background-color', object_table[i]['hex_color']);
+
+	// Put color in hidden form field for submit.
+
+	$('#real_color')
+	.val(object_table[i]['hex_color']);
+
+} // End of set_object_fields.
 
 // -----------------------------------------------
 // This function is never called.
@@ -1251,8 +1220,10 @@ $(function()
 	({
 		change:				function(color)
 							{
-								$('#color_swatch_chosen').css('background-color', color.toHexString() );
-								$('#real_color').val(color.toHexString() ); // Put color in hidden form field for submit.
+								$('#color_swatch_chosen')
+								.css('background-color', color.toHexString() );
+								$('#real_color')
+								.val(color.toHexString() ); // Put color in hidden form field for submit.
 							},
 		color:				'white',
 		preferredFormat:	'hex',
