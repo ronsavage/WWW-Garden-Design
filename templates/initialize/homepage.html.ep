@@ -95,6 +95,8 @@
 // Storage for info read in below from the database.
 
 var attribute_types_table	= [];
+var design_flower_index		= 0;
+var design_object_index		= 0;
 var garden_table			= [];
 var object_table			= [];
 
@@ -519,6 +521,8 @@ function populate_details(flower_id)
 		var tabs = ['attribute', 'note', 'image', 'url'];
 		var vars = ['common_name', 'scientific_name'];
 
+		var id;
+
 		for (var i = 0; i < tabs.length; i++)
 		{
 			for (var j = 0; j < vars.length; j++)
@@ -530,10 +534,31 @@ function populate_details(flower_id)
 			}
 		}
 
+		// Populate 3 flower fields on the Design tab.
+
+		design_flower_index++;
+
+		if (design_flower_index > 4)
+		{
+			design_flower_index = 1;
+		}
+
+		id = '#design_flower_' + design_flower_index;
+
+		$(id)
+		.html(thumbnail_html);
+
+		for (var i = 0; i < vars.length; i++)
+		{
+			id = '#design_' + vars[i] + '_' + design_flower_index;
+
+			$(id)
+			.text(flower[vars[i] ]);
+		}
+
 		// Copy attributes to the Details/Attributes tab.
 
 		var attribute_name;
-		var id;
 		var range = new Array();
 		var value;
 
@@ -784,12 +809,12 @@ function populate_design_tab_placeholders()
 
 	for (var i = 1; i <= 4; i++)
 	{
-		id = '#flower_' + i;
+		id = '#design_flower_' + i;
 
 		$(id)
 		.html(icon_html);
 
-		id = '#object_' + i;
+		id = '#design_object_' + i;
 
 		$(id)
 		.html(icon_html);
@@ -863,6 +888,27 @@ function set_object_fields(i)
 
 	$('#real_color')
 	.val(object_table[i]['hex_color']);
+
+	// Popuate 3 fields on the Design tab.
+
+	design_object_index++;
+
+	if (design_object_index > 4)
+	{
+		design_object_index = 1;
+	}
+
+	var id					= '#design_object_' + design_object_index;
+	var thumbnail_size		= <%== $$constants{design_thumbnail_size} %>;
+	var thumbnail_string	= "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
+
+	$(id)
+	.html("<img src = '" + object_table[i]['icon_url'] + "' " + thumbnail_string + '>');
+
+	id = '#design_object_name_' + design_object_index;
+
+	$(id)
+	.text(object_table[i]['name']);
 
 } // End of set_object_fields.
 

@@ -14,62 +14,62 @@
 					<tbody>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'flower_1'></span>
+								<span id = 'design_flower_1'></span>
 							</td>
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'scientific_name_1'></span>
+								<span id = 'design_scientific_name_1'></span>
 							</td>
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'common_name_1'></span>
+								<span id = 'design_common_name_1'></span>
 							</td>
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'flower_2'></span>
+								<span id = 'design_flower_2'></span>
 							</td>
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'scientific_name_2'></span>
+								<span id = 'design_scientific_name_2'></span>
 							</td>
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'common_name_2'></span>
+								<span id = 'design_common_name_2'></span>
 							</td>
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'flower_3'></span>
+								<span id = 'design_flower_3'></span>
 							</td>
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'scientific_name_3'></span>
+								<span id = 'design_scientific_name_3'></span>
 							</td>
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'common_name_3'></span>
+								<span id = 'design_common_name_3'></span>
 							</td>
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'flower_4'></span>
+								<span id = 'design_flower_4'></span>
 							</td>
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'scientific_name_4'></span>
+								<span id = 'design_scientific_name_4'></span>
 							</td>
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'common_name_4'></span>
+								<span id = 'design_common_name_4'></span>
 							</td>
 						</tr>
 					</tbody>
@@ -93,42 +93,42 @@
 					<tbody>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'object_1'></span>
+								<span id = 'design_object_1'></span>
 							</td>
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'object_name_1'></span>
+								<span id = 'design_object_name_1'></span>
 							</td>
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'object_2'></span>
+								<span id = 'design_object_2'></span>
 							</td>
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'object_name_2'></span>
+								<span id = 'design_object_name_2'></span>
 							</td>
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'object_3'></span>
+								<span id = 'design_object_3'></span>
 							</td>
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'object_name_3'></span>
+								<span id = 'design_object_name_3'></span>
 							</td>
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'object_4'></span>
+								<span id = 'design_object_4'></span>
 							</td>
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
-								<span id = 'object_name_4'></span>
+								<span id = 'design_object_name_4'></span>
 							</td>
 						</tr>
 					</tbody>
