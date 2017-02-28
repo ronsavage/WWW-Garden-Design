@@ -9,14 +9,29 @@
 			<td width = '15%'>
 				<table align = 'center'>
 					<thead>
-						<tr><td class = 'generic_border_margin'>Objects</td></td>
+						<tr><td class = 'generic_border_margin'>Flowers</td></td>
 					</thead>
 					<tbody>
-						<tr><td class = 'generic_border_margin'>One</td></td>
-						<tr><td class = 'generic_border_margin'>Two</td></td>
-						<tr><td class = 'generic_border_margin'>Three</td></td>
-						<tr><td class = 'generic_border_margin'>Four</td></td>
-						<tr><td class = 'generic_border_margin'>Five</td></td>
+						<tr>
+							<td class = 'generic_border_margin'>
+								<span id = 'flower_1'></span>
+							</td>
+						</tr>
+						<tr>
+							<td class = 'generic_border_margin'>
+								<span id = 'flower_2'></span>
+							</td>
+						</tr>
+						<tr>
+							<td class = 'generic_border_margin'>
+								<span id = 'flower_3'></span>
+							</td>
+						</tr>
+						<tr>
+							<td class = 'generic_border_margin'>
+								<span id = 'flower_4'></span>
+							</td>
+						</tr>
 					</tbody>
 				</table>
 			</td>
@@ -33,14 +48,29 @@
 			<td width = '15%'>
 				<table align = 'center'>
 					<thead>
-						<tr><td class = 'generic_border_margin'>Flowers</td></td>
+						<tr><td class = 'generic_border_margin'>Objects</td></td>
 					</thead>
 					<tbody>
-						<tr><td class = 'generic_border_margin'>One</td></td>
-						<tr><td class = 'generic_border_margin'>Two</td></td>
-						<tr><td class = 'generic_border_margin'>Three</td></td>
-						<tr><td class = 'generic_border_margin'>Four</td></td>
-						<tr><td class = 'generic_border_margin'>Five</td></td>
+						<tr>
+							<td class = 'generic_border_margin'>
+								<span id = 'object_1'></span>
+							</td>
+						</tr>
+						<tr>
+							<td class = 'generic_border_margin'>
+								<span id = 'object_2'></span>
+							</td>
+						</tr>
+						<tr>
+							<td class = 'generic_border_margin'>
+								<span id = 'object_3'></span>
+							</td>
+						</tr>
+						<tr>
+							<td class = 'generic_border_margin'>
+								<span id = 'object_4'></span>
+							</td>
+						</tr>
 					</tbody>
 				</table>
 			</td>
