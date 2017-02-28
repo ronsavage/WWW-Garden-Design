@@ -64,7 +64,7 @@
 %= include 'initialize/object', object_menu => $object_menu
 	</div>
 	<div id = 'global_design_tab'>
-%= include 'initialize/design'
+%= include 'initialize/design', constants => $constants
 	</div>
 	<div id = 'global_help_tab'>
 		<div id = 'help_div'>
