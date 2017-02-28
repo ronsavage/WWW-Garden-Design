@@ -19,7 +19,27 @@
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
+								<span id = 'scientific_name_1'></span>
+							</td>
+						</tr>
+						<tr>
+							<td class = 'generic_border_margin'>
+								<span id = 'common_name_1'></span>
+							</td>
+						</tr>
+						<tr>
+							<td class = 'generic_border_margin'>
 								<span id = 'flower_2'></span>
+							</td>
+						</tr>
+						<tr>
+							<td class = 'generic_border_margin'>
+								<span id = 'scientific_name_2'></span>
+							</td>
+						</tr>
+						<tr>
+							<td class = 'generic_border_margin'>
+								<span id = 'common_name_2'></span>
 							</td>
 						</tr>
 						<tr>
@@ -29,7 +49,27 @@
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
+								<span id = 'scientific_name_3'></span>
+							</td>
+						</tr>
+						<tr>
+							<td class = 'generic_border_margin'>
+								<span id = 'common_name_3'></span>
+							</td>
+						</tr>
+						<tr>
+							<td class = 'generic_border_margin'>
 								<span id = 'flower_4'></span>
+							</td>
+						</tr>
+						<tr>
+							<td class = 'generic_border_margin'>
+								<span id = 'scientific_name_4'></span>
+							</td>
+						</tr>
+						<tr>
+							<td class = 'generic_border_margin'>
+								<span id = 'common_name_4'></span>
 							</td>
 						</tr>
 					</tbody>
@@ -58,7 +98,17 @@
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
+								<span id = 'object_name_1'></span>
+							</td>
+						</tr>
+						<tr>
+							<td class = 'generic_border_margin'>
 								<span id = 'object_2'></span>
+							</td>
+						</tr>
+						<tr>
+							<td class = 'generic_border_margin'>
+								<span id = 'object_name_2'></span>
 							</td>
 						</tr>
 						<tr>
@@ -68,7 +118,17 @@
 						</tr>
 						<tr>
 							<td class = 'generic_border_margin'>
+								<span id = 'object_name_3'></span>
+							</td>
+						</tr>
+						<tr>
+							<td class = 'generic_border_margin'>
 								<span id = 'object_4'></span>
+							</td>
+						</tr>
+						<tr>
+							<td class = 'generic_border_margin'>
+								<span id = 'object_name_4'></span>
 							</td>
 						</tr>
 					</tbody>

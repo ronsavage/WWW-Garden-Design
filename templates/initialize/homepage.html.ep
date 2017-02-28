@@ -775,11 +775,11 @@ function populate_design_tab_placeholders()
 	var homepage_url		= <%== $$constants{homepage_url4js} %>;
 	var icon_url			= <%== $$constants{icon_url4js} %>;
 	var icon_path			= homepage_url + icon_url + '/white.tile.png';
-	var thumbnail_size		= <%== $$constants{search_thumbnail_size} %>;
+	var thumbnail_size		= <%== $$constants{design_thumbnail_size} %>;
 	var thumbnail_string	= "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
 	var icon_html			= "<img src = '" + icon_path + "' " + thumbnail_string + '>';
 
-	// Copy the white tile into each of 4 dummy flowers and 5 dummy objects.
+	// Copy the white tile into each of 4 dummy flowers and 4 dummy objects.
 	// I chose 4 because the result fits neatly on the screen of my laptop.
 
 	for (var i = 1; i <= 4; i++)
