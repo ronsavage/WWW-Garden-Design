@@ -1,50 +1,48 @@
+<table class = 'centered' class = 'generic border'>
+	<tr>
+		<td width = '15%'>
+			<table class = 'centered'>
+				<thead>
+					<tr><td class = 'generic_border_margin'>Objects</td></td>
+				</thead>
+				<tbody>
+					<tr><td class = 'generic_border_margin'>One</td></td>
+					<tr><td class = 'generic_border_margin'>Two</td></td>
+					<tr><td class = 'generic_border_margin'>Three</td></td>
+					<tr><td class = 'generic_border_margin'>Four</td></td>
+					<tr><td class = 'generic_border_margin'>Five</td></td>
+				</tbody>
+			</table>
+		</td>
+		<td width = '70%'>
+			<table class = 'centered'>
+				<thead>
+					<tr><td class = 'generic_border_margin'>Layout</td></td>
+				</thead>
+				<tbody>
+					<tr><td class = 'generic_border_margin'>One</td></td>
+				</tbody>
+			</table>
+		</td>
+		<td width = '15%'>
+			<table class = 'centered'>
+				<thead>
+					<tr><td class = 'generic_border_margin'>Flowers</td></td>
+				</thead>
+				<tbody>
+					<tr><td class = 'generic_border_margin'>One</td></td>
+					<tr><td class = 'generic_border_margin'>Two</td></td>
+					<tr><td class = 'generic_border_margin'>Three</td></td>
+					<tr><td class = 'generic_border_margin'>Four</td></td>
+					<tr><td class = 'generic_border_margin'>Five</td></td>
+				</tbody>
+			</table>
+		</td>
+	</tr>
+</table>
+
 %= form_for '/Design' => (method => 'POST') => begin
 	%= csrf_field
-
-	<div class = 'colmask threecol'>
-		<div class = 'colmid'>
-			<div class = 'colleft'>
-				<div class = 'col1'>
-					<table>
-						<thead>
-							<tr><td class = 'generic_border_margin'>Objects</td></td>
-						</thead>
-						<tbody>
-							<tr><td class = 'generic_border_margin'>One</td></td>
-							<tr><td class = 'generic_border_margin'>Two</td></td>
-							<tr><td class = 'generic_border_margin'>Three</td></td>
-							<tr><td class = 'generic_border_margin'>Four</td></td>
-							<tr><td class = 'generic_border_margin'>Five</td></td>
-						</tbody>
-					</table>
-				</div>
-				<div class = 'col2'>
-					<table>
-						<thead>
-							<tr><td class = 'generic_border_margin'>Layout</td></td>
-						</thead>
-						<tbody>
-							<tr><td class = 'generic_border_margin'>One</td></td>
-						</tbody>
-					</table>
-				</div>
-				<div class = 'col3'>
-				<table>
-						<thead>
-							<tr><td class = 'generic_border_margin'>Flowers</td></td>
-						</thead>
-						<tbody>
-							<tr><td class = 'generic_border_margin'>One</td></td>
-							<tr><td class = 'generic_border_margin'>Two</td></td>
-							<tr><td class = 'generic_border_margin'>Three</td></td>
-							<tr><td class = 'generic_border_margin'>Four</td></td>
-							<tr><td class = 'generic_border_margin'>Five</td></td>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
 
 % end
 
