@@ -337,7 +337,7 @@ sub as_html
 			{
 				td => mark_raw
 				(
-					qq|<a href='$$flower{web_page_url}' target = 'new_window'><img src='$$flower{thumbnail_url}' alt = "$$flower{scientific_name}"></a>|
+					qq|<a href='$$flower{web_page_url}' target = '_blank'><img src='$$flower{thumbnail_url}' alt = "$$flower{scientific_name}"></a>|
 				)
 			};
 
