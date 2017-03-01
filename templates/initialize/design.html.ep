@@ -81,7 +81,11 @@
 						<tr><td class = 'generic_border_margin'>Layout</td></td>
 					</thead>
 					<tbody>
-						<tr><td class = 'generic_border_margin'>One</td></td>
+						<tr>
+							<td class = 'generic_border_margin'>
+								<div id = 'design_droppable_1' class = 'ui-widget-header'>Drop here</div>
+							</td>
+						</tr>
 					</tbody>
 				</table>
 			</td>

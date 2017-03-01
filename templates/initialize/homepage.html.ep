@@ -543,10 +543,22 @@ function populate_details(flower_id)
 			design_flower_index = 1;
 		}
 
-		id = '#design_flower_' + design_flower_index;
+		var drag_id		= '#design_flower_drag_' + design_flower_index;
+		var drag_div	= "<div id = '" + drag_id + "' class = 'ui-widget-content'>";
+		var icon_id		= '#design_flower_' + design_flower_index;
 
-		$(id)
-		.html(thumbnail_html);
+		$(icon_id)
+		.html(drag_div + thumbnail_html + '</div>');
+
+		$(drag_id).draggable();
+
+		$('#design_droppable_1').droppable(
+		{
+			drop: function()
+			{
+				alert('Dropped');
+			}
+		});
 
 		for (var i = 0; i < vars.length; i++)
 		{
