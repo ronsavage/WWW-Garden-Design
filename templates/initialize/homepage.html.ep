@@ -548,6 +548,7 @@ function populate_details(flower_id)
 		var icon_id		= '#design_flower_' + design_flower_index;
 
 		$(icon_id)
+		.empty()
 		.html(drag_div + thumbnail_html + '</div>');
 
 		$(drag_id).draggable();
