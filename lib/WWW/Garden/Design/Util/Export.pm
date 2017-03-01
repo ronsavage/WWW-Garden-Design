@@ -423,6 +423,7 @@ sub export_all_pages
 	);
 
 	my(@attributes, $aliases);
+	my($common_name);
 	my(@images);
 	my(@notes);
 	my($pig_latin);
@@ -437,6 +438,7 @@ sub export_all_pages
 
 		$aliases			= $$flower{aliases};
 		@attributes			= ();
+		$common_name		= $$flower{common_name};
 		@images				= ();
 		@notes				= ();
 		$scientific_name	= $$flower{scientific_name};
@@ -521,8 +523,9 @@ sub export_all_pages
 					(
 						'individual.page.tx',
 						{
-							aliases			=> $aliases eq '-' ? '' : "Common name(s): $aliases",
+							aliases			=> $aliases eq '' ? '' : "Aliases: $aliases",
 							attributes		=> \@attributes,
+							common_name		=> $common_name,
 							notes			=> \@notes,
 							images			=> \@images,
 							scientific_name	=> $scientific_name,

@@ -8,6 +8,7 @@
 
 	<div class = 'page_title'><: $title :></div>
 	<h1 align = 'center'>Scientific name: <: $scientific_name :></h1>
+	<h1 align = 'center'>Common name: <: $common_name :></h1>
 	<h1 align = 'center'><: $aliases :></h1>
 
 	<h2 align = 'center'>Attributes</h1>
