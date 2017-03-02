@@ -639,7 +639,7 @@ sub export_garden_layout
 			$image_id = $image -> svg -> image
 			(
 				height	=> $$constants{cell_height},
-				href	=> "$$object{icon_url}/$file_name.png",
+				href	=> $$object{icon_url},
 				width	=> $$constants{cell_width},
 				x		=> $x_offset + $$constants{cell_width} * $$feature{x}, # Cell co-ord.
 				y		=> $y_offset + $$constants{cell_height} * $$feature{y}, # Cell co-ord.
