@@ -24,7 +24,7 @@
 					</tr>
 					<tr>
 						<td>o A word or phrase in any case:</td>
-						<td>(1) "cordatum", (2) "Sweet Scented Basil", (3) "Acer negundo 'Variegatum'".</td>
+						<td>(1) "cordatum", (2) "Sweet Scented Basil".</td>
 					</tr>
 					<tr>
 						<td>o A search by size. Spaces around '<', '=' and '>' are optional. If cm and m absent, m is assumed:</td>
