@@ -455,7 +455,7 @@ sub export_all_pages
 		{
 			push @attributes,
 			[
-				{td => $$attribute{name} },
+				{td => ucfirst $$attribute{name} },
 				{td => $$attribute{range} },
 			];
 		}
