@@ -12,6 +12,10 @@
 	<!-- Warning: The next line must not be put after the spectrum line, or the CSS in it fails to work. -->
 	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/css/www/garden/design/homepage.css'>
 	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/spectrum/spectrum.css'>
+	<style>
+	#design_flower_drag_1	{ width: 130px; height: 130px; padding: 0.25em; margin: 5px 5px 5px 5px}
+	#design_droppable_1		{ width: 130px; height: 130px; padding: 0.25em; margin: 5px 5px 5px 5px}
+	</style>
 
 </head>
 
@@ -111,7 +115,9 @@ $(function()
 		minLength:	2,
 		select:		function(event, ui)
 		{
-			$('#aliases').empty().append(ui.item ? ui.item.value : '-');
+			$('#aliases')
+			.empty()
+			.append(ui.item ? ui.item.value : '-');
 		}
 	});
 
@@ -128,7 +134,9 @@ $(function()
 		minLength:	2,
 		select:		function(event, ui)
 		{
-			$('#common_name').empty().append(ui.item ? ui.item.value : '-');
+			$('#common_name')
+			.empty()
+			.append(ui.item ? ui.item.value : '-');
 		}
 	});
 
@@ -147,7 +155,9 @@ $(function()
 		{
 			if (ui.item)
 			{
-				$('#garden_name').empty().append(ui.item.value);
+				$('#garden_name')
+				.empty()
+				.append(ui.item.value);
 			}
 		}
 	});
@@ -165,7 +175,9 @@ $(function()
 		minLength:	2,
 		select:		function(event, ui)
 		{
-			$('#object_name').empty().append(ui.item ? ui.item.value : '-');
+			$('#object_name')
+			.empty()
+			.append(ui.item ? ui.item.value : '-');
 		}
 	});
 
@@ -184,7 +196,9 @@ $(function()
 		{
 			if (ui.item)
 			{
-				$('#property_name').empty().append(ui.item.value);
+				$('#property_name')
+				.empty()
+				.append(ui.item.value);
 			}
 		}
 	});
@@ -202,7 +216,9 @@ $(function()
 		minLength:	2,
 		select:		function(event, ui)
 		{
-			$('#scientific_name').empty().append(ui.item ? ui.item.value : '-');
+			$('#scientific_name')
+			.empty()
+			.append(ui.item ? ui.item.value : '-');
 		}
 	});
 
@@ -468,6 +484,26 @@ function get_garden_table()
 
 // -----------------------------------------------
 
+function get_design_image_size_string()
+{
+	var thumbnail_size = <%== $$constants{design_thumbnail_size} %>;
+
+	return "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
+
+} // End of get_design_image_size_string.
+
+// -----------------------------------------------
+
+function get_search_image_size_string()
+{
+	var thumbnail_size = <%== $$constants{search_thumbnail_size} %>;
+
+	return "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
+
+} // End of get_search_image_size_string.
+
+// -----------------------------------------------
+
 function populate_details(flower_id)
 {
 	$.ajax
@@ -504,12 +540,10 @@ function populate_details(flower_id)
 		$('#flower_width')
 		.val(flower['width']);
 
-		var thumbnail_size		= <%== $$constants{search_thumbnail_size} %>;
-		var thumbnail_string	= "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
 		var homepage_url		= <%== $$constants{homepage_url4js} %>;
 		var image_url			= <%== $$constants{image_url4js} %>;
 		var image_path			= homepage_url + image_url + '/' + flower['pig_latin'] + '.0.jpg';
-		var thumbnail_html		= "<img src = '" + image_path + "' " + thumbnail_string + '>';
+		var thumbnail_html		= "<img src = '" + image_path + "' " + get_search_image_size_string() + '>';
 
 		$('#flower_thumbnail')
 		.html(thumbnail_html);
@@ -543,17 +577,15 @@ function populate_details(flower_id)
 			design_flower_index = 1;
 		}
 
-		var drag_id		= '#design_flower_drag_' + design_flower_index;
-		var drag_div	= "<div id = '" + drag_id + "' class = 'ui-widget-content'>";
-		var icon_id		= '#design_flower_' + design_flower_index;
+		var drag_id		= '#design_flower_' + design_flower_index;
+		thumbnail_html	= "<img src = '" + image_path + "' " + get_design_image_size_string() + '>';
 
-		$(icon_id)
-		.empty()
-		.html(drag_div + thumbnail_html + '</div>');
+		$(drag_id)
+		.html(thumbnail_html)
+		.draggable();
 
-		$(drag_id).draggable();
-
-		$('#design_droppable_1').droppable(
+		$('#design_droppable_1')
+		.droppable(
 		{
 			drop: function()
 			{
@@ -672,7 +704,7 @@ function populate_details(flower_id)
 			sequence		= flower['images'][i]['sequence'];
 			ids[i]			= build_image_ids(sequence);
 			image_path		= homepage_url + image_url + '/' + file_name;
-			thumbnail_html	= "<img src = '" + image_path + "' " + thumbnail_string + '>';
+			thumbnail_html	= "<img src = '" + image_path + "' " + get_search_image_size_string() + '>';
 
 			// For the HTML column order, see templates/initialize/images.html.ep.
 
@@ -813,9 +845,7 @@ function populate_design_tab_placeholders()
 	var homepage_url		= <%== $$constants{homepage_url4js} %>;
 	var icon_url			= <%== $$constants{icon_url4js} %>;
 	var icon_path			= homepage_url + icon_url + '/white.tile.png';
-	var thumbnail_size		= <%== $$constants{design_thumbnail_size} %>;
-	var thumbnail_string	= "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
-	var icon_html			= "<img src = '" + icon_path + "' " + thumbnail_string + '>';
+	var icon_html			= "<img src = '" + icon_path + "' " + get_design_image_size_string() + '>';
 
 	// Copy the white tile into each of 4 dummy flowers and 4 dummy objects.
 	// I chose 4 because the result fits neatly on the screen of my laptop.
@@ -911,12 +941,10 @@ function set_object_fields(i)
 		design_object_index = 1;
 	}
 
-	var id					= '#design_object_' + design_object_index;
-	var thumbnail_size		= <%== $$constants{design_thumbnail_size} %>;
-	var thumbnail_string	= "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
+	var id = '#design_object_' + design_object_index;
 
 	$(id)
-	.html("<img src = '" + object_table[i]['icon_url'] + "' " + thumbnail_string + '>');
+	.html("<img src = '" + object_table[i]['icon_url'] + "' " + get_design_image_size_string() + '>');
 
 	id = '#design_object_name_' + design_object_index;
 
