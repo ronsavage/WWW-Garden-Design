@@ -1081,7 +1081,7 @@ sub gardens2csv
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 
-	$csv -> combine(qw/property_name garden_name description/);
+	$csv -> combine(qw/property_name garden_name description publish/);
 
 	print $fh $csv -> string, "\n";
 
@@ -1290,7 +1290,7 @@ sub properties2csv
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 
-	$csv -> combine(qw/name description/);
+	$csv -> combine(qw/name description publish/);
 
 	print $fh $csv -> string, "\n";
 
@@ -1304,6 +1304,7 @@ sub properties2csv
 		(
 			$$row{name},
 			$$row{description},
+			$$row{publish}
 		);
 
 		print $fh $csv -> string, "\n";
