@@ -669,6 +669,7 @@ sub populate_properties_table
 			{
 				description	=> $$item{description},
 				name		=> $$item{name},
+				publish		=> $$item{publish},
 			}
 		);
 	}
