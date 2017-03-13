@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset = 'utf-8'>
+		<title>d3 demo 1</title>
+		<style type = 'text/css'>
+		div.bar
+		{
+			height:	150px;
+			width:	150px;
+		}
+		</style>
+
+</head>
+<body>
+
+	<script src = 'http://d3js.org/d3.v4.min.js'></script>
+	<script type = 'text/javascript'>
+
+	var dataset	= [1, 2, 3];
+	var divs	= d3.select('body').selectAll('div')
+					.data(dataset)
+					.enter()
+					.append('div')
+					.attr('class', 'bar');
+
+	divs
+	.text(function(d, i)
+	{
+		var href = '<img src = "' + 'https://savage.net.au/Flowers/images/Alstroemeria.1.0.jpg' + "'/>";
+
+		href;
+	});
+
+
+
+	</script>
+</body>
+</html>
