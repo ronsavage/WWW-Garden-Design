@@ -863,6 +863,23 @@ sub export_layout_guide
 	my($property_name)	= $self -> property_name;
 
 	$html .= <<EOS;
+<table align='center' summary = 'Table for a list of articles'>
+	<tr><td align='center'><br /><span class = '$$constants{css_class4headings}' id = 'articles'>Articles</span></td></tr>
+	<tr><td><a href = 'https://savage.net.au/Flowers/html/Garden.Design.Software.html'>2016-12-29: Garden Design Software</a></td></tr>
+	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/How.To.Net.Dwarf.Apples.html'>2016-01-03: How To Net Dwarf Apples</a></td></tr>
+	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/Protecting.Apples.From.Possums.html'>2013-12-08: Protecting Apples From Possums</a></td></tr>
+</table>
+<table align='center' summary = 'Table for a list of URLs'>
+	<tr><td align='center'><br /><span class = '$$constants{css_class4headings}' id = 'various_urls'>Various URLs</span></td></tr>
+	<tr><td><a href = 'https://datatables.net/'>The URL</a> of the free Javascript package which manages the HTML table below</td></tr>
+	<tr><td><a href = 'https://github.com/bgrins/spectrum'>The github repo</a> of the free Javascript package which provides a color spectrum...</td></tr>
+	<tr><td>... and the corresponding <a href = 'https://bgrins.github.io/spectrum/'>on-line docs.</a></td></tr>
+	<tr><td><br></td></tr>
+	<tr><td><a href = 'http://www.theplantlist.org/'>The Plant List - A working list of all plant species</a></td></tr>
+</table>
+EOS
+
+	$html .= <<EOS;
 <table align = 'center' summary = 'Table for a list of garden layouts'>
 	<tr><td align = 'center'><span class = '$$constants{css_class4headings}' id = 'garden_layouts'>The Garden Layouts</span></td></tr>
 EOS
@@ -876,25 +893,7 @@ EOS
 EOS
 	}
 
-	$html .= <<EOS;
-</table>
-<br />
-<table align='center' summary = 'Table for a list of articles'>
-	<tr><td align='center'><br /><span class = '$$constants{css_class4headings}' id = 'articles'>Articles</span></td></tr>
-	<tr><td><a href = 'https://savage.net.au/Flowers/html/Garden.Design.Software.html'>2016-12-29: Garden Design Software</a></td></tr>
-	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/How.To.Net.Dwarf.Apples.html'>2016-01-03: How To Net Dwarf Apples</a></td></tr>
-	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/Protecting.Apples.From.Possums.html'>2013-12-08: Protecting Apples From Possums</a></td></tr>
-</table>
-<br />
-<table align='center' summary = 'Table for a list of URLs'>
-	<tr><td align='center'><br /><span class = '$$constants{css_class4headings}' id = 'various_urls'>Various URLs</span></td></tr>
-	<tr><td><a href = 'https://datatables.net/'>The URL</a> of the free Javascript package which manages the HTML table below</td></tr>
-	<tr><td><a href = 'https://github.com/bgrins/spectrum'>The github repo</a> of the free Javascript package which provides a color spectrum...</td></tr>
-	<tr><td>... and the corresponding <a href = 'https://bgrins.github.io/spectrum/'>on-line docs.</a></td></tr>
-	<tr><td><br></td></tr>
-	<tr><td><a href = 'http://www.theplantlist.org/'>The Plant List - A working list of all plant species</a></td></tr>
-</table>
-EOS
+	$html .= "</table>\n";
 
 	return $html;
 
