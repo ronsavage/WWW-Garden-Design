@@ -285,6 +285,10 @@ sub as_html
 	my($thumbnail, @tbody);
 	my($text);
 
+	open(my $fh, '>:encoding(UTF-8)', 'sort.log');
+	say $fh $$_{scientific_name} for @$flowers;
+	close $fh;
+
 	for my $flower (@$flowers)
 	{
 		next if ($$flower{publish} eq 'No');
