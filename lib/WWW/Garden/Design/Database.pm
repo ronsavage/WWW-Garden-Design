@@ -994,7 +994,7 @@ sub read_flowers_table
 
 	# Return an arrayref of hashrefs.
 
-	return @records;
+	return [@records];
 
 } # End of read_flowers_table.
 
