@@ -877,7 +877,6 @@ EOS
 	}
 
 	$html .= <<EOS;
-	<tr><td><br></td></tr>
 </table>
 <br />
 <table align='center' summary = 'Table for a list of articles'>
@@ -885,7 +884,6 @@ EOS
 	<tr><td><a href = 'https://savage.net.au/Flowers/html/Garden.Design.Software.html'>2016-12-29: Garden Design Software</a></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/How.To.Net.Dwarf.Apples.html'>2016-01-03: How To Net Dwarf Apples</a></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/Protecting.Apples.From.Possums.html'>2013-12-08: Protecting Apples From Possums</a></td></tr>
-	<tr><td><br></td></tr>
 </table>
 <br />
 <table align='center' summary = 'Table for a list of URLs'>
@@ -896,7 +894,6 @@ EOS
 	<tr><td><br></td></tr>
 	<tr><td><a href = 'http://www.theplantlist.org/'>The Plant List - A working list of all plant species</a></td></tr>
 </table>
-<br /><br />
 EOS
 
 	return $html;
