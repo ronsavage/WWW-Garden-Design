@@ -40,7 +40,7 @@ sub init_datatable
 				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Aliases.
 				{'cellType':'th','orderable':false,'searchable':false,'type':'html'}	// Thumbnail.
 			],
-			'order': [ [1, 'asc'] ]
+			'order': [ [2, 'asc'] ] // Common name. Scientific name fails because of dups like 'Malus domenstica'.
 		});
 	});
 EOS
