@@ -973,6 +973,7 @@ sub read_flowers_table
 	}
 
 	# Sort the flowers according to their scientific name.
+	# Warning: This sort is overridden by JS in Datatables. See Base.pm.
 
 	my($scientific_name, @scientific_name, %scientific_name);
 
