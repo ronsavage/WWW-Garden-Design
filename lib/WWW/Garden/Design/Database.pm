@@ -972,7 +972,7 @@ sub read_flowers_table
 
 	# Return an arrayref of hashrefs.
 
-	return [sort{$$a{common_name} cmp $$b{common_name} } @records];
+	return [sort{$$a{scientific_name} cmp $$b{scientific_name} } @records];
 
 } # End of read_flowers_table.
 
