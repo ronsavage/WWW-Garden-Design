@@ -1031,6 +1031,7 @@ sub read_gardens_table
 
 		$$record{property_description}	= $property{$$record{property_id} }{description};
 		$$record{property_name}			= $property{$$record{property_id} }{name};
+		$$record{property_publish}		= $property{$$record{property_id} }{publish};
 
 		push @records, $record;
 	}

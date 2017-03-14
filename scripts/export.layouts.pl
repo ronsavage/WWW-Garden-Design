@@ -64,7 +64,7 @@ Print help and exit.
 
 The name of the property for which all gardens will have their layouts exported.
 
-Default: 'home'.
+Default: 'Ron'.
 
 =back
 
