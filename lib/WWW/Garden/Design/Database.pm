@@ -21,6 +21,8 @@ use Time::HiRes qw/gettimeofday tv_interval/;
 
 use Types::Standard qw/Object HashRef/;
 
+use Unicode::Collate;
+
 extends qw/WWW::Garden::Design::Util::Config/;
 
 has constants =>
@@ -970,9 +972,29 @@ sub read_flowers_table
 		push @records, $record;
 	}
 
+	# Sort the flowers according to their scientific name.
+
+	my($scientific_name, @scientific_name, %scientific_name);
+
+	for my $record (@records)
+	{
+		$scientific_name					= $$record{scientific_name};
+		$scientific_name{$scientific_name}	= $record;
+
+		push @scientific_name, $scientific_name;
+	}
+
+	@scientific_name	= Unicode::Collate -> new -> sort(@scientific_name);
+	@records			= ();
+
+	for $scientific_name (@scientific_name)
+	{
+		push @records, $scientific_name{$scientific_name};
+	}
+
 	# Return an arrayref of hashrefs.
 
-	return [sort{$$a{scientific_name} cmp $$b{scientific_name} } @records];
+	return @records;
 
 } # End of read_flowers_table.
 
