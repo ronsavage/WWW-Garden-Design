@@ -975,22 +975,27 @@ sub read_flowers_table
 	# Sort the flowers according to their scientific name.
 	# Warning: This sort is overridden by JS in Datatables. See Base.pm.
 
-	my($scientific_name, @scientific_name, %scientific_name);
+	my($index) = 0;
+
+	my($key, @keys);
+	my(%records);
 
 	for my $record (@records)
 	{
-		$scientific_name					= $$record{scientific_name};
-		$scientific_name{$scientific_name}	= $record;
+		$index++;
 
-		push @scientific_name, $scientific_name;
+		$key			= "$$record{scientific_name}:$index";
+		$records{$key}	= $record;
+
+		push @keys, $key;
 	}
 
-	@scientific_name	= Unicode::Collate -> new -> sort(@scientific_name);
-	@records			= ();
+	@keys		= Unicode::Collate -> new -> sort(@keys);
+	@records	= ();
 
-	for $scientific_name (@scientific_name)
+	for $key (@keys)
 	{
-		push @records, $scientific_name{$scientific_name};
+		push @records, $records{$key};
 	}
 
 	# Return an arrayref of hashrefs.
