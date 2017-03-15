@@ -24,6 +24,7 @@
 	.axis line {
 	  fill: none;
 	  stroke: #fff;
+		shape-rendering: crispEdges;
 	}
 
 	.buttons {
@@ -41,39 +42,34 @@
 	  <button data-zoom="+1">Zoom In</button>
 	  <button data-zoom="-1">Zoom Out</button>
 	</div>
-	<script src="//d3js.org/d3.v3.min.js"></script>
+	<script src="http://d3js.org/d3.v4.js"></script>
 	<script>
 
 	var margin = {top: 20, right: 20, bottom: 30, left: 40},
 	    width = 960 - margin.left - margin.right,
 	    height = 500 - margin.top - margin.bottom;
 
-	var x = d3.scale.linear()
+	var x = d3.scaleLinear()
 	    .domain([-width / 2, width / 2])
 	    .range([0, width]);
 
-	var y = d3.scale.linear()
+	var y = d3.scaleLinear()
 	    .domain([-height / 2, height / 2])
 	    .range([height, 0]);
 
-	var xAxis = d3.svg.axis()
-	    .scale(x)
-	    .orient("bottom")
-	    .tickSize(-height);
+	var xAxis = d3.select('.axis')
+	    .call(d3.axisBottom(x) );
 
-	var yAxis = d3.svg.axis()
-	    .scale(y)
-	    .orient("left")
-	    .ticks(5)
-	    .tickSize(-width);
+	var yAxis = d3.select('.axis')
+		.call(d3.axisLeft(y) );
 
-	var zoom = d3.behavior.zoom()
-	    .x(x)
-	    .y(y)
-	    .scaleExtent([1, 10])
-	    .center([width / 2, height / 2])
-	    .size([width, height])
-	    .on("zoom", zoomed);
+	var zoom = d3.zoom;
+//		.transform()
+//	    .rescaleX(x)
+//	    .rescaleY(y)
+//	    .center([width / 2, height / 2])
+//	    .size([width, height])
+//	    .on("zoom", zoomed);
 
 	var svg = d3.select("body").append("svg")
 	    .attr("width", width + margin.left + margin.right)
