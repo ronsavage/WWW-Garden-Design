@@ -79,7 +79,8 @@ var column = row.selectAll(".square")
 	.attr("height", function(d) { return d.height; })
 	.style("fill", "#fff")
 	.style("stroke", "#222")
-//	;
+	.enter()
+	.append('text')
 	.text(function(d, i, nodes) {var s = '(' + d.x + ',' + d.y + ')'; return s});
 
 	</script>
