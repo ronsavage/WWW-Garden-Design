@@ -6,12 +6,32 @@
     <script src="/assets/js/d3.v4.min.js"></script>
     <script src="/assets/js/d3-jetpack.js"></script>
     <style type="text/css">
-    body { font-family: 'Helvetica Neue', Helvetica; font-weight: 300; padding: 20px;}
-    th { text-align: left; }
-    th, td { padding: 0 1em 0.5ex 0;}
-    th.center, td.center { text-align: center; }
-    th.num, td.num { text-align: right; }
-    </style>
+body
+{
+	font-family: 'Helvetica Neue', Helvetica;
+	font-weight: 300;
+	padding: 20px;
+}
+
+table.generic_border
+{
+	border:				1px solid #00aa00;
+	border-collapse:	collapse;
+}
+
+.table_striped>tbody>tr:nth-of-type(odd){background-color:#f9f9f9}
+
+td.generic_border
+{
+	border: 1px solid #00aa00;
+}
+
+th.generic_border
+{
+	border: 1px solid #00aa00;
+}
+
+   </style>
 </head>
 <body>
 <!-- https://www.vis4.net/blog/posts/making-html-tables-in-d3-doesnt-need-to-be-a-pain/ -->
@@ -19,38 +39,29 @@
 
     // the table rows, typically loaded from data file using d3.csv
     var movies = [
-        { title: "The Godfather", year: 1972, length: 175, budget: 6000000, rating: 9.1 },
-        { title: "The Shawshank Redemption", year: 1994, length: 142, budget: 25000000, rating: 9.1 },
-        { title: "The Lord of the Rings: The Return of the King", year: 2003, length: 251, budget: 94000000, rating: 9 },
-        { title: "The Godfather: Part II", year: 1974, length: 200, budget: 13000000, rating: 8.9 },
-        { title: "Shichinin no samurai", year: 1954, length: 206, budget: 500000, rating: 8.9 },
-        { title: "Buono, il brutto, il cattivo, Il", year: 1966, length: 180, budget: 1200000, rating: 8.8 },
-        { title: "Casablanca", year: 1942, length: 102, budget: 950000, rating: 8.8 },
-        { title: "The Lord of the Rings: The Fellowship of the Ring", year: 2001, length: 208, budget: 93000000, rating: 8.8 },
-        { title: "The Lord of the Rings: The Two Towers", year: 2002, length: 223, budget: 94000000, rating: 8.8 },
-        { title: "Pulp Fiction", year: 1994, length: 168, budget: 8000000, rating: 8.8 }
+        { title: "The Godfather", year: 1972, rating: 9.1 },
+        { title: "Pulp Fiction", year: 1994, rating: 8.8 }
     ];
 
     // column definitions
     var columns = [
-        { head: 'Movie title', cl: 'title', html: ƒ('title') },
-        { head: 'Year', cl: 'center', html: ƒ('year') },
-        { head: 'Length', cl: 'center', html: ƒ('length', length()) },
-        { head: 'Budget', cl: 'num', html: ƒ('budget', d3.format('$,')) },
-        { head: 'Rating', cl: 'num', html: ƒ('rating', d3.format('.1f')) }
+        { head: 'Movie title', klass: 'generic_border', html: ƒ('title') },
+        { head: 'Year', klass: 'generic_border', html: ƒ('year') },
+        { head: 'Rating', klass: 'generic_border', html: ƒ('rating', d3.format('.1f')) }
     ];
 
     // create table
     var table = d3.select('body')
         .append('table')
-		.attr('align', 'center');
+		.attr('align', 'center')
+		.attr('class', 'generic_border');
 
     // create table header
     table.append('thead').append('tr')
         .selectAll('th')
         .data(columns).enter()
         .append('th')
-        .attr('class', ƒ('cl'))
+        .attr('class', ƒ('klass'))
         .text(ƒ('head'));
 
     // create table body
@@ -71,7 +82,7 @@
         }).enter()
         .append('td')
         .html(ƒ('html'))
-        .attr('class', ƒ('cl'));
+        .attr('class', ƒ('klass'));
 
     function length() {
         var fmt = d3.format('02d');
