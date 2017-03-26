@@ -39,15 +39,14 @@ th.generic_border
 
     // the table rows, typically loaded from data file using d3.csv
     var movies = [
-        { title: "The Godfather", year: 1972, rating: 9.1 },
-        { title: "Pulp Fiction", year: 1994, rating: 8.8 }
+        { title: "The Godfather", rating: 9.1 },
+        { title: "Pulp Fiction", rating: 8.8 }
     ];
 
     // column definitions
     var columns = [
-        { head: 'Movie title', klass: 'generic_border', html: ƒ('title') },
-        { head: 'Year', klass: 'generic_border', html: ƒ('year') },
-        { head: 'Rating', klass: 'generic_border', html: ƒ('rating', d3.format('.1f')) }
+        { html: ƒ('title') },
+        { html: ƒ('rating', d3.format('.1f')) }
     ];
 
     // create table
@@ -56,13 +55,6 @@ th.generic_border
 		.attr('align', 'center')
 		.attr('class', 'generic_border');
 
-    // create table header
-    table.append('thead').append('tr')
-        .selectAll('th')
-        .data(columns).enter()
-        .append('th')
-        .attr('class', ƒ('klass'))
-        .text(ƒ('head'));
 
     // create table body
     table.append('tbody')
@@ -75,20 +67,15 @@ th.generic_border
                 // compute cell values for this specific row
                 var cell = {};
                 d3.keys(c).forEach(function(k) {
-                    cell[k] = typeof c[k] == 'function' ? c[k](row,i) : c[k];
+                    cell[k] = (typeof c[k] == 'function') ? c[k](row,i) : c[k];
                 });
                 return cell;
             });
-        }).enter()
+        })
+		.enter()
         .append('td')
-        .html(ƒ('html'))
-        .attr('class', ƒ('klass'));
-
-    function length() {
-        var fmt = d3.format('02d');
-        return function(l) { return Math.floor(l / 60) + ':' + fmt(l % 60) + ''; };
-    }
-
+        .attr('class', 'generic_border')
+        .html(ƒ('html'));
 
     </script>
 </body>

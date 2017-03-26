@@ -8,6 +8,18 @@
 		<title>Zoom + Pan</title>
 		<style>
 
+.square
+{
+	text-color: black;
+}
+
+table.generic_border
+{
+	border:				1px solid #00aa00;
+	border-collapse:	collapse;
+}
+
+
 
 		</style>
 
@@ -19,7 +31,7 @@
 <table align = 'center'>
 	<tr>
 		<td align = 'center'>
-			<div id="grid"></div>
+			<div id='grid'></div>
 		</td>
 	</tr>
 </table>
@@ -31,15 +43,15 @@ function gridData() {
 	var data = new Array();
 	var xpos = 1; //starting xpos and ypos at 1 so the stroke will show when we make the grid below
 	var ypos = 1;
-	var width = 50;
-	var height = 50;
+	var width = 40;
+	var height = 40;
 
 	// iterate for rows
-	for (var row = 0; row < 10; row++) {
+	for (var row = 0; row < 2; row++) {
 		data.push( new Array() );
 
 		// iterate for cells/columns inside rows
-		for (var column = 0; column < 10; column++) {
+		for (var column = 0; column < 5; column++) {
 			data[row].push({
 				x: xpos,
 				y: ypos,
@@ -59,29 +71,30 @@ function gridData() {
 
 var gridData = gridData();
 
-var grid = d3.select("#grid")
-	.append("svg")
-	.attr("width","510px")
-	.attr("height","510px");
+var grid = d3.select('#grid') // Uses id = 'grid'. See <div id='grid'></div> above.
+	.append('svg')
+	.attr('width','510px')
+	.attr('height','510px');
 
-var row = grid.selectAll(".row")
+var row = grid.selectAll('.row')
 	.data(gridData)
-	.enter().append("g")
-	.attr("class", "row");
+	.enter().append('g')
+	.attr('class', 'row');
 
-var column = row.selectAll(".square")
+var column = row.selectAll('.square') // Uses class = 'square', as assigned below.
 	.data(function(d) { return d; })
-	.enter().append("rect")
-	.attr("class","square")
-	.attr("x", function(d) { return d.x; })
-	.attr("y", function(d) { return d.y; })
-	.attr("width", function(d) { return d.width; })
-	.attr("height", function(d) { return d.height; })
-	.style("fill", "#fff")
-	.style("stroke", "#222")
 	.enter()
-	.append('text')
-	.text(function(d, i, nodes) {var s = '(' + d.x + ',' + d.y + ')'; return s});
+	.append('rect')
+	.attr('class','square')
+	.attr('x', function(d) { return d.x; })
+	.attr('y', function(d) { return d.y; })
+	.attr('width', function(d) { return d.width; })
+	.attr('height', function(d) { return d.height; })
+	.style('fill', '#ffffff')
+	.style('stroke', '#080808')
+//	.text(function(d) {return d.x})
+	.html('<img src = "' + 'http://127.0.0.1/Flowers/images/Tibouchina.urvilleana.0.jpg' + '">')
+	;
 
 	</script>
 </body>
