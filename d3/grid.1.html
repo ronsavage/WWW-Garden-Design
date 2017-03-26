@@ -79,7 +79,8 @@ var grid = d3.select('#grid') // Uses id = 'grid'. See <div id='grid'></div> abo
 var row = grid.selectAll('.row')
 	.data(gridData)
 	.enter().append('g')
-	.attr('class', 'row');
+	.attr('class', 'row')
+	;
 
 var column = row.selectAll('.square') // Uses class = 'square', as assigned below.
 	.data(function(d) { return d; })
@@ -92,8 +93,8 @@ var column = row.selectAll('.square') // Uses class = 'square', as assigned belo
 	.attr('height', function(d) { return d.height; })
 	.style('fill', '#ffffff')
 	.style('stroke', '#080808')
-//	.text(function(d) {return d.x})
-	.html('<img src = "' + 'http://127.0.0.1/Flowers/images/Tibouchina.urvilleana.0.jpg' + '">')
+	.append('image')
+	.attr('xlink:href', 'http://127.0.0.1/Flowers/images/Tibouchina.urvilleana.0.jpg')
 	;
 
 	</script>
