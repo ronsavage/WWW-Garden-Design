@@ -73,8 +73,8 @@ var gridData = gridData();
 
 var grid = d3.select('#grid') // Uses id = 'grid'. See <div id='grid'></div> above.
 	.append('svg')
-	.attr('width','510px')
-	.attr('height','510px');
+	.attr('width','210px')
+	.attr('height','100px');
 
 var row = grid.selectAll('.row')
 	.data(gridData)
@@ -85,16 +85,21 @@ var row = grid.selectAll('.row')
 var column = row.selectAll('.square') // Uses class = 'square', as assigned below.
 	.data(function(d) { return d; })
 	.enter()
-	.append('rect')
+//	.append('rect')
+//	.attr('class','square')
+//	.attr('x', function(d) { return d.x; })
+//	.attr('y', function(d) { return d.y; })
+//	.attr('width', function(d) { return d.width; })
+//	.attr('height', function(d) { return d.height; })
+//	.style('fill', '#ffffff')
+//	.style('stroke', '#0000ff') // For border of each square.
+	.append('image')
 	.attr('class','square')
+	.attr('href', 'http://127.0.0.1/Flowers/icons/framed.white.tile.png')
 	.attr('x', function(d) { return d.x; })
 	.attr('y', function(d) { return d.y; })
 	.attr('width', function(d) { return d.width; })
 	.attr('height', function(d) { return d.height; })
-	.style('fill', '#ffffff')
-	.style('stroke', '#080808')
-	.append('image')
-	.attr('xlink:href', 'http://127.0.0.1/Flowers/images/Tibouchina.urvilleana.0.jpg')
 	;
 
 	</script>
