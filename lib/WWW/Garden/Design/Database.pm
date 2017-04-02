@@ -674,6 +674,21 @@ sub get_flower_by_id
 
 } # End of get_flower_by_id.
 
+# --------------------------------------------------
+
+sub get_flower_by_scientific_name
+{
+	my($self, $key)	= @_;
+	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
+	$key			= "\U%$key"; # \U => Convert to upper-case.
+	my($sql)		= "select pig_latin from flowers where upper(scientific_name) like ?";
+
+	$self -> simple -> query($sql, $key) -> into(my $pig_latin) || die $self -> db -> simple -> error;
+
+	return length($pig_latin) > 0 ? "$pig_latin.0.jpg" : '';
+
+} # End of get_flower_by_scientific_name.
+
 # -----------------------------------------------
 
 sub insert_hashref

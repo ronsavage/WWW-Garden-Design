@@ -10,6 +10,21 @@ our $VERSION = '0.95';
 
 # -----------------------------------------------
 
+sub design_flower
+{
+	my($self, $scientific_name) = @_;
+
+	$self -> app -> log -> debug('GetTable.design_flower()');
+
+	my($defaults) = $self -> app -> defaults;
+
+	$self -> stash(thumbnail_name => $$defaults{db} -> get_flower_by_scientific_name($scientific_name) );
+	$self -> render;
+
+} # End of design_flower.
+
+# -----------------------------------------------
+
 sub attribute_types
 {
 	my($self) = @_;

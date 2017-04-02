@@ -168,6 +168,50 @@ $(function()
 
 $(function()
 {
+	$('#design_flower')
+	.autocomplete
+	({
+		source:		'/AutoComplete?type=design_flower',
+		minLength:	2,
+		select:		function(event, ui)
+		{
+			if (ui.item)
+			{
+				$('#design_flower')
+				.empty()
+				.append(ui.item.value);
+			}
+		}
+	});
+
+}); // End of autocomplete function.
+
+// -----------------------------------------------
+
+$(function()
+{
+	$('#design_object')
+	.autocomplete
+	({
+		source:		'/AutoComplete?type=design_object',
+		minLength:	2,
+		select:		function(event, ui)
+		{
+			if (ui.item)
+			{
+				$('#design_object')
+				.empty()
+				.append(ui.item.value);
+			}
+		}
+	});
+
+}); // End of autocomplete function.
+
+// -----------------------------------------------
+
+$(function()
+{
 	$('#object_name')
 	.autocomplete
 	({
@@ -240,7 +284,7 @@ $(function()
 			.append(ui.item ? ui.item.value : "-");
 		}
 	});
-});
+}); // End of autocomplete function.
 
 // -----------------------------------------------
 
@@ -436,28 +480,40 @@ function get_attribute_types()
 } // End of get_attribute_types.
 
 // -----------------------------------------------
-// Warning: This function cannot be used to populate object_menu_placeholder
-// since that involves changing the DOM, but the function is called from within
-// the document ready context which assumes the DOM has stopped changing.
 
-function get_object_table()
+function get_design_flower()
 {
-	$.get
-	(
-		'/GetTable/objects',
-		null,
-		function(json)
+	$.ajax
+	({
+		data:
 		{
-			object_table = json;
-
-			set_object_fields(0);
-
-			get_garden_table();
+			flower_id: $('#design_flower').val()
 		},
-		'json'
-	);
+		dataType:	'text',
+		method:		'POST',
+		url:		'/GetTable/design_flower',
+	})
+	.done(function(thumbnail_name)
+	{
+		if (thumbnail_name.length > 0)
+		{
+			alert(thumbnail_name);
+//			$('#design_flower_span')
+//			.html("<img src = '" + thumbnail_name + "' " + get_design_image_size_string() + '>');
+		}
+	});
 
-} // End of get_object_table.
+} // End of get_design_flower.
+
+// -----------------------------------------------
+
+function get_design_image_size_string()
+{
+	var thumbnail_size = <%== $$constants{design_thumbnail_size} %>;
+
+	return "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
+
+} // End of get_design_image_size_string.
 
 // -----------------------------------------------
 // Warning: This function cannot be used to populate garden_menu_placeholder
@@ -483,14 +539,28 @@ function get_garden_table()
 } // End of get_garden_table.
 
 // -----------------------------------------------
+// Warning: This function cannot be used to populate object_menu_placeholder
+// since that involves changing the DOM, but the function is called from within
+// the document ready context which assumes the DOM has stopped changing.
 
-function get_design_image_size_string()
+function get_object_table()
 {
-	var thumbnail_size = <%== $$constants{design_thumbnail_size} %>;
+	$.get
+	(
+		'/GetTable/objects',
+		null,
+		function(json)
+		{
+			object_table = json;
 
-	return "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
+			set_object_fields(0);
 
-} // End of get_design_image_size_string.
+			get_garden_table();
+		},
+		'json'
+	);
+
+} // End of get_object_table.
 
 // -----------------------------------------------
 
@@ -1185,6 +1255,12 @@ $(function()
 		preferredFormat:	'hex',
 		showInput:			true,
 		showPalette:		true
+	});
+
+	$('#design_flower')
+	.blur(function()
+	{
+		get_design_flower();
 	});
 
 	$('#flower_form')

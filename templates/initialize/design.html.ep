@@ -1,9 +1,35 @@
 %= form_for '/Design' => (method => 'POST') => begin
 	%= csrf_field
 
-	<table align = 'center'  width = '100%'>
+	<table class = 'centered'  width = '100%'>
 		<tr>
 			<td colspan = '3'><div class = 'blue_centered'>Design</div><br /></td>
+		</tr>
+		<tr>
+			<td align = 'center' colspan = '3'> <!-- Why does class centered not work here? -->
+				<table class = 'bordered centered'>
+					<tr>
+						<td width = '40%'>Flower search</td>
+						<td width = '10%'>Flower thumbnail</td>
+						<td width = '40%'>Object search</td>
+						<td width = '10%'>Object thumbnail</td>
+					</tr>
+					<tr>
+						<td width = '40%'>
+							<input id = 'design_flower' type = 'text' size = '30' maxlength = '100' value = ''>
+						</td>
+						<td width = '10%'>
+							<span id = 'design_flower_span'></span>
+						</td>
+						<td width = '40%'>
+							<input id = 'design_object' type = 'text' size = '30' maxlength = '100' value = ''>
+						</td>
+						<td width = '10%'>
+							<span id = 'design_object_span'></span>
+						</td>
+					</tr>
+				</table>
+			</td>
 		</tr>
 		<tr>
 			<td width = '15%'>

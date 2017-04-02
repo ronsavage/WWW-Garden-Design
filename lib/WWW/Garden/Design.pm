@@ -129,6 +129,8 @@ sub startup
 	$r -> route('/AutoComplete')				-> to('AutoComplete#display');
 	$r -> route('/GetFlowerDetails')			-> to('GetFlowerDetails#display');
 	$r -> route('/GetTable/attribute_types')	-> to('GetTable#attribute_types');
+	$r -> route('/GetTable/design_flower')		-> to('GetTable#design_flower');
+	$r -> route('/GetTable/design_object')		-> to('GetTable#design_object');
 	$r -> route('/GetTable/gardens')			-> to('GetTable#gardens');
 	$r -> route('/GetTable/objects')			-> to('GetTable#objects');
 	$r -> route('/SaveFlowerDetails')			-> to('SaveFlowerDetails#display');

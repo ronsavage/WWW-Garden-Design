@@ -17,6 +17,8 @@ sub display
 	(	# Form field		Table column		Table name.
 		aliases			=> ['aliases',			'flowers'],
 		common_name		=> ['common_name',		'flowers'],
+		design_flower	=> ['scientific_name',	'flowers'],
+		design_object	=> ['name',				'objects'],
 		garden_name		=> ['name',				'gardens'],
 		object_name		=> ['name',				'objects'],
 		property_name	=> ['name',				'properties'],
