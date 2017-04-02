@@ -10,22 +10,6 @@ our $VERSION = '0.95';
 
 # -----------------------------------------------
 
-sub design_flower
-{
-	my($self)			= @_;
-	my($design_flower)	= $self -> param('design_flower')	|| '';
-
-	$self -> app -> log -> debug('GetTable.design_flower()');
-
-	my($defaults) = $self -> app -> defaults;
-
-	$self -> stash(thumbnail_name => $$defaults{db} -> get_flower_by_scientific_name($design_flower) );
-	$self -> render;
-
-} # End of design_flower.
-
-# -----------------------------------------------
-
 sub attribute_types
 {
 	my($self) = @_;
@@ -37,6 +21,22 @@ sub attribute_types
 	$self -> render(json => $$defaults{db} -> read_table('attribute_types') );
 
 } # End of attribute_types.
+
+# -----------------------------------------------
+
+sub design_object
+{
+	my($self)			= @_;
+	my($design_object)	= $self -> param('design_object')	|| '';
+
+	$self -> app -> log -> debug('GetTable.design_object()');
+
+	my($defaults) = $self -> app -> defaults;
+
+	$self -> stash(icon_name => $$defaults{db} -> get_object_by_name($design_object) );
+	$self -> render;
+
+} # End of design_object.
 
 # -----------------------------------------------
 

@@ -517,6 +517,44 @@ function get_design_flower()
 
 // -----------------------------------------------
 
+function get_design_object()
+{
+	$.ajax
+	({
+		data:
+		{
+			design_object: $('#design_object').val()
+		},
+		dataType:	'text',
+		method:		'POST',
+		url:		'/GetTable/design_object',
+	})
+	.done(function(image_path)
+	{
+		if (image_path.length > 0)
+		{
+			var drag_id		= '#design_object_thumbnail';
+			thumbnail_html	= "<img src = '" + image_path + "' " + get_design_image_size_string() + '>';
+
+			$(drag_id)
+			.html(thumbnail_html)
+			.draggable();
+
+			$('#design_object_span')
+			.droppable(
+			{
+				drop: function()
+				{
+					alert('Dropped');
+				}
+			});
+		}
+	});
+
+} // End of get_design_object.
+
+// -----------------------------------------------
+
 function get_design_image_size_string()
 {
 	var thumbnail_size = <%== $$constants{design_thumbnail_size} %>;
@@ -1191,6 +1229,12 @@ $(function()
 	.blur(function()
 	{
 		get_design_flower();
+	});
+
+	$('#design_object')
+	.blur(function()
+	{
+		get_design_object();
 	});
 
 	$('#flower_form')

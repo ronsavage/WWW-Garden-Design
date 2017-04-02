@@ -676,6 +676,25 @@ sub get_flower_by_id
 
 # --------------------------------------------------
 
+sub get_object_by_name
+{
+	my($self, $key)	= @_;
+	my($constants)	= $self -> constants;
+	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
+	$key			= "\U%$key"; # \U => Convert to upper-case.
+	my($sql)		= "select name from objects where upper(name) like ?";
+
+	$self -> simple -> query($sql, $key) -> into(my $icon_name) || die $self -> db -> simple -> error;
+
+	$icon_name	= $self -> clean_up_icon_name($icon_name);
+	$icon_name	= length($icon_name) > 0 ? "$$constants{homepage_url}$$constants{icon_url}/$icon_name.png" : '';
+
+	return $icon_name;
+
+} # End of get_object_by_name.
+
+# --------------------------------------------------
+
 sub get_flower_by_scientific_name
 {
 	my($self, $key)	= @_;

@@ -9,7 +9,7 @@
 			<td align = 'center'> <!-- Why does class centered not work here? -->
 				<table class = 'bordered centered'>
 					<tr>
-						<td width = '40%'>Flower search</td>
+						<td width = '40%'>Flower search (Scientific name)</td>
 						<td width = '10%'>Flower thumbnail</td>
 						<td width = '40%'>Object search</td>
 						<td width = '10%'>Object thumbnail</td>
@@ -25,7 +25,7 @@
 							<input id = 'design_object' type = 'text' size = '30' maxlength = '100' value = ''>
 						</td>
 						<td width = '10%'>
-							<span id = 'design_object_span'></span>
+							<div id = 'design_object_thumbnail' class = 'ui-widget-content'></div>
 						</td>
 					</tr>
 					<tr>
