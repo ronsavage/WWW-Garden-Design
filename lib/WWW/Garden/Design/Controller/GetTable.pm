@@ -24,6 +24,22 @@ sub attribute_types
 
 # -----------------------------------------------
 
+sub design_flower
+{
+	my($self)			= @_;
+	my($design_flower)	= $self -> param('design_flower')	|| '';
+
+	$self -> app -> log -> debug('GetTable.design_flower()');
+
+	my($defaults) = $self -> app -> defaults;
+
+	$self -> stash(thumbnail_name => $$defaults{db} -> get_flower_by_scientific_name($design_flower) );
+	$self -> render;
+
+} # End of design_flower.
+
+# -----------------------------------------------
+
 sub design_object
 {
 	my($self)			= @_;
