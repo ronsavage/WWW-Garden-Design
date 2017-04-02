@@ -12,13 +12,14 @@ our $VERSION = '0.95';
 
 sub design_flower
 {
-	my($self, $scientific_name) = @_;
+	my($self)			= @_;
+	my($design_flower)	= $self -> param('design_flower')	|| '';
 
 	$self -> app -> log -> debug('GetTable.design_flower()');
 
 	my($defaults) = $self -> app -> defaults;
 
-	$self -> stash(thumbnail_name => $$defaults{db} -> get_flower_by_scientific_name($scientific_name) );
+	$self -> stash(thumbnail_name => $$defaults{db} -> get_flower_by_scientific_name($design_flower) );
 	$self -> render;
 
 } # End of design_flower.

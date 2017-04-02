@@ -88,7 +88,7 @@
 
 </body>
 
-%= javascript 'http://127.0.0.1/assets/js/jQuery/jquery-3.1.1.min.js'
+%= javascript 'https://code.jquery.com/jquery-3.2.0.min.js'
 %= javascript 'http://127.0.0.1/assets/js/jQuery/jquery-migrate-3.0.0.js'
 %= javascript 'http://127.0.0.1/assets/js/jQuery/jquery-ui-1.12.1/jquery-ui.min.js'
 %= javascript 'http://127.0.0.1/assets/js/jQuery/datatables.min.js'
@@ -99,8 +99,6 @@
 // Storage for info read in below from the database.
 
 var attribute_types_table	= [];
-var design_flower_index		= 0;
-var design_object_index		= 0;
 var garden_table			= [];
 var object_table			= [];
 
@@ -487,19 +485,31 @@ function get_design_flower()
 	({
 		data:
 		{
-			flower_id: $('#design_flower').val()
+			design_flower: $('#design_flower').val()
 		},
 		dataType:	'text',
 		method:		'POST',
 		url:		'/GetTable/design_flower',
 	})
-	.done(function(thumbnail_name)
+	.done(function(image_path)
 	{
-		if (thumbnail_name.length > 0)
+		if (image_path.length > 0)
 		{
-			alert(thumbnail_name);
-//			$('#design_flower_span')
-//			.html("<img src = '" + thumbnail_name + "' " + get_design_image_size_string() + '>');
+			var drag_id		= '#design_flower_thumbnail';
+			thumbnail_html	= "<img src = '" + image_path + "' " + get_design_image_size_string() + '>';
+
+			$(drag_id)
+			.html(thumbnail_html)
+			.draggable();
+
+			$('#design_flower_span')
+			.droppable(
+			{
+				drop: function()
+				{
+					alert('Dropped');
+				}
+			});
 		}
 	});
 
@@ -636,39 +646,6 @@ function populate_details(flower_id)
 				$(id)
 				.text(flower[vars[j] ]);
 			}
-		}
-
-		// Populate 3 flower fields on the Design tab.
-
-		design_flower_index++;
-
-		if (design_flower_index > 4)
-		{
-			design_flower_index = 1;
-		}
-
-		var drag_id		= '#design_flower_' + design_flower_index;
-		thumbnail_html	= "<img src = '" + image_path + "' " + get_design_image_size_string() + '>';
-
-		$(drag_id)
-		.html(thumbnail_html)
-		.draggable();
-
-		$('#design_droppable_1')
-		.droppable(
-		{
-			drop: function()
-			{
-				alert('Dropped');
-			}
-		});
-
-		for (var i = 0; i < vars.length; i++)
-		{
-			id = '#design_' + vars[i] + '_' + design_flower_index;
-
-			$(id)
-			.text(flower[vars[i] ]);
 		}
 
 		// Copy attributes to the Details/Attributes tab.
@@ -909,33 +886,6 @@ function object_menu_changed(data)
 } // End of object_menu_changed.
 
 // -----------------------------------------------
-
-function populate_design_tab_placeholders()
-{
-	var homepage_url		= <%== $$constants{homepage_url4js} %>;
-	var icon_url			= <%== $$constants{icon_url4js} %>;
-	var icon_path			= homepage_url + icon_url + '/white.tile.png';
-	var icon_html			= "<img src = '" + icon_path + "' " + get_design_image_size_string() + '>';
-
-	// Copy the white tile into each of 4 dummy flowers and 4 dummy objects.
-	// I chose 4 because the result fits neatly on the screen of my laptop.
-
-	for (var i = 1; i <= 4; i++)
-	{
-		id = '#design_flower_' + i;
-
-		$(id)
-		.html(icon_html);
-
-		id = '#design_object_' + i;
-
-		$(id)
-		.html(icon_html);
-	}
-
-} // End of populate_design_tab_placeholders.
-
-// -----------------------------------------------
 // Note: Changed means the user changed the selected item.
 
 function property_menu_changed(data)
@@ -1001,25 +951,6 @@ function set_object_fields(i)
 
 	$('#real_color')
 	.val(object_table[i]['hex_color']);
-
-	// Popuate 3 fields on the Design tab.
-
-	design_object_index++;
-
-	if (design_object_index > 4)
-	{
-		design_object_index = 1;
-	}
-
-	var id = '#design_object_' + design_object_index;
-
-	$(id)
-	.html("<img src = '" + object_table[i]['icon_url'] + "' " + get_design_image_size_string() + '>');
-
-	id = '#design_object_name_' + design_object_index;
-
-	$(id)
-	.text(object_table[i]['name']);
 
 } // End of set_object_fields.
 
@@ -1164,7 +1095,6 @@ $(function()
 {
 	get_attribute_types();
 	get_object_table();
-	populate_design_tab_placeholders();
 
 	// Enable the tabs before trying to work with them.
 

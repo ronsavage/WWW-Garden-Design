@@ -3,10 +3,10 @@
 
 	<table class = 'centered'  width = '100%'>
 		<tr>
-			<td colspan = '3'><div class = 'blue_centered'>Design</div><br /></td>
+			<td><div class = 'blue_centered'>Design</div><br /></td>
 		</tr>
 		<tr>
-			<td align = 'center' colspan = '3'> <!-- Why does class centered not work here? -->
+			<td align = 'center'> <!-- Why does class centered not work here? -->
 				<table class = 'bordered centered'>
 					<tr>
 						<td width = '40%'>Flower search</td>
@@ -19,7 +19,7 @@
 							<input id = 'design_flower' type = 'text' size = '30' maxlength = '100' value = ''>
 						</td>
 						<td width = '10%'>
-							<span id = 'design_flower_span'></span>
+							<div id = 'design_flower_thumbnail' class = 'ui-widget-content'></div>
 						</td>
 						<td width = '40%'>
 							<input id = 'design_object' type = 'text' size = '30' maxlength = '100' value = ''>
@@ -28,140 +28,11 @@
 							<span id = 'design_object_span'></span>
 						</td>
 					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td width = '15%'>
-				<table align = 'center'>
-					<thead>
-						<tr><td class = 'generic_border_margin'>Flowers</td></td>
-					</thead>
-					<tbody>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_flower_1' class = 'ui-widget-content'></div>
-							</td>
-						</tr>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_scientific_name_1'></div>
-							</td>
-						</tr>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_common_name_1'></div>
-							</td>
-						</tr>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_flower_2'></div>
-							</td>
-						</tr>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_scientific_name_2'></div>
-							</td>
-						</tr>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_common_name_2'></div>
-							</td>
-						</tr>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_flower_3'></div>
-							</td>
-						</tr>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_scientific_name_3'></div>
-							</td>
-						</tr>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_common_name_3'></div>
-							</td>
-						</tr>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_flower_4'></div>
-							</td>
-						</tr>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_scientific_name_4'></div>
-							</td>
-						</tr>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_common_name_4'></div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</td>
-			<td width = '70%'>
-				<table align = 'center'>
-					<thead>
-						<tr><td class = 'generic_border_margin'>Layout</td></td>
-					</thead>
-					<tbody>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_droppable_1' class = 'ui-widget-header'>Drop here</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</td>
-			<td width = '15%'>
-				<table align = 'center'>
-					<thead>
-						<tr><td class = 'generic_border_margin'>Objects</td></td>
-					</thead>
-					<tbody>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_object_1'></div>
-							</td>
-						</tr>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_object_name_1'></div>
-							</td>
-						</tr>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_object_2'></div>
-							</td>
-						</tr>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_object_name_2'></div>
-							</td>
-						</tr>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_object_3'></div>
-							</td>
-						</tr>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_object_name_3'></div>
-							</td>
-						</tr>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_object_4'></div>
-							</td>
-						</tr>
-						<tr>
-							<td class = 'generic_border_margin'>
-								<div id = 'design_object_name_4'></div>
-							</td>
-						</tr>
-					</tbody>
+					<tr>
+						<td align = 'center' class = 'generic_border_margin' colspan = '4' width = '100%'>
+							<div id = 'design_droppable_1' class = 'ui-widget-header'>Drop here</div>
+						</td>
+					</tr>
 				</table>
 			</td>
 		</tr>
