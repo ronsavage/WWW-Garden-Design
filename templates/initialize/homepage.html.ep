@@ -101,6 +101,8 @@
 var attribute_types_table	= [];
 var garden_table			= [];
 var object_table			= [];
+var window_width			= 0;
+var window_height			= 0;
 
 // -----------------------------------------------
 
@@ -1131,6 +1133,9 @@ function submit_search()
 
 $(function()
 {
+	window_width	= window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	window_height	= window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
 	get_attribute_types();
 	get_object_table();
 
