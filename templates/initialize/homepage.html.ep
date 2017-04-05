@@ -13,8 +13,21 @@
 	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/css/www/garden/design/homepage.css'>
 	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/spectrum/spectrum.css'>
 	<style>
-	#design_flower_drag_1	{ width: 130px; height: 130px; padding: 0.25em; margin: 5px 5px 5px 5px}
-	#design_droppable_1		{ width: 130px; height: 130px; padding: 0.25em; margin: 5px 5px 5px 5px}
+	#design_flower_drag_1
+	{
+		width: 40px;
+		height: 40px;
+		padding: 0px;
+		margin: 0px 0px 0px 0px;
+	}
+	#design_droppable_1
+	{
+		background-color: #ffffff;
+		width: 40px;
+		height: 40px;
+		padding: 0px;
+		margin: 0px 0px 0px 0px;
+	}
 	</style>
 
 </head>
@@ -559,7 +572,7 @@ function get_design_object()
 
 function get_design_image_size_string()
 {
-	var thumbnail_size = <%== $$constants{design_thumbnail_size} %>;
+	var thumbnail_size = <%== $$constants{virtual_cell_size} %>;
 
 	return "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
 
@@ -1014,12 +1027,25 @@ function set_virtual_parameters(i)
 
 	window_width				= window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 	window_height				= window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-	var virtual_x_cell_size		= <%== $$constants{virtual_x_cell_size} %>;
-	var visible_x_cell_count	= Math.round(window_width - virtual_x_cell_size - 1) / virtual_x_cell_size);
-	var virtual_y_cell_size		= <%== $$constants{virtual_y_cell_size} %>;
-	var visible_y_cell_count	= Math.round(window_height - virtual_y_cell_size - 1) / virtual_y_cell_size);
+	var virtual_cell_size		= <%== $$constants{virtual_cell_size} %>;
+	var visible_x_cell_count	= Math.round( (window_width - virtual_cell_size - 1) / virtual_cell_size);
+	var visible_y_cell_count	= Math.round( (window_height - virtual_cell_size - 1) / virtual_cell_size);
+	var table					= "<table align = 'center' class = 'bordered' widht = '100%'>\n";
 
-	alert('visible: ' + visible_x_cell_count + ' x ' + visible_y_cell_count);
+	for (row = 1; row <= visible_y_cell_count; row++)
+	{
+		table += "\t<tr>\n";
+
+		for (column = 1; column <= visible_x_cell_count; column++)
+		{
+			table += "<td class = 'generic_border_margin'><div id = 'design_droppable_1'> (" +
+						row + ',' + column + ') </div></td>';
+		}
+
+		table += "\n\t</tr>\n";
+	}
+
+	$('#virtual_garden').html(table);
 
 } // End of set_virtual_parameters.
 

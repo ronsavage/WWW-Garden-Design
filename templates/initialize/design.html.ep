@@ -22,13 +22,13 @@
 							<input id = 'design_flower' type = 'text' size = '30' maxlength = '100' value = ''>
 						</td>
 						<td width = '10%'>
-							<div id = 'design_flower_thumbnail' class = 'ui-widget-content'></div>
+							<div id = 'design_flower_thumbnail'></div>
 						</td>
 						<td width = '40%'>
 							<input id = 'design_object' type = 'text' size = '30' maxlength = '100' value = ''>
 						</td>
 						<td width = '10%'>
-							<div id = 'design_object_thumbnail' class = 'ui-widget-content'></div>
+							<div id = 'design_object_thumbnail'></div>
 						</td>
 					</tr>
 				</table>
@@ -37,16 +37,6 @@
 	</table>
 	<br />
 	<div id = 'virtual_garden'>
-		<table class = 'centered'  width = '100%'>
-			<tr>
-				<td align = 'center'>The Virtual Garden</td>
-			</tr>
-			<tr>
-				<td align = 'center' class = 'generic_border_margin' colspan = '4' width = '100%'>
-					<div id = 'design_droppable_1' class = 'ui-widget-header'>Drop here</div>
-				</td>
-			</tr>
-		</table>
 	</div>
 
 % end
