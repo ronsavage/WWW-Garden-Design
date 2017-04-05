@@ -1008,6 +1008,23 @@ function set_property_fields(i)
 
 // -----------------------------------------------
 
+function set_virtual_parameters(i)
+{
+	// Initialize globals.
+
+	window_width				= window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	window_height				= window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+	var virtual_x_cell_size		= <%== $$constants{virtual_x_cell_size} %>;
+	var visible_x_cell_count	= Math.round(window_width - virtual_x_cell_size - 1) / virtual_x_cell_size);
+	var virtual_y_cell_size		= <%== $$constants{virtual_y_cell_size} %>;
+	var visible_y_cell_count	= Math.round(window_height - virtual_y_cell_size - 1) / virtual_y_cell_size);
+
+	alert('visible: ' + visible_x_cell_count + ' x ' + visible_y_cell_count);
+
+} // End of set_virtual_parameters.
+
+// -----------------------------------------------
+
 function submit_flower()
 {
 	$.ajax
@@ -1133,9 +1150,7 @@ function submit_search()
 
 $(function()
 {
-	window_width	= window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-	window_height	= window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-
+	set_virtual_parameters();
 	get_attribute_types();
 	get_object_table();
 
