@@ -14,7 +14,7 @@
 					<tr>
 						<td width = '40%'>Flower search (Scientific name)</td>
 						<td width = '10%'>Flower thumbnail</td>
-						<td width = '40%'>Object search</td>
+						<td width = '40%'>Object search (Object name)</td>
 						<td width = '10%'>Object thumbnail</td>
 					</tr>
 					<tr>
@@ -35,10 +35,10 @@
 			</td>
 		</tr>
 	</table>
-	<br />
-	<div id = 'virtual_garden'>
-	</div>
 
 % end
 
-<div id = 'design_result_div'></div>
+<br />
+<table align = 'center'><tr><td>
+<div class = 'overflow_scroll' id = 'virtual_garden'></div>
+</td></tr></table>

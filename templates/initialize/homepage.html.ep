@@ -28,6 +28,15 @@
 		padding: 0px;
 		margin: 0px 0px 0px 0px;
 	}
+	.overflow_scroll
+	{
+		border:		1px solid #00aa00;
+		height:		600px;
+		padding:	1em;
+		overflow:	scroll;
+		width:		1500px;
+	}
+
 	</style>
 
 </head>
@@ -1025,18 +1034,14 @@ function set_virtual_parameters(i)
 {
 	// Initialize globals.
 
-	window_width				= window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-	window_height				= window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-	var virtual_cell_size		= <%== $$constants{virtual_cell_size} %>;
-	var visible_x_cell_count	= Math.round( (window_width - virtual_cell_size - 1) / virtual_cell_size);
-	var visible_y_cell_count	= Math.round( (window_height - virtual_cell_size - 1) / virtual_cell_size);
-	var table					= "<table align = 'center' class = 'bordered' widht = '100%'>\n";
+	var virtual_cell_count	= <%== $$constants{virtual_cell_count} %>;
+	var table				= "<table align = 'center' class = 'bordered' width = '100%'>\n";
 
-	for (row = 1; row <= visible_y_cell_count; row++)
+	for (row = 1; row <= virtual_cell_count; row++)
 	{
 		table += "\t<tr>\n";
 
-		for (column = 1; column <= visible_x_cell_count; column++)
+		for (column = 1; column <= virtual_cell_count; column++)
 		{
 			table += "<td class = 'generic_border_margin'><div id = 'design_droppable_1'> (" +
 						row + ',' + column + ') </div></td>';
@@ -1176,6 +1181,9 @@ function submit_search()
 
 $(function()
 {
+	window_width	= window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	window_height	= window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
 	set_virtual_parameters();
 	get_attribute_types();
 	get_object_table();
