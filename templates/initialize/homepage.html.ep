@@ -13,21 +13,6 @@
 	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/css/www/garden/design/homepage.css'>
 	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/spectrum/spectrum.css'>
 	<style>
-	#design_flower_drag_1
-	{
-		width: 40px;
-		height: 40px;
-		padding: 0px;
-		margin: 0px 0px 0px 0px;
-	}
-	#design_droppable_1
-	{
-		background-color: #ffffff;
-		width: 40px;
-		height: 40px;
-		padding: 0px;
-		margin: 0px 0px 0px 0px;
-	}
 	.overflow_scroll
 	{
 		border:		1px solid #00aa00;
@@ -519,21 +504,8 @@ function get_design_flower()
 	{
 		if (image_path.length > 0)
 		{
-			var drag_id		= '#design_flower_thumbnail';
-			thumbnail_html	= "<img src = '" + image_path + "' " + get_design_image_size_string() + '>';
-
-			$(drag_id)
-			.html(thumbnail_html)
-			.draggable();
-
-			$('#design_flower_span')
-			.droppable(
-			{
-				drop: function()
-				{
-					alert('Dropped');
-				}
-			});
+			$('#design_flower_thumbnail')
+			.html("<img src = '" + image_path + "' " + get_design_image_size_string() + '>');
 		}
 	});
 
@@ -557,21 +529,8 @@ function get_design_object()
 	{
 		if (image_path.length > 0)
 		{
-			var drag_id		= '#design_object_thumbnail';
-			thumbnail_html	= "<img src = '" + image_path + "' " + get_design_image_size_string() + '>';
-
-			$(drag_id)
-			.html(thumbnail_html)
-			.draggable();
-
-			$('#design_object_span')
-			.droppable(
-			{
-				drop: function()
-				{
-					alert('Dropped');
-				}
-			});
+			$('#design_object_thumbnail')
+			.html("<img src = '" + image_path + "' " + get_design_image_size_string() + '>');
 		}
 	});
 
@@ -1030,6 +989,14 @@ function set_property_fields(i)
 
 // -----------------------------------------------
 
+function monitor_click(id, row, column)
+{
+	alert(id);
+
+} // End of monitor_click.
+
+// -----------------------------------------------
+
 function set_virtual_parameters(i)
 {
 	// Initialize globals.
@@ -1037,20 +1004,39 @@ function set_virtual_parameters(i)
 	var virtual_cell_count	= <%== $$constants{virtual_cell_count} %>;
 	var table				= "<table align = 'center' class = 'bordered' width = '100%'>\n";
 
+	var id;
+
 	for (row = 1; row <= virtual_cell_count; row++)
 	{
 		table += "\t<tr>\n";
 
 		for (column = 1; column <= virtual_cell_count; column++)
 		{
-			table += "<td class = 'generic_border_margin'><div id = 'design_droppable_1'> (" +
-						row + ',' + column + ') </div></td>';
+			id		= 'id_' + row + '_' + column;
+			table	+= "<td class = 'generic_border_margin'>" +
+						"<div id = '" + id + "'>(" + row + ',' + column + ')</div></td>';
+
+//			$('#' + id)
+//			.click(function()
+//			{
+//				monitor_click(id, row, column);
+//			});
 		}
 
 		table += "\n\t</tr>\n";
 	}
 
+	table += '</table>';
+
 	$('#virtual_garden').html(table);
+
+	id = '#id_1_7';
+
+	$(id)
+	.click(function()
+	{
+		monitor_click(id, row, column);
+	});
 
 } // End of set_virtual_parameters.
 
