@@ -861,20 +861,20 @@ sub parse_search_text
 {
 	my($self, $search_text)	= @_;
 
-	$self -> logger -> debug('Database.parse_search_text()');
+	$self -> logger -> debug("Database.parse_search_text($search_text)");
 
 	my($request) =
 	{
 		error_message	=> '',
 		height_provided	=> false,
-		lc_search_text	=> lc $search_text,
-		search_text		=> $search_text, # Save in original case for display to the user.
+		lc_search_text	=> 'See below',
+		original_text	=> $search_text, # Save in original case for display to the user.
+		search_text		=> 'See below',
 		size_provided	=> false,
 		text_is_clean	=> true,
 		text_provided	=> true,
 		width_provided	=> false,
 	};
-	$search_text = lc $search_text;
 
 	# Test input and return structured result.
 
@@ -882,10 +882,10 @@ sub parse_search_text
 	{
 		$$request{text_provided} = false;
 	}
-	elsif ($search_text =~ /^[-a-z0-9. ']+$/) # Use another ' to reset the UltraEdit syntax hiliter.
+	elsif ($search_text =~ /^[-a-z0-9., ']+$/i) # Use another ' to reset the UltraEdit syntax hiliter.
 	{
 	}					#		Direction		Operator		Size					Unit
-	elsif ($search_text =~ /^(h|height|w|width)\s*([<=>])\s*([0-9]{0,3}(?:[.][0-9]{0,2})?)\s*(cm|m)?$/)
+	elsif ($search_text =~ /^(h|height|w|width)\s*([<=>])\s*([0-9]{0,3}(?:[.][0-9]{0,2})?)\s*(cm|m)?$/i)
 	{
 		my($direction) = $1;
 
@@ -908,6 +908,9 @@ sub parse_search_text
 		$$request{error_message}	= 'Unknown chars in text. Check Search FAQ for help with sizes';
 		$$request{text_is_clean}	= false;
 	}
+
+	$$request{search_text}		= $search_text;
+	$$request{lc_search_text}	= lc $search_text;
 
 	return $request;
 
