@@ -515,6 +515,40 @@ sub generate_pig_latin_from_scientific_name
 } # End of generate_pig_latin_from_scientific_name.
 
 # -----------------------------------------------
+# Return a list.
+
+sub get_autocomplete_flower_list
+{
+	my($self, $key)	= @_;
+	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
+
+	my(@result);
+	my(%seen);
+
+	my($sql)	= "select concat(scientific_name, '/', common_name) from flowers "
+					. "where upper(scientific_name) like '%$key%' "
+					. "or upper(common_name) like '%$key%' "
+					. "or upper(aliases) like '%$key%'";
+	my($result)	= $self -> simple -> query($sql) || die $self -> simple -> error;
+	my(@value)	= $result -> flat;
+
+	for my $value (@value)
+	{
+		next if (! defined $value);
+
+		if (! $seen{$value})
+		{
+			push @result, $value;
+
+			$seen{$value} = 1;
+		}
+	}
+
+	return [@result];
+
+} # End of get_autocomplete_flower_list.
+
+# -----------------------------------------------
 # Return the shortest item in the list.
 
 sub get_autocomplete_item
@@ -632,6 +666,25 @@ sub get_autocomplete_list
 
 # --------------------------------------------------
 
+sub get_flower_by_both_names
+{
+	my($self, $key)	= @_;
+	my($constants)	= $self -> constants;
+	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
+	$key			= "\U%$key"; # \U => Convert to upper-case.
+	my(@key)		= split('/', $key);
+	my($sql)		= "select pig_latin from flowers where upper(scientific_name) like ? and upper(common_name) like ?";
+
+	$self -> simple -> query($sql, $key[0], $key[1]) -> into(my $pig_latin) || die $self -> db -> simple -> error;
+
+	$pig_latin = length($pig_latin) > 0 ? "$$constants{homepage_url}$$constants{image_url}/$pig_latin.0.jpg" : '';
+
+	return $pig_latin;
+
+} # End of get_flower_by_both_names.
+
+# --------------------------------------------------
+
 sub get_flower_by_id
 {
 	my($self, $flower_id)		= @_;
@@ -692,24 +745,6 @@ sub get_object_by_name
 	return $icon_name;
 
 } # End of get_object_by_name.
-
-# --------------------------------------------------
-
-sub get_flower_by_scientific_name
-{
-	my($self, $key)	= @_;
-	my($constants)	= $self -> constants;
-	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
-	$key			= "\U%$key"; # \U => Convert to upper-case.
-	my($sql)		= "select pig_latin from flowers where upper(scientific_name) like ?";
-
-	$self -> simple -> query($sql, $key) -> into(my $pig_latin) || die $self -> db -> simple -> error;
-
-	$pig_latin = length($pig_latin) > 0 ? "$$constants{homepage_url}$$constants{image_url}/$pig_latin.0.jpg" : '';
-
-	return $pig_latin;
-
-} # End of get_flower_by_scientific_name.
 
 # -----------------------------------------------
 

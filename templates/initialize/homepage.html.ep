@@ -95,8 +95,7 @@
 
 </body>
 
-%= javascript 'https://code.jquery.com/jquery-3.2.0.min.js'
-%= javascript 'http://127.0.0.1/assets/js/jQuery/jquery-migrate-3.0.0.js'
+%= javascript 'https://code.jquery.com/jquery-3.2.1.min.js'
 %= javascript 'http://127.0.0.1/assets/js/jQuery/jquery-ui-1.12.1/jquery-ui.min.js'
 %= javascript 'http://127.0.0.1/assets/js/jQuery/datatables.min.js'
 %= javascript 'http://127.0.0.1/assets/js/spectrum/spectrum.js'
@@ -605,6 +604,42 @@ function get_search_image_size_string()
 
 // -----------------------------------------------
 
+function monitor_click(id, row, column)
+{
+	alert(id);
+
+} // End of monitor_click.
+
+// -----------------------------------------------
+// Note: Changed means the user changed the selected item.
+
+function object_menu_changed(data)
+{
+	//	for( key in data )
+	//	{
+	//		alert( "key is " + [ key ] + ", value is " + data[ key ] );
+	//	}
+
+	// Typical keys for data.item are:
+	//	o label => The object item's text (name column).
+	//	o value => The object item's # (primary key column).
+
+	current_object_id = data.item.value;
+
+	for (var i = 0; i < object_table.length; i++)
+	{
+		if (object_table[i]['id'] == current_object_id)
+		{
+			set_object_fields(i);
+
+			break;
+		}
+	}
+
+} // End of object_menu_changed.
+
+// -----------------------------------------------
+
 function populate_details(flower_id)
 {
 	$.ajax
@@ -881,34 +916,6 @@ function populate_details(flower_id)
 // -----------------------------------------------
 // Note: Changed means the user changed the selected item.
 
-function object_menu_changed(data)
-{
-	//	for( key in data )
-	//	{
-	//		alert( "key is " + [ key ] + ", value is " + data[ key ] );
-	//	}
-
-	// Typical keys for data.item are:
-	//	o label => The object item's text (name column).
-	//	o value => The object item's # (primary key column).
-
-	current_object_id = data.item.value;
-
-	for (var i = 0; i < object_table.length; i++)
-	{
-		if (object_table[i]['id'] == current_object_id)
-		{
-			set_object_fields(i);
-
-			break;
-		}
-	}
-
-} // End of object_menu_changed.
-
-// -----------------------------------------------
-// Note: Changed means the user changed the selected item.
-
 function property_menu_changed(data)
 {
 	//	for( key in data )
@@ -986,14 +993,6 @@ function set_property_fields(i)
 	.val(garden_table[i]['property_name']);
 
 } // End of set_property_fields.
-
-// -----------------------------------------------
-
-function monitor_click(id, row, column)
-{
-	alert(id);
-
-} // End of monitor_click.
 
 // -----------------------------------------------
 

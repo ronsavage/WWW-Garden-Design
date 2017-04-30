@@ -12,9 +12,9 @@
 			<td align = 'center'> <!-- Why does class centered not work here? -->
 				<table class = 'bordered centered'>
 					<tr>
-						<td width = '40%'>Flower search (Scientific name)</td>
+						<td width = '40%'>Flower search</td>
 						<td width = '10%'>Flower thumbnail</td>
-						<td width = '40%'>Object search (Object name)</td>
+						<td width = '40%'>Object search</td>
 						<td width = '10%'>Object thumbnail</td>
 					</tr>
 					<tr>

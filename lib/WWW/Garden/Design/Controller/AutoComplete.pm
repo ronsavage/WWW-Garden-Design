@@ -17,7 +17,7 @@ sub display
 	(	# Form field		Table column		Table name.
 		aliases			=> ['aliases',			'flowers'],
 		common_name		=> ['common_name',		'flowers'],
-		design_flower	=> ['scientific_name',	'flowers'],
+		design_flower	=> ['*',				'flowers'],
 		design_object	=> ['name',				'objects'],
 		garden_name		=> ['name',				'gardens'],
 		object_name		=> ['name',				'objects'],
@@ -32,7 +32,16 @@ sub display
 
 	my($defaults) = $self -> app -> defaults;
 
-	if ($want_single_item{$type})
+	# In the case of $type being 'design_flower', we're called from line 501 in homepage.html.ep,
+	# meaning we're on the Design garden tab. In this case we can't assume the string the user typed
+	# petains to just one column of the flower database, so we search every several columns in the
+	# 'flowers' table: scientific_name, common_name and aliases.
+
+	if ($type eq 'design_flower')
+	{
+		$self -> render(json => $$defaults{db} -> get_autocomplete_flower_list(uc $key) );
+	}
+	elsif ($want_single_item{$type})
 	{
 		$self -> render(json => $$defaults{db} -> get_autocomplete_item(\%context, $type, uc $key) );
 	}

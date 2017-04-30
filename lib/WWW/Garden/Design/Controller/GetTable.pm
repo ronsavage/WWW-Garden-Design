@@ -27,13 +27,13 @@ sub attribute_types
 sub design_flower
 {
 	my($self)			= @_;
-	my($design_flower)	= $self -> param('design_flower')	|| '';
+	my($design_flower)	= $self -> param('design_flower') || '';
 
 	$self -> app -> log -> debug('GetTable.design_flower()');
 
 	my($defaults) = $self -> app -> defaults;
 
-	$self -> stash(thumbnail_name => $$defaults{db} -> get_flower_by_scientific_name($design_flower) );
+	$self -> stash(thumbnail_name => $$defaults{db} -> get_flower_by_both_names($design_flower) );
 	$self -> render;
 
 } # End of design_flower.
@@ -43,7 +43,7 @@ sub design_flower
 sub design_object
 {
 	my($self)			= @_;
-	my($design_object)	= $self -> param('design_object')	|| '';
+	my($design_object)	= $self -> param('design_object') || '';
 
 	$self -> app -> log -> debug('GetTable.design_object()');
 
