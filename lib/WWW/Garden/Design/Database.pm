@@ -679,11 +679,11 @@ sub get_flower_by_both_names
 	my($self, $key)	= @_;
 	my($constants)	= $self -> constants;
 	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
-	$key			= "\U%$key"; # \U => Convert to upper-case.
+	$key			= uc $key;
 	my(@key)		= split('/', $key);
 	my($sql)		= "select pig_latin from flowers where upper(scientific_name) like ? and upper(common_name) like ?";
 
-	$self -> simple -> query($sql, $key[0], $key[1]) -> into(my $pig_latin) || die $self -> db -> simple -> error;
+	$self -> simple -> query($sql, $key[0], $key[1]) -> into(my $pig_latin) || die $self -> simple -> error;
 
 	$pig_latin = length($pig_latin) > 0 ? "$$constants{homepage_url}$$constants{image_url}/$pig_latin.0.jpg" : '';
 

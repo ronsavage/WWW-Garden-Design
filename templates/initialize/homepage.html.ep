@@ -996,7 +996,7 @@ function set_property_fields(i)
 
 // -----------------------------------------------
 
-function set_virtual_parameters(i)
+function set_virtual_parameters()
 {
 	// Initialize globals.
 
@@ -1014,12 +1014,6 @@ function set_virtual_parameters(i)
 			id		= 'id_' + row + '_' + column;
 			table	+= "<td class = 'generic_border_margin'>" +
 						"<div id = '" + id + "'>(" + row + ',' + column + ')</div></td>';
-
-//			$('#' + id)
-//			.click(function()
-//			{
-//				monitor_click(id, row, column);
-//			});
 		}
 
 		table += "\n\t</tr>\n";
@@ -1029,13 +1023,19 @@ function set_virtual_parameters(i)
 
 	$('#virtual_garden').html(table);
 
-	id = '#id_1_7';
-
-	$(id)
-	.click(function()
+	for (row = 1; row <= virtual_cell_count; row++)
 	{
-		monitor_click(id, row, column);
-	});
+		for (column = 1; column <= virtual_cell_count; column++)
+		{
+			id = '#id_' + row + '_' + column;
+
+			$(id)
+			.click(function()
+			{
+				monitor_click(id, row, column);
+			});
+		}
+	}
 
 } // End of set_virtual_parameters.
 
@@ -1171,7 +1171,7 @@ $(function()
 
 	set_virtual_parameters();
 	get_attribute_types();
-	get_object_table();
+//	get_object_table();
 
 	// Enable the tabs before trying to work with them.
 
