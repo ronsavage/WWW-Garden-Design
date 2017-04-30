@@ -31,10 +31,18 @@ sub design_flower
 
 	$self -> app -> log -> debug('GetTable.design_flower()');
 
-	my($defaults) = $self -> app -> defaults;
+	if (length($design_flower) < 2)
+	{
+		$self -> stash(thumbnail_name => '');
+		$self -> render();
+	}
+	else
+	{
+		my($defaults) = $self -> app -> defaults;
 
-	$self -> stash(thumbnail_name => $$defaults{db} -> get_flower_by_both_names($design_flower) );
-	$self -> render;
+		$self -> stash(thumbnail_name => $$defaults{db} -> get_flower_by_both_names($design_flower) );
+		$self -> render;
+	}
 
 } # End of design_flower.
 
@@ -47,10 +55,18 @@ sub design_object
 
 	$self -> app -> log -> debug('GetTable.design_object()');
 
-	my($defaults) = $self -> app -> defaults;
+	if (length($design_object) < 2)
+	{
+		$self -> stash(icon_name => '');
+		$self -> render();
+	}
+	else
+	{
+		my($defaults) = $self -> app -> defaults;
 
-	$self -> stash(icon_name => $$defaults{db} -> get_object_by_name($design_object) );
-	$self -> render;
+		$self -> stash(icon_name => $$defaults{db} -> get_object_by_name($design_object) );
+		$self -> render;
+	}
 
 } # End of design_object.
 

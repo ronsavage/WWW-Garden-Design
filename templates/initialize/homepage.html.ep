@@ -105,6 +105,7 @@
 // Storage for info read in below from the database.
 
 var attribute_types_table	= [];
+var chosen_thing			= '';
 var garden_table			= [];
 var object_table			= [];
 var window_width			= 0;
@@ -510,6 +511,20 @@ function get_design_flower()
 
 } // End of get_design_flower.
 
+
+// -----------------------------------------------
+
+function get_design_flower_icon()
+{
+	var html = $('#design_flower_thumbnail').html();
+
+	if (html.length > 0)
+	{
+		chosen_thing = html;
+	}
+
+} // End of get_design_flower_icon.
+
 // -----------------------------------------------
 
 function get_design_object()
@@ -534,6 +549,19 @@ function get_design_object()
 	});
 
 } // End of get_design_object.
+
+// -----------------------------------------------
+
+function get_design_object_icon()
+{
+	var html = $('#design_object_thumbnail').html();
+
+	if (html.length > 0)
+	{
+		chosen_thing = html;
+	}
+
+} // End of get_design_object_icon.
 
 // -----------------------------------------------
 
@@ -603,14 +631,6 @@ function get_search_image_size_string()
 } // End of get_search_image_size_string.
 
 // -----------------------------------------------
-
-function monitor_click(id, row, column)
-{
-	alert(id);
-
-} // End of monitor_click.
-
-// -----------------------------------------------
 // Note: Changed means the user changed the selected item.
 
 function object_menu_changed(data)
@@ -637,6 +657,17 @@ function object_menu_changed(data)
 	}
 
 } // End of object_menu_changed.
+
+// -----------------------------------------------
+
+function plant_flower(id, row, column)
+{
+	if (chosen_thing.length > 0)
+	{
+		$(id).html(chosen_thing);
+	}
+
+} // End of plant_flower.
 
 // -----------------------------------------------
 
@@ -1003,7 +1034,9 @@ function set_virtual_parameters()
 	var virtual_cell_count	= <%== $$constants{virtual_cell_count} %>;
 	var table				= "<table align = 'center' class = 'bordered' width = '100%'>\n";
 
+	var column;
 	var id;
+	var row;
 
 	for (row = 1; row <= virtual_cell_count; row++)
 	{
@@ -1023,19 +1056,14 @@ function set_virtual_parameters()
 
 	$('#virtual_garden').html(table);
 
-	for (row = 1; row <= virtual_cell_count; row++)
+	$("#virtual_garden td").click(function()
 	{
-		for (column = 1; column <= virtual_cell_count; column++)
-		{
-			id = '#id_' + row + '_' + column;
+		column	= parseInt( $(this).index() ) + 1;
+		row		= parseInt( $(this).parent().index() )+1;
+		id		= '#id_' + row + '_' + column;
 
-			$(id)
-			.click(function()
-			{
-				monitor_click(id, row, column);
-			});
-		}
-	}
+		plant_flower(id, row, column);
+	});
 
 } // End of set_virtual_parameters.
 
@@ -1171,7 +1199,7 @@ $(function()
 
 	set_virtual_parameters();
 	get_attribute_types();
-//	get_object_table();
+	get_object_table();
 
 	// Enable the tabs before trying to work with them.
 
@@ -1270,10 +1298,22 @@ $(function()
 		get_design_flower();
 	});
 
+	$('#design_flower_thumbnail')
+	.blur(function()
+	{
+		get_design_flower_icon();
+	});
+
 	$('#design_object')
 	.blur(function()
 	{
 		get_design_object();
+	});
+
+	$('#design_object_thumbnail')
+	.blur(function()
+	{
+		get_design_object_icon();
 	});
 
 	$('#flower_form')

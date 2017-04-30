@@ -549,6 +549,37 @@ sub get_autocomplete_flower_list
 } # End of get_autocomplete_flower_list.
 
 # -----------------------------------------------
+# Return a list.
+
+sub get_autocomplete_object_list
+{
+	my($self, $key)	= @_;
+	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
+
+	my(@result);
+	my(%seen);
+
+	my($sql)	= "select name from objects where upper(name) like '%$key%'";
+	my($result)	= $self -> simple -> query($sql) || die $self -> simple -> error;
+	my(@value)	= $result -> flat;
+
+	for my $value (@value)
+	{
+		next if (! defined $value);
+
+		if (! $seen{$value})
+		{
+			push @result, $value;
+
+			$seen{$value} = 1;
+		}
+	}
+
+	return [@result];
+
+} # End of get_autocomplete_object_list.
+
+# -----------------------------------------------
 # Return the shortest item in the list.
 
 sub get_autocomplete_item
