@@ -1,0 +1,6 @@
+[Sun Apr 30 14:29:27 2017] [info] ------------------------------
+[Sun Apr 30 14:29:27 2017] [debug] POST "/GetTable/design_object"
+[Sun Apr 30 14:29:27 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::GetTable" and action "design_object"
+[Sun Apr 30 14:29:27 2017] [debug] GetTable.design_object()
+[Sun Apr 30 14:29:27 2017] [debug] Rendering cached template "get_table/design_object.html.ep"
+[Sun Apr 30 14:29:27 2017] [debug] 200 OK (0.002505s, 399.202/s)

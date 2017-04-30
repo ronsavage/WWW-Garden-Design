@@ -13,7 +13,10 @@ sub display
 	my($self)		= @_;
 	my($key)		= $self -> param('term')	|| ''; # jquery forces use of 'term'.
 	my($type)		= $self -> param('type')	|| '';
-	my(%context)	=
+
+	$self -> app -> log -> debug("AutoComplete.display(key: $key, type: $type)");
+
+	my(%context) =
 	(	# Form field		Table column		Table name.
 		aliases			=> ['aliases',			'flowers'],
 		common_name		=> ['common_name',		'flowers'],
@@ -36,6 +39,8 @@ sub display
 	# meaning we're on the Design garden tab. In this case we can't assume the string the user typed
 	# petains to just one column of the flower database, so we search every several columns in the
 	# 'flowers' table: scientific_name, common_name and aliases.
+	# Warning: This use '*' in %context above means the methods in Database.pm which search %context
+	# must skip it. See Database.get_autocomplete_item() and Database.get_autocomplete_list().
 
 	if ($type eq 'design_flower')
 	{
