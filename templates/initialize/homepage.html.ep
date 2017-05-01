@@ -1299,7 +1299,7 @@ $(function()
 	});
 
 	$('#design_flower_thumbnail')
-	.blur(function()
+	.click(function()
 	{
 		get_design_flower_icon();
 	});
@@ -1311,7 +1311,7 @@ $(function()
 	});
 
 	$('#design_object_thumbnail')
-	.blur(function()
+	.click(function()
 	{
 		get_design_object_icon();
 	});
