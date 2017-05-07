@@ -3,33 +3,46 @@
 
 	<table class = 'centered'  width = '100%'>
 		<tr>
-			<td><div class = 'blue_centered'>Design</div><br /></td>
+			<td colspan = '3'><div class = 'blue_centered'>Design</div><br /></td>
 		</tr>
 		<tr>
-			<td align = 'center'>Search Fields</td>
+			<td align = 'center' colspan = '3'>Operations affecting the whole virtual garden</td>
 		</tr>
 		<tr>
-			<td align = 'center'> <!-- Why does class centered not work here? -->
+			<td width = '33%'><input type = 'submit' value = 'Load' /></td>
+			<td width = '33%'><input type = 'submit' value = 'Save' /></td>
+			<td width = '33%'><input type = 'submit' value = 'Delete garden' /></td>
+		</tr>
+		<tr>
+			<td colspan = '3'><hr /></td>
+		</td>
+		<tr>
+			<td align = 'center' colspan = '3'>Search fields for adding and deleting Icons</td>
+		</tr>
+		<tr>
+			<td align = 'center' colspan = '3'> <!-- Why does class centered not work here? -->
 				<table class = 'bordered centered'>
 					<tr>
-						<td width = '40%'>Flower search</td>
-						<td width = '10%'>Flower thumbnail</td>
-						<td width = '40%'>Object search</td>
-						<td width = '10%'>Object thumbnail</td>
+						<td class = 'generic_border generic_padding' width = '35%'>Flower search</td>
+						<td class = 'generic_border generic_padding' width = '10%'>Flower thumbnail</td>
+						<td class = 'generic_border generic_padding' width = '35%'>Object search</td>
+						<td class = 'generic_border generic_padding' width = '10%'>Object thumbnail</td>
+						<td class = 'generic_border generic_padding' width = '10%'>Undo</td>
 					</tr>
 					<tr>
-						<td width = '40%'>
+						<td class = 'generic_border generic_padding' width = '35%'>
 							<input id = 'design_flower' type = 'text' size = '30' maxlength = '100' value = ''>
 						</td>
-						<td width = '10%'>
+						<td class = 'generic_border generic_padding' width = '10%'>
 							<div id = 'design_flower_thumbnail'></div>
 						</td>
-						<td width = '40%'>
+						<td class = 'generic_border generic_padding' width = '35%'>
 							<input id = 'design_object' type = 'text' size = '30' maxlength = '100' value = ''>
 						</td>
-						<td width = '10%'>
+						<td class = 'generic_border generic_padding' width = '10%'>
 							<div id = 'design_object_thumbnail'></div>
 						</td>
+						<td class = 'generic_border generic_padding' width = '10%'><input type = 'submit' value = 'Delete icon' /></td>
 					</tr>
 				</table>
 			</td>
@@ -39,6 +52,7 @@
 % end
 
 <br />
-<table align = 'center'><tr><td>
-<div class = 'overflow_scroll' id = 'virtual_garden'></div>
-</td></tr></table>
+<table align = 'center'>
+	<tr><td align = 'center'>Virtual Garden</td></tr>
+	<tr><td><div class = 'overflow_scroll' id = 'virtual_garden'></div></td></tr>
+</table>
