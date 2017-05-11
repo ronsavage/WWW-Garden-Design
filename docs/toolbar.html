@@ -5,11 +5,11 @@
   <title>jQuery UI Controlgroup - Toolbar</title>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <style>
-	#forecolor-button
+	#property-button
 	{
       width: 70px;
     }
-    #hilitecolor-button
+    #garden-button
 	{
       width: 70px;
     }
@@ -24,11 +24,12 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
   $( function() {
-     var valueControls = [ "#forecolor", "#hilitecolor"];
+     var valueControls = [ "#property", "#garden"];
 
     $( ".toolbar" ).controlgroup();
     $(valueControls.join( ", " ) ).on( "click change selectmenuchange",
       function() {
+		//alert('id: ' + this.id + '. value: ' + $(this).val() );
         document.execCommand(
           this.id,
           false,
@@ -44,8 +45,8 @@
 <body>
 <div class="wrap">
   <div class="toolbar">
-      <select id="hilitecolor" title="Background color">
-        <option selected disabled>Highlight</option>
+      <select id="property" title="Property">
+        <option selected disabled>Property</option>
         <option value="white">None</option>
         <option value="red">Red</option>
         <option value="yellow">Yellow</option>
@@ -55,8 +56,8 @@
         <option value="purple">Purple</option>
         <option value="orange">Orange</option>
       </select>
-      <select id="forecolor" title="Color">
-        <option selected disabled>Color</option>
+      <select id="garden" title="Garden">
+        <option selected disabled>Garden</option>
         <option value="black">Black</option>
         <option value="white">White</option>
         <option value="red">Red</option>
