@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Controlgroup - Toolbar</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <style>
+	#forecolor-button
+	{
+      width: 70px;
+    }
+    #hilitecolor-button
+	{
+      width: 70px;
+    }
+    .toolbar {
+      font-size: .75em;
+    }
+    .wrap {
+      width: 588px;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+     var valueControls = [ "#forecolor", "#hilitecolor"];
+
+    $( ".toolbar" ).controlgroup();
+    $(valueControls.join( ", " ) ).on( "click change selectmenuchange",
+      function() {
+        document.execCommand(
+          this.id,
+          false,
+          $( this ).val()
+        );
+      } );
+    $( "form" ).on( "submit", function( event ) {
+      event.preventDefault();
+    });
+  } );
+  </script>
+</head>
+<body>
+<div class="wrap">
+  <div class="toolbar">
+      <select id="hilitecolor" title="Background color">
+        <option selected disabled>Highlight</option>
+        <option value="white">None</option>
+        <option value="red">Red</option>
+        <option value="yellow">Yellow</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+        <option value="grey">Grey</option>
+        <option value="purple">Purple</option>
+        <option value="orange">Orange</option>
+      </select>
+      <select id="forecolor" title="Color">
+        <option selected disabled>Color</option>
+        <option value="black">Black</option>
+        <option value="white">White</option>
+        <option value="red">Red</option>
+        <option value="yellow">Yellow</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+        <option value="#ccc">Grey</option>
+        <option value="purple">Purple</option>
+        <option value="orange">Orange</option>
+      </select>
+
+  </div>
+</div>
+
+</body>
+</html>
