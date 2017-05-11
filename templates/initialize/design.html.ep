@@ -53,6 +53,7 @@
 
 <br />
 <table align = 'center'>
-	<tr><td align = 'center'>Virtual Garden</td></tr>
+	<tr><td align = 'center'>Virtual Garden. It's dimensions are 99x99</td></tr>
+	<tr><td align = 'center'>Pretend the cells are 10cmx10cm or 2mx2m. The program does not care</td></tr>
 	<tr><td><div class = 'overflow_scroll' id = 'virtual_garden'></div></td></tr>
 </table>

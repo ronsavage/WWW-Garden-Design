@@ -9,11 +9,6 @@
 				<fieldset>
 				<table>
 					<tr>
-						<td class = 'centered' colspan = '2'>
-							On file<br /><hr />
-						</td>
-					</tr>
-					<tr>
 						<td>
 							<span id = 'property_menu_placeholder'><%== $property_menu %></span>
 						</td>
