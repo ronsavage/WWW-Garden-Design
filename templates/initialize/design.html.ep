@@ -9,18 +9,18 @@
 			<td colspan = '3'><br /></td>
 		</tr>
 		<tr>
+			<td align = 'center' colspan = '3'>Operations affecting the whole virtual garden</td>
+		</tr>
+		<tr>
+			<td colspan = '3'><br /></td>
+		</tr>
+		<tr>
 			<td align = 'center' colspan = '3'>
 				<div class = 'design_garden_toolbar'>
 					<span id = 'design_property_menu_span'><%== $design_property_menu %></span>
 					<span id = 'design_garden_menu_span'><%== $design_garden_menu %></span>
 				</div>
 			</td>
-		</tr>
-		<tr>
-			<td colspan = '3'><br /></td>
-		</tr>
-		<tr>
-			<td align = 'center' colspan = '3'>Operations affecting the whole virtual garden</td>
 		</tr>
 		<tr>
 			<td colspan = '3'><br /></td>

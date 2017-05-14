@@ -13,11 +13,6 @@
 	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/css/www/garden/design/homepage.css'>
 	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/spectrum/spectrum.css'>
 	<style>
-		#object_menu-button
-		{
-	      width: 200px;
-	    }
-
 		.overflow_scroll
 		{
 			border:		1px solid #00aa00;
