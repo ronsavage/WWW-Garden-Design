@@ -156,10 +156,11 @@ sub build_garden_menu
 {
 	my($self, $property_gardens, $controller, $id) = @_;
 	my($html)			= "<select id = '$id'>"
-							. "<option selected disabled>Gardens</option>";
+							. "<option disabled = '1'>Gardens</option>";
 	my($last_name)		= '';
 	my($property_id)	= $controller -> session('current_property_id');
-	my($selected)		= '';
+
+	my($selected);
 
 	for my $garden (@$property_gardens)
 	{
@@ -171,7 +172,7 @@ sub build_garden_menu
 		{
 			# Set this on the 1st menu item.
 
-			$selected = "selected = 'selected'";
+			$selected = 'selected';
 		}
 
 		$html		.= "<option $selected value = '$$garden{id}'>$$garden{name}</option>";
@@ -255,9 +256,10 @@ sub build_object_menu
 	my($self, $objects, $controller) = @_;
 	my($html)		= "<div class = 'object_toolbar'>"
 						. "<select id = 'object_menu'>"
-						. "<option selected disabled>Objects</option>";
+						. "<option disabled = '1'>Objects</option>";
 	my($last_name)  = '';
-	my($selected)	= '';
+
+	my($selected);
 
 	for my $object (@$objects)
 	{
@@ -265,7 +267,7 @@ sub build_object_menu
 		{
 			# Set this on the 1st menu item.
 
-			$selected = "selected = 'selected'";
+			$selected = 'selected';
 		}
 
 		next if ($last_name eq $$object{name});
@@ -287,9 +289,10 @@ sub build_property_menu
 {
 	my($self, $property_gardens, $controller, $id) = @_;
 	my($html)		= "<select id = '$id'>"
-						. "<option selected disabled>Properties</option>";
+						. "<option disabled = '1'>Properties</option>";
 	my($last_name)	= '';
-	my($selected)	= '';
+
+	my($selected);
 
 	for my $garden (@$property_gardens)
 	{
@@ -297,7 +300,7 @@ sub build_property_menu
 		{
 			# Set this on the 1st menu item.
 
-			$selected = "selected = 'selected'";
+			$selected = 'selected';
 
 			# current_property_id is used in build_garden_menu().
 
