@@ -334,22 +334,30 @@ function build_garden_menu(property_id, garden_menu_name)
 		}
 	}
 
-	html += '</select>';
+	html	+= '</select>';
+	id		= '#' + garden_menu_name;
 
-	$('#' + garden_menu_name + '_span')
+	$(id + '_span')
 	.empty()
 	.append(html);
 
+	// Warning: These 2 calls to selectmenu() are mandatory.
+
 	if (garden_menu_name == 'garden_garden_menu')
 	{
-		$('#garden_garden_menu')
+		$(id)
 		.selectmenu
 		({
 			change: function(event, data)
 			{
-				garden_menu_changed(data);
+				garden_garden_menu_changed(data);
 			}
 		});
+	}
+	else
+	{
+		$(id)
+		.selectmenu();
 	}
 
 } // End of build_garden_menu.
@@ -435,7 +443,7 @@ function design_property_menu_changed(data)
 // -----------------------------------------------
 // Note: Changed means the user changed the selected item.
 
-function garden_menu_changed(data)
+function garden_garden_menu_changed(data)
 {
 //	for( key in data )
 //	{
@@ -458,7 +466,7 @@ function garden_menu_changed(data)
 		}
 	}
 
-} // End of garden_menu_changed.
+} // End of garden_garden_menu_changed.
 
 // -----------------------------------------------
 // Note: Changed means the user changed the selected item.
