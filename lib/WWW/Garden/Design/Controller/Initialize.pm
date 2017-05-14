@@ -68,10 +68,12 @@ sub homepage
 
 	$self -> render
 	(
-		constants		=> $$defaults{constants_table},
-		garden_menu		=> $$defaults{garden_menu},
-		object_menu		=> $$defaults{object_menu},
-		property_menu	=> $$defaults{property_menu},
+		constants				=> $$defaults{constants_table},
+		design_garden_menu		=> $$defaults{garden_menu},
+		design_property_menu	=> $$defaults{property_menu},
+		garden_garden_menu		=> $$defaults{garden_menu},
+		garden_property_menu	=> $$defaults{property_menu},
+		object_menu				=> $$defaults{object_menu},
 	);
 
 } # End of homepage.

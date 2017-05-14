@@ -155,8 +155,8 @@ sub add_garden
 sub build_garden_menu
 {
 	my($self, $property_gardens, $controller) = @_;
-	my($html)			= "<label for 'garden_menu'>Garden: </label><br />"
-							. "<select name = 'garden_menu' id = 'garden_menu'>";
+	my($html)			= "<select id = 'garden_garden_menu'>"
+							. "<option selected disabled>Gardens</option>";
 	my($last_name)		= '';
 	my($property_id)	= $controller -> session('current_property_id');
 	my($selected)		= '';
@@ -253,8 +253,9 @@ qq|<response>
 sub build_object_menu
 {
 	my($self, $objects, $controller) = @_;
-	my($html)		= "<label for 'object_menu'>Object: </label><br />"
-						. "<select name = 'object_menu' id = 'object_menu'>";
+	my($html)		= "<div class = 'object_toolbar'>"
+						. "<select id = 'object_menu'>"
+						. "<option selected disabled>Objects</option>";
 	my($last_name)  = '';
 	my($selected)	= '';
 
@@ -274,7 +275,7 @@ sub build_object_menu
 		$selected	= '';
 	}
 
-	$html .= '</select>';
+	$html .= "</select>\n</div>\n";
 
 	return $html;
 
@@ -285,8 +286,8 @@ sub build_object_menu
 sub build_property_menu
 {
 	my($self, $property_gardens, $controller) = @_;
-	my($html)		= "<label for 'property_menu'>Property: </label><br />"
-						. "<select name = 'property_menu' id = 'property_menu'>";
+	my($html)		= "<select name = 'garden_property_menu' id = 'garden_property_menu'>"
+						. "<option selected disabled>Properties</option>";
 	my($last_name)	= '';
 	my($selected)	= '';
 

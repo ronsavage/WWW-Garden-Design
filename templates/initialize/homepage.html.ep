@@ -13,15 +13,19 @@
 	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/css/www/garden/design/homepage.css'>
 	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/spectrum/spectrum.css'>
 	<style>
-	.overflow_scroll
-	{
-		border:		1px solid #00aa00;
-		height:		600px;
-		padding:	1em;
-		overflow:	scroll;
-		width:		1500px;
-	}
+		#object_menu-button
+		{
+	      width: 200px;
+	    }
 
+		.overflow_scroll
+		{
+			border:		1px solid #00aa00;
+			height:		600px;
+			padding:	1em;
+			overflow:	scroll;
+			width:		1500px;
+		}
 	</style>
 
 </head>
@@ -69,13 +73,13 @@
 % end
 	</div>
 	<div id = 'global_garden_tab'>
-%= include 'initialize/garden', garden_menu => $garden_menu, property_menu => $property_menu
+%= include 'initialize/garden', garden_garden_menu => $garden_garden_menu, garden_property_menu => $garden_property_menu
 	</div>
 	<div id = 'global_object_tab'>
 %= include 'initialize/object', object_menu => $object_menu
 	</div>
 	<div id = 'global_design_tab'>
-%= include 'initialize/design', constants => $constants
+%= include 'initialize/design', constants => $constants, design_garden_menu => $design_garden_menu, design_property_menu => $design_property_menu
 	</div>
 	<div id = 'global_help_tab'>
 		<div id = 'help_div'>
@@ -310,8 +314,7 @@ function build_attribute_id(kind, name, value)
 function build_garden_menu(property_id)
 {
 	var first_id	= 0;
-	var html		= "<label for 'garden_menu'>Garden: </label><br />"
-						+ "<select name = 'garden_menu' id = 'garden_menu'>";
+	var html		= "<select id = 'garden_garden_menu'>";
 
 	var id;
 	var name;
@@ -333,11 +336,11 @@ function build_garden_menu(property_id)
 
 	html += '</select>';
 
-	$('#garden_menu_placeholder')
+	$('#garden_garden_menu_span')
 	.empty()
 	.append(html);
 
-	$('#garden_menu')
+	$('#garden_garden_menu')
 	.selectmenu
 	({
 		change: function(event, data)
@@ -387,8 +390,7 @@ function build_note_ids(sequence)
 function build_property_menu()
 {
 	var first_id	= 0;
-	var html		= "<label for 'property_menu'>Property: </label><br />"
-						+ "<select name = 'property_menu' id = 'property_menu'>";
+	var html		= "<select id = 'garden_property_menu'>";
 
 	var id;
 	var name;
@@ -407,14 +409,14 @@ function build_property_menu()
 
 	html += '</select>';
 
-	$('#property_menu_placeholder')
+	$('#garden_property_menu_span')
 	.empty()
 	.append(html);
 
 	$('#property_name')
 	.focus();
 
-	$('#property_menu')
+	$('#garden_property_menu')
 	.selectmenu
 	({
 		change: function(event, data)
@@ -574,7 +576,7 @@ function get_design_image_size_string()
 } // End of get_design_image_size_string.
 
 // -----------------------------------------------
-// Warning: This function cannot be used to populate garden_menu_placeholder
+// Warning: This function cannot be used to populate garden_garden_menu_span
 // since that involves changing the DOM, but the function is called from within
 // the document ready context which assumes the DOM has stopped changing.
 
@@ -597,7 +599,7 @@ function get_garden_table()
 } // End of get_garden_table.
 
 // -----------------------------------------------
-// Warning: This function cannot be used to populate object_menu_placeholder
+// Warning: This function cannot be used to populate object_menu_span
 // since that involves changing the DOM, but the function is called from within
 // the document ready context which assumes the DOM has stopped changing.
 
@@ -1194,6 +1196,10 @@ function submit_search()
 
 $(function()
 {
+	$('.design_garden_toolbar').controlgroup();
+	$('.garden_garden_toolbar').controlgroup();
+	$('.object_toolbar').controlgroup();
+
 	window_width	= window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 	window_height	= window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
@@ -1209,9 +1215,16 @@ $(function()
 		active: 1
 	});
 
-	// If the property tab is selected, give the focus to the property name.
+	$('#garden_garden_menu')
+	.selectmenu
+	({
+		change: function(event, data)
+		{
+			garden_menu_changed(data);
+		}
+	});
 
-	$('#property_menu')
+	$('#garden_property_menu')
 	.selectmenu
 	({
 		change: function(event, data)
@@ -1226,15 +1239,6 @@ $(function()
 		change: function(event, data)
 		{
 			object_menu_changed(data);
-		}
-	});
-
-	$('#garden_menu')
-	.selectmenu
-	({
-		change: function(event, data)
-		{
-			garden_menu_changed(data);
 		}
 	});
 
