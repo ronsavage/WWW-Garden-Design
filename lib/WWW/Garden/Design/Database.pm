@@ -110,6 +110,16 @@ sub BUILD
 
 # --------------------------------------------------
 
+sub add_flower
+{
+	my($self) = @_;
+
+	return '';
+
+} # End of add_flower.
+
+# --------------------------------------------------
+
 sub add_garden
 {
 	my($self, $item) = @_;

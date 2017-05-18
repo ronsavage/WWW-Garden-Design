@@ -12,7 +12,10 @@
 			<td align = 'center' colspan = '4'>Operations affecting the whole virtual garden</td>
 		</tr>
 		<tr>
-			<td colspan = '4'><br /></td>
+			<td></td>
+			<td align = 'center'>Properties</td>
+			<td align = 'center'>Gardens</td>
+			<td></td>
 		</tr>
 		<tr>
 			<td align = 'center' colspan = '4'>
@@ -28,8 +31,8 @@
 		<tr>
 			<td width = '25%'><input type = 'submit' value = 'Load' /></td>
 			<td width = '25%'><input type = 'submit' value = 'Save' /></td>
-			<td width = '25%'><input type = 'submit' value = 'Reset garden' /></td>
-			<td width = '25%'><input type = 'submit' value = 'Delete garden' /></td>
+			<td width = '25%'><input type = 'submit' value = 'Reset virtual garden' /></td>
+			<td width = '25%'><input type = 'submit' value = 'Delete virtual garden' /></td>
 		</tr>
 		<tr>
 			<td colspan = '4'><hr /></td>

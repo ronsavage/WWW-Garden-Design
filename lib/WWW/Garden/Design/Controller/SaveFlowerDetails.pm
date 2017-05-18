@@ -14,22 +14,24 @@ sub display
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('Details.display()');
+	$self -> app -> log -> debug('SaveFlowerDetails.display()');
 
 	my($item) =
 	{
-		aliases			=> $self -> param('aliases') || '-',
-		common_name		=> $self -> param('common_name'), # No default. See 'if' below.
-		scientific_name	=> $self -> param('scientific_name'),
+		aliases			=> $self -> req -> param('flower_aliases')			|| '-',
+		common_name		=> $self -> req -> param('flower_common_name')		|| '',
+		height			=> $self -> req -> param('flower_height')			|| '-',
+		scientific_name	=> $self -> req -> param('flower_scientific_name')	|| '',
+		width			=> $self -> req -> param('flower_width')			|| '-',
 	};
 
-	$self -> app -> log -> debug("param($_) => $$item{$_}") for sort keys %$item;
+	$self -> app -> log -> debug("$_ => $$item{$_}") for sort keys %$item;
 
 	if ($$item{common_name} && $$item{scientific_name})
 	{
 		my($defaults)  = $self -> app -> defaults;
 
-		$$defaults{db} -> add($item);
+		$$defaults{db} -> add_flower($item);
 
 		$self -> stash(error	=> undef);
 		$self -> stash(details	=> $self -> format($item) );
@@ -58,10 +60,10 @@ sub format
 	my($html) = <<EOS;
 <tr>
 	<td>$$item{common_name}</td>
-	<td>$$item{aliases}</td>
 	<td>$$item{scientific_name}</td>
-	<td>$$item{web_page_url}</td>
-	<td>$$item{thumbnail_url}</td>
+	<td>$$item{aliases}</td>
+	<td>$$item{height}</td>
+	<td>$$item{width}</td>
 </tr>
 EOS
 
