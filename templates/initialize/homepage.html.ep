@@ -42,30 +42,30 @@
 %= include 'initialize/search'
 	</div>
 	<div id = 'global_details_tab'>
-%= form_for '/SaveFlowerDetails' => (method => 'POST') => begin
-	    <ul>
-	        <li><a href = '#flower_tab'><span>Flower</span></a></li>
-	        <li><a href = '#attributes_tab'><span>Attributes</span></a></li>
-	        <li><a href = '#images_tab'><span>Images</span></a></li>
-	        <li><a href = '#notes_tab'><span>Notes</span></a></li>
-	        <li><a href = '#urls_tab'><span>URLs</span></a></li>
-	    </ul>
-	    <div id = 'flower_tab'>
+		<form id = 'details_form' name = 'details_form'>
+		    <ul>
+		        <li><a href = '#flower_tab'><span>Flower</span></a></li>
+		        <li><a href = '#attributes_tab'><span>Attributes</span></a></li>
+		        <li><a href = '#images_tab'><span>Images</span></a></li>
+		        <li><a href = '#notes_tab'><span>Notes</span></a></li>
+		        <li><a href = '#urls_tab'><span>URLs</span></a></li>
+		    </ul>
+		    <div id = 'flower_tab'>
 %= include 'initialize/flower'
-		</div>
-	    <div id = 'attributes_tab'>
+			</div>
+		    <div id = 'attributes_tab'>
 %= include 'initialize/attributes'
-		</div>
-	    <div id = 'images_tab'>
+			</div>
+		    <div id = 'images_tab'>
 %= include 'initialize/images', constants => $constants
-		</div>
-	    <div id = 'notes_tab'>
+			</div>
+		    <div id = 'notes_tab'>
 %= include 'initialize/notes', constants => $constants
-		</div>
-	    <div id = 'urls_tab'>
+			</div>
+		    <div id = 'urls_tab'>
 %= include 'initialize/urls'
-		</div>
-% end
+			</div>
+		</form>
 	</div>
 	<div id = 'global_garden_tab'>
 %= include 'initialize/garden', garden_garden_menu => $garden_garden_menu, garden_property_menu => $garden_property_menu
@@ -1070,26 +1070,32 @@ function set_virtual_parameters()
 
 // -----------------------------------------------
 
-function submit_flower()
+function submit_details()
 {
+	alert('1');
+
 	$.ajax
 	({
 		data:
 		{
-			aliases:			document.aliases.value,
-			common_name:		document.common_name.value,
-			edible:				document.attributes_form.edible.value,
-			habit:				document.attributes_form.habit.value,
-			native:				document.attributes_form.native,
-			scientific_name:	document.scientific_name.value,
-			sun_tolerance:		document.attributes_form.sun_tolerance.value
+			aliases:			document.flower_aliases.value,
+//			edible:				document.edible.value,
+//			habit:				document.habit.value,
+//			native:				document.native.value,
+//			sun_tolerance:		document.sun_tolerance.value,
+			common_name:		document.flower_common_name.value,
+			common_name:		document.flower_height.value,
+			scientific_name:	document.flower_scientific_name.value,
+			common_name:		document.flower_width.value
 		},
-		dataType:	'text',
+		dataType:	'html',
 		method:		'POST',
 		url:		'/AddFlower'
 	})
 	.done(function(html)
 	{
+		alert('2');
+
 		// $('#flower_result_div')
 		//	.empty()
 		//	.append(html);
@@ -1103,7 +1109,7 @@ function submit_flower()
 		alert('Ajax status: ' + textStatus + ', ' + error);
 	});
 
-} // End of submit_flower.
+} // End of submit_details.
 
 // -----------------------------------------------
 
@@ -1319,10 +1325,10 @@ $(function()
 		get_design_object_icon();
 	});
 
-	$('#flower_form')
+	$('#details_form')
 	.submit(function()
 	{
-		submit_flower();
+		submit_details();
 
 		return false;
 	});

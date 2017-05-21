@@ -1,4 +1,4 @@
-package WWW::Garden::Design::Controller::SaveFlowerDetails;
+package WWW::Garden::Design::Controller::AddFlower;
 
 use Mojo::Base 'Mojolicious::Controller';
 
@@ -14,15 +14,15 @@ sub display
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('SaveFlowerDetails.display()');
+	$self -> app -> log -> debug('AddFlower.display()');
 
 	my($item) =
 	{
-		aliases			=> $self -> req -> param('flower_aliases')			|| '-',
-		common_name		=> $self -> req -> param('flower_common_name')		|| '',
-		height			=> $self -> req -> param('flower_height')			|| '-',
-		scientific_name	=> $self -> req -> param('flower_scientific_name')	|| '',
-		width			=> $self -> req -> param('flower_width')			|| '-',
+		aliases			=> $self -> param('aliases')			|| '-',
+		common_name		=> $self -> param('common_name')		|| '',
+		height			=> $self -> param('height')				|| '-',
+		scientific_name	=> $self -> param('scientific_name')	|| '',
+		width			=> $self -> param('width')				|| '-',
 	};
 
 	$self -> app -> log -> debug("$_ => $$item{$_}") for sort keys %$item;
