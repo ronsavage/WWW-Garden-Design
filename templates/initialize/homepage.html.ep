@@ -1069,6 +1069,10 @@ function set_virtual_parameters()
 } // End of set_virtual_parameters.
 
 // -----------------------------------------------
+//			edible:				document.edible.value,
+//			habit:				document.habit.value,
+//			native:				document.native.value,
+//			sun_tolerance:		document.sun_tolerance.value
 
 function submit_details()
 {
@@ -1078,15 +1082,11 @@ function submit_details()
 	({
 		data:
 		{
-			aliases:			document.flower_aliases.value,
-//			edible:				document.edible.value,
-//			habit:				document.habit.value,
-//			native:				document.native.value,
-//			sun_tolerance:		document.sun_tolerance.value,
-			common_name:		document.flower_common_name.value,
-			common_name:		document.flower_height.value,
-			scientific_name:	document.flower_scientific_name.value,
-			common_name:		document.flower_width.value
+			aliases:			$('#flower_aliases').val(),
+			common_name:		$('#flower_common_name').val(),
+			flower_height:		$('#flower_height').val(),
+			flower_width:		$('#flower_width').val(),
+			scientific_name:	$('#flower_scientific_name').val()
 		},
 		dataType:	'html',
 		method:		'POST',
