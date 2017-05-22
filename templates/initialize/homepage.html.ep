@@ -1076,13 +1076,35 @@ function set_virtual_parameters()
 
 function submit_details()
 {
-	alert('1');
+	var attributes				= new Object;
+	attributes['native']		= ['No', 'Yes', 'Unknown'];
+	attributes['sun_tolerance']	= ['Full_sun', 'Part_shade', 'Shade', 'Unknown'];
+	var attribute_values		= new Array;
+
+	var id;
+	var key;
+	var value;
+
+	for (var kind in attributes)
+	{
+		for (var i = 0; i < attributes[kind].length; i++)
+		{
+			id		= '#attribute_' + kind + '_' + attributes[kind][i];
+			value	= $(id).prop('checked');
+
+			if (value == true)
+			{
+				attribute_values.push(kind + '.' + attributes[kind][i]);
+			}
+		}
+	}
 
 	$.ajax
 	({
 		data:
 		{
 			aliases:			$('#flower_aliases').val(),
+			attribute_values:	attribute_values.join('!'),
 			common_name:		$('#flower_common_name').val(),
 			flower_height:		$('#flower_height').val(),
 			flower_width:		$('#flower_width').val(),
@@ -1094,8 +1116,6 @@ function submit_details()
 	})
 	.done(function(html)
 	{
-		alert('2');
-
 		// $('#flower_result_div')
 		//	.empty()
 		//	.append(html);
