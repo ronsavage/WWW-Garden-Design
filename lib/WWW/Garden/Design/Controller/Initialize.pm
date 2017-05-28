@@ -43,6 +43,26 @@ sub build_check_boxes
 } # End of build_check_boxes.
 
 # -----------------------------------------------
+#	attributes['native']		= ['No', 'Yes', 'Unknown'];
+#	attributes['sun_tolerance']	= ['Full_sun', 'Part_shade', 'Shade', 'Unknown'];
+
+sub build_js_for_attributes
+{
+	my($self, $type_names, $type_fields)	= @_;
+	my($attribute_elements)					= "\tvar attributes = new Object;\n\n";
+
+	for my $type_name (sort @$type_names)
+	{
+		$attribute_elements .= "\tattributes['$type_name'] = ["
+								. join(', ', map{"'$_'"} @{$$type_fields{$type_name} })
+								. "];\n";
+	}
+
+	return $attribute_elements;
+
+} # End of build_js_for_attributes.
+
+# -----------------------------------------------
 
 sub homepage
 {
@@ -53,6 +73,7 @@ sub homepage
 	my($defaults)				= $self -> app -> defaults;
 	$$defaults{gardens_table}	= $$defaults{db} -> read_gardens_table; # Warning: Not read_table('gardens').
 	$$defaults{objects_table}	= $$defaults{db} -> read_objects_table; # Warning: Not read_table('objects').
+	my($attribute_elements)		= $self -> build_js_for_attributes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields});
 
 	# Warning: build_property_menu() sets a value in the session read by build_garden_menu(),
 	# so it must be called first.
@@ -70,6 +91,7 @@ sub homepage
 
 	$self -> render
 	(
+		attribute_elements		=> $attribute_elements,
 		constants				=> $$defaults{constants_table},
 		design_garden_menu		=> $$defaults{design_garden_menu},
 		design_property_menu	=> $$defaults{design_property_menu},

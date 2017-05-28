@@ -1076,10 +1076,8 @@ function set_virtual_parameters()
 
 function submit_details()
 {
-	var attributes				= new Object;
-	attributes['native']		= ['No', 'Yes', 'Unknown'];
-	attributes['sun_tolerance']	= ['Full_sun', 'Part_shade', 'Shade', 'Unknown'];
-	var attribute_values		= new Array;
+<%== $attribute_elements %>
+	var attribute_values = new Array;
 
 	var id;
 	var key;
