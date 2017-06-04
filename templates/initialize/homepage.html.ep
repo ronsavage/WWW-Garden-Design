@@ -1077,6 +1077,8 @@ function set_virtual_parameters()
 
 function submit_details()
 {
+	// Bundle up the attributes.
+
 <%== $attribute_elements %>
 	var attribute_list = [];
 
@@ -1098,8 +1100,14 @@ function submit_details()
 		}
 	}
 
+	// Bundle up the images.
+	// We assume the displayed image numbers are the same as in the for loop,
+	// so we don't include them in the packet sent to the server.
+
 	var image_count	= <%== $$constants{max_image_count} %>;
 	var image_list	= [];
+
+	// Warning: This loop starts from 1 even though elsewhere image loops start from 0.
 
 	for (var i = 1; i <= image_count; i++)
 	{
@@ -1114,6 +1122,44 @@ function submit_details()
 		}
 	}
 
+	// Bundle up the notes.
+	// We assume the displayed note numbers are the same as in the for loop,
+	// so we don't include them in the packet sent to the server.
+
+	var note_count	= <%== $$constants{max_note_count} %>;
+	var note_list	= [];
+
+	// Warning: This loop starts from 1 even though elsewhere note loops start from 0.
+
+	for (var i = 1; i <= note_count; i++)
+	{
+		id		= '#note_note_' + i;
+		value	= $(id).val();
+
+		if (value.length > 0)
+		{
+			note_list.push(i, value);
+		}
+	}
+
+	// Bundle up the URLs.
+
+	var url_count	= <%== $$constants{max_url_count} %>;
+	var url_list	= [];
+
+	// Warning: This loop starts from 1 even though elsewhere URL loops start from 0.
+
+	for (var i = 1; i <= url_count; i++)
+	{
+		id		= '#url_url_' + i;
+		value	= $(id).val();
+
+		if (value.length > 0)
+		{
+			url_list.push(i, value);
+		}
+	}
+
 	$.ajax
 	({
 		data:
@@ -1124,7 +1170,9 @@ function submit_details()
 			flower_height:		$('#flower_height').val(),
 			flower_width:		$('#flower_width').val(),
 			image_list:			image_list.join('!'),
-			scientific_name:	$('#flower_scientific_name').val()
+			note_list:			note_list.join('!'),
+			scientific_name:	$('#flower_scientific_name').val(),
+			url_list:			url_list.join('!')
 		},
 		dataType:	'html',
 		method:		'POST',

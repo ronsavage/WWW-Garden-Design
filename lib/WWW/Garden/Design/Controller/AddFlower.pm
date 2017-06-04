@@ -22,9 +22,11 @@ sub display
 		attribute_list	=> $self -> param('attribute_list')		|| '-',
 		common_name		=> $self -> param('common_name')		|| '',
 		height			=> $self -> param('height')				|| '-',
-		image_list		=> $self -> param('image_list')		|| '-',
+		image_list		=> $self -> param('image_list')			|| '-',
+		note_list		=> $self -> param('note_list')			|| '-',
 		scientific_name	=> $self -> param('scientific_name')	|| '',
 		width			=> $self -> param('width')				|| '-',
+		url_list		=> $self -> param('url_list')			|| '-',
 	};
 
 	$self -> app -> log -> debug("$_ => $$item{$_}") for sort keys %$item;
