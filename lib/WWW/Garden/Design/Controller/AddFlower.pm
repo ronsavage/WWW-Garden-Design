@@ -18,12 +18,13 @@ sub display
 
 	my($item) =
 	{
-		aliases				=> $self -> param('aliases')			|| '-',
-		attribute_values	=> $self -> param('attribute_values')	|| '-',
-		common_name			=> $self -> param('common_name')		|| '',
-		height				=> $self -> param('height')				|| '-',
-		scientific_name		=> $self -> param('scientific_name')	|| '',
-		width				=> $self -> param('width')				|| '-',
+		aliases			=> $self -> param('aliases')			|| '-',
+		attribute_list	=> $self -> param('attribute_list')		|| '-',
+		common_name		=> $self -> param('common_name')		|| '',
+		height			=> $self -> param('height')				|| '-',
+		image_list		=> $self -> param('image_list')		|| '-',
+		scientific_name	=> $self -> param('scientific_name')	|| '',
+		width			=> $self -> param('width')				|| '-',
 	};
 
 	$self -> app -> log -> debug("$_ => $$item{$_}") for sort keys %$item;

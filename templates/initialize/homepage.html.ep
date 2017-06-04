@@ -768,8 +768,9 @@ function populate_details(flower_id)
 
 		// Copy attributes to the Details/Attributes tab.
 
+		var range = [];
+
 		var attribute_name;
-		var range = new Array();
 		var value;
 
 		// Attributes: Copy attribute types to the Flower/Attributes tab.
@@ -1077,7 +1078,7 @@ function set_virtual_parameters()
 function submit_details()
 {
 <%== $attribute_elements %>
-	var attribute_values = new Array;
+	var attribute_list = [];
 
 	var id;
 	var key;
@@ -1092,8 +1093,24 @@ function submit_details()
 
 			if (value == true)
 			{
-				attribute_values.push(kind + '.' + attributes[kind][i]);
+				attribute_list.push(kind + '.' + attributes[kind][i]);
 			}
+		}
+	}
+
+	var image_count	= <%== $$constants{max_image_count} %>;
+	var image_list	= [];
+
+	for (var i = 1; i <= image_count; i++)
+	{
+		id		= '#image_file_name_' + i;
+		value	= $(id).val();
+
+		if (value.length > 0)
+		{
+			id = '#image_description_' + i;
+
+			image_list.push(i, value, $(id).val() );
 		}
 	}
 
@@ -1102,10 +1119,11 @@ function submit_details()
 		data:
 		{
 			aliases:			$('#flower_aliases').val(),
-			attribute_values:	attribute_values.join('!'),
+			attribute_list:		attribute_list.join('!'),
 			common_name:		$('#flower_common_name').val(),
 			flower_height:		$('#flower_height').val(),
 			flower_width:		$('#flower_width').val(),
+			image_list:			image_list.join('!'),
 			scientific_name:	$('#flower_scientific_name').val()
 		},
 		dataType:	'html',
@@ -1172,10 +1190,11 @@ function submit_search()
 
 	// Copy attributes from the search form.
 
+	var range = [];
+
 	var attribute_name;
 	var id;
 	var name;
-	var range = new Array();
 	var value;
 
 	for (var i = 0; i < attribute_types_table.length; i++)

@@ -21,7 +21,7 @@
 				<th>Image</th>
 				<th>Sequence</th>
 				<th>Image file name</th>
-				<th>Note</th>
+				<th>Description</th>
 			</tr>
 		</thead>
 		<tbody>
