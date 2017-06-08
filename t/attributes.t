@@ -36,13 +36,21 @@ my($result);
 
 for my $i (0 .. $#expected)
 {
-	$result = $checker -> validation
-	-> optional($headings[$i], 'trim')
+	$checker -> validation
 	-> input({heading => $headings[$i]})
 	-> required('heading')
 	-> like(qr/^$expected[$i]$/);
 
-	ok($checker -> validation -> is_valid == 1, "Heading '$expected[$i]' found"); $test_count++;
+	$result = $checker -> validation -> is_valid || 0;
+
+	ok($result == 1, "Heading '$expected[$i]' found"); $test_count++;
+}
+
+$csv -> column_names(@headings);
+
+for my $line (@{$csv -> getline_all($io)})
+{
+	diag Dumper($line);
 }
 
 close $io;
