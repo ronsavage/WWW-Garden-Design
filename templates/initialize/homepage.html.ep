@@ -1136,10 +1136,7 @@ function submit_details()
 		id		= '#note_note_' + i;
 		value	= $(id).val();
 
-		if (value.length > 0)
-		{
-			note_list.push(i, value);
-		}
+		note_list.push(i, value);
 	}
 
 	// Bundle up the URLs.
@@ -1154,10 +1151,7 @@ function submit_details()
 		id		= '#url_url_' + i;
 		value	= $(id).val();
 
-		if (value.length > 0)
-		{
-			url_list.push(i, value);
-		}
+		url_list.push(i, value);
 	}
 
 	$.ajax
