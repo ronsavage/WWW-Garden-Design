@@ -50,7 +50,6 @@ my(%params) =
 		'Lingua::EN::Inflect'		=> 1.895,
 		'Mojolicious'				=> 7.03,
 		'Mojo::Base'				=> '0',
-		'Mojo::DOM'					=> '0',
 		'Mojo::Log'					=> '0',
 		'Moo'						=> 2.003000,
 		'Path::Tiny'				=> 0.044,
@@ -65,6 +64,7 @@ my(%params) =
 		'Types::Standard'			=> 0.032,
 		'URI::Find::Schemeless'		=> 20160806,
 		'utf8'						=> 0,
+		'Validator::Custom'			=> 1.0201,
 		'warnings'					=> 0,
 	},
 	TEST_REQUIRES =>

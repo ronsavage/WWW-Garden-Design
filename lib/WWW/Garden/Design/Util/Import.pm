@@ -10,16 +10,25 @@ use File::Slurper qw/read_text/;
 
 use FindBin;
 
-use WWW::Garden::Design::Database;
-
-use Mojo::DOM;
 use Mojo::Log;
 
 use Moo;
 
 use Text::CSV::Encoded;
 
+use WWW::Garden::Design::Validation::AttributeTypes;
+
 extends qw/WWW::Garden::Design::Database::Base/;
+
+use Types::Standard qw/Object/;
+
+has attribute_type_checker =>
+(
+	default		=> sub{return WWW::Garden::Design::Validation::AttributeTypes -> new},
+	is			=> 'ro',
+	isa			=> Object,
+	required	=> 1,
+);
 
 our $VERSION = '0.95';
 
