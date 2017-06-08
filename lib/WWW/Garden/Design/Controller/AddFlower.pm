@@ -38,9 +38,11 @@ sub display
 	if ($$item{common_name} && $$item{scientific_name})
 	{
 		my($defaults)	= $self -> app -> defaults;
-		my($images)		= $self->process_image_list($$item{image_list});	# Hashref of arrayrefs.
-		my($notes)		= {split(/!/, $$item{note_list})};					# Hashref.
-		my($urls)		= $self->process_url_list($$item{url_list});		# Hashref.
+		my($images)		= $self->process_image_list($$item{image_list});			# Hashref of arrayrefs.
+		my($notes)		= {map{$_ eq '-' ? '' : $_} split(/!/, $$item{note_list})};	# Hashref.
+		my($urls)		= $self->process_url_list($$item{url_list});				# Hashref.
+
+		$self -> app -> log -> debug('Notes: ' . Dumper($notes) );
 
 #		$$defaults{db} -> add_flower($item);
 
@@ -87,12 +89,12 @@ EOS
 sub process_image_list
 {
 	my($self, $image_list)	= @_;
-	my(@images)				= split(/!/, $image_list);
+	my(@images)				= map{$_ eq '-' ? '' : $_} split(/!/, $image_list);
 	my($images)				= {};
 
 	$self -> app -> log -> debug('Details.process_image_list(...)');
 
-	for (my($i) = 0; $i <= $#images; $i += 2)
+	for (my($i) = 0; $i < $#images; $i += 3)
 	{
 		$$images{$images[$i]} = [$images[$i + 1], $images[$i + 2] ];
 	}
@@ -108,7 +110,7 @@ sub process_image_list
 sub process_url_list
 {
 	my($self, $url_list)	= @_;
-	my($urls)				= {split(/!/, $url_list)};
+	my($urls)				= {map{$_ eq '-' ? '' : $_} split(/!/, $url_list)};
 
 	$self -> app -> log -> debug('Details.process_url_list(...)');
 
@@ -116,7 +118,14 @@ sub process_url_list
 	{
 		my($finder) = URI::Find::Schemeless->new(sub{my($url, $text) = @_; $$urls{$key} = $url; return $url});
 
-		$finder->find(\$$urls{$key}) if ($$urls{$key});
+		if ($$urls{$key})
+		{
+			$finder->find(\$$urls{$key});
+		}
+		else
+		{
+			$$urls{$key} = '';
+		}
 	}
 
 	$self -> app -> log -> debug('Urls: ' . Dumper($urls) );
