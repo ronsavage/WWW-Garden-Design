@@ -1082,6 +1082,8 @@ function submit_details()
 <%== $attribute_elements %>
 	var attribute_list = [];
 
+	var joiner = '«»';
+
 	var id;
 	var key;
 	var value;
@@ -1090,12 +1092,12 @@ function submit_details()
 	{
 		for (var i = 0; i < attributes[kind].length; i++)
 		{
-			id		= '#attribute_' + kind + '_' + attributes[kind][i];
+			id		= build_attribute_id('attribute', kind, attributes[kind][i]);
 			value	= $(id).prop('checked');
 
 			if (value == true)
 			{
-				attribute_list.push(kind + '.' + attributes[kind][i]);
+				attribute_list.push(kind + joiner + attributes[kind][i]);
 			}
 		}
 	}
@@ -1153,14 +1155,14 @@ function submit_details()
 		data:
 		{
 			aliases:			$('#flower_aliases').val(),
-			attribute_list:		attribute_list.join('!'),
+			attribute_list:		attribute_list.join(joiner),
 			common_name:		$('#flower_common_name').val(),
 			flower_height:		$('#flower_height').val(),
 			flower_width:		$('#flower_width').val(),
-			image_list:			image_list.join('!'),
-			note_list:			note_list.join('!'),
+			image_list:			image_list.join(joiner),
+			note_list:			note_list.join(joiner),
 			scientific_name:	$('#flower_scientific_name').val(),
-			url_list:			url_list.join('!')
+			url_list:			url_list.join(joiner)
 		},
 		dataType:	'html',
 		method:		'POST',

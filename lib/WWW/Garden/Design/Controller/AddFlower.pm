@@ -10,6 +10,8 @@ use Moo;
 
 use URI::Find::Schemeless;
 
+use utf8;
+
 our $VERSION = '0.95';
 
 # -----------------------------------------------
@@ -37,10 +39,12 @@ sub display
 
 	if ($$item{common_name} && $$item{scientific_name})
 	{
+		my($joiner)		= qr/«»/;
 		my($defaults)	= $self -> app -> defaults;
-		my($images)		= $self->process_image_list($$item{image_list});			# Hashref of arrayrefs.
-		my($notes)		= {map{$_ eq '-' ? '' : $_} split(/!/, $$item{note_list})};	# Hashref.
-		my($urls)		= $self->process_url_list($$item{url_list});				# Hashref.
+		my($attributes)	= $self -> process_attributes($joiner, $$item{attribute_list});		# Hashref of arrayrefs.
+		my($images)		= $self -> process_images($joiner, $$item{image_list});				# Hashref of arrayrefs.
+		my($notes)		= {map{$_ eq '-' ? '' : $_} split($joiner, $$item{note_list})};	# Hashref.
+		my($urls)		= $self -> process_urls($joiner, $$item{url_list});					# Hashref.
 
 		$self -> app -> log -> debug('Notes: ' . Dumper($notes) );
 
@@ -86,13 +90,44 @@ EOS
 
 # -----------------------------------------------
 
-sub process_image_list
+sub process_attributes
 {
-	my($self, $image_list)	= @_;
-	my(@images)				= map{$_ eq '-' ? '' : $_} split(/!/, $image_list);
-	my($images)				= {};
+	my($self, $joiner, $attribute_list)	= @_;
+	my(@attributes)						= split($joiner, $attribute_list);
+	my($attributes)						= {};
 
-	$self -> app -> log -> debug('Details.process_image_list(...)');
+	$self -> app -> log -> debug('Details.process_attributes(...)');
+
+	my($key);
+
+	for (my($i) = 0; $i < $#attributes; $i += 2)
+	{
+		$key				= $attributes[$i];
+		$$attributes{$key}	= [] if (! $$attributes{$key});
+
+		push @{$$attributes{$key} }, $attributes[$i + 1];
+	}
+
+	for $key (keys %$attributes)
+	{
+		$$attributes{$key} = join(', ', @{$$attributes{$key} });
+	}
+
+	$self -> app -> log -> debug('Attributes: ' . Dumper($attributes) );
+
+	return \$attributes;
+
+} # End of process_attributes.
+
+# -----------------------------------------------
+
+sub process_images
+{
+	my($self, $joiner, $image_list)	= @_;
+	my(@images)						= map{$_ eq '-' ? '' : $_} split($joiner, $image_list);
+	my($images)						= {};
+
+	$self -> app -> log -> debug('Details.process_images(...)');
 
 	for (my($i) = 0; $i < $#images; $i += 3)
 	{
@@ -103,16 +138,16 @@ sub process_image_list
 
 	return \$images;
 
-} # End of process_image_list.
+} # End of process_images.
 
 # -----------------------------------------------
 
-sub process_url_list
+sub process_urls
 {
-	my($self, $url_list)	= @_;
-	my($urls)				= {map{$_ eq '-' ? '' : $_} split(/!/, $url_list)};
+	my($self, $joiner, $url_list)	= @_;
+	my($urls)						= {map{$_ eq '-' ? '' : $_} split($joiner, $url_list)};
 
-	$self -> app -> log -> debug('Details.process_url_list(...)');
+	$self -> app -> log -> debug('Details.process_urls(...)');
 
 	for my $key (keys %$urls)
 	{
@@ -132,7 +167,7 @@ sub process_url_list
 
 	return $urls;
 
-} # End of process_url_list.
+} # End of process_urls.
 
 # -----------------------------------------------
 
