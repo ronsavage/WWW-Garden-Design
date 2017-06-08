@@ -41,10 +41,10 @@ sub display
 	{
 		my($joiner)		= qr/«»/;
 		my($defaults)	= $self -> app -> defaults;
-		my($attributes)	= $self -> process_attributes($joiner, $$item{attribute_list});		# Hashref of arrayrefs.
-		my($images)		= $self -> process_images($joiner, $$item{image_list});				# Hashref of arrayrefs.
+		my($attributes)	= $self -> process_attributes($joiner, $$item{attribute_list});	# Hashref.
+		my($images)		= $self -> process_images($joiner, $$item{image_list});			# Hashref of arrayrefs.
 		my($notes)		= {map{$_ eq '-' ? '' : $_} split($joiner, $$item{note_list})};	# Hashref.
-		my($urls)		= $self -> process_urls($joiner, $$item{url_list});					# Hashref.
+		my($urls)		= $self -> process_urls($joiner, $$item{url_list});				# Hashref.
 
 		$self -> app -> log -> debug('Notes: ' . Dumper($notes) );
 
