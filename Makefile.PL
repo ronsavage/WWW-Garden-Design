@@ -63,6 +63,7 @@ my(%params) =
 		'Text::Xslate'				=> 1.0007,
 		'Time::HiRes'				=> 1.9741,
 		'Types::Standard'			=> 0.032,
+		'URI::Find::Schemeless'		=> 20160806,
 		'utf8'						=> 0,
 		'warnings'					=> 0,
 	},
