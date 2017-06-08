@@ -12,9 +12,9 @@ use Types::Standard qw/Object/;
 
 has validation =>
 (
-	is			=> 'ro',
+	is			=> 'rw',
 	isa			=> Object,
-	required	=> 1,
+	required	=> 0,
 );
 
 has validator =>
@@ -22,7 +22,7 @@ has validator =>
 	default		=> sub{return Mojolicious::Validator -> new},
 	is			=> 'ro',
 	isa			=> Object,
-	required	=> 1,
+	required	=> 0,
 );
 
 our $VERSION = '0.95';
