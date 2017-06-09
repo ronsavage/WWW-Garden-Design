@@ -29,24 +29,33 @@ open(my $io, '<', $path) || die "Can't open($path): $!\n";
 my($attribute_type_keys)	= {};
 my($test_count)				= 0;
 my($checker)				= WWW::Garden::Design::Validation::AttributeTypes -> new;
-my(@expected)				= ('name','sequence','range');
-my(@headings)				= @{$csv -> getline($io) };
+my(@expected_headings)		= ('name','sequence','range');
+my(@got_headings)			= @{$csv -> getline($io) };
 
 my($result);
 
-for my $i (0 .. $#expected)
+for my $i (0 .. $#expected_headings)
 {
-	$checker -> validation
-	-> input({heading => $headings[$i]})
-	-> required('heading')
-	-> like(qr/^$expected[$i]$/);
+	$result = $checker
+	-> validation
+	-> input({expected => $expected_headings[$i], got => $got_headings[$i]})
+	-> required('got')
+#	-> like(qr/^$expected[$i]$/)
+	-> equal_to('expected')
+	-> is_valid || 0;
 
-	$result = $checker -> validation -> is_valid || 0;
-
-	ok($result == 1, "Heading '$expected[$i]' found"); $test_count++;
+	ok($result == 1, "Heading '$expected_headings[$i]' found"); $test_count++;
 }
 
-$csv -> column_names(@headings);
+my(%expected_attribute_types) =
+(
+	'Edible'		=> [],
+	'Habit'			=> [],
+	'Native'		=> [],
+	'Sun tolerance'	=> [],
+);
+
+$csv -> column_names(@expected_headings);
 
 for my $line (@{$csv -> getline_all($io)})
 {
