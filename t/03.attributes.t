@@ -7,18 +7,19 @@ use Data::Dumper::Concise; # For Dumper().
 
 use FindBin;
 
+use Mojolicious::Validator;
+
 use Test::More;
 
 use Text::CSV::Encoded;
 
 use WWW::Garden::Design::Util::Filer;
-use WWW::Garden::Design::Validation::AttributeTypes;
 
 # ------------------------------------------------
 
 sub test_attribute_types
 {
-	my($filer, $test_count, $expected_attribute_types) = @_;
+	my($filer, $validator, $validation, $test_count, $expected_attribute_types) = @_;
 	my($path)	= "$FindBin::Bin/../data/flowers.csv";
 	my($csv)	= Text::CSV::Encoded -> new
 	({
@@ -32,7 +33,6 @@ sub test_attribute_types
 
 	# 1: Validate the headings in attribute_types.csv.
 
-	my($checker)			= WWW::Garden::Design::Validation::AttributeTypes -> new;
 	my(@expected_headings)	= ('name','sequence','range');
 	my(@got_headings)		= @{$csv -> getline($io) };
 
@@ -42,8 +42,7 @@ sub test_attribute_types
 
 	for my $i (0 .. $#expected_headings)
 	{
-		$result = $checker
-		-> validation
+		$result = $validation
 		-> input({expected => $expected_headings[$i], got => $got_headings[$i]})
 		-> required('got')
 		-> equal_to('expected')
@@ -89,7 +88,7 @@ sub test_attribute_types
 
 sub test_attributes
 {
-	my($filer, $test_count, $expected_attribute_types) = @_;
+	my($filer, $validator, $validation, $test_count, $expected_attribute_types) = @_;
 	my($path)		= "$FindBin::Bin/../data/flowers.csv";
 	my($flowers)	= $filer -> read_csv_file($path);
 	my($csv)		= Text::CSV::Encoded -> new
@@ -104,7 +103,6 @@ sub test_attributes
 
 	# 1: Validate the headings in attributes.csv.
 
-	my($checker)			= WWW::Garden::Design::Validation::AttributeTypes -> new;
 	my(@expected_headings)	= ('common_name','attribute_name','range');
 	my(@got_headings)		= @{$csv -> getline($io) };
 
@@ -114,8 +112,7 @@ sub test_attributes
 
 	for my $i (0 .. $#expected_headings)
 	{
-		$result = $checker
-		-> validation
+		$result = $validation
 		-> input({expected => $expected_headings[$i], got => $got_headings[$i]})
 		-> required('got')
 		-> equal_to('expected')
@@ -183,8 +180,10 @@ my($expected_attribute_types) =
 };
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
-$test_count		= test_attribute_types($filer, $test_count, $expected_attribute_types);
-$test_count		= test_attributes($filer, $test_count, $expected_attribute_types);
+my($validator)	= Mojolicious::Validator -> new;
+my($validation)	= $validator -> validation;
+$test_count		= test_attribute_types($filer, $validator, $validation, $test_count, $expected_attribute_types);
+$test_count		= test_attributes($filer, $validator, $validation, $test_count, $expected_attribute_types);
 
 print "# Internal test count: $test_count\n";
 

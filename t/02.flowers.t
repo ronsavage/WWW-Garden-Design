@@ -7,6 +7,8 @@ use Data::Dumper::Concise; # For Dumper().
 
 use FindBin;
 
+use Mojolicious::Validator;
+
 use Test::More;
 
 use WWW::Garden::Design::Util::Filer;
@@ -15,8 +17,8 @@ use WWW::Garden::Design::Util::Filer;
 
 sub test_flowers
 {
-	my($filer, $test_count)	= @_;
-	my($path)				= "$FindBin::Bin/../data/flowers.csv";
+	my($filer, $validator, $validation, $test_count) = @_;
+	my($path) = "$FindBin::Bin/../data/flowers.csv";
 
 	my($aliases);
 	my($common_name, %common_names);
@@ -64,7 +66,9 @@ sub test_flowers
 
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
-$test_count		= test_flowers($filer, $test_count);
+my($validator)	= Mojolicious::Validator -> new;
+my($validation)	= $validator -> validation;
+$test_count		= test_flowers($filer, $validator, $validation, $test_count);
 
 print "# Internal test count: $test_count\n";
 
