@@ -4,21 +4,23 @@ use feature 'say';
 use strict;
 use warnings;
 
+use Data::Dumper::Concise; # For Dumper().
+
 use File::Slurper qw/read_dir/;
 
 use FindBin;
 
-use Text::CSV::Encoded;
+use WWW::Garden::Design::Util::Filer;
 
 # -----------------------------------------------
 
 sub fix
 {
-	my($csv)	= @_;
+	my($filer)	= @_;
 	my(%data)	=
 	(
-		'flowers'	=> read_csv_file($csv, 'flowers'),
-		'images'	=> read_csv_file($csv, 'images'),
+		'flowers'	=> $filer -> read_csv_file("$FindBin::Bin/../data/flowers.csv"),
+		'images'	=> $filer -> read_csv_file("$FindBin::Bin/../data/images.csv"),
 	);
 
 	my($count)	= 0;
@@ -48,25 +50,6 @@ sub fix
 
 # ------------------------------------------------
 
-sub read_csv_file
-{
-	my($csv, $table_name)	= @_;
-	my($file_name)			= "data/$table_name.csv";
+my($filer) = WWW::Garden::Design::Util::Filer -> new;
 
-	open(my $io, '<', $file_name) || die "Can't open($file_name): $!\n";
-
-	$csv -> column_names($csv -> getline($io) );
-
-	return $csv -> getline_hr_all($io);
-
-} # End of read_csv_file.
-
-# ------------------------------------------------
-
-my($csv) = Text::CSV::Encoded -> new
-({
-	always_quote	=> 1,
-	encoding_in		=> 'utf-8',
-});
-
-fix($csv);
+fix($filer);
