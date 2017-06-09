@@ -52,6 +52,7 @@ my(%params) =
 		'Mojo::Base'				=> '0',
 		'Mojo::Log'					=> '0',
 		'Moo'						=> 2.003000,
+		'Params::Classify'			=> 0.013,
 		'Path::Tiny'				=> 0.044,
 		'Pod::Usage'				=> 1.63,
 		'Sort::Naturally'			=> 1.03,
