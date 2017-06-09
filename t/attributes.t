@@ -17,9 +17,9 @@ use WWW::Garden::Design::Validation::AttributeTypes;
 
 sub test_attribute_types
 {
-	my($test_count)	= @_;
-	my($path)		= "$FindBin::Bin/../data/flowers.csv";
-	my($csv)		= Text::CSV::Encoded -> new
+	my($test_count, $expected_attribute_types) = @_;
+	my($path)	= "$FindBin::Bin/../data/flowers.csv";
+	my($csv)	= Text::CSV::Encoded -> new
 	({
 		allow_whitespace => 1,
 		encoding_in      => 'utf-8',
@@ -51,14 +51,6 @@ sub test_attribute_types
 
 	# 2: Validate the data in attribute_types.csv.
 
-	my(%expected_attribute_types) =
-	(
-		'Edible'		=> ['int', 'No, Bean, Flower, Fruit, Leaf, Stem, Rhizome, Unknown'],
-		'Habit'			=> ['int', 'Columnar, Dwarf, Semi-dwarf, Prostrate, Shrub, Tree, Vine, Unknown'],
-		'Native'		=> ['int', 'Yes, No, Unknown'],
-		'Sun tolerance'	=> ['int', 'Full sun, Part shade, Shade, Unknown'],
-	);
-
 	$csv -> column_names(@expected_headings);
 
 	my($expected_format);
@@ -71,7 +63,7 @@ sub test_attribute_types
 		$range				= $$line[2];
 		$sequence			= $$line[1];
 		$type				= $$line[0];
-		$expected_format	= $expected_attribute_types{$type};
+		$expected_format	= $$expected_attribute_types{$type};
 
 		ok($expected_format, "Attribute type '$type'"); $test_count++;
 
@@ -98,9 +90,9 @@ sub test_attribute_types
 
 sub test_attributes
 {
-	my($test_count)	= @_;
-	my($path)		= "$FindBin::Bin/../data/flowers.csv";
-	my($csv)		= Text::CSV::Encoded -> new
+	my($test_count, $expected_attribute_types) = @_;
+	my($path)	= "$FindBin::Bin/../data/flowers.csv";
+	my($csv)	= Text::CSV::Encoded -> new
 	({
 		allow_whitespace => 1,
 		encoding_in      => 'utf-8',
@@ -130,15 +122,68 @@ sub test_attributes
 		ok($result == 1, "Heading '$expected_headings[$i]' found"); $test_count++;
 	}
 
+	# 2: Validate the data in attributes.csv.
+
+	$csv -> column_names(@expected_headings);
+
+	# Prepare ranges.
+
+	my(%expected_attributes);
+
+	my($range);
+
+	for my $type (keys %$expected_attribute_types)
+	{
+		$expected_attributes{$type}					= {};
+		$range										= [split(/, /, ${$$expected_attribute_types{$type} }[1])];
+		@{$expected_attributes{$type}{@$range} }	= (1) x @$range;
+	}
+
+	diag Dumper(%expected_attributes);
+
+	my($count) = 0;
+
+	my($common_name);
+	my($expected_format);
+	my($type);
+
+	for my $line (@{$csv -> getline_all($io)})
+	{
+		$count++;
+
+		last if ($count > 2);
+
+		$common_name		= $$line[0];
+		$type				= $$line[1];
+		$range				= $$line[2];
+		$expected_format	= $$expected_attribute_types{$type};
+
+		ok($expected_format, "Attribute '$type'"); $test_count++;
+
+		if (! $expected_format)
+		{
+			BAIL_OUT('No point continuing when the above test fails');
+		}
+
+		ok($range eq $$expected_format[1], "Attribute range '$range'"); $test_count++;
+	}
+
 	return $test_count;
 
 } # End of test_attributes.
 
 # ------------------------------------------------
 
+my($expected_attribute_types) =
+{
+	'Edible'		=> ['int', 'No, Bean, Flower, Fruit, Leaf, Stem, Rhizome, Unknown'],
+	'Habit'			=> ['int', 'Columnar, Dwarf, Semi-dwarf, Prostrate, Shrub, Tree, Vine, Unknown'],
+	'Native'		=> ['int', 'Yes, No, Unknown'],
+	'Sun tolerance'	=> ['int', 'Full sun, Part shade, Shade, Unknown'],
+};
 my($test_count)	= 0;
-$test_count		= test_attribute_types($test_count);
-$test_count		= test_attributes($test_count);
+$test_count		= test_attribute_types($test_count, $expected_attribute_types);
+$test_count		= test_attributes($test_count, $expected_attribute_types);
 
 print "# Internal test count: $test_count\n";
 
