@@ -71,8 +71,6 @@ sub test_attribute_types
 
 	# 2: Validate the data in attribute_types.csv.
 
-	$csv -> column_names(@expected_headings);
-
 	my($expected_format);
 	my($name);
 	my($range);
@@ -109,8 +107,9 @@ sub test_attribute_types
 sub test_attributes
 {
 	my($test_count, $expected_attribute_types) = @_;
-	my($path)	= "$FindBin::Bin/../data/flowers.csv";
-	my($csv)	= Text::CSV::Encoded -> new
+	my($path)		= "$FindBin::Bin/../data/flowers.csv";
+	my($flowers)	= read_csv_file($path);
+	my($csv)		= Text::CSV::Encoded -> new
 	({
 		allow_whitespace => 1,
 		encoding_in      => 'utf-8',
@@ -143,8 +142,14 @@ sub test_attributes
 	}
 
 	# 2: Validate the data in attributes.csv.
+	# Prepare flowers.
 
-	$csv -> column_names(@expected_headings);
+	my(%common_names);
+
+	for my $line (@$flowers)
+	{
+		$common_names{$$line{'common_name'} } = 1;
+	}
 
 	# Prepare ranges.
 
@@ -172,11 +177,7 @@ sub test_attributes
 		$expected_format	= $$expected_attribute_types{$name};
 
 		ok($expected_attributes{$name}, "Attribute '$name'"); $test_count++;
-
-#		if (! $expected_format)
-#		{
-#			BAIL_OUT('No point continuing when the above test fails');
-#		}
+		ok($common_names{$common_name}, "Attribute '$name', common_name '$common_name'"); $test_count++;
 
 		for $range (split(/, /, $$line{'range'}) )
 		{
