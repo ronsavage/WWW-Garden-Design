@@ -13,6 +13,24 @@ use Text::CSV::Encoded;
 
 use WWW::Garden::Design::Validation::AttributeTypes;
 
+# -----------------------------------------------
+
+sub read_csv_file
+{
+	my($file_name) = @_;
+	my($csv) = Text::CSV::Encoded -> new
+	({
+		allow_whitespace => 1,
+		encoding_in      => 'utf-8',
+	});
+	my($io)  = IO::File -> new($file_name, 'r');
+
+	$csv -> column_names($csv -> getline($io) );
+
+	return $csv -> getline_hr_all($io);
+
+} # End of read_csv_file.
+
 # ------------------------------------------------
 
 sub test_attribute_types
@@ -35,6 +53,8 @@ sub test_attribute_types
 	my(@expected_headings)	= ('name','sequence','range');
 	my(@got_headings)		= @{$csv -> getline($io) };
 
+	close $io;
+
 	my($result);
 
 	for my $i (0 .. $#expected_headings)
@@ -54,18 +74,18 @@ sub test_attribute_types
 	$csv -> column_names(@expected_headings);
 
 	my($expected_format);
+	my($name);
 	my($range);
 	my($sequence);
-	my($type);
 
-	for my $line (@{$csv -> getline_all($io)})
+	for my $line (@{read_csv_file($path)})
 	{
-		$range				= $$line[2];
-		$sequence			= $$line[1];
-		$type				= $$line[0];
-		$expected_format	= $$expected_attribute_types{$type};
+		$range				= $$line{'range'};
+		$sequence			= $$line{'sequence'};
+		$name				= $$line{'name'};
+		$expected_format	= $$expected_attribute_types{$name};
 
-		ok($expected_format, "Attribute type '$type'"); $test_count++;
+		ok($expected_format, "Attribute type '$name'"); $test_count++;
 
 		if (! $expected_format)
 		{
@@ -79,8 +99,6 @@ sub test_attribute_types
 
 		ok($range eq $$expected_format[1], "Attribute type range '$range'"); $test_count++;
 	}
-
-	close $io;
 
 	return $test_count;
 
@@ -107,6 +125,8 @@ sub test_attributes
 	my($checker)			= WWW::Garden::Design::Validation::AttributeTypes -> new;
 	my(@expected_headings)	= ('common_name','attribute_name','range');
 	my(@got_headings)		= @{$csv -> getline($io) };
+
+	close $io;
 
 	my($result);
 
@@ -136,33 +156,31 @@ sub test_attributes
 		$expected_attributes{$type}{$_} = 1 for (split(/, /, ${$$expected_attribute_types{$type} }[1]));
 	}
 
-	diag Dumper(%expected_attributes);
-
 	my($count) = 0;
 
 	my($common_name);
 	my($expected_format);
+	my($name);
 	my($range);
-	my($type);
 
-	for my $line (@{$csv -> getline_all($io)})
+	for my $line (@{read_csv_file($path)})
 	{
 		$count++;
 
-		$common_name		= $$line[0];
-		$type				= $$line[1];
-		$expected_format	= $$expected_attribute_types{$type};
+		$common_name		= $$line{'common_name'};
+		$name				= $$line{'attribute_name'};
+		$expected_format	= $$expected_attribute_types{$name};
 
-		ok($expected_attributes{$type}, "Attribute '$type'"); $test_count++;
+		ok($expected_attributes{$name}, "Attribute '$name'"); $test_count++;
 
 #		if (! $expected_format)
 #		{
 #			BAIL_OUT('No point continuing when the above test fails');
 #		}
 
-		for $range (split(/, /, $$line[2]) )
+		for $range (split(/, /, $$line{'range'}) )
 		{
-			ok($expected_attributes{$type}{$range}, "Attribute '$type', range '$range'"); $test_count++;
+			ok($expected_attributes{$name}{$range}, "Attribute '$name', range '$range'"); $test_count++;
 		}
 	}
 
