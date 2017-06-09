@@ -130,13 +130,10 @@ sub test_attributes
 
 	my(%expected_attributes);
 
-	my($range);
-
 	for my $type (keys %$expected_attribute_types)
 	{
-		$expected_attributes{$type}					= {};
-		$range										= [split(/, /, ${$$expected_attribute_types{$type} }[1])];
-		@{$expected_attributes{$type}{@$range} }	= (1) x @$range;
+		$expected_attributes{$type}		= {};
+		$expected_attributes{$type}{$_} = 1 for (split(/, /, ${$$expected_attribute_types{$type} }[1]));
 	}
 
 	diag Dumper(%expected_attributes);
@@ -145,27 +142,28 @@ sub test_attributes
 
 	my($common_name);
 	my($expected_format);
+	my($range);
 	my($type);
 
 	for my $line (@{$csv -> getline_all($io)})
 	{
 		$count++;
 
-		last if ($count > 2);
-
 		$common_name		= $$line[0];
 		$type				= $$line[1];
-		$range				= $$line[2];
 		$expected_format	= $$expected_attribute_types{$type};
 
-		ok($expected_format, "Attribute '$type'"); $test_count++;
+		ok($expected_attributes{$type}, "Attribute '$type'"); $test_count++;
 
-		if (! $expected_format)
+#		if (! $expected_format)
+#		{
+#			BAIL_OUT('No point continuing when the above test fails');
+#		}
+
+		for $range (split(/, /, $$line[2]) )
 		{
-			BAIL_OUT('No point continuing when the above test fails');
+			ok($expected_attributes{$type}{$range}, "Attribute '$type', range '$range'"); $test_count++;
 		}
-
-		ok($range eq $$expected_format[1], "Attribute range '$range'"); $test_count++;
 	}
 
 	return $test_count;
