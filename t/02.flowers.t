@@ -2,6 +2,7 @@
 
 use strict;
 use warnings;
+use open qw(:std :utf8); # Undeclared streams in UTF-8.
 
 use Data::Dumper::Concise; # For Dumper().
 
@@ -18,23 +19,37 @@ use WWW::Garden::Design::Util::Filer;
 sub test_flowers
 {
 	my($filer, $validator, $validation, $test_count) = @_;
-	my($path) = "$FindBin::Bin/../data/flowers.csv";
+	my($path)	= "$FindBin::Bin/../data/flowers.csv";
 
-	my($aliases);
 	my($common_name, %common_names);
-	my($height);
-	my($publish);
-	my($scientific_name);
-	my($width);
+	my($result);
 
 	for my $line (@{$filer -> read_csv_file($path)})
 	{
-		$common_name				= $$line{'common_name'};
+		$common_name	= $$line{'common_name'};
+		$result			= $validation
+		-> input($line)
+		-> required('common_name')
+		-> is_valid || 0;
+
+		ok($result == 1, "Common name '$common_name' ok"); $test_count++;
+
 		$common_names{$common_name}	= 0 if (! $common_names{$common_name});
 
-		ok(length($common_name) > 0, "Common name '$common_name' not empty"); $test_count++;
-
 		$common_names{$common_name}++;
+
+		$result = $validation
+		-> required('scientific_name')
+		-> is_valid || 0;
+
+		ok($result == 1, "Scientific name '$$line{scientific_name} ok"); $test_count++;
+
+		$result = $validation
+		-> required('publish')
+		-> in('Yes', 'No')
+		-> is_valid || 0;
+
+		ok($result == 1, "Publish '$$line{publish} is Yes or No"); $test_count++;
 	}
 
 	for $common_name (sort keys %common_names)

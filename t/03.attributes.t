@@ -48,7 +48,7 @@ sub test_attribute_types
 		-> equal_to('expected')
 		-> is_valid || 0;
 
-		ok($result == 1, "Heading '$expected_headings[$i]' found"); $test_count++;
+		ok($result == 1, "Heading '$expected_headings[$i]' ok"); $test_count++;
 	}
 
 	# 2: Validate the data in attribute_types.csv.
@@ -74,10 +74,10 @@ sub test_attribute_types
 
 		if ($$expected_format[0] eq 'int')
 		{
-			ok($sequence =~ /^[0-9]{1,3}$/, "Attribute type sequence '$sequence'"); $test_count++;
+			ok($sequence =~ /^[0-9]{1,3}$/, "Attribute type sequence '$sequence' ok"); $test_count++;
 		}
 
-		ok($range eq $$expected_format[1], "Attribute type range '$range'"); $test_count++;
+		ok($range eq $$expected_format[1], "Attribute type range '$range' ok"); $test_count++;
 	}
 
 	return $test_count;
@@ -118,7 +118,7 @@ sub test_attributes
 		-> equal_to('expected')
 		-> is_valid || 0;
 
-		ok($result == 1, "Heading '$expected_headings[$i]' found"); $test_count++;
+		ok($result == 1, "Heading '$expected_headings[$i]' ok"); $test_count++;
 	}
 
 	# 2: Validate the data in attributes.csv.
@@ -157,11 +157,11 @@ sub test_attributes
 		$expected_format	= $$expected_attribute_types{$name};
 
 		ok($expected_attributes{$name}, "Attribute '$name'"); $test_count++;
-		ok($common_names{$common_name}, "Attribute '$name', common_name '$common_name'"); $test_count++;
+		ok($common_names{$common_name}, "Attribute '$name', common_name '$common_name' ok"); $test_count++;
 
 		for $range (split(/, /, $$line{'range'}) )
 		{
-			ok($expected_attributes{$name}{$range}, "Attribute '$name', range '$range'"); $test_count++;
+			ok($expected_attributes{$name}{$range}, "Attribute '$name', range '$range' ok"); $test_count++;
 		}
 	}
 
