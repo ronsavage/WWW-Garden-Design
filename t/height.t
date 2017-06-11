@@ -15,6 +15,8 @@ my($test_count)	= 0;
 my($validator)	= Mojolicious::Validator -> new;
 my($validation)	= $validator -> validation;
 
+my(@height);
+
 $validator -> add_check
 (
 	height => sub
@@ -23,7 +25,20 @@ $validator -> add_check
 
 		return 1 if ($value !~ /^([^cm]+)(?:c?m){0,1}$/);
 
-		return ! is_number($1); # A number is acceptable.
+		@height = split(/-/, $1);
+
+		return 1 if ($#height > 1);		# 1-2-3 is unaccepatable.
+
+		# A number is acceptable, so return 0!.
+
+		if ($#height == 0)
+		{
+			return ! is_number($height[0]);
+		}
+		else
+		{
+		 	return ! is_number($height[1]);
+		}
 	}
 );
 
@@ -33,23 +48,27 @@ my(@data) =
 	{height => '1'},
 	{height => '1cm'},
 	{height => '1m'},
+	{height	=> '40-70cm'},
+	{height	=> '1.5-2m'},
 	{height => 'z1'},
 );
 
+my($expected);
 my($result);
+my($suffix);
 
 for my $line (@data)
 {
-	# This cannot use topic('height') instead of required() because of the work required() does.
-
-	$result = (length($$line{height}) == 0)
+	$expected	= ($$line{height} =~ /z/) ? 0 : 1;
+	$suffix		= ($expected == 0) ? ' using a reversed test' : '';
+	$result		= (length($$line{height}) == 0)
 	|| $validation
 	-> input($line)
 	-> required('height')
 	-> height
 	-> is_valid;
 
-	ok($result == 1, "Height '$$line{height}' is ok"); $test_count++;
+	ok($result == $expected, "Height '$$line{height}' is a valid height$suffix"); $test_count++;
 }
 
 print "# Internal test count: $test_count\n";

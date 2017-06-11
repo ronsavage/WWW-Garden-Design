@@ -29,13 +29,9 @@ sub test_flowers
 		{
 			my($validation, $name, $value, @args) = @_;
 
-			# Allow an empty field.
+			return 1 if ($value !~ /^([^cm]+)(?:c?m){0,1}$/);
 
-			return 1 if (length($value) == 0);
-
-			return 0 if ($value !~ /^(.+)(?:cm|m)$/);
-
-			return is_number($1);
+			return ! is_number($1); # A number is acceptable.
 		}
 	);
 
@@ -77,9 +73,12 @@ sub test_flowers
 
 		# Test height.
 
-		$result = $validation
-		-> height('height')
-		-> is_valid || 0;
+		$result = (length($$line{height}) == 0)
+		|| $validation
+		-> input($line)
+		-> required('height')
+		-> height
+		-> is_valid;
 
 		ok($result == 1, "Common name '$common_name'. Height '$$line{height}' is ok"); $test_count++;
 	}
