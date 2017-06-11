@@ -57,15 +57,15 @@ sub test_flowers
 	{
 		# Test common name.
 
-		$common_name	= $$line{'common_name'};
+		$common_name	= $$line{common_name};
 		$result			= $validation
 		-> input($line)
 		-> required('common_name')
-		-> is_valid || 0;
+		-> is_valid;
 
 		ok($result == 1, "Common name '$common_name' ok"); $test_count++;
 
-		$common_names{$common_name}	= 0 if (! $common_names{$common_name});
+		$common_names{$common_name} = 0 if (! $common_names{$common_name});
 
 		$common_names{$common_name}++;
 
@@ -73,7 +73,7 @@ sub test_flowers
 
 		$result = $validation
 		-> required('scientific_name')
-		-> is_valid || 0;
+		-> is_valid;
 
 		ok($result == 1, "Common name '$common_name'. Scientific name '$$line{scientific_name} ok"); $test_count++;
 
@@ -82,7 +82,7 @@ sub test_flowers
 		$result = $validation
 		-> required('publish')
 		-> in('Yes', 'No')
-		-> is_valid || 0;
+		-> is_valid;
 
 		ok($result == 1, "Common name '$common_name'. Publish '$$line{publish} is Yes or No"); $test_count++;
 

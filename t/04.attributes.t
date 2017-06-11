@@ -29,11 +29,12 @@ sub test_attribute_types
 	my($table_name) = 'attribute_types';
 	$path           =~ s/flowers/$table_name/;
 
+	# 1: Validate the headings in attribute_types.csv.
+	# The headings must be listed here in the same order as in the file.
+
 	open(my $io, '<', $path) || die "Can't open($path): $!\n";
 
-	# 1: Validate the headings in attribute_types.csv.
-
-	my(@expected_headings)	= ('name','sequence','range');
+	my(@expected_headings)	= ('name', 'sequence', 'range');
 	my(@got_headings)		= @{$csv -> getline($io) };
 
 	close $io;
@@ -46,7 +47,7 @@ sub test_attribute_types
 		-> input({expected => $expected_headings[$i], got => $got_headings[$i]})
 		-> required('got')
 		-> equal_to('expected')
-		-> is_valid || 0;
+		-> is_valid;
 
 		ok($result == 1, "Heading '$expected_headings[$i]' ok"); $test_count++;
 	}
@@ -60,9 +61,9 @@ sub test_attribute_types
 
 	for my $line (@{$filer -> read_csv_file($path)})
 	{
-		$range				= $$line{'range'};
-		$sequence			= $$line{'sequence'};
-		$name				= $$line{'name'};
+		$range				= $$line{range};
+		$sequence			= $$line{sequence};
+		$name				= $$line{name};
 		$expected_format	= $$expected_attribute_types{$name};
 
 		ok($expected_format, "Attribute type '$name'"); $test_count++;
@@ -99,11 +100,12 @@ sub test_attributes
 	my($table_name) = 'attributes';
 	$path           =~ s/flowers/$table_name/;
 
+	# 1: Validate the headings in attributes.csv.
+	# The headings must be listed here in the same order as in the file.
+
 	open(my $io, '<', $path) || die "Can't open($path): $!\n";
 
-	# 1: Validate the headings in attributes.csv.
-
-	my(@expected_headings)	= ('common_name','attribute_name','range');
+	my(@expected_headings)	= ('common_name', 'attribute_name', 'range');
 	my(@got_headings)		= @{$csv -> getline($io) };
 
 	close $io;
@@ -116,7 +118,7 @@ sub test_attributes
 		-> input({expected => $expected_headings[$i], got => $got_headings[$i]})
 		-> required('got')
 		-> equal_to('expected')
-		-> is_valid || 0;
+		-> is_valid;
 
 		ok($result == 1, "Heading '$expected_headings[$i]' ok"); $test_count++;
 	}
@@ -128,7 +130,7 @@ sub test_attributes
 
 	for my $line (@$flowers)
 	{
-		$common_names{$$line{'common_name'} } = 1;
+		$common_names{$$line{common_name} } = 1;
 	}
 
 	# Prepare ranges.
@@ -152,14 +154,14 @@ sub test_attributes
 	{
 		$count++;
 
-		$common_name		= $$line{'common_name'};
-		$name				= $$line{'attribute_name'};
+		$common_name		= $$line{common_name};
+		$name				= $$line{attribute_name};
 		$expected_format	= $$expected_attribute_types{$name};
 
 		ok($expected_attributes{$name}, "Attribute '$name'"); $test_count++;
 		ok($common_names{$common_name}, "Attribute '$name', common_name '$common_name' ok"); $test_count++;
 
-		for $range (split(/, /, $$line{'range'}) )
+		for $range (split(/, /, $$line{range}) )
 		{
 			ok($expected_attributes{$name}{$range}, "Attribute '$name', range '$range' ok"); $test_count++;
 		}
