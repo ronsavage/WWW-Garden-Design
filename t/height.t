@@ -21,7 +21,7 @@ $validator -> add_check
 	{
 		my($validation, $name, $value, @args) = @_;
 
-		return 1 if ($value !~ /^(.+)(?:cm|m){0,1}$/);
+		return 1 if ($value !~ /^([^cm]+)(?:c?m){0,1}$/);
 
 		return ! is_number($1); # A number is acceptable.
 	}
