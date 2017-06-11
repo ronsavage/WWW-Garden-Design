@@ -15,29 +15,29 @@ my($test_count)	= 0;
 my($validator)	= Mojolicious::Validator -> new;
 my($validation)	= $validator -> validation;
 
-my(@height);
+my(@range);
 
 $validator -> add_check
 (
-	height => sub
+	range => sub
 	{
 		my($validation, $name, $value, @args) = @_;
 
 		return 1 if ($value !~ /^([^cm]+)(?:c?m){0,1}$/);
 
-		@height = split(/-/, $1);
+		@range = split(/-/, $1);
 
-		return 1 if ($#height > 1);		# 1-2-3 is unaccepatable.
+		return 1 if ($#range > 1);		# 1-2-3 is unaccepatable.
 
 		# A number is acceptable, so return 0!.
 
-		if ($#height == 0)
+		if ($#range == 0)
 		{
-			return ! is_number($height[0]);
+			return ! is_number($range[0]);
 		}
 		else
 		{
-		 	return ! is_number($height[1]);
+		 	return ! is_number($range[1]);
 		}
 	}
 );
@@ -65,7 +65,7 @@ for my $line (@data)
 	|| $validation
 	-> input($line)
 	-> required('height')
-	-> height
+	-> range
 	-> is_valid;
 
 	ok($result == $expected, "Height '$$line{height}' is a valid height$suffix"); $test_count++;

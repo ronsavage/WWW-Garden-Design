@@ -23,15 +23,30 @@ sub test_flowers
 	my($filer, $validator, $validation, $test_count) = @_;
 	my($path)	= "$FindBin::Bin/../data/flowers.csv";
 
+	my(@range);
+
 	$validator -> add_check
 	(
-		height => sub
+		range => sub
 		{
 			my($validation, $name, $value, @args) = @_;
 
 			return 1 if ($value !~ /^([^cm]+)(?:c?m){0,1}$/);
 
-			return ! is_number($1); # A number is acceptable.
+			@range = split(/-/, $1);
+
+			return 1 if ($#range > 1);		# 1-2-3 is unaccepatable.
+
+			# A number is acceptable, so return 0!.
+
+			if ($#range == 0)
+			{
+				return ! is_number($range[0]);
+			}
+			else
+			{
+			 	return ! is_number($range[1]);
+			}
 		}
 	);
 
@@ -77,10 +92,21 @@ sub test_flowers
 		|| $validation
 		-> input($line)
 		-> required('height')
-		-> height
+		-> range
 		-> is_valid;
 
 		ok($result == 1, "Common name '$common_name'. Height '$$line{height}' is ok"); $test_count++;
+
+		# Test width.
+
+		$result = (length($$line{width}) == 0)
+		|| $validation
+		-> input($line)
+		-> required('width')
+		-> range
+		-> is_valid;
+
+		ok($result == 1, "Common name '$common_name'. Width '$$line{width}' is ok"); $test_count++;
 	}
 
 	for $common_name (sort keys %common_names)
