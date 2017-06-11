@@ -27,8 +27,6 @@ sub read_csv_file
 	my($self, $file_name)	= @_;
 	my($io)					= IO::File -> new($file_name, 'r');
 
-	print "Reading $file_name. \n";
-
 	$self -> csv -> column_names($self -> csv -> getline($io) );
 
 	return $self -> csv -> getline_hr_all($io);
