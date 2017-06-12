@@ -967,7 +967,7 @@ sub flower_locations2csv
 		$common_name	= $$flower{common_name};
 		%location		= ();
 
-		for my $location (sort{$$a{common_name} cmp $$b{common_name} } @{$$flower{flower_locations} })
+		for my $location (@{$$flower{flower_locations} })
 		{
 			$garden_name							= $$garden_id2name{$$location{garden_id} };
 			$property_name							= $$property_id2name{$$location{property_id} };
