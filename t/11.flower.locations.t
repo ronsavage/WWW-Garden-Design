@@ -37,13 +37,13 @@ sub test_flower_locations
 
 	# 2: Read properties.csv.
 
-	my($table_name)	= 'properties';
+	$table_name		= 'properties';
 	$path			=~ s/flowers/$table_name/;
 	my($properties)	= $filer -> read_csv_file($path);
 
 	# 2: Read gardens.csv.
 
-	my($table_name)	= 'gardens';
+	$table_name		= 'gardens';
 	$path			=~ s/flowers/$table_name/;
 	my($gardens)	= $filer -> read_csv_file($path);
 
