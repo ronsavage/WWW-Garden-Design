@@ -1266,17 +1266,20 @@ sub object_locations2csv
 			push @{$location{$garden_name} }, "$$feature{x},$$feature{y}";
 		}
 
-		for $garden_name (sort keys %location)
+		for $property_name (sort keys %location)
 		{
-			$csv -> combine
-			(
-				$object_name,
-				$property_name,
-				$garden_name,
-				join(' ', nsort @{$location{$garden_name} }),
-			);
+			for $garden_name (sort keys %{$location{$property_name} })
+			{
+				$csv -> combine
+				(
+					$object_name,
+					$property_name,
+					$garden_name,
+					join(' ', nsort @{$location{$property_name}{$garden_name} }),
+				);
 
-			print $fh $csv -> string, "\n";
+				print $fh $csv -> string, "\n";
+			}
 		}
 	}
 
