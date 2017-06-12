@@ -969,8 +969,8 @@ sub flower_locations2csv
 
 		for my $location (@{$$flower{flower_locations} })
 		{
-			$garden_name							= $garden_id2name{$$location{garden_id} };
-			$property_name							= $property_id2name{$$location{property_id} };
+			$garden_name							= $$garden_id2name{$$location{garden_id} };
+			$property_name							= $$property_id2name{$$location{property_id} };
 			$location{$property_name}				= {} if (! $location{$property_name});
 			$location{$property_name}{$garden_name}	= [] if (! $location{$property_name}{$garden_name});
 
