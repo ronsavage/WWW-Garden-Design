@@ -20,24 +20,16 @@ use WWW::Garden::Design::Util::Filer;
 sub test_attribute_types
 {
 	my($filer, $validator, $validation, $test_count, $expected_attribute_types) = @_;
-	my($path)	= "$FindBin::Bin/../data/flowers.csv";
-	my($csv)	= Text::CSV::Encoded -> new
-	({
-		allow_whitespace => 1,
-		encoding_in      => 'utf-8',
-	});
-	my($table_name) = 'attribute_types';
-	$path           =~ s/flowers/$table_name/;
+	my($path)				= "$FindBin::Bin/../data/flowers.csv";
+	my($table_name)			= 'attribute_types';
+	$path					=~ s/flowers/$table_name/;
+	my($attributes_types)	= $filer -> read_csv_file($path);
 
 	# 1: Validate the headings in attribute_types.csv.
 	# The headings must be listed here in the same order as in the file.
 
-	open(my $io, '<', $path) || die "Can't open($path): $!\n";
-
-	my(@expected_headings)	= ('name', 'sequence', 'range');
-	my(@got_headings)		= @{$csv -> getline($io) };
-
-	close $io;
+	my(@expected_headings)	= sort('name', 'sequence', 'range');
+	my(@got_headings)		= sort keys %{$$attributes_types[0]};
 
 	my($result);
 
@@ -59,7 +51,7 @@ sub test_attribute_types
 	my($range);
 	my($sequence);
 
-	for my $line (@{$filer -> read_csv_file($path)})
+	for my $line (@$attributes_types)
 	{
 		$range				= $$line{range};
 		$sequence			= $$line{sequence};
@@ -90,25 +82,26 @@ sub test_attribute_types
 sub test_attributes
 {
 	my($filer, $validator, $validation, $test_count, $expected_attribute_types) = @_;
-	my($path)		= "$FindBin::Bin/../data/flowers.csv";
-	my($flowers)	= $filer -> read_csv_file($path);
-	my($csv)		= Text::CSV::Encoded -> new
-	({
-		allow_whitespace => 1,
-		encoding_in      => 'utf-8',
-	});
+
+	# 1: Read flowers.csv in order to later validate the common_name column of attributes.csv.
+
+	my(%flowers);
+
+	my($path)					= "$FindBin::Bin/../data/flowers.csv";
+	my($flowers)				= $filer -> read_csv_file($path);
+	$flowers{$$_{common_name} }	= 1 for @$flowers;
+
+	# 2: Read attributes.csv.
+
 	my($table_name) = 'attributes';
 	$path           =~ s/flowers/$table_name/;
+	my($attributes)	= $filer -> read_csv_file($path);
 
-	# 1: Validate the headings in attributes.csv.
+	# 3: Validate the headings in attributes.csv.
 	# The headings must be listed here in the same order as in the file.
 
-	open(my $io, '<', $path) || die "Can't open($path): $!\n";
-
-	my(@expected_headings)	= ('common_name', 'attribute_name', 'range');
-	my(@got_headings)		= @{$csv -> getline($io) };
-
-	close $io;
+	my(@expected_headings)	= sort ('common_name', 'attribute_name', 'range');
+	my(@got_headings)		= sort keys %{$$attributes[0]};
 
 	my($result);
 
@@ -123,7 +116,7 @@ sub test_attributes
 		ok($result == 1, "Heading '$expected_headings[$i]' ok"); $test_count++;
 	}
 
-	# 2: Validate the data in attributes.csv.
+	# 4: Validate the data in attributes.csv.
 	# Prepare flowers.
 
 	my(%common_names);
@@ -150,7 +143,7 @@ sub test_attributes
 	my($name);
 	my($range);
 
-	for my $line (@{$filer -> read_csv_file($path)})
+	for my $line (@$attributes)
 	{
 		$count++;
 

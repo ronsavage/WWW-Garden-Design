@@ -20,24 +20,16 @@ use WWW::Garden::Design::Util::Filer;
 sub test_gardens
 {
 	my($filer, $validator, $validation, $test_count, $property_names) = @_;
-	my($path)	= "$FindBin::Bin/../data/flowers.csv";
-	my($csv)	= Text::CSV::Encoded -> new
-	({
-		allow_whitespace => 1,
-		encoding_in      => 'utf-8',
-	});
-	my($table_name) = 'gardens';
-	$path           =~ s/flowers/$table_name/;
+	my($path)		= "$FindBin::Bin/../data/flowers.csv";
+	my($table_name)	= 'gardens';
+	$path			=~ s/flowers/$table_name/;
+	my($gardens)	= $filer -> read_csv_file($path);
 
 	# 1: Validate the headings in gardens.csv.
 	# The headings must be listed here in the same order as in the file.
 
-	open(my $io, '<', $path) || die "Can't open($path): $!\n";
-
-	my(@expected_headings)	= ('property_name', 'garden_name', 'description', 'publish');
-	my(@got_headings)		= @{$csv -> getline($io) };
-
-	close $io;
+	my(@expected_headings)	= sort('property_name', 'garden_name', 'description', 'publish');
+	my(@got_headings)		= sort keys %{$$gardens[0]};
 
 	my($result);
 
@@ -57,7 +49,7 @@ sub test_gardens
 	my($garden_name, %garden_names);
 	my($property_name);
 
-	for my $line (@{$filer -> read_csv_file($path)})
+	for my $line (@$gardens)
 	{
 		for my $column (qw/description garden_name property_name publish/)
 		{
@@ -99,24 +91,16 @@ sub test_gardens
 sub test_properties
 {
 	my($filer, $validator, $validation, $test_count, $property_names) = @_;
-	my($path)	= "$FindBin::Bin/../data/flowers.csv";
-	my($csv)	= Text::CSV::Encoded -> new
-	({
-		allow_whitespace => 1,
-		encoding_in      => 'utf-8',
-	});
+	my($path)		= "$FindBin::Bin/../data/flowers.csv";
 	my($table_name) = 'properties';
 	$path           =~ s/flowers/$table_name/;
+	my($properties)	= $filer -> read_csv_file($path);
 
 	# 1: Validate the headings in properties.csv.
 	# The headings must be listed here in the same order as in the file.
 
-	open(my $io, '<', $path) || die "Can't open($path): $!\n";
-
-	my(@expected_headings)	= ('name','description','publish');
-	my(@got_headings)		= @{$csv -> getline($io) };
-
-	close $io;
+	my(@expected_headings)	= sort('name','description','publish');
+	my(@got_headings)		= sort keys %{$$properties[0]};
 
 	my($result);
 
@@ -135,7 +119,7 @@ sub test_properties
 
 	my($property_name);
 
-	for my $line (@{$filer -> read_csv_file($path)})
+	for my $line (@$properties)
 	{
 		for my $column (qw/description name publish/)
 		{
