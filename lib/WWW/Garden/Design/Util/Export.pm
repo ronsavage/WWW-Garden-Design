@@ -962,7 +962,7 @@ sub flower_locations2csv
 	my(%location);
 	my($property_name);
 
-	for my $flower (@$flowers)
+	for my $flower (sort{uc($$a{common_name}) cmp uc($$b{common_name})} @$flowers)
 	{
 		$common_name	= $$flower{common_name};
 		%location		= ();
