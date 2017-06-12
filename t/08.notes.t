@@ -17,11 +17,11 @@ use WWW::Garden::Design::Util::Filer;
 
 # ------------------------------------------------
 
-sub test_images
+sub test_notes
 {
 	my($filer, $validator, $validation, $test_count, $property_names) = @_;
 
-	# 1: Read flowers.csv in order to later validate the common_name column of images.csv.
+	# 1: Read flowers.csv in order to later validate the common_name column of notes.csv.
 
 	my(%flowers);
 
@@ -29,16 +29,16 @@ sub test_images
 	my($flowers)				= $filer -> read_csv_file($path);
 	$flowers{$$_{common_name} }	= 1 for @$flowers;
 
-	# 2: Read images.csv.
+	# 2: Read notes.csv.
 
-	my($table_name) = 'images';
+	my($table_name) = 'notes';
 	$path           =~ s/flowers/$table_name/;
-	my($images)		= $filer -> read_csv_file($path);
+	my($notes)		= $filer -> read_csv_file($path);
 
-	# 3: Validate the headings in images.csv.
+	# 3: Validate the headings in notes.csv.
 
-	my(@expected_headings)	= sort(qw/common_name sequence description file_name/);
-	my(@got_headings)		= sort keys %{$$images[0]};
+	my(@expected_headings)	= sort(qw/common_name sequence note/);
+	my(@got_headings)		= sort keys %{$$notes[0]};
 
 	my($result);
 
@@ -53,31 +53,31 @@ sub test_images
 		ok($result == 1, "Heading '$expected_headings[$i]' ok"); $test_count++;
 	}
 
-	# 4: Validate the data in images.csv.
+	# 4: Validate the data in notes.csv.
 
 	my($common_name);
-	my($file_name, %file_names);
+	my($note, %notes);
 	my($sequence, %sequences);
 
-	for my $line (@$images)
+	for my $line (@$notes)
 	{
 		# Check common names.
 
 		$common_name = $$line{common_name};
 
-		ok($flowers{$common_name}, "Common name '$common_name'. Name present in flowers.csv"); $test_count++;
+		ok($flowers{$common_name}, "Common name '$common_name'. Name present in notes.csv"); $test_count++;
 
-		for my $column (qw/common_name sequence description file_name/)
+		for my $column (qw/common_name sequence note/)
 		{
 			ok(length($$line{$column}) > 0, "Common name: '$common_name', value: '$$line{$column}' ok"); $test_count++;
 		}
 
-		# Check file names.
+		# Check notes.
 
-		$file_name				= $$line{file_name};
-		$file_names{$file_name}	= 0 if (! $file_names{$file_name});
+		$notes			= $$line{note};
+		$notes{$note}	= 0 if (! $notes{$note});
 
-		$file_names{$file_name}++;
+		$notes{$note}++;
 
 		# Check sequences.
 
@@ -89,9 +89,9 @@ sub test_images
 		$sequences{$common_name}{$sequence}++;
 	}
 
-	for $file_name (sort keys %file_names)
+	for $note (sort keys %notes)
 	{
-		ok($file_names{$file_name} == 1, "File name '$file_name' not duplicated"); $test_count++;
+		ok($notes{$note} == 1, "Note '$note' not duplicated"); $test_count++;
 	}
 
 	for $common_name (sort keys %sequences)
@@ -104,7 +104,7 @@ sub test_images
 
 	return $test_count;
 
-} # End of test_images.
+} # End of test_notes.
 
 # ------------------------------------------------
 
@@ -112,7 +112,7 @@ my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
 my($validator)	= Mojolicious::Validator -> new;
 my($validation)	= $validator -> validation;
-$test_count		= test_images($filer, $validator, $validation, $test_count);
+$test_count		= test_notes($filer, $validator, $validation, $test_count);
 
 print "# Internal test count: $test_count\n";
 
