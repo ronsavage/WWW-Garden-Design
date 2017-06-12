@@ -2,6 +2,7 @@
 
 use strict;
 use warnings;
+use open qw(:std :utf8); # Undeclared streams in UTF-8.
 
 use Data::Dumper::Concise; # For Dumper().
 
@@ -56,7 +57,6 @@ sub test_notes
 	# 4: Validate the data in notes.csv.
 
 	my($common_name);
-	my($note, %notes);
 	my($sequence, %sequences);
 
 	for my $line (@$notes)
@@ -72,12 +72,7 @@ sub test_notes
 			ok(length($$line{$column}) > 0, "Common name: '$common_name', value: '$$line{$column}' ok"); $test_count++;
 		}
 
-		# Check notes.
-
-		$notes			= $$line{note};
-		$notes{$note}	= 0 if (! $notes{$note});
-
-		$notes{$note}++;
+		# Don't check notes. They may be duplicated!
 
 		# Check sequences.
 
@@ -87,11 +82,6 @@ sub test_notes
 		ok($sequence =~ /^[0-9]{1,3}$/, "Image sequence '$sequence' ok"); $test_count++;
 
 		$sequences{$common_name}{$sequence}++;
-	}
-
-	for $note (sort keys %notes)
-	{
-		ok($notes{$note} == 1, "Note '$note' not duplicated"); $test_count++;
 	}
 
 	for $common_name (sort keys %sequences)
