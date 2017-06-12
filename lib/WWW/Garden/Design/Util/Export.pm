@@ -246,7 +246,6 @@ sub as_csv
 	$self -> attribute_types2csv($csv);
 	$self -> attributes2csv($csv, $flowers);
 	$self -> constants2csv($csv);
-	$self -> flower_locations2csv($csv, $flowers);
 	$self -> images2csv($csv, $flowers);
 	$self -> notes2csv($csv, $flowers);
 	$self -> urls2csv($csv, $flowers);
@@ -255,7 +254,8 @@ sub as_csv
 	my($property_id2name)	= $self -> properties2csv($csv);
 	my($garden_id2name)		= $self -> gardens2csv($csv, $property_id2name);
 
-	$self -> object_locations2csv($csv, $objects, $garden_id2name);
+	$self -> flower_locations2csv($csv, $flowers, $property_id2name);
+	$self -> object_locations2csv($csv, $objects, $property_id2name, $garden_id2name);
 	$self -> db -> logger -> info('Finished exporting all CSV files');
 
 	# Return 0 for OK and 1 for error.
@@ -946,11 +946,19 @@ sub export_layouts
 
 sub flower_locations2csv
 {
-	my($self, $csv, $flowers)	= @_;
-	my($file_name)				= $self -> output_file =~ s/flowers.csv/flower_locations.csv/r;
-	my($garden_table)			= $self -> db -> read_table('gardens');
+	my($self, $csv, $flowers, $property_id2name) = @_;
+	my($file_name)		= $self -> output_file =~ s/flowers.csv/flower_locations.csv/r;
+	my($property_table)	= $self -> db -> read_table('properties');
+	my($garden_table)	= $self -> db -> read_table('gardens');
 
-	# Build look-up table so we can export gardens names instead of the primary keys.
+	# Build look-up tables so we can export property names and gardens names instead of the primary keys.
+
+	my(%properties);
+
+	for my $item (@$property_table)
+	{
+		$properties{$$item{id} } = $$item{name};
+	}
 
 	my(%gardens);
 
@@ -963,13 +971,14 @@ sub flower_locations2csv
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 
-	$csv -> combine(qw/common_name garden_name xy/);
+	$csv -> combine(qw/common_name property_name garden_name xy/);
 
 	print $fh $csv -> string, "\n";
 
 	my($common_name);
 	my($garden_name);
 	my(%location);
+	my($property_name);
 
 	for my $flower (@$flowers)
 	{
@@ -979,6 +988,7 @@ sub flower_locations2csv
 		for my $location (@{$$flower{flower_locations} })
 		{
 			$garden_name			= $gardens{$$location{garden_id} };
+			$property_name			= $properties{$$location{property_id} };
 			$location{$garden_name}	= [] if (! $location{$garden_name});
 
 			push @{$location{$garden_name} }, "$$location{x},$$location{y}",
@@ -990,6 +1000,7 @@ sub flower_locations2csv
 			(
 				$common_name,
 				$garden_name,
+				$property_name,
 				join(' ', nsort @{$location{$garden_name} }),
 			);
 
@@ -1220,20 +1231,21 @@ sub notes2csv
 
 sub object_locations2csv
 {
-	my($self, $csv, $objects, $garden_id2name) = @_;
+	my($self, $csv, $objects, $property_id2name, $garden_id2name) = @_;
 	my($file_name) = $self -> output_file =~ s/flowers.csv/object_locations.csv/r;
 
 	$self -> db -> logger -> info("Writing to $file_name");
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 
-	$csv -> combine(qw/name garden_name xy/);
+	$csv -> combine(qw/name property_name garden_name xy/);
 
 	print $fh $csv -> string, "\n";
 
 	my($garden_id, $garden_name);
 	my(%location);
 	my($object_name);
+	my($property_id, $property_name);
 
 	for my $object (@$objects)
 	{
@@ -1244,6 +1256,8 @@ sub object_locations2csv
 		{
 			$garden_id				= $$feature{garden_id};
 			$garden_name			= $$garden_id2name{$garden_id};
+			$property_id			= $$feature{property_id};
+			$property_name			= $$property_id2name{$property_id};
 			$location{$garden_name}	= [] if (! $location{$garden_name});
 
 			push @{$location{$garden_name} }, "$$feature{x},$$feature{y}";
@@ -1254,6 +1268,7 @@ sub object_locations2csv
 			$csv -> combine
 			(
 				$object_name,
+				$property_name,
 				$garden_name,
 				join(' ', nsort @{$location{$garden_name} }),
 			);

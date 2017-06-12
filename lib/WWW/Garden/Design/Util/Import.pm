@@ -16,6 +16,7 @@ use Moo;
 
 use Text::CSV::Encoded;
 
+use WWW::Garden::Design::Database;
 use WWW::Garden::Design::Validation::AttributeTypes;
 
 extends qw/WWW::Garden::Design::Database::Base/;
@@ -75,9 +76,9 @@ sub populate_all_tables
 	$self -> populate_flowers_table($path, $csv, \%flower_keys);
 	$self -> populate_properties_table($path, $csv, \%property_keys);
 	$self -> populate_gardens_table($path, $csv, \%garden_keys, \%property_keys);
-	$self -> populate_flower_locations_table($path, $csv, \%flower_keys, \%garden_keys);
+	$self -> populate_flower_locations_table($path, $csv, \%flower_keys, \%property_keys, \%garden_keys);
 	$self -> populate_objects_table($path, $csv, \%object_keys);
-	$self -> populate_object_locations_table($path, $csv, \%garden_keys, \%object_keys);
+	$self -> populate_object_locations_table($path, $csv, \%property_keys, \%garden_keys, \%object_keys);
 	$self -> populate_attributes_table($path, $csv, \%attribute_type_keys, \%flower_keys);
 	$self -> populate_notes_table($path, $csv, \%flower_keys);
 	$self -> populate_images_table($path, $csv, \%flower_keys);
@@ -231,7 +232,7 @@ sub populate_constants_table
 
 sub populate_flower_locations_table
 {
-	my($self, $path, $csv, $flower_keys, $garden_keys) = @_;
+	my($self, $path, $csv, $flower_keys, $property_keys, $garden_keys) = @_;
 	my($table_name) = 'flower_locations';
 	$path           =~ s/flowers/$table_name/;
 
@@ -250,7 +251,7 @@ sub populate_flower_locations_table
 	{
 		$count++;
 
-		for my $column (qw/common_name garden_name xy/)
+		for my $column (qw/common_name property_name garden_name xy/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -263,6 +264,13 @@ sub populate_flower_locations_table
 		if (! defined $$flower_keys{$$item{common_name} })
 		{
 			$self -> db -> logger -> error("$table_name. Row: $count. Common name '$$item{common_name}' undefined");
+
+			next;
+		}
+
+		if (! defined $$property_keys{$$item{property_name} })
+		{
+			$self -> db -> logger -> error("$table_name. Row: $count. Property '$$item{property_name}' undefined");
 
 			next;
 		}
@@ -288,6 +296,7 @@ sub populate_flower_locations_table
 				{
 					flower_id	=> $$flower_keys{$$item{common_name} },
 					garden_id	=> $$garden_keys{$$item{garden_name} },
+					property_id	=> $$property_keys{$$item{property_name} },
 					x			=> $x,
 					y			=> $y,
 				}
@@ -542,7 +551,7 @@ sub populate_notes_table
 
 sub populate_object_locations_table
 {
-	my($self, $path, $csv, $garden_keys, $object_keys) = @_;
+	my($self, $path, $csv, $property_keys, $garden_keys, $object_keys) = @_;
 	my($table_name) = 'object_locations';
 	$path           =~ s/flowers/$table_name/;
 
@@ -561,7 +570,7 @@ sub populate_object_locations_table
 	{
 		$count++;
 
-		for my $column (qw/garden_name name xy/)
+		for my $column (qw/property_name garden_name name xy/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -585,6 +594,7 @@ sub populate_object_locations_table
 				{
 					garden_id	=> $$garden_keys{$$item{garden_name} },
 					object_id	=> $$object_keys{$$item{name} },
+					property_id	=> $$property_keys{$$item{property_name} },
 					x			=> $x,
 					y			=> $y,
 				}

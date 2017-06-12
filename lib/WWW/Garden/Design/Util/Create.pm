@@ -212,6 +212,7 @@ create table $table_name
 id			$primary_key,
 flower_id 	int references flowers(id),
 garden_id	int references gardens(id),
+property_id	int references properties(id),
 x			integer not null,
 y			integer not null
 ) $engine
@@ -328,6 +329,7 @@ create table $table_name
 id			$primary_key,
 garden_id	int references gardens(id),
 object_id	int references objects(id),
+property_id	int references properties(id),
 x			integer not null,
 y			integer not null
 ) $engine
