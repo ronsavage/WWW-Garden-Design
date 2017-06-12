@@ -32,7 +32,7 @@ sub test_images
 	# 2: Read images.csv.
 
 	my($table_name) = 'images';
-	$path           =~ s/flowers/$table_name/;
+	$path			=~ s/flowers/$table_name/;
 	my($images)		= $filer -> read_csv_file($path);
 
 	# 3: Validate the headings in images.csv.

@@ -33,7 +33,7 @@ sub test_notes
 	# 2: Read notes.csv.
 
 	my($table_name) = 'notes';
-	$path           =~ s/flowers/$table_name/;
+	$path			=~ s/flowers/$table_name/;
 	my($notes)		= $filer -> read_csv_file($path);
 
 	# 3: Validate the headings in notes.csv.

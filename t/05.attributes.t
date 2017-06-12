@@ -94,7 +94,7 @@ sub test_attributes
 	# 2: Read attributes.csv.
 
 	my($table_name) = 'attributes';
-	$path           =~ s/flowers/$table_name/;
+	$path			=~ s/flowers/$table_name/;
 	my($attributes)	= $filer -> read_csv_file($path);
 
 	# 3: Validate the headings in attributes.csv.

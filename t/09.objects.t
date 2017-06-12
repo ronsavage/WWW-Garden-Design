@@ -23,7 +23,7 @@ sub test_objects
 	my($filer, $validator, $validation, $test_count) = @_;
 	my($path)		= "$FindBin::Bin/../data/flowers.csv";
 	my($table_name) = 'objects';
-	$path           =~ s/flowers/$table_name/;
+	$path			=~ s/flowers/$table_name/;
 	my($objects)	= $filer -> read_csv_file($path);
 
 	# 1: Validate the headings in objects.csv.

@@ -17,11 +17,11 @@ use WWW::Garden::Design::Util::Filer;
 
 # ------------------------------------------------
 
-sub test_urls
+sub test_flower_locations
 {
 	my($filer, $validator, $validation, $test_count) = @_;
 
-	# 1: Read flowers.csv in order to later validate the common_name column of urls.csv.
+	# 1: Read flowers.csv in order to later validate the common_name column of flower_locations.csv.
 
 	my(%flowers);
 
@@ -29,16 +29,28 @@ sub test_urls
 	my($flowers)				= $filer -> read_csv_file($path);
 	$flowers{$$_{common_name} }	= 1 for @$flowers;
 
-	# 2: Read urls.csv.
+	# 2: Read flower_locations.csv.
 
-	my($table_name) = 'urls';
+	my($table_name)			= 'flower_locations';
+	$path					=~ s/flowers/$table_name/;
+	my($flower_locations)	= $filer -> read_csv_file($path);
+
+	# 2: Read properties.csv.
+
+	my($table_name)	= 'properties';
 	$path			=~ s/flowers/$table_name/;
-	my($urls)		= $filer -> read_csv_file($path);
+	my($properties)	= $filer -> read_csv_file($path);
 
-	# 3: Validate the headings in urls.csv.
+	# 2: Read gardens.csv.
 
-	my(@expected_headings)	= sort(qw/common_name sequence url/);
-	my(@got_headings)		= sort keys %{$$urls[0]};
+	my($table_name)	= 'gardens';
+	$path			=~ s/flowers/$table_name/;
+	my($gardens)	= $filer -> read_csv_file($path);
+
+	# 3: Validate the headings in flower_locations.csv.
+
+	my(@expected_headings)	= sort(qw/common_name property_name garden_name xy/);
+	my(@got_headings)		= sort keys %{$$flower_locations[0]};
 
 	my($result);
 
@@ -53,12 +65,11 @@ sub test_urls
 		ok($result == 1, "Heading '$expected_headings[$i]' ok"); $test_count++;
 	}
 
-	# 4: Validate the data in images.csv.
+	# 4: Validate the data in flower_locations.csv.
 
 	my($common_name);
-	my($sequence, %sequences);
 
-	for my $line (@$urls)
+	for my $line (@$flower_locations)
 	{
 		# Check common names.
 
@@ -71,30 +82,11 @@ sub test_urls
 			ok(length($$line{$column}) > 0, "Common name: '$common_name', value: '$$line{$column}' ok"); $test_count++;
 		}
 
-		# Check URL.
-		# Skip.
-
-		# Check sequences.
-
-		$sequence					= $$line{sequence};
-		$sequences{$common_name}	= {} if (! $sequences{$common_name});
-
-		ok($sequence =~ /^[0-9]{1,3}$/, "Image sequence '$sequence' ok"); $test_count++;
-
-		$sequences{$common_name}{$sequence}++;
-	}
-
-	for $common_name (sort keys %sequences)
-	{
-		for $sequence (sort keys %{$sequences{$common_name} })
-		{
-			ok($sequences{$common_name}{$sequence} == 1, "Sequence '$sequence' is unique within common name '$common_name'"); $test_count++;
-		}
 	}
 
 	return $test_count;
 
-} # End of test_urls.
+} # End of test_flower_locations.
 
 # ------------------------------------------------
 
@@ -102,7 +94,7 @@ my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
 my($validator)	= Mojolicious::Validator -> new;
 my($validation)	= $validator -> validation;
-$test_count		= test_urls($filer, $validator, $validation, $test_count);
+$test_count		= test_flower_locations($filer, $validator, $validation, $test_count);
 
 print "# Internal test count: $test_count\n";
 

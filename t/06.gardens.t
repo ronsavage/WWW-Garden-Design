@@ -93,7 +93,7 @@ sub test_properties
 	my($filer, $validator, $validation, $test_count, $property_names) = @_;
 	my($path)		= "$FindBin::Bin/../data/flowers.csv";
 	my($table_name) = 'properties';
-	$path           =~ s/flowers/$table_name/;
+	$path			=~ s/flowers/$table_name/;
 	my($properties)	= $filer -> read_csv_file($path);
 
 	# 1: Validate the headings in properties.csv.
