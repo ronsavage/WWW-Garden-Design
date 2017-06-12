@@ -984,8 +984,8 @@ sub flower_locations2csv
 				$csv -> combine
 				(
 					$common_name,
-					$garden_name,
 					$property_name,
+					$garden_name,
 					join(' ', nsort @{$location{$property_name}{$garden_name} }),
 				);
 
