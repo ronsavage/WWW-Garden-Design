@@ -254,7 +254,7 @@ sub as_csv
 	my($property_id2name)	= $self -> properties2csv($csv);
 	my($garden_id2name)		= $self -> gardens2csv($csv, $property_id2name);
 
-	$self -> flower_locations2csv($csv, $flowers, $property_id2name);
+	$self -> flower_locations2csv($csv, $flowers, $property_id2name, $garden_id2name);
 	$self -> object_locations2csv($csv, $objects, $property_id2name, $garden_id2name);
 	$self -> db -> logger -> info('Finished exporting all CSV files');
 
@@ -946,26 +946,8 @@ sub export_layouts
 
 sub flower_locations2csv
 {
-	my($self, $csv, $flowers, $property_id2name) = @_;
-	my($file_name)		= $self -> output_file =~ s/flowers.csv/flower_locations.csv/r;
-	my($property_table)	= $self -> db -> read_table('properties');
-	my($garden_table)	= $self -> db -> read_table('gardens');
-
-	# Build look-up tables so we can export property names and gardens names instead of the primary keys.
-
-	my(%properties);
-
-	for my $item (@$property_table)
-	{
-		$properties{$$item{id} } = $$item{name};
-	}
-
-	my(%gardens);
-
-	for my $item (@$garden_table)
-	{
-		$gardens{$$item{id} } = $$item{name};
-	}
+	my($self, $csv, $flowers, $property_id2name, $garden_id2name) = @_;
+	my($file_name) = $self -> output_file =~ s/flowers.csv/flower_locations.csv/r;
 
 	$self -> db -> logger -> info("Writing to $file_name");
 
@@ -987,8 +969,8 @@ sub flower_locations2csv
 
 		for my $location (@{$$flower{flower_locations} })
 		{
-			$garden_name							= $gardens{$$location{garden_id} };
-			$property_name							= $properties{$$location{property_id} };
+			$garden_name							= $garden_id2name{$$location{garden_id} };
+			$property_name							= $property_id2name{$$location{property_id} };
 			$location{$property_name}				= {} if (! $location{$property_name});
 			$location{$property_name}{$garden_name}	= [] if (! $location{$property_name}{$garden_name});
 
@@ -1263,7 +1245,7 @@ sub object_locations2csv
 			$location{$property_name}				= {} if (! $location{$property_name});
 			$location{$property_name}{$garden_name}	= [] if (! $location{$property_name}{$garden_name});
 
-			push @{$location{$garden_name} }, "$$feature{x},$$feature{y}";
+			push @{$location{$property_name}{$garden_name} }, "$$feature{x},$$feature{y}";
 		}
 
 		for $property_name (sort keys %location)
