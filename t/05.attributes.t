@@ -65,7 +65,7 @@ sub test_attribute_types
 			BAIL_OUT('No point continuing when the above test fails');
 		}
 
-		if ($$expected_format[0] eq 'int')
+		if ($$expected_format[0] eq 'Integer')
 		{
 			ok($sequence =~ /^[0-9]{1,3}$/, "Attribute type sequence '$sequence' ok"); $test_count++;
 		}
@@ -168,10 +168,10 @@ sub test_attributes
 
 my($expected_attribute_types) =
 {
-	'Edible'		=> ['int', 'No, Bean, Flower, Fruit, Leaf, Stem, Rhizome, Unknown'],
-	'Habit'			=> ['int', 'Columnar, Dwarf, Semi-dwarf, Prostrate, Shrub, Tree, Vine, Unknown'],
-	'Native'		=> ['int', 'Yes, No, Unknown'],
-	'Sun tolerance'	=> ['int', 'Full sun, Part shade, Shade, Unknown'],
+	'Edible'		=> ['Integer', 'No, Bean, Flower, Fruit, Leaf, Stem, Rhizome, Unknown'],
+	'Habit'			=> ['Integer', 'Columnar, Dwarf, Semi-dwarf, Prostrate, Shrub, Tree, Vine, Unknown'],
+	'Native'		=> ['Integer', 'Yes, No, Unknown'],
+	'Sun tolerance'	=> ['Integer', 'Full sun, Part shade, Shade, Unknown'],
 };
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
