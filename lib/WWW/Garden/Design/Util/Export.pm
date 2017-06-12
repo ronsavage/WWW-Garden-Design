@@ -987,24 +987,28 @@ sub flower_locations2csv
 
 		for my $location (@{$$flower{flower_locations} })
 		{
-			$garden_name			= $gardens{$$location{garden_id} };
-			$property_name			= $properties{$$location{property_id} };
-			$location{$garden_name}	= [] if (! $location{$garden_name});
+			$garden_name							= $gardens{$$location{garden_id} };
+			$property_name							= $properties{$$location{property_id} };
+			$location{$property_name}				= {} if (! $location{$property_name});
+			$location{$property_name}{$garden_name}	= [] if (! $location{$property_name}{$garden_name});
 
-			push @{$location{$garden_name} }, "$$location{x},$$location{y}",
+			push @{$location{$property_name}{$garden_name} }, "$$location{x},$$location{y}",
 		}
 
-		for $garden_name (sort keys %location)
+		for $property_name (sort keys %location)
 		{
-			$csv -> combine
-			(
-				$common_name,
-				$garden_name,
-				$property_name,
-				join(' ', nsort @{$location{$garden_name} }),
-			);
+			for $garden_name (sort keys %{$location{$property_name} })
+			{
+				$csv -> combine
+				(
+					$common_name,
+					$garden_name,
+					$property_name,
+					join(' ', nsort @{$location{$property_name}{$garden_name} }),
+				);
 
-			print $fh $csv -> string, "\n";
+				print $fh $csv -> string, "\n";
+			}
 		}
 	}
 
@@ -1242,10 +1246,10 @@ sub object_locations2csv
 
 	print $fh $csv -> string, "\n";
 
-	my($garden_id, $garden_name);
+	my($garden_name);
 	my(%location);
 	my($object_name);
-	my($property_id, $property_name);
+	my($property_name);
 
 	for my $object (@$objects)
 	{
@@ -1254,11 +1258,10 @@ sub object_locations2csv
 
 		for my $feature (@{$$object{object_locations} })
 		{
-			$garden_id				= $$feature{garden_id};
-			$garden_name			= $$garden_id2name{$garden_id};
-			$property_id			= $$feature{property_id};
-			$property_name			= $$property_id2name{$property_id};
-			$location{$garden_name}	= [] if (! $location{$garden_name});
+			$garden_name							= $$garden_id2name{$$feature{garden_id} };
+			$property_name							= $$property_id2name{$$feature{property_id} };
+			$location{$property_name}				= {} if (! $location{$property_name});
+			$location{$property_name}{$garden_name}	= [] if (! $location{$property_name}{$garden_name});
 
 			push @{$location{$garden_name} }, "$$feature{x},$$feature{y}";
 		}
