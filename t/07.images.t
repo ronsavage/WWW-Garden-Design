@@ -19,7 +19,7 @@ use WWW::Garden::Design::Util::Filer;
 
 sub test_images
 {
-	my($filer, $validator, $validation, $test_count, $property_names) = @_;
+	my($filer, $validator, $validation, $test_count) = @_;
 
 	# 1: Read flowers.csv in order to later validate the common_name column of images.csv.
 
@@ -67,7 +67,7 @@ sub test_images
 
 		ok($flowers{$common_name}, "Common name '$common_name'. Name present in flowers.csv"); $test_count++;
 
-		for my $column (qw/common_name sequence description file_name/)
+		for my $column (@expected_headings)
 		{
 			ok(length($$line{$column}) > 0, "Common name: '$common_name', value: '$$line{$column}' ok"); $test_count++;
 		}

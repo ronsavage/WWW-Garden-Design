@@ -2,7 +2,6 @@
 
 use strict;
 use warnings;
-use open qw(:std :utf8); # Undeclared streams in UTF-8.
 
 use Data::Dumper::Concise; # For Dumper().
 
@@ -18,11 +17,11 @@ use WWW::Garden::Design::Util::Filer;
 
 # ------------------------------------------------
 
-sub test_notes
+sub test_urls
 {
-	my($filer, $validator, $validation, $test_count, $property_names) = @_;
+	my($filer, $validator, $validation, $test_count) = @_;
 
-	# 1: Read flowers.csv in order to later validate the common_name column of notes.csv.
+	# 1: Read flowers.csv in order to later validate the common_name column of urls.csv.
 
 	my(%flowers);
 
@@ -30,16 +29,16 @@ sub test_notes
 	my($flowers)				= $filer -> read_csv_file($path);
 	$flowers{$$_{common_name} }	= 1 for @$flowers;
 
-	# 2: Read notes.csv.
+	# 2: Read urls.csv.
 
-	my($table_name) = 'notes';
+	my($table_name) = 'urls';
 	$path           =~ s/flowers/$table_name/;
-	my($notes)		= $filer -> read_csv_file($path);
+	my($urls)		= $filer -> read_csv_file($path);
 
-	# 3: Validate the headings in notes.csv.
+	# 3: Validate the headings in urls.csv.
 
-	my(@expected_headings)	= sort(qw/common_name sequence note/);
-	my(@got_headings)		= sort keys %{$$notes[0]};
+	my(@expected_headings)	= sort(qw/common_name sequence url/);
+	my(@got_headings)		= sort keys %{$$urls[0]};
 
 	my($result);
 
@@ -54,12 +53,12 @@ sub test_notes
 		ok($result == 1, "Heading '$expected_headings[$i]' ok"); $test_count++;
 	}
 
-	# 4: Validate the data in notes.csv.
+	# 4: Validate the data in images.csv.
 
 	my($common_name);
 	my($sequence, %sequences);
 
-	for my $line (@$notes)
+	for my $line (@$urls)
 	{
 		# Check common names.
 
@@ -72,7 +71,8 @@ sub test_notes
 			ok(length($$line{$column}) > 0, "Common name: '$common_name', value: '$$line{$column}' ok"); $test_count++;
 		}
 
-		# Don't check notes. They may be duplicated!
+		# Check URL.
+		# Skip.
 
 		# Check sequences.
 
@@ -94,7 +94,7 @@ sub test_notes
 
 	return $test_count;
 
-} # End of test_notes.
+} # End of test_urls.
 
 # ------------------------------------------------
 
@@ -102,7 +102,7 @@ my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
 my($validator)	= Mojolicious::Validator -> new;
 my($validation)	= $validator -> validation;
-$test_count		= test_notes($filer, $validator, $validation, $test_count);
+$test_count		= test_urls($filer, $validator, $validation, $test_count);
 
 print "# Internal test count: $test_count\n";
 

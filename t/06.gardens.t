@@ -51,7 +51,7 @@ sub test_gardens
 
 	for my $line (@$gardens)
 	{
-		for my $column (qw/description garden_name property_name publish/)
+		for my $column (@expected_headings)
 		{
 			ok(length($$line{$column}) > 0, "Properties column: '$column', value: '$$line{$column}' ok"); $test_count++;
 
@@ -121,7 +121,7 @@ sub test_properties
 
 	for my $line (@$properties)
 	{
-		for my $column (qw/description name publish/)
+		for my $column (@expected_headings)
 		{
 			ok(length($$line{$column}) > 0, "Properties column: '$column', value: '$$line{$column}' ok"); $test_count++;
 
