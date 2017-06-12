@@ -37,12 +37,8 @@ sub test_images
 
 	# 3: Validate the headings in images.csv.
 
-	open(my $io, '<', $path) || die "Can't open($path): $!\n";
-
 	my(@expected_headings)	= sort(qw/common_name sequence description file_name/);
 	my(@got_headings)		= sort keys %{$$images[0]};
-
-	close $io;
 
 	my($result);
 

@@ -31,14 +31,10 @@ sub test_flowers
 	# 1: Validate the headings in properties.csv.
 	# The headings must be listed here in the same order as in the file.
 
-	open(my $io, '<', $path) || die "Can't open($path): $!\n";
-
 	my(@expected_headings)	= ('common_name', 'scientific_name', 'aliases', 'height', 'width', 'publish');
 	my(@got_headings)		= @{$csv -> getline($io) };
 
 	my($result);
-
-	close $io;
 
 	for my $i (0 .. $#expected_headings)
 	{
