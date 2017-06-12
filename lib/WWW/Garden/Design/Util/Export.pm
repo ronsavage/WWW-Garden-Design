@@ -209,7 +209,7 @@ sub attributes2csv
 
 	my($common_name);
 
-	for my $flower (@$flowers)
+	for my $flower (sort{uc($$a{common_name}) cmp uc($$b{common_name})} @$flowers)
 	{
 		$common_name = $$flower{common_name};
 
@@ -967,7 +967,7 @@ sub flower_locations2csv
 		$common_name	= $$flower{common_name};
 		%location		= ();
 
-		for my $location (@{$$flower{flower_locations} })
+		for my $location (sort{$$a{common_name} cmp $$b{common_name} } @{$$flower{flower_locations} })
 		{
 			$garden_name							= $$garden_id2name{$$location{garden_id} };
 			$property_name							= $$property_id2name{$$location{property_id} };
@@ -1016,7 +1016,7 @@ sub flowers2csv
 
 	print $fh $csv -> string, "\n";
 
-	for my $flower (@$flowers)
+	for my $flower (sort{uc($$a{common_name}) cmp uc($$b{common_name})} @$flowers)
 	{
 		$csv -> combine
 		(
@@ -1149,7 +1149,7 @@ sub images2csv
 
 	my($common_name);
 
-	for my $flower (@$flowers)
+	for my $flower (sort{uc($$a{common_name}) cmp uc($$b{common_name})} @$flowers)
 	{
 		$common_name = $$flower{common_name};
 
@@ -1190,7 +1190,7 @@ sub notes2csv
 
 	my($common_name);
 
-	for my $flower (@$flowers)
+	for my $flower (sort{uc($$a{common_name}) cmp uc($$b{common_name})} @$flowers)
 	{
 		$common_name = $$flower{common_name};
 
@@ -1363,7 +1363,7 @@ sub urls2csv
 
 	my($common_name);
 
-	for my $flower (@$flowers)
+	for my $flower (sort{uc($$a{common_name}) cmp uc($$b{common_name})} @$flowers)
 	{
 		$common_name = $$flower{common_name};
 
