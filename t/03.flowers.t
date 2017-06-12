@@ -22,6 +22,36 @@ sub test_flowers
 {
 	my($filer, $validator, $validation, $test_count) = @_;
 	my($path)	= "$FindBin::Bin/../data/flowers.csv";
+	my($csv)	= Text::CSV::Encoded -> new
+	({
+		allow_whitespace => 1,
+		encoding_in      => 'utf-8',
+	});
+
+	# 1: Validate the headings in properties.csv.
+	# The headings must be listed here in the same order as in the file.
+
+	open(my $io, '<', $path) || die "Can't open($path): $!\n";
+
+	my(@expected_headings)	= ('common_name', 'scientific_name', 'aliases', 'height', 'width', 'publish');
+	my(@got_headings)		= @{$csv -> getline($io) };
+
+	my($result);
+
+	close $io;
+
+	for my $i (0 .. $#expected_headings)
+	{
+		$result = $validation
+		-> input({expected => $expected_headings[$i], got => $got_headings[$i]})
+		-> required('got')
+		-> equal_to('expected')
+		-> is_valid;
+
+		ok($result == 1, "Heading '$expected_headings[$i]' ok"); $test_count++;
+	}
+
+	# 2: Validate the data in flowers.csv.
 
 	my(@range);
 
@@ -51,7 +81,6 @@ sub test_flowers
 	);
 
 	my($common_name, %common_names);
-	my($result);
 
 	for my $line (@{$filer -> read_csv_file($path)})
 	{
@@ -78,13 +107,16 @@ sub test_flowers
 		ok($result == 1, "Common name '$common_name'. Scientific name '$$line{scientific_name} ok"); $test_count++;
 
 		# Test publish flag.
+		#
+		# Comment out complex test.
+		#$result = $validation
+		#-> required('publish')
+		#-> in('Yes', 'No')
+		#-> is_valid;
+		#
+		#ok($result == 1, "Common name '$common_name'. Publish '$$line{publish} is Yes or No"); $test_count++;
 
-		$result = $validation
-		-> required('publish')
-		-> in('Yes', 'No')
-		-> is_valid;
-
-		ok($result == 1, "Common name '$common_name'. Publish '$$line{publish} is Yes or No"); $test_count++;
+		ok($$line{publish} =~ /^Yes|No$/, "Common name '$common_name'. Publish is Yes or No"); $test_count++;
 
 		# Test height.
 

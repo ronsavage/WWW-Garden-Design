@@ -108,10 +108,10 @@ sub test_properties
 	my($table_name) = 'properties';
 	$path           =~ s/flowers/$table_name/;
 
-	open(my $io, '<', $path) || die "Can't open($path): $!\n";
-
 	# 1: Validate the headings in properties.csv.
 	# The headings must be listed here in the same order as in the file.
+
+	open(my $io, '<', $path) || die "Can't open($path): $!\n";
 
 	my(@expected_headings)	= ('name','description','publish');
 	my(@got_headings)		= @{$csv -> getline($io) };
