@@ -21,18 +21,14 @@ use WWW::Garden::Design::Util::Filer;
 sub test_flowers
 {
 	my($filer, $validator, $validation, $test_count) = @_;
-	my($path)	= "$FindBin::Bin/../data/flowers.csv";
-	my($csv)	= Text::CSV::Encoded -> new
-	({
-		allow_whitespace => 1,
-		encoding_in      => 'utf-8',
-	});
+	my($path)		= "$FindBin::Bin/../data/flowers.csv";
+	my($flowers)	= $filer -> read_csv_file($path);
 
 	# 1: Validate the headings in properties.csv.
 	# The headings must be listed here in the same order as in the file.
 
-	my(@expected_headings)	= ('common_name', 'scientific_name', 'aliases', 'height', 'width', 'publish');
-	my(@got_headings)		= @{$csv -> getline($io) };
+	my(@expected_headings)	= sort ('common_name', 'scientific_name', 'aliases', 'height', 'width', 'publish');
+	my(@got_headings)		= sort keys %{$$flowers[0]};
 
 	my($result);
 
