@@ -169,6 +169,8 @@ sub attribute_types2csv
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 
+	# Column names are in order left-to-right.
+
 	$csv -> combine(qw/name sequence range/);
 
 	print $fh $csv -> string, "\n";
@@ -201,6 +203,8 @@ sub attributes2csv
 	$self -> db -> logger -> info("Writing to $file_name");
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
+
+	# Column names are in order left-to-right.
 
 	$csv -> combine(qw/common_name attribute_name range/);
 
@@ -375,6 +379,8 @@ sub constants2csv
 	$self -> db -> logger -> info("Writing to $file_name");
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
+
+	# Column names are in order left-to-right.
 
 	$csv -> combine(qw/name value/);
 
@@ -952,6 +958,8 @@ sub flower_locations2csv
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 
+	# Column names are in order left-to-right.
+
 	$csv -> combine(qw/common_name property_name garden_name xy/);
 
 	print $fh $csv -> string, "\n";
@@ -1010,6 +1018,8 @@ sub flowers2csv
 	$self -> db -> logger -> info("Writing to $output_file");
 
 	open(my $fh, '>:encoding(utf-8)', $output_file) || die "Can't open(> $output_file): $!";
+
+	# Column names are in order left-to-right.
 
 	$csv -> combine(qw/common_name scientific_name aliases height width publish/);
 
@@ -1102,6 +1112,8 @@ sub gardens2csv
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 
+	# Column names are in order left-to-right.
+
 	$csv -> combine(qw/property_name garden_name description publish/);
 
 	print $fh $csv -> string, "\n";
@@ -1141,6 +1153,8 @@ sub images2csv
 	$self -> db -> logger -> info("Writing to $file_name");
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
+
+	# Column names are in order left-to-right.
 
 	$csv -> combine(qw/common_name sequence description file_name/);
 
@@ -1183,6 +1197,8 @@ sub notes2csv
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 
+	# Column names are in order left-to-right.
+
 	$csv -> combine(qw/common_name sequence note/);
 
 	print $fh $csv -> string, "\n";
@@ -1222,6 +1238,8 @@ sub object_locations2csv
 	$self -> db -> logger -> info("Writing to $file_name");
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
+
+	# Column names are in order left-to-right.
 
 	$csv -> combine(qw/name property_name garden_name xy/);
 
@@ -1282,6 +1300,8 @@ sub objects2csv
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 
+	# Column names are in order left-to-right.
+
 	$csv -> combine(qw/name hex_color/);
 
 	print $fh $csv -> string, "\n";
@@ -1292,6 +1312,7 @@ sub objects2csv
 		(
 			$$object{name},
 			$$object{hex_color},
+			$$object{publish},
 		);
 
 		print $fh $csv -> string, "\n";
@@ -1316,6 +1337,8 @@ sub properties2csv
 	$self -> db -> logger -> info("Writing to $file_name");
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
+
+	# Column names are in order left-to-right.
 
 	$csv -> combine(qw/name description publish/);
 
@@ -1355,6 +1378,8 @@ sub urls2csv
 	$self -> db -> logger -> info("Writing to $file_name");
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
+
+	# Column names are in order left-to-right.
 
 	$csv -> combine(qw/common_name sequence url/);
 

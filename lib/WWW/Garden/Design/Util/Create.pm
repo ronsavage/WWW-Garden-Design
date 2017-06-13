@@ -351,7 +351,8 @@ create table $table_name
 (
 id			$primary_key,
 hex_color	varchar(255) not null,
-name		varchar(255) not null
+name		varchar(255) not null,
+publish		varchar(255) not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);

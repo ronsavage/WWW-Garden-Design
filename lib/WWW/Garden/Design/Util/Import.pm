@@ -107,6 +107,8 @@ sub populate_attributes_table
 	{
 		$count++;
 
+		# Column names are in alphabetical order.
+
 		for my $column (qw/attribute_name common_name range/)
 		{
 			if (! defined $$item{$column})
@@ -160,6 +162,8 @@ sub populate_attribute_types_table
 	{
 		$count++;
 
+		# Column names are in alphabetical order.
+
 		for my $column (qw/name range sequence/)
 		{
 			if (! defined $$item{$column})
@@ -202,6 +206,8 @@ sub populate_constants_table
 	for my $item (@{$csv -> getline_hr_all($io) })
 	{
 		$count++;
+
+		# Column names are in alphabetical order.
 
 		for my $column (qw/name value/)
 		{
@@ -249,6 +255,8 @@ sub populate_flower_locations_table
 	for my $item (@{$csv -> getline_hr_all($io) })
 	{
 		$count++;
+
+		# Column names are in alphabetical order.
 
 		for my $column (qw/common_name property_name garden_name xy/)
 		{
@@ -335,6 +343,8 @@ sub populate_flowers_table
 	{
 		$count++;
 
+		# Column names are in alphabetical order.
+
 		for my $column (qw/aliases common_name height publish scientific_name width/)
 		{
 			if (! defined $$item{$column})
@@ -419,6 +429,8 @@ sub populate_gardens_table
 	{
 		$count++;
 
+		# Column names are in alphabetical order.
+
 		for my $column (qw/garden_name description property_name publish/)
 		{
 			if (! defined $$item{$column})
@@ -462,6 +474,8 @@ sub populate_images_table
 	for my $item (@{$csv -> getline_hr_all($io) })
 	{
 		$count++;
+
+		# Column names are in alphabetical order.
 
 		for my $column (qw/common_name description file_name sequence/)
 		{
@@ -513,6 +527,8 @@ sub populate_notes_table
 	for my $item (@{$csv -> getline_hr_all($io) })
 	{
 		$count++;
+
+		# Column names are in alphabetical order.
 
 		for my $column (qw/common_name note sequence/)
 		{
@@ -568,6 +584,8 @@ sub populate_object_locations_table
 	for my $item (@{$csv -> getline_hr_all($io) })
 	{
 		$count++;
+
+		# Column names are in alphabetical order.
 
 		for my $column (qw/property_name garden_name name xy/)
 		{
@@ -626,7 +644,9 @@ sub populate_objects_table
 	{
 		$count++;
 
-		for my $column (qw/hex_color name/)
+		# Column names are in alphabetical order.
+
+		for my $column (qw/hex_color name publish/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -640,6 +660,7 @@ sub populate_objects_table
 			{
 				hex_color	=> $$item{hex_color},
 				name		=> $$item{name},
+				publish		=> $$item{publish},
 			}
 		);
 	}
@@ -672,6 +693,8 @@ sub populate_properties_table
 	for my $item (@{$csv -> getline_hr_all($io) })
 	{
 		$count++;
+
+		# Column names are in alphabetical order.
 
 		for my $column (qw/description name/)
 		{
@@ -715,6 +738,8 @@ sub populate_urls_table
 	for my $item (@{$csv -> getline_hr_all($io) })
 	{
 		$count++;
+
+		# Column names are in alphabetical order.
 
 		for my $column (qw/common_name sequence url/)
 		{
