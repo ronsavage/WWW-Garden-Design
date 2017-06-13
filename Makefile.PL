@@ -47,6 +47,7 @@ my(%params) =
 		'Imager'					=> 1.005,
 		'Imager::Fill'				=> 1.012,
 		'Lingua::EN::Inflect'		=> 1.895,
+		'Mojolicious'				=> 7.33,
 		'Mojolicious::Validator'	=> 0,
 		'Mojo::Base'				=> 0,
 		'Mojo::Log'					=> 0,

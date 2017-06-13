@@ -22,6 +22,7 @@ use Getopt::Long;
 use Imager;
 use Imager::Fill;
 use Lingua::EN::Inflect;
+use Mojolicious;
 use Mojolicious::Validator;
 use Mojo::Base;
 use Mojo::Log;
@@ -72,6 +73,7 @@ my(@modules) = qw
 	Imager
 	Imager::Fill
 	Lingua::EN::Inflect
+	Mojolicious
 	Mojolicious::Validator
 	Mojo::Base
 	Mojo::Log
