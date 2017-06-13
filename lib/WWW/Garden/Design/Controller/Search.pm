@@ -111,6 +111,7 @@ sub format
 	<td>$$item{common_name}</td>
 	<td>$$item{aliases}</td>
 	<td>$$item{hxw}</td>
+	<td>$$item{publish}</td>
 	<td>
 		<button class = 'button' onClick='populate_details($$item{id})'>
 			<img src = '$$item{thumbnail_url}' width = '$$constants_table{cell_width}' height = '$$constants_table{cell_height}'/>

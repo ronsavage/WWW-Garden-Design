@@ -30,6 +30,7 @@ sub display
 		height			=> $self -> param('height')				|| '',
 		image_list		=> $self -> param('image_list')			|| '',
 		note_list		=> $self -> param('note_list')			|| '',
+		publish			=> $self -> param('publish')			|| '',
 		scientific_name	=> $self -> param('scientific_name')	|| '',
 		width			=> $self -> param('width')				|| '',
 		url_list		=> $self -> param('url_list')			|| '',
@@ -45,8 +46,6 @@ sub display
 		my($images)		= $self -> process_images($joiner, $$item{image_list});			# Hashref of arrayrefs.
 		my($notes)		= {map{$_ eq '-' ? '' : $_} split($joiner, $$item{note_list})};	# Hashref.
 		my($urls)		= $self -> process_urls($joiner, $$item{url_list});				# Hashref.
-
-		$self -> app -> log -> debug('Notes: ' . Dumper($notes) );
 
 #		$$defaults{db} -> add_flower($item);
 

@@ -35,6 +35,7 @@
 				<th>Common name</th>
 				<th>Aliases</th>
 				<th>H x W</th>
+				<td>Publish</td>
 				<th>Edit <span class = 'alert'>(clickable)</span></th>
 			</tr>
 		</thead>
@@ -49,7 +50,8 @@
 				<th>Common name</th>
 				<th>Aliases</th>
 				<th>H x W</th>
-				<th>Edit</th>
+				<td>Publish</td>
+				<th>Edit <span class = 'alert'>(clickable)</span></th>
 			</tr>
 		</tfoot>
 	</table>

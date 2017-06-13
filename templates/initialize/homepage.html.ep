@@ -735,6 +735,9 @@ function populate_details(flower_id)
 		$('#flower_height')
 		.val(flower['height']);
 
+		$('#flower_publish')
+		.val(flower['publish']);
+
 		$('#flower_width')
 		.val(flower['width']);
 
@@ -1158,6 +1161,7 @@ function submit_details()
 			attribute_list:		attribute_list.join(joiner),
 			common_name:		$('#flower_common_name').val(),
 			flower_height:		$('#flower_height').val(),
+			flower_publish:		$('#flower_publish').val(),
 			flower_width:		$('#flower_width').val(),
 			image_list:			image_list.join(joiner),
 			note_list:			note_list.join(joiner),
