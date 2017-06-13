@@ -119,26 +119,31 @@ sub test_attributes
 	# 4: Validate the data in attributes.csv.
 	# Prepare flowers.
 
-	my(%common_names);
+	my($common_name, %common_names);
+	my(%got_attributes);
 
 	for my $line (@$flowers)
 	{
-		$common_names{$$line{common_name} } = 1;
+		$common_name					= $$line{common_name};
+		$common_names{$common_name} 	= 1;
+		$got_attributes{$common_name}	= {};
 	}
 
 	# Prepare ranges.
 
 	my(%expected_attributes);
 
-	for my $type (keys %$expected_attribute_types)
+	for my $name (keys %$expected_attribute_types)
 	{
-		$expected_attributes{$type}		= {};
-		$expected_attributes{$type}{$_} = 1 for (split(/, /, ${$$expected_attribute_types{$type} }[1]));
+		$expected_attributes{$name}				= {};
+		$expected_attributes{$name}{$_} 		= 1 for (split(/, /, ${$$expected_attribute_types{$name} }[1]));
+		$got_attributes{$common_name}{$name}	= 0;
 	}
+
+	# Test attributes.csv.
 
 	my($count) = 0;
 
-	my($common_name);
 	my($expected_format);
 	my($name);
 	my($range);
@@ -151,12 +156,24 @@ sub test_attributes
 		$name				= $$line{attribute_name};
 		$expected_format	= $$expected_attribute_types{$name};
 
+		$got_attributes{$common_name}{$name}++;
+
 		ok($expected_attributes{$name}, "Attribute '$name'"); $test_count++;
 		ok($common_names{$common_name}, "Attribute '$name', common_name '$common_name' ok"); $test_count++;
 
 		for $range (split(/, /, $$line{range}) )
 		{
 			ok($expected_attributes{$name}{$range}, "Attribute '$name', range '$range' ok"); $test_count++;
+		}
+	}
+
+	# Test counts of attribute types.
+
+	for $common_name (sort keys %got_attributes)
+	{
+		for $name (sort keys %{$got_attributes{$common_name} })
+		{
+			ok ($got_attributes{$common_name}{$name} == 1, "Common name '$common_name', attribute '$name' occurs once"); $test_count++;
 		}
 	}
 
