@@ -5,7 +5,10 @@ use warnings;
 
 # I tried 'require'-ing modules but that did not work.
 
-# Start block 1.
+use WWW::Garden::Design; # For the version #.
+
+use Test::More;
+
 use base;
 use boolean;
 use Config::Tiny;
@@ -42,21 +45,13 @@ use Unicode::Collate;
 use URI::Find::Schemeless;
 use utf8;
 use warnings;
-# End block 1.
-
-use Test::More;
-
-# Start block 2.
-use WWW::Garden::Design; # For the version #.
-# End block 2.
 
 # ----------------------
 
 pass('All external modules loaded');
 
-# Start block 3.
 my(@modules) = qw
-(
+/
 	base
 	boolean
 	Config::Tiny
@@ -93,13 +88,9 @@ my(@modules) = qw
 	URI::Find::Schemeless
 	utf8
 	warnings
-	Test::More
-);
-# End block 3.
+/;
 
-# Start block 4.
 diag "Testing WWW::Garden::Design V $WWW::Garden::Design::VERSION";
-# End block 4.
 
 for my $module (@modules)
 {
