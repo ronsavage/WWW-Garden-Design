@@ -294,7 +294,7 @@ sub as_html
 
 		for (@{$$flower{attributes} })
 		{
-			$native = $$_{range} if ($$_{name} eq 'native');
+			$native = $$_{range} if ($$_{name} eq 'Native');
 		}
 
 		for my $key (sort{$columns{$a}{order} <=> $columns{$b}{order} } keys %columns)

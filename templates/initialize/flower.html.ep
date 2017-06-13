@@ -15,11 +15,11 @@
 			<td>
 				<table class = 'table_margin_auto'>
 					<tr>
-						<td>Common name:</td>
+						<td>Common name: <span class = 'alert'>*</span></td>
 						<td align = 'left'><input id = 'flower_common_name' name = 'flower_common_name' type = 'text' size = '50' maxlength = '100'></td>
 					</tr>
 					<tr>
-						<td>Scientific name:</td>
+						<td>Scientific name: <span class = 'alert'>*</span></td>
 						<td align = 'left'><input id = 'flower_scientific_name' name = 'flower_scientific_name' type = 'text' size = '50' maxlength = '100'></td>
 					</tr>
 					<tr>
@@ -35,7 +35,10 @@
 						<td align = 'left'><input id = 'flower_width' name = 'flower_width' type = 'text' size = '10'></td>
 					</tr>
 					<tr>
-						<td>
+						<td colspan = '2'><span class = 'alert'>*</span> indicates a mandatory field</td>
+					</tr>
+					<tr>
+						<td colspan = '2'>
 							<br /><br />
 						</td>
 					</tr>

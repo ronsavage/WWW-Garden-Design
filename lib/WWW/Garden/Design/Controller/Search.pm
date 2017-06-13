@@ -92,11 +92,11 @@ sub format
 	{
 		$count++;
 
-		# Find which of the flower's attributes is 'native'.
+		# Find which of the flower's attributes is 'Native'.
 
 		for $attribute (@{$$item{attributes} })
 		{
-			$native = $$attribute{range} if ($$attribute{name} eq 'native');
+			$native = $$attribute{range} if ($$attribute{name} eq 'Native');
 		}
 
 		# Note: Every time you add a column, you must update:

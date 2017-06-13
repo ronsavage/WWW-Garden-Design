@@ -43,8 +43,8 @@ sub build_check_boxes
 } # End of build_check_boxes.
 
 # -----------------------------------------------
-#	attributes['native']		= ['No', 'Yes', 'Unknown'];
-#	attributes['sun_tolerance']	= ['Full_sun', 'Part_shade', 'Shade', 'Unknown'];
+#	attributes['Native']		= ['No', 'Yes', 'Unknown'];
+#	attributes['Sun tolerance']	= ['Full_sun', 'Part_shade', 'Shade', 'Unknown'];
 
 sub build_js_for_attributes
 {
