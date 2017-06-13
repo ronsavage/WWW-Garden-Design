@@ -17,30 +17,30 @@ use WWW::Garden::Design::Util::Filer;
 
 # ------------------------------------------------
 
-sub test_flower_locations
+sub test_object_locations
 {
 	my($filer, $validator, $validation, $test_count) = @_;
 
-	# 1: Read flowers.csv in order to later validate the common_name column of flower_locations.csv.
+	# 1: Read objects.csv in order to later validate the name column of object_locations.csv.
 
-	my(%flowers);
+	my(%objects);
 
-	my($path)					= "$FindBin::Bin/../data/flowers.csv";
-	my($flowers)				= $filer -> read_csv_file($path);
-	$flowers{$$_{common_name} }	= 1 for @$flowers;
+	my($path)				= "$FindBin::Bin/../data/objects.csv";
+	my($objects)			= $filer -> read_csv_file($path);
+	$objects{$$_{name} }	= 1 for @$objects;
 
-	# 2: Read flower_locations.csv.
+	# 2: Read object_locations.csv.
 
-	my($table_name)			= 'flower_locations';
-	$path					=~ s/flowers/$table_name/;
-	my($flower_locations)	= $filer -> read_csv_file($path);
+	my($table_name)			= 'object_locations';
+	$path					=~ s/objects/$table_name/;
+	my($object_locations)	= $filer -> read_csv_file($path);
 
 	# 2: Read properties.csv.
 
 	my(%properties);
 
 	$table_name				= 'properties';
-	$path					=~ s/flower_locations/$table_name/;
+	$path					=~ s/object_locations/$table_name/;
 	my($properties)			= $filer -> read_csv_file($path);
 	$properties{$$_{name} }	= 1 for @$properties;
 
@@ -53,10 +53,10 @@ sub test_flower_locations
 	my($gardens)				= $filer -> read_csv_file($path);
 	$gardens{$$_{garden_name} }	= 1 for @$gardens;
 
-	# 3: Validate the headings in flower_locations.csv.
+	# 3: Validate the headings in object_locations.csv.
 
-	my(@expected_headings)	= sort(qw/common_name property_name garden_name xy/);
-	my(@got_headings)		= sort keys %{$$flower_locations[0]};
+	my(@expected_headings)	= sort(qw/name property_name garden_name xy/);
+	my(@got_headings)		= sort keys %{$$object_locations[0]};
 
 	my($result);
 
@@ -71,23 +71,23 @@ sub test_flower_locations
 		ok($result == 1, "Heading '$expected_headings[$i]' ok"); $test_count++;
 	}
 
-	# 4: Validate the data in flower_locations.csv.
+	# 4: Validate the data in object_locations.csv.
 
-	my($common_name);
 	my($garden_name);
+	my($name);
 	my($property_name);
 
-	for my $line (@$flower_locations)
+	for my $line (@$object_locations)
 	{
-		# Check common names.
+		# Check names.
 
-		$common_name = $$line{common_name};
+		$name = $$line{name};
 
-		ok($flowers{$common_name}, "Common name '$common_name'. Name present in flowers.csv"); $test_count++;
+		ok($objects{$name}, "Name '$name'. Name present in objects.csv"); $test_count++;
 
 		for my $column (@expected_headings)
 		{
-			ok(length($$line{$column}) > 0, "Common name '$common_name', value '$$line{$column}' ok"); $test_count++;
+			ok(length($$line{$column}) > 0, "Name: '$name', value: '$$line{$column}' ok"); $test_count++;
 		}
 
 		# Check property names.
@@ -105,7 +105,7 @@ sub test_flower_locations
 
 	return $test_count;
 
-} # End of test_flower_locations.
+} # End of test_object_locations.
 
 # ------------------------------------------------
 
@@ -113,7 +113,7 @@ my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
 my($validator)	= Mojolicious::Validator -> new;
 my($validation)	= $validator -> validation;
-$test_count		= test_flower_locations($filer, $validator, $validation, $test_count);
+$test_count		= test_object_locations($filer, $validator, $validation, $test_count);
 
 print "# Internal test count: $test_count\n";
 
