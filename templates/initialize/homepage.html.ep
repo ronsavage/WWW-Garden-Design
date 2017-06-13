@@ -7,8 +7,9 @@
 	<title>Garden Design</title>
 	<meta http-equiv = 'Content-Type' content = 'text/html; charset = utf-8' />
 
-	<link rel='stylesheet' type='text/css' href='http://127.0.0.1/assets/js/jQuery/jquery-ui-1.12.1/jquery-ui.min.css'>
-	<link rel='stylesheet' type='text/css' href='http://127.0.0.1/assets/js/jQuery/datatables.min.css'>
+	<link rel = 'stylesheet' href = 'http://127.0.0.1/assets/js/jQuery/jquery-ui-1.12.1.custom/jquery-ui.theme.min.css'>
+	<link rel = 'stylesheet' type = 'text/css' href='http://127.0.0.1/assets/js/jQuery/jquery-ui-1.12.1/jquery-ui.min.css'>
+	<link rel = 'stylesheet' type = 'text/css' href='http://127.0.0.1/assets/js/jQuery/datatables.min.css'>
 	<!-- Warning: The next line must not be put after the spectrum line, or the CSS in it fails to work. -->
 	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/css/www/garden/design/homepage.css'>
 	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/spectrum/spectrum.css'>
@@ -735,8 +736,10 @@ function populate_details(flower_id)
 		$('#flower_height')
 		.val(flower['height']);
 
-		$('#flower_publish')
-		.val(flower['publish']);
+		alert('id: ' + '#flower_publish_' + flower['publish']);
+
+		$('#flower_publish_' + flower['publish'])
+		.checkboxradio('value', true);
 
 		$('#flower_width')
 		.val(flower['width']);
