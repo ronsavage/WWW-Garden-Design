@@ -36,7 +36,12 @@
 					</tr>
 					<tr>
 						<td>Publish:</td>
-						<td align = 'left'><input id = 'flower_publish' name = 'flower_publish' type = 'text' size = '10'></td>
+						<td align = 'left'>
+						  <label for = 'flower_publish_yes'>Yes</label>
+						  <input type = 'radio' name = 'flower_publish_yes' id = 'flower_publish_yes'>
+						  <label for = 'flower_publish_no'>No</label>
+						  <input type = 'radio' name = 'flower_publish_no' id = 'flower_publish_no'>
+						</td>
 					</tr>
 					<tr>
 						<td colspan = '2'><span class = 'alert'>*</span> indicates a mandatory field</td>

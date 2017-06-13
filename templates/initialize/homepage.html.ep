@@ -1430,6 +1430,9 @@ $(function()
 
 	$('#search_text')
 	.focus();
+
+	$("input[type='radio']").checkboxradio();
+
 });
 
 </script>
