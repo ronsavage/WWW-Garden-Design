@@ -1,6 +1,5 @@
 #!/usr/bin/env perl
 
-use feature 'say';
 use strict;
 use warnings;
 
@@ -25,7 +24,7 @@ sub fix
 
 	for my $key (sort keys %data)
 	{
-		say "Table: $key. Row count: ", scalar(@{$data{$key} });
+		print "Table: $key. Row count: ", scalar(@{$data{$key} }), "\n";
 	}
 
 	my($file_name) = 'data/attributes.1.csv';

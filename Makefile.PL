@@ -41,7 +41,6 @@ my(%params) =
 		'DBIx::Admin::CreateTable'	=> 2.07,
 		'DBIx::Simple'				=> 1.35,
 		'Encode'					=> 2.55,
-		'feature'					=> 0,
 		'File::Slurper'				=> 0.009,
 		'FindBin'					=> 1.49,
 		'Getopt::Long'				=> 2.42,

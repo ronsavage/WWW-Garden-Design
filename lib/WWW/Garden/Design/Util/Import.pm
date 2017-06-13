@@ -1,6 +1,5 @@
 package WWW::Garden::Design::Util::Import;
 
-use feature 'say';
 use strict;
 use utf8;
 use warnings;

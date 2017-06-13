@@ -1,6 +1,5 @@
 package WWW::Garden::Design::Util::Export;
 
-use feature 'say';
 use strict;
 use utf8;
 use warnings;
