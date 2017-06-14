@@ -988,6 +988,9 @@ function set_garden_fields(i)
 	$('#garden_name')
 	.val(garden_table[i]['name']);
 
+	$('#garden_publish') // In garden_table, do not use 'garden_publish'!
+	.prop('checked', (garden_table[i]['publish'] == 'Yes') ? true : false);
+
 } // End of set_garden_fields.
 
 // -----------------------------------------------
@@ -1357,6 +1360,15 @@ $(function()
 		change: function(event, data)
 		{
 			garden_property_menu_changed(data);
+		}
+	});
+
+	$('#garden_garden_menu')
+	.selectmenu
+	({
+		change: function(event, data)
+		{
+			garden_garden_menu_changed(data);
 		}
 	});
 
