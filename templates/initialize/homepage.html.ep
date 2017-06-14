@@ -1010,9 +1010,12 @@ function set_object_fields(i)
 	$('#color_swatch_chosen')
 	.css('background-color', object_table[i]['hex_color']);
 
+	$('#object_publish')
+	.prop('checked', (object_table[i]['publish'] == 'Yes') ? true : false);
+
 	// Put color in hidden form field for submit.
 
-	$('#real_color')
+	$('#color_chosen')
 	.val(object_table[i]['hex_color']);
 
 } // End of set_object_fields.
@@ -1212,11 +1215,13 @@ function submit_garden()
 	})
 	.done(function(html)
 	{
+//		$('#garden_result_div')
+//		.empty()
+//		.append(html);
+
 		$('#garden_result_div')
 		.empty()
-		.append(html);
-
-		// Does not exist => get_property_gardens();
+		.text('Hi!');
 	})
 	.fail(function(jqxhr, textStatus, error)
 	{
@@ -1224,6 +1229,40 @@ function submit_garden()
 	});
 
 } // End of submit_garden.
+
+// -----------------------------------------------
+
+function submit_object()
+{
+	$.ajax
+	({
+		data:
+		{
+			color_chosen:	$('#color_chosen').val(),
+			color_code:		$('#color_code').prop('checked') ? 'Yes' : 'No',
+			color_name:		$('#color_name').val(),
+			object_name:	$('#object_name').val()
+		},
+		dataType:	'html',
+		method:		'POST',
+		url:		'/AddGarden'
+	})
+	.done(function(html)
+	{
+//		$('#garden_result_div')
+//		.empty()
+//		.append(html);
+
+		$('#garden_result_div')
+		.empty()
+		.text('Hi!');
+	})
+	.fail(function(jqxhr, textStatus, error)
+	{
+		alert('Ajax status: ' + textStatus + ', ' + error);
+	});
+
+} // End of submit_object.
 
 // -----------------------------------------------
 
@@ -1373,10 +1412,11 @@ $(function()
 	({
 		change:				function(color)
 							{
+								$('#color_chosen')
+								.val(color.toHexString() ); // Put color in hidden form field for submit.
+
 								$('#color_swatch_chosen')
 								.css('background-color', color.toHexString() );
-								$('#real_color')
-								.val(color.toHexString() ); // Put color in hidden form field for submit.
 							},
 		color:				'white',
 		preferredFormat:	'hex',
@@ -1420,6 +1460,14 @@ $(function()
 	.submit(function()
 	{
 		submit_garden();
+
+		return false;
+	});
+
+	$('#object_form')
+	.submit(function()
+	{
+		submit_object();
 
 		return false;
 	});

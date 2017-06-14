@@ -16,10 +16,12 @@ sub display
 
 	my($item) =
 	{
-		garden_description		=> $self -> param('garden_description')   || '-',
-		garden_name				=> $self -> param('garden_name'), # No default. See 'if' below.
-		property_description	=> $self -> param('property_description') || '-',
-		property_name			=> $self -> param('property_name'), # No default. See 'if' below.
+		garden_description		=> $self -> param('garden_description')		|| '-',
+		garden_name				=> $self -> param('garden_name')			|| '',
+		garden_publish			=> $self -> param('garden_publish')			|| '',
+		property_description	=> $self -> param('property_description')	|| '-',
+		property_name			=> $self -> param('property_name')			|| '',,
+		property_publish		=> $self -> param('property_publish')		|| '',
 	};
 
 	$self -> app -> log -> debug("param($_) => $$item{$_}") for sort keys %$item;
@@ -28,7 +30,7 @@ sub display
 	{
 		my($defaults) = $self -> app -> defaults;
 
-		$$defaults{db} -> add_garden($item);
+#		$$defaults{db} -> add_garden($item);
 
 		$self -> stash(error => undef);
 	}
