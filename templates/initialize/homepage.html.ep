@@ -736,10 +736,8 @@ function populate_details(flower_id)
 		$('#flower_height')
 		.val(flower['height']);
 
-		alert('id: ' + '#flower_publish_' + flower['publish']);
-
-		$('#flower_publish_' + flower['publish'])
-		.checkboxradio('value', true);
+		$('#flower_publish')
+		.prop('checked', (flower['publish'] == 'Yes') ? true : false);
 
 		$('#flower_width')
 		.val(flower['width']);
@@ -758,8 +756,6 @@ function populate_details(flower_id)
 
 		var tabs = ['attribute', 'note', 'image', 'url'];
 		var vars = ['common_name', 'scientific_name'];
-
-		var id;
 
 		for (var i = 0; i < tabs.length; i++)
 		{
@@ -1163,9 +1159,9 @@ function submit_details()
 			aliases:			$('#flower_aliases').val(),
 			attribute_list:		attribute_list.join(joiner),
 			common_name:		$('#flower_common_name').val(),
-			flower_height:		$('#flower_height').val(),
-			flower_publish:		$('#flower_publish').val(),
-			flower_width:		$('#flower_width').val(),
+			height:				$('#flower_height').val(),
+			publish:			$('#flower_publish').prop('checked') ? 'Yes' : 'No',
+			width:				$('#flower_width').val(),
 			image_list:			image_list.join(joiner),
 			note_list:			note_list.join(joiner),
 			scientific_name:	$('#flower_scientific_name').val(),
@@ -1434,8 +1430,19 @@ $(function()
 	$('#search_text')
 	.focus();
 
-	$("input[type='radio']").checkboxradio();
+	$('#flower_publish').on('mousedown', function()
+	{
+		var flower_publish_id = '#flower_publish';
 
+		// Beware: 'new' is reserved, as in var new = 'x', so use 'now'.
+
+		var old = $(flower_publish_id).prop('checked');
+		var now = (old) ? false : true;
+
+		setTimeout("$('#flower_publish').prop('checked', now);", 200);
+
+//		alert('old: ' + old + '. now: ' + now);
+	});
 });
 
 </script>

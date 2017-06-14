@@ -13,7 +13,7 @@
 			<td colspan = '2'><br /></td>
 		</tr>
 		<tr>
-			<td><br />Name: <span class = 'alert'>*</span></td>
+			<td><br />Name: <span class = 'alert'>*</span> </td>
 			<td align = 'left'><input id = 'object_name' type = 'text' size = '50' maxlength = '100'></td>
 		</tr>
 		<tr>
@@ -51,7 +51,7 @@
 			<td><input type = 'text' class = 'color_spectrum' id = 'color_spectrum' /></div></td>
 		</tr>
 		<tr>
-			<td>Color chosen: <span class = 'alert'>*</span></td>
+			<td>Color chosen: <span class = 'alert'>*</span> </td>
 			<td><div class = 'color_swatch_chosen' id = 'color_swatch_chosen'></div></td>
 		</tr>
 		<tr>

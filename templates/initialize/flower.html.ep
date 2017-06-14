@@ -15,11 +15,11 @@
 			<td>
 				<table class = 'table_margin_auto'>
 					<tr>
-						<td>Common name: <span class = 'alert'>*</span></td>
+						<td>Common name: <span class = 'alert'>*</span> </td>
 						<td align = 'left'><input id = 'flower_common_name' name = 'flower_common_name' type = 'text' size = '50' maxlength = '100'></td>
 					</tr>
 					<tr>
-						<td>Scientific name: <span class = 'alert'>*</span></td>
+						<td>Scientific name: <span class = 'alert'>* </span></td>
 						<td align = 'left'><input id = 'flower_scientific_name' name = 'flower_scientific_name' type = 'text' size = '50' maxlength = '100'></td>
 					</tr>
 					<tr>
@@ -36,11 +36,7 @@
 					</tr>
 					<tr>
 						<td>Publish:</td>
-						<td align = 'left'>
-							<label for = 'flower_publish_Yes'>Yes</label>
-							<input type = 'radio' name = 'flower_publish' id = 'flower_publish_Yes'>
-							<label for = 'flower_publish_No'>No</label>
-							<input type = 'radio' name = 'flower_publish' id = 'flower_publish_No'>
+						<td align = 'left'><input type = 'checkbox' value = '' id = 'flower_publish'/></td>
 						</td>
 					</tr>
 					<tr>
