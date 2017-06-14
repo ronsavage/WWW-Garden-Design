@@ -37,7 +37,6 @@
 					<tr>
 						<td>Publish:</td>
 						<td align = 'left'><input type = 'checkbox' value = '' id = 'flower_publish'/></td>
-						</td>
 					</tr>
 					<tr>
 						<td colspan = '2'><span class = 'alert'>*</span> indicates a mandatory field</td>

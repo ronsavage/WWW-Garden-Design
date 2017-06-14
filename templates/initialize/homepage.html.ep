@@ -1027,6 +1027,9 @@ function set_property_fields(i)
 	$('#property_name')
 	.val(garden_table[i]['property_name']);
 
+	$('#property_publish')
+	.prop('checked', (garden_table[i]['property_publish'] == 'Yes') ? true : false);
+
 } // End of set_property_fields.
 
 // -----------------------------------------------
@@ -1198,8 +1201,10 @@ function submit_garden()
 		{
 			garden_description:		$('#garden_description').val(),
 			garden_name:			$('#garden_name').val(),
+			garden_publish:			$('#garden_publish').prop('checked') ? 'Yes' : 'No',
 			property_description:	$('#property_description').val(),
-			property_name:			$('#property_name').val()
+			property_name:			$('#property_name').val(),
+			property_publish:		$('#property_publish').prop('checked') ? 'Yes' : 'No'
 		},
 		dataType:	'html',
 		method:		'POST',
@@ -1430,19 +1435,9 @@ $(function()
 	$('#search_text')
 	.focus();
 
-	$('#flower_publish').on('mousedown', function()
-	{
-		var flower_publish_id = '#flower_publish';
+	// Warning: Do not use jQuery UI on checkboxes or radio buttons.
+	// There is a myriad of problems, especially related to timing of clicks.
 
-		// Beware: 'new' is reserved, as in var new = 'x', so use 'now'.
-
-		var old = $(flower_publish_id).prop('checked');
-		var now = (old) ? false : true;
-
-		setTimeout("$('#flower_publish').prop('checked', now);", 200);
-
-//		alert('old: ' + old + '. now: ' + now);
-	});
 });
 
 </script>
