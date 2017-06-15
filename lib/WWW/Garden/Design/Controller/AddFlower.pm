@@ -22,35 +22,24 @@ sub display
 
 	$self -> app -> log -> debug('AddFlower.display()');
 
-	my($item) =
-	{
-		aliases			=> $self -> param('aliases')			|| '',
-		attribute_list	=> $self -> param('attribute_list')		|| '',
-		common_name		=> $self -> param('common_name')		|| '',
-		height			=> $self -> param('height')				|| '',
-		image_list		=> $self -> param('image_list')			|| '',
-		note_list		=> $self -> param('note_list')			|| '',
-		publish			=> $self -> param('publish')			|| '',
-		scientific_name	=> $self -> param('scientific_name')	|| '',
-		width			=> $self -> param('width')				|| '',
-		url_list		=> $self -> param('url_list')			|| '',
-	};
+	my(@params)	= qw/aliases attribute_list common_name csrf_token height image_list note_list publish scientific_name width url_list/;
+	my($items)	= {map {($_, $self -> param($_) )} @params};
 
-	$self -> app -> log -> debug("$_ => $$item{$_}") for sort keys %$item;
+	$self -> app -> log -> debug("$_ => $$items{$_}") for sort keys %$items;
 
-	if ($$item{common_name} && $$item{scientific_name})
+	if ($$items{common_name} && $$items{scientific_name})
 	{
 		my($joiner)		= qr/«»/;
 		my($defaults)	= $self -> app -> defaults;
-		my($attributes)	= $self -> process_attributes($joiner, $$item{attribute_list});	# Hashref.
-		my($images)		= $self -> process_images($joiner, $$item{image_list});			# Hashref of arrayrefs.
-		my($notes)		= {map{$_ eq '-' ? '' : $_} split($joiner, $$item{note_list})};	# Hashref.
-		my($urls)		= $self -> process_urls($joiner, $$item{url_list});				# Hashref.
+		my($attributes)	= $self -> process_attributes($joiner, $$items{attribute_list});	# Hashref.
+		my($images)		= $self -> process_images($joiner, $$items{image_list});			# Hashref of arrayrefs.
+		my($notes)		= {map{$_ eq '-' ? '' : $_} split($joiner, $$items{note_list})};	# Hashref.
+		my($urls)		= $self -> process_urls($joiner, $$items{url_list});				# Hashref.
 
-#		$$defaults{db} -> add_flower($item);
+#		$$defaults{db} -> add_flower($items);
 
 		$self -> stash(error	=> undef);
-		$self -> stash(details	=> $self -> format($item) );
+		$self -> stash(details	=> $self -> format($items) );
 	}
 	else
 	{

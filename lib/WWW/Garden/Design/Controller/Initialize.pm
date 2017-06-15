@@ -51,9 +51,12 @@ sub build_js_for_attributes
 	my($self, $type_names, $type_fields)	= @_;
 	my($attribute_elements)					= "\tvar attributes = new Object;\n\n";
 
+	my($temp_name);
+
 	for my $type_name (sort @$type_names)
 	{
-		$attribute_elements .= "\tattributes['$type_name'] = ["
+		$temp_name			= $type_name =~ s/ /_/gr;
+		$attribute_elements	.= "\tattributes['$temp_name'] = ["
 								. join(', ', map{"'$_'"} @{$$type_fields{$type_name} })
 								. "];\n";
 	}

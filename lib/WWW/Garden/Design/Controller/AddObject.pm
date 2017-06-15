@@ -14,22 +14,16 @@ sub display
 
 	$self -> app -> log -> debug('AddObject.display()');
 
-	my($item) =
-	{
-		color_chosen	=> $self -> param('color_chosen')	|| '',
-		color_code		=> $self -> param('color_code')		|| '',
-		color_name		=> $self -> param('color_name')		|| '',
-		object_name		=> $self -> param('object_name')	|| '',
-		object_publish	=> $self -> param('object_publish')	|| '',
-	};
+	my(@params)	= qw/color_chosen color_code color_name object_name object_publish/;
+	my($items)	= {map {($_, $self -> param($_) )} @params};
 
-	$self -> app -> log -> debug("param($_) => $$item{$_}") for sort keys %$item;
+	$self -> app -> log -> debug("param($_) => $$items{$_}") for sort keys %$items;
 
-	if ($$item{color_chosen} && $$item{object_name})
+	if ($$items{color_chosen} && $$items{object_name})
 	{
 		my($defaults) = $self -> app -> defaults;
 
-#		$$defaults{db} -> add_object($item);
+#		$$defaults{db} -> add_object($items);
 
 		$self -> stash(error => undef);
 	}

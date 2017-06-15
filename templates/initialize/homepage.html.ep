@@ -1168,6 +1168,7 @@ function submit_details()
 			aliases:			$('#flower_aliases').val(),
 			attribute_list:		attribute_list.join(joiner),
 			common_name:		$('#flower_common_name').val(),
+			csrf_token:			$('#csrf_token').val(),
 			height:				$('#flower_height').val(),
 			publish:			$('#flower_publish').prop('checked') ? 'Yes' : 'No',
 			width:				$('#flower_width').val(),

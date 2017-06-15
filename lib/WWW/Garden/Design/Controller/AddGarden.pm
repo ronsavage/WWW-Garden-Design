@@ -14,23 +14,16 @@ sub display
 
 	$self -> app -> log -> debug('AddGarden.display()');
 
-	my($item) =
-	{
-		garden_description		=> $self -> param('garden_description')		|| '-',
-		garden_name				=> $self -> param('garden_name')			|| '',
-		garden_publish			=> $self -> param('garden_publish')			|| '',
-		property_description	=> $self -> param('property_description')	|| '-',
-		property_name			=> $self -> param('property_name')			|| '',,
-		property_publish		=> $self -> param('property_publish')		|| '',
-	};
+	my(@params)	= qw/garden_description garden_name garden_publish property_description property_name property_publish/;
+	my($items)	= {map {($_, $self -> param($_) )} @params};
 
-	$self -> app -> log -> debug("param($_) => $$item{$_}") for sort keys %$item;
+	$self -> app -> log -> debug("param($_) => $$items{$_}") for sort keys %$items;
 
-	if ($$item{garden_name} && $$item{property_name})
+	if ($$items{garden_name} && $$items{property_name})
 	{
 		my($defaults) = $self -> app -> defaults;
 
-#		$$defaults{db} -> add_garden($item);
+#		$$defaults{db} -> add_garden($items);
 
 		$self -> stash(error => undef);
 	}
