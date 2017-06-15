@@ -1,46 +1,19 @@
 #!/usr/bin/env perl
 
+use lib 'lib';
 use strict;
 use warnings;
 
-use Mojolicious::Validator;
-
-use Params::Classify 'is_number';
-
 use Test::More;
+
+use WWW::Garden::Design::Util::Validator;
 
 # ------------------------------------------------
 
 my($test_count)	= 0;
-my($validator)	= Mojolicious::Validator -> new;
-my($validation)	= $validator -> validation;
+my($validator)	= WWW::Garden::Design::Util::Validator -> new;
 
-my(@range);
-
-$validator -> add_check
-(
-	range => sub
-	{
-		my($validation, $name, $value, @args) = @_;
-
-		return 1 if ($value !~ /^([^cm]+)(?:c?m){0,1}$/);
-
-		@range = split(/-/, $1);
-
-		return 1 if ($#range > 1);		# 1-2-3 is unaccepatable.
-
-		# A number is acceptable, so return 0!.
-
-		if ($#range == 0)
-		{
-			return ! is_number($range[0]);
-		}
-		else
-		{
-		 	return ! is_number($range[1]);
-		}
-	}
-);
+$validator -> add_attribute_range_check;
 
 my(@data) =
 (
@@ -54,21 +27,22 @@ my(@data) =
 );
 
 my($expected);
+my($infix);
 my($result);
-my($suffix);
 
 for my $line (@data)
 {
 	$expected	= ($$line{height} =~ /z/) ? 0 : 1;
-	$suffix		= ($expected == 0) ? ' using a reversed test' : '';
+	$infix		= $expected ? 'a valid' : 'an invalid';
 	$result		= (length($$line{height}) == 0)
-	|| $validation
+	|| $validator
+	-> validation
 	-> input($line)
 	-> required('height')
 	-> range
 	-> is_valid;
 
-	ok($result == $expected, "Height '$$line{height}' is a valid height$suffix"); $test_count++;
+	ok($result == $expected, "Height '$$line{height}' is $infix height"); $test_count++;
 }
 
 print "# Internal test count: $test_count\n";
