@@ -32,15 +32,19 @@
 		</tr>
 		<tr>
 			<td></td>
-			<td>Choose any one of the following to specify the color of the object's tile.</td>
+			<td>o Choose any one of the next 3 to specify the color of the object's tile.</td>
 		</tr>
 		<tr>
 			<td></td>
-			<td>Color codes are '#' + 6 hex digits.</td>
+			<td>o For color field mis-matches, precedence is top-down.</td>
 		</tr>
 		<tr>
 			<td></td>
-			<td>Auto-complete does not work on this page.</td>
+			<td>o Color codes are '#' + 6 hex digits.</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>o Auto-complete does not work on this page.</td>
 		</tr>
 		<tr>
 			<td>Color code:</td>

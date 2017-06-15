@@ -1188,7 +1188,7 @@ function submit_details()
 
 			$('#flower_result_div')
 			.empty()
-			.text('Hi!');
+			.text('Submitted flower details');
 	})
 	.fail(function(jqxhr, textStatus, error)
 	{
@@ -1224,7 +1224,7 @@ function submit_garden()
 
 		$('#garden_result_div')
 		.empty()
-		.text('Hi!');
+		.text('Submitted garden details');
 	})
 	.fail(function(jqxhr, textStatus, error)
 	{
@@ -1242,23 +1242,24 @@ function submit_object()
 		data:
 		{
 			color_chosen:	$('#color_chosen').val(),
-			color_code:		$('#color_code').prop('checked') ? 'Yes' : 'No',
+			color_code:		$('#color_code').val(),
 			color_name:		$('#color_name').val(),
-			object_name:	$('#object_name').val()
+			object_name:	$('#object_name').val(),
+			object_publish:	$('#object_publish').prop('checked') ? 'Yes' : 'No'
 		},
 		dataType:	'html',
 		method:		'POST',
-		url:		'/AddGarden'
+		url:		'/AddObject'
 	})
 	.done(function(html)
 	{
-//		$('#garden_result_div')
+//		$('#object_result_div')
 //		.empty()
 //		.append(html);
 
-		$('#garden_result_div')
+		$('#object_result_div')
 		.empty()
-		.text('Hi!');
+		.text('Submitted object details');
 	})
 	.fail(function(jqxhr, textStatus, error)
 	{
