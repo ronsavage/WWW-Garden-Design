@@ -14,8 +14,7 @@ sub display
 
 	$self -> app -> log -> debug('AddGarden.display()');
 
-	my(@params)	= qw/garden_description garden_name garden_publish property_description property_name property_publish/;
-	my($items)	= {map {($_, $self -> param($_) )} @params};
+	my($items) = $self->req->params->to_hash;
 
 	$self -> app -> log -> debug("param($_) => $$items{$_}") for sort keys %$items;
 

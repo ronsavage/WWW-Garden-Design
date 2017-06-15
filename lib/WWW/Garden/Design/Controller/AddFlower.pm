@@ -15,6 +15,7 @@ use utf8;
 our $VERSION = '0.95';
 
 # -----------------------------------------------
+# https://github.com/kraih/mojo/wiki/Request-data.
 
 sub display
 {
@@ -22,8 +23,7 @@ sub display
 
 	$self -> app -> log -> debug('AddFlower.display()');
 
-	my(@params)	= qw/aliases attribute_list common_name csrf_token height image_list note_list publish scientific_name width url_list/;
-	my($items)	= {map {($_, $self -> param($_) )} @params};
+	my($items) = $self->req->params->to_hash;
 
 	$self -> app -> log -> debug("$_ => $$items{$_}") for sort keys %$items;
 
@@ -90,7 +90,7 @@ sub process_attributes
 
 	for (my($i) = 0; $i < $#attributes; $i += 2)
 	{
-		$key				= $attributes[$i];
+		$key				= $attributes[$i] =~ s/_/ /gr;
 		$$attributes{$key}	= [] if (! $$attributes{$key});
 
 		push @{$$attributes{$key} }, $attributes[$i + 1];

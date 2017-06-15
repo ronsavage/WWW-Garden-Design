@@ -14,8 +14,7 @@ sub display
 
 	$self -> app -> log -> debug('AddObject.display()');
 
-	my(@params)	= qw/color_chosen color_code color_name object_name object_publish/;
-	my($items)	= {map {($_, $self -> param($_) )} @params};
+	my($items) = $self->req->params->to_hash;
 
 	$self -> app -> log -> debug("param($_) => $$items{$_}") for sort keys %$items;
 

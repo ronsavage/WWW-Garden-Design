@@ -297,9 +297,12 @@ $(function()
 
 function build_attribute_id(kind, name, value)
 {
-	// We must allow for range values like 'Full sun' and 'Semi-dwarf'.
+	// We must allow for:
+	// o Names like 'Sun tolerance'.
+	// o Range values like 'Full sun' and 'Semi-dwarf'.
 
-	value = value.replace(/\s|-/g, '_');
+	name	= name.replace(/\s|-/g, '_');
+	value	= value.replace(/\s|-/g, '_');
 
 	return '#' + kind + '_' + name + '_' + value;
 
