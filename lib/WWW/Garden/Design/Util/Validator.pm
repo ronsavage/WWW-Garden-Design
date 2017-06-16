@@ -124,13 +124,6 @@ sub check_equal_to
 			-> equal_to($expected)
 			-> is_valid;
 
-#		$result = $checker
-#		-> validation
-#		-> input({expected => $expected_headings[$i], got => $got_headings[$i]})
-#		-> required('got')
-#		-> equal_to('expected')
-#		-> is_valid;
-
 } # End of check_equal_to.
 
 # -----------------------------------------------
