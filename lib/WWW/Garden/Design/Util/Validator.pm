@@ -49,7 +49,7 @@ sub add_attribute_range_check
 
 	$self -> validator -> add_check
 	(
-		range => sub
+		attribute_range => sub
 		{
 			my($validation, $name, $value, @args) = @_;
 
@@ -79,34 +79,75 @@ sub add_attribute_range_check
 
 # -----------------------------------------------
 
-sub range_check
+sub check_attribute_range
 {
 	my($self, $params, $name) = @_;
 
 	$self -> validation -> input($params);
 
 	return (length($$params{$name}) == 0)
-			|| $self -> validation
-			-> required($name)
-			-> range
+			|| $self
+			-> validation
+			-> required($name, 'trim')
+			-> attribute_range
 			-> is_valid;
 
-} # End of range_check.
+} # End of check_attribute_range.
 
 # -----------------------------------------------
 
-sub required_check
+sub check_member
+{
+	my($self, $params, $name, @set) = @_;
+
+	$self -> validation -> input($params);
+
+	return $self
+			-> validation
+			-> required('publish') # No trim needed.
+			-> in(@set)
+			-> is_valid;
+
+} # End of check_member.
+
+# -----------------------------------------------
+
+sub check_equal_to
+{
+	my($self, $params, $name, $expected) = @_;
+
+	$self -> validation -> input($params);
+
+	return $self
+			-> validation
+			-> required($name, 'trim')
+			-> equal_to($expected)
+			-> is_valid;
+
+#		$result = $checker
+#		-> validation
+#		-> input({expected => $expected_headings[$i], got => $got_headings[$i]})
+#		-> required('got')
+#		-> equal_to('expected')
+#		-> is_valid;
+
+} # End of check_equal_to.
+
+# -----------------------------------------------
+
+sub check_required
 {
 	my($self, $params, $name) = @_;
 
 	$self -> validation -> input($params);
 
 	return (length($$params{$name}) == 0)
-			|| $self -> validation
-			-> required($name)
+			|| $self
+			-> validation
+			-> required($name, 'trim')
 			-> is_valid;
 
-} # End of required_check.
+} # End of check_required.
 
 # -----------------------------------------------
 

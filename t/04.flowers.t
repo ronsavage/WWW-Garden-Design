@@ -21,9 +21,10 @@ use WWW::Garden::Design::Util::Validator;
 
 sub test_flowers
 {
-	my($filer, $validator, $validation, $test_count) = @_;
-	my($path)		= "$FindBin::Bin/../data/flowers.csv";
-	my($flowers)	= $filer -> read_csv_file($path);
+	my($filer, $test_count)	= @_;
+	my($checker)			= WWW::Garden::Design::Util::Validator -> new;
+	my($path)				= "$FindBin::Bin/../data/flowers.csv";
+	my($flowers)			= $filer -> read_csv_file($path);
 
 	# 1: Validate the headings in properties.csv.
 	# The headings must be listed here in the same order as in the file.
@@ -35,18 +36,17 @@ sub test_flowers
 
 	for my $i (0 .. $#expected_headings)
 	{
-		$result = $validation
-		-> input({expected => $expected_headings[$i], got => $got_headings[$i]})
-		-> required('got')
-		-> equal_to('expected')
-		-> is_valid;
+		$result = $checker -> check_equal_to
+					(
+						{expected => $expected_headings[$i], got => $got_headings[$i]},
+						'got',
+						'expected'
+					);
 
 		ok($result == 1, "Heading '$expected_headings[$i]' ok"); $test_count++;
 	}
 
 	# 2: Validate the data in flowers.csv.
-
-	my($checker) = WWW::Garden::Design::Util::Validator -> new;
 
 	$checker -> add_attribute_range_check;
 
@@ -54,10 +54,10 @@ sub test_flowers
 
 	for my $params (@{$filer -> read_csv_file($path)})
 	{
-		# Test common name.
+		# Test common name, and stash for duplicate testing later.
 
 		$common_name	= $$params{common_name};
-		$result			= $checker -> required_check($params, 'common_name');
+		$result			= $checker -> check_required($params, 'common_name');
 
 		ok($result == 1, "Common name '$common_name' ok"); $test_count++;
 
@@ -67,31 +67,25 @@ sub test_flowers
 
 		# Test scientific name.
 
-		$result = $checker -> required_check($params, 'scientific_name');
+		$result = $checker -> check_required($params, 'scientific_name');
 
 		ok($result == 1, "Common name '$common_name'. Scientific name '$$params{scientific_name} ok"); $test_count++;
 
 		# Test publish flag.
-		#
-		# Comment out complex test.
-		#$result = $validation
-		#-> required('publish')
-		#-> in('Yes', 'No')
-		#-> is_valid;
-		#
-		#ok($result == 1, "Common name '$common_name'. Publish '$$params{publish} is Yes or No"); $test_count++;
 
-		ok($$params{publish} =~ /^Yes|No$/, "Common name '$common_name'. Publish is Yes or No"); $test_count++;
+		$result = $checker -> check_member($params, 'publish', 'Yes', 'No');
+
+		ok($result  == 1, "Common name '$common_name'. Publish is Yes or No"); $test_count++;
 
 		# Test height.
 
-		$result = $checker -> range_check($params, 'height');
+		$result = $checker -> check_attribute_range($params, 'height');
 
 		ok($result == 1, "Common name '$common_name'. Height '$$params{height}' is ok"); $test_count++;
 
 		# Test width.
 
-		$result = $checker -> range_check($params, 'width');
+		$result = $checker -> check_attribute_range($params, 'width');
 
 		ok($result == 1, "Common name '$common_name'. Width '$$params{width}' is ok"); $test_count++;
 	}
@@ -109,9 +103,7 @@ sub test_flowers
 
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
-my($validator)	= Mojolicious::Validator -> new;
-my($validation)	= $validator -> validation;
-$test_count		= test_flowers($filer, $validator, $validation, $test_count);
+$test_count		= test_flowers($filer, $test_count);
 
 print "# Internal test count: $test_count\n";
 

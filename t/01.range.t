@@ -38,7 +38,7 @@ for my $params (@data)
 	$infix		= $expected ? 'a valid' : 'an invalid';
 	$message	= "Height '$$params{height}' is $infix height";
 
-	ok($checker -> range_check($params, 'height') == $expected, $message);
+	ok($checker -> check_attribute_range($params, 'height') == $expected, $message);
 }
 
 print "# Internal test count: $test_count\n";
