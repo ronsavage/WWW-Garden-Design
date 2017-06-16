@@ -51,6 +51,9 @@ sub add_attribute_range_check
 		{
 			my($validation, $name, $value, @args) = @_;
 
+			# Return 0 for success, 1 for error!
+			# Warning: The test will fail if (length($value) == 0)!
+
 			return 1 if ($value !~ /^([^cm]+)(?:c?m){0,1}$/);
 
 			my(@range) = split(/-/, $1);

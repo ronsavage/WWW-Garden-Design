@@ -35,12 +35,12 @@ for my $line (@data)
 	$expected	= ($$line{height} =~ /z/) ? 0 : 1;
 	$infix		= $expected ? 'a valid' : 'an invalid';
 	$result		= (length($$line{height}) == 0)
-	|| $validator
-	-> validation
-	-> input($line)
-	-> required('height')
-	-> range
-	-> is_valid;
+					|| $validator
+					-> validation
+					-> input($line)
+					-> required('height')
+					-> range
+					-> is_valid;
 
 	ok($result == $expected, "Height '$$line{height}' is $infix height"); $test_count++;
 }
