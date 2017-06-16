@@ -62,7 +62,7 @@ sub add_attribute_range_check
 
 			return 1 if ($#range > 1);		# 1-2-3 is unaccepatable.
 
-			# A number is acceptable, so return 0!.
+			# A number is acceptable, so return 0!
 
 			if ($#range == 0)
 			{
@@ -70,7 +70,7 @@ sub add_attribute_range_check
 			}
 			else
 			{
-			 	return ! is_number($range[1]);
+				return ! (is_number($range[0]) && is_number($range[1]) );
 			}
 		}
 	);
@@ -128,7 +128,7 @@ sub check_equal_to
 
 # -----------------------------------------------
 
-sub check_required
+sub check_optional
 {
 	my($self, $params, $name) = @_;
 
@@ -136,6 +136,21 @@ sub check_required
 
 	return (length($$params{$name}) == 0)
 			|| $self
+			-> validation
+			-> optional($name)
+			-> is_valid;
+
+} # End of check_optional.
+
+# -----------------------------------------------
+
+sub check_required
+{
+	my($self, $params, $name) = @_;
+
+	$self -> validation -> input($params);
+
+	return $self
 			-> validation
 			-> required($name, 'trim')
 			-> is_valid;

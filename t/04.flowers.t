@@ -71,6 +71,12 @@ sub test_flowers
 
 		ok($result == 1, "Common name '$common_name'. Scientific name '$$params{scientific_name} ok"); $test_count++;
 
+		# Test aliases.
+
+		$result = $checker -> check_optional($params, 'aliases');
+
+		ok($result == 1, "Common name '$common_name'. Aliases '$$params{aliases} ok"); $test_count++;
+
 		# Test publish flag.
 
 		$result = $checker -> check_member($params, 'publish', ['Yes', 'No']);

@@ -32,14 +32,14 @@ my($message);
 
 for my $params (@data)
 {
-	$test_count++;
-
 	$expected	= ($$params{height} =~ /z/) ? 0 : 1;
 	$infix		= $expected ? 'a valid' : 'an invalid';
 	$message	= "Height '$$params{height}' is $infix height";
 
-	ok($checker -> check_attribute_range($params, 'height') == $expected, $message);
+	ok($checker -> check_attribute_range($params, 'height') == $expected, $message); $test_count++;
 }
+
+ok($checker -> check_optional({x => ''}, 'x') == 1, 'Length 0 is ok'); $test_count++;
 
 print "# Internal test count: $test_count\n";
 
