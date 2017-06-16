@@ -50,7 +50,7 @@ sub test_flowers
 
 	$checker -> add_attribute_range_check;
 
-	my($common_name, %common_names);
+	my($common_name, %count);
 
 	for my $params (@{$filer -> read_csv_file($path)})
 	{
@@ -61,9 +61,9 @@ sub test_flowers
 
 		ok($result == 1, "Common name '$common_name' ok"); $test_count++;
 
-		$common_names{$common_name} = 0 if (! $common_names{$common_name});
+		$count{$common_name} = 0 if (! $count{$common_name});
 
-		$common_names{$common_name}++;
+		$count{$common_name}++;
 
 		# Test scientific name.
 
@@ -73,7 +73,7 @@ sub test_flowers
 
 		# Test publish flag.
 
-		$result = $checker -> check_member($params, 'publish', 'Yes', 'No');
+		$result = $checker -> check_member($params, 'publish', ['Yes', 'No']);
 
 		ok($result  == 1, "Common name '$common_name'. Publish is Yes or No"); $test_count++;
 
@@ -90,9 +90,9 @@ sub test_flowers
 		ok($result == 1, "Common name '$common_name'. Width '$$params{width}' is ok"); $test_count++;
 	}
 
-	for $common_name (sort keys %common_names)
+	for $common_name (sort keys %count)
 	{
-		ok($common_names{$common_name} == 1, "Common name '$common_name' not duplicated"); $test_count++;
+		ok($count{$common_name} == 1, "Common name '$common_name' not duplicated"); $test_count++;
 	}
 
 	return $test_count;

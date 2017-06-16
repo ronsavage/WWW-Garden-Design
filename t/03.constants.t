@@ -14,15 +14,17 @@ use Test::More;
 use Text::CSV::Encoded;
 
 use WWW::Garden::Design::Util::Filer;
+use WWW::Garden::Design::Util::Validator;
 
 # ------------------------------------------------
 
 sub test_attribute_types
 {
-	my($filer, $validator, $validation, $test_count, $expected_constants) = @_;
-	my($path)				= "$FindBin::Bin/../data/flowers.csv";
-	my($table_name)			= 'constants';
-	$path					=~ s/flowers/$table_name/;
+	my($filer, $test_count, $expected_constants) = @_;
+	my($checker)	= WWW::Garden::Design::Util::Validator -> new;
+	my($path)		= "$FindBin::Bin/../data/flowers.csv";
+	my($table_name)	= 'constants';
+	$path			=~ s/flowers/$table_name/;
 	my($constants)	= $filer -> read_csv_file($path);
 
 	# 1: Validate the headings in constants.csv.
@@ -35,33 +37,37 @@ sub test_attribute_types
 
 	for my $i (0 .. $#expected_headings)
 	{
-		$result = $validation
-		-> input({expected => $expected_headings[$i], got => $got_headings[$i]})
-		-> required('got')
-		-> equal_to('expected')
-		-> is_valid;
+		$result = $checker -> check_equal_to
+					(
+						{expected => $expected_headings[$i], got => $got_headings[$i]},
+						'got',
+						'expected'
+					);
 
 		ok($result == 1, "Heading '$expected_headings[$i]' ok"); $test_count++;
 	}
 
 	# 2: Validate the data in constants.csv.
 
+	my($expected_keys) = [keys %$expected_constants];
+
 	my($expected_format);
 	my($name);
+	my(%required);
 	my($value);
 
-	for my $line (@$constants)
+	@required{@$expected_keys} = 0 x @$expected_keys;
+
+	for my $params (@$constants)
 	{
-		$name				= $$line{name};
-		$value				= $$line{value};
+		$name				= $$params{name};
+		$value				= $$params{value};
 		$expected_format	= $$expected_constants{$name};
+		$required{$name}	= 1;
 
-		ok($expected_format, "Constant '$name'"); $test_count++;
+		$result = $checker -> check_member($params, 'name', $expected_keys);
 
-		if (! $expected_format)
-		{
-			BAIL_OUT('No point continuing when the above test fails');
-		}
+		ok($result == 1, "Constant '$name'"); $test_count++;
 
 		if ($expected_format eq 'Integer')
 		{
@@ -71,6 +77,11 @@ sub test_attribute_types
 		{
 			ok(length($value) > 0, "Constant '$value' ok"); $test_count++;
 		}
+	}
+
+	for $name (sort @$expected_keys)
+	{
+		ok($required{$name} == 1, "Name '$name' not duplicated and not missing"); $test_count++;
 	}
 
 	return $test_count;
@@ -112,9 +123,7 @@ my($expected_constants) =
 };
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
-my($validator)	= Mojolicious::Validator -> new;
-my($validation)	= $validator -> validation;
-$test_count		= test_attribute_types($filer, $validator, $validation, $test_count, $expected_constants);
+$test_count		= test_attribute_types($filer, $test_count, $expected_constants);
 
 print "# Internal test count: $test_count\n";
 

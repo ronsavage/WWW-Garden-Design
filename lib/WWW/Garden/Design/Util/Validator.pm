@@ -98,14 +98,14 @@ sub check_attribute_range
 
 sub check_member
 {
-	my($self, $params, $name, @set) = @_;
+	my($self, $params, $name, $set) = @_;
 
 	$self -> validation -> input($params);
 
 	return $self
 			-> validation
-			-> required('publish') # No trim needed.
-			-> in(@set)
+			-> required($name, 'trim')
+			-> in(@$set)
 			-> is_valid;
 
 } # End of check_member.

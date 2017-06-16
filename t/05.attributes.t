@@ -60,11 +60,6 @@ sub test_attribute_types
 
 		ok($expected_format, "Attribute type '$name'"); $test_count++;
 
-		if (! $expected_format)
-		{
-			BAIL_OUT('No point continuing when the above test fails');
-		}
-
 		if ($$expected_format[0] eq 'Integer')
 		{
 			ok($sequence =~ /^[0-9]{1,3}$/, "Attribute type sequence '$sequence' ok"); $test_count++;
