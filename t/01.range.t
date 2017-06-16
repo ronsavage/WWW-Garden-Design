@@ -11,9 +11,9 @@ use WWW::Garden::Design::Util::Validator;
 # ------------------------------------------------
 
 my($test_count)	= 0;
-my($validator)	= WWW::Garden::Design::Util::Validator -> new;
+my($checker)	= WWW::Garden::Design::Util::Validator -> new;
 
-$validator -> add_attribute_range_check;
+$checker -> add_attribute_range_check;
 
 my(@data) =
 (
@@ -28,21 +28,17 @@ my(@data) =
 
 my($expected);
 my($infix);
-my($result);
+my($message);
 
-for my $line (@data)
+for my $params (@data)
 {
-	$expected	= ($$line{height} =~ /z/) ? 0 : 1;
-	$infix		= $expected ? 'a valid' : 'an invalid';
-	$result		= (length($$line{height}) == 0)
-					|| $validator
-					-> validation
-					-> input($line)
-					-> required('height')
-					-> range
-					-> is_valid;
+	$test_count++;
 
-	ok($result == $expected, "Height '$$line{height}' is $infix height"); $test_count++;
+	$expected	= ($$params{height} =~ /z/) ? 0 : 1;
+	$infix		= $expected ? 'a valid' : 'an invalid';
+	$message	= "Height '$$params{height}' is $infix height";
+
+	ok($checker -> range_check($params, 'height') == $expected, $message);
 }
 
 print "# Internal test count: $test_count\n";

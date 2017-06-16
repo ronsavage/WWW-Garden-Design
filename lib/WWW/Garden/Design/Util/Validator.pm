@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
+use Data::Dumper::Concise; # For Dumper().
+
 use Mojolicious::Validator;
 
 use Moo;
@@ -74,6 +76,37 @@ sub add_attribute_range_check
 	);
 
 } # End of add_attribute_range_check.
+
+# -----------------------------------------------
+
+sub range_check
+{
+	my($self, $params, $name) = @_;
+
+	$self -> validation -> input($params);
+
+	return (length($$params{$name}) == 0)
+			|| $self -> validation
+			-> required($name)
+			-> range
+			-> is_valid;
+
+} # End of range_check.
+
+# -----------------------------------------------
+
+sub required_check
+{
+	my($self, $params, $name) = @_;
+
+	$self -> validation -> input($params);
+
+	return (length($$params{$name}) == 0)
+			|| $self -> validation
+			-> required($name)
+			-> is_valid;
+
+} # End of required_check.
 
 # -----------------------------------------------
 
