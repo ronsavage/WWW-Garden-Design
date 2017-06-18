@@ -96,6 +96,22 @@ sub check_attribute_range
 
 # -----------------------------------------------
 
+sub check_equal_to
+{
+	my($self, $params, $name, $expected) = @_;
+
+	$self -> validation -> input($params);
+
+	return $self
+			-> validation
+			-> required($name, 'trim')
+			-> equal_to($expected)
+			-> is_valid;
+
+} # End of check_equal_to.
+
+# -----------------------------------------------
+
 sub check_member
 {
 	my($self, $params, $name, $set) = @_;
@@ -112,19 +128,13 @@ sub check_member
 
 # -----------------------------------------------
 
-sub check_equal_to
+sub check_natural_number
 {
-	my($self, $params, $name, $expected) = @_;
+	my($self, $params, $name) = @_;
 
-	$self -> validation -> input($params);
+	return ( (length($$params{$name}) == 0) || ($$params{$name} !~ /^[0-9]+$/) );
 
-	return $self
-			-> validation
-			-> required($name, 'trim')
-			-> equal_to($expected)
-			-> is_valid;
-
-} # End of check_equal_to.
+} # End of check_natural_number.
 
 # -----------------------------------------------
 

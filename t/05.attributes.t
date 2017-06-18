@@ -7,19 +7,19 @@ use Data::Dumper::Concise; # For Dumper().
 
 use FindBin;
 
-use Mojolicious::Validator;
-
 use Test::More;
 
 use Text::CSV::Encoded;
 
 use WWW::Garden::Design::Util::Filer;
+use WWW::Garden::Design::Util::Validator;
 
 # ------------------------------------------------
 
 sub test_attribute_types
 {
-	my($filer, $validator, $validation, $test_count, $expected_attribute_types) = @_;
+	my($filer, $test_count, $expected_attribute_types) = @_;
+	my($checker)			= WWW::Garden::Design::Util::Validator -> new;
 	my($path)				= "$FindBin::Bin/../data/flowers.csv";
 	my($table_name)			= 'attribute_types';
 	$path					=~ s/flowers/$table_name/;
@@ -35,37 +35,40 @@ sub test_attribute_types
 
 	for my $i (0 .. $#expected_headings)
 	{
-		$result = $validation
-		-> input({expected => $expected_headings[$i], got => $got_headings[$i]})
-		-> required('got')
-		-> equal_to('expected')
-		-> is_valid;
+		$result = $checker -> check_equal_to
+					(
+						{expected => $expected_headings[$i], got => $got_headings[$i]},
+						'got',
+						'expected'
+					);
 
 		ok($result == 1, "Heading '$expected_headings[$i]' ok"); $test_count++;
 	}
 
 	# 2: Validate the data in attribute_types.csv.
 
+	my($expected_keys) = [keys %$expected_attribute_types];
+
 	my($expected_format);
 	my($name);
 	my($range);
 	my($sequence);
 
-	for my $line (@$attributes_types)
+	for my $params (@$attributes_types)
 	{
-		$range				= $$line{range};
-		$sequence			= $$line{sequence};
-		$name				= $$line{name};
+		$range				= $$params{range};
+		$sequence			= $$params{sequence};
+		$name				= $$params{name};
 		$expected_format	= $$expected_attribute_types{$name};
 
-		ok($expected_format, "Attribute type '$name'"); $test_count++;
+		ok($checker -> check_member($params, 'name', $expected_keys), "Attribute type '$name'"); $test_count++;
 
 		if ($$expected_format[0] eq 'Integer')
 		{
-			ok($sequence =~ /^[0-9]{1,3}$/, "Attribute type sequence '$sequence' ok"); $test_count++;
+			ok($checker -> check_natural_number($params, 'sequence') == 1, "Attribute type sequence '$sequence' ok"); $test_count++;
 		}
 
-		ok($range eq $$expected_format[1], "Attribute type range '$range' ok"); $test_count++;
+		ok($checker -> check_member($params, 'range', $expected_keys), "Attribute type range '$range' ok"); $test_count++;
 	}
 
 	return $test_count;
@@ -76,7 +79,8 @@ sub test_attribute_types
 
 sub test_attributes
 {
-	my($filer, $validator, $validation, $test_count, $expected_attribute_types) = @_;
+	my($filer, $test_count, $expected_attribute_types) = @_;
+	my($checker)			= WWW::Garden::Design::Util::Validator -> new;
 
 	# 1: Read flowers.csv in order to later validate the common_name column of attributes.csv.
 
@@ -102,17 +106,20 @@ sub test_attributes
 
 	for my $i (0 .. $#expected_headings)
 	{
-		$result = $validation
-		-> input({expected => $expected_headings[$i], got => $got_headings[$i]})
-		-> required('got')
-		-> equal_to('expected')
-		-> is_valid;
+		$result = $checker -> check_equal_to
+					(
+						{expected => $expected_headings[$i], got => $got_headings[$i]},
+						'got',
+						'expected'
+					);
 
 		ok($result == 1, "Heading '$expected_headings[$i]' ok"); $test_count++;
 	}
 
 	# 4: Validate the data in attributes.csv.
 	# Prepare flowers.
+
+	my($expected_keys) = [keys %$expected_attribute_types];
 
 	my($common_name, %common_names);
 	my(%got_attributes);
@@ -153,12 +160,12 @@ sub test_attributes
 
 		$got_attributes{$common_name}{$name}++;
 
-		ok($expected_attributes{$name}, "Attribute '$name'"); $test_count++;
-		ok($common_names{$common_name}, "Attribute '$name', common_name '$common_name' ok"); $test_count++;
+		ok($checker -> check_member($params, 'name', $expected_attributes), "Attribute '$name' ok"); $test_count++;
+		ok($checker -> check_member($params, 'common_name', $common_names, "Attribute '$name', common_name '$common_name' ok"); $test_count++;
 
 		for $range (split(/, /, $$line{range}) )
 		{
-			ok($expected_attributes{$name}{$range}, "Attribute '$name', range '$range' ok"); $test_count++;
+			ok($checker -> check_member($params, 'range', $expected_attributes{$name}), "Attribute '$name', range '$range' ok"); $test_count++;
 		}
 	}
 
@@ -168,7 +175,7 @@ sub test_attributes
 	{
 		for $name (sort keys %{$got_attributes{$common_name} })
 		{
-			ok ($got_attributes{$common_name}{$name} == 1, "Common name '$common_name', attribute '$name' occurs once"); $test_count++;
+			ok($got_attributes{$common_name}{$name} == 1, "Common name '$common_name', attribute '$name' occurs once"); $test_count++;
 		}
 	}
 
@@ -187,10 +194,8 @@ my($expected_attribute_types) =
 };
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
-my($validator)	= Mojolicious::Validator -> new;
-my($validation)	= $validator -> validation;
-$test_count		= test_attribute_types($filer, $validator, $validation, $test_count, $expected_attribute_types);
-$test_count		= test_attributes($filer, $validator, $validation, $test_count, $expected_attribute_types);
+$test_count		= test_attribute_types($filer, $test_count, $expected_attribute_types);
+$test_count		= test_attributes($filer, $test_count, $expected_attribute_types);
 
 print "# Internal test count: $test_count\n";
 

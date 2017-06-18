@@ -71,7 +71,7 @@ sub test_attribute_types
 
 		if ($expected_format eq 'Integer')
 		{
-			ok($value =~ /^[0-9]{1,3}$/, "Constant '$value' ok"); $test_count++;
+			ok($checker -> check_natural_number($params, 'name') == 1, "Constant '$value' ok"); $test_count++;
 		}
 		else
 		{
