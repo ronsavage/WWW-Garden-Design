@@ -113,11 +113,11 @@ sub test_flower_locations
 		ok($checker -> check_key_exists(\%gardens, $garden_name) == 1, "Garden name '$garden_name' ok"); $test_count++;
 	}
 
-	for $property_name (keys %xy)
+	for $property_name (sort keys %xy)
 	{
-		for $garden_name (keys %{$xy{$property_name} })
+		for $garden_name (sort keys %{$xy{$property_name} })
 		{
-			for $xy (keys %{$xy{$property_name}{$garden_name} })
+			for $xy (sort keys %{$xy{$property_name}{$garden_name} })
 			{
 				ok($checker -> check_count($xy{$property_name}{$garden_name}, $xy, 1) == 1, "Property name '$property_name'. Garden name '$garden_name'. XY '$xy' duplicated"); $test_count++;
 			}

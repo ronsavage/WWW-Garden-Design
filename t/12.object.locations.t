@@ -84,7 +84,9 @@ sub test_object_locations
 	{
 		# Check names.
 
-		$name = $$params{name};
+		$name			= $$params{name};
+		$garden_name	= $$params{garden_name};
+		$property_name	= $$params{property_name};
 
 		ok($checker -> check_key_exists(\%objects, $name) == 1, "Object name '$name'. Name present in objects.csv"); $test_count++;
 
@@ -106,24 +108,15 @@ sub test_object_locations
 			ok($checker -> check_natural_number({y => $xy[1]}, 'y') == 1, "Object name '$name', xy '$xy'. Y ok"); $test_count++;
 		}
 
-		# Check property names.
-
-		$property_name = $$params{property_name};
-
 		ok ($checker -> check_key_exists(\%properties, $property_name) == 1, "Property name '$property_name' ok"); $test_count++;
-
-		# Check garden names.
-
-		$garden_name = $$params{garden_name};
-
 		ok ($checker -> check_key_exists(\%gardens, $garden_name) == 1, "Garden name '$garden_name' ok"); $test_count++;
 	}
 
-	for $property_name (keys %xy)
+	for $property_name (sort keys %xy)
 	{
-		for $garden_name (keys %{$xy{$property_name} })
+		for $garden_name (sort keys %{$xy{$property_name} })
 		{
-			for $xy (keys %{$xy{$property_name}{$garden_name} })
+			for $xy (sort keys %{$xy{$property_name}{$garden_name} })
 			{
 				ok($checker -> check_count($xy{$property_name}{$garden_name}, $xy, 1) == 1, "Property name '$property_name'. Garden name '$garden_name'. XY '$xy' duplicated"); $test_count++;
 			}
