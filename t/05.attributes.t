@@ -143,7 +143,7 @@ sub test_attributes
 	for my $name (keys %$expected_attribute_types)
 	{
 		$expected_attributes{$name}				= {};
-		$expected_attributes{$name}{$_} 		= 1 for (split(/, /, ${$$expected_attribute_types{$name} }[1]));
+		$expected_attributes{$name}{$_} 		= 1 for (split(/,\s*/, ${$$expected_attribute_types{$name} }[1]));
 		$got_attributes{$common_name}{$name}	= 0;
 	}
 
@@ -168,7 +168,7 @@ sub test_attributes
 		ok($checker -> check_member($params, 'attribute_name', $expected_keys), "Attribute '$name' ok"); $test_count++;
 		ok($checker -> check_member($params, 'common_name', [keys %common_names]), "Attribute '$name', common_name '$common_name' ok"); $test_count++;
 
-		for $range (split(/, /, $$params{range}) )
+		for $range (split(/,\s*/, $$params{range}) )
 		{
 			# We hae to fiddle 'range' on-the-fly so check_member() does not check (e.g. Basil) for 'Leaf, Stem'.
 

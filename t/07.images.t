@@ -86,7 +86,7 @@ sub test_images
 		$sequence					= $$params{sequence};
 		$sequences{$common_name}	= {} if (! $sequences{$common_name});
 
-		ok($checker -> check_natural_number($params, 'sequence') == 1, "Image sequence '$sequence' ok"); $test_count++;
+		ok($checker -> check_natural_number($params, 'sequence') == 1, "Common name '$common_name'. Image sequence '$sequence' ok"); $test_count++;
 
 		$sequences{$common_name}{$sequence}++;
 	}
@@ -100,7 +100,7 @@ sub test_images
 	{
 		for $sequence (sort keys %{$sequences{$common_name} })
 		{
-			ok($checker -> check_count($sequences{$common_name}, $sequence, 1) == 1, "Sequence '$sequence' is unique within common name '$common_name'"); $test_count++;
+			ok($checker -> check_count($sequences{$common_name}, $sequence, 1) == 1, "Common name '$common_name'. Sequence '$sequence' is unique"); $test_count++;
 		}
 	}
 
