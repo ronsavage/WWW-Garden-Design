@@ -42,15 +42,15 @@ my(%expected)	=
 	gardens			=>   5,
 	images			=> 457,
 	notes			=> 761,
-	properties		=>   3,
 	objects			=>  28,
+	properties		=>   3,
 	urls			=> 194,
 );
 
 my($result);
 my($sql, $set);
 
-for my $table_name(qw/attribute_types attributes colors flowers gardens images notes objects urls/)
+for my $table_name (sort keys %expected)
 {
 	$sql	= "select count(*) as count from $table_name";
 	$set	= $simple -> query($sql) || die $simple -> error;
