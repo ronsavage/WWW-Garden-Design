@@ -8,6 +8,8 @@ use DBIx::Simple;
 
 use Test::More;
 
+use WWW::Garden::Design::Util::Validator;
+
 # ---------------------------------------------
 
 my($test_database)	= 'data/flowers.sqlite';
@@ -29,6 +31,7 @@ my($dbh) = DBI -> connect($$config{dsn}, $$config{username}, $$config{password},
 
 $dbh -> do('PRAGMA foreign_keys = ON') if ($$config{dsn} =~ /SQLite/i);
 
+my($checker)	= WWW::Garden::Design::Util::Validator -> new;
 my($simple)		= DBIx::Simple -> new($dbh);
 my(%expected)	=
 (
@@ -52,7 +55,7 @@ for my $table_name(qw/attribute_types attributes colors flowers gardens images n
 	$set	= $simple -> query($sql) || die $simple -> error;
 	$result	= $set -> hash;
 
-	ok($$result{count} == $expected{$table_name}, "Table: $table_name. Records: $expected{$table_name}. Found: $$result{count}");
+	ok($checker -> check_count($result, 'count', $expected{$table_name}) == 1, "Table: $table_name. Records: $expected{$table_name}. Found: $$result{count}");
 }
 
 done_testing;

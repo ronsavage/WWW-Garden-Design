@@ -68,13 +68,11 @@ sub test_attribute_types
 
 		ok($result == 1, "Constant '$name' ok"); $test_count++;
 
+		ok($checker -> check_required($params, 'value') == 1, "Constant '$value' ok"); $test_count++;
+
 		if ($expected_format eq 'Integer')
 		{
 			ok($checker -> check_natural_number($params, 'value') == 1, "Constant '$value' ok"); $test_count++;
-		}
-		else
-		{
-			ok(length($value) > 0, "Constant '$value' ok"); $test_count++;
 		}
 	}
 
