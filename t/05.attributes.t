@@ -109,15 +109,10 @@ sub test_attributes
 	my(@expected_headings)	= sort ('common_name', 'attribute_name', 'range');
 	my(@got_headings)		= sort keys %{$$attributes[0]};
 
-	print STDERR '# expected_headings: ', Dumper(@expected_headings), ". \n";
-	print STDERR '# got_headings: ', Dumper(@got_headings), ". \n";
-
 	my($result);
 
 	for my $i (0 .. $#expected_headings)
 	{
-		print STDERR "# expected: $expected_headings[$i]. got: $got_headings[$i]. \n";
-
 		$result = $checker -> check_equal_to
 					(
 						{expected => $expected_headings[$i], got => $got_headings[$i]},
@@ -172,12 +167,16 @@ sub test_attributes
 
 		$got_attributes{$common_name}{$name}++;
 
-		ok($checker -> check_member($params, 'name', $expected_attributes{$name}), "Attribute '$name' ok"); $test_count++;
-#		ok($checker -> check_member($params, 'common_name', keys %common_names), "Attribute '$name', common_name '$common_name' ok"); $test_count++;
+		ok($checker -> check_member($params, 'attribute_name', $expected_keys), "Attribute '$name' ok"); $test_count++;
+		ok($checker -> check_member($params, 'common_name', [keys %common_names]), "Attribute '$name', common_name '$common_name' ok"); $test_count++;
 
 		for $range (split(/, /, $$params{range}) )
 		{
-#			ok($checker -> check_member($params, 'range', $expected_attributes{$name}), "Attribute '$name', range '$range' ok"); $test_count++;
+			# We hae to fiddle 'range' on-the-fly so check_member() does not check (e.g. Basil) for 'Leaf, Stem'.
+
+			$$params{range} = $range;
+
+			ok($checker -> check_member($params, 'range', [keys %{$expected_attributes{$name} }]), "Attribute '$name', range '$range' ok"); $test_count++;
 		}
 	}
 
@@ -187,7 +186,7 @@ sub test_attributes
 	{
 		for $name (sort keys %{$got_attributes{$common_name} })
 		{
-#			ok($got_attributes{$common_name}{$name} == 1, "Common name '$common_name', attribute '$name' occurs once"); $test_count++;
+			ok($got_attributes{$common_name}{$name} == 1, "Common name '$common_name', attribute '$name' occurs once"); $test_count++;
 		}
 	}
 
