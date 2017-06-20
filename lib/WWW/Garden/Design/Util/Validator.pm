@@ -51,7 +51,7 @@ sub add_attribute_range_check
 	(
 		attribute_range => sub
 		{
-			my($validation, $name, $value, @args) = @_;
+			my($validation, $topic, $value, @args) = @_;
 
 			# Return 0 for success, 1 for error!
 			# Warning: The test will fail if (length($value) == 0)!
@@ -81,14 +81,14 @@ sub add_attribute_range_check
 
 sub check_attribute_range
 {
-	my($self, $params, $name) = @_;
+	my($self, $params, $topic) = @_;
 
 	$self -> validation -> input($params);
 
-	return (length($$params{$name}) == 0)
+	return (length($$params{$topic}) == 0)
 			|| $self
 			-> validation
-			-> required($name, 'trim')
+			-> required($topic, 'trim')
 			-> attribute_range
 			-> is_valid;
 
@@ -99,9 +99,9 @@ sub check_attribute_range
 
 sub check_count
 {
-	my($self, $hashref, $name, $count) = @_;
+	my($self, $hashref, $topic, $count) = @_;
 
-	return $$hashref{$name} == $count ? 1 : 0;
+	return $$hashref{$topic} == $count ? 1 : 0;
 
 } # End of check_count.
 
@@ -109,13 +109,13 @@ sub check_count
 
 sub check_equal_to
 {
-	my($self, $params, $name, $expected) = @_;
+	my($self, $params, $topic, $expected) = @_;
 
 	$self -> validation -> input($params);
 
 	return $self
 			-> validation
-			-> required($name, 'trim')
+			-> required($topic, 'trim')
 			-> equal_to($expected)
 			-> is_valid;
 
@@ -126,9 +126,9 @@ sub check_equal_to
 
 sub check_key_exists
 {
-	my($self, $hashref, $name) = @_;
+	my($self, $hashref, $topic) = @_;
 
-	return exists($$hashref{$name}) ? 1 : 0;
+	return exists($$hashref{$topic}) ? 1 : 0;
 
 } # End of check_key_exists.
 
@@ -136,13 +136,13 @@ sub check_key_exists
 
 sub check_member
 {
-	my($self, $params, $name, $set) = @_;
+	my($self, $params, $topic, $set) = @_;
 
 	$self -> validation -> input($params);
 
 	return $self
 			-> validation
-			-> required($name, 'trim')
+			-> required($topic, 'trim')
 			-> in(@$set)
 			-> is_valid;
 
@@ -153,8 +153,8 @@ sub check_member
 
 sub check_natural_number
 {
-	my($self, $params, $name)	= @_;
-	my($value)					= $$params{$name};
+	my($self, $params, $topic)	= @_;
+	my($value)					= $$params{$topic};
 
 	return ( (length($value) == 0) || ($value !~ /^[0-9]+$/) ) ? 0 : 1;
 
@@ -164,14 +164,14 @@ sub check_natural_number
 
 sub check_optional
 {
-	my($self, $params, $name) = @_;
+	my($self, $params, $topic) = @_;
 
 	$self -> validation -> input($params);
 
-	return (length($$params{$name}) == 0)
+	return (length($$params{$topic}) == 0)
 			|| $self
 			-> validation
-			-> optional($name)
+			-> optional($topic)
 			-> is_valid;
 
 } # End of check_optional.
@@ -180,13 +180,13 @@ sub check_optional
 
 sub check_required
 {
-	my($self, $params, $name) = @_;
+	my($self, $params, $topic) = @_;
 
 	$self -> validation -> input($params);
 
 	return $self
 			-> validation
-			-> required($name, 'trim')
+			-> required($topic, 'trim')
 			-> is_valid;
 
 } # End of check_required.
