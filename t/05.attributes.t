@@ -18,8 +18,7 @@ use WWW::Garden::Design::Util::Validator;
 
 sub test_attribute_types
 {
-	my($filer, $test_count, $expected_attribute_types) = @_;
-	my($checker)			= WWW::Garden::Design::Util::Validator -> new;
+	my($filer, $checker, $test_count, $expected_attribute_types) = @_;
 	my($path)				= "$FindBin::Bin/../data/flowers.csv";
 	my($table_name)			= 'attribute_types';
 	$path					=~ s/flowers/$table_name/;
@@ -86,8 +85,7 @@ sub test_attribute_types
 
 sub test_attributes
 {
-	my($filer, $test_count, $expected_attribute_types) = @_;
-	my($checker)			= WWW::Garden::Design::Util::Validator -> new;
+	my($filer, $checker, $test_count, $expected_attribute_types) = @_;
 
 	# 1: Read flowers.csv in order to later validate the common_name column of attributes.csv.
 
@@ -203,10 +201,11 @@ my($expected_attribute_types) =
 	'Native'		=> ['Integer', 'Yes, No, Unknown'],
 	'Sun tolerance'	=> ['Integer', 'Full sun, Part shade, Shade, Unknown'],
 };
+my($checker)	= WWW::Garden::Design::Util::Validator -> new;
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
-$test_count		= test_attribute_types($filer, $test_count, $expected_attribute_types);
-$test_count		= test_attributes($filer, $test_count, $expected_attribute_types);
+$test_count		= test_attribute_types($filer, $checker, $test_count, $expected_attribute_types);
+$test_count		= test_attributes($filer, $checker, $test_count, $expected_attribute_types);
 
 print "# Internal test count: $test_count\n";
 

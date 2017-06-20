@@ -7,13 +7,12 @@ use Data::Dumper::Concise; # For Dumper().
 
 use FindBin;
 
-use Mojolicious::Validator;
-
 use Test::More;
 
 use Text::CSV::Encoded;
 
 use WWW::Garden::Design::Util::Filer;
+use WWW::Garden::Design::Util::Validator;
 
 # ------------------------------------------------
 
@@ -148,15 +147,14 @@ sub test_properties
 
 # ------------------------------------------------
 
+my($checker)	= WWW::Garden::Design::Util::Validator -> new;
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
-my($validator)	= Mojolicious::Validator -> new;
-my($validation)	= $validator -> validation;
 
 my(%property_names);
 
-$test_count	= test_properties($filer, $validator, $validation, $test_count, \%property_names);
-$test_count	= test_gardens($filer, $validator, $validation, $test_count, \%property_names);
+$test_count	= test_properties($filer, $checker, $test_count, \%property_names);
+$test_count	= test_gardens($filer, $checker, $test_count, \%property_names);
 
 print "# Internal test count: $test_count\n";
 

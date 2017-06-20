@@ -21,10 +21,9 @@ use WWW::Garden::Design::Util::Validator;
 
 sub test_flowers
 {
-	my($filer, $test_count)	= @_;
-	my($checker)			= WWW::Garden::Design::Util::Validator -> new;
-	my($path)				= "$FindBin::Bin/../data/flowers.csv";
-	my($flowers)			= $filer -> read_csv_file($path);
+	my($filer, $checker, $test_count) = @_;
+	my($path)		= "$FindBin::Bin/../data/flowers.csv";
+	my($flowers)	= $filer -> read_csv_file($path);
 
 	# 1: Validate the headings in properties.csv.
 	# The headings must be listed here in the same order as in the file.
@@ -107,9 +106,10 @@ sub test_flowers
 
 # ------------------------------------------------
 
+my($checker)	= WWW::Garden::Design::Util::Validator -> new;
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
-$test_count		= test_flowers($filer, $test_count);
+$test_count		= test_flowers($filer, $checker, $test_count);
 
 print "# Internal test count: $test_count\n";
 

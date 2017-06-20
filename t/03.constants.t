@@ -20,8 +20,7 @@ use WWW::Garden::Design::Util::Validator;
 
 sub test_attribute_types
 {
-	my($filer, $test_count, $expected_constants) = @_;
-	my($checker)	= WWW::Garden::Design::Util::Validator -> new;
+	my($filer, $checker, $test_count, $expected_constants) = @_;
 	my($path)		= "$FindBin::Bin/../data/flowers.csv";
 	my($table_name)	= 'constants';
 	$path			=~ s/flowers/$table_name/;
@@ -121,9 +120,10 @@ my($expected_constants) =
 	x_offset				=> 'Integer',
 	y_offset				=> 'Integer',
 };
+my($checker)	= WWW::Garden::Design::Util::Validator -> new;
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
-$test_count		= test_attribute_types($filer, $test_count, $expected_constants);
+$test_count		= test_attribute_types($filer, $checker, $test_count, $expected_constants);
 
 print "# Internal test count: $test_count\n";
 
