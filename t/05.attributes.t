@@ -56,19 +56,26 @@ sub test_attribute_types
 
 	for my $params (@$attributes_types)
 	{
+		$name				= $$params{name};
 		$range				= $$params{range};
 		$sequence			= $$params{sequence};
-		$name				= $$params{name};
 		$expected_format	= $$expected_attribute_types{$name};
 
-		ok($checker -> check_member($params, 'name', $expected_keys), "Attribute type '$name'"); $test_count++;
+		ok($checker -> check_member($params, 'name', $expected_keys), "Attribute type '$name' ok"); $test_count++;
 
 		if ($$expected_format[0] eq 'Integer')
 		{
-			ok($checker -> check_natural_number($params, 'sequence') == 1, "Attribute type sequence '$sequence' ok"); $test_count++;
+			ok($checker -> check_natural_number($params, 'sequence') == 0, "Attribute type '$name'. Sequence '$sequence' ok"); $test_count++;
 		}
 
-		ok($checker -> check_member($params, 'range', $expected_keys), "Attribute type range '$range' ok"); $test_count++;
+		$result = $checker -> check_equal_to
+					(
+						{expected => $$expected_format[1], got => $range},
+						'got',
+						'expected'
+					);
+
+		ok($result == 1, "Attribute type '$name'. Range '$range' ok"); $test_count++;
 	}
 
 	return $test_count;
@@ -102,10 +109,15 @@ sub test_attributes
 	my(@expected_headings)	= sort ('common_name', 'attribute_name', 'range');
 	my(@got_headings)		= sort keys %{$$attributes[0]};
 
+	print STDERR '# expected_headings: ', Dumper(@expected_headings), ". \n";
+	print STDERR '# got_headings: ', Dumper(@got_headings), ". \n";
+
 	my($result);
 
 	for my $i (0 .. $#expected_headings)
 	{
+		print STDERR "# expected: $expected_headings[$i]. got: $got_headings[$i]. \n";
+
 		$result = $checker -> check_equal_to
 					(
 						{expected => $expected_headings[$i], got => $got_headings[$i]},
@@ -150,22 +162,22 @@ sub test_attributes
 	my($name);
 	my($range);
 
-	for my $line (@$attributes)
+	for my $params (@$attributes)
 	{
 		$count++;
 
-		$common_name		= $$line{common_name};
-		$name				= $$line{attribute_name};
+		$common_name		= $$params{common_name};
+		$name				= $$params{attribute_name};
 		$expected_format	= $$expected_attribute_types{$name};
 
 		$got_attributes{$common_name}{$name}++;
 
-		ok($checker -> check_member($params, 'name', $expected_attributes), "Attribute '$name' ok"); $test_count++;
-		ok($checker -> check_member($params, 'common_name', $common_names, "Attribute '$name', common_name '$common_name' ok"); $test_count++;
+		ok($checker -> check_member($params, 'name', $expected_attributes{$name}), "Attribute '$name' ok"); $test_count++;
+#		ok($checker -> check_member($params, 'common_name', keys %common_names), "Attribute '$name', common_name '$common_name' ok"); $test_count++;
 
-		for $range (split(/, /, $$line{range}) )
+		for $range (split(/, /, $$params{range}) )
 		{
-			ok($checker -> check_member($params, 'range', $expected_attributes{$name}), "Attribute '$name', range '$range' ok"); $test_count++;
+#			ok($checker -> check_member($params, 'range', $expected_attributes{$name}), "Attribute '$name', range '$range' ok"); $test_count++;
 		}
 	}
 
@@ -175,7 +187,7 @@ sub test_attributes
 	{
 		for $name (sort keys %{$got_attributes{$common_name} })
 		{
-			ok($got_attributes{$common_name}{$name} == 1, "Common name '$common_name', attribute '$name' occurs once"); $test_count++;
+#			ok($got_attributes{$common_name}{$name} == 1, "Common name '$common_name', attribute '$name' occurs once"); $test_count++;
 		}
 	}
 

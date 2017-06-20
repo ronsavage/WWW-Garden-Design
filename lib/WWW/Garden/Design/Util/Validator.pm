@@ -127,12 +127,14 @@ sub check_member
 } # End of check_member.
 
 # -----------------------------------------------
+# Warning: Returns 1 for invalid!
 
 sub check_natural_number
 {
-	my($self, $params, $name) = @_;
+	my($self, $params, $name)	= @_;
+	my($value)					= $$params{$name};
 
-	return ( (length($$params{$name}) == 0) || ($$params{$name} !~ /^[0-9]+$/) );
+	return ( (length($value) == 0) || ($value !~ /^[0-9]+$/) ) ? 1 : 0;
 
 } # End of check_natural_number.
 
