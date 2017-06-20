@@ -29,7 +29,7 @@ sub test_attribute_types
 	# 1: Validate the headings in constants.csv.
 	# The headings must be listed here in the same order as in the file.
 
-	my(@expected_headings)	= sort('name', 'value');
+	my(@expected_headings)	= sort(qw/name value/);
 	my(@got_headings)		= sort keys %{$$constants[0]};
 
 	my($result);

@@ -27,7 +27,7 @@ sub test_gardens
 	# 1: Validate the headings in gardens.csv.
 	# The headings must be listed here in the same order as in the file.
 
-	my(@expected_headings)	= sort('property_name', 'garden_name', 'description', 'publish');
+	my(@expected_headings)	= sort(qw/property_name garden_name description publish/);
 	my(@got_headings)		= sort keys %{$$gardens[0]};
 
 	my($result);
@@ -60,7 +60,7 @@ sub test_gardens
 				$garden_name	= $$params{garden_name};
 				$property_name	= $$params{property_name};
 
-				ok($checker -> check_exists($property_names, $property_name) == 1, "Property name '$property_name' present in properties.csv ok"); $test_count++;
+				ok($checker -> check_key_exists($property_names, $property_name) == 1, "Property name '$property_name' present in properties.csv ok"); $test_count++;
 
 				$garden_names{$property_name}				= {} if (! $garden_names{$property_name});
 				$garden_names{$property_name}{$garden_name}	= 0 if (! $garden_names{$property_name}{$garden_name});

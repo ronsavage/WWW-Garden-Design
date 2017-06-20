@@ -27,7 +27,7 @@ sub test_attribute_types
 	# 1: Validate the headings in attribute_types.csv.
 	# The headings must be listed here in the same order as in the file.
 
-	my(@expected_headings)	= sort('name', 'sequence', 'range');
+	my(@expected_headings)	= sort(qw/name sequence range/);
 	my(@got_headings)		= sort keys %{$$attributes_types[0]};
 
 	my($result);

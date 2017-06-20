@@ -124,13 +124,13 @@ sub check_equal_to
 # -----------------------------------------------
 # Warning: Returns 1 for valid!
 
-sub check_exists
+sub check_key_exists
 {
 	my($self, $hashref, $name) = @_;
 
 	return exists($$hashref{$name}) ? 1 : 0;
 
-} # End of check_exists.
+} # End of check_key_exists.
 
 # -----------------------------------------------
 

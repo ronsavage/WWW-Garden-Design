@@ -14,12 +14,13 @@ use Test::More;
 use Text::CSV::Encoded;
 
 use WWW::Garden::Design::Util::Filer;
+use WWW::Garden::Design::Util::Validator;
 
 # ------------------------------------------------
 
 sub test_images
 {
-	my($filer, $validator, $validation, $test_count) = @_;
+	my($filer, $checker, $test_count) = @_;
 
 	# 1: Read flowers.csv in order to later validate the common_name column of images.csv.
 
@@ -44,61 +45,62 @@ sub test_images
 
 	for my $i (0 .. $#expected_headings)
 	{
-		$result = $validation
-		-> input({expected => $expected_headings[$i], got => $got_headings[$i]})
-		-> required('got')
-		-> equal_to('expected')
-		-> is_valid;
+		$result = $checker -> check_equal_to
+					(
+						{expected => $expected_headings[$i], got => $got_headings[$i]},
+						'got',
+						'expected'
+					);
 
 		ok($result == 1, "Heading '$expected_headings[$i]' ok"); $test_count++;
 	}
 
 	# 4: Validate the data in images.csv.
 
-	my($common_name);
-	my($file_name, %file_names);
+	my($common_name, %count);
+	my($file_name);
 	my($sequence, %sequences);
 
-	for my $line (@$images)
+	for my $params (@$images)
 	{
 		# Check common names.
 
-		$common_name = $$line{common_name};
+		$common_name = $$params{common_name};
 
-		ok($flowers{$common_name}, "Common name '$common_name'. Name present in flowers.csv"); $test_count++;
+		ok($checker -> check_key_exists(\%flowers, $common_name) == 1, "Common name '$common_name'. Name present in flowers.csv"); $test_count++;
 
 		for my $column (@expected_headings)
 		{
-			ok(length($$line{$column}) > 0, "Common name '$common_name', value '$$line{$column}' ok"); $test_count++;
+			ok($checker -> check_key_exists($params, $column) == 1, "Common name '$common_name', value '$$params{$column}' ok"); $test_count++;
 		}
 
 		# Check file names.
 
-		$file_name				= $$line{file_name};
-		$file_names{$file_name}	= 0 if (! $file_names{$file_name});
+		$file_name			= $$params{file_name};
+		$count{$file_name}	= 0 if (! $count{$file_name});
 
-		$file_names{$file_name}++;
+		$count{$file_name}++;
 
 		# Check sequences.
 
-		$sequence					= $$line{sequence};
+		$sequence					= $$params{sequence};
 		$sequences{$common_name}	= {} if (! $sequences{$common_name});
 
-		ok($sequence =~ /^[0-9]{1,3}$/, "Image sequence '$sequence' ok"); $test_count++;
+		ok($checker -> check_natural_number($params, 'sequence') == 1, "Image sequence '$sequence' ok"); $test_count++;
 
 		$sequences{$common_name}{$sequence}++;
 	}
 
-	for $file_name (sort keys %file_names)
+	for $file_name (sort keys %count)
 	{
-		ok($file_names{$file_name} == 1, "File name '$file_name' not duplicated"); $test_count++;
+		ok($checker -> check_count(\%count, $file_name, 1) == 1, "File name '$file_name' not duplicated"); $test_count++;
 	}
 
 	for $common_name (sort keys %sequences)
 	{
 		for $sequence (sort keys %{$sequences{$common_name} })
 		{
-			ok($sequences{$common_name}{$sequence} == 1, "Sequence '$sequence' is unique within common name '$common_name'"); $test_count++;
+			ok($checker -> check_count($sequences{$common_name}, $sequence, 1) == 1, "Sequence '$sequence' is unique within common name '$common_name'"); $test_count++;
 		}
 	}
 
@@ -108,11 +110,10 @@ sub test_images
 
 # ------------------------------------------------
 
+my($checker)	= WWW::Garden::Design::Util::Validator -> new;
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
-my($validator)	= Mojolicious::Validator -> new;
-my($validation)	= $validator -> validation;
-$test_count		= test_images($filer, $validator, $validation, $test_count);
+$test_count		= test_images($filer, $checker, $test_count);
 
 print "# Internal test count: $test_count\n";
 
