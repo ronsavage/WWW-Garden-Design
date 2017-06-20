@@ -64,7 +64,7 @@ sub test_attribute_types
 
 		if ($$expected_format[0] eq 'Integer')
 		{
-			ok($checker -> check_natural_number($params, 'sequence') == 0, "Attribute type '$name'. Sequence '$sequence' ok"); $test_count++;
+			ok($checker -> check_natural_number($params, 'sequence') == 1, "Attribute type '$name'. Sequence '$sequence' ok"); $test_count++;
 		}
 
 		$result = $checker -> check_equal_to
@@ -184,7 +184,7 @@ sub test_attributes
 	{
 		for $name (sort keys %{$got_attributes{$common_name} })
 		{
-			ok($got_attributes{$common_name}{$name} == 1, "Common name '$common_name', attribute '$name' occurs once"); $test_count++;
+			ok($checker -> check_count($got_attributes{$common_name}, $name, 1) == 1, "Common name '$common_name', attribute '$name' occurs once"); $test_count++;
 		}
 	}
 

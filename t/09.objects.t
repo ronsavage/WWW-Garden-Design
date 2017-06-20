@@ -52,7 +52,7 @@ sub test_objects
 	{
 		$name = $$line{name};
 
-		ok(length($name) > 0, "Value: '$name' ok"); $test_count++;
+		ok(length($name) > 0, "Value '$name' ok"); $test_count++;
 		ok($$line{hex_color} =~ /^#[0-9A-F]{6,6}$/i, "Value: $$line{hex_color} ok"); $test_count++;
 		ok($$line{publish} =~ /^Yes|No$/, "Object name '$name'. Publish is Yes or No"); $test_count++;
 

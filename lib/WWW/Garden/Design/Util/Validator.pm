@@ -95,6 +95,17 @@ sub check_attribute_range
 } # End of check_attribute_range.
 
 # -----------------------------------------------
+# Warning: Returns 1 for valid!
+
+sub check_count
+{
+	my($self, $hashref, $name, $count) = @_;
+
+	return $$hashref{$name} == $count ? 1 : 0;
+
+} # End of check_count.
+
+# -----------------------------------------------
 
 sub check_equal_to
 {
@@ -109,6 +120,17 @@ sub check_equal_to
 			-> is_valid;
 
 } # End of check_equal_to.
+
+# -----------------------------------------------
+# Warning: Returns 1 for valid!
+
+sub check_exists
+{
+	my($self, $hashref, $name) = @_;
+
+	return exists($$hashref{$name}) ? 1 : 0;
+
+} # End of check_exists.
 
 # -----------------------------------------------
 
@@ -127,14 +149,14 @@ sub check_member
 } # End of check_member.
 
 # -----------------------------------------------
-# Warning: Returns 1 for invalid!
+# Warning: Returns 1 for valid!
 
 sub check_natural_number
 {
 	my($self, $params, $name)	= @_;
 	my($value)					= $$params{$name};
 
-	return ( (length($value) == 0) || ($value !~ /^[0-9]+$/) ) ? 1 : 0;
+	return ( (length($value) == 0) || ($value !~ /^[0-9]+$/) ) ? 0 : 1;
 
 } # End of check_natural_number.
 

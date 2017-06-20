@@ -69,7 +69,7 @@ sub test_images
 
 		for my $column (@expected_headings)
 		{
-			ok(length($$line{$column}) > 0, "Common name: '$common_name', value: '$$line{$column}' ok"); $test_count++;
+			ok(length($$line{$column}) > 0, "Common name '$common_name', value '$$line{$column}' ok"); $test_count++;
 		}
 
 		# Check file names.

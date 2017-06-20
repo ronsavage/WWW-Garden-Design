@@ -87,7 +87,7 @@ sub test_object_locations
 
 		for my $column (@expected_headings)
 		{
-			ok(length($$line{$column}) > 0, "Name: '$name', value: '$$line{$column}' ok"); $test_count++;
+			ok(length($$line{$column}) > 0, "Name '$name', value '$$line{$column}' ok"); $test_count++;
 		}
 
 		# Check property names.

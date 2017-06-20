@@ -97,7 +97,7 @@ sub test_flowers
 
 	for $common_name (sort keys %count)
 	{
-		ok($count{$common_name} == 1, "Common name '$common_name' not duplicated"); $test_count++;
+		ok($checker -> check_count(\%count, $common_name, 1) == 1, "Common name '$common_name' not duplicated"); $test_count++;
 	}
 
 	return $test_count;

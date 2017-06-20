@@ -18,7 +18,7 @@ use WWW::Garden::Design::Util::Validator;
 
 sub test_gardens
 {
-	my($filer, $validator, $validation, $test_count, $property_names) = @_;
+	my($filer, $checker, $test_count, $property_names) = @_;
 	my($path)		= "$FindBin::Bin/../data/flowers.csv";
 	my($table_name)	= 'gardens';
 	$path			=~ s/flowers/$table_name/;
@@ -34,11 +34,12 @@ sub test_gardens
 
 	for my $i (0 .. $#expected_headings)
 	{
-		$result = $validation
-		-> input({expected => $expected_headings[$i], got => $got_headings[$i]})
-		-> required('got')
-		-> equal_to('expected')
-		-> is_valid;
+		$result = $checker -> check_equal_to
+					(
+						{expected => $expected_headings[$i], got => $got_headings[$i]},
+						'got',
+						'expected'
+					);
 
 		ok($result == 1, "Heading '$expected_headings[$i]' ok"); $test_count++;
 	}
@@ -48,18 +49,18 @@ sub test_gardens
 	my($garden_name, %garden_names);
 	my($property_name);
 
-	for my $line (@$gardens)
+	for my $params (@$gardens)
 	{
 		for my $column (@expected_headings)
 		{
-			ok(length($$line{$column}) > 0, "Properties column: '$column', value: '$$line{$column}' ok"); $test_count++;
+			ok($checker -> check_required($params, $column) == 1, "Properties column '$column', value '$$params{$column}' ok"); $test_count++;
 
 			if ($column eq 'property_name')
 			{
-				$garden_name	= $$line{garden_name};
-				$property_name	= $$line{property_name};
+				$garden_name	= $$params{garden_name};
+				$property_name	= $$params{property_name};
 
-				ok(exists $$property_names{$property_name}, "Property name '$property_name' present in properties.csv ok"); $test_count++;
+				ok($checker -> check_exists($property_names, $property_name) == 1, "Property name '$property_name' present in properties.csv ok"); $test_count++;
 
 				$garden_names{$property_name}				= {} if (! $garden_names{$property_name});
 				$garden_names{$property_name}{$garden_name}	= 0 if (! $garden_names{$property_name}{$garden_name});
@@ -68,7 +69,7 @@ sub test_gardens
 			}
 			elsif ($column eq 'publish')
 			{
-				ok($$line{$column} =~ /^Yes|No$/, "Garden name '$$line{garden_name}'. Publish is Yes or No"); $test_count++;
+				ok($checker -> check_member($params, 'publish', ['Yes', 'No']), "Garden name '$$params{garden_name}'. Publish is Yes or No"); $test_count++;
 			}
 		}
 	}
@@ -77,7 +78,7 @@ sub test_gardens
 	{
 		for $garden_name (sort keys %{$garden_names{$property_name} })
 		{
-			ok($garden_names{$property_name}{$garden_name} == 1, "Garden name '$garden_name' is unique within property '$property_name'"); $test_count++;
+			ok($checker -> check_count($garden_names{$property_name}, $garden_name, 1) == 1, "Garden name '$garden_name' is unique within property '$property_name'"); $test_count++;
 		}
 	}
 
@@ -89,7 +90,7 @@ sub test_gardens
 
 sub test_properties
 {
-	my($filer, $validator, $validation, $test_count, $property_names) = @_;
+	my($filer, $checker, $test_count, $property_names) = @_;
 	my($path)		= "$FindBin::Bin/../data/flowers.csv";
 	my($table_name) = 'properties';
 	$path			=~ s/flowers/$table_name/;
@@ -105,11 +106,12 @@ sub test_properties
 
 	for my $i (0 .. $#expected_headings)
 	{
-		$result = $validation
-		-> input({expected => $expected_headings[$i], got => $got_headings[$i]})
-		-> required('got')
-		-> equal_to('expected')
-		-> is_valid;
+		$result = $checker -> check_equal_to
+					(
+						{expected => $expected_headings[$i], got => $got_headings[$i]},
+						'got',
+						'expected'
+					);
 
 		ok($result == 1, "Heading '$expected_headings[$i]' ok"); $test_count++;
 	}
@@ -118,19 +120,19 @@ sub test_properties
 
 	my($property_name);
 
-	for my $line (@$properties)
+	for my $params (@$properties)
 	{
 		for my $column (@expected_headings)
 		{
-			ok(length($$line{$column}) > 0, "Properties column: '$column', value: '$$line{$column}' ok"); $test_count++;
+			ok($checker -> check_required($params, $column) == 1, "Properties column '$column', value '$$params{$column}' ok"); $test_count++;
 
 			if ($column eq 'publish')
 			{
-				ok($$line{publish} =~ /^Yes|No$/, "Property name '$$line{name}'. Publish is Yes or No"); $test_count++;
+				ok($checker -> check_member($params, 'publish', ['Yes', 'No']), "Property column '$column', value '$$params{publish}' ok"); $test_count++;
 			}
 		}
 
-		$property_name						= $$line{name};
+		$property_name						= $$params{name};
 		$$property_names{$property_name}	= 0 if (! $$property_names{$property_name});
 
 		$$property_names{$property_name}++;
@@ -138,7 +140,7 @@ sub test_properties
 
 	for $property_name (sort keys %$property_names)
 	{
-		ok($$property_names{$property_name} == 1, "Property name '$property_name' not duplicated"); $test_count++;
+		ok($checker -> check_count($property_names, $property_name, 1) == 1, "Property name '$property_name' not duplicated"); $test_count++;
 	}
 
 	return $test_count;

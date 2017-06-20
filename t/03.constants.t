@@ -70,7 +70,7 @@ sub test_attribute_types
 
 		if ($expected_format eq 'Integer')
 		{
-			ok($checker -> check_natural_number($params, 'value') == 0, "Constant '$value' ok"); $test_count++;
+			ok($checker -> check_natural_number($params, 'value') == 1, "Constant '$value' ok"); $test_count++;
 		}
 		else
 		{
@@ -80,7 +80,7 @@ sub test_attribute_types
 
 	for $name (sort @$expected_keys)
 	{
-		ok($required{$name} == 1, "Name '$name' not duplicated and not missing"); $test_count++;
+		ok($checker -> check_count(\%required, $name, 1) == 1, "Name '$name' not duplicated and not missing"); $test_count++;
 	}
 
 	return $test_count;
