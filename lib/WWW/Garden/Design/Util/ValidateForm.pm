@@ -42,7 +42,7 @@ sub flower_details
 		$$params{status}	= 0;
 		my($joiner)			= $$defaults{joiner};
 		my($attributes)		= $self -> process_flower_attributes($app, $joiner, $$params{attribute_list}, $defaults);
-		my($csrf_ok)		= $self -> process_csrf_token($controller, $params);
+		my($csrf_ok)		= $controller -> session('csrf_token') eq $$params{csrf_token} ? 1 : 0;
 		my($images)			= $self -> process_flower_images($app, $joiner, $$params{image_list});
 		my($notes)			= $self -> process_flower_notes($app, $joiner, $$params{note_list});
 		my($urls)			= $self -> process_flower_urls($app, $joiner, $$params{url_list});
