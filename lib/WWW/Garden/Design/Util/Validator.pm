@@ -110,11 +110,14 @@ sub check_count
 
 sub check_csrf_token
 {
-	my($self, $params) = @_;
+	my($self, $controller, $params) = @_;
 
+	$self -> validation -> csrf_token($controller -> session('csrf_token') );
 	$self -> validation -> input($params);
 
-	return $self -> validation -> csrf_protect;
+	my($output) = $self -> validation -> csrf_protect;
+
+	return $$output{csrf_token} ? 1 : 0;
 
 } # End of check_csrf_token.
 

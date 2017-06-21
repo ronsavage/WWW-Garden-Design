@@ -42,12 +42,22 @@ sub flower_details
 		$$params{status}	= 0;
 		my($joiner)			= $$defaults{joiner};
 		my($attributes)		= $self -> process_flower_attributes($app, $joiner, $$params{attribute_list}, $defaults);
-		my($csrf_token)		= $self -> validator -> check_csrf_token($params);
+		my($csrf_ok)		= $self -> process_csrf_token($controller, $params);
 		my($images)			= $self -> process_flower_images($app, $joiner, $$params{image_list});
 		my($notes)			= $self -> process_flower_notes($app, $joiner, $$params{note_list});
 		my($urls)			= $self -> process_flower_urls($app, $joiner, $$params{url_list});
 
-		$app -> log -> debug("csrf_token => $$params{csrf_token}. Result: " . Dumper($csrf_token) );
+		if ($csrf_ok == 1)
+		{
+			$app -> log -> debug('Validated params: ' . Dumper($self -> validator -> validation -> output) );
+		}
+		else
+		{
+			# Return 0 for success and 1 for failure.
+
+			$$params{message}	= 'Detected apparent CSRF activity';
+			$$params{status}	= 1;
+		}
 	}
 	else
 	{
@@ -60,6 +70,19 @@ sub flower_details
 	return $params;
 
 } # End of flower_details.
+
+# -----------------------------------------------
+# Returns a hashref.
+
+sub process_csrf_token
+{
+	my($self, $controller, $params) = @_;
+
+	$controller -> app -> log -> debug('ValidateForm.process_csrf_token(...)');
+
+	return $self -> validator -> check_csrf_token($controller, $params);
+
+} # End of process_csrf_token.
 
 # -----------------------------------------------
 # Returns a hashref.
