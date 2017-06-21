@@ -24,9 +24,9 @@ sub display
 	$self -> app -> log -> debug('AddFlower.display()');
 
 	my($defaults)	= $self -> app -> defaults;
-	my($params)		= $$defaults{validator} -> flower_details($self, $defaults);
+	my($params)		= $$defaults{validate_form} -> flower_details($self, $defaults);
 
-	if ($$params{_status} == 0)
+	if ($$params{status} == 0)
 	{
 #		$$defaults{db} -> add_flower($params);
 
@@ -35,9 +35,9 @@ sub display
 	}
 	else
 	{
-		$self -> stash(error	=> $$params{_message});
+		$self -> stash(error	=> $$params{message});
 		$self -> stash(details	=> undef);
-		$self -> app -> log -> error($$params{_message});
+		$self -> app -> log -> error($$params{message});
 	}
 
 	$self -> render;

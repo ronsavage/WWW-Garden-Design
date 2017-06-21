@@ -38,20 +38,23 @@ sub flower_details
 	{
 		# Return 0 for success and 1 for failure.
 
-		$$params{_message}	= 'OK';
-		$$params{_status}	= 0;
+		$$params{message}	= 'OK';
+		$$params{status}	= 0;
 		my($joiner)			= $$defaults{joiner};
-		my($attributes)		= $self -> process_flower_attributes($app, $joiner, $$params{attribute_list});
+		my($attributes)		= $self -> process_flower_attributes($app, $joiner, $$params{attribute_list}, $defaults);
+		my($csrf_token)		= $self -> validator -> check_csrf_token($params);
 		my($images)			= $self -> process_flower_images($app, $joiner, $$params{image_list});
 		my($notes)			= $self -> process_flower_notes($app, $joiner, $$params{note_list});
 		my($urls)			= $self -> process_flower_urls($app, $joiner, $$params{url_list});
+
+		$app -> log -> debug("csrf_token => $$params{csrf_token}. Result: " . Dumper($csrf_token) );
 	}
 	else
 	{
 		# Return 0 for success and 1 for failure.
 
-		$$params{_message}	= 'Missing common name or scientific name';
-		$$params{_status}	= 1;
+		$$params{message}	= 'Missing common name or scientific name';
+		$$params{status}	= 1;
 	}
 
 	return $params;
@@ -63,7 +66,7 @@ sub flower_details
 
 sub process_flower_attributes
 {
-	my($self, $app, $joiner, $attribute_list) = @_;
+	my($self, $app, $joiner, $attribute_list, $defaults) = @_;
 	my(@attributes)	= split(/$joiner/, $attribute_list);
 	my($attributes)	= {};
 
@@ -79,9 +82,34 @@ sub process_flower_attributes
 		push @{$$attributes{$key} }, $attributes[$i + 1];
 	}
 
+	$app -> log -> debug('Attribute type names: ' . Dumper($$defaults{attribute_type_names}) );
+	$app -> log -> debug('Attribute type fields: ' . Dumper($$defaults{attribute_type_fields}) );
+
+	my($field);
+	my($temp_name);
+	my($validated);
+
 	for $key (keys %$attributes)
 	{
-		$$attributes{$key} = join(', ', @{$$attributes{$key} });
+		# 1: Test the name of the attribute.
+
+		$temp_name = "attribute_$key";
+
+		$self -> validator -> check_member({$temp_name => $key}, $temp_name, $$defaults{attribute_type_names});
+
+		# 2: If that test worked, test all values of the attribute.
+
+		$validated = $self -> validator -> validation -> output;
+
+		if (exists $$validated{$temp_name})
+		{
+			for $field (@{$$attributes{$key} })
+			{
+				$temp_name = "attribute_${key}_$field";
+
+				$self -> validator -> check_member({$temp_name => $field}, $temp_name, $$defaults{attribute_type_fields}{$key});
+			}
+		}
 	}
 
 	$app -> log -> debug('Attributes: ' . Dumper($attributes) );

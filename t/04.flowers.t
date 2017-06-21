@@ -47,8 +47,6 @@ sub test_flowers
 
 	# 2: Validate the data in flowers.csv.
 
-	$checker -> add_attribute_range_check;
-
 	my($common_name, %count);
 
 	for my $params (@{$filer -> read_csv_file($path)})

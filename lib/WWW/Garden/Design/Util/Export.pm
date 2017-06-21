@@ -514,7 +514,7 @@ sub export_all_pages
 		{
 			push @urls,
 			[
-				{td => $$url{sequence}},
+				{td => $$url{sequence} },
 				{td => mark_raw("<a href = '$$url{url}'>$$url{url}</a>")},
 			];
 		}

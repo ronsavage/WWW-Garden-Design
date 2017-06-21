@@ -38,6 +38,7 @@ sub BUILD
 	my($self) = @_;
 
 	$self -> validation($self -> validator -> validation);
+	$self -> add_attribute_range_check;
 
 } # End of BUILD.
 
@@ -99,11 +100,23 @@ sub check_attribute_range
 
 sub check_count
 {
-	my($self, $hashref, $topic, $count) = @_;
+	my($self, $params, $topic, $count) = @_;
 
-	return $$hashref{$topic} == $count ? 1 : 0;
+	return $$params{$topic} == $count ? 1 : 0;
 
 } # End of check_count.
+
+# -----------------------------------------------
+
+sub check_csrf_token
+{
+	my($self, $params) = @_;
+
+	$self -> validation -> input($params);
+
+	return $self -> validation -> csrf_protect;
+
+} # End of check_csrf_token.
 
 # -----------------------------------------------
 
@@ -126,9 +139,9 @@ sub check_equal_to
 
 sub check_key_exists
 {
-	my($self, $hashref, $topic) = @_;
+	my($self, $params, $topic) = @_;
 
-	return exists($$hashref{$topic}) ? 1 : 0;
+	return exists($$params{$topic}) ? 1 : 0;
 
 } # End of check_key_exists.
 

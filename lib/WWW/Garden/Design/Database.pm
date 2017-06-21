@@ -1194,7 +1194,7 @@ sub read_gardens_table
 
 	# Return an arrayref of hashrefs.
 
-	return [sort{$$a{property_name} cmp $$b{property_name} || $$a{name} cmp $$b{name}} @records];
+	return [sort{$$a{property_name} cmp $$b{property_name} || $$a{name} cmp $$b{name} } @records];
 
 } # End of read_gardens_table.
 
