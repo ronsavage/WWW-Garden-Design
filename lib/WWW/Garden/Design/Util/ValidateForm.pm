@@ -64,7 +64,7 @@ sub flower_details
 sub process_flower_attributes
 {
 	my($self, $app, $joiner, $attribute_list) = @_;
-	my(@attributes)	= split($joiner, $attribute_list);
+	my(@attributes)	= split(/$joiner/, $attribute_list);
 	my($attributes)	= {};
 
 	$app -> log -> debug('ValidateForm.process_flower_attributes(...)');
@@ -96,7 +96,7 @@ sub process_flower_attributes
 sub process_flower_images
 {
 	my($self, $app, $joiner, $image_list) = @_;
-	my(@images)	= map{defined($_) ? $_ : ''} split($joiner, $image_list);
+	my(@images)	= map{defined($_) ? $_ : ''} split(/$joiner/, $image_list);
 	my($images)	= {};
 
 	$app -> log -> debug('ValidateForm.process_flower_images(...)');
@@ -118,7 +118,7 @@ sub process_flower_images
 sub process_flower_notes
 {
 	my($self, $app, $joiner, $note_list) = @_;
-	my($notes)	= {map{defined($_) ? $_ : ''} split($joiner, $note_list)};
+	my($notes)	= {map{defined($_) ? $_ : ''} split(/$joiner/, $note_list)};
 
 	$app -> log -> debug('ValidateForm.process_flower_notes(...)');
 	$app -> log -> debug('Notes: ' . Dumper($notes) );
@@ -133,7 +133,7 @@ sub process_flower_notes
 sub process_flower_urls
 {
 	my($self, $app, $joiner, $url_list) = @_;
-	my($urls)	= {map{defined($_) ? $_ : ''} split($joiner, $url_list)};
+	my($urls)	= {map{defined($_) ? $_ : ''} split(/$joiner/, $url_list)};
 
 	$app -> log -> debug('ValidateForm.process_flower_urls(...)');
 

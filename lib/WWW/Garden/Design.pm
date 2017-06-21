@@ -117,7 +117,7 @@ sub startup
 	$$defaults{attribute_type_names}	= $self -> build_attribute_type_names($$defaults{attribute_types_table});
 	$$defaults{attribute_type_fields}	= $self -> build_attribute_type_fields($$defaults{attribute_types_table});
 	$$defaults{attribute_attribute_ids}	= $self -> build_attribute_ids('attribute', $$defaults{attribute_type_fields}, $$defaults{attribute_type_names});
-	$$defaults{joiner}					= qr/«»/;
+	$$defaults{joiner}					= '«»'; # Must match joiner in homepage.html.ep.
 	$$defaults{search_attribute_ids}	= $self -> build_attribute_ids('search', $$defaults{attribute_type_fields}, $$defaults{attribute_type_names});
 	$$defaults{validator}				= WWW::Garden::Design::Util::ValidateForm -> new;
 

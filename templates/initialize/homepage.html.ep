@@ -1096,7 +1096,7 @@ function submit_details()
 <%== $attribute_elements %>
 	var attribute_list = [];
 
-	var joiner = '«»';
+	var joiner = '<%== $joiner %>'; // Must match $joiner in Design.pm.
 
 	var id;
 	var key;

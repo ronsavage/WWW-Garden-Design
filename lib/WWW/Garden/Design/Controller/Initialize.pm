@@ -92,6 +92,8 @@ sub homepage
 	$self -> stash(csrf_token				=> $self -> session('csrf_token') );
 	$self -> stash(search_check_boxes		=> $self -> build_check_boxes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields}, $$defaults{search_attribute_ids}) );
 
+	# These parameters are passed to homepage.html.ep for incorporation into JS code.
+
 	$self -> render
 	(
 		attribute_elements		=> $attribute_elements,
@@ -100,6 +102,7 @@ sub homepage
 		design_property_menu	=> $$defaults{design_property_menu},
 		garden_garden_menu		=> $$defaults{garden_garden_menu},
 		garden_property_menu	=> $$defaults{garden_property_menu},
+		joiner					=> $$defaults{joiner},
 		object_menu				=> $$defaults{object_menu},
 	);
 
