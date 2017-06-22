@@ -1,17 +1,17 @@
 #!/usr/bin/env perl
 
-use lib 'lib';
 use strict;
 use warnings;
-
-use Test::More;
 
 use WWW::Garden::Design::Util::Validator;
 
 # ------------------------------------------------
+# This is a copy of t/01.range.t, without the Test::More parts.
 
-my($test_count)	= 0;
+my(%count)		= (pass => 0, total => 0);
 my($checker)	= WWW::Garden::Design::Util::Validator -> new;
+
+$checker -> add_dimension_check;
 
 my(@data) =
 (
@@ -27,19 +27,16 @@ my(@data) =
 
 my($expected);
 my($infix);
-my($message);
 
 for my $params (@data)
 {
-	$expected	= ($$params{height} =~ /^z/) ? 0 : 1;
-	$infix		= $expected ? '' : 'not ';
-	$message	= "Height '$$params{height}' is ${infix}a valid height";
+	$count{total}++;
 
-	ok($checker -> check_dimension($params, 'height', ['cm', 'm']) == $expected, $message); $test_count++;
+	$count{pass}++ if ($checker -> check_dimension($params, 'height', ['cm', 'm']) == 1);
 }
 
-ok($checker -> check_optional({x => ''}, 'x') == 1, 'Length 0 is ok'); $test_count++;
+$count{total}++;
 
-print "# Internal test count: $test_count\n";
+$count{pass}++ if ($checker -> check_optional({x => ''}, 'x') == 1);
 
-done_testing($test_count);
+print "Test counts: \n", join("\n", map{"$_: $count{$_}"} sort keys %count), "\n";
