@@ -38,17 +38,22 @@ sub flower_details
 	{
 		# Return 0 for success and 1 for failure.
 
-		$$params{message}	= 'OK';
-		$$params{status}	= 0;
-		my($joiner)			= $$defaults{joiner};
-		my($attributes)		= $self -> process_flower_attributes($app, $joiner, $$params{attribute_list}, $defaults);
-		my($csrf_ok)		= $controller -> session('csrf_token') eq $$params{csrf_token} ? 1 : 0;
-		my($images)			= $self -> process_flower_images($app, $joiner, $$params{image_list});
-		my($notes)			= $self -> process_flower_notes($app, $joiner, $$params{note_list});
-		my($urls)			= $self -> process_flower_urls($app, $joiner, $$params{url_list});
+		my($csrf_ok)	= $controller -> session('csrf_token') eq $$params{csrf_token} ? 1 : 0;
+		my($joiner)		= $$defaults{joiner};
+
+		$self -> process_flower_attributes($app, $defaults, $joiner, $$params{attribute_list});
+		$self -> process_flower_images($app, $defaults, $joiner, $$params{image_list});
+		$self -> process_flower_notes($app, $defaults, $joiner, $$params{note_list});
+		$self -> process_flower_urls($app, $defaults, $joiner, $$params{url_list});
 
 		if ($csrf_ok == 1)
 		{
+			$$params{message}	= 'OK';
+			$$params{status}	= 0;
+
+			# Need to call error() on each name appearing in failed()'s output.
+
+			$app -> log -> debug('Failed params: ' . Dumper($self -> validator -> validation -> failed) );
 			$app -> log -> debug('Validated params: ' . Dumper($self -> validator -> validation -> output) );
 		}
 		else
@@ -72,24 +77,10 @@ sub flower_details
 } # End of flower_details.
 
 # -----------------------------------------------
-# Returns a hashref.
-
-sub process_csrf_token
-{
-	my($self, $controller, $params) = @_;
-
-	$controller -> app -> log -> debug('ValidateForm.process_csrf_token(...)');
-
-	return $self -> validator -> check_csrf_token($controller, $params);
-
-} # End of process_csrf_token.
-
-# -----------------------------------------------
-# Returns a hashref.
 
 sub process_flower_attributes
 {
-	my($self, $app, $joiner, $attribute_list, $defaults) = @_;
+	my($self, $app, $defaults, $joiner, $attribute_list) = @_;
 	my(@attributes)	= split(/$joiner/, $attribute_list);
 	my($attributes)	= {};
 
@@ -104,9 +95,6 @@ sub process_flower_attributes
 
 		push @{$$attributes{$key} }, $attributes[$i + 1];
 	}
-
-	$app -> log -> debug('Attribute type names: ' . Dumper($$defaults{attribute_type_names}) );
-	$app -> log -> debug('Attribute type fields: ' . Dumper($$defaults{attribute_type_fields}) );
 
 	my($field);
 	my($temp_name);
@@ -135,76 +123,90 @@ sub process_flower_attributes
 		}
 	}
 
-	$app -> log -> debug('Attributes: ' . Dumper($attributes) );
-
-	return $attributes;
-
 } # End of process_flower_attributes.
 
 # -----------------------------------------------
-# Returns a hashref of arrayrefs.
 
 sub process_flower_images
 {
-	my($self, $app, $joiner, $image_list) = @_;
-	my(@images)	= map{defined($_) ? $_ : ''} split(/$joiner/, $image_list);
-	my($images)	= {};
+	my($self, $app, $defaults, $joiner, $image_list) = @_;
+	my(@images) = map{defined($_) ? $_ : ''} split(/$joiner/, $image_list);
 
 	$app -> log -> debug('ValidateForm.process_flower_images(...)');
 
+	# I'm currently accepting duplicate file names and duplicate descriptions.
+
+	my(@field);
+
 	for (my($i) = 0; $i < $#images; $i += 3)
 	{
-		$$images{$images[$i]} = [$images[$i + 1], $images[$i + 2] ];
+		next if (length($images[$i + 1]) == 0);
+
+		@field = split(/_/, $images[$i]);
+
+		$app -> log -> debug("Image. i: $i. id: $images[$i]. " . Dumper(@field) );
+
+		if ( ($field[1] >= 1) && ($field[1] <= $$defaults{max_image_count}) )
+		{
+			$self -> validator -> check_required({$images[$i] => "$images[$i + 1]$joiner$images[$i + 2]"}, $images[$i]);
+		}
 	}
-
-	$app -> log -> debug('Images: ' . Dumper($images) );
-
-	return $images;
 
 } # End of process_flower_images.
 
 # -----------------------------------------------
-# Returns a hashref.
 
 sub process_flower_notes
 {
-	my($self, $app, $joiner, $note_list) = @_;
-	my($notes)	= {map{defined($_) ? $_ : ''} split(/$joiner/, $note_list)};
+	my($self, $app, $defaults, $joiner, $note_list) = @_;
+	my(@notes) = map{defined($_) ? $_ : ''} split(/$joiner/, $note_list);
 
 	$app -> log -> debug('ValidateForm.process_flower_notes(...)');
-	$app -> log -> debug('Notes: ' . Dumper($notes) );
 
-	return $notes;
+	# I'm currently accepting duplicate notes.
+
+	my(@field);
+
+	for (my($i) = 0; $i < $#notes; $i += 2)
+	{
+		next if (length($notes[$i + 1]) == 0);
+
+		@field = split(/_/, $notes[$i]);
+
+		if ( ($field[1] >= 1) && ($field[1] <= $$defaults{max_note_count}) )
+		{
+			$self -> validator -> check_required({$notes[$i] => $notes[$i + 1]}, $notes[$i]);
+		}
+	}
 
 } # End of process_flower_notes.
 
 # -----------------------------------------------
-# Returns a hashref.
 
 sub process_flower_urls
 {
-	my($self, $app, $joiner, $url_list) = @_;
-	my($urls)	= {map{defined($_) ? $_ : ''} split(/$joiner/, $url_list)};
+	my($self, $app, $defaults, $joiner, $url_list) = @_;
+	my(@urls) = map{defined($_) ? $_ : ''} split(/$joiner/, $url_list);
 
 	$app -> log -> debug('ValidateForm.process_flower_urls(...)');
 
-	for my $key (keys %$urls)
-	{
-		my($finder) = URI::Find::Schemeless->new(sub{my($url, $text) = @_; $$urls{$key} = $url; return $url});
+	my($finder, @field);
 
-		if ($$urls{$key})
+	for (my($i) = 0; $i < $#urls; $i += 2)
+	{
+		next if (length($urls[$i + 1]) == 0);
+
+		@field = split(/_/, $urls[$i]);
+
+		if ( ($field[1] >= 1) && ($field[1] <= $$defaults{max_url_count}) )
 		{
-			$finder->find(\$$urls{$key});
-		}
-		else
-		{
-			$$urls{$key} = '';
+			$finder = URI::Find::Schemeless->new(sub{my($url, $text) = @_; return $url});
+
+			$finder->find(\$urls[$i + 1]);
+
+			$self -> validator -> check_required({$urls[$i] => $urls[$i + 1]}, $urls[$i]);
 		}
 	}
-
-	$app -> log -> debug('Urls: ' . Dumper($urls) );
-
-	return $urls;
 
 } # End of process_flower_urls.
 

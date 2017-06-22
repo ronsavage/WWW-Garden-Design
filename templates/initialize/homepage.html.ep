@@ -1125,13 +1125,15 @@ function submit_details()
 
 	// Warning: This loop starts from 1 even though elsewhere image loops start from 0.
 
+	var file_name;
+
 	for (var i = 1; i <= image_count; i++)
 	{
-		id		= '#image_file_name_' + i;
-		value	= $(id).val() || '';
-		id		= '#image_description_' + i;
+		id			= '#image_file_name_' + i;
+		file_name	= $(id).val() || '';
+		id			= '#image_description_' + i;
 
-		image_list.push(i, value || '-', $(id).val() || '-'); // # The '-' helps with Perl's split().
+		image_list.push('image_' + i, file_name, $(id).val() || '');
 	}
 
 	// Bundle up the notes.
@@ -1147,7 +1149,7 @@ function submit_details()
 	{
 		id = '#note_note_' + i;
 
-		note_list.push(i, $(id).val() || '-'); // # The '-' helps with Perl's split().
+		note_list.push('note_' + i, $(id).val() );
 	}
 
 	// Bundle up the URLs.
@@ -1161,7 +1163,7 @@ function submit_details()
 	{
 		id = '#url_url_' + i;
 
-		url_list.push(i, $(id).val() || '-'); // # The '-' helps with Perl's split().
+		url_list.push('url_' + i, $(id).val() );
 	}
 
 	$.ajax
