@@ -144,9 +144,7 @@ sub process_flower_images
 
 		@field = split(/_/, $images[$i]);
 
-		$app -> log -> debug("Image. i: $i. id: $images[$i]. " . Dumper(@field) );
-
-		if ( ($field[1] >= 1) && ($field[1] <= $$defaults{max_image_count}) )
+		if ( ($field[1] >= 1) && ($field[1] <= $$defaults{constants_table}{max_image_count}) )
 		{
 			$self -> validator -> check_required({$images[$i] => "$images[$i + 1]$joiner$images[$i + 2]"}, $images[$i]);
 		}
@@ -173,7 +171,7 @@ sub process_flower_notes
 
 		@field = split(/_/, $notes[$i]);
 
-		if ( ($field[1] >= 1) && ($field[1] <= $$defaults{max_note_count}) )
+		if ( ($field[1] >= 1) && ($field[1] <= $$defaults{constants_table}{max_note_count}) )
 		{
 			$self -> validator -> check_required({$notes[$i] => $notes[$i + 1]}, $notes[$i]);
 		}
@@ -198,7 +196,7 @@ sub process_flower_urls
 
 		@field = split(/_/, $urls[$i]);
 
-		if ( ($field[1] >= 1) && ($field[1] <= $$defaults{max_url_count}) )
+		if ( ($field[1] >= 1) && ($field[1] <= $$defaults{constants_table}{max_url_count}) )
 		{
 			$finder = URI::Find::Schemeless->new(sub{my($url, $text) = @_; return $url});
 
