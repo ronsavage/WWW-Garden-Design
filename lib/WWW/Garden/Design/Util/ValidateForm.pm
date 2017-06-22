@@ -50,24 +50,30 @@ sub flower_details
 
 		if ($csrf_ok == 1)
 		{
+			$app -> log -> debug('Validated params: ' . Dumper($self -> validator -> validation -> output) );
+
 			$$params{message}	= 'OK';
 			$$params{status}	= 0;
 			my($failed)			= $self -> validator -> validation -> failed;
 
 			my(@args);
-			my($check);
+			my(%errors);
 			my($result);
 			my($suffix);
+			my($test);
 
 			for my $name (@$failed)
 			{
-				($check, $result, @args)	= @{$self -> validator -> validation -> error($name)};
-				$suffix						= ($#args >= 0) ? 'Args: ' . join(', ', @args) . '.' : '';
-
-				$app -> log -> debug("Error. Field name: $name. Test: $check. $suffix");
+				($test, $result, @args)	= @{$self -> validator -> validation -> error($name)};
+				$suffix						= ($#args >= 0) ? join(', ', @args) : '';
+				$errors{$name}				= [$$params{$name}, $test, $suffix];
 			}
 
-			$app -> log -> debug('Validated params: ' . Dumper($self -> validator -> validation -> output) );
+			if (scalar keys %errors > 0)
+			{
+				$$params{message}	= \%errors;
+				$$params{status}	= 1;
+			}
 		}
 		else
 		{

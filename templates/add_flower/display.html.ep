@@ -1,35 +1,55 @@
+<br />
+
 % if (my $error = stash 'error') {
 
-<table align = 'center'>
-<tr>
-	<td class = 'error'><br /><br />Error: <%= $error %></td>
-</tr>
+<h2 align = 'center' class = 'error'>Error List</h2>
+
+<table align = 'center' class = 'table_striped'>
+	<thead>
+	<tr>
+		<th class = 'generic_border'>Name</th>
+		<th class = 'generic_border'>Value</th>
+		<th class = 'generic_border'>Test</th>
+		<th class = 'generic_border'>Parameters</th>
+	</tr>
+	</thead>
+	<tbody>
+	%== $error
+	</tbody>
+	<tfoot>
+	<tr>
+		<th class = 'generic_border'>Name</th>
+		<th class = 'generic_border'>Value</th>
+		<th class = 'generic_border'>Test</th>
+		<th class = 'generic_border'>Parameters</th>
+	</tr>
+	</tfoot>
 </table>
 
 % } else {
 
 <table align = 'center' class = 'datatable' id = 'result_table'>
-<thead>
-<tr>
-	<th>Common name</th>
-	<th>Scientific name</th>
-	<th>Aliases</th>
-	<th>Height</th>
-	<th>Width</th>
-</tr>
-</thead>
-<tbody>
-%== $details
-</tbody>
-<tfoot>
-<tr>
-	<th>Common name</th>
-	<th>Scientific name</th>
-	<th>Aliases</th>
-	<th>Height</th>
-	<th>Width</th>
-</tr>
-</tfoot>
+	<thead>
+	<tr>
+		<th>Common name</th>
+		<th>Scientific name</th>
+		<th>Aliases</th>
+		<th>Height</th>
+		<th>Width</th>
+	</tr>
+	</thead>
+	<tbody>
+	%== $details
+	</tbody>
+	<tfoot>
+	<tr>
+		<th>Common name</th>
+		<th>Scientific name</th>
+		<th>Aliases</th>
+		<th>Height</th>
+		<th>Width</th>
+	</tr>
+	</tfoot>
 </table>
 
 % }

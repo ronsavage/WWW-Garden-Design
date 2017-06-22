@@ -1188,13 +1188,9 @@ function submit_details()
 	})
 	.done(function(html)
 	{
-		// $('#flower_result_div')
-		//	.empty()
-		//	.append(html);
-
-			$('#flower_result_div')
-			.empty()
-			.text('Submitted flower details');
+		$('#flower_result_div')
+		.empty()
+		.append(html);
 	})
 	.fail(function(jqxhr, textStatus, error)
 	{
