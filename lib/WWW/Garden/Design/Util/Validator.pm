@@ -14,6 +14,16 @@ use Params::Classify 'is_number';
 
 use Types::Standard qw/Object/;
 
+use URI::Find::Schemeless;
+
+has url_finder =>
+(
+	default		=> sub{return URI::Find::Schemeless -> new(sub{my($url, $text) = @_; return $url})},
+	is			=> 'ro',
+	isa			=> Object,
+	required	=> 0,
+);
+
 has validation =>
 (
 	is			=> 'rw',
@@ -39,6 +49,7 @@ sub BUILD
 
 	$self -> validation($self -> validator -> validation);
 	$self -> add_dimension_check;
+	$self -> add_url_check;
 
 } # End of BUILD.
 
@@ -76,6 +87,27 @@ sub add_dimension_check
 	);
 
 } # End of add_dimension_check.
+
+# -----------------------------------------------
+
+sub add_url_check
+{
+	my($self) = @_;
+
+	$self -> validator -> add_check
+	(
+		url => sub
+		{
+			my($validation, $topic, $value, @args)	= @_;
+			my($count)								= $self -> url_finder -> find(\$value);
+
+			# Return 0 for success, 1 for error!
+
+			return ($count == 1) ? 0 : 1;
+		}
+	);
+
+} # End of add_url_check.
 
 # -----------------------------------------------
 # Warning: Returns 1 for valid!
@@ -190,6 +222,23 @@ sub check_required
 			-> is_valid;
 
 } # End of check_required.
+
+# -----------------------------------------------
+
+sub check_url
+{
+	my($self, $params, $topic) = @_;
+
+	$self -> validation -> input($params);
+
+	return (length($$params{$topic}) == 0)
+			|| $self
+			-> validation
+			-> required($topic, 'trim')
+			-> url
+			-> is_valid;
+
+} # End of check_url.
 
 # -----------------------------------------------
 

@@ -28,14 +28,16 @@
 
 % } else {
 
-<table align = 'center' class = 'datatable' id = 'result_table'>
+<h2 align = 'center'>Details updated</h2>
+
+<table align = 'center' class = 'table_striped'>
 	<thead>
 	<tr>
-		<th>Common name</th>
-		<th>Scientific name</th>
-		<th>Aliases</th>
-		<th>Height</th>
-		<th>Width</th>
+		<th class = 'generic_border'>Common name</th>
+		<th class = 'generic_border'>Scientific name</th>
+		<th class = 'generic_border'>Aliases</th>
+		<th class = 'generic_border'>Height</th>
+		<th class = 'generic_border'>Width</th>
 	</tr>
 	</thead>
 	<tbody>
@@ -43,11 +45,11 @@
 	</tbody>
 	<tfoot>
 	<tr>
-		<th>Common name</th>
-		<th>Scientific name</th>
-		<th>Aliases</th>
-		<th>Height</th>
-		<th>Width</th>
+		<th class = 'generic_border'>Common name</th>
+		<th class = 'generic_border'>Scientific name</th>
+		<th class = 'generic_border'>Aliases</th>
+		<th class = 'generic_border'>Height</th>
+		<th class = 'generic_border'>Width</th>
 	</tr>
 	</tfoot>
 </table>

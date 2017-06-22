@@ -78,7 +78,9 @@ sub format_errors
 
 	for my $name (sort keys %$errors)
 	{
-		$html .= <<EOS;
+		$$errors{$name}[0]	= '';
+		$$errors{$name}[2]	= '';
+		$html				.= <<EOS;
 <tr>
 	<td class = 'generic_border'>$name</td>
 	<td class = 'generic_border'>$$errors{$name}[0]</td>

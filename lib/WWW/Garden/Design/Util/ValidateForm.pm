@@ -219,21 +219,13 @@ sub process_flower_urls
 
 	$app -> log -> debug('ValidateForm.process_flower_urls(...)');
 
-	my($finder, @field);
-
 	for (my($i) = 0; $i < $#urls; $i += 2)
 	{
-		next if (length($urls[$i + 1]) == 0);
-
 		@field = split(/_/, $urls[$i]);
 
 		if ( ($field[1] >= 1) && ($field[1] <= $$defaults{constants_table}{max_url_count}) )
 		{
-			$finder = URI::Find::Schemeless->new(sub{my($url, $text) = @_; return $url});
-
-			$finder->find(\$urls[$i + 1]);
-
-			$self -> validator -> check_required({$urls[$i] => $urls[$i + 1]}, $urls[$i]);
+			$self -> validator -> check_url({$urls[$i] => $urls[$i + 1]}, $urls[$i]);
 		}
 	}
 
