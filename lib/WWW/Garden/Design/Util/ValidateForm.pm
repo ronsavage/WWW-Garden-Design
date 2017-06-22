@@ -42,6 +42,7 @@ sub flower_details
 		my($joiner)		= $$defaults{joiner};
 
 		$self -> process_flower_attributes($app, $defaults, $joiner, $$params{attribute_list});
+		$self -> process_flower_dimensions($app, $defaults, $$params{height}, $$params{width});
 		$self -> process_flower_images($app, $defaults, $joiner, $$params{image_list});
 		$self -> process_flower_notes($app, $defaults, $joiner, $$params{note_list});
 		$self -> process_flower_urls($app, $defaults, $joiner, $$params{url_list});
@@ -53,12 +54,13 @@ sub flower_details
 
 			# Need to call error() on each name appearing in failed()'s output.
 
-			$app -> log -> debug('Failed params: ' . Dumper($self -> validator -> validation -> failed) );
 			$app -> log -> debug('Validated params: ' . Dumper($self -> validator -> validation -> output) );
 		}
 		else
 		{
 			# Return 0 for success and 1 for failure.
+
+			$app -> log -> debug('Failed params: ' . Dumper($self -> validator -> validation -> failed) );
 
 			$$params{message}	= 'Detected apparent CSRF activity';
 			$$params{status}	= 1;
@@ -124,6 +126,18 @@ sub process_flower_attributes
 	}
 
 } # End of process_flower_attributes.
+
+# -----------------------------------------------
+
+sub process_flower_dimensions
+{
+	my($self, $app, $defaults, $height, $width) = @_;
+
+	$app -> log -> debug("ValidateForm.process_flower_dimensions(height: $height, width: $width)");
+	$self -> validator -> check_dimension({height => $height}, 'height', ['cm', 'm']);
+	$self -> validator -> check_dimension({width => $width}, 'width', ['cm', 'm']);
+
+} # End of process_flower_dimensions.
 
 # -----------------------------------------------
 

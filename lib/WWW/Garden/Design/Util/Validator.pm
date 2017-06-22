@@ -38,62 +38,44 @@ sub BUILD
 	my($self) = @_;
 
 	$self -> validation($self -> validator -> validation);
-	$self -> add_attribute_range_check;
+	$self -> add_dimension_check;
 
 } # End of BUILD.
 
 # -----------------------------------------------
 
-sub add_attribute_range_check
+sub add_dimension_check
 {
 	my($self) = @_;
 
 	$self -> validator -> add_check
 	(
-		attribute_range => sub
+		dimension => sub
 		{
 			my($validation, $topic, $value, @args) = @_;
 
 			# Return 0 for success, 1 for error!
 			# Warning: The test will fail if (length($value) == 0)!
 
-			return 1 if ($value !~ /^([^cm]+)(?:c?m){0,1}$/);
+			my($args) = join('|', @args);
 
-			my(@range) = split(/-/, $1);
+			return 1 if ($value !~ /^([0-9.]+)(-[0-9.]+)?\s*(?:$args){0,1}$/);
 
-			return 1 if ($#range > 1);		# 1-2-3 is unaccepatable.
+			my($one, $two)	= ($1, $2 || '');
+			$two			= substr($two, 1) if (substr($two, 0, 1) eq '-');
 
-			# A number is acceptable, so return 0!
-
-			if ($#range == 0)
+			if (length($two) == 0)
 			{
-				return ! is_number($range[0]);
+				return ! is_number($one);
 			}
 			else
 			{
-				return ! (is_number($range[0]) && is_number($range[1]) );
+				return ! (is_number($one) && is_number($two) );
 			}
 		}
 	);
 
-} # End of add_attribute_range_check.
-
-# -----------------------------------------------
-
-sub check_attribute_range
-{
-	my($self, $params, $topic) = @_;
-
-	$self -> validation -> input($params);
-
-	return (length($$params{$topic}) == 0)
-			|| $self
-			-> validation
-			-> required($topic, 'trim')
-			-> attribute_range
-			-> is_valid;
-
-} # End of check_attribute_range.
+} # End of add_dimension_check.
 
 # -----------------------------------------------
 # Warning: Returns 1 for valid!
@@ -105,6 +87,23 @@ sub check_count
 	return $$params{$topic} == $count ? 1 : 0;
 
 } # End of check_count.
+
+# -----------------------------------------------
+
+sub check_dimension
+{
+	my($self, $params, $topic, $units) = @_;
+
+	$self -> validation -> input($params);
+
+	return (length($$params{$topic}) == 0)
+			|| $self
+			-> validation
+			-> required($topic, 'trim')
+			-> dimension(@$units)
+			-> is_valid;
+
+} # End of check_dimension.
 
 # -----------------------------------------------
 
