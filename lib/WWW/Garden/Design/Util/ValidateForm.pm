@@ -45,6 +45,7 @@ sub flower_details
 		$self -> process_flower_dimensions($app, $defaults, $$params{height}, $$params{width});
 		$self -> process_flower_images($app, $defaults, $joiner, $$params{image_list});
 		$self -> process_flower_notes($app, $defaults, $joiner, $$params{note_list});
+		$self -> validator -> check_member($params, 'publish', ['Yes', 'No']);
 		$self -> process_flower_urls($app, $defaults, $joiner, $$params{url_list});
 
 		if ($csrf_ok == 1)
