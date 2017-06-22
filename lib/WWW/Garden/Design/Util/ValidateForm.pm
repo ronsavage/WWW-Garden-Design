@@ -52,16 +52,26 @@ sub flower_details
 		{
 			$$params{message}	= 'OK';
 			$$params{status}	= 0;
+			my($failed)			= $self -> validator -> validation -> failed;
 
-			# Need to call error() on each name appearing in failed()'s output.
+			my(@args);
+			my($check);
+			my($result);
+			my($suffix);
+
+			for my $name (@$failed)
+			{
+				($check, $result, @args)	= @{$self -> validator -> validation -> error($name)};
+				$suffix						= ($#args >= 0) ? 'Args: ' . join(', ', @args) . '.' : '';
+
+				$app -> log -> debug("Error. Field name: $name. Test: $check. $suffix");
+			}
 
 			$app -> log -> debug('Validated params: ' . Dumper($self -> validator -> validation -> output) );
 		}
 		else
 		{
 			# Return 0 for success and 1 for failure.
-
-			$app -> log -> debug('Failed params: ' . Dumper($self -> validator -> validation -> failed) );
 
 			$$params{message}	= 'Detected apparent CSRF activity';
 			$$params{status}	= 1;
