@@ -303,7 +303,7 @@ This is the printout of synopsis.pl:
 	pass: 8
 	total: 9
 
-See also t/t.pl.
+See also t/*.t.
 
 =head1 Description
 

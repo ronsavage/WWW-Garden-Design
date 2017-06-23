@@ -33,11 +33,13 @@ sub display
 
 		$self -> stash(error	=> undef);
 		$self -> stash(details	=> $self -> format_details($params) );
+		$self -> stash(message	=> $$params{message});
 	}
 	else
 	{
-		$self -> stash(error	=> $self -> format_errors($$params{message}));
+		$self -> stash(error	=> $self -> format_errors($params));
 		$self -> stash(details	=> undef);
+		$self -> stash(message	=> $$params{message});
 		$self -> app -> log -> error($$params{message});
 	}
 
@@ -70,22 +72,22 @@ sub format_details
 
 sub format_errors
 {
-	my($self, $errors) = @_;
+	my($self, $params) = @_;
 
 	$self -> app -> log -> debug('Details.format_errors(...)');
 
 	my($html) = '';
 
-	for my $name (sort keys %$errors)
+	my($errors);
+
+	for my $name (sort keys %{$$params{errors} })
 	{
-		$$errors{$name}[0]	= '';
-		$$errors{$name}[2]	= '';
-		$html				.= <<EOS;
+		$errors	= $$params{errors}{$name};
+		$html	.= <<EOS;
 <tr>
 	<td class = 'generic_border'>$name</td>
-	<td class = 'generic_border'>$$errors{$name}[0]</td>
-	<td class = 'generic_border'>$$errors{$name}[1]</td>
-	<td class = 'generic_border'>$$errors{$name}[2]</td>
+	<td class = 'generic_border'>$$errors[0]</td>
+	<td class = 'generic_border'>$$errors[1]</td>
 </tr>
 EOS
 	}

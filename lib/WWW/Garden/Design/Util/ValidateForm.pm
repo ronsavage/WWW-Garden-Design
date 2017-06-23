@@ -33,6 +33,7 @@ sub flower_details
 	my($app)	= $controller -> app;
 
 	$app -> log -> debug("$_ => $$params{$_}") for sort keys %$params;
+	$app -> log -> debug('CSRF. session' . $controller -> session('csrf_token') . ". params: $$params{csrf_token}");
 
 	if ($$params{common_name} && $$params{scientific_name})
 	{
@@ -52,26 +53,33 @@ sub flower_details
 		{
 			$app -> log -> debug('Validated params: ' . Dumper($self -> validator -> validation -> output) );
 
-			$$params{message}	= 'OK';
-			$$params{status}	= 0;
-			my($failed)			= $self -> validator -> validation -> failed;
-
 			my(@args);
 			my(%errors);
 			my($result);
 			my($suffix);
 			my($test);
 
-			for my $name (@$failed)
+			# Warning: Inside this loop, don't use $$params{$name} because of cases like $$params{url_list},
+			# which splits into url_1, url_2, etc. Here, $name assumes these latter values, which in turn
+			# means $$params{url_list} is defined but $$params{url_1} etc are all undef!
+
+			for my $name (@{$self -> validator -> validation -> failed})
 			{
 				($test, $result, @args)	= @{$self -> validator -> validation -> error($name)};
-				$suffix						= ($#args >= 0) ? join(', ', @args) : '';
-				$errors{$name}				= [$$params{$name}, $test, $suffix];
+				$suffix					= ($#args >= 0) ? join(', ', @args) : '';
+				$errors{$name}			= [$test, $suffix];
 			}
 
-			if (scalar keys %errors > 0)
+			if (scalar keys %errors == 0)
 			{
-				$$params{message}	= \%errors;
+				$$params{errors}	= {};
+				$$params{message}	= 'All fields pass validation';
+				$$params{status}	= 0;
+			}
+			else
+			{
+				$$params{errors}	= \%errors;
+				$$params{message}	= 'Some fields failed validation';
 				$$params{status}	= 1;
 			}
 		}
@@ -79,6 +87,7 @@ sub flower_details
 		{
 			# Return 0 for success and 1 for failure.
 
+			$$params{errors}	= {};
 			$$params{message}	= 'Detected apparent CSRF activity';
 			$$params{status}	= 1;
 		}
@@ -87,6 +96,7 @@ sub flower_details
 	{
 		# Return 0 for success and 1 for failure.
 
+		$$params{errors}	= {};
 		$$params{message}	= 'Missing common name or scientific name';
 		$$params{status}	= 1;
 	}
@@ -218,6 +228,8 @@ sub process_flower_urls
 	my(@urls) = map{defined($_) ? $_ : ''} split(/$joiner/, $url_list);
 
 	$app -> log -> debug('ValidateForm.process_flower_urls(...)');
+
+	my(@field);
 
 	for (my($i) = 0; $i < $#urls; $i += 2)
 	{

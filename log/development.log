@@ -1,0 +1,150 @@
+[Fri Jun 23 10:13:24 2017] [info] Listening at "http://localhost:3008"
+[Fri Jun 23 10:13:29 2017] [info] ------------------------------
+[Fri Jun 23 10:13:30 2017] [debug] GET "/"
+[Fri Jun 23 10:13:30 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::Initialize" and action "homepage"
+[Fri Jun 23 10:13:30 2017] [debug] Initialize.homepage()
+[Fri Jun 23 10:13:30 2017] [debug] Rendering template "initialize/homepage.html.ep"
+[Fri Jun 23 10:13:30 2017] [debug] Rendering template "initialize/search.html.ep"
+[Fri Jun 23 10:13:30 2017] [debug] Rendering template "initialize/flower.html.ep"
+[Fri Jun 23 10:13:30 2017] [debug] Rendering template "initialize/attributes.html.ep"
+[Fri Jun 23 10:13:30 2017] [debug] Rendering template "initialize/images.html.ep"
+[Fri Jun 23 10:13:30 2017] [debug] Rendering template "initialize/notes.html.ep"
+[Fri Jun 23 10:13:30 2017] [debug] Rendering template "initialize/urls.html.ep"
+[Fri Jun 23 10:13:30 2017] [debug] Rendering template "initialize/garden.html.ep"
+[Fri Jun 23 10:13:30 2017] [debug] Rendering template "initialize/object.html.ep"
+[Fri Jun 23 10:13:30 2017] [debug] Rendering template "initialize/design.html.ep"
+[Fri Jun 23 10:13:30 2017] [debug] Rendering template "initialize/search_help.html.ep"
+[Fri Jun 23 10:13:30 2017] [debug] Rendering template "initialize/faq_help.html.ep"
+[Fri Jun 23 10:13:30 2017] [debug] 200 OK (0.084483s, 11.837/s)
+[Fri Jun 23 10:13:30 2017] [info] ------------------------------
+[Fri Jun 23 10:13:30 2017] [info] ------------------------------
+[Fri Jun 23 10:13:30 2017] [debug] GET "/GetTable/attribute_types"
+[Fri Jun 23 10:13:30 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::GetTable" and action "attribute_types"
+[Fri Jun 23 10:13:30 2017] [debug] GetTable.attribute_types()
+[Fri Jun 23 10:13:30 2017] [debug] 200 OK (0.004894s, 204.332/s)
+[Fri Jun 23 10:13:30 2017] [info] ------------------------------
+[Fri Jun 23 10:13:30 2017] [debug] GET "/GetTable/objects"
+[Fri Jun 23 10:13:30 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::GetTable" and action "objects"
+[Fri Jun 23 10:13:30 2017] [debug] GetTable.objects()
+[Fri Jun 23 10:13:30 2017] [debug] GetTable.objects(). Size of object_table: 28
+[Fri Jun 23 10:13:30 2017] [debug] 200 OK (0.039836s, 25.103/s)
+[Fri Jun 23 10:13:30 2017] [info] ------------------------------
+[Fri Jun 23 10:13:30 2017] [debug] GET "/GetTable/gardens"
+[Fri Jun 23 10:13:30 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::GetTable" and action "gardens"
+[Fri Jun 23 10:13:30 2017] [debug] GetTable.gardens()
+[Fri Jun 23 10:13:30 2017] [debug] GetTable.gardens(). Size of garden_table: 5
+[Fri Jun 23 10:13:30 2017] [debug] 200 OK (0.034987s, 28.582/s)
+[Fri Jun 23 10:13:32 2017] [info] ------------------------------
+[Fri Jun 23 10:13:32 2017] [debug] POST "/Search"
+[Fri Jun 23 10:13:32 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::Search" and action "display"
+[Fri Jun 23 10:13:32 2017] [debug] Database.search()
+[Fri Jun 23 10:13:32 2017] [debug] Database.parse_search_text(nas)
+[Fri Jun 23 10:13:32 2017] [debug] Database.parse_search_attributes()
+[Fri Jun 23 10:13:32 2017] [debug] Database.parse_attribute_checkboxes()
+[Fri Jun 23 10:13:32 2017] [info] Match count: 1
+[Fri Jun 23 10:13:32 2017] [debug] Rendering template "search/display.html.ep"
+[Fri Jun 23 10:13:32 2017] [debug] 200 OK (0.256084s, 3.905/s)
+[Fri Jun 23 10:13:32 2017] [info] ------------------------------
+[Fri Jun 23 10:13:32 2017] [debug] GET "/AutoComplete"
+[Fri Jun 23 10:13:32 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::AutoComplete" and action "display"
+[Fri Jun 23 10:13:32 2017] [debug] AutoComplete.display(key: nas, type: search)
+[Fri Jun 23 10:13:32 2017] [debug] 200 OK (0.003778s, 264.690/s)
+[Fri Jun 23 10:13:33 2017] [info] ------------------------------
+[Fri Jun 23 10:13:33 2017] [debug] POST "/GetFlowerDetails"
+[Fri Jun 23 10:13:33 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlowerDetails" and action "display"
+[Fri Jun 23 10:13:33 2017] [debug] GetFlowerDetails.display(flower_id => 127)
+[Fri Jun 23 10:13:33 2017] [debug] 200 OK (0.011453s, 87.313/s)
+[Fri Jun 23 10:13:40 2017] [info] ------------------------------
+[Fri Jun 23 10:13:40 2017] [debug] POST "/AddFlower"
+[Fri Jun 23 10:13:40 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::AddFlower" and action "display"
+[Fri Jun 23 10:13:40 2017] [debug] AddFlower.display()
+[Fri Jun 23 10:13:40 2017] [debug] aliases => Nose-tweaker, Nose-twister
+[Fri Jun 23 10:13:40 2017] [debug] attribute_list => Edible«»Flower«»Edible«»Leaf«»Edible«»Stem«»Edible«»Rhizome«»Habit«»Prostrate«»Native«»No«»Sun_tolerance«»Full sun
+[Fri Jun 23 10:13:40 2017] [debug] common_name => Nasturtium
+[Fri Jun 23 10:13:40 2017] [debug] csrf_token => a5f65dce2a6fac9be2390725d87f54364088fc66
+[Fri Jun 23 10:13:40 2017] [debug] height => 
+[Fri Jun 23 10:13:40 2017] [debug] image_list => image_1«»Tropaeolum.majus.1.jpg«»Flower«»image_2«»Tropaeolum.majus.2.jpg«»Flower. This is the creeper«»image_3«»«»«»image_4«»Tropaeolum.majus.4.jpg«»Leaf«»image_5«»«»«»image_6«»«»«»image_7«»«»«»image_8«»«»«»image_9«»«»«»image_10«»«»«»image_11«»«»«»image_12«»«»«»image_13«»«»«»image_14«»«»«»image_15«»«»«»image_16«»«»«»image_17«»«»«»image_18«»«»«»image_19«»«»«»image_20«»«»
+[Fri Jun 23 10:13:40 2017] [debug] note_list => note_1«»One pot plant is a perennial, dying back at the start of Summer«»note_2«»The other one crept across the patio and then completely died off«»note_3«»All parts of the plant - flowers, leaves, stems, rhizomes - can be eaten«»note_4«»«»note_5«»«»note_6«»«»note_7«»«»note_8«»«»note_9«»«»note_10«»«»note_11«»«»note_12«»«»note_13«»«»note_14«»«»note_15«»«»note_16«»«»note_17«»«»note_18«»«»note_19«»«»note_20«»
+[Fri Jun 23 10:13:40 2017] [debug] publish => Yes
+[Fri Jun 23 10:13:40 2017] [debug] scientific_name => Tropaeolum majus
+[Fri Jun 23 10:13:40 2017] [debug] url_list => url_1«»scotsburn.biz«»url_2«»xxx«»url_3«»«»url_4«»«»url_5«»«»url_6«»«»url_7«»«»url_8«»«»url_9«»«»url_10«»
+[Fri Jun 23 10:13:40 2017] [debug] width => 
+[Fri Jun 23 10:13:40 2017] [debug] CSRF. sessiona5f65dce2a6fac9be2390725d87f54364088fc66. params: a5f65dce2a6fac9be2390725d87f54364088fc66
+[Fri Jun 23 10:13:40 2017] [debug] ValidateForm.process_flower_attributes(...)
+[Fri Jun 23 10:13:40 2017] [debug] ValidateForm.process_flower_dimensions(height: , width: )
+[Fri Jun 23 10:13:40 2017] [debug] ValidateForm.process_flower_images(...)
+[Fri Jun 23 10:13:40 2017] [debug] ValidateForm.process_flower_notes(...)
+[Fri Jun 23 10:13:40 2017] [debug] ValidateForm.process_flower_urls(...)
+[Fri Jun 23 10:13:40 2017] [debug] Validated params: {
+  attribute_Edible => "Edible",
+  attribute_Edible_Flower => "Flower",
+  attribute_Edible_Leaf => "Leaf",
+  attribute_Edible_Rhizome => "Rhizome",
+  attribute_Edible_Stem => "Stem",
+  attribute_Habit => "Habit",
+  attribute_Habit_Prostrate => "Prostrate",
+  attribute_Native => "Native",
+  attribute_Native_No => "No",
+  "attribute_Sun tolerance" => "Sun tolerance",
+  "attribute_Sun tolerance_Full sun" => "Full sun",
+  image_1 => "Tropaeolum.majus.1.jpg\x{ab}\x{bb}Flower",
+  image_2 => "Tropaeolum.majus.2.jpg\x{ab}\x{bb}Flower. This is the creeper",
+  image_4 => "Tropaeolum.majus.4.jpg\x{ab}\x{bb}Leaf",
+  note_1 => "One pot plant is a perennial, dying back at the start of Summer",
+  note_2 => "The other one crept across the patio and then completely died off",
+  note_3 => "All parts of the plant - flowers, leaves, stems, rhizomes - can be eaten",
+  publish => "Yes",
+  url_1 => "scotsburn.biz"
+}
+
+[Fri Jun 23 10:13:40 2017] [debug] Details.format_errors(...)
+[Fri Jun 23 10:13:40 2017] [error] Some fields failed validation
+[Fri Jun 23 10:13:40 2017] [debug] Rendering template "add_flower/display.html.ep"
+[Fri Jun 23 10:13:40 2017] [debug] 200 OK (0.021985s, 45.486/s)
+[Fri Jun 23 10:13:58 2017] [info] ------------------------------
+[Fri Jun 23 10:13:58 2017] [debug] POST "/AddFlower"
+[Fri Jun 23 10:13:58 2017] [debug] Routing to controller "WWW::Garden::Design::Controller::AddFlower" and action "display"
+[Fri Jun 23 10:13:58 2017] [debug] AddFlower.display()
+[Fri Jun 23 10:13:58 2017] [debug] aliases => Nose-tweaker, Nose-twister
+[Fri Jun 23 10:13:58 2017] [debug] attribute_list => Edible«»Flower«»Edible«»Leaf«»Edible«»Stem«»Edible«»Rhizome«»Habit«»Prostrate«»Native«»No«»Sun_tolerance«»Full sun
+[Fri Jun 23 10:13:58 2017] [debug] common_name => Nasturtium
+[Fri Jun 23 10:13:58 2017] [debug] csrf_token => a5f65dce2a6fac9be2390725d87f54364088fc66
+[Fri Jun 23 10:13:58 2017] [debug] height => 
+[Fri Jun 23 10:13:58 2017] [debug] image_list => image_1«»Tropaeolum.majus.1.jpg«»Flower«»image_2«»Tropaeolum.majus.2.jpg«»Flower. This is the creeper«»image_3«»«»«»image_4«»Tropaeolum.majus.4.jpg«»Leaf«»image_5«»«»«»image_6«»«»«»image_7«»«»«»image_8«»«»«»image_9«»«»«»image_10«»«»«»image_11«»«»«»image_12«»«»«»image_13«»«»«»image_14«»«»«»image_15«»«»«»image_16«»«»«»image_17«»«»«»image_18«»«»«»image_19«»«»«»image_20«»«»
+[Fri Jun 23 10:13:58 2017] [debug] note_list => note_1«»One pot plant is a perennial, dying back at the start of Summer«»note_2«»The other one crept across the patio and then completely died off«»note_3«»All parts of the plant - flowers, leaves, stems, rhizomes - can be eaten«»note_4«»«»note_5«»«»note_6«»«»note_7«»«»note_8«»«»note_9«»«»note_10«»«»note_11«»«»note_12«»«»note_13«»«»note_14«»«»note_15«»«»note_16«»«»note_17«»«»note_18«»«»note_19«»«»note_20«»
+[Fri Jun 23 10:13:58 2017] [debug] publish => Yes
+[Fri Jun 23 10:13:58 2017] [debug] scientific_name => Tropaeolum majus
+[Fri Jun 23 10:13:58 2017] [debug] url_list => url_1«»scotsburn.biz«»url_2«»https://en.wikipedia.org/wiki/Tropaeolum«»url_3«»«»url_4«»«»url_5«»«»url_6«»«»url_7«»«»url_8«»«»url_9«»«»url_10«»
+[Fri Jun 23 10:13:58 2017] [debug] width => 
+[Fri Jun 23 10:13:58 2017] [debug] CSRF. sessiona5f65dce2a6fac9be2390725d87f54364088fc66. params: a5f65dce2a6fac9be2390725d87f54364088fc66
+[Fri Jun 23 10:13:58 2017] [debug] ValidateForm.process_flower_attributes(...)
+[Fri Jun 23 10:13:58 2017] [debug] ValidateForm.process_flower_dimensions(height: , width: )
+[Fri Jun 23 10:13:58 2017] [debug] ValidateForm.process_flower_images(...)
+[Fri Jun 23 10:13:58 2017] [debug] ValidateForm.process_flower_notes(...)
+[Fri Jun 23 10:13:58 2017] [debug] ValidateForm.process_flower_urls(...)
+[Fri Jun 23 10:13:58 2017] [debug] Validated params: {
+  attribute_Edible => "Edible",
+  attribute_Edible_Flower => "Flower",
+  attribute_Edible_Leaf => "Leaf",
+  attribute_Edible_Rhizome => "Rhizome",
+  attribute_Edible_Stem => "Stem",
+  attribute_Habit => "Habit",
+  attribute_Habit_Prostrate => "Prostrate",
+  attribute_Native => "Native",
+  attribute_Native_No => "No",
+  "attribute_Sun tolerance" => "Sun tolerance",
+  "attribute_Sun tolerance_Full sun" => "Full sun",
+  image_1 => "Tropaeolum.majus.1.jpg\x{ab}\x{bb}Flower",
+  image_2 => "Tropaeolum.majus.2.jpg\x{ab}\x{bb}Flower. This is the creeper",
+  image_4 => "Tropaeolum.majus.4.jpg\x{ab}\x{bb}Leaf",
+  note_1 => "One pot plant is a perennial, dying back at the start of Summer",
+  note_2 => "The other one crept across the patio and then completely died off",
+  note_3 => "All parts of the plant - flowers, leaves, stems, rhizomes - can be eaten",
+  publish => "Yes",
+  url_1 => "scotsburn.biz",
+  url_2 => "https://en.wikipedia.org/wiki/Tropaeolum"
+}
+
+[Fri Jun 23 10:13:58 2017] [debug] Details.format_details(...)
+[Fri Jun 23 10:13:58 2017] [debug] Rendering cached template "add_flower/display.html.ep"
+[Fri Jun 23 10:13:58 2017] [debug] 200 OK (0.008072s, 123.885/s)
