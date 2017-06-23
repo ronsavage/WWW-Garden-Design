@@ -47,7 +47,7 @@ sub flower_details
 		$self -> process_flower_images($app, $defaults, $joiner, $$params{image_list});
 		$self -> process_flower_notes($app, $defaults, $joiner, $$params{note_list});
 		$self -> validator -> check_member($params, 'publish', ['Yes', 'No']);
-		$self -> process_flower_urls($app, $defaults, $joiner, $$params{url_list});
+		$self -> process_flower_urls($app, $defaults, $joiner, $params);
 
 		if ($csrf_ok == 1)
 		{
@@ -67,7 +67,7 @@ sub flower_details
 			{
 				($test, $result, @args)	= @{$self -> validator -> validation -> error($name)};
 				$suffix					= ($#args >= 0) ? join(', ', @args) : '';
-				$errors{$name}			= [$test, $suffix];
+				$errors{$name}			= [$$params{$name}, $test, $suffix];
 			}
 
 			if (scalar keys %errors == 0)
@@ -224,19 +224,25 @@ sub process_flower_notes
 
 sub process_flower_urls
 {
-	my($self, $app, $defaults, $joiner, $url_list) = @_;
-	my(@urls) = map{defined($_) ? $_ : ''} split(/$joiner/, $url_list);
+	my($self, $app, $defaults, $joiner, $params) = @_;
+	my(@urls) = map{defined($_) ? $_ : ''} split(/$joiner/, $$params{url_list});
 
 	$app -> log -> debug('ValidateForm.process_flower_urls(...)');
 
-	my(@field);
+	# Expected format of @urls:
+	# o [$i]: A string id of the form 'url_\d+'.
+	# o [$i + 1]: The url itself.
 
 	for (my($i) = 0; $i < $#urls; $i += 2)
 	{
-		@field = split(/_/, $urls[$i]);
+		next if ($urls[$i] !~ /^url_([0-9]{1,2})/);
 
-		if ( ($field[1] >= 1) && ($field[1] <= $$defaults{constants_table}{max_url_count}) )
+		if ( ($1 >= 1) && ($1 <= $$defaults{constants_table}{max_url_count}) )
 		{
+			# We put the individual urls back into %$params for display if necessary (e.g. as errors).
+
+			$$params{$urls[$i]} = $urls[$i + 1];
+
 			$self -> validator -> check_url({$urls[$i] => $urls[$i + 1]}, $urls[$i]);
 		}
 	}
