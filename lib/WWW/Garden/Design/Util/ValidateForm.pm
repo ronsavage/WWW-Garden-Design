@@ -49,8 +49,8 @@ sub flower_details
 
 		$self -> process_flower_attributes($app, $defaults, $joiner, $$params{attribute_list}, \%errors);
 		$self -> process_flower_dimensions($app, $defaults, $$params{height}, $$params{width}, \%errors);
-		$self -> process_flower_images($app, $defaults, $joiner, $$params{image_list}, \%errors);
-		$self -> process_flower_notes($app, $defaults, $joiner, $$params{note_list}, \%errors);
+		$self -> process_flower_images($app, $defaults, $joiner, $$params{image_list}, $params, \%errors);
+		$self -> process_flower_notes($app, $defaults, $joiner, $$params{note_list}, $params, \%errors);
 		$self -> validator -> check_member($params, 'publish', ['Yes', 'No']);
 		$self -> process_flower_urls($app, $defaults, $joiner, $params, \%errors);
 
@@ -164,27 +164,65 @@ sub process_flower_dimensions
 
 sub process_flower_images
 {
-	my($self, $app, $defaults, $joiner, $image_list, $errors) = @_;
+	my($self, $app, $defaults, $joiner, $image_list, $params, $errors) = @_;
 	my(@images) = map{defined($_) ? $_ : ''} split(/$joiner/, $image_list);
 
 	$app -> log -> debug('ValidateForm.process_flower_images(...)');
 
 	# I'm currently accepting duplicate file names and duplicate descriptions.
+	# Also, accept empty image description without generating an error msg.
 	#
 	# Expected format of @images:
 	# o [$i]: A string id of the form 'image_\d+'.
 	# o [$i + 1]: The image's name.
 	# o [$i + 2]: The image's description.
 
+	my(@id_length)		= (7, 8); # (Min, Max).
+	my($id_message)		= "$id_length[0] .. $id_length[1] chars";
+	my($prefix_length)	= 20;
+	my(@image_length)	= (4, 250); # (Min, Max).
+	my($image_message)	= "$image_length[0] .. $image_length[1] chars";
+
+	my($id);
+	my($image_length);
+
 	for (my($i) = 0; $i < $#images; $i += 3)
 	{
-		next if (length($images[$i + 1]) == 0);
-		next if ($images[$i] !~ /^image_([0-9]{1,2})/);
-		next if ( (length($images[$i + 1]) > 250) || (length($images[$i + 2]) > 250) );
+		$image_length = length($images[$i]);
 
-		if ( ($1 >= 1) && ($1 <= $$defaults{constants_table}{max_image_count}) )
+		# Ignore empty id without generating an error msg.
+
+		next if ($image_length == 0);
+
+		if ( ($image_length < $id_length[0]) || ($image_length > $id_length[1]) || ($images[$i] !~ /^image_([0-9]{1,2})/) )
 		{
+			$$errors{'image_id'} = [substr($images[$i], 0, $prefix_length), 'length', $id_message];
+
+			next;
+		}
+
+		$id				= $1;
+		$image_length	= length($images[$i + 1]);
+
+		# Ignore empty image file name without generating an error msg.
+
+		next if ($image_length == 0);
+
+		$image_length = length($images[$i + 2]);
+
+		next if ( (length($images[$i + 1]) > $image_length[1]) || ($image_length > $image_length[1]) );
+
+		if ( ($id >= 1) && ($id <= $$defaults{constants_table}{max_image_count}) )
+		{
+			# We put the individual notes back into %$params for display if necessary (e.g. as errors).
+
+			$$params{$images[$i]} = $images[$i + 1];
+
 			$self -> validator -> check_required({$images[$i] => "$images[$i + 1]$joiner$images[$i + 2]"}, $images[$i]);
+		}
+		else
+		{
+			$$errors{'image_id'} = [substr($images[$i], 0, $prefix_length), 'length', $id_message];
 		}
 	}
 
@@ -194,26 +232,63 @@ sub process_flower_images
 
 sub process_flower_notes
 {
-	my($self, $app, $defaults, $joiner, $note_list, $errors) = @_;
+	my($self, $app, $defaults, $joiner, $note_list, $params, $errors) = @_;
 	my(@notes) = map{defined($_) ? $_ : ''} split(/$joiner/, $note_list);
 
 	$app -> log -> debug('ValidateForm.process_flower_notes(...)');
 
 	# I'm currently accepting duplicate notes.
+	# Also, ignore empty note without generating an error msg.
 	#
 	# Expected format of @notes:
 	# o [$i]: A string id of the form 'note_\d+'.
 	# o [$i + 1]: The note's text.
 
+	my(@id_length)		= (6, 7); # (Min, Max).
+	my($id_message)		= "$id_length[0] .. $id_length[1] chars";
+	my($prefix_length)	= 20;
+	my(@note_length)	= (0, 250); # (Min, Max).
+	my($note_message)	= "$note_length[0] .. $note_length[1] chars";
+
+	my($id);
+	my($note_length);
+
 	for (my($i) = 0; $i < $#notes; $i += 2)
 	{
-		next if (length($notes[$i + 1]) == 0);
-		next if ($notes[$i] !~ /^note_([0-9]{1,2})/);
-		next if (length($notes[$i + 1]) > 250);
+		$note_length = length($notes[$i]);
 
-		if ( ($1 >= 1) && ($1 <= $$defaults{constants_table}{max_note_count}) )
+		# Ignore empty id without generating an error msg.
+
+		next if ($note_length == 0);
+
+		if ( ($note_length < $id_length[0]) || ($note_length > $id_length[1]) || ($notes[$i] !~ /^note_([0-9]{1,2})/) )
 		{
-			$self -> validator -> check_required({$notes[$i] => $notes[$i + 1]}, $notes[$i]);
+			$$errors{'note_id'} = [substr($notes[$i], 0, $prefix_length), 'length', $id_message];
+
+			next;
+		}
+
+		$id				= $1;
+		$note_length	= length($notes[$i + 1]);
+
+		if ($note_length > $note_length[1])
+		{
+			$$errors{$notes[$i]} = [substr($notes[$i + 1], 0, $id_length[1]), 'length', $note_message];
+
+			next;
+		}
+
+		if ( ($id >= 1) && ($id <= $$defaults{constants_table}{max_note_count}) )
+		{
+			# We put the individual notes back into %$params for display if necessary (e.g. as errors).
+
+			$$params{$notes[$i]} = $notes[$i + 1];
+
+			$self -> validator -> check_optional({$notes[$i] => $notes[$i + 1]}, $notes[$i]);
+		}
+		else
+		{
+			$$errors{'note_id'} = [substr($notes[$i], 0, $prefix_length), 'length', $id_message];
 		}
 	}
 
@@ -232,41 +307,55 @@ sub process_flower_urls
 	# o [$i]: A string id of the form 'url_\d+'.
 	# o [$i + 1]: The url itself.
 
-	my($max_url_length) = 250;
+	my(@id_length)		= (5, 6); # (Min, Max).
+	my($id_message)		= "$id_length[0] .. $id_length[1] chars";
+	my($prefix_length)	= 20;
+	my(@url_length)		= (5, 120); # (Min, Max).
+	my($url_message)	= "$url_length[0] .. $url_length[1] chars";
 
+	my($id);
 	my($url_length);
 
 	for (my($i) = 0; $i < $#urls; $i += 2)
 	{
 		$url_length = length($urls[$i]);
 
+		# Ignore empty id without generating an error msg.
+
 		next if ($url_length == 0);
 
-		if ( ($url_length < 5) || ($url_length > 6) || ($urls[$i] !~ /^url_([0-9]{1,2})/) )
+		if ( ($url_length < $id_length[0]) || ($url_length > $id_length[1]) || ($urls[$i] !~ /^url_([0-9]{1,2})/) )
 		{
-			$$errors{'url_id'} = [substr($urls[$i], 0, 20), 'length', '5 .. 6 chars'];
+			$$errors{'url_id'} = [substr($urls[$i], 0, $prefix_length), 'length', $id_message];
 
 			next;
 		}
 
-		$url_length = length($urls[$i + 1]);
+		$id			= $1;
+		$url_length	= length($urls[$i + 1]);
+
+		# Ignore empty url without generating an error msg.
 
 		next if ($url_length == 0);
 
-		if ( ($url_length < 5) || ($url_length > $max_url_length) )
+		if ( ($url_length < $url_length[0]) || ($url_length > $url_length[1]) )
 		{
-			$$errors{$urls[$i]} = [substr($urls[$i + 1], 0, $max_url_length), 'length', "5 .. $max_url_length chars"];
+			$$errors{$urls[$i]} = [substr($urls[$i + 1], 0, $id_length[1]), 'length', $url_message];
 
 			next;
 		}
 
-		if ( ($1 >= 1) && ($1 <= $$defaults{constants_table}{max_url_count}) )
+		if ( ($id >= 1) && ($id <= $$defaults{constants_table}{max_url_count}) )
 		{
 			# We put the individual urls back into %$params for display if necessary (e.g. as errors).
 
 			$$params{$urls[$i]} = $urls[$i + 1];
 
 			$self -> validator -> check_url({$urls[$i] => $urls[$i + 1]}, $urls[$i]);
+		}
+		else
+		{
+			$$errors{'url_id'} = [substr($urls[$i], 0, $prefix_length), 'length', $id_message];
 		}
 	}
 

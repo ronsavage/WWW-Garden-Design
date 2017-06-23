@@ -855,8 +855,8 @@ function populate_details(flower_id)
 			$(ids[i][2])
 			.text('');	// Image.
 
-			$(ids[i][3])
-			.val('');	// Sequence.
+			//$(ids[i][3])
+			//.val('');	// Sequence.
 		}
 
 		// 2: Loop over all images owned by this flower.
@@ -888,8 +888,8 @@ function populate_details(flower_id)
 			$(ids[i][2])
 			.html(thumbnail_html);
 
-			$(ids[i][3])
-			.val(sequence);
+			//$(ids[i][3])
+			//.val(sequence);
 		}
 
 		// Notes: Copy notes to the Details/Notes tab.
@@ -907,8 +907,8 @@ function populate_details(flower_id)
 			$(ids[i][0])
 			.val('');	// Note.
 
-			$(ids[i][1])
-			.val('');	// Sequence.
+			//$(ids[i][1])
+			//.val('');	// Sequence.
 		}
 
 		// 2: Loop over all notes owned by this flower.
