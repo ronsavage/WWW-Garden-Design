@@ -82,13 +82,13 @@ sub test_flowers
 
 		# Test height.
 
-		$result = $checker -> check_dimension($params, 'height');
+		$result = $checker -> check_dimension($params, 'height', ['cm', 'm']);
 
 		ok($result == 1, "Common name '$common_name'. Height '$$params{height}' is ok"); $test_count++;
 
 		# Test width.
 
-		$result = $checker -> check_dimension($params, 'width');
+		$result = $checker -> check_dimension($params, 'width', ['cm', 'm']);
 
 		ok($result == 1, "Common name '$common_name'. Width '$$params{width}' is ok"); $test_count++;
 	}
