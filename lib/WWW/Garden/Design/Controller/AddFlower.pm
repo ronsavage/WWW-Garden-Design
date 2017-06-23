@@ -37,7 +37,7 @@ sub display
 	}
 	else
 	{
-		$self -> stash(error	=> $self -> format_errors($params));
+		$self -> stash(error	=> $self -> format_errors($params) );
 		$self -> stash(details	=> undef);
 		$self -> stash(message	=> $$params{message});
 		$self -> app -> log -> error($$params{message});
@@ -88,6 +88,7 @@ sub format_errors
 	<td class = 'generic_border'>$name</td>
 	<td class = 'generic_border'>$$errors[0]</td>
 	<td class = 'generic_border'>$$errors[1]</td>
+	<td class = 'generic_border'>$$errors[2]</td>
 </tr>
 EOS
 	}

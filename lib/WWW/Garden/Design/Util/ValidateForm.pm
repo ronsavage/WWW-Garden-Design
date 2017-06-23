@@ -29,32 +29,36 @@ our $VERSION = '0.95';
 sub flower_details
 {
 	my($self, $controller, $defaults) = @_;
-	my($params) = $controller -> req -> params -> to_hash;
-	my($app)	= $controller -> app;
+	my($app)			= $controller -> app;
+	my($params) 		= $controller -> req -> params -> to_hash;
+	$$params{errors}	= {};
+	$$params{message}	= '';
+	$$params{status}	= 1; # Return 0 for success and 1 for failure.
 
 	$app -> log -> debug("$_ => $$params{$_}") for sort keys %$params;
 	$app -> log -> debug('CSRF. session' . $controller -> session('csrf_token') . ". params: $$params{csrf_token}");
 
+	# %errors is declared at this level so various methods can store into it.
+
+	my(%errors);
+
 	if ($$params{common_name} && $$params{scientific_name})
 	{
-		# Return 0 for success and 1 for failure.
-
 		my($csrf_ok)	= $controller -> session('csrf_token') eq $$params{csrf_token} ? 1 : 0;
 		my($joiner)		= $$defaults{joiner};
 
-		$self -> process_flower_attributes($app, $defaults, $joiner, $$params{attribute_list});
-		$self -> process_flower_dimensions($app, $defaults, $$params{height}, $$params{width});
-		$self -> process_flower_images($app, $defaults, $joiner, $$params{image_list});
-		$self -> process_flower_notes($app, $defaults, $joiner, $$params{note_list});
+		$self -> process_flower_attributes($app, $defaults, $joiner, $$params{attribute_list}, \%errors);
+		$self -> process_flower_dimensions($app, $defaults, $$params{height}, $$params{width}, \%errors);
+		$self -> process_flower_images($app, $defaults, $joiner, $$params{image_list}, \%errors);
+		$self -> process_flower_notes($app, $defaults, $joiner, $$params{note_list}, \%errors);
 		$self -> validator -> check_member($params, 'publish', ['Yes', 'No']);
-		$self -> process_flower_urls($app, $defaults, $joiner, $params);
+		$self -> process_flower_urls($app, $defaults, $joiner, $params, \%errors);
 
 		if ($csrf_ok == 1)
 		{
 			$app -> log -> debug('Validated params: ' . Dumper($self -> validator -> validation -> output) );
 
-			my(@args);
-			my(%errors);
+			my(@args, $args);
 			my($result);
 			my($suffix);
 			my($test);
@@ -66,39 +70,29 @@ sub flower_details
 			for my $name (@{$self -> validator -> validation -> failed})
 			{
 				($test, $result, @args)	= @{$self -> validator -> validation -> error($name)};
-				$suffix					= ($#args >= 0) ? join(', ', @args) : '';
-				$errors{$name}			= [$$params{$name}, $test, $suffix];
+				$args					= ($#args >= 0) ? join(', ', @args) : '';
+				$errors{$name}			= [$$params{$name}, $test, $args];
 			}
 
 			if (scalar keys %errors == 0)
 			{
-				$$params{errors}	= {};
-				$$params{message}	= 'All fields pass validation';
-				$$params{status}	= 0;
+				$$params{message}	= 'All fields were validated successfully';
+				$$params{status}	= 0; # Return 0 for success and 1 for failure.
 			}
 			else
 			{
 				$$params{errors}	= \%errors;
-				$$params{message}	= 'Some fields failed validation';
-				$$params{status}	= 1;
+				$$params{message}	= 'These fields failed validation';
 			}
 		}
 		else
 		{
-			# Return 0 for success and 1 for failure.
-
-			$$params{errors}	= {};
-			$$params{message}	= 'Detected apparent CSRF activity';
-			$$params{status}	= 1;
+			$$params{message} = 'Detected apparent CSRF activity';
 		}
 	}
 	else
 	{
-		# Return 0 for success and 1 for failure.
-
-		$$params{errors}	= {};
-		$$params{message}	= 'Missing common name or scientific name';
-		$$params{status}	= 1;
+		$$params{message} = 'Missing common name or scientific name';
 	}
 
 	return $params;
@@ -109,7 +103,7 @@ sub flower_details
 
 sub process_flower_attributes
 {
-	my($self, $app, $defaults, $joiner, $attribute_list) = @_;
+	my($self, $app, $defaults, $joiner, $attribute_list, $errors) = @_;
 	my(@attributes)	= split(/$joiner/, $attribute_list);
 	my($attributes)	= {};
 
@@ -158,7 +152,7 @@ sub process_flower_attributes
 
 sub process_flower_dimensions
 {
-	my($self, $app, $defaults, $height, $width) = @_;
+	my($self, $app, $defaults, $height, $width, $errors) = @_;
 
 	$app -> log -> debug("ValidateForm.process_flower_dimensions(height: $height, width: $width)");
 	$self -> validator -> check_dimension({height => $height}, 'height', ['cm', 'm']);
@@ -170,22 +164,25 @@ sub process_flower_dimensions
 
 sub process_flower_images
 {
-	my($self, $app, $defaults, $joiner, $image_list) = @_;
+	my($self, $app, $defaults, $joiner, $image_list, $errors) = @_;
 	my(@images) = map{defined($_) ? $_ : ''} split(/$joiner/, $image_list);
 
 	$app -> log -> debug('ValidateForm.process_flower_images(...)');
 
 	# I'm currently accepting duplicate file names and duplicate descriptions.
-
-	my(@field);
+	#
+	# Expected format of @images:
+	# o [$i]: A string id of the form 'image_\d+'.
+	# o [$i + 1]: The image's name.
+	# o [$i + 2]: The image's description.
 
 	for (my($i) = 0; $i < $#images; $i += 3)
 	{
 		next if (length($images[$i + 1]) == 0);
+		next if ($images[$i] !~ /^image_([0-9]{1,2})/);
+		next if ( (length($images[$i + 1]) > 250) || (length($images[$i + 2]) > 250) );
 
-		@field = split(/_/, $images[$i]);
-
-		if ( ($field[1] >= 1) && ($field[1] <= $$defaults{constants_table}{max_image_count}) )
+		if ( ($1 >= 1) && ($1 <= $$defaults{constants_table}{max_image_count}) )
 		{
 			$self -> validator -> check_required({$images[$i] => "$images[$i + 1]$joiner$images[$i + 2]"}, $images[$i]);
 		}
@@ -197,22 +194,24 @@ sub process_flower_images
 
 sub process_flower_notes
 {
-	my($self, $app, $defaults, $joiner, $note_list) = @_;
+	my($self, $app, $defaults, $joiner, $note_list, $errors) = @_;
 	my(@notes) = map{defined($_) ? $_ : ''} split(/$joiner/, $note_list);
 
 	$app -> log -> debug('ValidateForm.process_flower_notes(...)');
 
 	# I'm currently accepting duplicate notes.
-
-	my(@field);
+	#
+	# Expected format of @notes:
+	# o [$i]: A string id of the form 'note_\d+'.
+	# o [$i + 1]: The note's text.
 
 	for (my($i) = 0; $i < $#notes; $i += 2)
 	{
 		next if (length($notes[$i + 1]) == 0);
+		next if ($notes[$i] !~ /^note_([0-9]{1,2})/);
+		next if (length($notes[$i + 1]) > 250);
 
-		@field = split(/_/, $notes[$i]);
-
-		if ( ($field[1] >= 1) && ($field[1] <= $$defaults{constants_table}{max_note_count}) )
+		if ( ($1 >= 1) && ($1 <= $$defaults{constants_table}{max_note_count}) )
 		{
 			$self -> validator -> check_required({$notes[$i] => $notes[$i + 1]}, $notes[$i]);
 		}
@@ -224,7 +223,7 @@ sub process_flower_notes
 
 sub process_flower_urls
 {
-	my($self, $app, $defaults, $joiner, $params) = @_;
+	my($self, $app, $defaults, $joiner, $params, $errors) = @_;
 	my(@urls) = map{defined($_) ? $_ : ''} split(/$joiner/, $$params{url_list});
 
 	$app -> log -> debug('ValidateForm.process_flower_urls(...)');
@@ -233,9 +232,33 @@ sub process_flower_urls
 	# o [$i]: A string id of the form 'url_\d+'.
 	# o [$i + 1]: The url itself.
 
+	my($max_url_length) = 250;
+
+	my($url_length);
+
 	for (my($i) = 0; $i < $#urls; $i += 2)
 	{
-		next if ($urls[$i] !~ /^url_([0-9]{1,2})/);
+		$url_length = length($urls[$i]);
+
+		next if ($url_length == 0);
+
+		if ( ($url_length < 5) || ($url_length > 6) || ($urls[$i] !~ /^url_([0-9]{1,2})/) )
+		{
+			$$errors{'url_id'} = [substr($urls[$i], 0, 20), 'length', '5 .. 6 chars'];
+
+			next;
+		}
+
+		$url_length = length($urls[$i + 1]);
+
+		next if ($url_length == 0);
+
+		if ( ($url_length < 5) || ($url_length > $max_url_length) )
+		{
+			$$errors{$urls[$i]} = [substr($urls[$i + 1], 0, $max_url_length), 'length', "5 .. $max_url_length chars"];
+
+			next;
+		}
 
 		if ( ($1 >= 1) && ($1 <= $$defaults{constants_table}{max_url_count}) )
 		{
