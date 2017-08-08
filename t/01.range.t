@@ -6,12 +6,12 @@ use warnings;
 
 use Test::More;
 
-use WWW::Garden::Design::Util::Validator;
+use MojoX::Validate::Util;
 
 # ------------------------------------------------
 
 my($test_count)	= 0;
-my($checker)	= WWW::Garden::Design::Util::Validator -> new;
+my($checker)	= MojoX::Validate::Util -> new;
 
 my(@data) =
 (
@@ -31,14 +31,12 @@ my($message);
 
 for my $params (@data)
 {
-	$expected	= ($$params{height} =~ /^z/) ? 0 : 1;
+	$expected	= ($$params{height} =~ /^z?1$/) ? 0 : 1;
 	$infix		= $expected ? '' : 'not ';
 	$message	= "Height '$$params{height}' is ${infix}a valid height";
 
 	ok($checker -> check_dimension($params, 'height', ['cm', 'm']) == $expected, $message); $test_count++;
 }
-
-ok($checker -> check_optional({x => ''}, 'x') == 1, 'Length 0 is ok'); $test_count++;
 
 print "# Internal test count: $test_count\n";
 

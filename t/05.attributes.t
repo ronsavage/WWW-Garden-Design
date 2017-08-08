@@ -7,12 +7,13 @@ use Data::Dumper::Concise; # For Dumper().
 
 use FindBin;
 
+use MojoX::Validate::Util;
+
 use Test::More;
 
 use Text::CSV::Encoded;
 
 use WWW::Garden::Design::Util::Filer;
-use WWW::Garden::Design::Util::Validator;
 
 # ------------------------------------------------
 
@@ -48,33 +49,39 @@ sub test_attribute_types
 
 	my($expected_keys) = [keys %$expected_attribute_types];
 
-	my($expected_format);
+	my($expected_set, $expected_format);
 	my($name);
-	my($range);
+	my(@range, $range);
 	my($sequence);
 
 	for my $params (@$attributes_types)
 	{
 		$name				= $$params{name};
-		$range				= $$params{range};
+		@range				= split(/, /, $$params{range});
 		$sequence			= $$params{sequence};
 		$expected_format	= $$expected_attribute_types{$name};
+		$expected_set		= [split(/, /, $$expected_format[2])];
 
 		ok($checker -> check_member($params, 'name', $expected_keys), "Attribute type '$name' ok"); $test_count++;
 
 		if ($$expected_format[0] eq 'Integer')
 		{
-			ok($checker -> check_natural_number($params, 'sequence') == 1, "Attribute type '$name'. Sequence '$sequence' ok"); $test_count++;
+			ok($checker -> check_number($params, 'sequence', $$expected_format[1]), "Attribute type '$name'. Sequence '$sequence' ok"); $test_count++;
 		}
 
-		$result = $checker -> check_equal_to
-					(
-						{expected => $$expected_format[1], got => $range},
-						'got',
-						'expected'
-					);
+		for $range (@range)
+		{
+			note "Compare <$range> with <@{[join(', ', @$expected_set)]}>";
 
-		ok($result == 1, "Attribute type '$name'. Range '$range' ok"); $test_count++;
+			$result = $checker -> check_member
+						(
+							{got => $range},
+							'got',
+							$expected_set
+						);
+
+			ok($result == 1, "Attribute type '$name'. Range '$range' ok"); $test_count++;
+		}
 	}
 
 	return $test_count;
@@ -184,7 +191,7 @@ sub test_attributes
 	{
 		for $name (sort keys %{$got_attributes{$common_name} })
 		{
-			ok($checker -> check_count($got_attributes{$common_name}, $name, 1) == 1, "Common name '$common_name', attribute '$name' occurs once"); $test_count++;
+			ok($checker -> check_number($got_attributes{$common_name}, $name, 1) == 1, "Common name '$common_name', attribute '$name' occurs once"); $test_count++;
 		}
 	}
 
@@ -196,12 +203,12 @@ sub test_attributes
 
 my($expected_attribute_types) =
 {
-	'Edible'		=> ['Integer', 'No, Bean, Flower, Fruit, Leaf, Stem, Rhizome, Unknown'],
-	'Habit'			=> ['Integer', 'Columnar, Dwarf, Semi-dwarf, Prostrate, Shrub, Tree, Vine, Unknown'],
-	'Native'		=> ['Integer', 'Yes, No, Unknown'],
-	'Sun tolerance'	=> ['Integer', 'Full sun, Part shade, Shade, Unknown'],
+	'Edible'		=> ['Integer', 10, 'No, Bean, Flower, Fruit, Leaf, Stem, Rhizome, Unknown'],
+	'Habit'			=> ['Integer', 20, 'Columnar, Dwarf, Semi-dwarf, Prostrate, Shrub, Tree, Vine, Unknown'],
+	'Native'		=> ['Integer', 30, 'Yes, No, Unknown'],
+	'Sun tolerance'	=> ['Integer', 40, 'Full sun, Part shade, Shade, Unknown'],
 };
-my($checker)	= WWW::Garden::Design::Util::Validator -> new;
+my($checker)	= MojoX::Validate::Util -> new;
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
 $test_count		= test_attribute_types($filer, $checker, $test_count, $expected_attribute_types);

@@ -8,14 +8,11 @@ use Data::Dumper::Concise; # For Dumper().
 
 use FindBin;
 
-use Mojolicious::Validator;
-
-use Params::Classify 'is_number';
+use MojoX::Validate::Util;
 
 use Test::More;
 
 use WWW::Garden::Design::Util::Filer;
-use WWW::Garden::Design::Util::Validator;
 
 # ------------------------------------------------
 
@@ -95,7 +92,7 @@ sub test_flowers
 
 	for $common_name (sort keys %count)
 	{
-		ok($checker -> check_count(\%count, $common_name, 1) == 1, "Common name '$common_name' not duplicated"); $test_count++;
+		ok($checker -> check_number(\%count, $common_name, 1) == 1, "Common name '$common_name' not duplicated"); $test_count++;
 	}
 
 	return $test_count;
@@ -104,7 +101,7 @@ sub test_flowers
 
 # ------------------------------------------------
 
-my($checker)	= WWW::Garden::Design::Util::Validator -> new;
+my($checker)	= MojoX::Validate::Util -> new;
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
 $test_count		= test_flowers($filer, $checker, $test_count);

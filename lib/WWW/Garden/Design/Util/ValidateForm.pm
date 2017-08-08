@@ -6,17 +6,17 @@ use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use Data::Dumper::Concise; # For Dumper().
 
+use MojoX::Validate::Util;
+
 use Moo;
 
 use Types::Standard qw/Object/;
-
-use WWW::Garden::Design::Util::Validator;
 
 use utf8;
 
 has validator =>
 (
-	default		=> sub{return WWW::Garden::Design::Util::Validator -> new},
+	default		=> sub{return MojoX::Validate::Util -> new},
 	is			=> 'ro',
 	isa			=> Object,
 	required	=> 0,

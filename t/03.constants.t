@@ -14,7 +14,7 @@ use Test::More;
 use Text::CSV::Encoded;
 
 use WWW::Garden::Design::Util::Filer;
-use WWW::Garden::Design::Util::Validator;
+use MojoX::Validate::Util;
 
 # ------------------------------------------------
 
@@ -72,13 +72,13 @@ sub test_attribute_types
 
 		if ($expected_format eq 'Integer')
 		{
-			ok($checker -> check_natural_number($params, 'value') == 1, "Constant '$value' ok"); $test_count++;
+			ok($checker -> check_ascii_digits($params, 'value') == 1, "Constant '$value' ok"); $test_count++;
 		}
 	}
 
 	for $name (sort @$expected_keys)
 	{
-		ok($checker -> check_count(\%required, $name, 1) == 1, "Name '$name' not duplicated and not missing"); $test_count++;
+		ok($checker -> check_number(\%required, $name, 1) == 1, "Name '$name' not duplicated and not missing"); $test_count++;
 	}
 
 	return $test_count;
@@ -118,7 +118,7 @@ my($expected_constants) =
 	x_offset				=> 'Integer',
 	y_offset				=> 'Integer',
 };
-my($checker)	= WWW::Garden::Design::Util::Validator -> new;
+my($checker)	= MojoX::Validate::Util -> new;
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
 $test_count		= test_attribute_types($filer, $checker, $test_count, $expected_constants);

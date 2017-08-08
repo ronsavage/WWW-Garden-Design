@@ -7,12 +7,13 @@ use Data::Dumper::Concise; # For Dumper().
 
 use FindBin;
 
+use MojoX::Validate::Util;
+
 use Test::More;
 
 use Text::CSV::Encoded;
 
 use WWW::Garden::Design::Util::Filer;
-use WWW::Garden::Design::Util::Validator;
 
 # ------------------------------------------------
 
@@ -149,7 +150,7 @@ sub test_properties
 
 # ------------------------------------------------
 
-my($checker)	= WWW::Garden::Design::Util::Validator -> new;
+my($checker)	= MojoX::Validate::Util -> new;
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
 

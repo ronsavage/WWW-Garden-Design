@@ -8,7 +8,7 @@ use DBIx::Simple;
 
 use Test::More;
 
-use WWW::Garden::Design::Util::Validator;
+use MojoX::Validate::Util;
 
 # ---------------------------------------------
 
@@ -31,7 +31,7 @@ my($dbh) = DBI -> connect($$config{dsn}, $$config{username}, $$config{password},
 
 $dbh -> do('PRAGMA foreign_keys = ON') if ($$config{dsn} =~ /SQLite/i);
 
-my($checker)	= WWW::Garden::Design::Util::Validator -> new;
+my($checker)	= MojoX::Validate::Util -> new;
 my($simple)		= DBIx::Simple -> new($dbh);
 my(%expected)	=
 (
@@ -56,7 +56,7 @@ for my $table_name (sort keys %expected)
 	$set	= $simple -> query($sql) || die $simple -> error;
 	$result	= $set -> hash;
 
-	ok($checker -> check_count($result, 'count', $expected{$table_name}) == 1, "Table: $table_name. Records: $expected{$table_name}. Found: $$result{count}");
+	ok($checker -> check_number($result, 'count', $expected{$table_name}) == 1, "Table: $table_name. Records: $expected{$table_name}. Found: $$result{count}");
 }
 
 done_testing;
