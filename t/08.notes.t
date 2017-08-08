@@ -8,14 +8,13 @@ use Data::Dumper::Concise; # For Dumper().
 
 use FindBin;
 
-use Mojolicious::Validator;
+use MojoX::Validate::Util;
 
 use Test::More;
 
 use Text::CSV::Encoded;
 
 use WWW::Garden::Design::Util::Filer;
-use WWW::Garden::Design::Util::Validator;
 
 # ------------------------------------------------
 
@@ -77,11 +76,12 @@ sub test_notes
 		# Don't check notes. They may be duplicated!
 
 		# Check sequences.
+		# Note: We can't check the actual value of sequence, since it will just be a low number.
 
 		$sequence					= $$params{sequence};
 		$sequences{$common_name}	= {} if (! $sequences{$common_name});
 
-		ok($checker -> check_natural_number($params, 'sequence') == 1, "Common name '$common_name'. Image sequence '$sequence' ok"); $test_count++;
+		ok($checker -> check_ascii_digits($params, 'sequence') == 1, "Common name '$common_name'. Image sequence '$sequence' ok"); $test_count++;
 
 		$sequences{$common_name}{$sequence}++;
 	}
@@ -90,7 +90,7 @@ sub test_notes
 	{
 		for $sequence (sort keys %{$sequences{$common_name} })
 		{
-			ok($checker -> check_count($sequences{$common_name}, $sequence, 1) == 1, "Common name '$common_name'. Sequence '$sequence' is unique"); $test_count++;
+			ok($checker -> check_ascii_digits($sequences{$common_name}, $sequence) == 1, "Common name '$common_name'. Sequence '$sequence' is unique"); $test_count++;
 		}
 	}
 
@@ -100,7 +100,7 @@ sub test_notes
 
 # ------------------------------------------------
 
-my($checker)	= WWW::Garden::Design::Util::Validator -> new;
+my($checker)	= MojoX::Validate::Util -> new;
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
 $test_count		= test_notes($filer, $checker, $test_count);

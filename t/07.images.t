@@ -81,25 +81,26 @@ sub test_images
 		$count{$file_name}++;
 
 		# Check sequences.
+		# Note: We can't check the actual value of sequence, since it will just be a low number.
 
 		$sequence					= $$params{sequence};
 		$sequences{$common_name}	= {} if (! $sequences{$common_name});
 
-		ok($checker -> check_natural_number($params, 'sequence') == 1, "Common name '$common_name'. Image sequence '$sequence' ok"); $test_count++;
+		ok($checker -> check_ascii_digits($params, 'sequence') == 1, "Common name '$common_name'. Image sequence '$sequence' ok"); $test_count++;
 
 		$sequences{$common_name}{$sequence}++;
 	}
 
 	for $file_name (sort keys %count)
 	{
-		ok($checker -> check_count(\%count, $file_name, 1) == 1, "File name '$file_name' not duplicated"); $test_count++;
+		ok($checker -> check_number(\%count, $file_name, 1) == 1, "File name '$file_name' not duplicated"); $test_count++;
 	}
 
 	for $common_name (sort keys %sequences)
 	{
 		for $sequence (sort keys %{$sequences{$common_name} })
 		{
-			ok($checker -> check_count($sequences{$common_name}, $sequence, 1) == 1, "Common name '$common_name'. Sequence '$sequence' is unique"); $test_count++;
+			ok($checker -> check_number($sequences{$common_name}, $sequence, 1) == 1, "Common name '$common_name'. Sequence '$sequence' is unique"); $test_count++;
 		}
 	}
 

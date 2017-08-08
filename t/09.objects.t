@@ -8,14 +8,13 @@ use Data::Dumper::Concise; # For Dumper().
 
 use FindBin;
 
-use Mojolicious::Validator;
+use MojoX::Validate::Util;
 
 use Test::More;
 
 use Text::CSV::Encoded;
 
 use WWW::Garden::Design::Util::Filer;
-use WWW::Garden::Design::Util::Validator;
 
 # ------------------------------------------------
 
@@ -66,7 +65,7 @@ sub test_objects
 
 	for $name (sort keys %count)
 	{
-		ok($checker -> check_count(\%count, $name, 1) == 1, "Object '$name' is unique"); $test_count++;
+		ok($checker -> check_number(\%count, $name, 1) == 1, "Object '$name' is unique"); $test_count++;
 	}
 
 	return $test_count;
@@ -75,7 +74,7 @@ sub test_objects
 
 # ------------------------------------------------
 
-my($checker)	= WWW::Garden::Design::Util::Validator -> new;
+my($checker)	= MojoX::Validate::Util -> new;
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
 $test_count		= test_objects($filer, $checker, $test_count);

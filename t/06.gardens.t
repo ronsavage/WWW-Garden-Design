@@ -79,7 +79,7 @@ sub test_gardens
 	{
 		for $garden_name (sort keys %{$garden_names{$property_name} })
 		{
-			ok($checker -> check_count($garden_names{$property_name}, $garden_name, 1) == 1, "Garden name '$garden_name' is unique within property '$property_name'"); $test_count++;
+			ok($checker -> check_number($garden_names{$property_name}, $garden_name, 1) == 1, "Garden name '$garden_name' is unique within property '$property_name'"); $test_count++;
 		}
 	}
 
@@ -141,7 +141,7 @@ sub test_properties
 
 	for $property_name (sort keys %$property_names)
 	{
-		ok($checker -> check_count($property_names, $property_name, 1) == 1, "Property name '$property_name' not duplicated"); $test_count++;
+		ok($checker -> check_number($property_names, $property_name, 1) == 1, "Property name '$property_name' not duplicated"); $test_count++;
 	}
 
 	return $test_count;

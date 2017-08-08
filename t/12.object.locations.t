@@ -7,14 +7,13 @@ use Data::Dumper::Concise; # For Dumper().
 
 use FindBin;
 
-use Mojolicious::Validator;
+use MojoX::Validate::Util;
 
 use Test::More;
 
 use Text::CSV::Encoded;
 
 use WWW::Garden::Design::Util::Filer;
-use WWW::Garden::Design::Util::Validator;
 
 # ------------------------------------------------
 
@@ -104,8 +103,8 @@ sub test_object_locations
 
 			$xy{$property_name}{$garden_name}{$xy}++;
 
-			ok($checker -> check_natural_number({x => $xy[0]}, 'x') == 1, "Object name '$name', xy '$xy'. X ok"); $test_count++;
-			ok($checker -> check_natural_number({y => $xy[1]}, 'y') == 1, "Object name '$name', xy '$xy'. Y ok"); $test_count++;
+			ok($checker -> check_ascii_digits({x => $xy[0]}, 'x') == 1, "Object name '$name', xy '$xy'. X ok"); $test_count++;
+			ok($checker -> check_ascii_digits({y => $xy[1]}, 'y') == 1, "Object name '$name', xy '$xy'. Y ok"); $test_count++;
 		}
 
 		ok ($checker -> check_key_exists(\%properties, $property_name) == 1, "Property name '$property_name' ok"); $test_count++;
@@ -118,7 +117,7 @@ sub test_object_locations
 		{
 			for $xy (sort keys %{$xy{$property_name}{$garden_name} })
 			{
-				ok($checker -> check_count($xy{$property_name}{$garden_name}, $xy, 1) == 1, "Property name '$property_name'. Garden name '$garden_name'. XY '$xy' duplicated"); $test_count++;
+				ok($checker -> check_number($xy{$property_name}{$garden_name}, $xy, 1) == 1, "Property name '$property_name'. Garden name '$garden_name'. XY '$xy' duplicated"); $test_count++;
 			}
 		}
 	}
@@ -129,7 +128,7 @@ sub test_object_locations
 
 # ------------------------------------------------
 
-my($checker)	= WWW::Garden::Design::Util::Validator -> new;
+my($checker)	= MojoX::Validate::Util -> new;
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
 $test_count		= test_object_locations($filer, $checker, $test_count);
