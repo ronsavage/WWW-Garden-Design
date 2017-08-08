@@ -49,7 +49,7 @@ sub test_attribute_types
 
 	my($expected_keys) = [keys %$expected_attribute_types];
 
-	my($expected_set, $expected_format);
+	my($expected_format, $expected_set);
 	my($name);
 	my(@range, $range);
 	my($sequence);
@@ -57,10 +57,10 @@ sub test_attribute_types
 	for my $params (@$attributes_types)
 	{
 		$name				= $$params{name};
-		@range				= split(/, /, $$params{range});
-		$sequence			= $$params{sequence};
 		$expected_format	= $$expected_attribute_types{$name};
 		$expected_set		= [split(/, /, $$expected_format[2])];
+		@range				= split(/, /, $$params{range});
+		$sequence			= $$params{sequence};
 
 		ok($checker -> check_member($params, 'name', $expected_keys), "Attribute type '$name' ok"); $test_count++;
 
@@ -71,8 +71,6 @@ sub test_attribute_types
 
 		for $range (@range)
 		{
-			note "Compare <$range> with <@{[join(', ', @$expected_set)]}>";
-
 			$result = $checker -> check_member
 						(
 							{got => $range},
@@ -158,9 +156,9 @@ sub test_attributes
 
 	my($count) = 0;
 
-	my($expected_format);
+	my($expected_format, $expected_set);
 	my($name);
-	my($range);
+	my(@range, $range);
 
 	for my $params (@$attributes)
 	{
@@ -169,19 +167,24 @@ sub test_attributes
 		$common_name		= $$params{common_name};
 		$name				= $$params{attribute_name};
 		$expected_format	= $$expected_attribute_types{$name};
+		$expected_set		= [split(/, /, $$expected_format[2])];
+		@range				= split(/, /, $$params{range});
 
 		$got_attributes{$common_name}{$name}++;
 
 		ok($checker -> check_member($params, 'attribute_name', $expected_keys), "Attribute '$name' ok"); $test_count++;
 		ok($checker -> check_member($params, 'common_name', [keys %common_names]), "Attribute '$name', common_name '$common_name' ok"); $test_count++;
 
-		for $range (split(/,\s*/, $$params{range}) )
+		for $range (@range)
 		{
-			# We hae to fiddle 'range' on-the-fly so check_member() does not check (e.g. Basil) for 'Leaf, Stem'.
+			$result = $checker -> check_member
+						(
+							{got => $range},
+							'got',
+							$expected_set
+						);
 
-			$$params{range} = $range;
-
-			ok($checker -> check_member($params, 'range', [keys %{$expected_attributes{$name} }]), "Attribute '$name', range '$range' ok"); $test_count++;
+			ok($result == 1, "Attribute type '$name'. Range '$range' ok"); $test_count++;
 		}
 	}
 
