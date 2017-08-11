@@ -5,6 +5,8 @@ use utf8;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
+use boolean;
+
 use Encode 'encode';
 
 use Imager;
@@ -81,9 +83,9 @@ our $VERSION = '0.95';
 
 sub BUILD
 {
-	my($self)            = @_;
-	my($export_type)     = $self -> export_type;
-	my($standalone_page) = $self -> standalone_page;
+	my($self)				= @_;
+	my($export_type)		= $self -> export_type;
+	my($standalone_page)	= $self -> standalone_page;
 
 	$self -> title_font
 	(
@@ -555,18 +557,27 @@ sub export_garden_layout
 	my($objects)		= $self -> db -> read_objects_table;
 	my($max_x)			= 0;
 	my($max_y)			= 0;
+	my($property_found)	= false;
 	my($property_name)	= $self -> property_name;
 	my($x_offset)		= $$constants{x_offset};
 	my($y_offset)		= $$constants{y_offset};
 
-	print "Entered export_garden_layout($garden_name). \n";
-
-	my(%garden_name);
+	my(%garden_id2name, %garden_name2id);
 
 	for my $garden (@$gardens_table)
 	{
-		$garden_name{$$garden{id} } = $$garden{name};
+		$garden_name2id{$$garden{name} }	= $$garden{id};
+		$garden_id2name{$$garden{id} }		= $$garden{name};
+
+		if ($property_name eq $$garden{property_name})
+		{
+			$property_found = true;
+		}
 	}
+
+	die "No such property: $property_name. \n" if (! $property_found);
+
+	my($garden_id) = $garden_name2id{$garden_name};
 
 	my(%object_name);
 
@@ -586,7 +597,7 @@ sub export_garden_layout
 	{
 		for my $location (@{$$flower{flower_locations} })
 		{
-			next if ($garden_name{$$location{garden_id} } ne $garden_name);
+			next if ($garden_id2name{$$location{garden_id} } ne $garden_name);
 
 			$id					= $$location{id};
 			$x					= $$location{x};
@@ -605,7 +616,7 @@ sub export_garden_layout
 	{
 		for my $feature (@{$$object{object_locations} })
 		{
-			next if ($garden_name{$$feature{garden_id} } ne $garden_name);
+			next if ($garden_id2name{$$feature{garden_id} } ne $garden_name);
 
 			$x		= $$feature{x};
 			$y		= $$feature{y};
@@ -639,7 +650,7 @@ sub export_garden_layout
 	{
 		for my $feature (@{$$object{object_locations} })
 		{
-			next if ($garden_name{$$feature{garden_id} } ne $garden_name);
+			next if ($garden_id2name{$$feature{garden_id} } ne $garden_name);
 
 			$file_name	= $self -> db -> clean_up_icon_name($$object{name});
 
@@ -657,16 +668,17 @@ sub export_garden_layout
 	# 3: Add the flowers to the grid.
 
 	my($pig_latin);
+	my(%tool_tips);
+
+	$tool_tips{$garden_id} = {};
 
 	for my $flower (@$flowers)
 	{
-		print "$$flower{scientific_name). \n";
-
 		$pig_latin = $$flower{pig_latin};
 
 		for my $location (@{$$flower{flower_locations} })
 		{
-			next if ($garden_name{$$location{garden_id} } ne $garden_name);
+			next if ($garden_id2name{$$location{garden_id} } ne $garden_name);
 
 			$image_id = $image -> image_link
 			(
@@ -677,9 +689,7 @@ sub export_garden_layout
 				y		=> $$location{y}, # Cell co-ord.
 			);
 
-			print "($$location{x}, $$location{x}). image_id: $image_id. $$flower{scientific_name}. \n":
-
-			$self -> db -> logger -> info("($$location{x}, $$location{x}). image_id: $image_id. $$flower{scientific_name}");
+			$tool_tips{$garden_id}{$image_id} = "$$flower{scientific_name} / $$flower{common_name}";
 		}
 	}
 
@@ -776,7 +786,35 @@ EOS
 		</table>
 
 		<table align = 'center' summary = 'Second placeholder for link to top'><tr><td><a href = '#top'>Top</a></td></tr></table>
+EOS
+
+	# Finally, generate the JS which implements ToolTips activated by MouseOver.
+
+	push @garden_index, <<EOS;
 	</body>
+
+	<script type="text/javascript" src="/assets/js/jQuery/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="/assets/js/jQuery/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+	<script type="text/javascript">
+	var tool_tips = [];
+EOS
+
+	my(@tips);
+
+	for $image_id (nsort keys %{$tool_tips{$garden_id} })
+	{
+		# Must use double-quotes in case the common_name contains a single-quote.
+		# And we use a stack because <<EOS added an extra \n to every output line :-(.
+
+		push @tips, qq|\ttool_tips[$image_id]\t= "$tool_tips{$garden_id}{$image_id}";|;
+	}
+
+	my($tips) = join("\n", @tips);
+
+	push @garden_index, <<EOS;
+$tips
+
+	</script>
 </html>
 EOS
 
@@ -945,8 +983,6 @@ sub export_layouts
 {
 	my($self)			= @_;
 	my($gardens_table)	= $self -> db -> read_gardens_table; # Warning: Not read_table('gardens').
-
-	print "Entered export_layouts. \n";
 
 	for my $garden (@$gardens_table)
 	{
