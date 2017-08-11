@@ -26,9 +26,9 @@ use Imager;
 use Imager::Fill;
 use Lingua::EN::Inflect;
 use Mojolicious;
-use Mojolicious::Validator;
 use Mojo::Base;
 use Mojo::Log;
+use MojoX::Validate::Util;
 use Moo;
 use Params::Classify;
 use Path::Tiny;
@@ -69,9 +69,9 @@ my(@modules) = qw
 	Imager::Fill
 	Lingua::EN::Inflect
 	Mojolicious
-	Mojolicious::Validator
 	Mojo::Base
 	Mojo::Log
+	MojoX::Validate::Util
 	Moo
 	Params::Classify
 	Path::Tiny
