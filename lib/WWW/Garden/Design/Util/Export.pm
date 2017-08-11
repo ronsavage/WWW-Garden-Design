@@ -559,6 +559,8 @@ sub export_garden_layout
 	my($x_offset)		= $$constants{x_offset};
 	my($y_offset)		= $$constants{y_offset};
 
+	print "Entered export_garden_layout($garden_name). \n";
+
 	my(%garden_name);
 
 	for my $garden (@$gardens_table)
@@ -658,6 +660,8 @@ sub export_garden_layout
 
 	for my $flower (@$flowers)
 	{
+		print "$$flower{scientific_name). \n";
+
 		$pig_latin = $$flower{pig_latin};
 
 		for my $location (@{$$flower{flower_locations} })
@@ -672,6 +676,10 @@ sub export_garden_layout
 				x		=> $$location{x}, # Cell co-ord.
 				y		=> $$location{y}, # Cell co-ord.
 			);
+
+			print "($$location{x}, $$location{x}). image_id: $image_id. $$flower{scientific_name}. \n":
+
+			$self -> db -> logger -> info("($$location{x}, $$location{x}). image_id: $image_id. $$flower{scientific_name}");
 		}
 	}
 
@@ -937,6 +945,8 @@ sub export_layouts
 {
 	my($self)			= @_;
 	my($gardens_table)	= $self -> db -> read_gardens_table; # Warning: Not read_table('gardens').
+
+	print "Entered export_layouts. \n";
 
 	for my $garden (@$gardens_table)
 	{
