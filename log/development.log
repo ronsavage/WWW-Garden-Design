@@ -1,0 +1,10 @@
+[Fri Aug 11 17:53:23 2017] [info] Max (x, y) after processing 'flower_locations': (29, 67)
+[Fri Aug 11 17:53:23 2017] [info] Max (x, y) after processing 'object_locations': (30, 69)
+[Fri Aug 11 17:53:23 2017] [info] Writing to /home/ron/savage.net.au/Flowers/Back.garden.layout.svg
+[Fri Aug 11 17:53:23 2017] [info] Writing to /home/ron/savage.net.au/Flowers/Back.garden.layout.html
+[Fri Aug 11 17:53:23 2017] [info] Finished exporting garden layout for the 'Back' garden
+[Fri Aug 11 17:53:23 2017] [info] Max (x, y) after processing 'flower_locations': (29, 33)
+[Fri Aug 11 17:53:23 2017] [info] Max (x, y) after processing 'object_locations': (30, 34)
+[Fri Aug 11 17:53:23 2017] [info] Writing to /home/ron/savage.net.au/Flowers/Front.garden.layout.svg
+[Fri Aug 11 17:53:23 2017] [info] Writing to /home/ron/savage.net.au/Flowers/Front.garden.layout.html
+[Fri Aug 11 17:53:23 2017] [info] Finished exporting garden layout for the 'Front' garden

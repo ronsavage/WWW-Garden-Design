@@ -668,6 +668,9 @@ sub export_garden_layout
 	# 3: Add the flowers to the grid.
 
 	my($pig_latin);
+	my(%tool_tips);
+
+	$tool_tips{$garden_id} = {};
 
 	for my $flower (@$flowers)
 	{
@@ -686,6 +689,8 @@ sub export_garden_layout
 				x		=> $$location{x}, # Cell co-ord.
 				y		=> $$location{y}, # Cell co-ord.
 			);
+
+			$tool_tips{$garden_id}{$image_id} = "$$flower{scientific_name} / $$flower{common_name}";
 		}
 	}
 
@@ -783,6 +788,56 @@ EOS
 
 		<table align = 'center' summary = 'Second placeholder for link to top'><tr><td><a href = '#top'>Top</a></td></tr></table>
 	</body>
+EOS
+
+	# Finally, (in several steps) generate the JS which implements ToolTips activated by MouseOver.
+
+	push @garden_index, <<EOS;
+
+	<script type="text/javascript" src="/assets/js/jQuery/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="/assets/js/jQuery/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+	<script type="text/javascript">
+
+	var tool_tips = [];
+EOS
+
+	my($index) = -1;
+
+	my(@tips);
+
+	for $image_id (nsort keys %{$tool_tips{$garden_id} })
+	{
+		$index++;
+
+		# Must use double-quotes in case the common_name contains a single-quote.
+		# And we use a stack because <<EOS added an extra \n to every output line :-(.
+
+		push @tips, qq|\ttool_tips[$index] = {id: '$image_id', text: "$tool_tips{$garden_id}{$image_id}"};|;
+	}
+
+	my($tips) = join("\n", @tips);
+
+	push @garden_index, <<EOS;
+$tips
+
+	var id;
+
+	for (var i = 0; i < tool_tips.length; i++)
+	{
+		id = document.getElementById(tool_tips[i].id);
+
+		\$(id).tooltip({content: tool_tips[i].text, items: 'span'});
+
+		\$(id)
+		.mouseenter(function() {
+			\$(id).tooltip('open')
+		})
+		.mouseleave(function() {
+			\$(id).tooltip('close')
+		});
+	}
+
+	</script>
 </html>
 EOS
 
