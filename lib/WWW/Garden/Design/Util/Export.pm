@@ -566,6 +566,8 @@ sub export_garden_layout
 
 	my(%garden_id2name, %garden_name2id);
 
+	# The calling code checks ($$garden{property_publish} eq 'No') and ($$garden{publish} eq 'No').
+
 	for my $garden (@$gardens_table)
 	{
 		$garden_name2id{$$garden{name} }	= $$garden{id};
@@ -585,6 +587,8 @@ sub export_garden_layout
 
 	for my $object (@$objects)
 	{
+		next if ($$object{publish} eq 'No');
+
 		$object_name{$$object{id} } = $$object{name};
 	}
 
@@ -597,6 +601,8 @@ sub export_garden_layout
 
 	for my $flower (@$flowers)
 	{
+		next if ($$flower{publish} eq 'No');
+
 		for my $location (@{$$flower{flower_locations} })
 		{
 			next if ($garden_id2name{$$location{garden_id} } ne $garden_name);
@@ -616,6 +622,8 @@ sub export_garden_layout
 
 	for my $object (@$objects)
 	{
+		next if ($$object{publish} eq 'No');
+
 		for my $feature (@{$$object{object_locations} })
 		{
 			next if ($garden_id2name{$$feature{garden_id} } ne $garden_name);
@@ -650,13 +658,14 @@ sub export_garden_layout
 
 	for my $object (@$objects)
 	{
+		next if ($$object{publish} eq 'No');
+
 		for my $feature (@{$$object{object_locations} })
 		{
 			next if ($garden_id2name{$$feature{garden_id} } ne $garden_name);
 
 			$file_name	= $self -> db -> clean_up_icon_name($$object{name});
-
-			$image_id = $image -> svg -> image
+			$image_id	= $image -> svg -> image
 			(
 				height	=> $$constants{cell_height},
 				href	=> $$object{icon_url},
@@ -676,6 +685,8 @@ sub export_garden_layout
 
 	for my $flower (@$flowers)
 	{
+		next if ($$flower{publish} eq 'No');
+
 		$pig_latin = $$flower{pig_latin};
 
 		for my $location (@{$$flower{flower_locations} })
@@ -875,6 +886,8 @@ sub export_icons
 
 	for my $object (sort{$$a{name} cmp $$b{name} } @$objects)
 	{
+		next if ($$object{publish} eq 'No');;
+
 		$color		= Imager::Color -> new($$object{hex_color});
 		$fill		= Imager::Fill -> new(fg => $color, hatch => 'dots16');
 		$id			= $$object{id};
@@ -1334,6 +1347,8 @@ sub object_locations2csv
 
 	for my $object (@$objects)
 	{
+		next if ($$object{publish} eq 'No');
+
 		%location		= ();
 		$object_name	= $$object{name};
 
@@ -1390,6 +1405,8 @@ sub objects2csv
 
 	for my $object (@$objects)
 	{
+		next if ($$object{publish} eq 'No');
+
 		$csv -> combine
 		(
 			$$object{name},
