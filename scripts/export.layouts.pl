@@ -19,6 +19,7 @@ my(%option);
 if ($option_parser -> getoptions
 (
  \%option,
+	'all=s',
 	'help',
 	'property_name=s'
 ) )
@@ -45,6 +46,7 @@ export.layouts.pl - Export various *.svg and *.html files.
 export.layouts.pl [options]
 
 	Options:
+	-all Yes or No
 	-help
 	-property_name aName
 
@@ -55,6 +57,20 @@ Exit value: 0.
 =head1 OPTIONS
 
 =over 4
+
+=item o all => Yes or No
+
+=over 4
+
+=item o Yes
+
+Export everything.
+
+=item o No
+
+Respect property/garden/flower-level publish flag.
+
+=back
 
 =item o help
 

@@ -19,7 +19,8 @@ my(%option);
 if ($option_parser -> getoptions
 (
  \%option,
-	'export_type=i',
+	'all=i',
+	'export_type=s',
 	'help',
 	'standalone_page=i',
 ) )
@@ -55,6 +56,7 @@ export.as.html.pl - Export flowers as a table or a whole page.
 export.as.html.pl [options]
 
 	Options:
+	-all Yes or No
 	-export_type
 	-help
 	-standalone_page
@@ -66,6 +68,20 @@ Exit value: 0.
 =head1 OPTIONS
 
 =over 4
+
+=item o all => Yes or No
+
+=over 4
+
+=item o Yes
+
+Export everything.
+
+=item o No
+
+Respect property/garden/flower-level publish flag.
+
+=back
 
 =item o export_type => $integer
 

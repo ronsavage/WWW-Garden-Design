@@ -19,6 +19,7 @@ my(%option);
 if ($option_parser -> getoptions
 (
  \%option,
+	'all=s',
 	'help',
 ) )
 {
@@ -44,6 +45,7 @@ export.all.pages.pl - Export a page for each flower.
 export.all.pages.pl [options]
 
 	Options:
+	-all Yes or No
 	-help
 
 All switches can be reduced to a single letter.
@@ -51,6 +53,20 @@ All switches can be reduced to a single letter.
 Exit value: 0.
 
 =head1 OPTIONS
+
+=item o all => Yes or No
+
+=over 4
+
+=item o Yes
+
+Export everything.
+
+=item o No
+
+Respect property/garden/flower-level publish flag.
+
+=back
 
 =over 4
 

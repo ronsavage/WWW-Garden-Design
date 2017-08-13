@@ -29,6 +29,14 @@ use Types::Standard qw/Any Int HashRef Str/;
 
 extends qw/WWW::Garden::Design::Database::Base/;
 
+has all =>
+(
+	default		=> sub{return 'No'},
+	is			=> 'rw',
+	isa			=> Str,
+	required	=> 0,
+);
+
 has export_columns =>
 (
 	default		=> sub{return {} },
@@ -86,6 +94,12 @@ sub BUILD
 	my($self)				= @_;
 	my($export_type)		= $self -> export_type;
 	my($standalone_page)	= $self -> standalone_page;
+	my($all)				= $self -> all;
+
+	if ($all !~ /^(?:No|Yes)$/i)
+	{
+		die "The 'all' flag must be Yes or No'\n";
+	}
 
 	$self -> title_font
 	(

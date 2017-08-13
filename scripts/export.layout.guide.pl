@@ -19,6 +19,7 @@ my(%option);
 if ($option_parser -> getoptions
 (
  \%option,
+	'all=s',
 	'help',
 ) )
 {
@@ -46,6 +47,7 @@ export.layout.guide.pl - Export flowers schema/layout as a table.
 export.layout.guide.pl [options]
 
 	Options:
+	-all Yes or No
 	-help
 
 All switches can be reduced to a single letter.
@@ -55,6 +57,20 @@ Exit value: 0.
 =head1 OPTIONS
 
 =over 4
+
+=item o all => Yes or No
+
+=over 4
+
+=item o Yes
+
+Export everything.
+
+=item o No
+
+Respect property/garden/flower-level publish flag.
+
+=back
 
 =item o help
 
