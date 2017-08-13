@@ -212,19 +212,21 @@
 </g>
 <!-- objects -->
 <g id="node10" class="node"><title>objects</title>
-<path fill="none" stroke="blue" d="M1031,-233C1031,-233 1148,-233 1148,-233 1154,-233 1160,-239 1160,-245 1160,-245 1160,-290 1160,-290 1160,-296 1154,-302 1148,-302 1148,-302 1031,-302 1031,-302 1025,-302 1019,-296 1019,-290 1019,-290 1019,-245 1019,-245 1019,-239 1025,-233 1031,-233"/>
+<path fill="none" stroke="blue" d="M1031,-221.5C1031,-221.5 1148,-221.5 1148,-221.5 1154,-221.5 1160,-227.5 1160,-233.5 1160,-233.5 1160,-301.5 1160,-301.5 1160,-307.5 1154,-313.5 1148,-313.5 1148,-313.5 1031,-313.5 1031,-313.5 1025,-313.5 1019,-307.5 1019,-301.5 1019,-301.5 1019,-233.5 1019,-233.5 1019,-227.5 1025,-221.5 1031,-221.5"/>
 <text text-anchor="middle" x="1047" y="-263.8" font-family="Times,serif" font-size="14.00">objects</text>
-<polyline fill="none" stroke="blue" points="1075,-233 1075,-302 "/>
-<text text-anchor="middle" x="1117.5" y="-286.8" font-family="Times,serif" font-size="14.00">1: hex_color</text>
-<polyline fill="none" stroke="blue" points="1075,-279 1160,-279 "/>
-<text text-anchor="middle" x="1117.5" y="-263.8" font-family="Times,serif" font-size="14.00">2: id</text>
-<polyline fill="none" stroke="blue" points="1075,-256 1160,-256 "/>
-<text text-anchor="middle" x="1117.5" y="-240.8" font-family="Times,serif" font-size="14.00">3: name</text>
+<polyline fill="none" stroke="blue" points="1075,-221.5 1075,-313.5 "/>
+<text text-anchor="middle" x="1117.5" y="-298.3" font-family="Times,serif" font-size="14.00">1: hex_color</text>
+<polyline fill="none" stroke="blue" points="1075,-290.5 1160,-290.5 "/>
+<text text-anchor="middle" x="1117.5" y="-275.3" font-family="Times,serif" font-size="14.00">2: id</text>
+<polyline fill="none" stroke="blue" points="1075,-267.5 1160,-267.5 "/>
+<text text-anchor="middle" x="1117.5" y="-252.3" font-family="Times,serif" font-size="14.00">3: name</text>
+<polyline fill="none" stroke="blue" points="1075,-244.5 1160,-244.5 "/>
+<text text-anchor="middle" x="1117.5" y="-229.3" font-family="Times,serif" font-size="14.00">4: publish</text>
 </g>
 <!-- object_locations&#45;&gt;objects -->
 <g id="edge9" class="edge"><title>object_locations:port3&#45;&gt;objects:port0:w</title>
-<path fill="none" stroke="grey" d="M1086.5,-523.5C1095.56,-523.5 1087.56,-450.818 1085.5,-442 1069.82,-375.031 1034.73,-369.339 1018.5,-302.5 1017.37,-297.833 1014.29,-285.595 1013.93,-276.909"/>
-<polygon fill="grey" stroke="grey" points="1017.22,-278.091 1017.5,-267.5 1010.68,-275.605 1017.22,-278.091"/>
+<path fill="none" stroke="grey" d="M1086.5,-523.5C1095.56,-523.5 1087.72,-450.781 1085.5,-442 1069.79,-379.742 1034.5,-376.185 1018.5,-314 1016.73,-307.118 1012.04,-287.72 1012.63,-276.269"/>
+<polygon fill="grey" stroke="grey" points="1015.71,-277.942 1017.5,-267.5 1009.59,-274.545 1015.71,-277.942"/>
 </g>
 <!-- object_locations&#45;&gt;properties -->
 <g id="edge12" class="edge"><title>object_locations:port4&#45;&gt;properties:port0:w</title>

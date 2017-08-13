@@ -216,6 +216,8 @@ sub attributes2csv
 
 	for my $flower (sort{uc($$a{common_name}) cmp uc($$b{common_name})} @$flowers)
 	{
+		next if ($$flower{publish} eq 'No');
+
 		$common_name = $$flower{common_name};
 
 		for my $attribute (@{$$flower{attributes} })
@@ -977,6 +979,7 @@ sub export_layout_guide
 	<tr><td>... and the corresponding <a href = 'https://bgrins.github.io/spectrum/'>on-line docs.</a></td></tr>
 	<tr><td><br></td></tr>
 	<tr><td><a href = 'http://www.theplantlist.org/'>The Plant List - A working list of all plant species</a></td></tr>
+	<tr><td><a href = 'http://www.plantnet.org/'>PlantNet - Identify plants via pix</a></td></tr>
 </table>
 EOS
 
@@ -1009,7 +1012,7 @@ sub export_layouts
 
 	for my $garden (@$gardens_table)
 	{
-		next if ($$garden{publish} eq 'No');
+		next if ( ($$garden{property_publish} eq 'No') || ($$garden{publish} eq 'No') );
 
 		$self -> export_garden_layout($gardens_table, $$garden{name}) if ($self -> property_name eq $$garden{property_name});
 	}
@@ -1040,6 +1043,8 @@ sub flower_locations2csv
 
 	for my $flower (sort{uc($$a{common_name}) cmp uc($$b{common_name})} @$flowers)
 	{
+		next if ($$flower{publish} eq 'No');
+
 		$common_name	= $$flower{common_name};
 		%location		= ();
 
@@ -1096,6 +1101,8 @@ sub flowers2csv
 
 	for my $flower (sort{uc($$a{common_name}) cmp uc($$b{common_name})} @$flowers)
 	{
+		next if ($$flower{publish} eq 'No');
+
 		$csv -> combine
 		(
 			$$flower{common_name},
@@ -1191,6 +1198,8 @@ sub gardens2csv
 
 	for my $garden (sort{$$a{name} cmp $$b{name} } @$garden_table)
 	{
+		next if ($$garden{publish} eq 'No');
+
 		$garden_id2name{$$garden{id} } = $$garden{name};
 
 		$csv -> combine
@@ -1233,6 +1242,8 @@ sub images2csv
 
 	for my $flower (sort{uc($$a{common_name}) cmp uc($$b{common_name})} @$flowers)
 	{
+		next if ($$flower{publish} eq 'No');
+
 		$common_name = $$flower{common_name};
 
 		for my $image (sort{$$a{flower_id} cmp $$b{flower_id} || $$a{sequence} <=> $$b{sequence} } @{$$flower{images} })
@@ -1276,6 +1287,8 @@ sub notes2csv
 
 	for my $flower (sort{uc($$a{common_name}) cmp uc($$b{common_name})} @$flowers)
 	{
+		next if ($$flower{publish} eq 'No');
+
 		$common_name = $$flower{common_name};
 
 		for my $note (sort{$$a{flower_id} cmp $$b{flower_id} || $$a{sequence} <=> $$b{sequence} } @{$$flower{notes} })
@@ -1417,6 +1430,8 @@ sub properties2csv
 
 	for my $row (sort{uc($$a{name}) cmp uc($$b{name})} @$property_table)
 	{
+		next if ($$row{publish} eq 'No');
+
 		$property_id2name{$$row{id} } = $$row{name};
 
 		$csv -> combine
@@ -1458,6 +1473,8 @@ sub urls2csv
 
 	for my $flower (sort{uc($$a{common_name}) cmp uc($$b{common_name})} @$flowers)
 	{
+		next if ($$flower{publish} eq 'No');
+
 		$common_name = $$flower{common_name};
 
 		for my $url (sort{$$a{flower_id} cmp $$b{flower_id} || $$a{sequence} <=> $$b{sequence} } @{$$flower{urls} })

@@ -970,9 +970,6 @@ sub parse_search_text
 	{
 		$$request{text_provided} = false;
 	}
-	elsif ($search_text =~ /^[-a-z0-9., ']+$/i) # Use another ' to reset the UltraEdit syntax hiliter.
-	{
-	}					#		Direction		Operator		Size					Unit
 	elsif ($search_text =~ /^(h|height|w|width)\s*([<=>])\s*([0-9]{0,3}(?:[.][0-9]{0,2})?)\s*(cm|m)?$/i)
 	{
 		my($direction) = $1;
@@ -991,9 +988,9 @@ sub parse_search_text
 			$$request{unit}	= 'cm';
 		}
 	}
-	else
+	elsif (length($search_text) > 100) # Arbitrary limit.
 	{
-		$$request{error_message}	= 'Unknown chars in text. Check Search FAQ for help with sizes';
+		$$request{error_message}	= 'Search text suspiciously long. Check Search FAQ for help with sizes';
 		$$request{text_is_clean}	= false;
 	}
 
