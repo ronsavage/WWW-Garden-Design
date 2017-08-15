@@ -79,7 +79,15 @@ sub startup
 {
 	my $self = shift;
 
+	open my $fh, '>', './mojo.log';
+	print $fh "1\n";
+	close $fh;
+
 	$self -> secrets(['757d76331dc264f21ae97b861189bd9d8aa74647']);
+
+	open $fh, '>>', './mojo.log';
+	print $fh "2\n";
+	close $fh;
 
 	# Log a special line to make the start of each request easy to find in the log.
 	# Of course, nothing is logged by this just because the server restarted.
@@ -93,6 +101,10 @@ sub startup
 		}
 	);
 
+	open $fh, '>>', './mojo.log';
+	print $fh "3\n";
+	close $fh;
+
 	# Documentation browser under '/perldoc'.
 
 	$self -> plugin('PODRenderer');
@@ -104,6 +116,10 @@ sub startup
 					scoreboard  => '/tmp/mojolicious',
 				});
 	$self -> plugin('TagHelpers');
+
+	open $fh, '>>', './mojo.log';
+	print $fh "4\n";
+	close $fh;
 
 	# Stash some gobal variables.
 
@@ -121,6 +137,10 @@ sub startup
 	$$defaults{search_attribute_ids}	= $self -> build_attribute_ids('search', $$defaults{attribute_type_fields}, $$defaults{attribute_type_names});
 
 	$self -> defaults($defaults);
+
+	open $fh, '>>', './mojo.log';
+	print $fh "5\n";
+	close $fh;
 
 	# Router.
 
@@ -140,6 +160,10 @@ sub startup
 	$r -> route('/GetTable/gardens')			-> to('GetTable#gardens');
 	$r -> route('/GetTable/objects')			-> to('GetTable#objects');
 	$r -> route('/Search')						-> to('Search#display');
+
+	open $fh, '>>', './mojo.log';
+	print $fh "7\n";
+	close $fh;
 
 } # End of startup.
 
