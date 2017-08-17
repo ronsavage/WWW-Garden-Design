@@ -78,10 +78,6 @@ sub homepage
 	$$defaults{objects_table}	= $$defaults{db} -> read_objects_table; # Warning: Not read_table('objects').
 	my($attribute_elements)		= $self -> build_js_for_attributes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields});
 
-	open my $fh, '>>', './mojo.log';
-	print $fh "8\n";
-	close $fh;
-
 	# Warning: build_property_menu() sets a value in the session read by build_garden_menu(),
 	# so it must be called first.
 
@@ -91,18 +87,10 @@ sub homepage
 	$$defaults{garden_garden_menu}		= $$defaults{db} -> build_garden_menu($$defaults{gardens_table}, $self, 'garden_garden_menu');
 	$$defaults{object_menu}				= $$defaults{db} -> build_object_menu($$defaults{objects_table}, $self);
 
-	open $fh, '>>', './mojo.log';
-	print $fh "9\n";
-	close $fh;
-
 	$self -> app -> defaults($defaults);
 	$self -> stash(attribute_check_boxes	=> $self -> build_check_boxes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields}, $$defaults{attribute_attribute_ids}) );
 	$self -> stash(csrf_token				=> $self -> session('csrf_token') );
 	$self -> stash(search_check_boxes		=> $self -> build_check_boxes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields}, $$defaults{search_attribute_ids}) );
-
-	open $fh, '>>', './mojo.log';
-	print $fh "10\n";
-	close $fh;
 
 	# These parameters are passed to homepage.html.ep for incorporation into JS code.
 
@@ -117,10 +105,6 @@ sub homepage
 		joiner					=> $$defaults{joiner},
 		object_menu				=> $$defaults{object_menu},
 	);
-
-	open $fh, '>>', './mojo.log';
-	print $fh "11\n";
-	close $fh;
 
 } # End of homepage.
 
