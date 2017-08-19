@@ -983,6 +983,46 @@ function populate_details(flower_id)
 
 // -----------------------------------------------
 
+function process_design_delete()
+{
+	alert('Delete');
+
+	return false;
+
+} // End of process_design_delete.
+
+// -----------------------------------------------
+
+function process_design_load()
+{
+	alert('Load');
+
+	return false;
+
+} // End of process_design_load.
+
+// -----------------------------------------------
+
+function process_design_reset()
+{
+	alert('Reset');
+
+	return false;
+
+} // End of process_design_reset.
+
+// -----------------------------------------------
+
+function process_design_save()
+{
+	alert('Save');
+
+	return false;
+
+} // End of process_design_save.
+
+// -----------------------------------------------
+
 function set_garden_fields(i)
 {
 	$('#garden_description')
