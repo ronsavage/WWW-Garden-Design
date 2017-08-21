@@ -1,4 +1,4 @@
-%= form_for '/Design' => (method => 'POST') => begin
+<form name = 'design_form' id = 'design_form'>
 	%= csrf_field
 
 	<table class = 'centered'  width = '100%'>
@@ -69,8 +69,7 @@
 			</td>
 		</tr>
 	</table>
-
-% end
+</form>
 
 <br />
 <table align = 'center'>

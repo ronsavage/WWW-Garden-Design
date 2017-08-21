@@ -1491,6 +1491,17 @@ $(function()
 		get_design_flower_icon();
 	});
 
+	$('#design_form').keypress
+	(
+		function(event)
+		{
+			if (event.which == '13')
+			{
+				event.preventDefault();
+			}
+		}
+	);
+
 	$('#design_object')
 	.blur(function()
 	{
