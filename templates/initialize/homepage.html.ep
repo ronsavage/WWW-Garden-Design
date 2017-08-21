@@ -1020,11 +1020,11 @@ function process_design_reset()
 } // End of process_design_reset.
 
 // -----------------------------------------------
-// This code took a long time to write, given the pathological nature of JS.
-// I tried the length operator, the regexp.test() function, and others things.
 
 function process_design_save()
 {
+	var flower_list			= [];
+	var joiner				= '<%== $joiner %>'; // Must match $joiner in Design.pm.
 	var match				= new Array();
 	var thing_count			= 0;
 	var virtual_cell_count	= <%== $$constants{virtual_cell_count} %>;
@@ -1047,12 +1047,40 @@ function process_design_save()
 			{
 				thing_count++;
 
-				alert('(row, column): (' + row + ', ' + column + '). match[1]: ' + match[1] + '.');
+				flower_list.push(row + joiner + column + joiner + match[1]);
 			}
 		}
 	}
 
-	alert('thing_count: ' + thing_count);
+	if (thing_count == 0)
+	{
+		alert('No thumbnails planted in the virtual garden!');
+	}
+	else
+	{
+		// Confirm Save to Property/Garden.
+
+		$("#design_property_menu").menu();
+		$("#design_property_menu").prop('disabled', false);
+
+		alert('disabled: ' + $("#design_property_menu").prop('disabled') );
+
+		$('#design_property_menu').menu
+		({
+			select: function (event, ui)
+			{
+				alert(event);
+			}
+		});
+
+		$('#design_property_menu').menu('select');
+
+//		options = $('#design_property_menu').menu('option');
+//
+//		alert('Saving ' + flower_list.length + ' flowers for property ' + options);
+
+//		process_design_ajax(flower_list);
+	}
 
 	return false;
 
