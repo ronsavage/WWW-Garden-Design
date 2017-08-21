@@ -425,6 +425,70 @@ function build_virtual_id(column, row)
 } // End of build_virtual_id.
 
 // -----------------------------------------------
+
+function confirm_design_reset()
+{
+	return false;
+
+} // End of confirm_design_reset.
+
+// -----------------------------------------------
+
+function confirm_design_save()
+{
+	var flower_list			= [];
+	var joiner				= '<%== $joiner %>'; // Must match $joiner in Design.pm.
+	var match				= new Array();
+	var thing_count			= 0;
+	var virtual_cell_count	= <%== $$constants{virtual_cell_count} %>;
+	var img_regexp			= /<img.+?".+\/(.+?)&#.+?".+/;
+
+	var column;
+	var html;
+	var id;
+	var row;
+
+	for (row = 1; row <= virtual_cell_count; row++)
+	{
+		for (column = 1; column <= virtual_cell_count; column++)
+		{
+			id		= build_virtual_id(column, row)
+			html	= $('#' + id).html();
+			match	= img_regexp.exec(html);
+
+			if (match !== null)
+			{
+				thing_count++;
+
+				flower_list.push(row + joiner + column + joiner + match[1]);
+			}
+		}
+	}
+
+	if (thing_count == 0)
+	{
+		alert('No thumbnails planted in the virtual garden!');
+	}
+	else
+	{
+		var garden_index	= design_garden_menu.selectedIndex;
+		var garden_name		= design_garden_menu.options[garden_index].text; // Not '.value'!
+		var property_index	= design_property_menu.selectedIndex;
+		var property_name	= design_property_menu.options[property_index].text; // Not '.value'!
+		var ok				= confirm("Do you really want to overwrite property '" + property_name
+								+ "', garden '" + garden_name + '?');
+
+		if (ok !== false)
+		{
+			process_design_save(flower_list, garden_index, property_index);
+		}
+	}
+
+	return false;
+
+} // End of confirm_design_save.
+
+// -----------------------------------------------
 // Note: Changed means the user changed the selected item.
 
 function design_property_menu_changed(data)
@@ -1021,68 +1085,10 @@ function process_design_reset()
 
 // -----------------------------------------------
 
-function process_design_save()
+function process_design_save(flower_list, garden_index, property_index)
 {
-	var flower_list			= [];
-	var joiner				= '<%== $joiner %>'; // Must match $joiner in Design.pm.
-	var match				= new Array();
-	var thing_count			= 0;
-	var virtual_cell_count	= <%== $$constants{virtual_cell_count} %>;
-	var img_regexp			= /<img.+?".+\/(.+?)&#.+?".+/;
 
-	var column;
-	var html;
-	var id;
-	var row;
-
-	for (row = 1; row <= virtual_cell_count; row++)
-	{
-		for (column = 1; column <= virtual_cell_count; column++)
-		{
-			id		= build_virtual_id(column, row)
-			html	= $('#' + id).html();
-			match	= img_regexp.exec(html);
-
-			if (match !== null)
-			{
-				thing_count++;
-
-				flower_list.push(row + joiner + column + joiner + match[1]);
-			}
-		}
-	}
-
-	if (thing_count == 0)
-	{
-		alert('No thumbnails planted in the virtual garden!');
-	}
-	else
-	{
-		// Confirm Save to Property/Garden.
-
-		$("#design_property_menu").menu();
-		$("#design_property_menu").prop('disabled', false);
-
-		alert('disabled: ' + $("#design_property_menu").prop('disabled') );
-
-		$('#design_property_menu').menu
-		({
-			select: function (event, ui)
-			{
-				alert(event);
-			}
-		});
-
-		$('#design_property_menu').menu('select');
-
-//		options = $('#design_property_menu').menu('option');
-//
-//		alert('Saving ' + flower_list.length + ' flowers for property ' + options);
-
-//		process_design_ajax(flower_list);
-	}
-
-	return false;
+	alert(flower_list);
 
 } // End of process_design_save.
 

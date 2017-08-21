@@ -30,9 +30,9 @@
 		</tr>
 		<tr>
 			<td width = '25%'><button type = 'button' onClick = 'return process_design_load()'>Load</button></td>
-			<td width = '25%'><button type = 'button' onClick = 'return process_design_save()'>Save</button></td>
+			<td width = '25%'><button type = 'button' onClick = 'return confirm_design_save()'>Save</button></td>
 			<td width = '25%'><button type = 'button' onClick = 'return process_design_reset()'>Reset virtual garden</button></td>
-			<td width = '25%'><button type = 'button' onClick = 'return process_design_delete()'>Delete virtual garden</button></td>
+			<td width = '25%'><button type = 'button' onClick = 'return confirm_design_delete()'>Delete virtual garden</button></td>
 		</tr>
 		<tr>
 			<td colspan = '4'><hr /></td>

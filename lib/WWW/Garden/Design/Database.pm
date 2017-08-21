@@ -165,7 +165,7 @@ sub add_garden
 sub build_garden_menu
 {
 	my($self, $property_gardens, $controller, $id) = @_;
-	my($html)			= "<select id = '$id'>"
+	my($html)			= "<select id = '$id' name = '$id'>"
 							. "<option disabled = '1'>Gardens</option>";
 	my($last_name)		= '';
 	my($property_id)	= $controller -> session('current_property_id');
@@ -298,7 +298,7 @@ sub build_object_menu
 sub build_property_menu
 {
 	my($self, $property_gardens, $controller, $id) = @_;
-	my($html)		= "<select id = '$id'>"
+	my($html)		= "<select id = '$id' name = '$id'>"
 						. "<option disabled = '1'>Properties</option>";
 	my($last_name)	= '';
 
