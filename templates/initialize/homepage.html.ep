@@ -472,12 +472,8 @@ function confirm_design_save()
 	else
 	{
 		var flowers			= flower_list.join(joiner);
-		var garden_id		= '#design_garden_menu';
-		var garden_index	= $(garden_id).val(); // Primary key.
 		var g_selectedIndex	= design_garden_menu.selectedIndex;
 		var garden_name		= design_garden_menu.options[g_selectedIndex].text; // Or, perhaps, '.value'.
-		var property_id		= '#design_property_menu';
-		var property_index	= $(property_id).val(); // Primary key.
 		var p_selectedIndex	= design_property_menu.selectedIndex;
 		var property_name	= design_property_menu.options[p_selectedIndex].text; // Or, perhaps, '.value'.
 		var ok				= confirm("Do you really want to overwrite garden '" + garden_name
@@ -485,7 +481,7 @@ function confirm_design_save()
 
 		if (ok !== false)
 		{
-			process_design_save(flowers, garden_index, garden_name, property_index, property_name);
+			process_design_save(flowers, garden_name, property_name);
 		}
 	}
 
@@ -1090,25 +1086,30 @@ function process_design_reset()
 
 // -----------------------------------------------
 
-function process_design_save(flowers, garden_index, garden_name, property_index, property_name)
+function process_design_save(flowers, garden_name, property_name)
 {
+	var garden_id	= '#design_garden_menu';
+	var property_id	= '#design_property_menu';
+
 	$.ajax
 	({
 		data:
 		{
 			flowers:		flowers,
-			garden_index:	garden_index,
+			garden_index:	$(garden_id).val(), // Primary key.
 			garden_name:	garden_name,
-			property_index:	property_index,
+			property_index:	$(property_id).val(), // Primary key.
 			property_name:	property_name
 		},
 		dataType:	'text',
 		method:		'POST',
 		url:		'/Design', // See routes at end of WWW::Garden::Design.startup().
 	})
-	.done(function()
+	.done(function(html)
 	{
-		alert('Saved');
+		$('#design_result_div')
+		.empty()
+		.append(html);
 	});
 
 } // End of process_design_save.

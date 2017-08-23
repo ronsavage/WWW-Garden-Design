@@ -71,6 +71,8 @@
 	</table>
 </form>
 
+<div id = 'design_result_div'></div>
+
 <br />
 <table align = 'center'>
 	<tr><td align = 'center'>Virtual Garden. It's dimensions are <%== $$constants{virtual_cell_count} %>x<%== $$constants{virtual_cell_count} %></td></tr>

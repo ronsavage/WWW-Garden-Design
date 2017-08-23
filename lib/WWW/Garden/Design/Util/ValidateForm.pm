@@ -28,6 +28,28 @@ our $VERSION = '0.95';
 
 # -----------------------------------------------
 
+sub design_details
+{
+	my($self, $controller, $defaults) = @_;
+	my($app)			= $controller -> app;
+	my($joiner)			= $$defaults{joiner};
+	my($params) 		= $controller -> req -> params -> to_hash;
+	$$params{errors}	= {};
+	$$params{message}	= '';
+	$$params{success}	= false;
+
+	$app -> log -> debug("$_ => $$params{$_}") for sort keys %$params;
+
+	# %errors is declared at this level so various methods can store into it.
+
+	my(%errors);
+
+	return $params;
+
+} # End of design_details.
+
+# -----------------------------------------------
+
 sub flower_details
 {
 	my($self, $controller, $defaults) = @_;
