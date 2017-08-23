@@ -44,6 +44,12 @@ sub design_details
 
 	my(%errors);
 
+	$self -> process_design_property($app, $defaults, \%errors, $joiner, $params);
+
+###############################
+	$$params{success}	= true;
+###############################
+
 	return $params;
 
 } # End of design_details.
@@ -71,12 +77,12 @@ sub flower_details
 		my($csrf_ok)	= $controller -> session('csrf_token') eq $$params{csrf_token} ? 1 : 0;
 		my($joiner)		= $$defaults{joiner};
 
-		$self -> process_flower_attributes($app, $defaults, $joiner, $$params{attribute_list}, \%errors);
-		$self -> process_flower_dimensions($app, $defaults, $$params{height}, $$params{width}, \%errors);
-		$self -> process_flower_images($app, $defaults, $joiner, $$params{image_list}, $params, \%errors);
-		$self -> process_flower_notes($app, $defaults, $joiner, $$params{note_list}, $params, \%errors);
+		$self -> process_flower_attributes($app, $defaults, \%errors, $joiner, $params);
+		$self -> process_flower_dimensions($app, $defaults, \%errors, $params);
+		$self -> process_flower_images($app, $defaults, \%errors, $joiner, $params);
+		$self -> process_flower_notes($app, $defaults, \%errors, $joiner, $params);
 		$self -> validator -> check_member($params, 'publish', ['Yes', 'No']);
-		$self -> process_flower_urls($app, $defaults, $joiner, $params, \%errors);
+		$self -> process_flower_urls($app, $defaults, \%errors, $joiner, $params);
 
 		if ($csrf_ok == 1)
 		{
@@ -125,11 +131,27 @@ sub flower_details
 
 # -----------------------------------------------
 
+sub process_design_property
+{
+	my($self, $app, $defaults, $errors, $joiner, $params) = @_;
+	my($garden_index)	= $$params{garden_index};
+	my($garden_name)	= $$params{garden_name};
+	my($property_index)	= $$params{property_index};
+	my($property_name)	= $$params{property_name};
+
+	$app -> log -> debug('ValidateForm.process_design_property(...)');
+
+
+} # End of process_design_property.
+
+# -----------------------------------------------
+
 sub process_flower_attributes
 {
-	my($self, $app, $defaults, $joiner, $attribute_list, $errors) = @_;
-	my(@attributes)	= split(/$joiner/, $attribute_list);
-	my($attributes)	= {};
+	my($self, $app, $defaults, $errors, $joiner, $params) = @_;
+	my($attribute_list)	= $$params{attribute_list};
+	my(@attributes)		= split(/$joiner/, $attribute_list);
+	my($attributes)		= {};
 
 	$app -> log -> debug('ValidateForm.process_flower_attributes(...)');
 
@@ -176,7 +198,9 @@ sub process_flower_attributes
 
 sub process_flower_dimensions
 {
-	my($self, $app, $defaults, $height, $width, $errors) = @_;
+	my($self, $app, $defaults, $errors, $params) = @_;
+	my($$height)	= $$params{height};
+	my($width)		= $$params{width};
 
 	$app -> log -> debug("ValidateForm.process_flower_dimensions(height: $height, width: $width)");
 	$self -> validator -> check_dimension({height => $height}, 'height', ['cm', 'm']);
@@ -188,8 +212,9 @@ sub process_flower_dimensions
 
 sub process_flower_images
 {
-	my($self, $app, $defaults, $joiner, $image_list, $params, $errors) = @_;
-	my(@images) = map{defined($_) ? $_ : ''} split(/$joiner/, $image_list);
+	my($self, $app, $defaults, $errors, $joiner, $params) = @_;
+	my($image_list)	= $$params{image_list};
+	my(@images)		= map{defined($_) ? $_ : ''} split(/$joiner/, $image_list);
 
 	$app -> log -> debug('ValidateForm.process_flower_images(...)');
 
@@ -256,8 +281,9 @@ sub process_flower_images
 
 sub process_flower_notes
 {
-	my($self, $app, $defaults, $joiner, $note_list, $params, $errors) = @_;
-	my(@notes) = map{defined($_) ? $_ : ''} split(/$joiner/, $note_list);
+	my($self, $app, $defaults, $errors, $joiner, $params) = @_;
+	my($note_list)	= $$params{note_list};
+	my(@notes)		= map{defined($_) ? $_ : ''} split(/$joiner/, $note_list);
 
 	$app -> log -> debug('ValidateForm.process_flower_notes(...)');
 
@@ -322,8 +348,9 @@ sub process_flower_notes
 
 sub process_flower_urls
 {
-	my($self, $app, $defaults, $joiner, $params, $errors) = @_;
-	my(@urls) = map{defined($_) ? $_ : ''} split(/$joiner/, $$params{url_list});
+	my($self, $app, $defaults, $errors, $joiner, $params) = @_;
+	my($url_list)	= $$params{url_list};
+	my(@urls)		= map{defined($_) ? $_ : ''} split(/$joiner/, $url_list);
 
 	$app -> log -> debug('ValidateForm.process_flower_urls(...)');
 
