@@ -28,7 +28,7 @@
 
 % } else {
 
-<h2 align = 'center'>Design updated</h2>
+<h3 align = 'center'>Design updated</h3>
 
 <table align = 'center' class = 'table_striped'>
 	<thead>
@@ -40,12 +40,6 @@
 	<tbody>
 	%== $details
 	</tbody>
-	<tfoot>
-	<tr>
-		<th class = 'generic_border'>Property name</th>
-		<th class = 'generic_border'>Garden name</th>
-	</tr>
-	</tfoot>
 </table>
 
 % }

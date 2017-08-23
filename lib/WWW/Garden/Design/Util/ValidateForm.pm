@@ -199,8 +199,8 @@ sub process_flower_attributes
 sub process_flower_dimensions
 {
 	my($self, $app, $defaults, $errors, $params) = @_;
-	my($$height)	= $$params{height};
-	my($width)		= $$params{width};
+	my($height)	= $$params{height};
+	my($width)	= $$params{width};
 
 	$app -> log -> debug("ValidateForm.process_flower_dimensions(height: $height, width: $width)");
 	$self -> validator -> check_dimension({height => $height}, 'height', ['cm', 'm']);
