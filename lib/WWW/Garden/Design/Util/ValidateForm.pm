@@ -134,13 +134,18 @@ sub flower_details
 sub process_design_property
 {
 	my($self, $app, $defaults, $errors, $joiner, $params) = @_;
-	my($garden_index)	= $$params{garden_index};
-	my($garden_name)	= $$params{garden_name};
-	my($property_index)	= $$params{property_index};
-	my($property_name)	= $$params{property_name};
 
 	$app -> log -> debug('ValidateForm.process_design_property(...)');
 
+	for my $index_name (qw/garden_index property_index/)
+	{
+		$self -> validator -> check_ascii_digits($params, $index_name);
+	}
+
+	for my $param_name (qw/garden_name property_name/)
+	{
+		$self -> validator -> check_required($params, $param_name);
+	}
 
 } # End of process_design_property.
 
