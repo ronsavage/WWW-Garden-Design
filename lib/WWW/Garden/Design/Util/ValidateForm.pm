@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
+use boolean;
+
 use Data::Dumper::Concise; # For Dumper().
 
 use MojoX::Validate::Util;
@@ -33,7 +35,7 @@ sub flower_details
 	my($params) 		= $controller -> req -> params -> to_hash;
 	$$params{errors}	= {};
 	$$params{message}	= '';
-	$$params{status}	= 1; # Return 0 for success and 1 for failure.
+	$$params{success}	= false;
 
 	$app -> log -> debug("$_ => $$params{$_}") for sort keys %$params;
 	$app -> log -> debug('CSRF. session' . $controller -> session('csrf_token') . ". params: $$params{csrf_token}");
@@ -77,7 +79,7 @@ sub flower_details
 			if (scalar keys %errors == 0)
 			{
 				$$params{message}	= 'All fields were validated successfully';
-				$$params{status}	= 0; # Return 0 for success and 1 for failure.
+				$$params{success}	= true;
 			}
 			else
 			{

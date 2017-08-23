@@ -8,11 +8,11 @@ our $VERSION = '0.95';
 
 # -----------------------------------------------
 
-sub display
+sub save
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('AddObject.display()');
+	$self -> app -> log -> debug('AddObject.save()');
 
 	my($items) = $self->req->params->to_hash;
 
@@ -36,7 +36,7 @@ sub display
 
 	$self -> render;
 
-} # End of display.
+} # End of save.
 
 # -----------------------------------------------
 

@@ -4,8 +4,6 @@ use Mojo::Base 'Mojolicious::Controller';
 
 use boolean;
 
-use Data::Dumper::Concise; # For Dumper().
-
 use WWW::Garden::Design::Util::Config;
 
 use Moo;

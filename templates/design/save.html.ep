@@ -1,0 +1,11 @@
+% if (my $error = stash 'error') {
+
+<table align = 'center'>
+<tr>
+	<td class = 'error'><br /><br />Error: <%= $error %></td>
+</tr>
+</table>
+
+% }
+
+Saved!

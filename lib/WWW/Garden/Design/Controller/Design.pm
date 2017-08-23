@@ -1,8 +1,10 @@
-package WWW::Garden::Design::Controller::AddGarden;
+package WWW::Garden::Design::Controller::Design;
 
 use Mojo::Base 'Mojolicious::Controller';
 
 use Moo;
+
+use WWW::Garden::Design::Util::ValidateForm
 
 our $VERSION = '0.95';
 
@@ -12,11 +14,13 @@ sub save
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('AddGarden.v()');
+	$self -> app -> log -> debug('Design.save()');
 
-	my($items) = $self->req->params->to_hash;
+	my($defaults)	= $self -> app -> defaults;
+	my($validator)	= WWW::Garden::Design::Util::ValidateForm -> new;
+	my($params)		= $validator -> design_details($self, $defaults);
 
-	$self -> app -> log -> debug("param($_) => $$items{$_}") for sort keys %$items;
+=pod
 
 	if ($$items{garden_name} && $$items{property_name})
 	{
@@ -33,6 +37,8 @@ sub save
 		$self -> stash(error => $message);
 		$self -> app -> log -> error($message);
 	}
+
+=cut
 
 	$self -> render;
 

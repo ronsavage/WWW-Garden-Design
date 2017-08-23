@@ -2,8 +2,6 @@ package WWW::Garden::Design;
 
 use Mojo::Base 'Mojolicious';
 
-use Data::Dumper::Concise; # For Dumper().
-
 use WWW::Garden::Design::Database;
 use WWW::Garden::Design::Util::Config;
 use WWW::Garden::Design::Util::ValidateForm;
@@ -129,10 +127,11 @@ sub startup
 	$r -> namespaces(['WWW::Garden::Design::Controller']);
 
 	$r -> route('/')							-> to('Initialize#homepage');
-	$r -> route('/AddFlower')					-> to('AddFlower#display');
-	$r -> route('/AddGarden')					-> to('AddGarden#display');
-	$r -> route('/AddObject')					-> to('AddObject#display');
+	$r -> route('/AddFlower')					-> to('AddFlower#save');
+	$r -> route('/AddGarden')					-> to('AddGarden#save');
+	$r -> route('/AddObject')					-> to('AddObject#save');
 	$r -> route('/AutoComplete')				-> to('AutoComplete#display');
+	$r -> route('/Design')						-> to('Design#save');
 	$r -> route('/GetFlowerDetails')			-> to('GetFlowerDetails#display');
 	$r -> route('/GetTable/attribute_types')	-> to('GetTable#attribute_types');
 	$r -> route('/GetTable/design_flower')		-> to('GetTable#design_flower');

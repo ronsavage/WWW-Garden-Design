@@ -2,8 +2,6 @@ package WWW::Garden::Design::Controller::Initialize;
 
 use Mojo::Base 'Mojolicious::Controller';
 
-use Data::Dumper::Concise; # For Dumper().
-
 use Moo;
 
 our $VERSION = '0.95';

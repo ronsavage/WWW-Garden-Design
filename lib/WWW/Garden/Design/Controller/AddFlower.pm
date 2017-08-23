@@ -2,50 +2,15 @@ package WWW::Garden::Design::Controller::AddFlower;
 
 use Mojo::Base 'Mojolicious::Controller';
 
-use Data::Dumper::Concise; # For Dumper().
-
 use Date::Simple;
 
 use Moo;
 
-use URI::Find::Schemeless;
-
 use utf8;
 
+use WWW::Garden::Design::Util::ValidateForm;
+
 our $VERSION = '0.95';
-
-# -----------------------------------------------
-# https://github.com/kraih/mojo/wiki/Request-data.
-
-sub display
-{
-	my($self) = @_;
-
-	$self -> app -> log -> debug('AddFlower.display()');
-
-	my($defaults)	= $self -> app -> defaults;
-	my($validator)	= WWW::Garden::Design::Util::ValidateForm -> new;
-	my($params)		= $validator -> flower_details($self, $defaults);
-
-	if ($$params{status} == 0)
-	{
-#		$$defaults{db} -> add_flower($params);
-
-		$self -> stash(error	=> undef);
-		$self -> stash(details	=> $self -> format_details($params) );
-		$self -> stash(message	=> $$params{message});
-	}
-	else
-	{
-		$self -> stash(error	=> $self -> format_errors($params) );
-		$self -> stash(details	=> undef);
-		$self -> stash(message	=> $$params{message});
-		$self -> app -> log -> error($$params{message});
-	}
-
-	$self -> render;
-
-} # End of display.
 
 # -----------------------------------------------
 
@@ -96,6 +61,39 @@ EOS
 	return $html;
 
 } # End of format_errors.
+
+# -----------------------------------------------
+# https://github.com/kraih/mojo/wiki/Request-data.
+
+sub save
+{
+	my($self) = @_;
+
+	$self -> app -> log -> debug('AddFlower.save()');
+
+	my($defaults)	= $self -> app -> defaults;
+	my($validator)	= WWW::Garden::Design::Util::ValidateForm -> new;
+	my($params)		= $validator -> flower_details($self, $defaults);
+
+	if ($$params{success})
+	{
+#		$$defaults{db} -> add_flower($params);
+
+		$self -> stash(error	=> undef);
+		$self -> stash(details	=> $self -> format_details($params) );
+		$self -> stash(message	=> $$params{message});
+	}
+	else
+	{
+		$self -> stash(error	=> $self -> format_errors($params) );
+		$self -> stash(details	=> undef);
+		$self -> stash(message	=> $$params{message});
+		$self -> app -> log -> error($$params{message});
+	}
+
+	$self -> render;
+
+} # End of save.
 
 # -----------------------------------------------
 

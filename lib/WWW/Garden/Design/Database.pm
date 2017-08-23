@@ -5,8 +5,6 @@ use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
-use Data::Dumper::Concise; # For Dumper().
-
 use DBI;
 
 use DBIx::Simple;
@@ -878,8 +876,6 @@ sub parse_search_attributes
 	my($checkboxes)			= $self -> parse_attribute_checkboxes($defaults, $search_attributes);
 	my(@type_names)			= keys %$checkboxes;
 	my($type_name_count)	= scalar @type_names;
-
-	#$self -> logger -> debug('checkboxes: ' . Dumper($checkboxes) );
 
 	if ($type_name_count == 0)
 	{
