@@ -286,8 +286,7 @@ create table $table_name
 id			$primary_key,
 flower_id	int references flowers(id),
 description	varchar(255) not null,
-file_name	varchar(255) not null,
-sequence	integer not null
+file_name	varchar(255) not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);
@@ -307,8 +306,7 @@ create table $table_name
 (
 id			$primary_key,
 flower_id	int references flowers(id),
-note		text not null,
-sequence	integer not null
+note		text not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);
@@ -393,7 +391,6 @@ create table $table_name
 (
 id			$primary_key,
 flower_id	int references flowers(id),
-sequence	integer not null,
 url			varchar(255) not null
 ) $engine
 SQL

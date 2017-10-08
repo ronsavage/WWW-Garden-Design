@@ -37,7 +37,7 @@ sub test_images
 
 	# 3: Validate the headings in images.csv.
 
-	my(@expected_headings)	= sort(qw/common_name sequence description file_name/);
+	my(@expected_headings)	= sort(qw/common_name description file_name/);
 	my(@got_headings)		= sort keys %{$$images[0]};
 
 	my($result);
@@ -58,7 +58,6 @@ sub test_images
 
 	my($common_name, %count);
 	my($file_name);
-	my($sequence, %sequences);
 
 	for my $params (@$images)
 	{
@@ -79,29 +78,11 @@ sub test_images
 		$count{$file_name}	= 0 if (! $count{$file_name});
 
 		$count{$file_name}++;
-
-		# Check sequences.
-		# Note: We can't check the actual value of sequence, since it will just be a low number.
-
-		$sequence					= $$params{sequence};
-		$sequences{$common_name}	= {} if (! $sequences{$common_name});
-
-		ok($checker -> check_ascii_digits($params, 'sequence') == 1, "Common name '$common_name'. Image sequence '$sequence' ok"); $test_count++;
-
-		$sequences{$common_name}{$sequence}++;
 	}
 
 	for $file_name (sort keys %count)
 	{
 		ok($checker -> check_number(\%count, $file_name, 1) == 1, "File name '$file_name' not duplicated"); $test_count++;
-	}
-
-	for $common_name (sort keys %sequences)
-	{
-		for $sequence (sort keys %{$sequences{$common_name} })
-		{
-			ok($checker -> check_number($sequences{$common_name}, $sequence, 1) == 1, "Common name '$common_name'. Sequence '$sequence' is unique"); $test_count++;
-		}
 	}
 
 	return $test_count;

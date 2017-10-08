@@ -38,7 +38,7 @@ sub test_notes
 
 	# 3: Validate the headings in notes.csv.
 
-	my(@expected_headings)	= sort(qw/common_name sequence note/);
+	my(@expected_headings)	= sort(qw/common_name note/);
 	my(@got_headings)		= sort keys %{$$notes[0]};
 
 	my($result);
@@ -58,7 +58,6 @@ sub test_notes
 	# 4: Validate the data in notes.csv.
 
 	my($common_name);
-	my($sequence, %sequences);
 
 	for my $params (@$notes)
 	{
@@ -74,24 +73,6 @@ sub test_notes
 		}
 
 		# Don't check notes. They may be duplicated!
-
-		# Check sequences.
-		# Note: We can't check the actual value of sequence, since it will just be a low number.
-
-		$sequence					= $$params{sequence};
-		$sequences{$common_name}	= {} if (! $sequences{$common_name});
-
-		ok($checker -> check_ascii_digits($params, 'sequence') == 1, "Common name '$common_name'. Image sequence '$sequence' ok"); $test_count++;
-
-		$sequences{$common_name}{$sequence}++;
-	}
-
-	for $common_name (sort keys %sequences)
-	{
-		for $sequence (sort keys %{$sequences{$common_name} })
-		{
-			ok($checker -> check_ascii_digits($sequences{$common_name}, $sequence) == 1, "Common name '$common_name'. Sequence '$sequence' is unique"); $test_count++;
-		}
 	}
 
 	return $test_count;

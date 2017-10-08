@@ -477,7 +477,7 @@ sub populate_images_table
 
 		# Column names are in alphabetical order.
 
-		for my $column (qw/common_name description file_name sequence/)
+		for my $column (qw/common_name description file_name/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -499,7 +499,6 @@ sub populate_images_table
 				flower_id	=> $$flower_keys{$$item{common_name} },
 				description	=> $$item{description},
 				file_name	=> $$item{file_name},
-				sequence	=> $$item{sequence},
 			}
 		);
 	}
@@ -530,7 +529,7 @@ sub populate_notes_table
 
 		# Column names are in alphabetical order.
 
-		for my $column (qw/common_name note sequence/)
+		for my $column (qw/common_name note/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -551,7 +550,6 @@ sub populate_notes_table
 			{
 				flower_id	=> $$flower_keys{$$item{common_name} },
 				note		=> $$item{note},
-				sequence	=> $$item{sequence},
 			}
 		);
 	}
@@ -741,7 +739,7 @@ sub populate_urls_table
 
 		# Column names are in alphabetical order.
 
-		for my $column (qw/common_name sequence url/)
+		for my $column (qw/common_name url/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -761,7 +759,6 @@ sub populate_urls_table
 			$table_name,
 			{
 				flower_id	=> $$flower_keys{$$item{common_name} },
-				sequence	=> $$item{sequence},
 				url			=> $$item{url},
 			}
 		);

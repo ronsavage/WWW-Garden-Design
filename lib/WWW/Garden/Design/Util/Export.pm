@@ -532,7 +532,6 @@ sub export_all_pages
 		{
 			push @urls,
 			[
-				{td => $$url{sequence} },
 				{td => mark_raw("<a href = '$$url{url}'>$$url{url}</a>")},
 			];
 		}
@@ -1261,7 +1260,7 @@ sub images2csv
 
 	# Column names are in order left-to-right.
 
-	$csv -> combine(qw/common_name sequence description file_name/);
+	$csv -> combine(qw/common_name description file_name/);
 
 	print $fh $csv -> string, "\n";
 
@@ -1273,12 +1272,11 @@ sub images2csv
 
 		$common_name = $$flower{common_name};
 
-		for my $image (sort{$$a{flower_id} cmp $$b{flower_id} || $$a{sequence} <=> $$b{sequence} } @{$$flower{images} })
+		for my $image (sort{$$a{flower_id} cmp $$b{flower_id} } @{$$flower{images} })
 		{
 			$csv -> combine
 			(
 				$common_name,
-				$$image{sequence},
 				$$image{description},
 				$$image{raw_name}, # We don't want the whole domain/url!
 			);
@@ -1306,7 +1304,7 @@ sub notes2csv
 
 	# Column names are in order left-to-right.
 
-	$csv -> combine(qw/common_name sequence note/);
+	$csv -> combine(qw/common_name note/);
 
 	print $fh $csv -> string, "\n";
 
@@ -1318,12 +1316,11 @@ sub notes2csv
 
 		$common_name = $$flower{common_name};
 
-		for my $note (sort{$$a{flower_id} cmp $$b{flower_id} || $$a{sequence} <=> $$b{sequence} } @{$$flower{notes} })
+		for my $note (sort{$$a{flower_id} cmp $$b{flower_id} } @{$$flower{notes} })
 		{
 			$csv -> combine
 			(
 				$common_name,
-				$$note{sequence},
 				$$note{note},
 			);
 
@@ -1496,7 +1493,7 @@ sub urls2csv
 
 	# Column names are in order left-to-right.
 
-	$csv -> combine(qw/common_name sequence url/);
+	$csv -> combine(qw/common_name url/);
 
 	print $fh $csv -> string, "\n";
 
@@ -1508,12 +1505,11 @@ sub urls2csv
 
 		$common_name = $$flower{common_name};
 
-		for my $url (sort{$$a{flower_id} cmp $$b{flower_id} || $$a{sequence} <=> $$b{sequence} } @{$$flower{urls} })
+		for my $url (sort{$$a{flower_id} cmp $$b{flower_id} } @{$$flower{urls} })
 		{
 			$csv -> combine
 			(
 				$common_name,
-				$$url{sequence},
 				$$url{url},
 			);
 
