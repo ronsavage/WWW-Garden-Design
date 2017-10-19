@@ -1,34 +1,25 @@
 #!/bin/bash
 
-echo Starting attribute_types.csv ...
 test.csv.pl -c 3 -i data/attribute_types.csv
 
-echo Starting attributes.csv ...
 test.csv.pl -c 3 -i data/attributes.csv
 
-echo Starting constants.csv ...
-test.csv.pl -c 4 -i data/constants.csv
+test.csv.pl -c 2 -i data/constants.csv
 
-echo Starting flower_locations.csv ...
-test.csv.pl -c 3 -i data/flower_locations.csv
+test.csv.pl -c 4 -i data/flower_locations.csv
 
-echo Starting flowers.csv ...
 test.csv.pl -c 6 -i data/flowers.csv
 
-echo Starting gardens.csv ...
-test.csv.pl -c 2 -i data/gardens.csv
+test.csv.pl -c 4 -i data/gardens.csv
 
-echo Starting images.csv ...
-test.csv.pl -c 4 -i data/images.csv
+test.csv.pl -c 3 -i data/images.csv
 
-echo Starting notes.csv ...
-test.csv.pl -c 3 -i data/notes.csv
+test.csv.pl -c 2 -i data/notes.csv
 
-echo Starting object_locations.csv ...
-test.csv.pl -c 3 -i data/object_locations.csv
+test.csv.pl -c 4 -i data/object_locations.csv
 
-echo Starting objects.csv ...
-test.csv.pl -c 2 -i data/objects.csv
+test.csv.pl -c 3 -i data/objects.csv
 
-echo Starting urls.csv ...
-test.csv.pl -c 3 -i data/urls.csv
+test.csv.pl -c 3 -i data/properties.csv
+
+test.csv.pl -c 2 -i data/urls.csv
