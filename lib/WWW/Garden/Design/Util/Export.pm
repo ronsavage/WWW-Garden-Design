@@ -524,7 +524,6 @@ sub export_all_pages
 
 		push @urls,
 		[
-			{td => '#'},
 			{td => 'URLs'},
 		];
 
