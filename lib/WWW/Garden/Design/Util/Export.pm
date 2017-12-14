@@ -784,7 +784,6 @@ EOS
 	}
 
 	push @garden_index, <<EOS;
-			<tr><td><a href = '#schema'>The Database Schema</a></td></tr>
 			<tr><td><a href = '$$constants{homepage_url}/Flowers.html'>The Flower Catalog</a></td></tr>
 		</table>
 
@@ -801,18 +800,6 @@ EOS
 		<br />
 
 		<table align = 'center' summary = 'First placeholder for link to top'><tr><td align = 'center'><a href = '#top'>Top</a></td></tr></table>
-
-		<br />
-
-		<a>
-		<table align = 'center' summary = 'The Database Schema'>
-			<tr><td align = 'center'><span id = 'schema'>The Database Schema</span></td></tr>
-			<tr><td align = 'center'>
-				<object data = '$$constants{homepage_url}$$constants{flower_url}/flowers.schema.svg'></object>
-			</td></tr>
-		</table>
-
-		<table align = 'center' summary = 'Second placeholder for link to top'><tr><td><a href = '#top'>Top</a></td></tr></table>
 	</body>
 EOS
 
