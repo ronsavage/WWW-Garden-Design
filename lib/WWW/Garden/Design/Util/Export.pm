@@ -991,6 +991,8 @@ sub export_layout_guide
 	<tr><td><a href = 'https://github.com/bgrins/spectrum'>The github repo</a> of the free Javascript package which provides a color spectrum...</td></tr>
 	<tr><td>... and the corresponding <a href = 'https://bgrins.github.io/spectrum/'>on-line docs</a></td></tr>
 	<tr><td><a href = 'http://nurseriesonline.com.au'>Nurseries OnLine - A great Australian website</a></td></tr>
+	<tr><td><a href = 'http://www.flowersforums.com/forums/'>A great place to ask for help: Flower Forums</a></td></tr>
+	<tr><td><a href = 'http://www.LabourofLoveLandscaping.com'>Some identification assistance kindly provided by Kate Kennedy Butler</a></td></tr>
 	<tr><td><a href = 'http://www.theplantlist.org/'>The Plant List - A working list of all plant species</a></td></tr>
 	<tr><td><a href = 'http://www.plantnet.org/'>PlantNet - Identify plants via pix</a></td></tr>
 </table>
