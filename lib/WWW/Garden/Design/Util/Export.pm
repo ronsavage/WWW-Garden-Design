@@ -985,7 +985,8 @@ sub export_layout_guide
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/Protecting.Apples.From.Possums.html'>2013-12-08: Protecting Apples From Possums</a></td></tr>
 </table>
 <table align = 'center' summary = 'Table for a list of URLs'>
-	<tr><td align='center'><br /><span class = '$$constants{css_class4headings}' id = 'various_urls'>Various URLs</span></td></tr>
+	<tr><td align = 'center'><br /><span class = '$$constants{css_class4headings}' id = 'various_urls'>Various URLs</span></td></tr>
+	<tr><td align = 'center'><a href = '$$constants{homepage_url}$$constants{flower_url}/flowers.schema.svg'>The database schema</a></td></tr>
 	<tr><td><a href = 'https://datatables.net/'>The URL</a> of the free Javascript package which manages the HTML table below</td></tr>
 	<tr><td><a href = 'https://github.com/bgrins/spectrum'>The github repo</a> of the free Javascript package which provides a color spectrum...</td></tr>
 	<tr><td>... and the corresponding <a href = 'https://bgrins.github.io/spectrum/'>on-line docs.</a></td></tr>
