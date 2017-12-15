@@ -709,7 +709,7 @@ sub export_garden_layout
 			(
 				href	=> $$flower{web_page_url},
 				image	=> $$flower{thumbnail_url},
-				target	=> '_blank',
+				show	=> 'new',
 				title	=> "$$flower{scientific_name} / $$flower{common_name}",
 				x		=> $$location{x}, # Cell co-ord.
 				y		=> $$location{y}, # Cell co-ord.
