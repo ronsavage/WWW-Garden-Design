@@ -709,7 +709,7 @@ sub export_garden_layout
 			(
 				href	=> $$flower{web_page_url},
 				image	=> $$flower{thumbnail_url},
-				target	=> 'new_window',
+				target	=> '_blank',
 				title	=> "$$flower{scientific_name} / $$flower{common_name}",
 				x		=> $$location{x}, # Cell co-ord.
 				y		=> $$location{y}, # Cell co-ord.
@@ -863,7 +863,7 @@ EOS
 
 	$self -> db -> logger -> info("Finished exporting garden layout for the '$garden_name' garden");
 
-} # End of export_garden_layout;
+} # End of export_garden_layout.
 
 # -----------------------------------------------
 
