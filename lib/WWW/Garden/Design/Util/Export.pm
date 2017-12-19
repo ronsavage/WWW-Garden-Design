@@ -447,7 +447,7 @@ sub export_all_pages
 
 	my(@attributes, $aliases);
 	my($common_name);
-	my($id, @images);
+	my(@images);
 	my(@notes);
 	my($pig_latin);
 	my($scientific_name);
@@ -462,7 +462,6 @@ sub export_all_pages
 		$aliases			= $$flower{aliases};
 		@attributes			= ();
 		$common_name		= $$flower{common_name};
-		$id					= $$flower{id};
 		@images				= ();
 		@notes				= ();
 		$scientific_name	= $$flower{scientific_name};
@@ -483,43 +482,6 @@ sub export_all_pages
 			[
 				{td => ucfirst $$attribute{name} },
 				{td => $$attribute{range} },
-			];
-		}
-
-		# Auto-links.
-
-		my($link_count) = 0;
-
-		my($auto_link);
-		my(@links);
-
-		my($other_id, $other_pig_latin, $other_scientific_name);
-
-		for my $link (@{$$flower{links} })
-		{
-			$other_id = $$link[0];
-
-			next if ($other_id == $id);
-
-			$link_count++;
-
-			if ($link_count == 1)
-			{
-				push @links,
-				[
-					{td => 'URLs'}
-				];
-			}
-
-			$other_pig_latin		= $$link[1];
-			$other_scientific_name	= $$link[2];
-			$auto_link				= "See also <a href = '/Flowers/$other_pig_latin.html'>$other_scientific_name</a>";
-
-			$self -> logger -> debug($auto_link);
-
-			push @links,
-			[
-				{td => mark_raw($auto_link)},
 			];
 		}
 
@@ -594,7 +556,6 @@ sub export_all_pages
 							attributes		=> \@attributes,
 							common_name		=> $common_name,
 							images			=> \@images,
-							links			=> \@links,
 							notes			=> \@notes,
 							scientific_name	=> $scientific_name,
 							title			=> $scientific_name,
