@@ -1133,7 +1133,7 @@ sub read_flowers_table
 		push @keys, $key;
 	}
 
-	push @keys, links;
+	push @keys, 'links';
 
 	@keys		= Unicode::Collate -> new -> sort(@keys);
 	@records	= ();
