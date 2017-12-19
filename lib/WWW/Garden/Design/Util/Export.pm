@@ -488,12 +488,10 @@ sub export_all_pages
 
 		# Auto-links.
 
-		my(@links);
+		my($link_count) = 0;
 
-		push @links,
-		[
-			{td => 'URLs'}
-		];
+		my($auto_link);
+		my(@links);
 
 		my($other_id, $other_pig_latin, $other_scientific_name);
 
@@ -503,12 +501,25 @@ sub export_all_pages
 
 			next if ($other_id == $id);
 
+			$link_count++;
+
+			if ($link_count == 1)
+			{
+				push @links,
+				[
+					{td => 'URLs'}
+				];
+			}
+
 			$other_pig_latin		= $$link[1];
 			$other_scientific_name	= $$link[2];
+			$auto_link				= "See also <a href = '/Flowers/$other_pig_latin.html'>$other_scientific_name</a>";
+
+			$self -> logger -> debug($auto_link);
 
 			push @links,
 			[
-				{td => mark_raw("See also <a href = '/Flowers/$other_pig_latin.html'>$other_scientific_name</a>")},
+				{td => mark_raw($auto_link)},
 			];
 		}
 

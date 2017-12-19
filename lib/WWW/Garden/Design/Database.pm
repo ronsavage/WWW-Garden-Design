@@ -1049,7 +1049,8 @@ sub read_flowers_table
 	my($attribute);
 	my(@fields);
 	my($id);
-	my($pig_latin, $prefix, %prefixes);
+	my(%links);
+	my($pig_latin, $prefix);
 	my($record, @records);
 	my($scientific_name);
 	my($thumbnail);
@@ -1067,15 +1068,15 @@ sub read_flowers_table
 
 		$id						= $$record{id};
 		$scientific_name		= $$record{scientific_name};
-		@fields					= split(/\s+/, $scientific_name);
+		@fields					= split(/\s/, $scientific_name);
 		$prefix					= $fields[0]; # For auto-linking like-named flowers.
-		$prefixes{$prefix}		= [] if (! $prefixes{$prefix});
+		$links{$prefix}			= [] if (! $links{$prefix});
 		$pig_latin				= $$flower{pig_latin};
 		$$record{hxw}			= $self -> format_height_width($$flower{height}, $$flower{width});
 		$$record{thumbnail_url}	= "$$constants{homepage_url}$$constants{image_url}/$pig_latin.0.jpg";
 		$$record{web_page_url}	= "$$constants{homepage_url}$$constants{flower_url}/$pig_latin.html";
 
-		push @{$prefixes{$prefix} }, [$id, $pig_latin, $scientific_name];
+		push @{$links{$prefix} }, [$id, $pig_latin, $scientific_name];
 
 		# Warning: Obviously this loop only works if $table_name never matches $key in the above loop.
 
@@ -1125,9 +1126,14 @@ sub read_flowers_table
 		$scientific_name	= $$record{scientific_name};
 		$key				= "$scientific_name:$index";
 		$records{$key}		= $record;
-		@fields				= split(/\s+/, $scientific_name);
+		@fields				= split(/\s/, $scientific_name);
 		$prefix				= $fields[0]; # For auto-linking like-named flowers.
-		$records{links}		= $prefixes{$prefix}; # For auto-linking like-named flowers.
+		$records{links}		= $links{$prefix}; # For auto-linking like-named flowers.
+
+		if ($prefix eq 'Plectranthus')
+		{
+			$self -> logger -> debug(Dumper($records{links}) );
+		}
 
 		push @keys, $key;
 	}
