@@ -5,6 +5,8 @@ use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
+use Data::Dumper::Concise; # For Dumper().
+
 use DBI;
 
 use DBIx::Simple;
@@ -753,6 +755,8 @@ sub get_flower_by_id
 
 	for my $table_name (qw/attributes flower_locations images notes urls/)
 	{
+		# Return an arrayref of hashrefs.
+
 		$$flower{$table_name} = $self -> read_flower_dependencies($table_name, $$flower{id});
 	}
 
@@ -1043,9 +1047,11 @@ sub read_flowers_table
 	}
 
 	my($attribute);
+	my(@fields);
 	my($id);
-	my($pig_latin);
+	my($pig_latin, $prefix, %prefixes);
 	my($record, @records);
+	my($scientific_name);
 	my($thumbnail);
 
 	for my $flower (@$flower_table)
@@ -1059,13 +1065,24 @@ sub read_flowers_table
 			$$record{$key} = $$flower{$key};
 		}
 
+		$id						= $$record{id};
+		$scientific_name		= $$record{scientific_name};
+		@fields					= split(/\s+/, $scientific_name);
+		$prefix					= $fields[0]; # For auto-linking like-named flowers.
+		$prefixes{$prefix}		= [] if (! $prefixes{$prefix});
 		$pig_latin				= $$flower{pig_latin};
 		$$record{hxw}			= $self -> format_height_width($$flower{height}, $$flower{width});
 		$$record{thumbnail_url}	= "$$constants{homepage_url}$$constants{image_url}/$pig_latin.0.jpg";
 		$$record{web_page_url}	= "$$constants{homepage_url}$$constants{flower_url}/$pig_latin.html";
 
+		push @{$prefixes{$prefix} }, [$id, $pig_latin, $scientific_name];
+
+		# Warning: Obviously this loop only works if $table_name never matches $key in the above loop.
+
 		for my $table_name (qw/attributes flower_locations images notes urls/)
 		{
+			# Return an arrayref of hashrefs.
+
 			$$record{$table_name} = $self -> read_flower_dependencies($table_name, $$record{id});
 		}
 
@@ -1082,7 +1099,7 @@ sub read_flowers_table
 			}
 		}
 
-		# Fix the image urls.
+		# Fix the urls.
 
 		for my $i (0 .. $#{$$record{images} })
 		{
@@ -1105,8 +1122,12 @@ sub read_flowers_table
 	{
 		$index++;
 
-		$key			= "$$record{scientific_name}:$index";
-		$records{$key}	= $record;
+		$scientific_name	= $$record{scientific_name};
+		$key				= "$scientific_name:$index";
+		$records{$key}		= $record;
+		@fields				= split(/\s+/, $scientific_name);
+		$prefix				= $fields[0]; # For auto-linking like-named flowers.
+		$records{links}		= $prefixes{$prefix}; # For auto-linking like-named flowers.
 
 		push @keys, $key;
 	}

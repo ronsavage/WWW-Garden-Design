@@ -447,7 +447,8 @@ sub export_all_pages
 
 	my(@attributes, $aliases);
 	my($common_name);
-	my(@images);
+	my($id, @images);
+	my(@links);
 	my(@notes);
 	my($pig_latin);
 	my($scientific_name);
@@ -462,11 +463,14 @@ sub export_all_pages
 		$aliases			= $$flower{aliases};
 		@attributes			= ();
 		$common_name		= $$flower{common_name};
+		$id					= $$flower{id};
 		@images				= ();
 		@notes				= ();
 		$scientific_name	= $$flower{scientific_name};
 		$pig_latin			= $$flower{pig_latin};
 		@urls				= ();
+
+		# Attributes.
 
 		push @attributes,
 		[
@@ -483,6 +487,32 @@ sub export_all_pages
 			];
 		}
 
+		# Auto-links.
+
+		push @links,
+		[
+			{td => 'URLs'}
+		];
+
+		my($other_id, $other_pig_latin, $other_scientific_name);
+
+		for my $link (@{$$flower{links} })
+		{
+			$other_id = $$link[0];
+
+			next if ($other_id == $id);
+
+			$other_pig_latin		= $$link[1];
+			$other_scientific_name	= $$link[2];
+
+			push @links,
+			[
+				{td => mark_raw("See also <a href = '/Flowers/$other_pig_latin.html'>$other_scientific_name</a>")},
+			];
+		}
+
+		# Images.
+
 		push @images,
 		[
 			{td => 'Descriptions'},
@@ -497,6 +527,8 @@ sub export_all_pages
 				{td => mark_raw("<img src = '$$image{file_name}'>")},
 			];
 		}
+
+		# Notes.
 
 		push @notes,
 		[
@@ -521,6 +553,8 @@ sub export_all_pages
 				{td => mark_raw($text)},
 			];
 		}
+
+		# URLs.
 
 		push @urls,
 		[
