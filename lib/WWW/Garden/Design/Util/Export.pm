@@ -533,7 +533,7 @@ sub export_all_pages
 			{
 				if ($#links < 0)
 				{
-					push @links, [{td => 'Links'}];
+					push @links, [{td => 'Auto-generated links'}];
 				}
 
 				($other_id, $other_pig_latin, $other_common_name) = ($$item[0], $$item[1], $$item[2]);
@@ -546,11 +546,6 @@ sub export_all_pages
 		}
 
 		# Notes.
-
-		push @notes,
-		[
-			{td => 'Notes'},
-		];
 
 		for my $note (@{$$flower{notes} })
 		{
@@ -565,6 +560,14 @@ sub export_all_pages
 				$text = "» $text";
 			}
 
+			if ($#notes < 0)
+			{
+				push @notes,
+				[
+					{td => 'Notes'},
+				];
+			}
+
 			push @notes,
 			[
 				{td => mark_raw($text)},
@@ -573,13 +576,16 @@ sub export_all_pages
 
 		# URLs.
 
-		push @urls,
-		[
-			{td => 'URLs'},
-		];
-
 		for my $url (@{$$flower{urls} })
 		{
+			if ($#urls < 0)
+			{
+				push @urls,
+				[
+					{td => 'URLs'},
+				];
+			}
+
 			push @urls,
 			[
 				{td => mark_raw("<a href = '$$url{url}'>$$url{url}</a>")},
