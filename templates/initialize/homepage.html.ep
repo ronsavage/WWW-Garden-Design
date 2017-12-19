@@ -933,9 +933,9 @@ function populate_details(flower_id)
 		}
 
 		// 2: Loop over all images owned by this flower.
+		// This code reuses var id = [].
 
-		ids			= [];
-		image_count	= (flower['images'].length > image_count) ? image_count : flower['images'].length;
+		image_count = (flower['images'].length > image_count) ? image_count : flower['images'].length;
 
 		var description;
 		var file_name;
@@ -948,11 +948,6 @@ function populate_details(flower_id)
 			sequence		= flower['images'][i]['sequence'];
 			image_path		= homepage_url + image_url + '/' + file_name;
 			thumbnail_html	= "<img src = '" + image_path + "' " + get_search_image_size_string() + '>';
-
-			if (i <= 1)
-			{
-				//alert(i + ': ' + file_name);
-			}
 
 			// For the HTML column order, see templates/initialize/images.html.ep.
 
@@ -971,13 +966,13 @@ function populate_details(flower_id)
 
 		// Notes: Copy notes to the Details/Notes tab.
 		// 1: Remove any existing notes.
+		// This code reuses var id = [].
 
-		ids			= [];
-		note_count	= <%== $$constants{max_note_count} %>;
+		note_count = <%== $$constants{max_note_count} %>;
 
 		for (var i = 0; i < note_count; i++)
 		{
-			ids.push(build_note_ids(i + 1) );
+			ids[i] = build_note_ids(i + 1); // Used in this loop and the next.
 
 			// For the HTML column order, see templates/initialize/notes.html.ep.
 
@@ -989,9 +984,9 @@ function populate_details(flower_id)
 		}
 
 		// 2: Loop over all notes owned by this flower.
+		// This code reuses var id = [].
 
-		ids			= [];
-		note_count	= (flower['notes'].length > note_count) ? note_count : flower['notes'].length;
+		note_count = (flower['notes'].length > note_count) ? note_count : flower['notes'].length;
 
 		var note;
 
@@ -999,7 +994,6 @@ function populate_details(flower_id)
 		{
 			note		= flower['notes'][i]['note'];
 			sequence	= flower['notes'][i]['sequence'];
-			ids[i]		= build_note_ids(sequence);
 
 			// For the HTML column order, see templates/initialize/notes.html.ep.
 
@@ -1012,27 +1006,27 @@ function populate_details(flower_id)
 
 		// URLs: Copy urls to the Details/URLs tab.
 		// 1: Remove any existing URLs.
+		// This code reuses var id = [].
 
-		ids			= [];
-		url_count	= <%== $$constants{max_url_count} %>;
+		url_count = <%== $$constants{max_url_count} %>;
 
 		for (var i = 0; i < url_count; i++)
 		{
-			ids.push(build_url_ids(i) );
+			ids[i] = build_url_ids(i + 1); // Used in this loop and the next.
 
 			// For the HTML column order, see templates/initialize/urls.html.ep.
 
-			$(ids[i][0])
-			.val('');	// Sequence. Not used.
+			//$(ids[i][0])
+			//.val('');	// Sequence. Not used.
 
 			$(ids[i][1])
 			.val('');	// URL.
 		}
 
 		// 2: Loop over all URLs owned by this flower.
+		// This code reuses var id = [].
 
-		ids			= [];
-		url_count	= (flower['urls'].length > url_count) ? url_count : flower['urls'].length;
+		url_count = (flower['urls'].length > url_count) ? url_count : flower['urls'].length;
 
 		var url;
 
@@ -1040,7 +1034,6 @@ function populate_details(flower_id)
 		{
 			sequence	= flower['urls'][i]['sequence'];
 			url			= flower['urls'][i]['url'];
-			ids[i]		= build_url_ids(sequence);
 
 			// For the HTML column order, see templates/initialize/urls.html.ep.
 
