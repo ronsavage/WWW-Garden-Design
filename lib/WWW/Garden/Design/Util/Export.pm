@@ -432,11 +432,25 @@ sub export_all_pages
 
 	$self -> db -> logger -> info("flower_dir: $$constants{flower_dir}");
 
-	my(%attribute_sequence);
+	# Process each flower looking for others with the same prefix.
 
-	for (values @$attribute_types_table)
+	my(@fields);
+	my($id);
+	my($pig_latin, $prefix, %prefixes);
+	my($scientific_name);
+
+	for my $flower (@$flowers)
 	{
-		$attribute_sequence{$$_{name} } = $$_{sequence};
+		next if ($$flower{publish} eq 'No');
+
+		$id					= $$flower{id};
+		$scientific_name	= $$flower{scientific_name};
+		@fields				= split(/\s+/, $scientific_name);
+		$pig_latin			= $$flower{pig_latin};
+		$prefix				= $fields[0];
+		$prefixes{$prefix}	= [] if (! $prefixes{$prefix});
+
+		push @{$prefixes{$prefix} }, [$id, $pig_latin, $scientific_name];
 	}
 
 	my($tx) = Text::Xslate -> new
@@ -448,9 +462,9 @@ sub export_all_pages
 	my(@attributes, $aliases);
 	my($common_name);
 	my(@images);
+	my(@links);
 	my(@notes);
-	my($pig_latin);
-	my($scientific_name);
+	my($other_id, $other_pig_latin, $other_scientific_name);
 	my($text);
 	my($url, @urls);
 	my($web_page_name);
@@ -463,6 +477,7 @@ sub export_all_pages
 		@attributes			= ();
 		$common_name		= $$flower{common_name};
 		@images				= ();
+		@links				= ();
 		@notes				= ();
 		$scientific_name	= $$flower{scientific_name};
 		$pig_latin			= $$flower{pig_latin};
@@ -500,6 +515,26 @@ sub export_all_pages
 				{td => mark_raw($$image{description})},
 				{td => mark_raw("<img src = '$$image{file_name}'>")},
 			];
+		}
+
+		# Links.
+
+		@fields	= split(/\s+/, $scientific_name);
+		$prefix	= $fields[0];
+
+		if ($#{$prefixes{$prefix} } > 0)
+		{
+			for my $item (@{$prefixes{$prefix} })
+			{
+				if ($#links < 0)
+				{
+					push @links, 'Links';
+				}
+
+				($other_id, $other_pig_latin, $other_scientific_name) = ($$item[0], $$item[1], $$item[2]);
+
+				push @links, "See also <a href = '/Flowers/$other_pig_latin.html'>$other_scientific_name</a>";
+			}
 		}
 
 		# Notes.
@@ -556,6 +591,7 @@ sub export_all_pages
 							attributes		=> \@attributes,
 							common_name		=> $common_name,
 							images			=> \@images,
+							links			=> \@links,
 							notes			=> \@notes,
 							scientific_name	=> $scientific_name,
 							title			=> $scientific_name,
