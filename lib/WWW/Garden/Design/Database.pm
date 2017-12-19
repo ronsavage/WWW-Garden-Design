@@ -1130,13 +1130,10 @@ sub read_flowers_table
 		$prefix				= $fields[0]; # For auto-linking like-named flowers.
 		$records{links}		= $links{$prefix}; # For auto-linking like-named flowers.
 
-		if ($prefix eq 'Plectranthus')
-		{
-			$self -> logger -> debug(Dumper($records{links}) );
-		}
-
 		push @keys, $key;
 	}
+
+	push @keys, links;
 
 	@keys		= Unicode::Collate -> new -> sort(@keys);
 	@records	= ();

@@ -30,12 +30,14 @@
 
 	<br>
 
-	<table align = 'center' summary = 'Table for auto-linked flowers'>
-	<tr><td>
-		<div class = 'simple_border'>
-			:include 'individual.table.tx' {row => $links, table_id => 'Auto-linked flowers'};
-		</div>
-	</td></tr></table>
+	:if $#$links > 0 {
+		<table align = 'center' summary = 'Table for auto-linked flowers'>
+		<tr><td>
+			<div class = 'simple_border'>
+				:include 'individual.table.tx' {row => $links, table_id => 'Auto-linked flowers'};
+			</div>
+		</td></tr></table>
+	: }
 
 	<br>
 
