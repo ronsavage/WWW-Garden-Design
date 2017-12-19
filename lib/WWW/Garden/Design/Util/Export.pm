@@ -476,6 +476,7 @@ sub export_all_pages
 		$aliases			= $$flower{aliases};
 		@attributes			= ();
 		$common_name		= $$flower{common_name};
+		$id					= $$flower{id};
 		@images				= ();
 		@links				= ();
 		@notes				= ();
@@ -533,7 +534,10 @@ sub export_all_pages
 
 				($other_id, $other_pig_latin, $other_scientific_name) = ($$item[0], $$item[1], $$item[2]);
 
-				push @links, [{td => "See also <a href = '/Flowers/$other_pig_latin.html'>$other_scientific_name</a>"}];
+				if ($other_id != $id)
+				{
+					push @links, [{td => mark_raw("See also <a href = '/Flowers/$other_pig_latin.html'>$other_scientific_name</a>")}];
+				}
 			}
 		}
 
