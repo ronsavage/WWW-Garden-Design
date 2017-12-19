@@ -376,8 +376,8 @@ function build_image_ids(sequence)
 	[
 		'#image_description_' + sequence,	// 0.
 		'#image_file_name_' + sequence,		// 1.
-		'#image_image_' + sequence,			// 2.
-		'#image_sequence_' + sequence		// 3.
+		'#image_url_' + sequence,			// 2.
+		'#image_sequence_' + sequence		// 3. Not used.
 	];
 
 	return ids;
@@ -393,7 +393,7 @@ function build_note_ids(sequence)
 	var ids	=
 	[
 		'#note_note_' + sequence,		// 0.
-		'#note_sequence_' + sequence	// 1.
+		'#note_sequence_' + sequence	// 1. Not used.
 	];
 
 	return ids;
@@ -408,7 +408,7 @@ function build_url_ids(sequence)
 
 	var ids	=
 	[
-		'#url_sequence_' + sequence,	// 0.
+		'#url_sequence_' + sequence,	// 0. Not used.
 		'#url_url_' + sequence			// 1.
 	];
 
@@ -915,7 +915,7 @@ function populate_details(flower_id)
 
 		for (var i = 0; i < image_count; i++)
 		{
-			ids.push(build_image_ids(i + 1) );
+			ids[i] = build_image_ids(i + 1); // Used in this loop and the next.
 
 			// For the HTML column order, see templates/initialize/images.html.ep.
 
@@ -926,10 +926,10 @@ function populate_details(flower_id)
 			.val('');	// File name.
 
 			$(ids[i][2])
-			.text('');	// Image.
+			.html('');	// Image.
 
 			//$(ids[i][3])
-			//.val('');	// Sequence.
+			//.text('');	// Sequence. Not used.
 		}
 
 		// 2: Loop over all images owned by this flower.
@@ -946,9 +946,13 @@ function populate_details(flower_id)
 			description		= flower['images'][i]['description'];
 			file_name		= flower['images'][i]['file_name'];
 			sequence		= flower['images'][i]['sequence'];
-			ids[i]			= build_image_ids(sequence);
 			image_path		= homepage_url + image_url + '/' + file_name;
 			thumbnail_html	= "<img src = '" + image_path + "' " + get_search_image_size_string() + '>';
+
+			if (i <= 1)
+			{
+				//alert(i + ': ' + file_name);
+			}
 
 			// For the HTML column order, see templates/initialize/images.html.ep.
 
@@ -962,7 +966,7 @@ function populate_details(flower_id)
 			.html(thumbnail_html);
 
 			//$(ids[i][3])
-			//.val(sequence);
+			//.text(sequence); Not used.
 		}
 
 		// Notes: Copy notes to the Details/Notes tab.
@@ -981,7 +985,7 @@ function populate_details(flower_id)
 			.val('');	// Note.
 
 			//$(ids[i][1])
-			//.val('');	// Sequence.
+			//.val('');	// Sequence. Not used.
 		}
 
 		// 2: Loop over all notes owned by this flower.
@@ -1002,8 +1006,8 @@ function populate_details(flower_id)
 			$(ids[i][0])
 			.val(note);
 
-			$(ids[i][1])
-			.val(sequence);
+			//$(ids[i][1])
+			//.val(sequence); Not used.
 		}
 
 		// URLs: Copy urls to the Details/URLs tab.
@@ -1019,7 +1023,7 @@ function populate_details(flower_id)
 			// For the HTML column order, see templates/initialize/urls.html.ep.
 
 			$(ids[i][0])
-			.val('');	// Sequence.
+			.val('');	// Sequence. Not used.
 
 			$(ids[i][1])
 			.val('');	// URL.
@@ -1040,8 +1044,8 @@ function populate_details(flower_id)
 
 			// For the HTML column order, see templates/initialize/urls.html.ep.
 
-			$(ids[i][0])
-			.val(sequence);
+			//$(ids[i][0])
+			//.val(sequence); Not used.
 
 			$(ids[i][1])
 			.val(url);

@@ -17,14 +17,14 @@
 	<table align = 'center'>
 		<thead>
 			<tr>
-				<th>#</th>
+				<th class = 'centered'>#</th>
 				<th>URL</th>
 			</tr>
 		</thead>
 		<tbody>
 			% for my $i (1 .. $$constants{max_url_count}) {
 			<tr>
-				<td><%== $i %>.</td>
+				<td class = 'centered'><%== $i %></td>
 				<td align = 'left'><input id = 'url_url_<%== $i %>' type = 'text' size = '100' maxlength = '255'></td>
 			</tr>
 			% }
