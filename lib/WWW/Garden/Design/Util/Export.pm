@@ -528,12 +528,12 @@ sub export_all_pages
 			{
 				if ($#links < 0)
 				{
-					push @links, {td => 'Links'};
+					push @links, [{td => 'Links'}];
 				}
 
 				($other_id, $other_pig_latin, $other_scientific_name) = ($$item[0], $$item[1], $$item[2]);
 
-				push @links, {td => "See also <a href = '/Flowers/$other_pig_latin.html'>$other_scientific_name</a>"};
+				push @links, [{td => "See also <a href = '/Flowers/$other_pig_latin.html'>$other_scientific_name</a>"}];
 			}
 		}
 
