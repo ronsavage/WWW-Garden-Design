@@ -448,7 +448,6 @@ sub export_all_pages
 	my(@attributes, $aliases);
 	my($common_name);
 	my($id, @images);
-	my(@links);
 	my(@notes);
 	my($pig_latin);
 	my($scientific_name);
@@ -488,6 +487,8 @@ sub export_all_pages
 		}
 
 		# Auto-links.
+
+		my(@links);
 
 		push @links,
 		[
