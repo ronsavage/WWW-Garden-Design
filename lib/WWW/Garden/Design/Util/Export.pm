@@ -433,7 +433,11 @@ sub export_all_pages
 	$self -> db -> logger -> info("flower_dir: $$constants{flower_dir}");
 
 	# Process each flower looking for others with the same prefix.
+	# The reason for using common name here is it helps when 2
+	# different plants have the same scientific name, such as
+	# Plectrathus eklonii.
 
+	my($common_name);
 	my(@fields);
 	my($id);
 	my($pig_latin, $prefix, %prefixes);
@@ -443,6 +447,7 @@ sub export_all_pages
 	{
 		next if ($$flower{publish} eq 'No');
 
+		$common_name		= $$flower{common_name};
 		$id					= $$flower{id};
 		$scientific_name	= $$flower{scientific_name};
 		@fields				= split(/\s+/, $scientific_name);
@@ -450,7 +455,7 @@ sub export_all_pages
 		$prefix				= $fields[0];
 		$prefixes{$prefix}	= [] if (! $prefixes{$prefix});
 
-		push @{$prefixes{$prefix} }, [$id, $pig_latin, $scientific_name];
+		push @{$prefixes{$prefix} }, [$id, $pig_latin, $common_name];
 	}
 
 	my($tx) = Text::Xslate -> new
@@ -460,11 +465,10 @@ sub export_all_pages
 	);
 
 	my(@attributes, $aliases);
-	my($common_name);
 	my(@images);
 	my(@links);
 	my(@notes);
-	my($other_id, $other_pig_latin, $other_scientific_name);
+	my($other_id, $other_pig_latin, $other_common_name);
 	my($text);
 	my($url, @urls);
 	my($web_page_name);
@@ -532,11 +536,11 @@ sub export_all_pages
 					push @links, [{td => 'Links'}];
 				}
 
-				($other_id, $other_pig_latin, $other_scientific_name) = ($$item[0], $$item[1], $$item[2]);
+				($other_id, $other_pig_latin, $other_common_name) = ($$item[0], $$item[1], $$item[2]);
 
 				if ($other_id != $id)
 				{
-					push @links, [{td => mark_raw("See also <a href = '/Flowers/$other_pig_latin.html'>$other_scientific_name</a>")}];
+					push @links, [{td => mark_raw("See also <a href = '/Flowers/$other_pig_latin.html'>$other_common_name</a>")}];
 				}
 			}
 		}
