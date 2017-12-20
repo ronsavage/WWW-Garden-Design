@@ -437,11 +437,9 @@ sub export_all_pages
 	# different plants have the same scientific name, such as
 	# Plectranthus eklonii.
 
-	my($aliases, $alias);
 	my($common_name);
 	my(@fields);
 	my($id);
-	my($name);
 	my($pig_latin, $prefix, %prefixes);
 	my($scientific_name);
 
@@ -457,12 +455,8 @@ sub export_all_pages
 		$prefix				= $fields[0];
 		$prefixes{$prefix}	= [] if (! $prefixes{$prefix});
 		$aliases			= $$flower{aliases};
-		@fields				= split(/,\s*/, $aliases);
-		$name				= ( ($common_name =~ /\d$/) && (length($aliases) > 0) ) ? $fields[0] : $common_name;
 
-		$self -> db -> logger -> debug("$scientific_name. $common_name, $name");
-
-		push @{$prefixes{$prefix} }, [$id, $pig_latin, $name];
+		push @{$prefixes{$prefix} }, [$id, $pig_latin, "$scientific_name aka $common_name"];
 	}
 
 	my($tx) = Text::Xslate -> new
@@ -471,7 +465,7 @@ sub export_all_pages
 		path        => $$constants{template_path},
 	);
 
-	my(@attributes);
+	my(@attributes, $aliases);
 	my(@images);
 	my(@links);
 	my(@notes);
