@@ -454,7 +454,6 @@ sub export_all_pages
 		$pig_latin			= $$flower{pig_latin};
 		$prefix				= $fields[0];
 		$prefixes{$prefix}	= [] if (! $prefixes{$prefix});
-		$aliases			= $$flower{aliases};
 
 		push @{$prefixes{$prefix} }, [$id, $pig_latin, "$scientific_name aka $common_name"];
 	}
