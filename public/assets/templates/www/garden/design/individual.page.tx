@@ -26,12 +26,7 @@
 	<tr>
 		<td>
 			<div class = 'simple_border'>
-				Height: $height
-			</div>
-		</td>
-		<td>
-			<div class = 'simple_border'>
-				Width: $width
+				Height x width: <: $height :> x <: $width :>
 			</div>
 		</td>
 	</tr></table>
