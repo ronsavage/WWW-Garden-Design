@@ -36,15 +36,15 @@ my($simple)		= DBIx::Simple -> new($dbh);
 my(%expected)	=
 (
 	attribute_types	=>   4,
-	attributes		=> 664,
+	attributes		=> 708,
 	colors 			=> 674,
-	flowers			=> 168,
+	flowers			=> 179,
 	gardens			=>   5,
-	images			=> 457,
-	notes			=> 761,
+	images			=> 462,
+	notes			=> 748,
 	objects			=>  28,
 	properties		=>   3,
-	urls			=> 194,
+	urls			=> 211,
 );
 
 my($result);
