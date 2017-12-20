@@ -460,7 +460,7 @@ sub export_all_pages
 		@fields				= split(/,\s*/, $aliases);
 		$name				= ( ($common_name =~ /\d$/) && (length($aliases) > 0) ) ? $fields[0] : $common_name;
 
-		$self -> logger -> debug("$scientific_name. $common_name, $name");
+		$self -> db -> logger -> debug("$scientific_name. $common_name, $name");
 
 		push @{$prefixes{$prefix} }, [$id, $pig_latin, $name];
 	}
