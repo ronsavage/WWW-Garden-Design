@@ -455,7 +455,7 @@ sub export_all_pages
 		$prefix				= $fields[0];
 		$prefixes{$prefix}	= [] if (! $prefixes{$prefix});
 
-		push @{$prefixes{$prefix} }, [$id, $pig_latin, "$scientific_name aka $common_name"];
+		push @{$prefixes{$prefix} }, [$id, $pig_latin, "$scientific_name => $common_name"];
 	}
 
 	my($tx) = Text::Xslate -> new
