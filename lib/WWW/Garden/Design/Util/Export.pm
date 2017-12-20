@@ -604,12 +604,14 @@ sub export_all_pages
 							aliases			=> $aliases eq '' ? '' : "Aliases: $aliases",
 							attributes		=> \@attributes,
 							common_name		=> $common_name,
+							height			=> $$flower{height} || '-',
 							images			=> \@images,
 							links			=> \@links,
 							notes			=> \@notes,
 							scientific_name	=> $scientific_name,
 							title			=> $scientific_name,
 							urls			=> \@urls,
+							width			=> $$flower{width} || '-',
 						}
 					);
 		close $fh;
