@@ -435,11 +435,13 @@ sub export_all_pages
 	# Process each flower looking for others with the same prefix.
 	# The reason for using common name here is it helps when 2
 	# different plants have the same scientific name, such as
-	# Plectrathus eklonii.
+	# Plectranthus eklonii.
 
+	my($aliases, $alias);
 	my($common_name);
 	my(@fields);
 	my($id);
+	my($name);
 	my($pig_latin, $prefix, %prefixes);
 	my($scientific_name);
 
@@ -454,8 +456,13 @@ sub export_all_pages
 		$pig_latin			= $$flower{pig_latin};
 		$prefix				= $fields[0];
 		$prefixes{$prefix}	= [] if (! $prefixes{$prefix});
+		$aliases			= $$flower{aliases};
+		@fields				= split(/,\s*/, $aliases);
+		$name				= ( ($common_name =~ /\d$/) && (length($aliases) > 0) ) ? $fields[0] : $common_name;
 
-		push @{$prefixes{$prefix} }, [$id, $pig_latin, $common_name];
+		$self -> logger -> debug("$scientific_name. $common_name, $name");
+
+		push @{$prefixes{$prefix} }, [$id, $pig_latin, $name];
 	}
 
 	my($tx) = Text::Xslate -> new
@@ -464,7 +471,7 @@ sub export_all_pages
 		path        => $$constants{template_path},
 	);
 
-	my(@attributes, $aliases);
+	my(@attributes);
 	my(@images);
 	my(@links);
 	my(@notes);
