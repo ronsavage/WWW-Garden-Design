@@ -2,7 +2,8 @@
 
 use strict;
 use warnings;
-use open qw(:std :utf8); # Undeclared streams in UTF-8.
+use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
+use open      qw(:std :utf8); # Undeclared streams in UTF-8.
 
 use Data::Dumper::Concise; # For Dumper().
 
