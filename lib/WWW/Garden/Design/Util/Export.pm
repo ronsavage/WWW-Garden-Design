@@ -533,7 +533,7 @@ sub export_all_pages
 			{
 				if ($#links < 0)
 				{
-					push @links, [{td => 'Auto-generated links'}];
+					push @links, [{td => "Auto-generated links for $scientific_name => $common_name"}];
 				}
 
 				($other_id, $other_pig_latin, $other_common_name) = ($$item[0], $$item[1], $$item[2]);
