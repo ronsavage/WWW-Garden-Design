@@ -608,6 +608,7 @@ sub export_all_pages
 							images			=> \@images,
 							link_count		=> scalar(@links), # Necessary because Text::Xslate rejects $#$links.
 							links			=> \@links,
+							note_count		= scalar(@notes),
 							notes			=> \@notes,
 							scientific_name	=> $scientific_name,
 							title			=> $scientific_name,
