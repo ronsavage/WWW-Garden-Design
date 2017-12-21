@@ -44,6 +44,7 @@
 
 	<br>
 
+	:if ($#$links < 0) {
 	<table align = 'center' summary = 'Table for auto-linked flowers'>
 	<tr><td>
 		<div class = 'simple_border'>
@@ -52,6 +53,7 @@
 	</td></tr></table>
 
 	<br>
+	: }
 
 	<table align = 'center' summary = 'Table for flower notes'>
 	<tr><td>
