@@ -611,6 +611,7 @@ sub export_all_pages
 							notes			=> \@notes,
 							scientific_name	=> $scientific_name,
 							title			=> $scientific_name,
+							url_count		=> scalar(@urls),
 							urls			=> \@urls,
 							width			=> $$flower{width} || '-',
 						}

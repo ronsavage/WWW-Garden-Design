@@ -64,12 +64,16 @@
 
 	<br>
 
+	: if url_count >= 1 {
 	<table align = 'center' summary = 'Table for flower urls'>
 	<tr><td>
 		<div class = 'simple_border'>
 			:include 'individual.table.tx' {row => $urls, table_id => 'URLs'};
 		</div>
 	</td></tr></table>
+
+	<br />
+	: }
 
 	<hr>
 	<p align = 'center'>Return to <a href = '/Flowers.html'>index page</a></p>
