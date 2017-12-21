@@ -36,6 +36,7 @@
 	: }
 
 	<table align = 'center' summary = 'Table for flower images'>
+	<h2 align = 'center'>Images</h1>
 	<tr><td>
 		<div class = 'simple_border'>
 			:include 'individual.table.tx' {row => $images, table_id => 'Images'};
@@ -45,6 +46,7 @@
 	<br>
 
 	:if $link_count >= 1 {
+	<h2 align = 'center'>Flowers with similar scientific names</h1>
 	<table align = 'center' summary = 'Table for auto-linked flowers'>
 	<tr><td>
 		<div class = 'simple_border'>
@@ -56,6 +58,7 @@
 	: }
 
 	: if $note_count >= 1 {
+	<h2 align = 'center'>Notes</h1>
 	<table align = 'center' summary = 'Table for flower notes'>
 	<tr><td>
 		<div class = 'simple_border'>
@@ -67,6 +70,7 @@
 	: }
 
 	: if $url_count >= 1 {
+	<h2 align = 'center'>URLs</h1>
 	<table align = 'center' summary = 'Table for flower urls'>
 	<tr><td>
 		<div class = 'simple_border'>
