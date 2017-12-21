@@ -606,7 +606,7 @@ sub export_all_pages
 							common_name		=> $common_name,
 							height			=> $$flower{height} || '-',
 							images			=> \@images,
-							link_count		=> scalar(@links),
+							link_count		=> scalar(@links), # Necessary because Text::Xslate rejects $#$links.
 							links			=> \@links,
 							notes			=> \@notes,
 							scientific_name	=> $scientific_name,

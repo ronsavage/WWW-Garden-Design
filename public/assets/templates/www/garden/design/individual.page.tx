@@ -44,7 +44,7 @@
 
 	<br>
 
-	:if link_count >= 1 {
+	:if $link_count >= 1 {
 	<table align = 'center' summary = 'Table for auto-linked flowers'>
 	<tr><td>
 		<div class = 'simple_border'>
