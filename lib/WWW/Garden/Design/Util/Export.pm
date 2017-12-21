@@ -606,6 +606,7 @@ sub export_all_pages
 							common_name		=> $common_name,
 							height			=> $$flower{height} || '-',
 							images			=> \@images,
+							link_count		=> scalar(@links),
 							links			=> \@links,
 							notes			=> \@notes,
 							scientific_name	=> $scientific_name,
