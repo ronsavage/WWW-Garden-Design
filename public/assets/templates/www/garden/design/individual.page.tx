@@ -44,7 +44,7 @@
 
 	<br>
 
-	:if scalar(@links) < 0 {
+	:if scalar(@$links) < 0 {
 	<table align = 'center' summary = 'Table for auto-linked flowers'>
 	<tr><td>
 		<div class = 'simple_border'>
