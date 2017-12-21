@@ -21,6 +21,7 @@
 
 	<br>
 
+	:if ($height ne '-') && ($width ne '-') {
 	<h2 align = 'center'>Size</h1>
 	<table align = 'center' summary = 'Table for plant sizes'>
 	<tr>
@@ -32,6 +33,7 @@
 	</tr></table>
 
 	<br>
+	: }
 
 	<table align = 'center' summary = 'Table for flower images'>
 	<tr><td>
