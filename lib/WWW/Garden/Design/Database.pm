@@ -461,10 +461,6 @@ sub crosscheck
 		}
 	}
 
-	print "homepage_dir: $homepage_dir \n";
-	print "homepage_url: $homepage_url \n";
-	print "image_path: $image_path \n";
-
 	# Return 0 for OK and 1 for error.
 
 	return 0;
