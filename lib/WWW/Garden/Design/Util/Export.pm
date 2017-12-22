@@ -1462,7 +1462,7 @@ sub objects2csv
 
 	# Column names are in order left-to-right.
 
-	$csv -> combine(qw/name hex_color/);
+	$csv -> combine(qw/name hex_color publish/);
 
 	print $fh $csv -> string, "\n";
 
