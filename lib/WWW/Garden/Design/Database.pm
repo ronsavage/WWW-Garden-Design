@@ -402,6 +402,7 @@ sub crosscheck
 	close $io;
 
 	my($homepage_dir)	= $constants{homepage_dir};
+	my($homepage_url)	= $constants{homepage_url};
 	my($image_dir)		= $constants{image_dir};
 	my($image_path)		= "$homepage_dir$image_dir";
 	my($flowers)		= $self -> read_flowers_table;
@@ -419,25 +420,19 @@ sub crosscheck
 
 	my($count);
 	my($common_name);
-	my($flower, $file_name);
+	my($file_name);
 	my($image);
 	my($pig_latin);
 	my(%real_name);
 	my($scientific_name);
 
-	for my $plant (@$flowers)
+	for my $flower (@$flowers)
 	{
-		$flower					= $self -> get_flower_by_id($$plant{id});
 		$common_name			= $$flower{common_name};
 		$scientific_name		= $$flower{scientific_name};
 		$pig_latin				= $self -> scientific_name2pig_latin($flowers, $scientific_name, $common_name);
 		$file_name				= "$pig_latin.0.jpg";
 		$real_name{$file_name}	= 1;
-
-		if ($scientific_name eq 'Mandevilla hybrid')
-		{
-			print Dumper($flower);
-		}
 
 		if (! $file_list{name_hash}{$file_name})
 		{
@@ -446,7 +441,7 @@ sub crosscheck
 
 		for $image (@{$$flower{images} })
 		{
-			$file_name				= $$image{file_name};
+			$file_name				= $$image{file_name} =~ s/\Q$homepage_url$image_dir\/\E//r;
 			$real_name{$file_name}	= 1;
 
 			if (! $file_list{name_hash}{$file_name})
@@ -466,8 +461,8 @@ sub crosscheck
 		}
 	}
 
-	print Dumper(\%real_name);
-
+	print "homepage_dir: $homepage_dir \n";
+	print "homepage_url: $homepage_url \n";
 	print "image_path: $image_path \n";
 
 	# Return 0 for OK and 1 for error.
