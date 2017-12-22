@@ -378,7 +378,7 @@ sub populate_flowers_table
 	{
 		$common_name				= $$item{common_name};
 		$scientific_name			= $$item{scientific_name};
-		$pig_latin					= $self -> db -> generate_pig_latin_from_scientific_name($lines, $scientific_name, $common_name);
+		$pig_latin					= $self -> db -> scientific_name2pig_latin($lines, $scientific_name, $common_name);
 		($max_height, $min_height)	= $self -> validate_size($table_name, $count, lc $self -> db -> trim($$item{height}), lc $self -> db -> trim($$item{height}) );
 		($max_width, $min_width)	= $self -> validate_size($table_name, $count, lc $self -> db -> trim($$item{width}), lc $self -> db -> trim($$item{width}) );
 		$$flower_keys{$common_name}	= $self -> db -> insert_hashref
