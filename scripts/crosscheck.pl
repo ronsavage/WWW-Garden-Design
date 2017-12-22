@@ -28,7 +28,7 @@ if ($option_parser -> getoptions
 {
 	pod2usage(1) if ($option{'help'});
 
-	exit WWW::Garden::Design::Database -> new(logger => Mojo::Log -> new(path => $log_path) ) -> cross_check;
+	exit WWW::Garden::Design::Database -> new(logger => Mojo::Log -> new(path => $log_path) ) -> crosscheck;
 }
 else
 {
@@ -41,11 +41,11 @@ __END__
 
 =head1 NAME
 
-cross.check.pl - Check Latin names against image file names.
+crosscheck.pl - Check Latin names against image file names.
 
 =head1 SYNOPSIS
 
-cross.check.pl [options]
+crosscheck.pl [options]
 
 	Options:
 	-help

@@ -5,15 +5,21 @@ use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
+use Data::Dumper::Concise; # For Dumper().
+
 use DBI;
 
 use DBIx::Simple;
 
 use File::Slurper qw/read_dir/;
 
+use FindBin;
+
 use Lingua::EN::Inflect qw/inflect PL_N/; # PL_N: plural of a singular noun.
 
 use Moo;
+
+use Text::CSV::Encoded;
 
 use Time::HiRes qw/gettimeofday tv_interval/;
 
@@ -358,101 +364,117 @@ sub clean_up_icon_name
 
 # -----------------------------------------------
 
-sub cross_check
+sub crosscheck
 {
-	my($self)		= @_;
-	my($flowers)	= $self -> read_flowers_table;
-	my(%dirs)		=
-	(
-		'doc_flowers' =>
-		{
-			dir_name	=> "$ENV{DR}/Flowers",
-			file_names	=> [],
-			name_hash	=> {},
-		},
-		'doc_images' =>
-		{
-			dir_name	=> "$ENV{DR}/Flowers/images",
-			file_names	=> [],
-			name_hash	=> {},
-		},
-	);
+	my($self)	= @_;
+	my($path)	= "$FindBin::Bin/../data/constants.csv";
+	my($csv)	= Text::CSV::Encoded -> new
+	({
+		allow_whitespace => 1,
+		encoding_in      => 'utf-8',
+	});
 
-	# Read in the actualy file names.
+	open(my $io, '<', $path) || die "Can't open($path): $!\n";
 
-	my(@dir_list);
+	$csv -> column_names($csv -> getline($io) );
 
-	for my $key (sort keys %dirs)
+	my(%constants);
+
+	my($row) = 0;
+
+	for my $item (@{$csv -> getline_hr_all($io) })
 	{
-		@dir_list								= read_dir $dirs{$key}{dir_name};
-		@dir_list								= sort grep{! -d "$dirs{$key}{dir_name}/$_"} @dir_list; # Can't call sort directly on output of read_dir!
-		$dirs{$key}{file_names}					= [@dir_list];
-		@{$dirs{$key}{name_hash} }{@dir_list}	= (1) x @dir_list;
+		$row++;
 
-		#$self -> logger -> info("File in $key: $_") for sort keys %{$dirs{$key}{name_hash} };
+		# Column names are in alphabetical order.
+
+		for my $column (qw/name value/)
+		{
+			if (! defined $$item{$column})
+			{
+				print "File: $path. Row: $row. Column $column undefined. \n";
+			}
+		}
+
+		$constants{$$item{name} } = $$item{value};
 	}
+
+	close $io;
+
+	my($homepage_dir)	= $constants{homepage_dir};
+	my($image_dir)		= $constants{image_dir};
+	my($image_path)		= "$homepage_dir$image_dir";
+	my($flowers)		= $self -> read_flowers_table;
+
+	# Read in the actual file names.
+
+	my(%file_list);
+
+	my(@entries)						= read_dir $image_path;
+	@entries							= sort grep{! -d "$image_path/$_"} @entries; # Can't call sort directly on output of read_dir!
+	$file_list{file_names}				= [@entries];
+	@{$file_list{name_hash} }{@entries}	= (1) x @entries;
 
 	# Check that the files which ought to be there, are.
 
 	my($count);
 	my($common_name);
-	my($file_name);
+	my($flower, $file_name);
 	my($image);
-	my($key);
 	my($pig_latin);
 	my(%real_name);
 	my($scientific_name);
 
-	for my $flower (@$flowers)
+	for my $plant (@$flowers)
 	{
-		$common_name		= $$flower{common_name};
-		$scientific_name	= $$flower{scientific_name};
-		$pig_latin			= $self -> clean_up_scientific_name($flowers, $scientific_name, $common_name);
+		$flower					= $self -> get_flower_by_id($$plant{id});
+		$common_name			= $$flower{common_name};
+		$scientific_name		= $$flower{scientific_name};
+		$pig_latin				= $self -> scientific_name2pig_latin($flowers, $scientific_name, $common_name);
+		$file_name				= "$pig_latin.0.jpg";
+		$real_name{$file_name}	= 1;
 
-		for $key (sort keys %dirs)
+		if ($scientific_name eq 'Mandevilla hybrid')
 		{
-			$file_name						= ($key eq 'doc_images') ? "$pig_latin.0.jpg" : "$pig_latin.html";
-			$real_name{$key}				= {} if (! $real_name{$key});
-			$real_name{$key}{$file_name}	= 1;
-
-			if (! $dirs{$key}{name_hash}{$file_name})
-			{
-				$self -> logger -> error("1: Missing file in $key: $file_name");
-			}
+			print Dumper($flower);
 		}
 
-		$key = 'doc_images';
-
-		for $image (sort{$$a{file_name} cmp $$b{file_name} } @{$$flower{images} })
+		if (! $file_list{name_hash}{$file_name})
 		{
-			$file_name						= $$image{file_name};
-			$real_name{$key}{$file_name}	= 1;
+			print "Missing thumbnail: $file_name\n";
+		}
 
-			if (! $dirs{$key}{name_hash}{$file_name})
+		for $image (@{$$flower{images} })
+		{
+			$file_name				= $$image{file_name};
+			$real_name{$file_name}	= 1;
+
+			if (! $file_list{name_hash}{$file_name})
 			{
-				$self -> logger -> error("2: Missing file in doc_images: $file_name");
+				print "Missing image: $file_name\n";
 			}
 		}
 	}
 
 	# Check for any unexpected files. A file is unexpected if it's not real :-).
 
-	for my $key (sort keys %dirs)
+	for my $file_name (@{$file_list{file_names} })
 	{
-		for my $file_name (@{$dirs{$key}{file_names} })
+		if (! $real_name{$file_name})
 		{
-			if (! $real_name{$key}{$file_name})
-			{
-				$self -> logger -> error("3: Unexpected file in $key: $file_name");
-			}
+#				print "Unexpected image: $file_name\n";
 		}
 	}
+
+	print Dumper(\%real_name);
+
+	print "image_path: $image_path \n";
 
 	# Return 0 for OK and 1 for error.
 
 	return 0;
 
-} # End of cross_check.
+} # End of crosscheck.
 
 # --------------------------------------------------
 
@@ -488,43 +510,6 @@ sub format_height_width
 	return $result;
 
 } # End of format_height_width.
-
-# --------------------------------------------------
-
-sub generate_pig_latin_from_scientific_name
-{
-	my($self, $flowers, $scientific_name, $common_name) = @_;
-	my(@chars)		= split(//, $scientific_name);
-	my($pig_latin)	= '';
-
-	for (@chars)
-	{
-		$pig_latin .= $1 if (m|([-_. a-zA-Z0-9])|)
-	}
-
-	$pig_latin	=~ s!^\s!!;
-	$pig_latin	=~ s!\s$!!;
-	$pig_latin	=~ s!\s!\.!g;
-
-	my(%seen);
-
-	for my $flower (@$flowers)
-	{
-		$seen{$$flower{scientific_name} } = 0 if (! $seen{$$flower{scientific_name} });
-
-		$seen{$$flower{scientific_name} }++;
-	}
-
-	if ($seen{$scientific_name} > 1)
-	{
-		$pig_latin .= ".$1" if ($common_name =~ /^.+\s(\d+)$/);
-	}
-
-	$pig_latin =~ s!\.\.!\.!g;
-
-	return ucfirst lc $pig_latin;
-
-} # End of generate_pig_latin_from_scientific_name.
 
 # -----------------------------------------------
 # Return a list.
@@ -1262,6 +1247,43 @@ sub read_table
 	return [$set -> hashes];
 
 } # End of read_table.
+
+# --------------------------------------------------
+
+sub scientific_name2pig_latin
+{
+	my($self, $flowers, $scientific_name, $common_name) = @_;
+	my(@chars)		= split(//, $scientific_name);
+	my($pig_latin)	= '';
+
+	for (@chars)
+	{
+		$pig_latin .= $1 if (m|([-_. a-zA-Z0-9])|)
+	}
+
+	$pig_latin	=~ s!^\s!!;
+	$pig_latin	=~ s!\s$!!;
+	$pig_latin	=~ s!\s!\.!g;
+
+	my(%seen);
+
+	for my $flower (@$flowers)
+	{
+		$seen{$$flower{scientific_name} } = 0 if (! $seen{$$flower{scientific_name} });
+
+		$seen{$$flower{scientific_name} }++;
+	}
+
+	if ($seen{$scientific_name} > 1)
+	{
+		$pig_latin .= ".$1" if ($common_name =~ /^.+\s(\d+)$/);
+	}
+
+	$pig_latin =~ s!\.\.!\.!g;
+
+	return ucfirst lc $pig_latin;
+
+} # End of scientific_name2pig_latin.
 
 # --------------------------------------------------
 
