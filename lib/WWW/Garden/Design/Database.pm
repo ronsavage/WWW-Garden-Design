@@ -451,13 +451,13 @@ sub crosscheck
 		}
 	}
 
-	# Check for any unexpected files. A file is unexpected if it's not real :-).
+	# Check for any unexpected files, .i.e present in the directory but not in images.csv.
 
 	for my $file_name (@{$file_list{file_names} })
 	{
 		if (! $real_name{$file_name})
 		{
-#				print "Unexpected image: $file_name\n";
+				print "Unexpected image: $file_name\n";
 		}
 	}
 
