@@ -92,6 +92,8 @@ sub format
 
 		# Find which of the flower's attributes is 'Native'.
 
+		my($native) = 'N/A';
+
 		for $attribute (@{$$item{attributes} })
 		{
 			$native = $$attribute{range} if ($$attribute{name} eq 'Native');
