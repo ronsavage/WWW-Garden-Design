@@ -90,7 +90,6 @@ sub BUILD
 	my(%driver) =
 	(
 		mysql_enable_utf8	=> qr/dbi:MySQL/i,
-		pg_enable_utf8		=> qr/dbi:Pg/i,
 		sqlite_unicode		=> qr/dbi:SQLite/i,
 	);
 
