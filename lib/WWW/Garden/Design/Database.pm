@@ -83,7 +83,7 @@ sub BUILD
 	my($self)   = @_;
 	my($config) = $self -> config;
 
-	$self -> mojo_pg(Mojo::Pg -> new('postgres://$$config{username}:$$config{password}@localhost/wines') );
+	$self -> mojo_pg(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
 	$self -> constants($self -> read_constants_table); # Warning. Empty at start of import.
 	$self -> garden_map($self -> upper_name2id_map('gardens') );
 	$self -> property_map($self -> upper_name2id_map('properties') );
