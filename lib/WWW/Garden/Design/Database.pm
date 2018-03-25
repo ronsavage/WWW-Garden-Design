@@ -545,8 +545,6 @@ sub get_autocomplete_item
 
 	my($min_value);
 
-	$self -> logger -> info('@values: <' . join('>, <', @values) . '>');
-
 	for (@result)
 	{
 		if (length($_) < $min_length)
