@@ -615,7 +615,7 @@ sub get_flower_by_both_names
 	my(@key)		= split('/', $key);
 	my($sql)		= "select pig_latin from flowers where upper(scientific_name) like ? and upper(common_name) like ?";
 	my(@result)		= $self -> mojo_pg -> query($sql, $key[0], $key[1]) -> hashes;
-	my($pig_latin)	= ($#result => 0) ? "$$constants{homepage_url}$$constants{image_url}/$result[0].0.jpg" : '';
+	my($pig_latin)	= $#result >= 0 ? "$$constants{homepage_url}$$constants{image_url}/$result[0].0.jpg" : '';
 
 	return $pig_latin;
 
@@ -689,7 +689,7 @@ sub insert_hashref
 {
 	my($self, $table_name, $hashref) = @_;
 
-	return $self -> mojo_pg -> insert($table_name, {map{($_ => $$hashref{$_})} keys %$hashref}, {returning => ['id']);
+	return $self -> mojo_pg -> insert($table_name, {map{($_ => $$hashref{$_})} keys %$hashref}, {returning => ['id']});
 
 } # End of insert_hashref.
 
