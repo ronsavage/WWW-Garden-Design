@@ -597,7 +597,7 @@ sub get_autocomplete_list
 
 		$sql = "select distinct $search_column from $table_name where upper($search_column) like '%$key%'";
 
-		push @result, $self -> mojo_pg -> query($sql) -> each;
+		push @result, $self -> mojo_pg -> query($sql) -> arrays;
 	}
 
 	return [@result];
