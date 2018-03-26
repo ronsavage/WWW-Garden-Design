@@ -628,7 +628,10 @@ sub get_flower_by_id
 	my($self, $flower_id)		= @_;
 	my($attribute_types_table)	= $self -> read_table('attribute_types');
 	my($sql)					= "select * from flowers where id = $flower_id";
-	my($flower)					= $self -> mojo_pg -> query($sql) -> hashes;
+	my($query)					= $self -> mojo_pg -> query($sql);
+	my($flower)					= $query -> hash;
+
+	$query -> finish;
 
 	my(%attribute_type);
 
