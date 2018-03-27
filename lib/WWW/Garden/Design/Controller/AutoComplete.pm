@@ -37,7 +37,7 @@ sub display
 
 	# In the case of $type being 'design_flower', we're called from line 501 in homepage.html.ep,
 	# meaning we're on the Design garden tab. In this case we can't assume the string the user typed
-	# petains to just one column of the flower database, so we search every several columns in the
+	# petains to just one column of the flower database, so we search these 3 columns in the
 	# 'flowers' table: scientific_name, common_name and aliases.
 	# Warning: This use '*' in %context above means the methods in Database.pm which search %context
 	# must skip it. See Database.get_autocomplete_item() and Database.get_autocomplete_list().

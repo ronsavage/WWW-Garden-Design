@@ -575,8 +575,9 @@ sub get_autocomplete_list
 	my($self, $context, $type, $key) = @_;
 	$key =~ s/\'/\'\'/g; # Since we're using Pg.
 
-	my($result, @result);
-	my($sql);
+	my(@list);
+	my(@result);
+	my($sql, %seen);
 
 	for my $index (keys %$context)
 	{
@@ -595,9 +596,14 @@ sub get_autocomplete_list
 			next;
 		}
 
-		$sql = "select distinct $search_column from $table_name where upper($search_column) like '%$key%'";
+		# Using 'select distinct ...' did not weed out duplicates.
 
-		push @result, $self -> mojo_pg -> query($sql) -> arrays;
+		$sql	= "select $search_column from $table_name where upper($search_column) like '%$key%'";
+		@list	= map{$$_[0]} $self -> mojo_pg -> query($sql) -> arrays -> each;
+
+		push @result, grep{! $seen{$_} } @list;
+
+		$seen{$_} = 1 for @list;
 	}
 
 	return [@result];
