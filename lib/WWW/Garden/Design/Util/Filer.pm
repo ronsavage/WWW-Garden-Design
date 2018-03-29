@@ -43,7 +43,7 @@ sub investigate
 		$data{$kind}	= $self -> read_csv_file("$FindBin::Bin/../data/$file_name");
 	}
 
-	# Phase 2: Convert the flowers data into a hash with the common_name as the key.
+	# Phase 2: Convert the flowers data into a hash with the common name as the key.
 
 	my(%flowers);
 
@@ -52,7 +52,7 @@ sub investigate
 		$flowers{$$item{common_name} } = $item;
 	}
 
-	# Phase 3: Scan all CSV data except flowers and ensure all common_names are in flowers.csv.
+	# Phase 3: Scan all CSV data except flowers and ensure all common names are in flowers.csv.
 
 	my(%has_common_name) =
 	(
@@ -65,17 +65,15 @@ sub investigate
 
 	my($common_name);
 
-	for $kind (sort keys %data)
+	for $kind (sort keys %has_common_name)
 	{
-		next if (! $has_common_name{$kind});
-
 		for my $record (@{$data{$kind} })
 		{
 			$common_name = $$record{common_name};
 
 			if (! exists($flowers{$common_name} ) )
 			{
-				print "Common name $common_name in $kind.csv is not in flowers.csv. \n";
+				print "Common name '$common_name' in $kind.csv is not in flowers.csv. \n";
 			}
 		}
 	}
