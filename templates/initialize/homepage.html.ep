@@ -1459,9 +1459,6 @@ function submit_search()
 
 $(function()
 {
-	// Warning: Do not use jQuery UI on checkboxes or radio buttons.
-	// There is a myriad of problems, especially related to timing of clicks.
-
 	$('.design_garden_toolbar').controlgroup();
 	$('.garden_garden_toolbar').controlgroup();
 	$('.object_toolbar').controlgroup();
@@ -1638,8 +1635,6 @@ $(function()
 
 		return false;
 	});
-
-	// Default to having the cursor in the search text field.
 
 	$('#search_text')
 	.focus();

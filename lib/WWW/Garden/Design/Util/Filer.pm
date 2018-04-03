@@ -4,12 +4,6 @@ use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
-use Data::Dumper::Concise; # For Dumper().
-
-use File::Slurper 'read_dir';
-
-use FindBin;
-
 use Moo;
 
 use Text::CSV::Encoded;
@@ -25,60 +19,6 @@ has csv =>
 );
 
 our $VERSION = '0.95';
-
-# -----------------------------------------------
-
-sub investigate
-{
-	my($self) = @_;
-
-	# Phase 1: Read all CSV files.
-
-	my(%data);
-	my($kind);
-
-	for my $file_name (grep{/csv$/} read_dir("$FindBin::Bin/../data") )
-	{
-		$kind			= $file_name =~ s/\.csv//r;
-		$data{$kind}	= $self -> read_csv_file("$FindBin::Bin/../data/$file_name");
-	}
-
-	# Phase 2: Convert the flowers data into a hash with the common name as the key.
-
-	my(%flowers);
-
-	for my $item (@{$data{flowers} })
-	{
-		$flowers{$$item{common_name} } = $item;
-	}
-
-	# Phase 3: Scan all CSV data except flowers and ensure all common names are in flowers.csv.
-
-	my(%has_common_name) =
-	(
-		attributes			=> 1,
-		flower_locations	=> 1,
-		images				=> 1,
-		notes				=> 1,
-		urls				=> 1,
-	);
-
-	my($common_name);
-
-	for $kind (sort keys %has_common_name)
-	{
-		for my $record (@{$data{$kind} })
-		{
-			$common_name = $$record{common_name};
-
-			if (! exists($flowers{$common_name} ) )
-			{
-				print "Common name '$common_name' in $kind.csv is not in flowers.csv. \n";
-			}
-		}
-	}
-
-} # End of investigate.
 
 # -----------------------------------------------
 
