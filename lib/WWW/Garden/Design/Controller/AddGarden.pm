@@ -12,7 +12,7 @@ sub save
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('AddGarden.v()');
+	$self -> app -> log -> debug('AddGarden.save()');
 
 	my($items) = $self->req->params->to_hash;
 

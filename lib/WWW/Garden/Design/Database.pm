@@ -9,13 +9,13 @@ use Data::Dumper::Concise; # For Dumper().
 
 use DBI;
 
-use DBIx::Simple;
-
 use File::Slurper qw/read_dir/;
 
 use FindBin;
 
 use Lingua::EN::Inflect qw/inflect PL_N/; # PL_N: plural of a singular noun.
+
+use Mojo::Pg;
 
 use Moo;
 
@@ -59,18 +59,18 @@ has logger =>
 	required => 1,
 );
 
+has mojo_pg =>
+(
+	is       => 'rw',
+	isa      => Object,
+	required => 0,
+);
+
 has property_map =>
 (
 	default  => sub{return {} },
 	is       => 'rw',
 	isa      => HashRef,
-	required => 0,
-);
-
-has simple =>
-(
-	is       => 'rw',
-	isa      => Object,
 	required => 0,
 );
 
@@ -82,29 +82,8 @@ sub BUILD
 {
 	my($self)   = @_;
 	my($config) = $self -> config;
-	my($attr)   =
-	{
-		AutoCommit => defined($$config{AutoCommit}) ? $$config{AutoCommit} : 1,
-		RaiseError => defined($$config{RaiseError}) ? $$config{RaiseError} : 1,
-	};
-	my(%driver) =
-	(
-		mysql_enable_utf8	=> qr/dbi:MySQL/i,
-		sqlite_unicode		=> qr/dbi:SQLite/i,
-	);
 
-	for my $db (keys %driver)
-	{
-		if ($$config{dsn} =~ $driver{$db})
-		{
-			$$attr{$db} = defined($$config{$db}) ? $$config{$db} : 1;
-		}
-	}
-
-	$self -> dbh(DBI -> connect($$config{dsn}, $$config{username}, $$config{password}, $attr) );
-	$self -> dbh -> do('PRAGMA foreign_keys = ON') if ($$config{dsn} =~ /SQLite/i);
-
-	$self -> simple(DBIx::Simple -> new($self -> dbh) );
+	$self -> mojo_pg(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
 	$self -> constants($self -> read_constants_table); # Warning. Empty at start of import.
 	$self -> garden_map($self -> upper_name2id_map('gardens') );
 	$self -> property_map($self -> upper_name2id_map('properties') );
@@ -508,30 +487,12 @@ sub get_autocomplete_flower_list
 {
 	my($self, $key)	= @_;
 	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
+	my($sql)		= "select distinct concat(scientific_name, '/', common_name) from flowers "
+						. "where upper(scientific_name) like '%$key%' "
+						. "or upper(common_name) like '%$key%' "
+						. "or upper(aliases) like '%$key%'";
 
-	my(@result);
-	my(%seen);
-
-	my($sql)	= "select concat(scientific_name, '/', common_name) from flowers "
-					. "where upper(scientific_name) like '%$key%' "
-					. "or upper(common_name) like '%$key%' "
-					. "or upper(aliases) like '%$key%'";
-	my($result)	= $self -> simple -> query($sql) || die $self -> simple -> error;
-	my(@value)	= $result -> flat;
-
-	for my $value (@value)
-	{
-		next if (! defined $value);
-
-		if (! $seen{$value})
-		{
-			push @result, $value;
-
-			$seen{$value} = 1;
-		}
-	}
-
-	return [@result];
+	return [$self -> mojo_pg -> query($sql) -> each];
 
 } # End of get_autocomplete_flower_list.
 
@@ -543,26 +504,7 @@ sub get_autocomplete_object_list
 	my($self, $key)	= @_;
 	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
 
-	my(@result);
-	my(%seen);
-
-	my($sql)	= "select name from objects where upper(name) like '%$key%'";
-	my($result)	= $self -> simple -> query($sql) || die $self -> simple -> error;
-	my(@value)	= $result -> flat;
-
-	for my $value (@value)
-	{
-		next if (! defined $value);
-
-		if (! $seen{$value})
-		{
-			push @result, $value;
-
-			$seen{$value} = 1;
-		}
-	}
-
-	return [@result];
+	return [$self -> mojo_pg -> query("select distinct name from objects where upper(name) like '%$key%'") -> each];
 
 } # End of get_autocomplete_object_list.
 
@@ -574,9 +516,8 @@ sub get_autocomplete_item
 	my($self, $context, $type, $key) = @_;
 	$key =~ s/\'/\'\'/g; # Since we're using Pg.
 
-	my($result, @result);
-	my($sql, %seen);
-	my(@values, $value);
+	my(@result);
+	my($sql);
 
 	for my $index (keys %$context)
 	{
@@ -595,30 +536,16 @@ sub get_autocomplete_item
 			next;
 		}
 
-		$sql	= "select $search_column from $table_name where upper($search_column) like '%$key%'";
-		$result	= $self -> simple -> query($sql) || die $self -> simple -> error;
-		@values	= $result -> flat;
+		$sql = "select distinct $search_column from $table_name where upper($search_column) like '%$key%'";
 
-		for $value (@values)
-		{
-			next if (! defined $value);
-
-			if (! $seen{$value})
-			{
-				push @result, $value;
-
-				$seen{$value} = 1;
-			}
-		}
+		push @result, $self -> mojo_pg -> query($sql) -> each;
 	}
 
 	my($min_length) = 99; # Arbitrary.
 
 	my($min_value);
 
-	$self -> logger -> info('@values: <' . join('>, <', @values) . '>');
-
-	for (@values)
+	for (@result)
 	{
 		if (length($_) < $min_length)
 		{
@@ -648,9 +575,9 @@ sub get_autocomplete_list
 	my($self, $context, $type, $key) = @_;
 	$key =~ s/\'/\'\'/g; # Since we're using Pg.
 
-	my($result, @result);
+	my(@list);
+	my(@result);
 	my($sql, %seen);
-	my(@value, $value);
 
 	for my $index (keys %$context)
 	{
@@ -669,21 +596,14 @@ sub get_autocomplete_list
 			next;
 		}
 
+		# Using 'select distinct ...' did not weed out duplicates.
+
 		$sql	= "select $search_column from $table_name where upper($search_column) like '%$key%'";
-		$result	= $self -> simple -> query($sql) || die $self -> simple -> error;
-		@value	= $result -> flat;
+		@list	= map{$$_[0]} $self -> mojo_pg -> query($sql) -> arrays -> each;
 
-		for $value (@value)
-		{
-			next if (! defined $value);
+		push @result, grep{! $seen{$_} } @list;
 
-			if (! $seen{$value})
-			{
-				push @result, $value;
-
-				$seen{$value} = 1;
-			}
-		}
+		$seen{$_} = 1 for @list;
 	}
 
 	return [@result];
@@ -700,10 +620,8 @@ sub get_flower_by_both_names
 	$key			= uc $key;
 	my(@key)		= split('/', $key);
 	my($sql)		= "select pig_latin from flowers where upper(scientific_name) like ? and upper(common_name) like ?";
-
-	$self -> simple -> query($sql, $key[0], $key[1]) -> into(my $pig_latin) || die $self -> simple -> error;
-
-	$pig_latin = length($pig_latin) > 0 ? "$$constants{homepage_url}$$constants{image_url}/$pig_latin.0.jpg" : '';
+	my(@result)		= $self -> mojo_pg -> query($sql, $key[0], $key[1]) -> hashes;
+	my($pig_latin)	= $#result >= 0 ? "$$constants{homepage_url}$$constants{image_url}/$result[0].0.jpg" : '';
 
 	return $pig_latin;
 
@@ -716,8 +634,10 @@ sub get_flower_by_id
 	my($self, $flower_id)		= @_;
 	my($attribute_types_table)	= $self -> read_table('attribute_types');
 	my($sql)					= "select * from flowers where id = $flower_id";
-	my($set)					= $self -> simple -> query($sql) || die $self -> db -> simple -> error;
-	my($flower)					= $set -> hash;
+	my($query)					= $self -> mojo_pg -> query($sql);
+	my($flower)					= $query -> hash;
+
+	$query -> finish;
 
 	my(%attribute_type);
 
@@ -764,11 +684,9 @@ sub get_object_by_name
 	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
 	$key			= "\U%$key"; # \U => Convert to upper-case.
 	my($sql)		= "select name from objects where upper(name) like ?";
-
-	$self -> simple -> query($sql, $key) -> into(my $icon_name) || die $self -> db -> simple -> error;
-
-	$icon_name	= $self -> clean_up_icon_name($icon_name);
-	$icon_name	= length($icon_name) > 0 ? "$$constants{homepage_url}$$constants{icon_url}/$icon_name.png" : '';
+	my(@result)		= $self -> mojo_pg -> query($sql, $key) -> hashes;
+	my($icon_name)	= $self -> clean_up_icon_name($result[0]);
+	$icon_name		= length($icon_name) > 0 ? "$$constants{homepage_url}$$constants{icon_url}/$icon_name.png" : '';
 
 	return $icon_name;
 
@@ -780,10 +698,7 @@ sub insert_hashref
 {
 	my($self, $table_name, $hashref) = @_;
 
-	$self -> simple -> insert($table_name, {map{($_ => $$hashref{$_})} keys %$hashref})
-		|| die $self -> simple -> error;
-
-	return $self -> simple -> last_insert_id(undef, undef, $table_name, undef);
+	return $self -> mojo_pg -> insert($table_name, {map{($_ => $$hashref{$_})} keys %$hashref}, {returning => ['id']});
 
 } # End of insert_hashref.
 
@@ -994,12 +909,10 @@ sub read_constants_table
 sub read_flower_dependencies
 {
 	my($self, $table_name, $flower_id) = @_;
-	my($sql)	= "select * from $table_name where flower_id = $flower_id";
-	my($set)	= $self -> simple -> query($sql) || die $self -> db -> simple -> error;
 
 	# Return an arrayref of hashrefs.
 
-	return [$set -> hashes];
+	return [$self -> mojo_pg -> query("select * from $table_name where flower_id = $flower_id") -> hashes -> each];
 
 } # End of read_flower_dependencies.
 
@@ -1111,12 +1024,10 @@ sub read_flowers_table
 sub read_garden_dependencies
 {
 	my($self, $table_name, $garden_id) = @_;
-	my($sql)	= "select * from $table_name where garden_id = $garden_id";
-	my($set)	= $self -> simple -> query($sql) || die $self -> db -> simple -> error;
 
 	# Return an arrayref of hashrefs.
 
-	return [$set -> hashes];
+	return [$self -> mojo_pg -> query("select * from $table_name where garden_id = $garden_id") -> hashes -> each];
 
 } # End of read_garden_dependencies.
 
@@ -1177,12 +1088,10 @@ sub read_gardens_table
 sub read_object_dependencies
 {
 	my($self, $table_name, $object_id) = @_;
-	my($sql)	= "select * from $table_name where object_id = $object_id";
-	my($set)	= $self -> simple -> query($sql) || die $self -> db -> simple -> error;
 
 	# Return an arrayref of hashrefs.
 
-	return [$set -> hashes];
+	return [$self -> mojo_pg -> query("select * from $table_name where object_id = $object_id") -> hashes -> each];
 
 } # End of read_object_dependencies.
 
@@ -1228,13 +1137,11 @@ sub read_objects_table
 
 sub read_table
 {
-	my($self, $table_name)	= @_;
-	my($sql)				= "select * from $table_name";
-	my($set)				= $self -> simple -> query($sql) || die $self -> db -> simple -> error;
+	my($self, $table_name) = @_;
 
 	# Return an arrayref of hashrefs.
 
-	return [$set -> hashes];
+	return [$self -> mojo_pg -> query("select * from $table_name") -> hashes -> each];
 
 } # End of read_table.
 
@@ -1454,9 +1361,8 @@ sub trim
 
 sub upper_name2id_map
 {
-	my($self, $table_name) = @_;
-	my($result)   = $self -> simple -> query("select upper(name), id from $table_name")
-					|| die $self -> simple -> error;
+	my($self, $table_name)	= @_;
+	my(%result)				= map{($$_{name} => $$_{id})} $self -> mojo_pg -> query("select upper(name) as name, id from $table_name") -> hashes -> each;
 
 	return {$result -> map};
 
