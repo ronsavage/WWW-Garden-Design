@@ -1364,7 +1364,7 @@ sub upper_name2id_map
 	my($self, $table_name)	= @_;
 	my(%result)				= map{($$_{name} => $$_{id})} $self -> mojo_pg -> query("select upper(name) as name, id from $table_name") -> hashes -> each;
 
-	return {$result -> map};
+	return {%result};
 
 } # End of upper_name2id_map.
 
