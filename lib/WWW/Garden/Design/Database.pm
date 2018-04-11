@@ -44,14 +44,6 @@ has dbh =>
 	required => 0,
 );
 
-has garden_map =>
-(
-	default  => sub{return {} },
-	is       => 'rw',
-	isa      => HashRef,
-	required => 0,
-);
-
 has logger =>
 (
 	is       => 'rw',
@@ -66,14 +58,6 @@ has mojo_pg =>
 	required => 0,
 );
 
-has property_map =>
-(
-	default  => sub{return {} },
-	is       => 'rw',
-	isa      => HashRef,
-	required => 0,
-);
-
 our $VERSION = '0.95';
 
 # -----------------------------------------------
@@ -85,8 +69,6 @@ sub BUILD
 
 	$self -> mojo_pg(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
 	$self -> constants($self -> read_constants_table); # Warning. Empty at start of import.
-	$self -> garden_map($self -> upper_name2id_map('gardens') );
-	$self -> property_map($self -> upper_name2id_map('properties') );
 
 }	# End of BUILD.
 
@@ -108,26 +90,27 @@ sub add_garden
 
 	$self -> logger -> debug('Database.add_garden(...)');
 
-	my(%map) =
-	(
-		property => $self -> property_map,
-	);
+	# Is the propery on file? AddGarden.pm checked that the user entered something!
 
-	my($id);
-	my($name);
-	my($uc_name, %uc_name);
+	my($property_name)		= $$item{property_name};
+	my($properties_table)	= $self -> read_table('properties');
 
-	for my $key (keys %map)
+	my(%property);
+
+	for (@$properties_table)
 	{
-		$name			= $$item{"${key}_name"};
-		$uc_name		= uc $name;
-		$uc_name{$key}	= $uc_name;
-		$id				= $map{$key}{$uc_name} || 'undef';
+		$property{$$_{name} } = $$_{id};
+	}
 
-		if (! $map{$key}{$uc_name})
-		{
-			$map{$key}{$uc_name} = $self -> insert_hashref(PL_N($key), {description => $$item{'property_description'}, name => $name});
-		}
+	if (exists($property{$property_name}) )
+	{
+		# It's a property update. The garden component may be an insert or an update.
+
+		my($id) = $property{$property_name};
+	}
+	else
+	{
+		# It's a property insert. The garden component must be an insert.
 	}
 
 	$self -> insert_hashref
@@ -136,7 +119,7 @@ sub add_garden
 		{
 			description	=> $$item{garden_description},
 			name		=> $$item{garden_name},
-			property_id	=> $map{property}{$uc_name{'property'} },
+			property_id	=> $map{property}{$uc_name{'property_name'} },
 		}
 	);
 

@@ -14,21 +14,21 @@ sub save
 
 	$self -> app -> log -> debug('AddGarden.save()');
 
-	my($items) = $self->req->params->to_hash;
+	my($item) = $self -> req -> params -> to_hash;
 
-	$self -> app -> log -> debug("param($_) => $$items{$_}") for sort keys %$items;
+	$self -> app -> log -> debug("param($_) => $$item{$_}") for sort keys %$item;
 
-	if ($$items{garden_name} && $$items{property_name})
+	if ($$item{garden_name} && $$item{property_name})
 	{
 		my($defaults) = $self -> app -> defaults;
 
-#		$$defaults{db} -> add_garden($items);
+		$$defaults{db} -> add_garden($item);
 
 		$self -> stash(error => undef);
 	}
 	else
 	{
-		my($message) = 'Missing property or garden name';
+		my($message) = 'Missing property name or garden name';
 
 		$self -> stash(error => $message);
 		$self -> app -> log -> error($message);

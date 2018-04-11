@@ -14,7 +14,7 @@ sub save
 
 	$self -> app -> log -> debug('AddObject.save()');
 
-	my($items) = $self->req->params->to_hash;
+	my($items) = $self -> req -> params -> to_hash;
 
 	$self -> app -> log -> debug("param($_) => $$items{$_}") for sort keys %$items;
 
