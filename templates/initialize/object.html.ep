@@ -63,6 +63,9 @@
 			<td><div class = 'color_swatch_chosen' id = 'color_swatch_chosen'></div></td>
 		</tr>
 		<tr>
+			<td colspan = '2'><br /></td>
+		</tr>
+		<tr>
 			<td colspan = '2'><span class = 'alert'>*</span> indicates a mandatory field</td>
 		</tr>
 		<tr>
