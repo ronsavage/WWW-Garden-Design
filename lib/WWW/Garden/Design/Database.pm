@@ -119,7 +119,7 @@ sub add_garden
 		{
 			description	=> $$item{garden_description},
 			name		=> $$item{garden_name},
-			property_id	=> $map{property}{$uc_name{'property_name'} },
+			property_id	=> 1 # TODO $map{property}{$uc_name{'property_name'} },
 		}
 	);
 
@@ -681,7 +681,10 @@ sub insert_hashref
 {
 	my($self, $table_name, $hashref) = @_;
 
-	return $self -> mojo_pg -> insert($table_name, {map{($_ => $$hashref{$_})} keys %$hashref}, {returning => ['id']});
+	return ${$self -> mojo_pg -> insert
+	(
+		$table_name, {map{($_ => $$hashref{$_})} keys %$hashref}, {returning => ['id']}
+	) -> hash}{id};
 
 } # End of insert_hashref.
 
