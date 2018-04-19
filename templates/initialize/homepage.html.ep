@@ -1185,6 +1185,8 @@ function set_object_fields(i)
 
 function set_property_fields(i)
 {
+	garden_current_property_id = garden_table[i]['property_id'];
+
 	$('#property_description')
 	.val(garden_table[i]['property_description']);
 
@@ -1429,6 +1431,40 @@ function submit_object()
 
 // -----------------------------------------------
 
+function submit_property()
+{
+	$.ajax
+	({
+		data:
+		{
+			description:	$('#property_description').val(),
+			id:				garden_current_property_id,
+			name:			$('#property_name').val(),
+			publish:		$('#property_publish').prop('checked') ? 'Yes' : 'No'
+		},
+		dataType:	'html',
+		method:		'POST',
+		url:		'/AddProperty' // See routes at end of WWW::Garden::Design.startup().
+	})
+	.done(function(html)
+	{
+//		$('#property_result_div')
+//		.empty()
+//		.append(html);
+
+		$('#property_result_div')
+		.empty()
+		.text('Submitted property details');
+	})
+	.fail(function(jqxhr, textStatus, error)
+	{
+		alert('Ajax status: ' + textStatus + ', ' + error);
+	});
+
+} // End of submit_property.
+
+// -----------------------------------------------
+
 function submit_search()
 {
 	var fields = new Object();
@@ -1651,6 +1687,14 @@ $(function()
 	.submit(function()
 	{
 		submit_object();
+
+		return false;
+	});
+
+	$('#property_form')
+	.submit(function()
+	{
+		submit_property();
 
 		return false;
 	});

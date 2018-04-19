@@ -1,4 +1,4 @@
-<form name = 'garden_form' id = 'garden_form'>
+<form name = 'property_form' id = 'property_form'>
 	%= csrf_field
 	<table align = 'center'>
 		<tr>
@@ -14,7 +14,7 @@
 		</tr>
 		<tr>
 			<td align = 'center' colspan = '4'>
-				<div class = 'garden_garden_toolbar'>
+				<div class = 'garden_garden_toolbar'> <!-- Class not defined -->
 					<span id = 'property_property_menu_span'><%== $property_property_menu %></span>
 				</div>
 			</td>

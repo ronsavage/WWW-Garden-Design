@@ -478,7 +478,7 @@ sub get_autocomplete_item
 
 		$sql = "select distinct $search_column from $table_name where upper($search_column) like '%$key%'";
 
-		push @result, $self -> mojo_pg -> query($sql) -> each;
+		push @result, $self -> mojo_pg -> query($sql) -> hasheseach;
 	}
 
 	my($min_length) = 99; # Arbitrary.
@@ -840,7 +840,7 @@ sub process_garden_submit
 
 	$self -> logger -> debug('Database.process_garden_submit(...)');
 
-	my($table_name)			= 'properties';
+	my($table_name)			= 'gardens';
 	my($property_name)		= $$item{property_name};
 	my($properties_table)	= $self -> read_table($table_name);
 
@@ -859,7 +859,7 @@ sub process_garden_submit
 		publish		=> $$item{property_publish},
 	};
 
-	# Is the propery on file? AddGarden.pm checked that the user entered something!
+	# Is the property on file? AddGarden.pm checked that the user entered something!
 
 	if (exists($property{$property_name}) )
 	{
@@ -892,6 +892,76 @@ sub process_garden_submit
 	);
 
 } # End of process_garden_submit.
+
+# --------------------------------------------------
+
+sub process_property_submit
+{
+	my($self, $item) = @_;
+
+	$self -> logger -> debug('Database.process_property_submit(...)');
+
+	my($table_name)			= 'properties';
+	my($id)					= $$item{id};
+	my($properties_table)	= $self -> read_table($table_name);
+
+	my(%property);
+
+	for (@$properties_table)
+	{
+		$property{$$_{id} } = $$_{name};
+	}
+
+	my($fields) =
+	{
+		description	=> $$item{description},
+		name		=> $$item{name},
+		publish		=> $$item{publish},
+	};
+
+	# Is the property on file? AddProperty.pm checked that the user entered something!
+
+	if (exists($property{$id}) )
+	{
+		# It's a property update.
+
+		$self -> mojo_pg -> update
+		(
+			$table_name,
+			$fields,
+			{id => $$item{id} }
+		);
+
+		$self -> logger -> debug("Database.process_property_submit(...). Updated the '$table_name' table");
+	}
+	else
+	{
+		# It's a property insert.
+
+		$id = ${$self -> mojo_pg -> insert
+		(
+			$table_name,
+			$fields,
+			{returning => 'id'}
+		)}{id};
+
+		$self -> logger -> debug("Database.process_property_submit(...). Inserted id $id into the '$table_name' table");
+	}
+
+	return 1;
+
+	$self -> insert_hashref
+	(
+		$table_name,
+		{
+			description	=> $$item{description},
+			id			=> ,
+			name		=> $$item{_name},
+			publish		=> $$item{publish},
+		}
+	);
+
+} # End of process_property_submit.
 
 # -----------------------------------------------
 

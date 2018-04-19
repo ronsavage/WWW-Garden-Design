@@ -15,7 +15,7 @@
 		</tr>
 		<tr>
 			<td align = 'center' colspan = '4'>
-				<div class = 'garden_garden_toolbar'>
+				<div class = 'garden_garden_toolbar'> <!-- Class not defined -->
 					<span id = 'garden_property_menu_span'><%== $garden_property_menu %></span>
 					<span id = 'garden_garden_menu_span'><%== $garden_garden_menu %></span>
 				</div>
