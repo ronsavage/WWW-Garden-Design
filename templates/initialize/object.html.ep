@@ -5,6 +5,9 @@
 			<td colspan = '2'><div class = 'blue_centered'>Objects</div><br /></td>
 		</tr>
 		<tr>
+			<td class = 'centered' colspan = '2'>Object menu</td>
+		</tr>
+		<tr>
 			<td align = 'center' colspan = '2'>
 				<span id = 'object_menu_span'><%== $object_menu %></span>
 			</td>

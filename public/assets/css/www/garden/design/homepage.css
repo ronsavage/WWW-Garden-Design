@@ -78,6 +78,10 @@ body
 	font-style: italic;
 }
 
+.left
+	text-align: left;
+}
+
 .purple_on_red_title
 {
 	background-color:	red;
@@ -102,6 +106,11 @@ body
 	font-size:			30px;
 	text-align:			center;
 	width:				20em;
+}
+
+.right
+{
+	text-align: right;
 }
 
 table
