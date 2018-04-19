@@ -46,9 +46,9 @@
 	</table>
 	<table align = 'center'>
 		<tr>
-			<td align = 'center' width = '33%'><input type = 'submit' value = 'Update' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td align = 'center' width = '33%'><input type = 'submit' value = 'Delete' />&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td align = 'center' width = '33%'><input type = 'reset'  value = 'Reset' /></td>
+			<td align = 'left' width = '33%'><input type = 'submit' value = 'Update' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td align = 'center' width = '33%'><input type = 'submit' value = 'Delete' /></td>
+			<td align = 'right' width = '33%'><input type = 'reset'  value = 'Reset' /></td>
 		</tr>
 	</table>
 </form>
