@@ -130,6 +130,7 @@ sub startup
 	$r -> route('/AddFlower')					-> to('AddFlower#save');
 	$r -> route('/AddGarden')					-> to('AddGarden#save');
 	$r -> route('/AddObject')					-> to('AddObject#save');
+	$r -> route('/AddProperty')					-> to('AddProperty#save');
 	$r -> route('/AutoComplete')				-> to('AutoComplete#display');
 	$r -> route('/Design')						-> to('Design#save');
 	$r -> route('/GetFlowerDetails')			-> to('GetFlowerDetails#display');

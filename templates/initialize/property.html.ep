@@ -2,7 +2,7 @@
 	%= csrf_field
 	<table align = 'center'>
 		<tr>
-			<td colspan = '4'><div class = 'blue_centered'>Gardens</div></td>
+			<td colspan = '4'><div class = 'blue_centered'>Properties</div></td>
 		</tr>
 		<tr>
 			<td colspan = '4'><br /></td>
@@ -10,14 +10,12 @@
 		<tr>
 			<td></td>
 			<td align = 'center'>Properties</td>
-			<td align = 'center'>Gardens</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td align = 'center' colspan = '4'>
 				<div class = 'garden_garden_toolbar'>
-					<span id = 'garden_property_menu_span'><%== $garden_property_menu %></span>
-					<span id = 'garden_garden_menu_span'><%== $garden_garden_menu %></span>
+					<span id = 'property_property_menu_span'><%== $property_property_menu %></span>
 				</div>
 			</td>
 		</tr>
@@ -27,16 +25,16 @@
 			<td colspan = '2'><br /></td>
 		</tr>
 		<tr>
-			<td>Garden name: <span class = 'alert'>*</span> </td>
-			<td align = 'left' colspan = '2'><input id = 'garden_name' type = 'text' size = '50' maxlength = '100'></td>
+			<td>Property name: <span class = 'alert'>*</span> </td>
+			<td align = 'left' colspan = '2'><input id = 'property_name' type = 'text' size = '50' maxlength = '100'></td>
 		</tr>
 		<tr>
 			<td>Description:</td>
-			<td align = 'left' colspan = '2'><input id = 'garden_description' type = 'text' size = '50' maxlength = '100'></td>
+			<td align = 'left' colspan = '2'><input id = 'property_description' type = 'text' size = '50' maxlength = '100'></td>
 		</tr>
 		<tr>
-			<td>Publish garden:</td>
-			<td align = 'left' colspan = '2'><input type = 'checkbox' value = '' id = 'garden_publish'/></td>
+			<td>Publish property:</td>
+			<td align = 'left' colspan = '2'><input type = 'checkbox' value = '' id = 'property_publish'/></td>
 		</tr>
 		<tr>
 			<td colspan = '2'><br /></td>
@@ -55,4 +53,4 @@
 	</table>
 </form>
 
-<div id = 'garden_result_div'></div>
+<div id = 'property_result_div'></div>

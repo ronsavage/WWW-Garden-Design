@@ -82,49 +82,6 @@ sub add_flower
 
 } # End of add_flower.
 
-# --------------------------------------------------
-
-sub add_garden
-{
-	my($self, $item) = @_;
-
-	$self -> logger -> debug('Database.add_garden(...)');
-
-	# Is the propery on file? AddGarden.pm checked that the user entered something!
-
-	my($property_name)		= $$item{property_name};
-	my($properties_table)	= $self -> read_table('properties');
-
-	my(%property);
-
-	for (@$properties_table)
-	{
-		$property{$$_{name} } = $$_{id};
-	}
-
-	if (exists($property{$property_name}) )
-	{
-		# It's a property update. The garden component may be an insert or an update.
-
-		my($id) = $property{$property_name};
-	}
-	else
-	{
-		# It's a property insert. The garden component must be an insert.
-	}
-
-	$self -> insert_hashref
-	(
-		'gardens',
-		{
-			description	=> $$item{garden_description},
-			name		=> $$item{garden_name},
-			property_id	=> 1 # TODO $map{property}{$uc_name{'property_name'} },
-		}
-	);
-
-} # End of add_garden.
-
 # -----------------------------------------------
 
 sub build_garden_menu
@@ -874,6 +831,67 @@ sub parse_search_text
 	return $request;
 
 } # End of parse_search_text.
+
+# --------------------------------------------------
+
+sub process_garden_submit
+{
+	my($self, $item) = @_;
+
+	$self -> logger -> debug('Database.process_garden_submit(...)');
+
+	my($table_name)			= 'properties';
+	my($property_name)		= $$item{property_name};
+	my($properties_table)	= $self -> read_table($table_name);
+
+	my(%property);
+
+	for (@$properties_table)
+	{
+		$property{$$_{name} } = $$_{id};
+	}
+
+	my($new_data) =
+	{
+		description	=> $$item{property_description},
+		id			=> $$item{property_id},
+		name		=> $property_name,
+		publish		=> $$item{property_publish},
+	};
+
+	# Is the propery on file? AddGarden.pm checked that the user entered something!
+
+	if (exists($property{$property_name}) )
+	{
+		# It's a property update. The garden component may be an insert or an update.
+
+		$self -> mojo_pg -> update
+		(
+			$table_name,
+			$new_data,
+			{id => $property{$property_name} }
+		);
+
+		$self -> logger -> debug("Database.add_garden(...). Apparently updated the '$table_name' table");
+	}
+	else
+	{
+		# It's a property insert. The garden component must also be an insert.
+	}
+
+	return 1;
+
+	$self -> insert_hashref
+	(
+		'gardens',
+		{
+			description	=> $$item{garden_description},
+			name		=> $$item{garden_name},
+			property_id	=> 1 # TODO $map{property}{$uc_name{'property_name'} },
+		}
+	);
+
+} # End of process_garden_submit.
 
 # -----------------------------------------------
 
