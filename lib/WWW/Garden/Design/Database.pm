@@ -107,8 +107,8 @@ sub build_garden_menu
 			$selected = 'selected';
 		}
 
-		$html		.= "<option $selected value = '$$garden{id}'>$$garden{name}</option>";
 		$last_name	= $$garden{name};
+		$html		.= "<option $selected value = '$$garden{id}'>$last_name</option>";
 		$selected	= '';
 	}
 
@@ -117,69 +117,6 @@ sub build_garden_menu
 	return $html;
 
 } # End of build_garden_menu.
-
-# -----------------------------------------------
-
-sub build_error_xml
-{
-	my($self, $error, $result) = @_;
-
-	$self -> logger -> debug("Database::Library.build_error_xml($error, ...)");
-
-	my(@msg);
-	my($value);
-
-	push @msg, {left => 'Field', right => 'Error'};
-
-	for my $field ($result -> invalids)
-	{
-		$value = $result -> get_original_value($field) || '';
-
-		$self -> logger -> error("Validation error. Field '$field' has an invalid value: $value");
-
-		push @msg, {left => $field, right => "Invalid value: $value"};
-	}
-
-	for my $field ($result -> missings)
-	{
-		$self -> logger -> error("Validation error. Field '$field' is missing");
-
-		push @msg, {left => $field, right => 'Missing value'};
-	}
-
-	my($html) = $self -> templater -> render
-	(
-		'fancy.table.tx',
-		{
-			data => [@msg],
-		}
-	);
-
-	return
-qq|<response>
-	<error>Error: $error</error>
-	<html><![CDATA[$html]]></html>
-</response>
-|;
-
-} # End of build_error_xml.
-
-# -----------------------------------------------
-
-sub build_ok_xml
-{
-	my($self, $html) = @_;
-
-	$self -> logger -> debug('Database.build_ok_xml(...)');
-
-	return
-qq|<response>
-	<error></error>
-	<html><![CDATA[$html]]></html>
-</response>
-|;
-
-} # End of build_ok_xml.
 
 # -----------------------------------------------
 
@@ -204,8 +141,8 @@ sub build_object_menu
 
 		next if ($last_name eq $$object{name});
 
-		$html		.= "<option $selected value = '$$object{id}'>$$object{name}</option>";
 		$last_name	= $$object{name};
+		$html		.= "<option $selected value = '$$object{id}'>$last_name</option>";
 		$selected	= '';
 	}
 
@@ -216,6 +153,7 @@ sub build_object_menu
 } # End of build_object_menu.
 
 # -----------------------------------------------
+# This version of simple_build_property_menu() only includes properties with gardens.
 
 sub build_property_menu
 {
@@ -241,8 +179,8 @@ sub build_property_menu
 
 		next if ($last_name eq $$garden{property_name});
 
-		$html		.= "<option $selected value = '$$garden{property_id}'>$$garden{property_name}</option>";
 		$last_name	= $$garden{property_name};
+		$html		.= "<option $selected value = '$$garden{property_id}'>$last_name</option>";
 		$selected	= '';
 	}
 
@@ -253,21 +191,36 @@ sub build_property_menu
 } # End of build_property_menu.
 
 # -----------------------------------------------
+# This version of build_property_menu() includes properties with no gardens.
 
-sub build_simple_error_xml
+sub build_simple_property_menu
 {
-	my($self, $error, $html) = @_;
+	my($self, $properties, $id) = @_;
+	my($html)		= "<select id = '$id' name = '$id'>"
+						. "<option disabled = '1'>Properties</option>";
+	my($last_name)	= '';
 
-	$self -> logger -> debug("Database.build_simple_error_xml($error, ...)");
+	my($selected);
 
-	return
-qq|<response>
-	<error>Error: $error</error>
-	<html><![CDATA[$html]]></html>
-</response>
-|;
+	for my $property (@$properties)
+	{
+		if ($last_name eq '')
+		{
+			# Set this on the 1st menu item.
 
-} # End of build_simple_error_xml.
+			$selected = 'selected';
+		}
+
+		$last_name	= $$property{name};
+		$html		.= "<option $selected value = '$$property{id}'>$last_name</option>";
+		$selected	= '';
+	}
+
+	$html .= '</select>';
+
+	return $html;
+
+} # End of build_simple_property_menu.
 
 # --------------------------------------------------
 
@@ -1206,6 +1159,35 @@ sub read_objects_table
 	return [sort{$$a{name} cmp $$b{name} } @records];
 
 } # End of read_objects_table.
+
+# --------------------------------------------------
+
+sub read_properties_table
+{
+	my($self)		= @_;
+	my($constants)	= $self -> constants;
+
+	my($record, @records);
+
+	for my $property (@{$self -> read_table('properties')})
+	{
+		# Phase 1: Transfer the object data.
+
+		$record	= {};
+
+		for my $key (keys %$property)
+		{
+			$$record{$key} = $$property{$key};
+		}
+
+		push @records, $record;
+	}
+
+	# Return an arrayref of hashrefs.
+
+	return [sort{$$a{name} cmp $$b{name} } @records];
+
+} # End of read_properties_table.
 
 # --------------------------------------------------
 

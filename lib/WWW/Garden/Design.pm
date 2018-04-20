@@ -139,6 +139,7 @@ sub startup
 	$r -> route('/GetTable/design_object')		-> to('GetTable#design_object');
 	$r -> route('/GetTable/gardens')			-> to('GetTable#gardens');
 	$r -> route('/GetTable/objects')			-> to('GetTable#objects');
+	$r -> route('/GetTable/properties')			-> to('GetTable#properties');
 	$r -> route('/Search')						-> to('Search#display');
 
 } # End of startup.

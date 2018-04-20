@@ -70,7 +70,7 @@
 		</form>
 	</div>
 	<div id = 'global_property_tab'>
-%= include 'initialize/property', property_property_menu => $garden_property_menu
+%= include 'initialize/property', property_property_menu => $simple_property_menu
 	</div>
 	<div id = 'global_garden_tab'>
 %= include 'initialize/garden', garden_garden_menu => $garden_garden_menu, garden_property_menu => $garden_property_menu
@@ -116,6 +116,7 @@ var garden_current_garden_id	= 0;	// o Garden menu on the Gardens tab.
 var garden_current_property_id	= 0;	// o Property menu on the Gardens tab.
 var garden_table				= [];
 var object_table				= [];
+var simple_property_table		= [];
 var window_width				= 0;
 var window_height				= 0;
 
@@ -587,8 +588,8 @@ function garden_property_menu_changed(data)
 	{
 		if (garden_table[i]['property_id'] == current_property_id)
 		{
-			set_property_fields(i);
 			selected_garden_id = build_garden_menu(current_property_id, 'garden_garden_menu');
+
 			set_garden_fields(i);
 
 			break;
@@ -718,7 +719,6 @@ function get_garden_table()
 		{
 			garden_table = json;
 
-			set_property_fields(0);
 			set_garden_fields(0);
 		},
 		'json'
@@ -730,6 +730,7 @@ function get_garden_table()
 // Warning: This function cannot be used to populate object_menu_span
 // since that involves changing the DOM, but the function is called from within
 // the document ready context which assumes the DOM has stopped changing.
+// Warning: See also comment within code.
 
 function get_object_table()
 {
@@ -743,10 +744,11 @@ function get_object_table()
 
 			set_object_fields(0);
 
-			// This is not called where get_object_table() is called,
+			// Warning: This is not called where get_object_table() is called,
 			// because when placed there it pauses for 15 seconds.
 
 			get_garden_table();
+			get_simple_property_table();
 		},
 		'json'
 	);
@@ -762,6 +764,28 @@ function get_search_image_size_string()
 	return "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
 
 } // End of get_search_image_size_string.
+
+// -----------------------------------------------
+// Warning: This function cannot be used to populate garden_garden_menu_span
+// since that involves changing the DOM, but the function is called from within
+// the document ready context which assumes the DOM has stopped changing.
+
+function get_simple_property_table()
+{
+	$.get
+	(
+		'/GetTable/properties', // See routes at end of WWW::Garden::Design.startup().
+		null,
+		function(json)
+		{
+			simple_property_table = json;
+
+			set_simple_property_fields(2);
+		},
+		'json'
+	);
+
+} // End of get_simple_property_table.
 
 // -----------------------------------------------
 // Note: Changed means the user changed the selected item.
@@ -1137,6 +1161,36 @@ function process_design_save(flowers, garden_name, property_name)
 } // End of process_design_save.
 
 // -----------------------------------------------
+// Note: Changed means the user changed the selected item.
+
+function property_property_menu_changed(data)
+{
+	//	for( key in data )
+	//	{
+	//		alert( "key is " + [ key ] + ", value is " + data[ key ] );
+	//	}
+
+	// Typical keys for data.item are:
+	//	o label => The property item's text (name column value).
+	//	o value => The property item's # (primary key column value).
+
+	var current_property_id = data.item.value;
+
+	for (var i = 0; i < simple_property_table.length; i++)
+	{
+		if (simple_property_table[i]['id'] == current_property_id)
+		{
+			set_simple_property_fields(i);
+
+			break;
+		}
+	}
+
+	simple_current_property_id = current_property_id;
+
+} // End of property_property_menu_changed.
+
+// -----------------------------------------------
 
 function set_garden_fields(i)
 {
@@ -1239,6 +1293,23 @@ function set_virtual_parameters()
 	});
 
 } // End of set_virtual_parameters.
+
+// -----------------------------------------------
+
+function set_simple_property_fields(i)
+{
+	simple_current_property_id = simple_property_table[i]['id'];
+
+	$('#property_description')
+	.val(simple_property_table[i]['description']);
+
+	$('#property_name')
+	.val(simple_property_table[i]['name']);
+
+	$('#property_publish') // In simple_property_table, do not use the 'publish' string!
+	.prop('checked', (simple_property_table[i]['publish'] == 'Yes') ? true : false);
+
+} // End of set_simple_property_fields.
 
 // -----------------------------------------------
 //			edible:				document.edible.value,
@@ -1531,7 +1602,7 @@ $(function()
 
 	set_virtual_parameters();
 	get_attribute_types();
-	get_object_table();
+	get_object_table();	// This also gets the gardens and properties tables. Warning: See code for comment.
 
 	// Enable the tabs before trying to work with them.
 
@@ -1574,6 +1645,15 @@ $(function()
 		change: function(event, data)
 		{
 			object_menu_changed(data);
+		}
+	});
+
+	$('#property_property_menu')
+	.selectmenu
+	({
+		change: function(event, data)
+		{
+			property_property_menu_changed(data);
 		}
 	});
 

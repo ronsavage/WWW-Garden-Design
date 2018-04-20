@@ -104,4 +104,20 @@ sub objects
 
 # -----------------------------------------------
 
+sub properties
+{
+	my($self) = @_;
+
+	$self -> app -> log -> debug('GetTable.properties()');
+
+	my($defaults)		= $self -> app -> defaults;
+	my($property_table)	= $$defaults{db} -> read_properties_table;
+
+	$self -> app -> log -> debug('GetTable.properties(). Size of property_table: ' . scalar @$property_table);
+	$self -> render(json => $property_table);
+
+} # End of properties.
+
+# -----------------------------------------------
+
 1;
