@@ -24,15 +24,15 @@
 		</tr>
 		<tr>
 			<td>Property name: <span class = 'alert'>*</span> </td>
-			<td align = 'left' colspan = '2'><input id = 'property_name' type = 'text' size = '50' maxlength = '100'></td>
+			<td align = 'left' colspan = '2'><input id = 'simple_property_name' type = 'text' size = '50' maxlength = '100'></td>
 		</tr>
 		<tr>
 			<td>Description:</td>
-			<td align = 'left' colspan = '2'><input id = 'property_description' type = 'text' size = '50' maxlength = '100'></td>
+			<td align = 'left' colspan = '2'><input id = 'simple_property_description' type = 'text' size = '50' maxlength = '100'></td>
 		</tr>
 		<tr>
 			<td>Publish property:</td>
-			<td align = 'left' colspan = '2'><input type = 'checkbox' value = '' id = 'property_publish'/></td>
+			<td align = 'left' colspan = '2'><input type = 'checkbox' value = '' id = 'simple_property_publish'/></td>
 		</tr>
 		<tr>
 			<td colspan = '3'><br /></td>
@@ -46,8 +46,8 @@
 	</table>
 	<table align = 'center'>
 		<tr>
-			<td align = 'left' width = '33%'><input type = 'submit' value = 'Update' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td align = 'center' width = '33%'><input type = 'submit' value = 'Delete' /></td>
+			<td align = 'left' width = '33%'><input type = 'simple_property_submit' type = 'submit' value = 'Update' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td align = 'center' width = '33%'><input type = 'simple_property_submit' type = 'submit' value = 'Delete' /></td>
 			<td align = 'right' width = '33%'><input type = 'reset'  value = 'Reset' /></td>
 		</tr>
 	</table>

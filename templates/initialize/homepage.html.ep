@@ -109,13 +109,14 @@
 // Storage for info read in below from the database.
 
 var attribute_types_table		= [];
-var chosen_thing				= '';	// These 4 var are the current ids within each menu, for use in Ajax calls.
+var chosen_thing				= '';	// These are the current ids within each menu, for use in Ajax calls.
 var design_current_garden_id	= 0;	// o Garden menu on the Design tab.
 var design_current_property_id	= 0;	// o Property menu on the Design tab.
 var garden_current_garden_id	= 0;	// o Garden menu on the Gardens tab.
 var garden_current_property_id	= 0;	// o Property menu on the Gardens tab.
 var garden_table				= [];
 var object_table				= [];
+var simple_current_property_id	= 0;	// o Property menu on the Properties tab.
 var simple_property_table		= [];
 var window_width				= 0;
 var window_height				= 0;
@@ -744,7 +745,7 @@ function get_object_table()
 
 			set_object_fields(0);
 
-			// Warning: This is not called where get_object_table() is called,
+			// Warning: get_garden_table() is not called where get_object_table() is called,
 			// because when placed there it pauses for 15 seconds.
 
 			get_garden_table();
@@ -780,7 +781,7 @@ function get_simple_property_table()
 		{
 			simple_property_table = json;
 
-			set_simple_property_fields(2);
+			set_simple_property_fields(0);
 		},
 		'json'
 	);
@@ -1237,23 +1238,6 @@ function set_object_fields(i)
 
 // -----------------------------------------------
 
-function set_property_fields(i)
-{
-	garden_current_property_id = garden_table[i]['property_id'];
-
-	$('#property_description')
-	.val(garden_table[i]['property_description']);
-
-	$('#property_name')
-	.val(garden_table[i]['property_name']);
-
-	$('#property_publish') // In garden_table, do not use the 'property_publish' string!
-	.prop('checked', (garden_table[i]['property_publish'] == 'Yes') ? true : false);
-
-} // End of set_property_fields.
-
-// -----------------------------------------------
-
 function set_virtual_parameters()
 {
 	// Initialize globals.
@@ -1300,22 +1284,22 @@ function set_simple_property_fields(i)
 {
 	simple_current_property_id = simple_property_table[i]['id'];
 
-	$('#property_description')
+	$('#simple_property_description')
 	.val(simple_property_table[i]['description']);
 
-	$('#property_name')
+	$('#simple_property_name')
 	.val(simple_property_table[i]['name']);
 
-	$('#property_publish') // In simple_property_table, do not use the 'publish' string!
+	$('#simple_property_publish') // In simple_property_table, do not use the 'publish' string!
 	.prop('checked', (simple_property_table[i]['publish'] == 'Yes') ? true : false);
 
 } // End of set_simple_property_fields.
 
 // -----------------------------------------------
-//			edible:				document.edible.value,
-//			habit:				document.habit.value,
-//			native:				document.native.value,
-//			sun_tolerance:		document.sun_tolerance.value
+//		edible:				document.edible.value,
+//		habit:				document.habit.value,
+//		native:				document.native.value,
+//		sun_tolerance:		document.sun_tolerance.value
 
 function submit_details()
 {
@@ -1508,10 +1492,11 @@ function submit_property()
 	({
 		data:
 		{
-			description:	$('#property_description').val(),
-			id:				garden_current_property_id,
-			name:			$('#property_name').val(),
-			publish:		$('#property_publish').prop('checked') ? 'Yes' : 'No'
+			description:	$('#simple_property_description').val(),
+			id:				simple_current_property_id,
+			name:			$('#simple_property_name').val(),
+			publish:		$('#simple_property_publish').prop('checked') ? 'Yes' : 'No',
+			submit:			$('#simple_property_name').val(),
 		},
 		dataType:	'html',
 		method:		'POST',
