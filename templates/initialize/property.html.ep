@@ -44,10 +44,40 @@
 			<td colspan = '3'><br /></td>
 		</tr>
 		<tr>
-			<td align = 'left' width = '33%'><input type = 'submit' value = 'Update' onclick = 'submit_property("Update")'/></td>
-			<td align = 'center' width = '33%'><input type = 'submit' value = 'Delete' onclick = 'submit_property("Delete")'/></td>
+			<td align = 'left' width = '33%'><input type = 'submit' value = 'Update' onclick = 'submit_old_property("Update")'/></td>
+			<td align = 'center' width = '33%'><input type = 'submit' value = 'Delete' onclick = 'submit_old_property("Delete")'/></td>
 			<td align = 'right' width = '33%'><input type = 'reset' value = 'Reset' /></td>
 		</tr>
+		<tr>
+			<td colspan = '3'><br /></td>
+		</tr>
+		<tr>
+			<td colspan = '3'><hr /></td>
+		</tr>
+		<tr>
+			<td align = 'center' colspan = '3'>New Property</td>
+		</tr>
+		<tr>
+			<td colspan = '3'><br /></td>
+		</tr>
+		<tr>
+			<td>Property name: <span class = 'alert'>*</span> </td>
+			<td align = 'left' colspan = '2'><input id = 'new_property_name' type = 'text' size = '50' maxlength = '100'></td>
+		</tr>
+		<tr>
+			<td>Description:</td>
+			<td align = 'left' colspan = '2'><input id = 'new_property_description' type = 'text' size = '50' maxlength = '100'></td>
+		</tr>
+		<tr>
+			<td>Publish property:</td>
+			<td align = 'left' colspan = '2'><input type = 'checkbox' value = '' id = 'new_property_publish'/></td>
+		</tr>
+		<tr>
+			<td colspan = '3'><br /></td>
+		</tr>
+			<td align = 'left' width = '33%'><input type = 'submit' value = 'Save' onclick = 'submit_new_property()'/></td>
+			<td width = '33%'></td>
+			<td align = 'right' width = '33%'><input type = 'reset' value = 'Reset' /></td>
 	</table>
 </form>
 

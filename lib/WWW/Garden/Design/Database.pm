@@ -854,8 +854,9 @@ sub process_property_submit
 
 	$self -> logger -> debug('Database.process_property_submit(...)');
 
-	my($table_name)			= 'properties';
+	my($action)				= $$item{action};
 	my($id)					= $$item{id};
+	my($table_name)			= 'properties';
 	my($properties_table)	= $self -> read_table($table_name);
 
 	my(%property);
