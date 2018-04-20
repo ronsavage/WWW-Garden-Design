@@ -44,8 +44,8 @@
 			<td colspan = '3'><br /></td>
 		</tr>
 		<tr>
-			<td align = 'left' width = '33%'><input type = 'submit' value = 'Update'/></td>
-			<td align = 'center' width = '33%'><input type = 'submit' value = 'Delete'/></td>
+			<td align = 'left' width = '33%'><input type = 'submit' value = 'Update' onclick = 'submit_property("Update")'/></td>
+			<td align = 'center' width = '33%'><input type = 'submit' value = 'Delete' onclick = 'submit_property("Delete")'/></td>
 			<td align = 'right' width = '33%'><input type = 'reset' value = 'Reset' /></td>
 		</tr>
 	</table>

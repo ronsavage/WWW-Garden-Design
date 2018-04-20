@@ -1486,12 +1486,13 @@ function submit_object()
 
 // -----------------------------------------------
 
-function submit_property()
+function submit_property(action)
 {
 	$.ajax
 	({
 		data:
 		{
+			action:			action,
 			description:	$('#simple_property_description').val(),
 			id:				simple_current_property_id,
 			name:			$('#simple_property_name').val(),
@@ -1758,8 +1759,6 @@ $(function()
 	$('#property_form')
 	.submit(function()
 	{
-		submit_property();
-
 		return false;
 	});
 
