@@ -856,64 +856,80 @@ sub process_property_submit
 
 	my($action)				= $$item{action};
 	my($id)					= $$item{id};
+	my($name)				= $$item{name};
 	my($table_name)			= 'properties';
 	my($properties_table)	= $self -> read_table($table_name);
 
 	my(%property);
 
-	for (@$properties_table)
-	{
-		$property{$$_{id} } = $$_{name};
-	}
-
 	my($fields) =
 	{
 		description	=> $$item{description},
-		name		=> $$item{name},
+		name		=> $name,
 		publish		=> $$item{publish},
 	};
 
-	# Is the property on file? AddProperty.pm checked that the user entered something!
+	my($result);
 
-	if (exists($property{$id}) )
+	if ($action == 'Save')
 	{
-		# It's a property update.
+		# It's a property insert.
+		# is the property on file?
 
-		$self -> mojo_pg -> update
-		(
-			$table_name,
-			$fields,
-			{id => $$item{id} }
-		);
+		for (@$properties_table)
+		{
+			$property{uc $$_{name} } = $$_{id};
+		}
 
-		$self -> logger -> debug("Database.process_property_submit(...). Updated the '$table_name' table");
+		if (exists($property{uc $name}) )
+		{
+			$result = 'Error: That property name is on file';
+		}
+		else
+		{
+			$id = ${$self -> mojo_pg -> insert
+			(
+				$table_name,
+				$fields,
+				{returning => 'id'}
+			)}{id};
+
+			$self -> logger -> debug("Database.process_property_submit(...). Inserted id $id for property '$name' into the '$table_name' table");
+
+			$result = 'Success: Record added to the database';
+		}
 	}
 	else
 	{
-		# It's a property insert.
+		# Is the property on file? AddProperty.pm checked that the user entered something!
 
-		$id = ${$self -> mojo_pg -> insert
-		(
-			$table_name,
-			$fields,
-			{returning => 'id'}
-		)}{id};
+		for (@$properties_table)
+		{
+			$property{$$_{id} } = $$_{name};
+		}
 
-		$self -> logger -> debug("Database.process_property_submit(...). Inserted id $id into the '$table_name' table");
+		if (exists($property{$id}) )
+		{
+			# It's a property update.
+
+			$self -> mojo_pg -> update
+			(
+				$table_name,
+				$fields,
+				{id => $$item{id} }
+			);
+
+			$self -> logger -> debug("Database.process_property_submit(...). Record id $id ${action}d. Table: '$table_name'");
+
+			$result = 'Success: Record ' . ( ($action eq 'update') ? 'updated' : 'deleted');
+		}
+		else
+		{
+			$result = 'Error: Cannot update the database. That record was not found';
+		}
 	}
 
-	return 1;
-
-	$self -> insert_hashref
-	(
-		$table_name,
-		{
-			description	=> $$item{description},
-			id			=> ,
-			name		=> $$item{_name},
-			publish		=> $$item{publish},
-		}
-	);
+	return $result;
 
 } # End of process_property_submit.
 

@@ -20,9 +20,8 @@ sub save
 
 	if ($$item{name})
 	{
-		my($defaults) = $self -> app -> defaults;
-
-		#$$defaults{db} -> process_property_submit($item);
+		my($defaults)	= $self -> app -> defaults;
+		my($result)		= $$defaults{db} -> process_property_submit($item);
 
 		$self -> stash(error => undef);
 	}
