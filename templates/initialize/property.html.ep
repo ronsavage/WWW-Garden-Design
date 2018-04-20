@@ -43,12 +43,10 @@
 		<tr>
 			<td colspan = '3'><br /></td>
 		</tr>
-	</table>
-	<table align = 'center'>
 		<tr>
-			<td align = 'left' width = '33%'><input type = 'simple_property_submit' type = 'submit' value = 'Update' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td align = 'center' width = '33%'><input type = 'simple_property_submit' type = 'submit' value = 'Delete' /></td>
-			<td align = 'right' width = '33%'><input type = 'reset'  value = 'Reset' /></td>
+			<td align = 'left' width = '33%'><input type = 'submit' value = 'Update'/></td>
+			<td align = 'center' width = '33%'><input type = 'submit' value = 'Delete'/></td>
+			<td align = 'right' width = '33%'><input type = 'reset' value = 'Reset' /></td>
 		</tr>
 	</table>
 </form>

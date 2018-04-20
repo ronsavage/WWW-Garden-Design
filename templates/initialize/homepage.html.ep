@@ -1495,8 +1495,7 @@ function submit_property()
 			description:	$('#simple_property_description').val(),
 			id:				simple_current_property_id,
 			name:			$('#simple_property_name').val(),
-			publish:		$('#simple_property_publish').prop('checked') ? 'Yes' : 'No',
-			submit:			$('#simple_property_name').val(),
+			publish:		$('#simple_property_publish').prop('checked') ? 'Yes' : 'No'
 		},
 		dataType:	'html',
 		method:		'POST',
