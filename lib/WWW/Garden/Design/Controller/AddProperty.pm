@@ -23,12 +23,14 @@ sub save
 		my($defaults)	= $self -> app -> defaults;
 		my($result)		= $$defaults{db} -> process_property_submit($item);
 
+		$self -> stash(details => $result);
 		$self -> stash(error => undef);
 	}
 	else
 	{
-		my($message) = 'Missing property name';
+		my($message) = 'Error: The property name is mandatory';
 
+		$self -> stash(details => undef);
 		$self -> stash(error => $message);
 		$self -> app -> log -> error($message);
 	}

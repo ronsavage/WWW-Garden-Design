@@ -1492,7 +1492,7 @@ function submit_new_property(action)
 	({
 		data:
 		{
-			action:			'Save',
+			action:			'save',
 			description:	$('#new_property_description').val(),
 			id:				0,
 			name:			$('#new_property_name').val(),
@@ -1504,13 +1504,9 @@ function submit_new_property(action)
 	})
 	.done(function(html)
 	{
-//		$('#property_result_div')
-//		.empty()
-//		.append(html);
-
 		$('#property_result_div')
 		.empty()
-		.text('Submitted property details');
+		.append(html);
 	})
 	.fail(function(jqxhr, textStatus, error)
 	{
@@ -1539,13 +1535,9 @@ function submit_old_property(action)
 	})
 	.done(function(html)
 	{
-//		$('#property_result_div')
-//		.empty()
-//		.append(html);
-
 		$('#property_result_div')
 		.empty()
-		.text('Submitted property details');
+		.append(html);
 	})
 	.fail(function(jqxhr, textStatus, error)
 	{

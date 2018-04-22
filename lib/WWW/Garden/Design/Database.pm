@@ -871,10 +871,10 @@ sub process_property_submit
 
 	my($result);
 
-	if ($action == 'Save')
+	if ($action eq 'save')
 	{
-		# It's a property insert.
-		# is the property on file?
+		# It's a property insert. Is the property name on file?
+		# AddProperty.pm checked that the user entered something!
 
 		for (@$properties_table)
 		{
@@ -887,21 +887,21 @@ sub process_property_submit
 		}
 		else
 		{
-			$id = ${$self -> mojo_pg -> insert
+			$id = $self -> mojo_pg -> insert
 			(
 				$table_name,
 				$fields,
 				{returning => 'id'}
-			)}{id};
+			) -> hash -> {id};
 
-			$self -> logger -> debug("Database.process_property_submit(...). Inserted id $id for property '$name' into the '$table_name' table");
+			$self -> logger -> debug("Table '$table_name'. Record id '$id' added. Property '$name'");
 
-			$result = 'Success: Record added to the database';
+			$result = 'Success: Record added';
 		}
 	}
-	else
+	elsif ($action =~ /^(?:delete|update)$/)
 	{
-		# Is the property on file? AddProperty.pm checked that the user entered something!
+		# Is the property id on file? AddProperty.pm checked that the user entered something!
 
 		for (@$properties_table)
 		{
@@ -919,14 +919,18 @@ sub process_property_submit
 				{id => $$item{id} }
 			);
 
-			$self -> logger -> debug("Database.process_property_submit(...). Record id $id ${action}d. Table: '$table_name'");
+			$self -> logger -> debug("Table '$table_name'. Record id '$id' ${action}d.");
 
-			$result = 'Success: Record ' . ( ($action eq 'update') ? 'updated' : 'deleted');
+			$result = "Success: Record ${action}d";
 		}
 		else
 		{
 			$result = 'Error: Cannot update the database. That record was not found';
 		}
+	}
+	else
+	{
+		$result = "Error: Unrecognized action '$action'. Must be 'save', 'update' or 'delete'";
 	}
 
 	return $result;

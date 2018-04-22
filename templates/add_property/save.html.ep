@@ -6,4 +6,8 @@
 </tr>
 </table>
 
+% } else {
+
+<h2 align = 'center'><%= $details %></h2>
+
 % }
