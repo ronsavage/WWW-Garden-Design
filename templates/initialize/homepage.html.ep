@@ -1488,9 +1488,9 @@ function submit_object()
 
 function submit_new_property(action)
 {
-	$.ajax
-	({
-		data:
+	$.post
+	(
+		'/AddProperty', // See routes at end of WWW::Garden::Design.startup().
 		{
 			action:			'save',
 			description:	$('#new_property_description').val(),
@@ -1498,20 +1498,14 @@ function submit_new_property(action)
 			name:			$('#new_property_name').val(),
 			publish:		$('#new_property_publish').prop('checked') ? 'Yes' : 'No'
 		},
-		dataType:	'html',
-		method:		'POST',
-		url:		'/AddProperty' // See routes at end of WWW::Garden::Design.startup().
-	})
-	.done(function(html)
-	{
-		$('#property_result_div')
-		.empty()
-		.append(html);
-	})
-	.fail(function(jqxhr, textStatus, error)
-	{
-		alert('Ajax status: ' + textStatus + ', ' + error);
-	});
+		function(packet)
+		{
+			$('#property_result_div')
+			.empty()
+			.append(packet.message.text);
+		},
+		'json'
+	);
 
 } // End of submit_new_property.
 
@@ -1529,7 +1523,7 @@ function submit_old_property(action)
 			name:			$('#simple_property_name').val(),
 			publish:		$('#simple_property_publish').prop('checked') ? 'Yes' : 'No'
 		},
-		dataType:	'html',
+		dataType:	'json',
 		method:		'POST',
 		url:		'/AddProperty' // See routes at end of WWW::Garden::Design.startup().
 	})

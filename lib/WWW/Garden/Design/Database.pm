@@ -883,7 +883,7 @@ sub process_property_submit
 
 		if (exists($property{uc $name}) )
 		{
-			$result = 'Error: That property name is on file';
+			$result = {text => 'That property name is on file', type => 'Error'};
 		}
 		else
 		{
@@ -896,7 +896,7 @@ sub process_property_submit
 
 			$self -> logger -> debug("Table '$table_name'. Record id '$id' added. Property '$name'");
 
-			$result = 'Success: Record added';
+			$result = {text => 'Record added', type => 'Success'};
 		}
 	}
 	elsif ($action =~ /^(?:delete|update)$/)
@@ -921,19 +921,19 @@ sub process_property_submit
 
 			$self -> logger -> debug("Table '$table_name'. Record id '$id' ${action}d.");
 
-			$result = "Success: Record ${action}d";
+			$result = {text => "Record ${action}d", type => 'Success'};
 		}
 		else
 		{
-			$result = 'Error: Cannot update the database. That record was not found';
+			$result = {text => 'Cannot update the database. That record was not found', type => 'Error'};
 		}
 	}
 	else
 	{
-		$result = "Error: Unrecognized action '$action'. Must be 'save', 'update' or 'delete'";
+		$result = {text => "Unrecognized action '$action'. Must be 'save', 'update' or 'delete'", type => 'Error'};
 	}
 
-	return $result;
+	return {message => $result};
 
 } # End of process_property_submit.
 
