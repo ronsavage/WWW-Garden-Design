@@ -320,47 +320,37 @@ function build_attribute_id(kind, name, value)
 
 // -----------------------------------------------
 
-function build_full_property_menu(property_id, property_menu_name)
+function build_full_property_menu(property_id)
 {
-	var first_id	= 0;
-	var html		= "<select id = '" + property_menu_name + "'>"
-						+ "<option disabled = '1' selected>Property menu</option>";
-	var selected_id	= 0;
+	var html = "<select id = 'property_property_menu'>"
+				+ "<option disabled = '1' selected>Property menu</option>";
 
 	var id;
+	var index;
 	var name;
 
 	for (var i = 0; i < full_property_table.length; i++)
 	{
-		// Obviously if the code or database are corrupt, this will never match.
-		// And in that case the function will return selected_id == 0.
+		id		= full_property_table[i]['id'];
+		name	= full_property_table[i]['name'];
 
-		if (full_property_table[i]['property_id'] == property_id)
+		if (full_property_table[i]['id'] == property_id)
 		{
-			id		= full_property_table[i]['id'];
-			name	= full_property_table[i]['name'];
-
-			if (first_id == 0)
-			{
-				first_id	= id;
-				html		+= "<option value = '" + id + "' selected>" + name + '</option>';
-				selected_id	= id;
-			}
-			else
-			{
-				html += "<option value = '" + id + "'>" + name + '</option>';
-			}
+			html	+= "<option value = '" + id + "' selected>" + name + '</option>';
+			index	= i;
+		}
+		else
+		{
+			html += "<option value = '" + id + "'>" + name + '</option>';
 		}
 	}
 
 	html	+= '</select>';
-	id		= '#' + property_menu_name;
+	id		= '#property_property_menu';
 
 	$(id + '_span')
 	.empty()
 	.append(html);
-
-	// Warning: These 2 calls to selectmenu() are mandatory.
 
 	$(id)
 	.selectmenu
@@ -371,7 +361,7 @@ function build_full_property_menu(property_id, property_menu_name)
 		}
 	});
 
-	return selected_id;
+	return index;
 
 } // End of build_full_property_menu.
 
@@ -1561,10 +1551,11 @@ function submit_new_property(action)
 			.empty()
 			.append(packet.message.text);
 
-			full_current_property_id = packet.message.current_id;
+			full_current_property_id	= packet.message.current_id;
+			full_property_table			= packet.property_table;
+			index						= build_full_property_menu(full_current_property_id);
 
-			get_full_property_table();
-			build_full_property_menu(full_current_property_id, 'property_property_menu');
+			set_full_property_fields(index);
 		},
 		'json'
 	);
@@ -1591,10 +1582,11 @@ function submit_old_property(action)
 			.empty()
 			.append(packet.message.text);
 
-			full_current_property_id = packet.message.current_id;
+			full_current_property_id	= packet.message.current_id;
+			full_property_table			= packet.property_table;
+			index						= build_full_property_menu(full_current_property_id);
 
-			get_full_property_table();
-			build_full_property_menu(full_current_property_id, 'property_property_menu');
+			set_full_property_fields(index);
 		},
 		'json'
 	);

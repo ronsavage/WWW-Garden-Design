@@ -34,6 +34,11 @@ sub save
 		my($defaults)	= $self -> app -> defaults;
 		my($result)		= $$defaults{db} -> process_property_submit($item);
 
+		if ($$result{message}{type} ne 'Error')
+		{
+			$$result{property_table} = $$defaults{db} -> read_properties_table;
+		}
+
 		$self -> stash(json => $self -> format_message($result) );
 		$self -> stash(error => undef);
 	}

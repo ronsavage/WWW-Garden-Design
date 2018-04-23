@@ -157,7 +157,7 @@ sub build_object_menu
 
 sub build_full_property_menu
 {
-	my($self, $properties, $id) = @_;
+	my($self, $properties, $id, $default_id) = @_;
 	my($html)		= "<select id = '$id' name = '$id'>"
 						. "<option disabled = '1'>Properties</option>";
 	my($last_name)	= '';
@@ -166,14 +166,18 @@ sub build_full_property_menu
 
 	for my $property (sort{$$a{name} cmp $$b{name} } @$properties)
 	{
-		if ($last_name eq '')
+		if ($default_id > 0)
 		{
-			# Set this on the 1st menu item.
-
-			$selected = 'selected';
+			$default_id	= 0;
+			$last_name	= $$property{name};
+			$selected	= 'selected';
+		}
+		elsif ($last_name eq '')
+		{
+			$last_name	= $$property{name};
+			$selected	= 'selected';
 		}
 
-		$last_name	= $$property{name};
 		$html		.= "<option $selected value = '$$property{id}'>$last_name</option>";
 		$selected	= '';
 	}
@@ -1016,8 +1020,6 @@ sub read_flowers_table
 
 	for my $flower (@$flower_table)
 	{
-		# Phase 1: Transfer the flower data.
-
 		$record	= {};
 
 		for my $key (keys %$flower)
@@ -1129,8 +1131,6 @@ sub read_gardens_table
 
 	for my $garden (@$garden_table)
 	{
-		# Phase 1: Transfer the garden data.
-
 		$record	= {};
 
 		for my $key (keys %$garden)
@@ -1182,8 +1182,6 @@ sub read_objects_table
 
 	for my $object (@{$self -> read_table('objects')})
 	{
-		# Phase 1: Transfer the object data.
-
 		$record	= {};
 
 		for my $key (keys %$object)
@@ -1216,25 +1214,9 @@ sub read_properties_table
 	my($self)		= @_;
 	my($constants)	= $self -> constants;
 
-	my($record, @records);
-
-	for my $property (@{$self -> read_table('properties')})
-	{
-		# Phase 1: Transfer the object data.
-
-		$record	= {};
-
-		for my $key (keys %$property)
-		{
-			$$record{$key} = $$property{$key};
-		}
-
-		push @records, $record;
-	}
-
 	# Return an arrayref of hashrefs.
 
-	return [sort{$$a{name} cmp $$b{name} } @records];
+	return [sort{$$a{name} cmp $$b{name} } @{$self -> read_table('properties')}];
 
 } # End of read_properties_table.
 
