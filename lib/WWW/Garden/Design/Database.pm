@@ -87,8 +87,7 @@ sub add_flower
 sub build_garden_menu
 {
 	my($self, $property_gardens, $controller, $id) = @_;
-	my($html)			= "<select id = '$id' name = '$id'>"
-							. "<option disabled = '1'>Gardens</option>";
+	my($html)			= "<select id = '$id' name = '$id'>";
 	my($last_name)		= '';
 	my($property_id)	= $controller -> session('current_property_id');
 
@@ -124,8 +123,7 @@ sub build_object_menu
 {
 	my($self, $objects, $controller) = @_;
 	my($html)		= "<div class = 'object_toolbar'>"
-						. "<select id = 'object_menu'>"
-						. "<option disabled = '1'>Objects</option>";
+						. "<select id = 'object_menu'>";
 	my($last_name)  = '';
 
 	my($selected);
@@ -158,8 +156,7 @@ sub build_object_menu
 sub build_full_property_menu
 {
 	my($self, $properties, $id, $default_id) = @_;
-	my($html)		= "<select id = '$id' name = '$id'>"
-						. "<option disabled = '1'>Properties</option>";
+	my($html)		= "<select id = '$id' name = '$id'>";
 	my($last_name)	= '';
 
 	my($selected);
@@ -194,8 +191,7 @@ sub build_full_property_menu
 sub build_property_menu
 {
 	my($self, $property_gardens, $controller, $id) = @_;
-	my($html)		= "<select id = '$id' name = '$id'>"
-						. "<option disabled = '1'>Properties</option>";
+	my($html)		= "<select id = '$id' name = '$id'>";
 	my($last_name)	= '';
 
 	my($selected);

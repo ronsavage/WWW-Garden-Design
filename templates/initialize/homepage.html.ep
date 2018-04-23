@@ -322,8 +322,7 @@ function build_attribute_id(kind, name, value)
 
 function build_full_property_menu(property_id)
 {
-	var html = "<select id = 'property_property_menu'>"
-				+ "<option disabled = '1' selected>Property menu</option>";
+	var html = "<select id = 'property_property_menu'>";
 
 	var id;
 	var index;
@@ -370,8 +369,7 @@ function build_full_property_menu(property_id)
 function build_garden_menu(property_id, garden_menu_name)
 {
 	var first_id	= 0;
-	var html		= "<select id = '" + garden_menu_name + "'>"
-						+ "<option disabled = '1' selected>Garden menu</option>";
+	var html		= "<select id = '" + garden_menu_name + "'>";
 	var selected_id	= 0;
 
 	var id;
