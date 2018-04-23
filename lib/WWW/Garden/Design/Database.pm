@@ -153,7 +153,39 @@ sub build_object_menu
 } # End of build_object_menu.
 
 # -----------------------------------------------
-# This version of simple_build_property_menu() only includes properties with gardens.
+# This version of build_property_menu() includes properties with and without gardens.
+
+sub build_full_property_menu
+{
+	my($self, $properties, $id) = @_;
+	my($html)		= "<select id = '$id' name = '$id'>"
+						. "<option disabled = '1'>Properties</option>";
+	my($last_name)	= '';
+
+	my($selected);
+
+	for my $property (sort{$$a{name} cmp $$b{name} } @$properties)
+	{
+		if ($last_name eq '')
+		{
+			# Set this on the 1st menu item.
+
+			$selected = 'selected';
+		}
+
+		$last_name	= $$property{name};
+		$html		.= "<option $selected value = '$$property{id}'>$last_name</option>";
+		$selected	= '';
+	}
+
+	$html .= '</select>';
+
+	return $html;
+
+} # End of build_full_property_menu.
+
+# -----------------------------------------------
+# This version of full_build_property_menu() only includes properties with gardens.
 
 sub build_property_menu
 {
@@ -189,38 +221,6 @@ sub build_property_menu
 	return $html;
 
 } # End of build_property_menu.
-
-# -----------------------------------------------
-# This version of build_property_menu() includes properties with no gardens.
-
-sub build_simple_property_menu
-{
-	my($self, $properties, $id) = @_;
-	my($html)		= "<select id = '$id' name = '$id'>"
-						. "<option disabled = '1'>Properties</option>";
-	my($last_name)	= '';
-
-	my($selected);
-
-	for my $property (sort{$$a{name} cmp $$b{name} } @$properties)
-	{
-		if ($last_name eq '')
-		{
-			# Set this on the 1st menu item.
-
-			$selected = 'selected';
-		}
-
-		$last_name	= $$property{name};
-		$html		.= "<option $selected value = '$$property{id}'>$last_name</option>";
-		$selected	= '';
-	}
-
-	$html .= '</select>';
-
-	return $html;
-
-} # End of build_simple_property_menu.
 
 # --------------------------------------------------
 
@@ -896,7 +896,7 @@ sub process_property_submit
 
 			$self -> logger -> debug("Table '$table_name'. Record id '$id' added. Property '$name'");
 
-			$result = {text => 'Record added', type => 'Success'};
+			$result = {current_id => $id, text => 'Record added', type => 'Success'};
 		}
 	}
 	elsif ($action eq 'update')
@@ -921,7 +921,7 @@ sub process_property_submit
 
 			$self -> logger -> debug("Table '$table_name'. Record id '$id' ${action}d.");
 
-			$result = {text => "Record ${action}d", type => 'Success'};
+			$result = {current_id => $$item{id}, text => "Record ${action}d", type => 'Success'};
 		}
 		else
 		{
@@ -949,7 +949,7 @@ sub process_property_submit
 
 			$self -> logger -> debug("Table '$table_name'. Record id '$id' ${action}d.");
 
-			$result = {text => "Record ${action}d", type => 'Success'};
+			$result = {current_id => 0, text => "Record ${action}d", type => 'Success'};
 		}
 		else
 		{

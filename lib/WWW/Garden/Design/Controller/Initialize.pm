@@ -82,10 +82,10 @@ sub homepage
 
 	$$defaults{design_property_menu}	= $$defaults{db} -> build_property_menu($$defaults{gardens_table}, $self, 'design_property_menu');
 	$$defaults{design_garden_menu}		= $$defaults{db} -> build_garden_menu($$defaults{gardens_table}, $self, 'design_garden_menu');
+	$$defaults{full_property_menu}		= $$defaults{db} -> build_full_property_menu($$defaults{properties_table}, 'property_property_menu');
 	$$defaults{garden_property_menu}	= $$defaults{db} -> build_property_menu($$defaults{gardens_table}, $self, 'garden_property_menu');
 	$$defaults{garden_garden_menu}		= $$defaults{db} -> build_garden_menu($$defaults{gardens_table}, $self, 'garden_garden_menu');
 	$$defaults{object_menu}				= $$defaults{db} -> build_object_menu($$defaults{objects_table}, $self);
-	$$defaults{simple_property_menu}	= $$defaults{db} -> build_simple_property_menu($$defaults{properties_table}, 'property_property_menu');
 
 	$self -> app -> defaults($defaults);
 	$self -> stash(attribute_check_boxes	=> $self -> build_check_boxes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields}, $$defaults{attribute_attribute_ids}) );
@@ -100,11 +100,11 @@ sub homepage
 		constants				=> $$defaults{constants_table},
 		design_garden_menu		=> $$defaults{design_garden_menu},
 		design_property_menu	=> $$defaults{design_property_menu},
+		full_property_menu		=> $$defaults{full_property_menu},
 		garden_garden_menu		=> $$defaults{garden_garden_menu},
 		garden_property_menu	=> $$defaults{garden_property_menu},
 		joiner					=> $$defaults{joiner},
 		object_menu				=> $$defaults{object_menu},
-		simple_property_menu	=> $$defaults{simple_property_menu}
 	);
 
 } # End of homepage.

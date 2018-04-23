@@ -70,7 +70,7 @@
 		</form>
 	</div>
 	<div id = 'global_property_tab'>
-%= include 'initialize/property', property_property_menu => $simple_property_menu
+%= include 'initialize/property', property_property_menu => $full_property_menu
 	</div>
 	<div id = 'global_garden_tab'>
 %= include 'initialize/garden', garden_garden_menu => $garden_garden_menu, garden_property_menu => $garden_property_menu
@@ -112,12 +112,12 @@ var attribute_types_table		= [];
 var chosen_thing				= '';	// These are the current ids within each menu, for use in Ajax calls.
 var design_current_garden_id	= 0;	// o Garden menu on the Design tab.
 var design_current_property_id	= 0;	// o Property menu on the Design tab.
+var full_current_property_id	= 0;	// o Property menu on the Properties tab.
+var full_property_table			= [];
 var garden_current_garden_id	= 0;	// o Garden menu on the Gardens tab.
 var garden_current_property_id	= 0;	// o Property menu on the Gardens tab.
 var garden_table				= [];
 var object_table				= [];
-var simple_current_property_id	= 0;	// o Property menu on the Properties tab.
-var simple_property_table		= [];
 var window_width				= 0;
 var window_height				= 0;
 
@@ -320,11 +320,68 @@ function build_attribute_id(kind, name, value)
 
 // -----------------------------------------------
 
+function build_full_property_menu(property_id, property_menu_name)
+{
+	var first_id	= 0;
+	var html		= "<select id = '" + property_menu_name + "'>"
+						+ "<option disabled = '1' selected>Property menu</option>";
+	var selected_id	= 0;
+
+	var id;
+	var name;
+
+	for (var i = 0; i < full_property_table.length; i++)
+	{
+		// Obviously if the code or database are corrupt, this will never match.
+		// And in that case the function will return selected_id == 0.
+
+		if (full_property_table[i]['property_id'] == property_id)
+		{
+			id		= full_property_table[i]['id'];
+			name	= full_property_table[i]['name'];
+
+			if (first_id == 0)
+			{
+				first_id	= id;
+				html		+= "<option value = '" + id + "' selected>" + name + '</option>';
+				selected_id	= id;
+			}
+			else
+			{
+				html += "<option value = '" + id + "'>" + name + '</option>';
+			}
+		}
+	}
+
+	html	+= '</select>';
+	id		= '#' + property_menu_name;
+
+	$(id + '_span')
+	.empty()
+	.append(html);
+
+	// Warning: These 2 calls to selectmenu() are mandatory.
+
+	$(id)
+	.selectmenu
+	({
+		change: function(event, data)
+		{
+			property_property_menu_changed(data);
+		}
+	});
+
+	return selected_id;
+
+} // End of build_full_property_menu.
+
+// -----------------------------------------------
+
 function build_garden_menu(property_id, garden_menu_name)
 {
 	var first_id	= 0;
 	var html		= "<select id = '" + garden_menu_name + "'>"
-						+ "<option disabled = '1' selected>Gardens</option>";
+						+ "<option disabled = '1' selected>Garden menu</option>";
 	var selected_id	= 0;
 
 	var id;
@@ -710,6 +767,28 @@ function get_design_image_size_string()
 // since that involves changing the DOM, but the function is called from within
 // the document ready context which assumes the DOM has stopped changing.
 
+function get_full_property_table()
+{
+	$.get
+	(
+		'/GetTable/properties', // See routes at end of WWW::Garden::Design.startup().
+		null,
+		function(json)
+		{
+			full_property_table = json;
+
+			set_full_property_fields(0);
+		},
+		'json'
+	);
+
+} // End of get_full_property_table.
+
+// -----------------------------------------------
+// Warning: This function cannot be used to populate garden_garden_menu_span
+// since that involves changing the DOM, but the function is called from within
+// the document ready context which assumes the DOM has stopped changing.
+
 function get_garden_table()
 {
 	$.get
@@ -749,7 +828,7 @@ function get_object_table()
 			// because when placed there it pauses for 15 seconds.
 
 			get_garden_table();
-			get_simple_property_table();
+			get_full_property_table();
 		},
 		'json'
 	);
@@ -765,28 +844,6 @@ function get_search_image_size_string()
 	return "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
 
 } // End of get_search_image_size_string.
-
-// -----------------------------------------------
-// Warning: This function cannot be used to populate garden_garden_menu_span
-// since that involves changing the DOM, but the function is called from within
-// the document ready context which assumes the DOM has stopped changing.
-
-function get_simple_property_table()
-{
-	$.get
-	(
-		'/GetTable/properties', // See routes at end of WWW::Garden::Design.startup().
-		null,
-		function(json)
-		{
-			simple_property_table = json;
-
-			set_simple_property_fields(0);
-		},
-		'json'
-	);
-
-} // End of get_simple_property_table.
 
 // -----------------------------------------------
 // Note: Changed means the user changed the selected item.
@@ -1177,19 +1234,36 @@ function property_property_menu_changed(data)
 
 	var current_property_id = data.item.value;
 
-	for (var i = 0; i < simple_property_table.length; i++)
+	for (var i = 0; i < full_property_table.length; i++)
 	{
-		if (simple_property_table[i]['id'] == current_property_id)
+		if (full_property_table[i]['id'] == current_property_id)
 		{
-			set_simple_property_fields(i);
+			set_full_property_fields(i);
 
 			break;
 		}
 	}
 
-	simple_current_property_id = current_property_id;
+	full_current_property_id = current_property_id;
 
 } // End of property_property_menu_changed.
+
+// -----------------------------------------------
+
+function set_full_property_fields(i)
+{
+	full_current_property_id = full_property_table[i]['id'];
+
+	$('#full_property_description')
+	.val(full_property_table[i]['description']);
+
+	$('#full_property_name')
+	.val(full_property_table[i]['name']);
+
+	$('#full_property_publish') // In full_property_table, do not use the 'publish' string!
+	.prop('checked', (full_property_table[i]['publish'] == 'Yes') ? true : false);
+
+} // End of set_full_property_fields.
 
 // -----------------------------------------------
 
@@ -1277,23 +1351,6 @@ function set_virtual_parameters()
 	});
 
 } // End of set_virtual_parameters.
-
-// -----------------------------------------------
-
-function set_simple_property_fields(i)
-{
-	simple_current_property_id = simple_property_table[i]['id'];
-
-	$('#simple_property_description')
-	.val(simple_property_table[i]['description']);
-
-	$('#simple_property_name')
-	.val(simple_property_table[i]['name']);
-
-	$('#simple_property_publish') // In simple_property_table, do not use the 'publish' string!
-	.prop('checked', (simple_property_table[i]['publish'] == 'Yes') ? true : false);
-
-} // End of set_simple_property_fields.
 
 // -----------------------------------------------
 //		edible:				document.edible.value,
@@ -1503,6 +1560,11 @@ function submit_new_property(action)
 			$('#property_result_div')
 			.empty()
 			.append(packet.message.text);
+
+			full_current_property_id = packet.message.current_id;
+
+			get_full_property_table();
+			build_full_property_menu(full_current_property_id, 'property_property_menu');
 		},
 		'json'
 	);
@@ -1518,16 +1580,21 @@ function submit_old_property(action)
 		'/AddProperty', // See routes at end of WWW::Garden::Design.startup().
 		{
 			action:			action,
-			description:	$('#simple_property_description').val(),
-			id:				simple_current_property_id,
-			name:			$('#simple_property_name').val(),
-			publish:		$('#simple_property_publish').prop('checked') ? 'Yes' : 'No'
+			description:	$('#full_property_description').val(),
+			id:				full_current_property_id,
+			name:			$('#full_property_name').val(),
+			publish:		$('#full_property_publish').prop('checked') ? 'Yes' : 'No'
 		},
 		function(packet)
 		{
 			$('#property_result_div')
 			.empty()
 			.append(packet.message.text);
+
+			full_current_property_id = packet.message.current_id;
+
+			get_full_property_table();
+			build_full_property_menu(full_current_property_id, 'property_property_menu');
 		},
 		'json'
 	);
