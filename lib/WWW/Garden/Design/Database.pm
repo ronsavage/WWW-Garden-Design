@@ -899,7 +899,7 @@ sub process_property_submit
 			$result = {text => 'Record added', type => 'Success'};
 		}
 	}
-	elsif ($action =~ /^(?:delete|update)$/)
+	elsif ($action eq 'update')
 	{
 		# Is the property id on file? AddProperty.pm checked that the user entered something!
 
@@ -916,6 +916,34 @@ sub process_property_submit
 			(
 				$table_name,
 				$fields,
+				{id => $$item{id} }
+			);
+
+			$self -> logger -> debug("Table '$table_name'. Record id '$id' ${action}d.");
+
+			$result = {text => "Record ${action}d", type => 'Success'};
+		}
+		else
+		{
+			$result = {text => 'Cannot update the database. That record was not found', type => 'Error'};
+		}
+	}
+	elsif ($action eq 'delete')
+	{
+		# Is the property id on file? AddProperty.pm checked that the user entered something!
+
+		for (@$properties_table)
+		{
+			$property{$$_{id} } = $$_{name};
+		}
+
+		if (exists($property{$id}) )
+		{
+			# It's a property update.
+
+			$self -> mojo_pg -> delete
+			(
+				$table_name,
 				{id => $$item{id} }
 			);
 
