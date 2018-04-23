@@ -333,7 +333,7 @@ function build_full_property_menu(property_id)
 		id		= full_property_table[i]['id'];
 		name	= full_property_table[i]['name'];
 
-		if (full_property_table[i]['id'] == property_id)
+		if (id == property_id)
 		{
 			html	+= "<option value = '" + id + "' selected>" + name + '</option>';
 			index	= i;

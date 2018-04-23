@@ -159,23 +159,34 @@ sub build_full_property_menu
 	my($html)		= "<select id = '$id' name = '$id'>";
 	my($last_name)	= '';
 
+	my($name);
 	my($selected);
 
 	for my $property (sort{$$a{name} cmp $$b{name} } @$properties)
 	{
+		$name = $$property{name};
+
 		if ($default_id > 0)
 		{
+			# Set given id as selected.
+
 			$default_id	= 0;
-			$last_name	= $$property{name};
+			$last_name	= $name;
 			$selected	= 'selected';
 		}
 		elsif ($last_name eq '')
 		{
-			$last_name	= $$property{name};
+			# Set first id as selected if no id given.
+
+			$last_name	= $name;
 			$selected	= 'selected';
 		}
+		else
+		{
+			$selected = ''; # Reset it.
+		}
 
-		$html		.= "<option $selected value = '$$property{id}'>$last_name</option>";
+		$html		.= "<option $selected value = '$$property{id}'>$name</option>";
 		$selected	= '';
 	}
 
