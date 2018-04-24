@@ -113,6 +113,12 @@ body
 	text-align: right;
 }
 
+.success
+{
+	color:			green;
+	font-weight:	bold;
+}
+
 table
 {
 	border-spacing: 0;

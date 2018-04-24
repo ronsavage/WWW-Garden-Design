@@ -472,6 +472,18 @@ sub get_autocomplete_item
 } # End of get_autocomplete_item.
 
 # -----------------------------------------------
+
+sub format_raw_message
+{
+	my($self, $result)	= @_;
+	my($class)			= ($$result{type} eq 'Success') ? 'success' : 'error';
+	$$result{cooked}	= "<span class = 'centered $class'>$$result{type}</span>: $$result{raw}";
+
+	return $result;
+
+} # End of format_raw_message.
+
+# -----------------------------------------------
 # Return a list.
 
 sub get_autocomplete_list
@@ -870,6 +882,7 @@ sub process_property_submit
 	my($name)				= $$item{name};
 	my($table_name)			= 'properties';
 	my($properties_table)	= $self -> read_table($table_name);
+	my($result) 			= {current_id => 0};
 
 	my(%property);
 
@@ -879,8 +892,6 @@ sub process_property_submit
 		name		=> $name,
 		publish		=> $$item{publish},
 	};
-
-	my($result);
 
 	if ($action eq 'save')
 	{
@@ -894,7 +905,7 @@ sub process_property_submit
 
 		if (exists($property{uc $name}) )
 		{
-			$result = {text => 'That property name is on file', type => 'Error'};
+			$result = {raw => 'That property name is on file', type => 'Error'};
 		}
 		else
 		{
@@ -907,7 +918,7 @@ sub process_property_submit
 
 			$self -> logger -> debug("Table '$table_name'. Record id '$id' added. Property '$name'");
 
-			$result = {current_id => $id, text => 'Record added', type => 'Success'};
+			$result = {current_id => $id, raw => "Added property '$name'", type => 'Success'};
 		}
 	}
 	elsif ($action eq 'update')
@@ -932,11 +943,11 @@ sub process_property_submit
 
 			$self -> logger -> debug("Table '$table_name'. Record id '$id' ${action}d.");
 
-			$result = {current_id => $$item{id}, text => "Record ${action}d", type => 'Success'};
+			$result = {current_id => $$item{id}, raw => "Property '$name' ${action}d", type => 'Success'};
 		}
 		else
 		{
-			$result = {text => 'Cannot update the database. That record was not found', type => 'Error'};
+			$result = {raw => 'Cannot update the database. That record was not found', type => 'Error'};
 		}
 	}
 	elsif ($action eq 'delete')
@@ -969,7 +980,7 @@ sub process_property_submit
 
 				$self -> logger -> debug("Table '$table_name'. Record id '$id' $note");
 
-				$result = {current_id => 0, text => "Record $note", type => 'Error'};
+				$result = {raw => "Property '$name' $note", type => 'Error'};
 			}
 			else
 			{
@@ -981,20 +992,20 @@ sub process_property_submit
 
 				$self -> logger -> debug("Table '$table_name'. Record id '$id' ${action}d.");
 
-				$result = {current_id => 0, text => "Record ${action}d", type => 'Success'};
+				$result = {raw => "Property '$name' ${action}d", type => 'Success'};
 			}
 		}
 		else
 		{
-			$result = {text => 'Cannot update the database. That record was not found', type => 'Error'};
+			$result = {raw => 'Cannot update the database. That record was not found', type => 'Error'};
 		}
 	}
 	else
 	{
-		$result = {text => "Unrecognized action '$action'. Must be 'save', 'update' or 'delete'", type => 'Error'};
+		$result = {raw => "Unrecognized action '$action'. Must be one of 'save', 'update' or 'delete'", type => 'Error'};
 	}
 
-	return {message => $result};
+	return {message => $self -> format_raw_message($result)};
 
 } # End of process_property_submit.
 

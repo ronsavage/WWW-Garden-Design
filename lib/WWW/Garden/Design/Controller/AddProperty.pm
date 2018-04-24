@@ -8,17 +8,6 @@ our $VERSION = '0.95';
 
 # -----------------------------------------------
 
-sub format_message
-{
-	my($self, $result)		= @_;
-	$$result{message}{text}	= "<h2 class = 'centered'>$$result{message}{text}</h2>";
-
-	return $result;
-
-} # End of format_message.
-
-# -----------------------------------------------
-
 sub save
 {
 	my($self) = @_;
@@ -35,7 +24,7 @@ sub save
 		my($result)					= $$defaults{db} -> process_property_submit($item);
 		$$result{property_table}	= $$defaults{db} -> read_properties_table; # Load even for errors.
 
-		$self -> stash(json => $self -> format_message($result) );
+		$self -> stash(json => $result);
 		$self -> stash(error => undef);
 	}
 	else

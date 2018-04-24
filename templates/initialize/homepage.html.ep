@@ -11,7 +11,7 @@
 	<link rel = 'stylesheet' type = 'text/css' href='http://127.0.0.1/assets/js/jQuery/jquery-ui-1.12.1/jquery-ui.min.css'>
 	<link rel = 'stylesheet' type = 'text/css' href='http://127.0.0.1/assets/js/jQuery/datatables.min.css'>
 	<!-- Warning: The next line must not be put after the spectrum line, or the CSS in it fails to work. -->
-	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/css/www/garden/design/homepage.css'>
+	<link rel = 'stylesheet' type = 'text/css' href = '/assets/css/www/garden/design/homepage.css'>
 	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/spectrum/spectrum.css'>
 	<style>
 		.overflow_scroll
@@ -1556,7 +1556,7 @@ function submit_new_property(action)
 		{
 			$('#property_result_div')
 			.empty()
-			.append(packet.message.text);
+			.append(packet.message.cooked);
 
 			full_current_property_id	= packet.message.current_id;
 			full_property_table			= packet.property_table;
@@ -1587,7 +1587,7 @@ function submit_old_property(action)
 		{
 			$('#property_result_div')
 			.empty()
-			.append(packet.message.text);
+			.append(packet.message.cooked);
 
 			// Warning: With a delete, full_current_property_id is returned as 0.
 			// This means the code in build_full_property_menu will never find a match.
