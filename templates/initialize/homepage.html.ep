@@ -322,10 +322,10 @@ function build_attribute_id(kind, name, value)
 
 function build_full_property_menu(property_id)
 {
-	var html = "<select id = 'property_property_menu'>";
+	var html	= "<select id = 'property_property_menu'>";
+	var index	= -1;
 
 	var id;
-	var index;
 	var name;
 
 	for (var i = 0; i < full_property_table.length; i++)
@@ -342,6 +342,15 @@ function build_full_property_menu(property_id)
 		{
 			html += "<option value = '" + id + "'>" + name + '</option>';
 		}
+	}
+
+	// With a delete, property_id is 0, so index remains as -1.
+	// In this case I set it to the index of the 1st id in the table
+	// (assuming there is a 1st id!).
+
+	if (index < 0)
+	{
+		index = 0;
 	}
 
 	html	+= '</select>';
@@ -1579,6 +1588,9 @@ function submit_old_property(action)
 			$('#property_result_div')
 			.empty()
 			.append(packet.message.text);
+
+			// Warning: With a delete, full_current_property_id is returned as 0.
+			// This means the code in build_full_property_menu will never find a match.
 
 			full_current_property_id	= packet.message.current_id;
 			full_property_table			= packet.property_table;
