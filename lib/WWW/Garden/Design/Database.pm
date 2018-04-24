@@ -819,7 +819,7 @@ sub process_garden_submit
 	my($action)			= $$item{action};
 	my($id)				= $$item{id};
 	my($name)			= $$item{name};
-	my($result) 		= {current_id => 0};
+	my($result) 		= {garden_id => 0};
 	my($table_name)		= 'gardens';
 	my($gardens_table)	= $self -> read_table($table_name);
 	my($fields)			=
@@ -855,9 +855,9 @@ sub process_garden_submit
 				{returning => 'id'}
 			) -> hash -> {id};
 
-			$self -> logger -> debug("Table '$table_name'. Record id '$id' added. Garden '$name'");
+			$self -> logger -> debug("Table: $table_name. Record id: $id. Action: $action. Garden: $name");
 
-			$result = {current_id => $id, raw => "Added garden '$name'", type => 'Success'};
+			$result = {garden_id => $id, raw => "Added garden: $name", type => 'Success'};
 		}
 	}
 	elsif ($action eq 'update')
@@ -880,9 +880,9 @@ sub process_garden_submit
 				{id => $$item{id} }
 			);
 
-			$self -> logger -> debug("Table '$table_name'. Record id '$id' ${action}d.");
+			$self -> logger -> debug("Table: $table_name. Record id: $id. Action: $action");
 
-			$result = {current_id => $$item{id}, raw => "Property '$name' ${action}d", type => 'Success'};
+			$result = {garden_id => $$item{id}, raw => "Property: $name. Action: $action", type => 'Success'};
 		}
 		else
 		{
@@ -915,11 +915,11 @@ sub process_garden_submit
 
 			if ($found -> isTrue)
 			{
-				my($note) = "not ${action}d because the property has gardens";
+				my($note) = "Not deleted because the property has gardens";
 
-				$self -> logger -> debug("Table '$table_name'. Record id '$id' $note");
+				$self -> logger -> debug("Table: $table_name. Record id: $id. $note");
 
-				$result = {raw => "Property '$name' $note", type => 'Error'};
+				$result = {raw => "Property: $name. $note", type => 'Error'};
 			}
 			else
 			{
@@ -931,7 +931,7 @@ sub process_garden_submit
 
 				$self -> logger -> debug("Table '$table_name'. Record id '$id' ${action}d.");
 
-				$result = {raw => "Property '$name' ${action}d", type => 'Success'};
+				$result = {raw => "Property: $name. Action: $action", type => 'Success'};
 			}
 		}
 		else
@@ -941,10 +941,14 @@ sub process_garden_submit
 	}
 	else
 	{
-		$result = {raw => "Unrecognized action '$action'. Must be one of 'save', 'update' or 'delete'", type => 'Error'};
+		$result = {raw => "Unrecognized action: $action. Must be one of 'save', 'update' or 'delete'", type => 'Error'};
 	}
 
-	return {garden_table => $self -> read_gardens_table, message => $self -> format_raw_message($result)};
+	return
+	{
+		garden_table	=> $self -> read_gardens_table,
+		message			=> $self -> format_raw_message($result),
+	};
 
 } # End of process_garden_submit.
 
@@ -961,7 +965,7 @@ sub process_property_submit
 	my($name)				= $$item{name};
 	my($table_name)			= 'properties';
 	my($properties_table)	= $self -> read_table($table_name);
-	my($result) 			= {current_id => 0};
+	my($result) 			= {property_id => 0};
 	my($fields)				=
 	{
 		description	=> $$item{description},
@@ -994,9 +998,9 @@ sub process_property_submit
 				{returning => 'id'}
 			) -> hash -> {id};
 
-			$self -> logger -> debug("Table '$table_name'. Record id '$id' added. Property '$name'");
+			$self -> logger -> debug("Table: $table_name. Record id: $id. Action: $action. Property: $name");
 
-			$result = {current_id => $id, raw => "Added property '$name'", type => 'Success'};
+			$result = {property_id => $id, raw => "Added property: $name", type => 'Success'};
 		}
 	}
 	elsif ($action eq 'update')
@@ -1019,9 +1023,9 @@ sub process_property_submit
 				{id => $$item{id} }
 			);
 
-			$self -> logger -> debug("Table '$table_name'. Record id '$id' ${action}d.");
+			$self -> logger -> debug("Table: $table_name. Record id '$id'. Action: $action");
 
-			$result = {current_id => $$item{id}, raw => "Property '$name' ${action}d", type => 'Success'};
+			$result = {property_id => $$item{id}, raw => "Property: $name. Action: $action", type => 'Success'};
 		}
 		else
 		{
@@ -1054,11 +1058,11 @@ sub process_property_submit
 
 			if ($found -> isTrue)
 			{
-				my($note) = "not ${action}d because the property has gardens";
+				my($note) = "Not deleted because the property has gardens";
 
-				$self -> logger -> debug("Table '$table_name'. Record id '$id' $note");
+				$self -> logger -> debug("Table: $table_name. Record id: $id. $note");
 
-				$result = {raw => "Property '$name' $note", type => 'Error'};
+				$result = {raw => "Property: $name. $note", type => 'Error'};
 			}
 			else
 			{
@@ -1068,9 +1072,9 @@ sub process_property_submit
 					{id => $$item{id} }
 				);
 
-				$self -> logger -> debug("Table '$table_name'. Record id '$id' ${action}d.");
+				$self -> logger -> debug("Table: $table_name. Record id: $id. Action: $action");
 
-				$result = {raw => "Property '$name' ${action}d", type => 'Success'};
+				$result = {raw => "Property: $name. Action $action", type => 'Success'};
 			}
 		}
 		else
@@ -1080,10 +1084,14 @@ sub process_property_submit
 	}
 	else
 	{
-		$result = {raw => "Unrecognized action '$action'. Must be one of 'save', 'update' or 'delete'", type => 'Error'};
+		$result = {raw => "Unrecognized action: $action. Must be one of 'save', 'update' or 'delete'", type => 'Error'};
 	}
 
-	return {full_property_table => $self -> read_properties_table, message => $self -> format_raw_message($result)};
+	return
+	{
+		full_property_table	=> $self -> read_properties_table,
+		message				=> $self -> format_raw_message($result),
+	};
 
 } # End of process_property_submit.
 

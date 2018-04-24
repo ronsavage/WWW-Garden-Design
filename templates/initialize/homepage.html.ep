@@ -391,30 +391,24 @@ function build_full_property_menu(property_id, jquery_id)
 
 // -----------------------------------------------
 
-function build_garden_menu(property_id, garden_menu_name)
+function build_garden_menu(property_id, garden_id, jquery_id)
 {
-	var first_id	= 0;
-	var html		= "<select id = '" + garden_menu_name + "'>";
-	var selected_id	= 0;
+	var html = "<select id = '" + jquery_id + "'>";
 
 	var id;
 	var name;
 
 	for (var i = 0; i < garden_table.length; i++)
 	{
-		// Obviously if the code or database are corrupt, this will never match.
-		// And in that case the function will return selected_id == 0.
-
 		if (garden_table[i]['property_id'] == property_id)
 		{
 			id		= garden_table[i]['id'];
 			name	= garden_table[i]['name'];
 
-			if (first_id == 0)
+			if (id == garden_id)
 			{
-				first_id	= id;
-				html		+= "<option value = '" + id + "' selected>" + name + '</option>';
-				selected_id	= id;
+				html	+= "<option value = '" + id + "' selected>" + name + '</option>';
+				index	= i;
 			}
 			else
 			{
@@ -423,8 +417,17 @@ function build_garden_menu(property_id, garden_menu_name)
 		}
 	}
 
+	// With a delete, garden_current_garden_id is 0, so index remains as -1.
+	// In this case I set it to the index of the 1st id in the table
+	// (assuming there is a 1st id!). TODO.
+
+	if (index < 0)
+	{
+		index = 0;
+	}
+
 	html	+= '</select>';
-	id		= '#' + garden_menu_name;
+	id		= '#' + jquery_id;
 
 	$(id + '_span')
 	.empty()
@@ -432,7 +435,7 @@ function build_garden_menu(property_id, garden_menu_name)
 
 	// Warning: These 2 calls to selectmenu() are mandatory.
 
-	if (garden_menu_name == 'garden_garden_menu')
+	if (jquery_id == 'garden_garden_menu')
 	{
 		$(id)
 		.selectmenu
@@ -1455,8 +1458,6 @@ function submit_details()
 
 function submit_new_garden()
 {
-	alert('garden_current_property_id_2: ' + garden_current_property_id_2);
-
 	$.post
 	(
 		'/AddGarden', // See routes at end of WWW::Garden::Design.startup().
@@ -1474,9 +1475,9 @@ function submit_new_garden()
 			.empty()
 			.append(packet.message.cooked);
 
-			garden_current_garden_id	= packet.message.garden_id;
-			garden_property_table_1		= packet.property_table;
-			index						= build_garden_menu(garden_current_garden_id, 'garden_garden_menu');
+			garden_current_garden_id	= packet.message.current_id;
+			garden_garden_table			= packet.property_table;
+			index						= build_garden_menu(garden_current_property_id_2, garden_current_garden_id, 'garden_garden_menu');
 
 			set_garden_fields(index); // TODO.
 		},
@@ -1505,8 +1506,8 @@ function submit_new_property(action)
 			.empty()
 			.append(packet.message.cooked);
 
-			full_current_property_id		= packet.message.current_id;
-			garden_current_property_id_2	= packet.message.current_id;
+			full_current_property_id		= packet.message.property_id;
+			garden_current_property_id_2	= packet.message.property_id;
 			full_property_table				= packet.full_property_table;
 			index							= build_full_property_menu(full_current_property_id, 'full_property_menu');
 
@@ -1609,7 +1610,7 @@ function submit_old_property(action)
 			// Warning: With a delete, full_current_property_id is returned as 0.
 			// This means the code in build_full_property_menu will never find a match.
 
-			full_current_property_id	= packet.message.current_id;
+			full_current_property_id	= packet.message.garden_id;
 			full_property_table			= packet.property_table;
 			index						= build_full_property_menu(full_current_property_id, 'full_property_menu');
 
