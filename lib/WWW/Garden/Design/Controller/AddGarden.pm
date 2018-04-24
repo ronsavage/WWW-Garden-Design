@@ -21,7 +21,7 @@ sub save
 	if ($$item{name} && $$item{property_id})
 	{
 		my($defaults)	= $self -> app -> defaults;
-		#my($result)		= $$defaults{db} -> process_garden_submit($item);
+		#my($packet)		= $$defaults{db} -> process_garden_submit($item);
 
 		$self -> stash(error => undef);
 	}
