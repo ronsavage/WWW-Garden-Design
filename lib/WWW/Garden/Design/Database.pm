@@ -816,56 +816,135 @@ sub process_garden_submit
 
 	$self -> logger -> debug('Database.process_garden_submit(...)');
 
-	my($table_name)			= 'gardens';
-	my($property_name)		= $$item{property_name};
-	my($properties_table)	= $self -> read_table($table_name);
-
-	my(%property);
-
-	for (@$properties_table)
+	my($action)			= $$item{action};
+	my($id)				= $$item{id};
+	my($name)			= $$item{name};
+	my($result) 		= {current_id => 0};
+	my($table_name)		= 'gardens';
+	my($gardens_table)	= $self -> read_table($table_name);
+	my($fields)			=
 	{
-		$property{$$_{name} } = $$_{id};
-	}
-
-	my($new_data) =
-	{
-		description	=> $$item{property_description},
-		id			=> $$item{property_id},
-		name		=> $property_name,
-		publish		=> $$item{property_publish},
+		description	=> $$item{description},
+		name		=> $name,
+		property_id	=> $$item{property_id},
+		publish		=> $$item{publish},
 	};
 
-	# Is the property on file? AddGarden.pm checked that the user entered something!
+	my(%garden);
 
-	if (exists($property{$property_name}) )
+	if ($action eq 'save')
 	{
-		# It's a property update. The garden component may be an insert or an update.
+		# It's a garden insert. Is the garden name on file?
+		# AddGarden.pm checked that the user entered something!
 
-		$self -> mojo_pg -> update
-		(
-			$table_name,
-			$new_data,
-			{id => $property{$property_name} }
-		);
+		for (@$gardens_table)
+		{
+			$garden{uc $$_{name} } = $$_{id} if ($$_{property_id} == $$item{property_id});
+		}
 
-		$self -> logger -> debug("Database.add_garden(...). Apparently updated the '$table_name' table");
+		if (exists($garden{uc $name}) )
+		{
+			$result = {raw => 'That garden name is on file for this property', type => 'Error'};
+		}
+		else
+		{
+			$id = $self -> mojo_pg -> insert
+			(
+				$table_name,
+				$fields,
+				{returning => 'id'}
+			) -> hash -> {id};
+
+			$self -> logger -> debug("Table '$table_name'. Record id '$id' added. Garden '$name'");
+
+			$result = {current_id => $id, raw => "Added garden '$name'", type => 'Success'};
+		}
+	}
+	elsif ($action eq 'update')
+	{
+		# Is the garden id on file? AddGarden.pm checked that the user entered something!
+
+		for (@$gardens_table)
+		{
+			$garden{$$_{id} } = $$_{name};
+		}
+
+		if (exists($garden{$id}) )
+		{
+			# It's a garden update.
+
+			$self -> mojo_pg -> update
+			(
+				$table_name,
+				$fields,
+				{id => $$item{id} }
+			);
+
+			$self -> logger -> debug("Table '$table_name'. Record id '$id' ${action}d.");
+
+			$result = {current_id => $$item{id}, raw => "Property '$name' ${action}d", type => 'Success'};
+		}
+		else
+		{
+			$result = {raw => 'Cannot update the database. That record was not found', type => 'Error'};
+		}
+	}
+	elsif ($action eq 'delete')
+	{
+		# Is the garden id on file? AddGarden.pm checked that the user entered something!
+
+		for (@$gardens_table)
+		{
+			$garden{$$_{id} } = $$_{name};
+		}
+
+		if (exists($garden{$id}) )
+		{
+			# It's a property delete. But does this property have any gardens?
+
+			my($found)			= false;
+			my($garden_table)	= $self -> read_table('gardens');
+
+			for my $garden (@$gardens_table)
+			{
+				if ($$garden{property_id} == $$item{id})
+				{
+					$found = true;
+				}
+			}
+
+			if ($found -> isTrue)
+			{
+				my($note) = "not ${action}d because the property has gardens";
+
+				$self -> logger -> debug("Table '$table_name'. Record id '$id' $note");
+
+				$result = {raw => "Property '$name' $note", type => 'Error'};
+			}
+			else
+			{
+				$self -> mojo_pg -> delete
+				(
+					$table_name,
+					{id => $$item{id} }
+				);
+
+				$self -> logger -> debug("Table '$table_name'. Record id '$id' ${action}d.");
+
+				$result = {raw => "Property '$name' ${action}d", type => 'Success'};
+			}
+		}
+		else
+		{
+			$result = {raw => 'Cannot update the database. That record was not found', type => 'Error'};
+		}
 	}
 	else
 	{
-		# It's a property insert. The garden component must also be an insert.
+		$result = {raw => "Unrecognized action '$action'. Must be one of 'save', 'update' or 'delete'", type => 'Error'};
 	}
 
-	return 1;
-
-	$self -> insert_hashref
-	(
-		'gardens',
-		{
-			description	=> $$item{garden_description},
-			name		=> $$item{garden_name},
-			property_id	=> 1 # TODO $map{property}{$uc_name{'property_name'} },
-		}
-	);
+	return {garden_table => $self -> read_gardens_table, message => $self -> format_raw_message($result)};
 
 } # End of process_garden_submit.
 
@@ -883,15 +962,14 @@ sub process_property_submit
 	my($table_name)			= 'properties';
 	my($properties_table)	= $self -> read_table($table_name);
 	my($result) 			= {current_id => 0};
-
-	my(%property);
-
-	my($fields) =
+	my($fields)				=
 	{
 		description	=> $$item{description},
 		name		=> $name,
 		publish		=> $$item{publish},
 	};
+
+	my(%property);
 
 	if ($action eq 'save')
 	{

@@ -100,20 +100,39 @@ sub homepage
 	$self -> stash(csrf_token				=> $self -> session('csrf_token') );
 	$self -> stash(search_check_boxes		=> $self -> build_check_boxes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields}, $$defaults{search_attribute_ids}) );
 
+	# Find the id of the 1st property on the 2nd property menu on the Gardens tab.
+	# This is needed to initialize a JS variable of the same name.
+	# And we sort the properties because the property menu is sorted.
+
+	@{$$defaults{properties_table} } = sort{$$a{name} cmp $$b{name} } @{$$defaults{properties_table} };
+
+	my($garden_current_property_id_2) = -1;
+
+	for my $property (@{$$defaults{properties_table} })
+	{
+		if ($garden_current_property_id_2 < 0)
+		{
+			$garden_current_property_id_2 = $$property{id};
+
+			last;
+		}
+	}
+
 	# These parameters are passed to homepage.html.ep for incorporation into JS code.
 
 	$self -> render
 	(
-		attribute_elements		=> $attribute_elements,
-		constants				=> $$defaults{constants_table},
-		design_garden_menu		=> $$defaults{design_garden_menu},
-		design_property_menu	=> $$defaults{design_property_menu},
-		full_property_menu		=> $$defaults{full_property_menu},
-		garden_garden_menu		=> $$defaults{garden_garden_menu},
-		garden_property_menu_1	=> $$defaults{garden_property_menu_1},
-		garden_property_menu_2	=> $$defaults{garden_property_menu_2},
-		joiner					=> $$defaults{joiner},
-		object_menu				=> $$defaults{object_menu},
+		attribute_elements				=> $attribute_elements,
+		constants						=> $$defaults{constants_table},
+		design_garden_menu				=> $$defaults{design_garden_menu},
+		design_property_menu			=> $$defaults{design_property_menu},
+		full_property_menu				=> $$defaults{full_property_menu},
+		garden_current_property_id_2	=> $garden_current_property_id_2,
+		garden_garden_menu				=> $$defaults{garden_garden_menu},
+		garden_property_menu_1			=> $$defaults{garden_property_menu_1},
+		garden_property_menu_2			=> $$defaults{garden_property_menu_2},
+		joiner							=> $$defaults{joiner},
+		object_menu						=> $$defaults{object_menu},
 	);
 
 } # End of homepage.

@@ -21,13 +21,13 @@ sub save
 	if ($$item{name} && $$item{property_id})
 	{
 		my($defaults)	= $self -> app -> defaults;
-		#my($packet)		= $$defaults{db} -> process_garden_submit($item);
+		my($packet)		= $$defaults{db} -> process_garden_submit($item);
 
 		$self -> stash(error => undef);
 	}
 	else
 	{
-		my($message) = 'Missing property name or garden name';
+		my($message) = 'Missing garden name';
 
 		$self -> stash(error => $message);
 		$self -> app -> log -> error($message);

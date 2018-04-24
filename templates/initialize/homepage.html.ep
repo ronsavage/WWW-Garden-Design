@@ -116,7 +116,7 @@ var full_current_property_id		= 0;	// o Property menu on the Properties tab.
 var full_property_table				= [];
 var garden_current_garden_id		= 0;	// o Garden menu on the Gardens tab.
 var garden_current_property_id_1	= 0;	// o Update/delete garden property menu on the Gardens tab.
-var garden_current_property_id_2	= 0;	// o New garden property menu on the Gardens tab.
+var garden_current_property_id_2	= <%== $garden_current_property_id_2 %>;	// o New garden property menu on the Gardens tab.
 var garden_property_table			= [];
 var garden_table					= [];
 var object_table					= [];
@@ -1455,6 +1455,8 @@ function submit_details()
 
 function submit_new_garden()
 {
+	alert('garden_current_property_id_2: ' + garden_current_property_id_2);
+
 	$.post
 	(
 		'/AddGarden', // See routes at end of WWW::Garden::Design.startup().
@@ -1472,11 +1474,11 @@ function submit_new_garden()
 			.empty()
 			.append(packet.message.cooked);
 
-			full_current_garden_id	= packet.message.garden_id;
-			garden_property_table_2	= packet.property_table;
-			index					= build_full_property_menu(garden_current_property_id_2, 'garden_property_menu_2');
+			garden_current_garden_id	= packet.message.garden_id;
+			garden_property_table_1		= packet.property_table;
+			index						= build_garden_menu(garden_current_garden_id, 'garden_garden_menu');
 
-			set_full_property_fields(index); // TODO.
+			set_garden_fields(index); // TODO.
 		},
 		'json'
 	);
@@ -1485,35 +1487,37 @@ function submit_new_garden()
 
 // -----------------------------------------------
 
-function submit_old_garden(action)
+function submit_new_property(action)
 {
 	$.post
 	(
-		'/AddGarden', // See routes at end of WWW::Garden::Design.startup().
+		'/AddProperty', // See routes at end of WWW::Garden::Design.startup().
 		{
-			action:			action,
-			description:	$('#garden_description').val(),
-			id:				garden_current_garden_id,
-			name:			$('#garden_name').val(),
-			property_id:	garden_current_property_id_1,
-			publish:		$('#garden_publish').prop('checked') ? 'Yes' : 'No',
+			action:			'save',
+			description:	$('#new_property_description').val(),
+			id:				0,
+			name:			$('#new_property_name').val(),
+			publish:		$('#new_property_publish').prop('checked') ? 'Yes' : 'No'
 		},
 		function(packet)
 		{
-			$('#garden_result_div')
+			$('#property_result_div')
 			.empty()
 			.append(packet.message.cooked);
 
-			full_current_garden_id	= packet.message.garden_id;
-			garden_property_table	= packet.property_table;
-			index					= build_garden_menu(garden_current_property_id, 'garden_garden_menu'); // TODO?
+			full_current_property_id		= packet.message.current_id;
+			garden_current_property_id_2	= packet.message.current_id;
+			full_property_table				= packet.full_property_table;
+			index							= build_full_property_menu(full_current_property_id, 'full_property_menu');
 
-			set_full_property_fields(index); // TODO.
+			set_full_property_fields(index);
+
+			dummy = build_full_property_menu(garden_current_property_id_2, 'garden_property_menu_2');
 		},
 		'json'
 	);
 
-} // End of submit_new_garden.
+} // End of submit_new_property.
 
 // -----------------------------------------------
 
@@ -1552,37 +1556,35 @@ function submit_object()
 
 // -----------------------------------------------
 
-function submit_new_property(action)
+function submit_old_garden(action)
 {
 	$.post
 	(
-		'/AddProperty', // See routes at end of WWW::Garden::Design.startup().
+		'/AddGarden', // See routes at end of WWW::Garden::Design.startup().
 		{
-			action:			'save',
-			description:	$('#new_property_description').val(),
-			id:				0,
-			name:			$('#new_property_name').val(),
-			publish:		$('#new_property_publish').prop('checked') ? 'Yes' : 'No'
+			action:			action,
+			description:	$('#garden_description').val(),
+			id:				garden_current_garden_id,
+			name:			$('#garden_name').val(),
+			property_id:	garden_current_property_id_1,
+			publish:		$('#garden_publish').prop('checked') ? 'Yes' : 'No',
 		},
 		function(packet)
 		{
-			$('#property_result_div')
+			$('#garden_result_div')
 			.empty()
 			.append(packet.message.cooked);
 
-			full_current_property_id		= packet.message.current_id;
-			garden_current_property_id_2	= packet.message.current_id;
-			full_property_table				= packet.full_property_table;
-			index							= build_full_property_menu(full_current_property_id, 'full_property_menu');
+			full_current_garden_id	= packet.message.garden_id;
+			garden_property_table	= packet.property_table;
+			index					= build_garden_menu(garden_current_property_id, 'garden_garden_menu'); // TODO?
 
-			set_full_property_fields(index);
-
-			dummy = build_full_property_menu(garden_current_property_id_2, 'garden_property_menu_2');
+			set_full_property_fields(index); // TODO.
 		},
 		'json'
 	);
 
-} // End of submit_new_property.
+} // End of submit_old_garden.
 
 // -----------------------------------------------
 
