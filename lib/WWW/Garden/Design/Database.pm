@@ -950,17 +950,39 @@ sub process_property_submit
 
 		if (exists($property{$id}) )
 		{
-			# It's a property update.
+			# It's a property delete. But does this property have any gardens?
 
-			$self -> mojo_pg -> delete
-			(
-				$table_name,
-				{id => $$item{id} }
-			);
+			my($found)			= false;
+			my($garden_table)	= $self -> read_table('gardens');
 
-			$self -> logger -> debug("Table '$table_name'. Record id '$id' ${action}d.");
+			for my $garden (@$garden_table)
+			{
+				if ($$garden{property_id} == $$item{id})
+				{
+					$found = true;
+				}
+			}
 
-			$result = {current_id => 0, text => "Record ${action}d", type => 'Success'};
+			if ($found -> isTrue)
+			{
+				my($note) = "not ${action}d because the property has gardens";
+
+				$self -> logger -> debug("Table '$table_name'. Record id '$id' $note");
+
+				$result = {current_id => 0, text => "Record $note", type => 'Error'};
+			}
+			else
+			{
+				$self -> mojo_pg -> delete
+				(
+					$table_name,
+					{id => $$item{id} }
+				);
+
+				$self -> logger -> debug("Table '$table_name'. Record id '$id' ${action}d.");
+
+				$result = {current_id => 0, text => "Record ${action}d", type => 'Success'};
+			}
 		}
 		else
 		{
