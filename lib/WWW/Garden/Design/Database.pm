@@ -83,6 +83,52 @@ sub add_flower
 } # End of add_flower.
 
 # -----------------------------------------------
+# This version of build_property_menu() includes properties with and without gardens.
+
+sub build_full_property_menu
+{
+	my($self, $properties, $id, $default_id) = @_;
+	my($html)		= "<select id = '$id' name = '$id'>";
+	my($last_name)	= '';
+
+	my($name);
+	my($selected);
+
+	for my $property (sort{$$a{name} cmp $$b{name} } @$properties)
+	{
+		$name = $$property{name};
+
+		if ($default_id > 0)
+		{
+			# Set given id as selected.
+
+			$default_id	= 0;
+			$last_name	= $name;
+			$selected	= 'selected';
+		}
+		elsif ($last_name eq '')
+		{
+			# Set first id as selected if no id given.
+
+			$last_name	= $name;
+			$selected	= 'selected';
+		}
+		else
+		{
+			$selected = ''; # Reset it.
+		}
+
+		$html		.= "<option $selected value = '$$property{id}'>$name</option>";
+		$selected	= '';
+	}
+
+	$html .= '</select>';
+
+	return $html;
+
+} # End of build_full_property_menu.
+
+# -----------------------------------------------
 
 sub build_garden_menu
 {
@@ -149,52 +195,6 @@ sub build_object_menu
 	return $html;
 
 } # End of build_object_menu.
-
-# -----------------------------------------------
-# This version of build_property_menu() includes properties with and without gardens.
-
-sub build_full_property_menu
-{
-	my($self, $properties, $id, $default_id) = @_;
-	my($html)		= "<select id = '$id' name = '$id'>";
-	my($last_name)	= '';
-
-	my($name);
-	my($selected);
-
-	for my $property (sort{$$a{name} cmp $$b{name} } @$properties)
-	{
-		$name = $$property{name};
-
-		if ($default_id > 0)
-		{
-			# Set given id as selected.
-
-			$default_id	= 0;
-			$last_name	= $name;
-			$selected	= 'selected';
-		}
-		elsif ($last_name eq '')
-		{
-			# Set first id as selected if no id given.
-
-			$last_name	= $name;
-			$selected	= 'selected';
-		}
-		else
-		{
-			$selected = ''; # Reset it.
-		}
-
-		$html		.= "<option $selected value = '$$property{id}'>$name</option>";
-		$selected	= '';
-	}
-
-	$html .= '</select>';
-
-	return $html;
-
-} # End of build_full_property_menu.
 
 # -----------------------------------------------
 # This version of full_build_property_menu() only includes properties with gardens.
@@ -1005,7 +1005,7 @@ sub process_property_submit
 		$result = {raw => "Unrecognized action '$action'. Must be one of 'save', 'update' or 'delete'", type => 'Error'};
 	}
 
-	return {message => $self -> format_raw_message($result)};
+	return {full_property_table => $self -> read_properties_table, message => $self -> format_raw_message($result)};
 
 } # End of process_property_submit.
 

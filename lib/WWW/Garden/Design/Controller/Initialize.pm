@@ -79,11 +79,19 @@ sub homepage
 
 	# Warning: build_property_menu() sets a value in the session read by build_garden_menu(),
 	# so it must be called first.
+	#
+	# A note on the property menus on the Gardens tab:
+	# o garden_property_menu_1 => Properties which have gardens.
+	# o garden_property_menu_2 => All properties, since any property is allowed to have gardens added.
+	# Also, when a new property is added, only the latter menu gets updated (on the Gardens page).
+	# And when a garden is added, the garden_garden_menu menu is updated (on the Gardens page),
+	# as well as the garden menu on the Design page, i.e. the design_garden_menu.
 
 	$$defaults{design_property_menu}	= $$defaults{db} -> build_property_menu($$defaults{gardens_table}, $self, 'design_property_menu');
 	$$defaults{design_garden_menu}		= $$defaults{db} -> build_garden_menu($$defaults{gardens_table}, $self, 'design_garden_menu');
-	$$defaults{full_property_menu}		= $$defaults{db} -> build_full_property_menu($$defaults{properties_table}, 'property_property_menu', 0);
-	$$defaults{garden_property_menu}	= $$defaults{db} -> build_property_menu($$defaults{gardens_table}, $self, 'garden_property_menu');
+	$$defaults{full_property_menu}		= $$defaults{db} -> build_full_property_menu($$defaults{properties_table}, 'full_property_menu', 0);
+	$$defaults{garden_property_menu_1}	= $$defaults{db} -> build_property_menu($$defaults{gardens_table}, $self, 'garden_property_menu_1');
+	$$defaults{garden_property_menu_2}	= $$defaults{db} -> build_full_property_menu($$defaults{properties_table}, 'garden_property_menu_2', 0);
 	$$defaults{garden_garden_menu}		= $$defaults{db} -> build_garden_menu($$defaults{gardens_table}, $self, 'garden_garden_menu');
 	$$defaults{object_menu}				= $$defaults{db} -> build_object_menu($$defaults{objects_table}, $self);
 
@@ -102,7 +110,8 @@ sub homepage
 		design_property_menu	=> $$defaults{design_property_menu},
 		full_property_menu		=> $$defaults{full_property_menu},
 		garden_garden_menu		=> $$defaults{garden_garden_menu},
-		garden_property_menu	=> $$defaults{garden_property_menu},
+		garden_property_menu_1	=> $$defaults{garden_property_menu_1},
+		garden_property_menu_2	=> $$defaults{garden_property_menu_2},
 		joiner					=> $$defaults{joiner},
 		object_menu				=> $$defaults{object_menu},
 	);

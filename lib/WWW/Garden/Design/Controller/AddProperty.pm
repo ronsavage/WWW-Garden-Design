@@ -20,9 +20,9 @@ sub save
 
 	if ($$item{name})
 	{
-		my($defaults)				= $self -> app -> defaults;
-		my($result)					= $$defaults{db} -> process_property_submit($item);
-		$$result{property_table}	= $$defaults{db} -> read_properties_table; # Load even for errors.
+		my($defaults)					= $self -> app -> defaults;
+		my($result)						= $$defaults{db} -> process_property_submit($item);
+		$$result{full_property_table}	= $$defaults{db} -> read_properties_table; # Load even for errors.
 
 		$self -> stash(json => $result);
 		$self -> stash(error => undef);

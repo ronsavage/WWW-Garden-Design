@@ -18,11 +18,10 @@ sub save
 
 	$self -> app -> log -> debug("param($_) => $$item{$_}") for sort keys %$item;
 
-	if ($$item{garden_name} && $$item{property_id})
+	if ($$item{name} && $$item{property_id})
 	{
-		my($defaults) = $self -> app -> defaults;
-
-		$$defaults{db} -> process_garden_submit($item);
+		my($defaults)	= $self -> app -> defaults;
+		#my($result)		= $$defaults{db} -> process_garden_submit($item);
 
 		$self -> stash(error => undef);
 	}

@@ -13,7 +13,7 @@
 		<tr>
 			<td align = 'center'>
 				<div class = 'garden_garden_toolbar'> <!-- Class not defined -->
-					<span id = 'property_property_menu_span'><%== $property_property_menu %></span>
+					<span id = 'full_property_menu_span'><%== $full_property_menu %></span>
 				</div>
 			</td>
 		</tr>
