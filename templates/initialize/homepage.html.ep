@@ -1501,10 +1501,6 @@ function submit_new_garden()
 			garden_table				= packet.garden_table;
 			index						= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'garden_garden_menu');
 
-			alert('garden_current_property_id_1: ' + garden_current_property_id_1
-				+ '. garden_current_garden_id: ' + garden_current_garden_id
-				+ '. index: ' + index);
-
 			set_garden_fields(index);
 		},
 		'json'

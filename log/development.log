@@ -1,0 +1,13 @@
+[Wed Apr 25 12:53:17 2018] [info] ------------------------------
+[Wed Apr 25 12:53:17 2018] [debug] POST "/AddGarden"
+[Wed Apr 25 12:53:17 2018] [debug] Routing to controller "WWW::Garden::Design::Controller::AddGarden" and action "save"
+[Wed Apr 25 12:53:17 2018] [debug] AddGarden.save()
+[Wed Apr 25 12:53:17 2018] [debug] param(action) => save
+[Wed Apr 25 12:53:17 2018] [debug] param(description) => AG 18
+[Wed Apr 25 12:53:17 2018] [debug] param(id) => 0
+[Wed Apr 25 12:53:17 2018] [debug] param(name) => Amanda's Garden 18
+[Wed Apr 25 12:53:17 2018] [debug] param(property_id) => 40
+[Wed Apr 25 12:53:17 2018] [debug] param(publish) => No
+[Wed Apr 25 12:53:17 2018] [debug] Database.process_garden_submit(...)
+[Wed Apr 25 12:53:17 2018] [debug] Table: gardens. Record id: 22. Action: save. Garden: Amanda's Garden 18
+[Wed Apr 25 12:53:17 2018] [debug] 200 OK (0.275609s, 3.628/s)
