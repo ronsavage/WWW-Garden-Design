@@ -23,11 +23,12 @@ sub save
 		my($defaults)	= $self -> app -> defaults;
 		my($packet)		= $$defaults{db} -> process_garden_submit($item);
 
+		$self -> stash(json => $packet);
 		$self -> stash(error => undef);
 	}
 	else
 	{
-		my($message) = 'Missing garden name';
+		my($message) = 'Error: The garden name is mandatory';
 
 		$self -> stash(error => $message);
 		$self -> app -> log -> error($message);
