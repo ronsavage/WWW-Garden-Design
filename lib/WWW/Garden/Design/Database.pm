@@ -385,6 +385,19 @@ sub format_height_width
 } # End of format_height_width.
 
 # -----------------------------------------------
+# Using "<span class = 'centered $class'>$$result{type}</span>" only centers it within the div.
+
+sub format_raw_message
+{
+	my($self, $result)	= @_;
+	my($class)			= ($$result{type} eq 'Success') ? 'success' : 'error';
+	$$result{cooked}	= "<h2 class = 'centered'><span class = '$class'>$$result{type}</span>: $$result{raw}</h2>";
+
+	return $result;
+
+} # End of format_raw_message.
+
+# -----------------------------------------------
 # Return a list.
 
 sub get_autocomplete_flower_list
@@ -470,18 +483,6 @@ sub get_autocomplete_item
 	}
 
 } # End of get_autocomplete_item.
-
-# -----------------------------------------------
-
-sub format_raw_message
-{
-	my($self, $result)	= @_;
-	my($class)			= ($$result{type} eq 'Success') ? 'success' : 'error';
-	$$result{cooked}	= "<span class = 'centered $class'>$$result{type}</span>: $$result{raw}";
-
-	return $result;
-
-} # End of format_raw_message.
 
 # -----------------------------------------------
 # Return a list.
