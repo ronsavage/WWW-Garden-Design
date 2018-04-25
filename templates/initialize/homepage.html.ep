@@ -698,6 +698,37 @@ function garden_property_menu_1_changed(data)
 } // End of garden_property_menu_1_changed.
 
 // -----------------------------------------------
+// Note: Changed means the user changed the selected item.
+
+function garden_property_menu_2_changed(data)
+{
+	//	for( key in data )
+	//	{
+	//		alert( "key is " + [ key ] + ", value is " + data[ key ] );
+	//	}
+
+	// Typical keys for data.item are:
+	//	o label => The property item's text (name column value).
+	//	o value => The property item's # (primary key column value).
+
+	garden_current_property_id_2 = data.item.value;
+
+	for (var i = 0; i < garden_table.length; i++)
+	{
+		if (garden_table[i]['property_id'] == garden_current_property_id_2)
+		{
+			garden_current_garden_id	= garden_table[i]['id'];
+			index						= build_garden_menu(garden_current_property_id_2, garden_current_garden_id, 'garden_garden_menu');
+
+			set_garden_fields_2();
+
+			break;
+		}
+	}
+
+} // End of garden_property_menu_2_changed.
+
+// -----------------------------------------------
 
 function get_attribute_types()
 {
@@ -1290,6 +1321,21 @@ function set_garden_fields(i)
 
 // -----------------------------------------------
 
+function set_garden_fields_2()
+{
+	$('#garden_description')
+	.val('');
+
+	$('#garden_name')
+	.val('');
+
+	$('#garden_publish') // In garden_table, do not use the 'garden_publish' string!
+	.prop('checked', false);
+
+} // End of set_garden_fields_2.
+
+// -----------------------------------------------
+
 function set_object_fields(i)
 {
 	$('#color_code')
@@ -1753,6 +1799,15 @@ $(function()
 		change: function(event, data)
 		{
 			garden_property_menu_1_changed(data);
+		}
+	});
+
+	$('#garden_property_menu_2')
+	.selectmenu
+	({
+		change: function(event, data)
+		{
+			garden_property_menu_2_changed(data);
 		}
 	});
 
