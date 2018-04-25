@@ -103,6 +103,8 @@ sub homepage
 	# Find the id of the 1st property on the 2nd property menu on the Gardens tab.
 	# This is needed to initialize a JS variable of the same name.
 	# And we sort the properties because the property menu is sorted.
+	# Lastly, we choose the 2nd property menu because it has all properties on it,
+	# not just properties with gardens.
 
 	@{$$defaults{properties_table} }	= sort{$$a{name} cmp $$b{name} } @{$$defaults{properties_table} };
 	my($garden_current_property_id_2)	= -1;
@@ -140,6 +142,7 @@ sub homepage
 		constants						=> $$defaults{constants_table},
 		design_garden_menu				=> $$defaults{design_garden_menu},
 		design_property_menu			=> $$defaults{design_property_menu},
+		full_current_property_id		=> $garden_current_property_id_2,
 		full_property_menu				=> $$defaults{full_property_menu},
 		garden_current_garden_id		=> $garden_current_garden_id,
 		garden_current_property_id_2	=> $garden_current_property_id_2,

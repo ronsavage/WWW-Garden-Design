@@ -112,7 +112,7 @@ var attribute_types_table			= [];
 var chosen_thing					= '';	// These are the current ids within each menu, for use in Ajax calls:
 var design_current_garden_id		= 0;	// o Garden menu on the Design tab.
 var design_current_property_id		= 0;	// o Property menu on the Design tab.
-var full_current_property_id		= 0;	// o Property menu on the Properties tab.
+var full_current_property_id		= <%== $garden_current_property_id_2 %>;	// o Property menu on the Properties tab.
 var full_property_table				= [];
 var garden_current_garden_id		= <%== $garden_current_garden_id %>;		// o Update/delete garden menu on the Gardens tab.
 var garden_current_property_id_1	= <%== $garden_current_property_id_2 %>;	// o Update/delete garden property menu on the Gardens tab.
@@ -1530,7 +1530,7 @@ function submit_new_property(action)
 
 			full_current_property_id		= packet.message.property_id;
 			garden_current_property_id_2	= packet.message.property_id;
-			full_property_table				= packet.full_property_table;
+			full_property_table				= packet.property_table;
 			index							= build_full_property_menu(full_current_property_id, 'full_property_menu');
 
 			set_full_property_fields(index);
@@ -1631,7 +1631,7 @@ function submit_old_property(action)
 			// Warning: With a delete, full_current_property_id is returned as 0.
 			// This means the code in build_full_property_menu will never find a match.
 
-			full_current_property_id	= packet.message.garden_id;
+			full_current_property_id	= packet.message.property_id;
 			full_property_table			= packet.property_table;
 			index						= build_full_property_menu(full_current_property_id, 'full_property_menu');
 

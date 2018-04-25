@@ -31,8 +31,8 @@ sub save
 		my($result) = {garden_id => 0, raw => 'The property name is mandatory', type => 'Error'};
 		my($packet)	=
 		{
-			full_property_table	=> $$defaults{db} -> read_properties_table,
-			message				=> $$defaults{db} -> format_raw_message($result),
+			property_table	=> $$defaults{db} -> read_properties_table,
+			message			=> $$defaults{db} -> format_raw_message($result),
 		};
 
 		$self -> stash(json => $packet);
