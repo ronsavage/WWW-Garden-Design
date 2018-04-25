@@ -385,7 +385,7 @@ sub format_height_width
 } # End of format_height_width.
 
 # -----------------------------------------------
-# Using "<span class = 'centered $class'>$$result{type}</span>" only centers it within the div.
+# Using "<span class = 'centered $class'>$$result{type}</span>" only centers it within the span 'garden_result_div'.
 
 sub format_raw_message
 {

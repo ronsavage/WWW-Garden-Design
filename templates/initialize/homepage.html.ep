@@ -114,7 +114,7 @@ var design_current_garden_id		= 0;	// o Garden menu on the Design tab.
 var design_current_property_id		= 0;	// o Property menu on the Design tab.
 var full_current_property_id		= 0;	// o Property menu on the Properties tab.
 var full_property_table				= [];
-var garden_current_garden_id		= 0;	// o Garden menu on the Gardens tab.
+var garden_current_garden_id		= <%== $garden_current_garden_id %>;		// o Update/delete garden menu on the Gardens tab.
 var garden_current_property_id_1	= <%== $garden_current_property_id_2 %>;	// o Update/delete garden property menu on the Gardens tab.
 var garden_current_property_id_2	= <%== $garden_current_property_id_2 %>;	// o New garden property menu on the Gardens tab.
 var garden_property_table			= [];
@@ -1598,11 +1598,10 @@ function submit_old_garden(action)
 			.empty()
 			.append(packet.message.cooked);
 
-			full_current_garden_id	= packet.message.garden_id;
-			garden_property_table	= packet.property_table;
-			index					= build_garden_menu(garden_current_property_id, 'garden_garden_menu'); // TODO?
+			garden_table	= packet.garden_table;
+			index			= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'garden_garden_menu');
 
-			set_full_property_fields(index); // TODO.
+			set_garden_fields(index);
 		},
 		'json'
 	);

@@ -53,7 +53,10 @@
 			<td align = 'right' width = '33%'><input type = 'reset' value = 'Reset' /></td>
 		</tr>
 		<tr>
-			<td colspan = '3'><br /></td>
+			<td colspan = '3'><hr /></td>
+		</tr>
+		<tr>
+			<td colspan = '3'><span id = 'garden_result_div'></span></td>
 		</tr>
 		<tr>
 			<td colspan = '3'><hr /></td>
@@ -97,5 +100,3 @@
 			<td align = 'right' width = '33%'><input type = 'reset' value = 'Reset' /></td>
 	</table>
 </form>
-
-<div id = 'garden_result_div'></div>
