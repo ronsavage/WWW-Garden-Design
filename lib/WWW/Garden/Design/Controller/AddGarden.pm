@@ -14,24 +14,29 @@ sub save
 
 	$self -> app -> log -> debug('AddGarden.save()');
 
-	my($item) = $self -> req -> params -> to_hash;
+	my($defaults)	= $self -> app -> defaults;
+	my($item)		= $self -> req -> params -> to_hash;
 
 	$self -> app -> log -> debug("param($_) => $$item{$_}") for sort keys %$item;
 
 	if ($$item{name} && $$item{property_id})
 	{
-		my($defaults)	= $self -> app -> defaults;
-		my($packet)		= $$defaults{db} -> process_garden_submit($item);
+		my($packet) = $$defaults{db} -> process_garden_submit($item);
 
 		$self -> stash(json => $packet);
 		$self -> stash(error => undef);
 	}
 	else
 	{
-		my($message) = 'Error: The garden name is mandatory';
+		my($result) = {garden_id => 0, raw => 'The garden name is mandatory', type => 'Error'};
+		my($packet)	=
+		{
+			garden_table	=> $$defaults{db} -> read_gardens_table,
+			message			=> $$defaults{db} -> format_raw_message($result),
+		};
 
-		$self -> stash(error => $message);
-		$self -> app -> log -> error($message);
+		$self -> stash(json => $packet);
+		$self -> app -> log -> error($$result{raw});
 	}
 
 	$self -> render;

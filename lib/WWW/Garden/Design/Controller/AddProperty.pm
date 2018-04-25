@@ -14,24 +14,29 @@ sub save
 
 	$self -> app -> log -> debug('AddProperty.save()');
 
-	my($item) = $self -> req -> params -> to_hash;
+	my($defaults)	= $self -> app -> defaults;
+	my($item)		= $self -> req -> params -> to_hash;
 
 	$self -> app -> log -> debug("param($_) => $$item{$_}") for sort keys %$item;
 
 	if ($$item{name})
 	{
-		my($defaults)	= $self -> app -> defaults;
-		my($packet)		= $$defaults{db} -> process_property_submit($item);
+		my($packet) = $$defaults{db} -> process_property_submit($item);
 
 		$self -> stash(json => $packet);
 		$self -> stash(error => undef);
 	}
 	else
 	{
-		my($message) = 'Error: The property name is mandatory';
+		my($result) = {garden_id => 0, raw => 'The property name is mandatory', type => 'Error'};
+		my($packet)	=
+		{
+			full_property_table	=> $$defaults{db} -> read_properties_table,
+			message				=> $$defaults{db} -> format_raw_message($result),
+		};
 
-		$self -> stash(error => $message);
-		$self -> app -> log -> error($message);
+		$self -> stash(json => $packet);
+		$self -> app -> log -> error($$result{raw});
 	}
 
 	$self -> render;

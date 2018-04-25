@@ -49,7 +49,10 @@
 			<td align = 'right' width = '33%'><input type = 'reset' value = 'Reset' /></td>
 		</tr>
 		<tr>
-			<td colspan = '3'><br /></td>
+			<td colspan = '3'><hr /></td>
+		</tr>
+		<tr>
+			<td colspan = '3'><div id = 'property_result_div'></div></span></td>
 		</tr>
 		<tr>
 			<td colspan = '3'><hr /></td>
@@ -81,4 +84,3 @@
 	</table>
 </form>
 
-<div id = 'property_result_div'></div>
