@@ -1090,8 +1090,8 @@ sub process_property_submit
 
 	return
 	{
-		full_property_table	=> $self -> read_properties_table,
-		message				=> $self -> format_raw_message($result),
+		property_table	=> $self -> read_properties_table,
+		message			=> $self -> format_raw_message($result),
 	};
 
 } # End of process_property_submit.

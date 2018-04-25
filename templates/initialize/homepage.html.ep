@@ -99,7 +99,7 @@
 
 </body>
 
-%= javascript 'https://code.jquery.com/jquery-3.2.1.min.js'
+%= javascript 'http://127.0.0.1/assets/js/jQuery/jquery-3.2.1.min.js'
 %= javascript 'http://127.0.0.1/assets/js/jQuery/jquery-ui-1.12.1/jquery-ui.min.js'
 %= javascript 'http://127.0.0.1/assets/js/jQuery/datatables.min.js'
 %= javascript 'http://127.0.0.1/assets/js/spectrum/spectrum.js'
