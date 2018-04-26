@@ -678,7 +678,7 @@ function garden_property_menu_1_changed(data)
 
 	// Typical keys for data.item are:
 	//	o label => The property item's text (name column value).
-	//	o value => The property item's # (primary key column value).
+	//	o value => The property item's id # (primary key column value).
 
 	garden_current_property_id_1 = data.item.value;
 
@@ -709,22 +709,11 @@ function garden_property_menu_2_changed(data)
 
 	// Typical keys for data.item are:
 	//	o label => The property item's text (name column value).
-	//	o value => The property item's # (primary key column value).
+	//	o value => The property item's id # (primary key column value).
 
 	garden_current_property_id_2 = data.item.value;
 
-	for (var i = 0; i < garden_table.length; i++)
-	{
-		if (garden_table[i]['property_id'] == garden_current_property_id_2)
-		{
-			garden_current_garden_id	= garden_table[i]['id'];
-			index						= build_garden_menu(garden_current_property_id_2, garden_current_garden_id, 'garden_garden_menu');
-
-			set_garden_fields_2();
-
-			break;
-		}
-	}
+	set_garden_fields_2();
 
 } // End of garden_property_menu_2_changed.
 
@@ -1299,7 +1288,7 @@ function set_full_property_fields(i)
 	$('#full_property_name')
 	.val(full_property_table[i]['name']);
 
-	$('#full_property_publish') // In full_property_table, do not use the 'publish' string!
+	$('#full_property_publish') // In full_property_table, do not use the 'publish' (Yes/No) string!
 	.prop('checked', (full_property_table[i]['publish'] == 'Yes') ? true : false);
 
 } // End of set_full_property_fields.
@@ -1314,7 +1303,7 @@ function set_garden_fields(i)
 	$('#garden_name')
 	.val(garden_table[i]['name']);
 
-	$('#garden_publish') // In garden_table, do not use the 'garden_publish' string!
+	$('#garden_publish') // In garden_table, do not use the 'garden_publish' (Yes/No) string!
 	.prop('checked', (garden_table[i]['publish'] == 'Yes') ? true : false);
 
 } // End of set_garden_fields.
@@ -1323,13 +1312,13 @@ function set_garden_fields(i)
 
 function set_garden_fields_2()
 {
-	$('#garden_description')
+	$('#new_garden_description')
 	.val('');
 
-	$('#garden_name')
+	$('#new_garden_name')
 	.val('');
 
-	$('#garden_publish') // In garden_table, do not use the 'garden_publish' string!
+	$('#new_garden_publish') // In garden_table, do not use the 'garden_publish' (Yes/No) string!
 	.prop('checked', false);
 
 } // End of set_garden_fields_2.
