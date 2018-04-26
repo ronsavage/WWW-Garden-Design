@@ -820,6 +820,7 @@ sub process_garden_submit
 	my($action)			= $$item{action};
 	my($id)				= $$item{id};
 	my($name)			= $$item{name};
+	my($property_name)	= $$item{property_name};
 	my($result) 		= {garden_id => 0};
 	my($table_name)		= 'gardens';
 	my($gardens_table)	= $self -> read_table($table_name);
@@ -845,7 +846,7 @@ sub process_garden_submit
 
 		if (exists($garden{uc $name}) )
 		{
-			$result = {raw => 'That garden name is on file for this property', type => 'Error'};
+			$result = {raw => "Property: $property_name. Garden: $name. That garden name is on file", type => 'Error'};
 		}
 		else
 		{
@@ -856,9 +857,9 @@ sub process_garden_submit
 				{returning => 'id'}
 			) -> hash -> {id};
 
-			$self -> logger -> debug("Table: $table_name. Record id: $id. Action: $action. Garden: $name");
+			$self -> logger -> debug("Table: $table_name. Record id: $id. Action: $action. Property: $property_name. Garden: $name");
 
-			$result = {garden_id => $id, raw => "Added garden: $name", type => 'Success'};
+			$result = {garden_id => $id, raw => "Property: $property_name. Added garden: $name", type => 'Success'};
 		}
 	}
 	elsif ($action eq 'update')
@@ -881,9 +882,9 @@ sub process_garden_submit
 				{id => $$item{id} }
 			);
 
-			$self -> logger -> debug("Table: $table_name. Record id: $id. Action: $action");
+			$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Garden: $name. Action: $action");
 
-			$result = {garden_id => $$item{id}, raw => "Property: $name. Action: $action", type => 'Success'};
+			$result = {garden_id => $$item{id}, raw => "Property: $property_name. Garden. $name. Action: $action", type => 'Success'};
 		}
 		else
 		{
@@ -901,39 +902,17 @@ sub process_garden_submit
 
 		if (exists($garden{$id}) )
 		{
-			# It's a property delete. But does this property have any gardens?
+			$self -> mojo_pg -> delete
+			(
+				$table_name,
+				{id => $$item{id} }
+			);
 
-			my($found)			= false;
-			my($garden_table)	= $self -> read_table('gardens');
+			my($message) = "Property: $property_name. Garden: $name. Action: $action";
 
-			for my $garden (@$gardens_table)
-			{
-				if ($$garden{property_id} == $$item{id})
-				{
-					$found = true;
-				}
-			}
+			$self -> logger -> debug("Table '$table_name'. Record id '$id'. $message");
 
-			if ($found -> isTrue)
-			{
-				my($note) = "Not deleted because the property has gardens";
-
-				$self -> logger -> debug("Table: $table_name. Record id: $id. $note");
-
-				$result = {raw => "Property: $name. $note", type => 'Error'};
-			}
-			else
-			{
-				$self -> mojo_pg -> delete
-				(
-					$table_name,
-					{id => $$item{id} }
-				);
-
-				$self -> logger -> debug("Table '$table_name'. Record id '$id' ${action}d.");
-
-				$result = {raw => "Property: $name. Action: $action", type => 'Success'};
-			}
+			$result = {raw => $message, type => 'Success'};
 		}
 		else
 		{
@@ -988,7 +967,7 @@ sub process_property_submit
 
 		if (exists($property{uc $name}) )
 		{
-			$result = {raw => 'That property name is on file', type => 'Error'};
+			$result = {raw => 'Property: $name. That property name is on file', type => 'Error'};
 		}
 		else
 		{
@@ -999,7 +978,7 @@ sub process_property_submit
 				{returning => 'id'}
 			) -> hash -> {id};
 
-			$self -> logger -> debug("Table: $table_name. Record id: $id. Action: $action. Property: $name");
+			$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $name. Action: $action");
 
 			$result = {property_id => $id, raw => "Added property: $name", type => 'Success'};
 		}
@@ -1024,7 +1003,7 @@ sub process_property_submit
 				{id => $$item{id} }
 			);
 
-			$self -> logger -> debug("Table: $table_name. Record id '$id'. Action: $action");
+			$self -> logger -> debug("Table: $table_name. Record id '$id'. Property: $name. Action: $action");
 
 			$result = {property_id => $$item{id}, raw => "Property: $name. Action: $action", type => 'Success'};
 		}
@@ -1059,9 +1038,9 @@ sub process_property_submit
 
 			if ($found -> isTrue)
 			{
-				my($note) = "Not deleted because the property has gardens";
+				my($note) = "Record not deleted because it has gardens";
 
-				$self -> logger -> debug("Table: $table_name. Record id: $id. $note");
+				$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $name. $note");
 
 				$result = {raw => "Property: $name. $note", type => 'Error'};
 			}
@@ -1073,7 +1052,7 @@ sub process_property_submit
 					{id => $$item{id} }
 				);
 
-				$self -> logger -> debug("Table: $table_name. Record id: $id. Action: $action");
+				$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $name. Action: $action");
 
 				$result = {raw => "Property: $name. Action $action", type => 'Success'};
 			}

@@ -8,11 +8,11 @@ our $VERSION = '0.95';
 
 # -----------------------------------------------
 
-sub save
+sub process
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('AddObject.save()');
+	$self -> app -> log -> debug('AddObject.process()');
 
 	my($items) = $self -> req -> params -> to_hash;
 
@@ -36,7 +36,7 @@ sub save
 
 	$self -> render;
 
-} # End of save.
+} # End of process.
 
 # -----------------------------------------------
 

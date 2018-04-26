@@ -65,11 +65,11 @@ EOS
 # -----------------------------------------------
 # https://github.com/kraih/mojo/wiki/Request-data.
 
-sub save
+sub process
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('AddFlower.save()');
+	$self -> app -> log -> debug('AddFlower.process()');
 
 	my($defaults)	= $self -> app -> defaults;
 	my($validator)	= WWW::Garden::Design::Util::ValidateForm -> new;
@@ -93,7 +93,7 @@ sub save
 
 	$self -> render;
 
-} # End of save.
+} # End of process.
 
 # -----------------------------------------------
 

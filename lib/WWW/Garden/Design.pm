@@ -127,10 +127,10 @@ sub startup
 	$r -> namespaces(['WWW::Garden::Design::Controller']);
 
 	$r -> route('/')							-> to('Initialize#homepage');
-	$r -> route('/AddFlower')					-> to('AddFlower#save');
-	$r -> route('/AddGarden')					-> to('AddGarden#save');
-	$r -> route('/AddObject')					-> to('AddObject#save');
-	$r -> route('/AddProperty')					-> to('AddProperty#save');
+	$r -> route('/AddFlower')					-> to('AddFlower#process');
+	$r -> route('/AddGarden')					-> to('AddGarden#process');
+	$r -> route('/AddObject')					-> to('AddObject#process');
+	$r -> route('/AddProperty')					-> to('AddProperty#process');
 	$r -> route('/AutoComplete')				-> to('AutoComplete#display');
 	$r -> route('/Design')						-> to('Design#save');
 	$r -> route('/GetFlowerDetails')			-> to('GetFlowerDetails#display');

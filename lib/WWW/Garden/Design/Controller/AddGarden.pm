@@ -8,11 +8,11 @@ our $VERSION = '0.95';
 
 # -----------------------------------------------
 
-sub save
+sub process
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('AddGarden.save()');
+	$self -> app -> log -> debug('AddGarden.process()');
 
 	my($defaults)	= $self -> app -> defaults;
 	my($item)		= $self -> req -> params -> to_hash;
@@ -41,7 +41,7 @@ sub save
 
 	$self -> render;
 
-} # End of save.
+} # End of process.
 
 # -----------------------------------------------
 

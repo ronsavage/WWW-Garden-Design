@@ -1526,6 +1526,10 @@ function submit_details()
 
 function submit_new_garden()
 {
+	var index			= garden_property_menu_2.selectedIndex;
+	var property_name	= garden_property_menu_2.options[index].text;
+	var property_id		= garden_property_menu_2.options[index].value; // Not used.
+
 	$.post
 	(
 		'/AddGarden', // See routes at end of WWW::Garden::Design.startup().
@@ -1535,6 +1539,7 @@ function submit_new_garden()
 			id:				0,
 			name:			$('#new_garden_name').val(),
 			property_id:	garden_current_property_id_2,
+			property_name:	property_name,
 			publish:		$('#new_garden_publish').prop('checked') ? 'Yes' : 'No',
 		},
 		function(packet)
@@ -1627,6 +1632,10 @@ function submit_object()
 
 function submit_old_garden(action)
 {
+	var index			= garden_property_menu_1.selectedIndex;
+	var property_name	= garden_property_menu_1.options[index].text;
+	var property_id		= garden_property_menu_1.options[index].value; // Not used.
+
 	$.post
 	(
 		'/AddGarden', // See routes at end of WWW::Garden::Design.startup().
@@ -1636,6 +1645,7 @@ function submit_old_garden(action)
 			id:				garden_current_garden_id,
 			name:			$('#garden_name').val(),
 			property_id:	garden_current_property_id_1,
+			property_name:	property_name,
 			publish:		$('#garden_publish').prop('checked') ? 'Yes' : 'No',
 		},
 		function(packet)
@@ -1644,8 +1654,9 @@ function submit_old_garden(action)
 			.empty()
 			.append(packet.message.cooked);
 
-			garden_table	= packet.garden_table;
-			index			= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'garden_garden_menu');
+			garden_table				= packet.garden_table;
+			index						= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'garden_garden_menu');
+			garden_current_garden_id	= garden_table[index]['id']; // Update because previous one might have been deleted.
 
 			set_garden_fields(index);
 		},
