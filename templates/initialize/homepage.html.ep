@@ -1563,6 +1563,7 @@ function submit_new_garden()
 			index							= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'garden_garden_menu');
 
 			set_garden_fields_1(index);
+			set_garden_fields_2();
 		},
 		'json'
 	);
@@ -1606,6 +1607,8 @@ function submit_new_property(action)
 			set_full_property_fields(index);
 
 			index = build_full_property_menu(garden_current_property_id_2, 'garden_property_menu_2');
+
+			set_full_property_fields(index);
 		},
 		'json'
 	);
