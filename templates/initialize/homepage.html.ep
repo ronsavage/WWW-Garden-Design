@@ -117,7 +117,6 @@ var full_property_table				= [];
 var garden_current_garden_id		= <%== $garden_current_garden_id %>;		// o Update/delete garden menu on the Gardens tab.
 var garden_current_property_id_1	= <%== $garden_current_property_id_2 %>;	// o Update/delete garden property menu on the Gardens tab.
 var garden_current_property_id_2	= <%== $garden_current_property_id_2 %>;	// o New garden property menu on the Gardens tab.
-var garden_property_table			= [];
 var garden_table					= [];
 var object_table					= [];
 var window_width					= 0;
@@ -600,9 +599,9 @@ function design_property_menu_changed(data)
 		if (garden_table[i]['property_id'] == design_current_property_id)
 		{
 			design_current_garden_id	= garden_table[i]['id'];
-			dummy						= build_garden_menu(design_current_property_id, design_current_garden_id, 'design_garden_menu');
+			index						= build_garden_menu(design_current_property_id, design_current_garden_id, 'design_garden_menu');
 
-			// No need to call set_garden_fields(index) because the fields are not used  on the Design tab.
+			// No need to call set_garden_fields_1(index) because the fields are not used on the Design tab.
 
 			break;
 		}
@@ -658,7 +657,7 @@ function garden_garden_menu_changed(data)
 	{
 		if (garden_table[i]['id'] == garden_current_garden_id)
 		{
-			set_garden_fields(i);
+			set_garden_fields_1(i);
 
 			break;
 		}
@@ -689,7 +688,7 @@ function garden_property_menu_1_changed(data)
 			garden_current_garden_id	= garden_table[i]['id'];
 			index						= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'garden_garden_menu');
 
-			set_garden_fields(index);
+			set_garden_fields_1(index);
 
 			break;
 		}
@@ -857,7 +856,7 @@ function get_garden_table()
 		{
 			garden_table = json;
 
-			set_garden_fields(0);
+			set_garden_fields_1(0);
 		},
 		'json'
 	);
@@ -1295,7 +1294,7 @@ function set_full_property_fields(i)
 
 // -----------------------------------------------
 
-function set_garden_fields(i)
+function set_garden_fields_1(i)
 {
 	$('#garden_description')
 	.val(garden_table[i]['description']);
@@ -1306,7 +1305,7 @@ function set_garden_fields(i)
 	$('#garden_publish') // In garden_table, do not use the 'garden_publish' (Yes/No) string!
 	.prop('checked', (garden_table[i]['publish'] == 'Yes') ? true : false);
 
-} // End of set_garden_fields.
+} // End of set_garden_fields_1.
 
 // -----------------------------------------------
 
@@ -1521,7 +1520,7 @@ function submit_new_garden()
 	{
 		alert('Error: The garden name is mandatory');
 
-		return false;
+		return;
 	}
 
 	var index			= garden_property_menu_2.selectedIndex;
@@ -1532,7 +1531,7 @@ function submit_new_garden()
 	(
 		'/AddGarden', // See routes at end of WWW::Garden::Design.startup().
 		{
-			action:			'save',
+			action:			'add',
 			description:	$('#new_garden_description').val(),
 			id:				0,
 			name:			name,
@@ -1548,9 +1547,10 @@ function submit_new_garden()
 
 			garden_current_garden_id	= packet.message.garden_id;
 			garden_table				= packet.garden_table;
+			index						= build_full_property_menu(garden_current_property_id_1, 'garden_property_menu_1');
 			index						= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'garden_garden_menu');
 
-			set_garden_fields(index);
+			set_garden_fields_1(index);
 		},
 		'json'
 	);
@@ -1567,14 +1567,14 @@ function submit_new_property(action)
 	{
 		alert('Error: The property name is mandatory');
 
-		return false;
+		return;
 	}
 
 	$.post
 	(
 		'/AddProperty', // See routes at end of WWW::Garden::Design.startup().
 		{
-			action:			'save',
+			action:			'add',
 			description:	$('#new_property_description').val(),
 			id:				0,
 			name:			name,
@@ -1593,7 +1593,7 @@ function submit_new_property(action)
 
 			set_full_property_fields(index);
 
-			dummy = build_full_property_menu(garden_current_property_id_2, 'garden_property_menu_2');
+			index = build_full_property_menu(garden_current_property_id_2, 'garden_property_menu_2');
 		},
 		'json'
 	);
@@ -1665,7 +1665,7 @@ function submit_old_garden(action)
 			index						= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'garden_garden_menu');
 			garden_current_garden_id	= garden_table[index]['id']; // Update because previous one might have been deleted.
 
-			set_garden_fields(index);
+			set_garden_fields_1(index);
 		},
 		'json'
 	);
@@ -1676,6 +1676,29 @@ function submit_old_garden(action)
 
 function submit_old_property(action)
 {
+	var has_gardens	= false;
+	var name		= $('#full_property_name').val();
+
+	for (var i = 0; i < garden_table.length; i++)
+	{
+		if (name == garden_table[i]['property_name'])
+		{
+			has_gardens = true;
+
+			break;
+		}
+	}
+
+	if ( (action == 'delete') && (has_gardens == false) )
+	{
+		var ok = confirm('Are you sure you wish to delete property ' + name + '?');
+
+		if (ok == false)
+		{
+			return;
+		}
+	}
+
 	$.post
 	(
 		'/AddProperty', // See routes at end of WWW::Garden::Design.startup().
@@ -1683,7 +1706,7 @@ function submit_old_property(action)
 			action:			action,
 			description:	$('#full_property_description').val(),
 			id:				full_current_property_id,
-			name:			$('#full_property_name').val(),
+			name:			name,
 			publish:		$('#full_property_publish').prop('checked') ? 'Yes' : 'No'
 		},
 		function(packet)
@@ -1700,6 +1723,12 @@ function submit_old_property(action)
 			index						= build_full_property_menu(full_current_property_id, 'full_property_menu');
 
 			set_full_property_fields(index);
+
+			if (action == 'delete')
+			{
+				index							= build_full_property_menu(garden_current_property_id_2, 'garden_property_menu_2');
+				garden_current_property_id_2	= full_property_table[index]['id']; // Update because previous one might have been deleted.
+			}
 		},
 		'json'
 	);
@@ -1905,7 +1934,8 @@ $(function()
 		get_design_flower_icon();
 	});
 
-	$('#design_form').keypress
+	$('#design_form')
+	.keypress
 	(
 		function(event)
 		{
@@ -1937,12 +1967,32 @@ $(function()
 	});
 
 	$('#garden_form')
+	.keypress
+	(
+		function(event)
+		{
+			if (event.which == '13')
+			{
+				event.preventDefault();
+			}
+		}
+	)
 	.submit(function()
 	{
 		return false;
 	});
 
 	$('#object_form')
+	.keypress
+	(
+		function(event)
+		{
+			if (event.which == '13')
+			{
+				event.preventDefault();
+			}
+		}
+	)
 	.submit(function()
 	{
 		submit_object();
@@ -1951,6 +2001,16 @@ $(function()
 	});
 
 	$('#property_form')
+	.keypress
+	(
+		function(event)
+		{
+			if (event.which == '13')
+			{
+				event.preventDefault();
+			}
+		}
+	)
 	.submit(function()
 	{
 		return false;

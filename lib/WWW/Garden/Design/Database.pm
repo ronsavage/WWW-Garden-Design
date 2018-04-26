@@ -433,6 +433,7 @@ sub get_autocomplete_item
 	my($self, $context, $type, $key) = @_;
 	$key =~ s/\'/\'\'/g; # Since we're using Pg.
 
+	my(@item);
 	my(@result);
 	my($sql);
 
@@ -453,9 +454,13 @@ sub get_autocomplete_item
 			next;
 		}
 
-		$sql = "select distinct $search_column from $table_name where upper($search_column) like '%$key%'";
+		$sql	= "select distinct $search_column from $table_name where upper($search_column) like '%$key%'";
+		@item	= $self -> mojo_pg -> query($sql) -> hashes -> each;
 
-		push @result, ${$self -> mojo_pg -> query($sql) -> hashes -> each}{$search_column};
+		if ($#item >= 0)
+		{
+			push @result, $item[0]{$search_column};
+		}
 	}
 
 	my($min_length) = 99; # Arbitrary.
@@ -834,7 +839,7 @@ sub process_garden_submit
 
 	my(%garden);
 
-	if ($action eq 'save')
+	if ($action eq 'add')
 	{
 		# It's a garden insert. Is the garden name on file?
 		# AddGarden.pm checked that the user entered something!
@@ -955,7 +960,7 @@ sub process_property_submit
 
 	my(%property);
 
-	if ($action eq 'save')
+	if ($action eq 'add')
 	{
 		# It's a property insert. Is the property name on file?
 		# AddProperty.pm checked that the user entered something!
