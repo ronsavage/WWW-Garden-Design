@@ -1515,6 +1515,15 @@ function submit_details()
 
 function submit_new_garden()
 {
+	var name = $('#new_garden_name').val();
+
+	if (name == '')
+	{
+		alert('Error: The garden name is mandatory');
+
+		return false;
+	}
+
 	var index			= garden_property_menu_2.selectedIndex;
 	var property_name	= garden_property_menu_2.options[index].text;
 	var property_id		= garden_property_menu_2.options[index].value; // Not used.
@@ -1526,7 +1535,7 @@ function submit_new_garden()
 			action:			'save',
 			description:	$('#new_garden_description').val(),
 			id:				0,
-			name:			$('#new_garden_name').val(),
+			name:			name,
 			property_id:	garden_current_property_id_2,
 			property_name:	property_name,
 			publish:		$('#new_garden_publish').prop('checked') ? 'Yes' : 'No',
@@ -1552,6 +1561,15 @@ function submit_new_garden()
 
 function submit_new_property(action)
 {
+	var name = $('#new_property_name').val();
+
+	if (name == '')
+	{
+		alert('Error: The property name is mandatory');
+
+		return false;
+	}
+
 	$.post
 	(
 		'/AddProperty', // See routes at end of WWW::Garden::Design.startup().
@@ -1559,7 +1577,7 @@ function submit_new_property(action)
 			action:			'save',
 			description:	$('#new_property_description').val(),
 			id:				0,
-			name:			$('#new_property_name').val(),
+			name:			name,
 			publish:		$('#new_property_publish').prop('checked') ? 'Yes' : 'No'
 		},
 		function(packet)
