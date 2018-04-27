@@ -321,85 +321,6 @@ function build_attribute_id(kind, name, value)
 
 // -----------------------------------------------
 
-function build_properties_property_menu(property_id, jquery_id)
-{
-	var html	= "<select id = '" + jquery_id + "'>";
-	var index	= -1;
-
-	var id;
-	var name;
-
-	for (var i = 0; i < property_table.length; i++)
-	{
-		id		= property_table[i]['id'];
-		name	= property_table[i]['name'];
-
-		if (id == property_id)
-		{
-			html	+= "<option value = '" + id + "' selected>" + name + '</option>';
-			index	= i;
-		}
-		else
-		{
-			html += "<option value = '" + id + "'>" + name + '</option>';
-		}
-	}
-
-	// With a delete, property_id is 0, so index remains as -1.
-	// In this case I set it to the index of the 1st id in the table.
-
-	if (index < 0)
-	{
-		index = 0;
-	}
-
-	html	+= '</select>';
-	id		= '#' + jquery_id;
-
-	$(id + '_span')
-	.empty()
-	.append(html);
-
-	if (jquery_id == 'properties_property_menu')
-	{
-		$(id)
-		.selectmenu
-		({
-			change: function(event, data)
-			{
-				properties_property_menu_changed(data);
-			}
-		});
-	}
-	else if (jquery_id = 'gardens_property_menu_1')
-	{
-		$(id)
-		.selectmenu
-		({
-			change: function(event, data)
-			{
-				gardens_property_menu_1_changed(data);
-			}
-		});
-	}
-	else
-	{
-		$(id)
-		.selectmenu
-		({
-			change: function(event, data)
-			{
-				gardens_property_menu_2_changed(data);
-			}
-		});
-	}
-
-	return index;
-
-} // End of build_properties_property_menu.
-
-// -----------------------------------------------
-
 function build_garden_menu(property_id, garden_id, jquery_id)
 {
 	var html	= "<select id = '" + jquery_id + "'>";
@@ -464,6 +385,163 @@ function build_garden_menu(property_id, garden_id, jquery_id)
 	return index;
 
 } // End of build_garden_menu.
+
+// -----------------------------------------------
+
+function build_gardens_property_menu(property_id, garden_id, jquery_id)
+{
+	// Process:
+	// o Collect garden names for the given property.
+	// o Sort the names.
+	// o Construct the menu.
+
+	var garden_ids		= []; // This is a lookup table from names to ids, for use in the select.
+	var garden_names	= [];
+	var index			= -1; // The id of the 1st element, which is the one selected by default.
+
+	var name;
+
+	for (var i = 0; i < gardens_table.length; i++)
+	{
+		if (id == property_id)
+		{
+			name				= gardens_table[i]['name'];
+			garden_ids[name]	= gardens_table[i]['id'];
+
+			garden_names.push(name);
+
+			if (index < 0)
+			{
+				index = i;
+			}
+		}
+	}
+
+	garden_names.sort();
+
+	var html = "<select id = '" + jquery_id + "'>";
+
+	var id;
+	var name;
+
+	for (var i = 0; i < garden_names.length; i++)
+	{
+		name	= garden_names[i]['name'];
+		id		= garden_ids[name];
+
+		if (i == 0)
+		{
+			// Select the 1st one by default, to match the index saved above.
+
+			html += "<option value = '" + id + "' selected>" + name + '</option>';
+		}
+		else
+		{
+			html += "<option value = '" + id + "'>" + name + '</option>';
+		}
+	}
+
+	html	+= '</select>';
+	id		= '#' + jquery_id;
+
+	$(id + '_span')
+	.empty()
+	.append(html);
+
+	if (jquery_id == 'design_property_menu')
+	{
+		$(id)
+		.selectmenu
+		({
+			change: function(event, data)
+			{
+				design_property_menu_changed(data);
+			}
+		});
+	}
+	else
+	{
+		$(id)
+		.selectmenu
+		({
+			change: function(event, data)
+			{
+				gardens_garden_menu_changed(data);
+			}
+		});
+	}
+
+	return index;
+
+} // End of build_gardens_property_menu.
+
+// -----------------------------------------------
+
+function build_properties_property_menu(property_id, jquery_id)
+{
+	var html	= "<select id = '" + jquery_id + "'>";
+	var index	= -1;
+
+	var id;
+	var name;
+
+	for (var i = 0; i < property_table.length; i++)
+	{
+		id		= property_table[i]['id'];
+		name	= property_table[i]['name'];
+
+		if (id == property_id)
+		{
+			html	+= "<option value = '" + id + "' selected>" + name + '</option>';
+			index	= i;
+		}
+		else
+		{
+			html += "<option value = '" + id + "'>" + name + '</option>';
+		}
+	}
+
+	// With a delete, property_id is 0, so index remains as -1.
+	// In this case I set it to the index of the 1st id in the table.
+
+	if (index < 0)
+	{
+		index = 0;
+	}
+
+	html	+= '</select>';
+	id		= '#' + jquery_id;
+
+	$(id + '_span')
+	.empty()
+	.append(html);
+
+	if (jquery_id == 'properties_property_menu')
+	{
+		$(id)
+		.selectmenu
+		({
+			change: function(event, data)
+			{
+				properties_property_menu_changed(data);
+			}
+		});
+	}
+	else
+	{
+		$(id)
+		.selectmenu
+		({
+			change: function(event, data)
+			{
+				gardens_property_menu_2_changed(data);
+			}
+		});
+	}
+
+	return index;
+
+} // End of build_properties_property_menu.
 
 // -----------------------------------------------
 
@@ -610,7 +688,7 @@ function design_property_menu_changed(data)
 		if (garden_table[i]['property_id'] == design_current_property_id)
 		{
 			design_current_garden_id	= garden_table[i]['id'];
-			index						= build_garden_menu(design_current_property_id, design_current_garden_id, 'design_garden_menu');
+			index						= build_gardens_property_menu(design_current_property_id, design_current_garden_id, 'design_garden_menu');
 
 			// No need to call set_garden_fields_1(index) because the fields are not used on the Design tab.
 
@@ -697,7 +775,7 @@ function gardens_property_menu_1_changed(data)
 		if (garden_table[i]['property_id'] == garden_current_property_id_1)
 		{
 			garden_current_garden_id	= garden_table[i]['id'];
-			index						= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'gardens_garden_menu');
+			index						= build_gardens_property_menu(garden_current_property_id_1, garden_current_garden_id, 'gardens_garden_menu');
 
 			set_garden_fields_1(index);
 
@@ -1559,7 +1637,7 @@ function submit_new_garden()
 			garden_current_garden_id		= packet.message.garden_id;
 			garden_table					= packet.garden_table;
 			garden_current_property_id_1	= garden_current_property_id_2;
-			index							= build_properties_property_menu(garden_current_property_id_1, 'gardens_property_menu_1');
+			index							= build_gardens_property_menu(garden_current_property_id_1, 'gardens_property_menu_1');
 			index							= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'gardens_garden_menu');
 
 			set_garden_fields_1(index);
