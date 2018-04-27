@@ -77,62 +77,41 @@ sub homepage
 	$$defaults{properties_table}	= $$defaults{db} -> read_table('properties');
 	my($attribute_elements)			= $self -> build_js_for_attributes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields});
 
-	# Warning: build_property_menu() sets a value in the session read by build_garden_menu(),
+	# Warning: build_gardens_property_menu() sets a value in the session read by build_garden_menu(),
 	# so it must be called first.
 	#
 	# A note on the property menus on the Gardens tab:
-	# o garden_property_menu_1 => Properties which have gardens.
-	# o garden_property_menu_2 => All properties, since any property is allowed to have gardens added.
+	# o gardens_property_menu_1 => Properties which have gardens.
+	# o gardens_property_menu_2 => All properties, since any property is allowed to have gardens added.
 	# Also, when a new property is added, only the latter menu gets updated (on the Gardens page).
-	# And when a garden is added, the garden_garden_menu menu is updated (on the Gardens page),
+	# And when a garden is added, the gardens_garden_menu menu is updated (on the Gardens page),
 	# as well as the garden menu on the Design page, i.e. the design_garden_menu.
 
-	$$defaults{design_property_menu}	= $$defaults{db} -> build_property_menu($$defaults{gardens_table}, $self, 'design_property_menu');
-	$$defaults{design_garden_menu}		= $$defaults{db} -> build_garden_menu($$defaults{gardens_table}, $self, 'design_garden_menu');
-	$$defaults{full_property_menu}		= $$defaults{db} -> build_full_property_menu($$defaults{properties_table}, 'full_property_menu', 0);
-	$$defaults{garden_property_menu_1}	= $$defaults{db} -> build_property_menu($$defaults{gardens_table}, $self, 'garden_property_menu_1');
-	$$defaults{garden_property_menu_2}	= $$defaults{db} -> build_full_property_menu($$defaults{properties_table}, 'garden_property_menu_2', 0);
-	$$defaults{garden_garden_menu}		= $$defaults{db} -> build_garden_menu($$defaults{gardens_table}, $self, 'garden_garden_menu');
-	$$defaults{object_menu}				= $$defaults{db} -> build_object_menu($$defaults{objects_table}, $self);
+	$$defaults{design_property_menu}		= $$defaults{db} -> build_gardens_property_menu($$defaults{gardens_table}, $self, 'design_property_menu');
+	$$defaults{design_garden_menu}			= $$defaults{db} -> build_garden_menu($$defaults{gardens_table}, $self, 'design_garden_menu');
+	$$defaults{gardens_property_menu_1}		= $$defaults{db} -> build_gardens_property_menu($$defaults{gardens_table}, $self, 'gardens_property_menu_1');
+	$$defaults{gardens_property_menu_2}		= $$defaults{db} -> build_properties_property_menu($$defaults{properties_table}, 'gardens_property_menu_2', 0);
+	$$defaults{gardens_garden_menu}			= $$defaults{db} -> build_garden_menu($$defaults{gardens_table}, $self, 'gardens_garden_menu');
+	$$defaults{object_menu}					= $$defaults{db} -> build_object_menu($$defaults{objects_table}, $self);
+	$$defaults{properties_property_menu}	= $$defaults{db} -> build_properties_property_menu($$defaults{properties_table}, 'properties_property_menu', 0);
 
 	$self -> app -> defaults($defaults);
 	$self -> stash(attribute_check_boxes	=> $self -> build_check_boxes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields}, $$defaults{attribute_attribute_ids}) );
 	$self -> stash(csrf_token				=> $self -> session('csrf_token') );
 	$self -> stash(search_check_boxes		=> $self -> build_check_boxes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields}, $$defaults{search_attribute_ids}) );
 
-	# Find the id of the 1st property on the 2nd property menu on the Gardens tab.
-	# This is needed to initialize a JS variable of the same name.
-	# And we sort the properties because the property menu is sorted.
-	# Lastly, we choose the 2nd property menu because it has all properties on it,
-	# not just properties with gardens.
+	# Find the id of the 1st property on the Properties tab.
+	# This is needed to initialize a JS variable of the same name,
+	# and the corresponding JS variable of the 2nd property menu on the Gardens tab.
+	# And we sort the properties because the property menu is sorted, and we default to the 1st item.
 
-	@{$$defaults{properties_table} }	= sort{$$a{name} cmp $$b{name} } @{$$defaults{properties_table} };
-	my($garden_current_property_id_2)	= -1;
+	@{$$defaults{properties_table} } 	= sort{$$a{name} cmp $$b{name} } @{$$defaults{properties_table} };
+	my($properties_current_property_id)	= $$defaults{properties_table}[0]{id};
 
-	for my $property (@{$$defaults{properties_table} })
-	{
-		if ($garden_current_property_id_2 < 0)
-		{
-			$garden_current_property_id_2 = $$property{id};
+	# Find the id of the 1st garden on the Gardens tab. It is sorted in Database.read_gardens_table().
 
-			last;
-		}
-	}
-
-	# Find the id of the 1st garden on the Gardens tab.
-
-	@{$$defaults{gardens_table} }	= sort{$$a{name} cmp $$b{name} } @{$$defaults{gardens_table} };
-	my($garden_current_garden_id)	= -1;
-
-	for my $garden (@{$$defaults{gardens_table} })
-	{
-		if ($garden_current_garden_id < 0)
-		{
-			$garden_current_garden_id = $$garden{id};
-
-			last;
-		}
-	}
+	my($gardens_current_garden_id)		= $$defaults{gardens_table}[0]{id};
+	my($gardens_current_property_id_1)	= $$defaults{gardens_table}[0]{property_id};
 
 	# These parameters are passed to homepage.html.ep for incorporation into JS code.
 
@@ -142,15 +121,16 @@ sub homepage
 		constants						=> $$defaults{constants_table},
 		design_garden_menu				=> $$defaults{design_garden_menu},
 		design_property_menu			=> $$defaults{design_property_menu},
-		full_current_property_id		=> $garden_current_property_id_2,
-		full_property_menu				=> $$defaults{full_property_menu},
-		garden_current_garden_id		=> $garden_current_garden_id,
-		garden_current_property_id_2	=> $garden_current_property_id_2,
-		garden_garden_menu				=> $$defaults{garden_garden_menu},
-		garden_property_menu_1			=> $$defaults{garden_property_menu_1},
-		garden_property_menu_2			=> $$defaults{garden_property_menu_2},
+		gardens_current_garden_id		=> $gardens_current_garden_id,
+		gardens_current_property_id_1	=> $gardens_current_property_id_1,
+		gardens_current_property_id_2	=> $properties_current_property_id,
+		gardens_garden_menu				=> $$defaults{gardens_garden_menu},
+		gardens_property_menu_1			=> $$defaults{gardens_property_menu_1},
+		gardens_property_menu_2			=> $$defaults{gardens_property_menu_2},
 		joiner							=> $$defaults{joiner},
 		object_menu						=> $$defaults{object_menu},
+		properties_current_property_id	=> $properties_current_property_id,
+		properties_property_menu		=> $$defaults{properties_property_menu},
 	);
 
 } # End of homepage.

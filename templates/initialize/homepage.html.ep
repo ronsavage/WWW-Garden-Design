@@ -70,10 +70,10 @@
 		</form>
 	</div>
 	<div id = 'global_property_tab'>
-%= include 'initialize/property', full_property_menu => $full_property_menu
+%= include 'initialize/property', properties_property_menu => $properties_property_menu
 	</div>
 	<div id = 'global_garden_tab'>
-%= include 'initialize/garden', garden_garden_menu => $garden_garden_menu, garden_property_menu_1 => $garden_property_menu_1, garden_property_menu_2 => $garden_property_menu_2
+%= include 'initialize/garden', gardens_garden_menu => $gardens_garden_menu, gardens_property_menu_1 => $gardens_property_menu_1, gardens_property_menu_2 => $gardens_property_menu_2
 	</div>
 	<div id = 'global_object_tab'>
 %= include 'initialize/object', object_menu => $object_menu
@@ -112,12 +112,12 @@ var attribute_types_table			= [];
 var chosen_thing					= '';	// These are the current ids within each menu, for use in Ajax calls:
 var design_current_garden_id		= 0;	// o Garden menu on the Design tab.
 var design_current_property_id		= 0;	// o Property menu on the Design tab.
-var full_current_property_id		= <%== $garden_current_property_id_2 %>;	// o Property menu on the Properties tab.
-var full_property_table				= [];
-var garden_current_garden_id		= <%== $garden_current_garden_id %>;		// o Update/delete garden menu on the Gardens tab.
-var garden_current_property_id_1	= <%== $garden_current_property_id_2 %>;	// o Update/delete garden property menu on the Gardens tab.
-var garden_current_property_id_2	= <%== $garden_current_property_id_2 %>;	// o New garden property menu on the Gardens tab.
-var garden_table					= [];
+var properties_current_property_id	= <%== $properties_current_property_id %>;	// o Property menu on the Properties tab.
+var properties_table				= [];	// All properties, even if they don't have gardens.
+var gardens_current_garden_id		= <%== $gardens_current_garden_id %>;		// o Update/delete garden menu on the Gardens tab.
+var gardens_current_property_id_1	= <%== $gardens_current_property_id_1 %>;	// o Update/delete garden property menu on the Gardens tab.
+var gardens_current_property_id_2	= <%== $properties_current_property_id %>;	// o New garden property menu on the Gardens tab.
+var gardens_table					= [];	// Just gardens, with their corresponding properties and designs.
 var object_table					= [];
 var window_width					= 0;
 var window_height					= 0;
@@ -321,7 +321,7 @@ function build_attribute_id(kind, name, value)
 
 // -----------------------------------------------
 
-function build_full_property_menu(property_id, jquery_id)
+function build_properties_property_menu(property_id, jquery_id)
 {
 	var html	= "<select id = '" + jquery_id + "'>";
 	var index	= -1;
@@ -329,10 +329,10 @@ function build_full_property_menu(property_id, jquery_id)
 	var id;
 	var name;
 
-	for (var i = 0; i < full_property_table.length; i++)
+	for (var i = 0; i < property_table.length; i++)
 	{
-		id		= full_property_table[i]['id'];
-		name	= full_property_table[i]['name'];
+		id		= property_table[i]['id'];
+		name	= property_table[i]['name'];
 
 		if (id == property_id)
 		{
@@ -360,25 +360,25 @@ function build_full_property_menu(property_id, jquery_id)
 	.empty()
 	.append(html);
 
-	if (jquery_id == 'full_property_menu')
+	if (jquery_id == 'properties_property_menu')
 	{
 		$(id)
 		.selectmenu
 		({
 			change: function(event, data)
 			{
-				full_property_menu_changed(data);
+				properties_property_menu_changed(data);
 			}
 		});
 	}
-	else if (jquery_id = 'garden_property_menu_1')
+	else if (jquery_id = 'gardens_property_menu_1')
 	{
 		$(id)
 		.selectmenu
 		({
 			change: function(event, data)
 			{
-				garden_property_menu_1_changed(data);
+				gardens_property_menu_1_changed(data);
 			}
 		});
 	}
@@ -389,14 +389,14 @@ function build_full_property_menu(property_id, jquery_id)
 		({
 			change: function(event, data)
 			{
-				garden_property_menu_2_changed(data);
+				gardens_property_menu_2_changed(data);
 			}
 		});
 	}
 
 	return index;
 
-} // End of build_full_property_menu.
+} // End of build_properties_property_menu.
 
 // -----------------------------------------------
 
@@ -444,14 +444,14 @@ function build_garden_menu(property_id, garden_id, jquery_id)
 
 	// Warning: These 2 calls to selectmenu() are mandatory.
 
-	if (jquery_id == 'garden_garden_menu')
+	if (jquery_id == 'gardens_garden_menu')
 	{
 		$(id)
 		.selectmenu
 		({
 			change: function(event, data)
 			{
-				garden_garden_menu_changed(data);
+				gardens_garden_menu_changed(data);
 			}
 		});
 	}
@@ -623,7 +623,7 @@ function design_property_menu_changed(data)
 // -----------------------------------------------
 // Note: Changed means the user changed the selected item.
 
-function full_property_menu_changed(data)
+function properties_property_menu_changed(data)
 {
 	//	for( key in data )
 	//	{
@@ -634,11 +634,11 @@ function full_property_menu_changed(data)
 	//	o label => The property item's text (name column value).
 	//	o value => The property item's # (primary key column value).
 
-	full_current_property_id = data.item.value;
+	properties_current_property_id = data.item.value;
 
-	for (var i = 0; i < full_property_table.length; i++)
+	for (var i = 0; i < property_table.length; i++)
 	{
-		if (full_property_table[i]['id'] == full_current_property_id)
+		if (property_table[i]['id'] == properties_current_property_id)
 		{
 			set_full_property_fields(i);
 
@@ -646,12 +646,12 @@ function full_property_menu_changed(data)
 		}
 	}
 
-} // End of full_property_menu_changed.
+} // End of properties_property_menu_changed.
 
 // -----------------------------------------------
 // Note: Changed means the user changed the selected item.
 
-function garden_garden_menu_changed(data)
+function gardens_garden_menu_changed(data)
 {
 	//	for( key in data )
 	//	{
@@ -674,12 +674,12 @@ function garden_garden_menu_changed(data)
 		}
 	}
 
-} // End of garden_garden_menu_changed.
+} // End of gardens_garden_menu_changed.
 
 // -----------------------------------------------
 // Note: Changed means the user changed the selected item.
 
-function garden_property_menu_1_changed(data)
+function gardens_property_menu_1_changed(data)
 {
 	//	for( key in data )
 	//	{
@@ -697,7 +697,7 @@ function garden_property_menu_1_changed(data)
 		if (garden_table[i]['property_id'] == garden_current_property_id_1)
 		{
 			garden_current_garden_id	= garden_table[i]['id'];
-			index						= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'garden_garden_menu');
+			index						= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'gardens_garden_menu');
 
 			set_garden_fields_1(index);
 
@@ -705,12 +705,12 @@ function garden_property_menu_1_changed(data)
 		}
 	}
 
-} // End of garden_property_menu_1_changed.
+} // End of gardens_property_menu_1_changed.
 
 // -----------------------------------------------
 // Note: Changed means the user changed the selected item.
 
-function garden_property_menu_2_changed(data)
+function gardens_property_menu_2_changed(data)
 {
 	//	for( key in data )
 	//	{
@@ -725,7 +725,7 @@ function garden_property_menu_2_changed(data)
 
 	set_garden_fields_2();
 
-} // End of garden_property_menu_2_changed.
+} // End of gardens_property_menu_2_changed.
 
 // -----------------------------------------------
 
@@ -831,11 +831,11 @@ function get_design_image_size_string()
 } // End of get_design_image_size_string.
 
 // -----------------------------------------------
-// Warning: This function cannot be used to populate garden_garden_menu_span
+// Warning: This function cannot be used to populate gardens_garden_menu_span
 // since that involves changing the DOM, but the function is called from within
 // the document ready context which assumes the DOM has stopped changing.
 
-function get_full_property_table()
+function get_property_table()
 {
 	$.get
 	(
@@ -843,17 +843,17 @@ function get_full_property_table()
 		null,
 		function(json)
 		{
-			full_property_table = json;
+			property_table = json;
 
 			set_full_property_fields(0);
 		},
 		'json'
 	);
 
-} // End of get_full_property_table.
+} // End of get_property_table.
 
 // -----------------------------------------------
-// Warning: This function cannot be used to populate garden_garden_menu_span
+// Warning: This function cannot be used to populate gardens_garden_menu_span
 // since that involves changing the DOM, but the function is called from within
 // the document ready context which assumes the DOM has stopped changing.
 
@@ -896,7 +896,7 @@ function get_object_table()
 			// because when placed there it pauses for 15 seconds.
 
 			get_garden_table();
-			get_full_property_table();
+			get_property_table();
 		},
 		'json'
 	);
@@ -1290,16 +1290,16 @@ function process_design_save(flowers, garden_name, property_name)
 
 function set_full_property_fields(i)
 {
-	full_current_property_id = full_property_table[i]['id'];
+	properties_current_property_id = property_table[i]['id'];
 
 	$('#full_property_description')
-	.val(full_property_table[i]['description']);
+	.val(property_table[i]['description']);
 
 	$('#full_property_name')
-	.val(full_property_table[i]['name']);
+	.val(property_table[i]['name']);
 
-	$('#full_property_publish') // In full_property_table, do not use the 'publish' (Yes/No) string!
-	.prop('checked', (full_property_table[i]['publish'] == 'Yes') ? true : false);
+	$('#full_property_publish') // In property_table, do not use the 'publish' (Yes/No) string!
+	.prop('checked', (property_table[i]['publish'] == 'Yes') ? true : false);
 
 } // End of set_full_property_fields.
 
@@ -1534,9 +1534,9 @@ function submit_new_garden()
 		return;
 	}
 
-	var index			= garden_property_menu_2.selectedIndex;
-	var property_name	= garden_property_menu_2.options[index].text;
-	var property_id		= garden_property_menu_2.options[index].value; // Not used.
+	var index			= gardens_property_menu_2.selectedIndex;
+	var property_name	= gardens_property_menu_2.options[index].text;
+	var property_id		= gardens_property_menu_2.options[index].value; // Not used.
 
 	$.post
 	(
@@ -1559,8 +1559,8 @@ function submit_new_garden()
 			garden_current_garden_id		= packet.message.garden_id;
 			garden_table					= packet.garden_table;
 			garden_current_property_id_1	= garden_current_property_id_2;
-			index							= build_full_property_menu(garden_current_property_id_1, 'garden_property_menu_1');
-			index							= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'garden_garden_menu');
+			index							= build_properties_property_menu(garden_current_property_id_1, 'gardens_property_menu_1');
+			index							= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'gardens_garden_menu');
 
 			set_garden_fields_1(index);
 			set_garden_fields_2();
@@ -1599,14 +1599,14 @@ function submit_new_property(action)
 			.empty()
 			.append(packet.message.cooked);
 
-			full_current_property_id		= packet.message.property_id;
+			properties_current_property_id	= packet.message.property_id;
 			garden_current_property_id_2	= packet.message.property_id;
-			full_property_table				= packet.property_table;
-			index							= build_full_property_menu(full_current_property_id, 'full_property_menu');
+			property_table					= packet.property_table;
+			index							= build_properties_property_menu(properties_current_property_id, 'properties_property_menu');
 
 			set_full_property_fields(index);
 
-			index = build_full_property_menu(garden_current_property_id_2, 'garden_property_menu_2');
+			index = build_properties_property_menu(garden_current_property_id_2, 'gardens_property_menu_2');
 
 			set_full_property_fields(index);
 		},
@@ -1654,9 +1654,9 @@ function submit_object()
 
 function submit_old_garden(action)
 {
-	var index			= garden_property_menu_1.selectedIndex;
-	var property_name	= garden_property_menu_1.options[index].text;
-	var property_id		= garden_property_menu_1.options[index].value; // Not used.
+	var index			= gardens_property_menu_1.selectedIndex;
+	var property_name	= gardens_property_menu_1.options[index].text;
+	var property_id		= gardens_property_menu_1.options[index].value; // Not used.
 
 	$.post
 	(
@@ -1677,7 +1677,7 @@ function submit_old_garden(action)
 			.append(packet.message.cooked);
 
 			garden_table				= packet.garden_table;
-			index						= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'garden_garden_menu');
+			index						= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'gardens_garden_menu');
 			garden_current_garden_id	= garden_table[index]['id']; // Update because previous one might have been deleted.
 
 			set_garden_fields_1(index);
@@ -1720,7 +1720,7 @@ function submit_old_property(action)
 		{
 			action:			action,
 			description:	$('#full_property_description').val(),
-			id:				full_current_property_id,
+			id:				properties_current_property_id,
 			name:			name,
 			publish:		$('#full_property_publish').prop('checked') ? 'Yes' : 'No'
 		},
@@ -1730,16 +1730,16 @@ function submit_old_property(action)
 			.empty()
 			.append(packet.message.cooked);
 
-			full_current_property_id	= packet.message.property_id;
-			full_property_table			= packet.property_table;
-			index						= build_full_property_menu(full_current_property_id, 'full_property_menu');
+			properties_current_property_id	= packet.message.property_id;
+			property_table				= packet.property_table;
+			index						= build_properties_property_menu(properties_current_property_id, 'properties_property_menu');
 
 			set_full_property_fields(index);
 
 			if (action == 'delete')
 			{
-				index							= build_full_property_menu(garden_current_property_id_2, 'garden_property_menu_2');
-				garden_current_property_id_2	= full_property_table[index]['id']; // Update because previous one might have been deleted.
+				index							= build_properties_property_menu(garden_current_property_id_2, 'gardens_property_menu_2');
+				garden_current_property_id_2	= property_table[index]['id']; // Update because previous one might have been deleted.
 			}
 		},
 		'json'
@@ -1807,7 +1807,7 @@ function submit_search()
 $(function()
 {
 	$('.design_garden_toolbar').controlgroup();
-	$('.garden_garden_toolbar').controlgroup();
+	$('.gardens_gardentoolbar').controlgroup();
 	$('.object_toolbar').controlgroup();
 
 	window_width	= window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -1834,39 +1834,39 @@ $(function()
 		}
 	});
 
-	$('#full_property_menu')
+	$('#properties_property_menu')
 	.selectmenu
 	({
 		change: function(event, data)
 		{
-			full_property_menu_changed(data);
+			properties_property_menu_changed(data);
 		}
 	});
 
-	$('#garden_garden_menu')
+	$('#gardens_garden_menu')
 	.selectmenu
 	({
 		change: function(event, data)
 		{
-			garden_garden_menu_changed(data);
+			gardens_garden_menu_changed(data);
 		}
 	});
 
-	$('#garden_property_menu_1')
+	$('#gardens_property_menu_1')
 	.selectmenu
 	({
 		change: function(event, data)
 		{
-			garden_property_menu_1_changed(data);
+			gardens_property_menu_1_changed(data);
 		}
 	});
 
-	$('#garden_property_menu_2')
+	$('#gardens_property_menu_2')
 	.selectmenu
 	({
 		change: function(event, data)
 		{
-			garden_property_menu_2_changed(data);
+			gardens_property_menu_2_changed(data);
 		}
 	});
 

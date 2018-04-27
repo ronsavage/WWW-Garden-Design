@@ -83,9 +83,112 @@ sub add_flower
 } # End of add_flower.
 
 # -----------------------------------------------
-# This version of build_property_menu() includes properties with and without gardens.
 
-sub build_full_property_menu
+sub build_garden_menu
+{
+	my($self, $gardens, $controller, $jquery_id) = @_;
+	my($html)			= "<select id = '$jquery_id' name = '$jquery_id'>";
+	my($last_name)		= '';
+	my($property_id)	= $controller -> session('current_property_id');
+
+	my($selected);
+
+	for my $garden (@$gardens)
+	{
+		# This test assumes that within a property, all garden names are unique.
+
+		next if ($property_id ne $$garden{property_id});
+
+		if ($last_name eq '')
+		{
+			# Set this on the 1st menu item.
+
+			$selected = 'selected';
+		}
+
+		$last_name	= $$garden{name};
+		$html		.= "<option $selected value = '$$garden{id}'>$last_name</option>";
+		$selected	= '';
+	}
+
+	$html .= '</select>';
+
+	return $html;
+
+} # End of build_garden_menu.
+
+# -----------------------------------------------
+
+sub build_gardens_property_menu
+{
+	my($self, $gardens, $controller, $jquery_id) = @_;
+	my($html)		= "<select id = '$jquery_id' name = '$jquery_id'>";
+	my($last_name)	= '';
+
+	my($selected);
+
+	for my $garden (@$gardens)
+	{
+		if ($last_name eq '')
+		{
+			# Set this on the 1st menu item.
+
+			$selected = 'selected';
+
+			# current_property_id is used in build_garden_menu().
+
+			$controller -> session(current_property_id => $$garden{property_id});
+		}
+
+		next if ($last_name eq $$garden{property_name});
+
+		$last_name	= $$garden{property_name};
+		$html		.= "<option $selected value = '$$garden{property_id}'>$last_name</option>";
+		$selected	= '';
+	}
+
+	$html .= '</select>';
+
+	return $html;
+
+} # End of build_gardens_property_menu.
+
+# -----------------------------------------------
+
+sub build_object_menu
+{
+	my($self, $objects, $controller) = @_;
+	my($html)		= "<div class = 'object_toolbar'>"
+						. "<select id = 'object_menu'>";
+	my($last_name)  = '';
+
+	my($selected);
+
+	for my $object (@$objects)
+	{
+		if ($last_name eq '')
+		{
+			# Set this on the 1st menu item.
+
+			$selected = 'selected';
+		}
+
+		next if ($last_name eq $$object{name});
+
+		$last_name	= $$object{name};
+		$html		.= "<option $selected value = '$$object{id}'>$last_name</option>";
+		$selected	= '';
+	}
+
+	$html .= "</select>\n</div>\n";
+
+	return $html;
+
+} # End of build_object_menu.
+
+# -----------------------------------------------
+
+sub build_properties_property_menu
 {
 	my($self, $properties, $jquery_id, $default_id) = @_;
 	my($html)		= "<select id = '$jquery_id' name = '$jquery_id'>";
@@ -126,112 +229,7 @@ sub build_full_property_menu
 
 	return $html;
 
-} # End of build_full_property_menu.
-
-# -----------------------------------------------
-
-sub build_garden_menu
-{
-	my($self, $property_gardens, $controller, $jquery_id) = @_;
-	my($html)			= "<select id = '$jquery_id' name = '$jquery_id'>";
-	my($last_name)		= '';
-	my($property_id)	= $controller -> session('current_property_id');
-
-	my($selected);
-
-	for my $garden (@$property_gardens)
-	{
-		# This test assumes that within a property, all garden names are unique.
-
-		next if ($property_id ne $$garden{property_id});
-
-		if ($last_name eq '')
-		{
-			# Set this on the 1st menu item.
-
-			$selected = 'selected';
-		}
-
-		$last_name	= $$garden{name};
-		$html		.= "<option $selected value = '$$garden{id}'>$last_name</option>";
-		$selected	= '';
-	}
-
-	$html .= '</select>';
-
-	return $html;
-
-} # End of build_garden_menu.
-
-# -----------------------------------------------
-
-sub build_object_menu
-{
-	my($self, $objects, $controller) = @_;
-	my($html)		= "<div class = 'object_toolbar'>"
-						. "<select id = 'object_menu'>";
-	my($last_name)  = '';
-
-	my($selected);
-
-	for my $object (@$objects)
-	{
-		if ($last_name eq '')
-		{
-			# Set this on the 1st menu item.
-
-			$selected = 'selected';
-		}
-
-		next if ($last_name eq $$object{name});
-
-		$last_name	= $$object{name};
-		$html		.= "<option $selected value = '$$object{id}'>$last_name</option>";
-		$selected	= '';
-	}
-
-	$html .= "</select>\n</div>\n";
-
-	return $html;
-
-} # End of build_object_menu.
-
-# -----------------------------------------------
-# This version of full_build_property_menu() only includes properties with gardens.
-
-sub build_property_menu
-{
-	my($self, $property_gardens, $controller, $jquery_id) = @_;
-	my($html)		= "<select id = '$jquery_id' name = '$jquery_id'>";
-	my($last_name)	= '';
-
-	my($selected);
-
-	for my $garden (@$property_gardens)
-	{
-		if ($last_name eq '')
-		{
-			# Set this on the 1st menu item.
-
-			$selected = 'selected';
-
-			# current_property_id is used in build_garden_menu().
-
-			$controller -> session(current_property_id => $$garden{property_id});
-		}
-
-		next if ($last_name eq $$garden{property_name});
-
-		$last_name	= $$garden{property_name};
-		$html		.= "<option $selected value = '$$garden{property_id}'>$last_name</option>";
-		$selected	= '';
-	}
-
-	$html .= '</select>';
-
-	return $html;
-
-} # End of build_property_menu.
+} # End of build_properties_property_menu.
 
 # --------------------------------------------------
 

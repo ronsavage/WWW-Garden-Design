@@ -15,9 +15,9 @@
 		</tr>
 		<tr>
 			<td align = 'center' colspan = '4'>
-				<div class = 'garden_garden_toolbar'> <!-- Class not defined -->
-					<span id = 'garden_property_menu_1_span'><%== $garden_property_menu_1 %></span>
-					<span id = 'garden_garden_menu_span'><%== $garden_garden_menu %></span>
+				<div class = 'gardens_gardentoolbar'> <!-- Class not defined -->
+					<span id = 'gardens_property_menu_1_span'><%== $gardens_property_menu_1 %></span>
+					<span id = 'gardens_garden_menu_span'><%== $gardens_garden_menu %></span>
 				</div>
 			</td>
 		</tr>
@@ -74,8 +74,8 @@
 		</tr>
 		<tr>
 			<td align = 'center' colspan = '3'>
-				<div class = 'garden_garden_toolbar'> <!-- Class not defined -->
-					<span id = 'garden_property_menu_2_span'><%== $garden_property_menu_2 %></span>
+				<div class = 'gardens_gardentoolbar'> <!-- Class not defined -->
+					<span id = 'gardens_property_menu_2_span'><%== $gardens_property_menu_2 %></span>
 				</div>
 			</td>
 		</tr>
