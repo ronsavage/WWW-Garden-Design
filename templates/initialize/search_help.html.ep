@@ -19,19 +19,19 @@
 						<td>They are used here just for clarity.</td>
 					</tr>
 					<tr>
-						<td>o Contiguous spaces are reduced to a single space:</td>
+						<td>o Contiguous spaces are reduced to a single space: </td>
 						<td>(1) "Guinea&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Flower" is the same as "Guinea Flower".</td>
 					</tr>
 					<tr>
-						<td>o A word or phrase in any case:</td>
+						<td>o A word or phrase in any case: </td>
 						<td>(1) "cordatum", (2) "Sweet Scented Basil".</td>
 					</tr>
 					<tr>
-						<td>o A search by size. Spaces around '<', '=' and '>' are optional. If cm and m absent, m is assumed:</td>
+						<td>o A search by size. Spaces around '<', '=' and '>' are optional. If cm and m absent, m is assumed: </td>
 						<td>(1) "width<90cm", (2) "height = 1.1m", (3) "h > 2".</td>
 					</tr>
 					<tr>
-						<td>o A size of >= 100cm is converted into m:</td>
+						<td>o A size of >= 100cm is converted into m: </td>
 						<td>(1) "width < 200cm" is the same as "width < 2m".</td>
 					</tr>
 				</table>

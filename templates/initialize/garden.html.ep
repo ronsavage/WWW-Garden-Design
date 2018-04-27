@@ -31,11 +31,11 @@
 			<td align = 'left' colspan = '2'><input id = 'garden_name' type = 'text' size = '50' maxlength = '100'></td>
 		</tr>
 		<tr>
-			<td>Description:</td>
+			<td>Description: </td>
 			<td align = 'left' colspan = '2'><input id = 'garden_description' type = 'text' size = '50' maxlength = '100'></td>
 		</tr>
 		<tr>
-			<td>Publish garden:</td>
+			<td>Publish garden: </td>
 			<td align = 'left' colspan = '2'><input type = 'checkbox' value = '' id = 'garden_publish'/></td>
 		</tr>
 		<tr>
@@ -87,11 +87,11 @@
 			<td align = 'left' colspan = '2'><input id = 'new_garden_name' type = 'text' size = '50' maxlength = '100'></td>
 		</tr>
 		<tr>
-			<td>Description:</td>
+			<td>Description: </td>
 			<td align = 'left' colspan = '2'><input id = 'new_garden_description' type = 'text' size = '50' maxlength = '100'></td>
 		</tr>
 		<tr>
-			<td>Publish garden:</td>
+			<td>Publish garden: </td>
 			<td align = 'left' colspan = '2'><input type = 'checkbox' value = '' id = 'new_garden_publish'/></td>
 		</tr>
 		<tr>

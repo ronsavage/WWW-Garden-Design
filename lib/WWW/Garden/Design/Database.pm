@@ -87,8 +87,8 @@ sub add_flower
 
 sub build_full_property_menu
 {
-	my($self, $properties, $id, $default_id) = @_;
-	my($html)		= "<select id = '$id' name = '$id'>";
+	my($self, $properties, $jquery_id, $default_id) = @_;
+	my($html)		= "<select id = '$jquery_id' name = '$jquery_id'>";
 	my($last_name)	= '';
 
 	my($name);
@@ -132,8 +132,8 @@ sub build_full_property_menu
 
 sub build_garden_menu
 {
-	my($self, $property_gardens, $controller, $id) = @_;
-	my($html)			= "<select id = '$id' name = '$id'>";
+	my($self, $property_gardens, $controller, $jquery_id) = @_;
+	my($html)			= "<select id = '$jquery_id' name = '$jquery_id'>";
 	my($last_name)		= '';
 	my($property_id)	= $controller -> session('current_property_id');
 
@@ -201,8 +201,8 @@ sub build_object_menu
 
 sub build_property_menu
 {
-	my($self, $property_gardens, $controller, $id) = @_;
-	my($html)		= "<select id = '$id' name = '$id'>";
+	my($self, $property_gardens, $controller, $jquery_id) = @_;
+	my($html)		= "<select id = '$jquery_id' name = '$jquery_id'>";
 	my($last_name)	= '';
 
 	my($selected);

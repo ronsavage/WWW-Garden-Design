@@ -7,7 +7,7 @@
 		</tr>
 		% for my $check_box (@$search_check_boxes) {
 		<tr>
-			<td><%== $$check_box[0] %>:</td>
+			<td><%== $$check_box[0] %>: </td>
 			<td>
 				<%== $$check_box[1] %>
 			</td>
@@ -19,7 +19,7 @@
 	</table>
 	<table align = 'center'>
 		<tr>
-			<td>Search text:</td>
+			<td>Search text: </td>
 			<td align = 'left'><input id = 'search_text' type = 'text' size = '30' maxlength = '100' value = ''></td>
 		</tr>
 		<tr>

@@ -23,19 +23,19 @@
 						<td align = 'left'><input id = 'flower_scientific_name' name = 'flower_scientific_name' type = 'text' size = '50' maxlength = '100'></td>
 					</tr>
 					<tr>
-						<td>Aliases:</td>
+						<td>Aliases: </td>
 						<td align = 'left'><input id = 'flower_aliases' name = 'flower_aliases' type = 'text' size = '50' maxlength = '255'></td>
 					</tr>
 					<tr>
-						<td>Height:</td>
+						<td>Height: </td>
 						<td align = 'left'><input id = 'flower_height' name = 'flower_height' type = 'text' size = '10'></td>
 					</tr>
 					<tr>
-						<td>Width:</td>
+						<td>Width: </td>
 						<td align = 'left'><input id = 'flower_width' name = 'flower_width' type = 'text' size = '10'></td>
 					</tr>
 					<tr>
-						<td>Publish:</td>
+						<td>Publish: </td>
 						<td align = 'left'><input type = 'checkbox' value = '' id = 'flower_publish'/></td>
 					</tr>
 					<tr>
