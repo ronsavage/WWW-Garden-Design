@@ -1,0 +1,9 @@
+[Fri Apr 27 11:53:26 2018] [info] ------------------------------
+[Fri Apr 27 11:53:26 2018] [debug] POST "/AddProperty"
+[Fri Apr 27 11:53:26 2018] [debug] Routing to controller "WWW::Garden::Design::Controller::AddProperty" and action "process"
+[Fri Apr 27 11:53:26 2018] [debug] AddProperty.process()
+[Fri Apr 27 11:53:26 2018] [debug] param(action) => update
+[Fri Apr 27 11:53:26 2018] [debug] param(id) => 2
+[Fri Apr 27 11:53:26 2018] [debug] param(publish) => No
+[Fri Apr 27 11:53:26 2018] [error] The property name is mandatory
+[Fri Apr 27 11:53:26 2018] [debug] 200 OK (0.004859s, 205.804/s)

@@ -1690,7 +1690,7 @@ function submit_old_garden(action)
 function submit_old_property(action)
 {
 	var has_gardens	= false;
-	var name		= $('#full_property_name').val();
+	var name		= $('#properties_property_name').val();
 
 	for (var i = 0; i < garden_table.length; i++)
 	{
@@ -1717,10 +1717,10 @@ function submit_old_property(action)
 		'/AddProperty', // See routes at end of WWW::Garden::Design.startup().
 		{
 			action:			action,
-			description:	$('#full_property_description').val(),
+			description:	$('#properties_property_description').val(),
 			id:				properties_current_property_id,
 			name:			name,
-			publish:		$('#full_property_publish').prop('checked') ? 'Yes' : 'No'
+			publish:		$('#properties_property_publish').prop('checked') ? 'Yes' : 'No'
 		},
 		function(packet)
 		{
@@ -1729,8 +1729,8 @@ function submit_old_property(action)
 			.append(packet.message.cooked);
 
 			properties_current_property_id	= packet.message.property_id;
-			property_table				= packet.property_table;
-			index						= build_properties_property_menu(properties_current_property_id, 'properties_property_menu');
+			property_table					= packet.property_table;
+			index							= build_properties_property_menu(properties_current_property_id, 'properties_property_menu');
 
 			set_property_fields(index);
 
