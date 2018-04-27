@@ -1599,8 +1599,8 @@ function submit_new_property(action)
 			.empty()
 			.append(packet.message.cooked);
 
-			properties_current_property_id	= packet.message.property_id;
-			garden_current_property_id_2	= packet.message.property_id;
+			properties_current_property_id	= packet.message.property_id;	// On Properties tab.
+			garden_current_property_id_2	= packet.message.property_id;	// On Gardens tab.
 			property_table					= packet.property_table;
 			index							= build_properties_property_menu(properties_current_property_id, 'properties_property_menu');
 
@@ -1976,7 +1976,23 @@ $(function()
 		return false;
 	});
 
-	$('#garden_form')
+	$('#garden_form_1')
+	.keypress
+	(
+		function(event)
+		{
+			if (event.which == '13')
+			{
+				event.preventDefault();
+			}
+		}
+	)
+	.submit(function()
+	{
+		return false;
+	});
+
+	$('#garden_form_2')
 	.keypress
 	(
 		function(event)
