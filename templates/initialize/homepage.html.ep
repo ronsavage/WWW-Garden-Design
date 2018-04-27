@@ -403,7 +403,7 @@ function build_gardens_property_menu(property_id, garden_id, jquery_id)
 
 	for (var i = 0; i < gardens_table.length; i++)
 	{
-		if (id == property_id)
+		if (gardens_table[i]['property_id'] == property_id)
 		{
 			name				= gardens_table[i]['name'];
 			garden_ids[name]	= gardens_table[i]['id'];
@@ -422,7 +422,6 @@ function build_gardens_property_menu(property_id, garden_id, jquery_id)
 	var html = "<select id = '" + jquery_id + "'>";
 
 	var id;
-	var name;
 
 	for (var i = 0; i < garden_names.length; i++)
 	{
@@ -688,7 +687,7 @@ function design_property_menu_changed(data)
 		if (garden_table[i]['property_id'] == design_current_property_id)
 		{
 			design_current_garden_id	= garden_table[i]['id'];
-			index						= build_gardens_property_menu(design_current_property_id, design_current_garden_id, 'design_garden_menu');
+			index						= build_garden_menu(design_current_property_id, design_current_garden_id, 'design_garden_menu');
 
 			// No need to call set_garden_fields_1(index) because the fields are not used on the Design tab.
 
@@ -775,7 +774,12 @@ function gardens_property_menu_1_changed(data)
 		if (garden_table[i]['property_id'] == garden_current_property_id_1)
 		{
 			garden_current_garden_id	= garden_table[i]['id'];
-			index						= build_gardens_property_menu(garden_current_property_id_1, garden_current_garden_id, 'gardens_garden_menu');
+			index						= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'gardens_garden_menu');
+
+			alert('gardens_property_menu_1_changed()'
+				+ '. garden_current_property_id_1: ' + garden_current_property_id_1
+				+ '. garden_current_garden_id: ' + garden_current_garden_id
+				+ '. index: ' + index);
 
 			set_garden_fields_1(index);
 
@@ -1639,6 +1643,12 @@ function submit_new_garden()
 			garden_current_property_id_1	= garden_current_property_id_2;
 			index							= build_gardens_property_menu(garden_current_property_id_1, 'gardens_property_menu_1');
 			index							= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'gardens_garden_menu');
+
+			alert('submit_new_garden()'
+				+ '. garden_current_property_id_1: ' + garden_current_property_id_1
+				+ '. garden_current_property_id_2: ' + garden_current_property_id_2
+				+ '. garden_current_garden_id: ' + garden_current_garden_id
+				+ '. index: ' + index);
 
 			set_garden_fields_1(index);
 			set_garden_fields_2();
