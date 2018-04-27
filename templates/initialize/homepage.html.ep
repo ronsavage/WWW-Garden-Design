@@ -640,7 +640,7 @@ function properties_property_menu_changed(data)
 	{
 		if (property_table[i]['id'] == properties_current_property_id)
 		{
-			set_full_property_fields(i);
+			set_property_fields(i);
 
 			break;
 		}
@@ -845,7 +845,7 @@ function get_property_table()
 		{
 			property_table = json;
 
-			set_full_property_fields(0);
+			set_property_fields(0);
 		},
 		'json'
 	);
@@ -1288,20 +1288,20 @@ function process_design_save(flowers, garden_name, property_name)
 
 // -----------------------------------------------
 
-function set_full_property_fields(i)
+function set_property_fields(i)
 {
 	properties_current_property_id = property_table[i]['id'];
 
-	$('#full_property_description')
+	$('#properties_property_description')
 	.val(property_table[i]['description']);
 
-	$('#full_property_name')
+	$('#properties_property_name')
 	.val(property_table[i]['name']);
 
-	$('#full_property_publish') // In property_table, do not use the 'publish' (Yes/No) string!
+	$('#properties_property_publish') // In property_table, do not use the 'publish' (Yes/No) string!
 	.prop('checked', (property_table[i]['publish'] == 'Yes') ? true : false);
 
-} // End of set_full_property_fields.
+} // End of set_property_fields.
 
 // -----------------------------------------------
 
@@ -1604,11 +1604,9 @@ function submit_new_property(action)
 			property_table					= packet.property_table;
 			index							= build_properties_property_menu(properties_current_property_id, 'properties_property_menu');
 
-			set_full_property_fields(index);
+			set_property_fields(index);
 
 			index = build_properties_property_menu(garden_current_property_id_2, 'gardens_property_menu_2');
-
-			set_full_property_fields(index);
 		},
 		'json'
 	);
@@ -1734,7 +1732,7 @@ function submit_old_property(action)
 			property_table				= packet.property_table;
 			index						= build_properties_property_menu(properties_current_property_id, 'properties_property_menu');
 
-			set_full_property_fields(index);
+			set_property_fields(index);
 
 			if (action == 'delete')
 			{
