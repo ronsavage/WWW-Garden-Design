@@ -700,34 +700,6 @@ function design_property_menu_changed(data)
 // -----------------------------------------------
 // Note: Changed means the user changed the selected item.
 
-function properties_property_menu_changed(data)
-{
-	//	for( key in data )
-	//	{
-	//		alert( "key is " + [ key ] + ", value is " + data[ key ] );
-	//	}
-
-	// Typical keys for data.item are:
-	//	o label => The property item's text (name column value).
-	//	o value => The property item's # (primary key column value).
-
-	properties_current_property_id = data.item.value;
-
-	for (var i = 0; i < property_table.length; i++)
-	{
-		if (property_table[i]['id'] == properties_current_property_id)
-		{
-			set_property_fields(i);
-
-			break;
-		}
-	}
-
-} // End of properties_property_menu_changed.
-
-// -----------------------------------------------
-// Note: Changed means the user changed the selected item.
-
 function gardens_garden_menu_changed(data)
 {
 	//	for( key in data )
@@ -786,6 +758,21 @@ function gardens_property_menu_1_changed(data)
 			break;
 		}
 	}
+
+	alert('Start');
+
+	$('#gardens_property_menu_1')
+	.find(':input')
+	.each
+	(
+		function()
+		{
+			alert(this.value);
+		}
+	)
+	.end();
+
+	alert('End');
 
 } // End of gardens_property_menu_1_changed.
 
@@ -1369,6 +1356,34 @@ function process_design_save(flowers, garden_name, property_name)
 } // End of process_design_save.
 
 // -----------------------------------------------
+// Note: Changed means the user changed the selected item.
+
+function properties_property_menu_changed(data)
+{
+	//	for( key in data )
+	//	{
+	//		alert( "key is " + [ key ] + ", value is " + data[ key ] );
+	//	}
+
+	// Typical keys for data.item are:
+	//	o label => The property item's text (name column value).
+	//	o value => The property item's # (primary key column value).
+
+	properties_current_property_id = data.item.value;
+
+	for (var i = 0; i < property_table.length; i++)
+	{
+		if (property_table[i]['id'] == properties_current_property_id)
+		{
+			set_property_fields(i);
+
+			break;
+		}
+	}
+
+} // End of properties_property_menu_changed.
+
+// -----------------------------------------------
 
 function set_property_fields(i)
 {
@@ -1920,15 +1935,6 @@ $(function()
 		}
 	});
 
-	$('#properties_property_menu')
-	.selectmenu
-	({
-		change: function(event, data)
-		{
-			properties_property_menu_changed(data);
-		}
-	});
-
 	$('#gardens_garden_menu')
 	.selectmenu
 	({
@@ -1962,6 +1968,15 @@ $(function()
 		change: function(event, data)
 		{
 			object_menu_changed(data);
+		}
+	});
+
+	$('#properties_property_menu')
+	.selectmenu
+	({
+		change: function(event, data)
+		{
+			properties_property_menu_changed(data);
 		}
 	});
 
