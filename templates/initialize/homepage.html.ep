@@ -759,20 +759,23 @@ function gardens_property_menu_1_changed(data)
 		}
 	}
 
-	alert('Start');
-
-	$('#gardens_property_menu_1')
-	.find(':input')
+	$('#gardens_property_menu_1_span')
+	.find('option')
 	.each
 	(
 		function()
 		{
-			alert(this.value);
+			$(this).attr('selected', false);
+
+			if (this.value == garden_current_property_id_1)
+			{
+				$(this).attr('selected', true);
+			}
+
+			//alert(this.value);
 		}
 	)
 	.end();
-
-	alert('End');
 
 } // End of gardens_property_menu_1_changed.
 
