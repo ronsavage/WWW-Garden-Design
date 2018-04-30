@@ -79,10 +79,10 @@ sub gardens
 	$self -> app -> log -> debug('GetTable.gardens()');
 
 	my($defaults)		= $self -> app -> defaults;
-	my($garden_table)	= $$defaults{db} -> read_gardens_table;
+	my($gardens_table)	= $$defaults{db} -> read_gardens_table;
 
-	$self -> app -> log -> debug('GetTable.gardens(). Size of garden_table: ' . scalar @$garden_table);
-	$self -> render(json => $garden_table);
+	$self -> app -> log -> debug('GetTable.gardens(). Size of gardens_table: ' . scalar @$gardens_table);
+	$self -> render(json => $gardens_table);
 
 } # End of gardens.
 
@@ -110,11 +110,11 @@ sub properties
 
 	$self -> app -> log -> debug('GetTable.properties()');
 
-	my($defaults)		= $self -> app -> defaults;
-	my($property_table)	= $$defaults{db} -> read_properties_table;
+	my($defaults)			= $self -> app -> defaults;
+	my($properties_table)	= $$defaults{db} -> read_properties_table;
 
-	$self -> app -> log -> debug('GetTable.properties(). Size of property_table: ' . scalar @$property_table);
-	$self -> render(json => $property_table);
+	$self -> app -> log -> debug('GetTable.properties(). Size of properties_table: ' . scalar @$properties_table);
+	$self -> render(json => $properties_table);
 
 } # End of properties.
 

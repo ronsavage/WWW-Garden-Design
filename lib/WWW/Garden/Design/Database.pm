@@ -927,10 +927,13 @@ sub process_garden_submit
 		$result = {raw => "Unrecognized action: $action. Must be one of 'save', 'update' or 'delete'", type => 'Error'};
 	}
 
+	$gardens_table = $self -> read_gardens_table;
+
 	return
 	{
-		garden_table	=> $self -> read_gardens_table,
-		message			=> $self -> format_raw_message($result),
+		gardens_property_menu	=> $self -> build_gardens_property_menu($gardens_table, $self, 'gardens_property_menu_1'),
+		gardens_table			=> $gardens_table,
+		message					=> $self -> format_raw_message($result),
 	};
 
 } # End of process_garden_submit.

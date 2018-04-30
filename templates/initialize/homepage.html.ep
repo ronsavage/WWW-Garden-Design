@@ -329,12 +329,12 @@ function build_garden_menu(property_id, garden_id, jquery_id)
 	var id;
 	var name;
 
-	for (var i = 0; i < garden_table.length; i++)
+	for (var i = 0; i < gardens_table.length; i++)
 	{
-		if (garden_table[i]['property_id'] == property_id)
+		if (gardens_table[i]['property_id'] == property_id)
 		{
-			id		= garden_table[i]['id'];
-			name	= garden_table[i]['name'];
+			id		= gardens_table[i]['id'];
+			name	= gardens_table[i]['name'];
 
 			if (id == garden_id)
 			{
@@ -387,6 +387,8 @@ function build_garden_menu(property_id, garden_id, jquery_id)
 } // End of build_garden_menu.
 
 // -----------------------------------------------
+// This function is only called from submit_new_garden(), which cannot change the property menu.
+// So its purpose is to update the gardens_garden_menu to include the new garden.
 
 function build_gardens_property_menu(property_id, garden_id, jquery_id)
 {
@@ -467,7 +469,7 @@ function build_gardens_property_menu(property_id, garden_id, jquery_id)
 		data.item		= new Object;
 		data.item.value	= property_id;
 
-		gardens_property_menu_1_changed(data);
+		gardens_property_menu_1_changed(data); // Calls build_garden_menu().
 	}
 
 	return index;
@@ -682,11 +684,11 @@ function design_property_menu_changed(data)
 	design_current_property_id	= data.item.value;
 	var garden_id		= 0;
 
-	for (var i = 0; i < garden_table.length; i++)
+	for (var i = 0; i < gardens_table.length; i++)
 	{
-		if (garden_table[i]['property_id'] == design_current_property_id)
+		if (gardens_table[i]['property_id'] == design_current_property_id)
 		{
-			design_current_garden_id	= garden_table[i]['id'];
+			design_current_garden_id	= gardens_table[i]['id'];
 			index						= build_garden_menu(design_current_property_id, design_current_garden_id, 'design_garden_menu');
 
 			// No need to call set_garden_fields_1(index) because the fields are not used on the Design tab.
@@ -713,9 +715,9 @@ function gardens_garden_menu_changed(data)
 
 	gardens_current_garden_id = data.item.value;
 
-	for (var i = 0; i < garden_table.length; i++)
+	for (var i = 0; i < gardens_table.length; i++)
 	{
-		if (garden_table[i]['id'] == gardens_current_garden_id)
+		if (gardens_table[i]['id'] == gardens_current_garden_id)
 		{
 			set_garden_fields_1(i);
 
@@ -741,9 +743,9 @@ function gardens_property_menu_1_changed(data)
 
 	gardens_current_property_id_1 = data.item.value;
 
-	for (var i = 0; i < garden_table.length; i++)
+	for (var i = 0; i < gardens_table.length; i++)
 	{
-		if (garden_table[i]['property_id'] == gardens_current_property_id_1)
+		if (gardens_table[i]['property_id'] == gardens_current_property_id_1)
 		{
 			index = build_garden_menu(gardens_current_property_id_1, gardens_current_garden_id, 'gardens_garden_menu');
 
@@ -758,8 +760,7 @@ function gardens_property_menu_1_changed(data)
 		}
 	}
 
-/*
-	$('#gardens_property_menu_1_span')
+	$('#gardens_property_menu_1')
 	.children()
 	.find('option')
 	.each
@@ -778,7 +779,6 @@ function gardens_property_menu_1_changed(data)
 		}
 	)
 	.end();
-*/
 
 } // End of gardens_property_menu_1_changed.
 
@@ -932,7 +932,7 @@ function get_property_table()
 // since that involves changing the DOM, but the function is called from within
 // the document ready context which assumes the DOM has stopped changing.
 
-function get_garden_table()
+function get_gardens_table()
 {
 	$.get
 	(
@@ -940,14 +940,14 @@ function get_garden_table()
 		null,
 		function(json)
 		{
-			garden_table = json;
+			gardens_table = json;
 
 			set_garden_fields_1(0);
 		},
 		'json'
 	);
 
-} // End of get_garden_table.
+} // End of get_gardens_table.
 
 // -----------------------------------------------
 // Warning: This function cannot be used to populate object_menu_span
@@ -967,11 +967,11 @@ function get_object_table()
 
 			set_object_fields(0);
 
-			// Warning: get_garden_table() is not called where get_object_table() is called,
+			// Warning: get_gardens_table() is not called where get_object_table() is called,
 			// because when placed there it pauses for 15 seconds.
 
-			get_garden_table();
-			get_property_table();
+			get_gardens_table();
+			get_properties_table();
 		},
 		'json'
 	);
@@ -1411,13 +1411,13 @@ function set_property_fields(i)
 function set_garden_fields_1(i)
 {
 	$('#garden_description')
-	.val(garden_table[i]['description']);
+	.val(gardens_table[i]['description']);
 
 	$('#garden_name')
-	.val(garden_table[i]['name']);
+	.val(gardens_table[i]['name']);
 
-	$('#garden_publish') // In garden_table, do not use the 'garden_publish' (Yes/No) string!
-	.prop('checked', (garden_table[i]['publish'] == 'Yes') ? true : false);
+	$('#garden_publish') // In gardens_table, do not use the 'garden_publish' (Yes/No) string!
+	.prop('checked', (gardens_table[i]['publish'] == 'Yes') ? true : false);
 
 } // End of set_garden_fields_1.
 
@@ -1431,7 +1431,7 @@ function set_garden_fields_2()
 	$('#new_garden_name')
 	.val('');
 
-	$('#new_garden_publish') // In garden_table, do not use the 'garden_publish' (Yes/No) string!
+	$('#new_garden_publish') // In gardens_table, do not use the 'garden_publish' (Yes/No) string!
 	.prop('checked', false);
 
 } // End of set_garden_fields_2.
@@ -1660,7 +1660,7 @@ function submit_new_garden()
 			.append(packet.message.cooked);
 
 			gardens_current_garden_id		= packet.message.garden_id;
-			garden_table					= packet.garden_table;
+			gardens_table					= packet.gardens_table;
 			gardens_current_property_id_1	= gardens_current_property_id_2;
 			index							= build_gardens_property_menu(gardens_current_property_id_1, 'gardens_property_menu_1');
 
@@ -1775,9 +1775,9 @@ function submit_old_garden(action)
 			.empty()
 			.append(packet.message.cooked);
 
-			garden_table				= packet.garden_table;
+			gardens_table				= packet.gardens_table;
 			index						= build_garden_menu(gardens_current_property_id_1, gardens_current_garden_id, 'gardens_garden_menu');
-			gardens_current_garden_id	= garden_table[index]['id']; // Update because previous one might have been deleted.
+			gardens_current_garden_id	= gardens_table[index]['id']; // Update because previous one might have been deleted.
 
 			set_garden_fields_1(index);
 		},
@@ -1793,9 +1793,9 @@ function submit_old_property(action)
 	var has_gardens	= false;
 	var name		= $('#properties_property_name').val();
 
-	for (var i = 0; i < garden_table.length; i++)
+	for (var i = 0; i < gardens_table.length; i++)
 	{
-		if (name == garden_table[i]['property_name'])
+		if (name == gardens_table[i]['property_name'])
 		{
 			has_gardens = true;
 
