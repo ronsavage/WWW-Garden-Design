@@ -748,10 +748,10 @@ function gardens_property_menu_1_changed(data)
 			garden_current_garden_id	= garden_table[i]['id'];
 			index						= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'gardens_garden_menu');
 
-			alert('gardens_property_menu_1_changed()'
-				+ '. garden_current_property_id_1: ' + garden_current_property_id_1
-				+ '. garden_current_garden_id: ' + garden_current_garden_id
-				+ '. index: ' + index);
+			//alert('gardens_property_menu_1_changed()'
+			//	+ '. garden_current_property_id_1: ' + garden_current_property_id_1
+			//	+ '. garden_current_garden_id: ' + garden_current_garden_id
+			//	+ '. index: ' + index);
 
 			set_garden_fields_1(index);
 
@@ -759,7 +759,7 @@ function gardens_property_menu_1_changed(data)
 		}
 	}
 
-	$('#gardens_property_menu_1_span')
+	$('#gardens_property_menu_1')
 	.find('option')
 	.each
 	(
@@ -771,8 +771,6 @@ function gardens_property_menu_1_changed(data)
 			{
 				$(this).attr('selected', true);
 			}
-
-			//alert(this.value);
 		}
 	)
 	.end();
@@ -1953,6 +1951,7 @@ $(function()
 		change: function(event, data)
 		{
 			gardens_property_menu_1_changed(data);
+			event.preventDefault();
 		}
 	});
 

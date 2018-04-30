@@ -407,7 +407,7 @@ sub get_autocomplete_flower_list
 						. "or upper(common_name) like '%$key%' "
 						. "or upper(aliases) like '%$key%'";
 
-	return [$self -> mojo_pg -> query($sql) -> each];
+	return [$self -> mojo_pg -> query($sql) -> hashes -> each];
 
 } # End of get_autocomplete_flower_list.
 
@@ -419,7 +419,7 @@ sub get_autocomplete_object_list
 	my($self, $key)	= @_;
 	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
 
-	return [$self -> mojo_pg -> query("select distinct name from objects where upper(name) like '%$key%'") -> each];
+	return [$self -> mojo_pg -> query("select distinct name from objects where upper(name) like '%$key%'") -> hashes -> each];
 
 } # End of get_autocomplete_object_list.
 
