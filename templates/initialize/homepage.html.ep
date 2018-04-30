@@ -423,21 +423,13 @@ function build_gardens_property_menu(property_id, garden_id, jquery_id)
 
 	var id;
 
+	// Selecting the 'current' item takes place in gardens_property_menu_1_changed().
+
 	for (var i = 0; i < garden_names.length; i++)
 	{
 		name	= garden_names[i]['name'];
 		id		= garden_ids[name];
-
-		if (i == 0)
-		{
-			// Select the 1st one by default, to match the index saved above.
-
-			html += "<option value = '" + id + "' selected>" + name + '</option>';
-		}
-		else
-		{
-			html += "<option value = '" + id + "'>" + name + '</option>';
-		}
+		html	+= "<option value = '" + id + "'>" + name + '</option>';
 	}
 
 	html	+= '</select>';
@@ -446,6 +438,8 @@ function build_gardens_property_menu(property_id, garden_id, jquery_id)
 	$(id + '_span')
 	.empty()
 	.append(html);
+
+	$(id).selectmenu();
 
 	if (jquery_id == 'design_property_menu')
 	{
@@ -764,24 +758,27 @@ function gardens_property_menu_1_changed(data)
 		}
 	}
 
-	$('#gardens_property_menu_1')
+/*
+	$('#gardens_property_menu_1_span')
+	.children()
 	.find('option')
 	.each
 	(
 		function()
 		{
-			$(this).attr('selected', false);
-
 			alert('this.value: ' + this.value + ' & gardens_current_property_id_1: '
 				+ gardens_current_property_id_1);
 
 			if (this.value == gardens_current_property_id_1)
 			{
-				$(this).attr('selected', true);
+				alert('Selecting property id: ' + gardens_current_property_id_1);
+
+				$('#gardens_property_menu_1').menu('select');
 			}
 		}
 	)
 	.end();
+*/
 
 } // End of gardens_property_menu_1_changed.
 
