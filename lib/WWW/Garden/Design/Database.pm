@@ -816,7 +816,7 @@ sub parse_search_text
 
 sub process_garden_submit
 {
-	my($self, $item) = @_;
+	my($self, $controller, $item) = @_;
 
 	$self -> logger -> debug('Database.process_garden_submit(...)');
 
@@ -931,7 +931,7 @@ sub process_garden_submit
 
 	return
 	{
-		gardens_property_menu	=> $self -> build_gardens_property_menu($gardens_table, $self, 'gardens_property_menu_1'),
+		gardens_property_menu	=> $self -> build_gardens_property_menu($gardens_table, $controller, 'gardens_property_menu_1'),
 		gardens_table			=> $gardens_table,
 		message					=> $self -> format_raw_message($result),
 	};

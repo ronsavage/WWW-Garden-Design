@@ -21,7 +21,7 @@ sub process
 
 	if ($$item{name} && $$item{property_id})
 	{
-		my($packet) = $$defaults{db} -> process_garden_submit($item);
+		my($packet) = $$defaults{db} -> process_garden_submit($self -> app, $item);
 
 		$self -> stash(json => $packet);
 		$self -> stash(error => undef);

@@ -390,56 +390,13 @@ function build_garden_menu(property_id, garden_id, jquery_id)
 // This function is only called from submit_new_garden(), which cannot change the property menu.
 // So its purpose is to update the gardens_garden_menu to include the new garden.
 
-function build_gardens_property_menu(property_id, garden_id, jquery_id)
+function build_gardens_property_menu(property_id, jquery_id, gardens_property_menu)
 {
-	// Process:
-	// o Collect garden names for the given property.
-	// o Sort the names.
-	// o Construct the menu.
-
-	var garden_ids		= []; // This is a lookup table from names to ids, for use in the select.
-	var garden_names	= [];
-	var index			= -1; // The id of the 1st element, which is the one selected by default.
-
-	var name;
-
-	for (var i = 0; i < gardens_table.length; i++)
-	{
-		if (gardens_table[i]['property_id'] == property_id)
-		{
-			name				= gardens_table[i]['name'];
-			garden_ids[name]	= gardens_table[i]['id'];
-
-			garden_names.push(name);
-
-			if (index < 0)
-			{
-				index = i;
-			}
-		}
-	}
-
-	garden_names.sort();
-
-	var html = "<select id = '" + jquery_id + "'>";
-
-	var id;
-
-	// Selecting the 'current' item takes place in gardens_property_menu_1_changed().
-
-	for (var i = 0; i < garden_names.length; i++)
-	{
-		name	= garden_names[i]['name'];
-		id		= garden_ids[name];
-		html	+= "<option value = '" + id + "'>" + name + '</option>';
-	}
-
-	html	+= '</select>';
-	id		= '#' + jquery_id;
+	var id = '#' + jquery_id;
 
 	$(id + '_span')
 	.empty()
-	.append(html);
+	.append(gardens_property_menu);
 
 	$(id).selectmenu();
 
@@ -471,8 +428,6 @@ function build_gardens_property_menu(property_id, garden_id, jquery_id)
 
 		gardens_property_menu_1_changed(data); // Calls build_garden_menu().
 	}
-
-	return index;
 
 } // End of build_gardens_property_menu.
 
@@ -760,7 +715,7 @@ function gardens_property_menu_1_changed(data)
 		}
 	}
 
-	$('#gardens_property_menu_1')
+	$('#gardens_property_menu_1_span')
 	.children()
 	.find('option')
 	.each
@@ -774,7 +729,7 @@ function gardens_property_menu_1_changed(data)
 			{
 				alert('Selecting property id: ' + gardens_current_property_id_1);
 
-				$('#gardens_property_menu_1').menu('select');
+				$(this).attr('selected', true);
 			}
 		}
 	)
@@ -910,28 +865,6 @@ function get_design_image_size_string()
 // since that involves changing the DOM, but the function is called from within
 // the document ready context which assumes the DOM has stopped changing.
 
-function get_property_table()
-{
-	$.get
-	(
-		'/GetTable/properties', // See routes at end of WWW::Garden::Design.startup().
-		null,
-		function(json)
-		{
-			property_table = json;
-
-			set_property_fields(0);
-		},
-		'json'
-	);
-
-} // End of get_property_table.
-
-// -----------------------------------------------
-// Warning: This function cannot be used to populate gardens_garden_menu_span
-// since that involves changing the DOM, but the function is called from within
-// the document ready context which assumes the DOM has stopped changing.
-
 function get_gardens_table()
 {
 	$.get
@@ -977,6 +910,28 @@ function get_object_table()
 	);
 
 } // End of get_object_table.
+
+// -----------------------------------------------
+// Warning: This function cannot be used to populate gardens_garden_menu_span
+// since that involves changing the DOM, but the function is called from within
+// the document ready context which assumes the DOM has stopped changing.
+
+function get_properties_table()
+{
+	$.get
+	(
+		'/GetTable/properties', // See routes at end of WWW::Garden::Design.startup().
+		null,
+		function(json)
+		{
+			property_table = json;
+
+			set_property_fields(0);
+		},
+		'json'
+	);
+
+} // End of get_properties_table.
 
 // -----------------------------------------------
 
@@ -1662,7 +1617,8 @@ function submit_new_garden()
 			gardens_current_garden_id		= packet.message.garden_id;
 			gardens_table					= packet.gardens_table;
 			gardens_current_property_id_1	= gardens_current_property_id_2;
-			index							= build_gardens_property_menu(gardens_current_property_id_1, 'gardens_property_menu_1');
+
+			build_gardens_property_menu(gardens_current_property_id_1, 'gardens_property_menu_1', packet.gardens_property_menu);
 
 			set_garden_fields_2();
 		},
