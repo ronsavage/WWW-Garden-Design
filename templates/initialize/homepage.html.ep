@@ -465,9 +465,15 @@ function build_gardens_property_menu(property_id, garden_id, jquery_id)
 		({
 			change: function(event, data)
 			{
-				gardens_garden_menu_changed(data);
-			}
+				gardens_property_menu_1_changed(data);
+			},
 		});
+
+		var data		= new Object;
+		data.item		= new Object;
+		data.item.value	= property_id;
+
+		gardens_property_menu_1_changed(data);
 	}
 
 	return index;
@@ -711,11 +717,11 @@ function gardens_garden_menu_changed(data)
 	//	o label => The garden item's text (name column value).
 	//	o value => The garden item's # (primary key column value).
 
-	garden_current_garden_id = data.item.value;
+	gardens_current_garden_id = data.item.value;
 
 	for (var i = 0; i < garden_table.length; i++)
 	{
-		if (garden_table[i]['id'] == garden_current_garden_id)
+		if (garden_table[i]['id'] == gardens_current_garden_id)
 		{
 			set_garden_fields_1(i);
 
@@ -739,19 +745,18 @@ function gardens_property_menu_1_changed(data)
 	//	o label => The property item's text (name column value).
 	//	o value => The property item's id # (primary key column value).
 
-	garden_current_property_id_1 = data.item.value;
+	gardens_current_property_id_1 = data.item.value;
 
 	for (var i = 0; i < garden_table.length; i++)
 	{
-		if (garden_table[i]['property_id'] == garden_current_property_id_1)
+		if (garden_table[i]['property_id'] == gardens_current_property_id_1)
 		{
-			garden_current_garden_id	= garden_table[i]['id'];
-			index						= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'gardens_garden_menu');
+			index = build_garden_menu(gardens_current_property_id_1, gardens_current_garden_id, 'gardens_garden_menu');
 
-			//alert('gardens_property_menu_1_changed()'
-			//	+ '. garden_current_property_id_1: ' + garden_current_property_id_1
-			//	+ '. garden_current_garden_id: ' + garden_current_garden_id
-			//	+ '. index: ' + index);
+			alert('gardens_property_menu_1_changed()'
+				+ '. gardens_current_property_id_1: ' + gardens_current_property_id_1
+				+ '. gardens_current_garden_id: ' + gardens_current_garden_id
+				+ '. index: ' + index);
 
 			set_garden_fields_1(index);
 
@@ -767,7 +772,10 @@ function gardens_property_menu_1_changed(data)
 		{
 			$(this).attr('selected', false);
 
-			if (this.value == garden_current_property_id_1)
+			alert('this.value: ' + this.value + ' & gardens_current_property_id_1: '
+				+ gardens_current_property_id_1);
+
+			if (this.value == gardens_current_property_id_1)
 			{
 				$(this).attr('selected', true);
 			}
@@ -791,7 +799,7 @@ function gardens_property_menu_2_changed(data)
 	//	o label => The property item's text (name column value).
 	//	o value => The property item's id # (primary key column value).
 
-	garden_current_property_id_2 = data.item.value;
+	gardens_current_property_id_2 = data.item.value;
 
 	set_garden_fields_2();
 
@@ -1644,7 +1652,7 @@ function submit_new_garden()
 			description:	$('#new_garden_description').val(),
 			id:				0,
 			name:			name,
-			property_id:	garden_current_property_id_2,
+			property_id:	gardens_current_property_id_2,
 			property_name:	property_name,
 			publish:		$('#new_garden_publish').prop('checked') ? 'Yes' : 'No',
 		},
@@ -1654,19 +1662,11 @@ function submit_new_garden()
 			.empty()
 			.append(packet.message.cooked);
 
-			garden_current_garden_id		= packet.message.garden_id;
+			gardens_current_garden_id		= packet.message.garden_id;
 			garden_table					= packet.garden_table;
-			garden_current_property_id_1	= garden_current_property_id_2;
-			index							= build_gardens_property_menu(garden_current_property_id_1, 'gardens_property_menu_1');
-			index							= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'gardens_garden_menu');
+			gardens_current_property_id_1	= gardens_current_property_id_2;
+			index							= build_gardens_property_menu(gardens_current_property_id_1, 'gardens_property_menu_1');
 
-			alert('submit_new_garden()'
-				+ '. garden_current_property_id_1: ' + garden_current_property_id_1
-				+ '. garden_current_property_id_2: ' + garden_current_property_id_2
-				+ '. garden_current_garden_id: ' + garden_current_garden_id
-				+ '. index: ' + index);
-
-			set_garden_fields_1(index);
 			set_garden_fields_2();
 		},
 		'json'
@@ -1704,13 +1704,13 @@ function submit_new_property(action)
 			.append(packet.message.cooked);
 
 			properties_current_property_id	= packet.message.property_id;	// On Properties tab.
-			garden_current_property_id_2	= packet.message.property_id;	// On Gardens tab.
+			gardens_current_property_id_2	= packet.message.property_id;	// On Gardens tab.
 			property_table					= packet.property_table;
 			index							= build_properties_property_menu(properties_current_property_id, 'properties_property_menu');
 
 			set_property_fields(index);
 
-			index = build_properties_property_menu(garden_current_property_id_2, 'gardens_property_menu_2');
+			index = build_properties_property_menu(gardens_current_property_id_2, 'gardens_property_menu_2');
 		},
 		'json'
 	);
@@ -1766,9 +1766,9 @@ function submit_old_garden(action)
 		{
 			action:			action,
 			description:	$('#garden_description').val(),
-			id:				garden_current_garden_id,
+			id:				gardens_current_garden_id,
 			name:			$('#garden_name').val(),
-			property_id:	garden_current_property_id_1,
+			property_id:	gardens_current_property_id_1,
 			property_name:	property_name,
 			publish:		$('#garden_publish').prop('checked') ? 'Yes' : 'No',
 		},
@@ -1779,8 +1779,8 @@ function submit_old_garden(action)
 			.append(packet.message.cooked);
 
 			garden_table				= packet.garden_table;
-			index						= build_garden_menu(garden_current_property_id_1, garden_current_garden_id, 'gardens_garden_menu');
-			garden_current_garden_id	= garden_table[index]['id']; // Update because previous one might have been deleted.
+			index						= build_garden_menu(gardens_current_property_id_1, gardens_current_garden_id, 'gardens_garden_menu');
+			gardens_current_garden_id	= garden_table[index]['id']; // Update because previous one might have been deleted.
 
 			set_garden_fields_1(index);
 		},
@@ -1840,8 +1840,8 @@ function submit_old_property(action)
 
 			if (action == 'delete')
 			{
-				index							= build_properties_property_menu(garden_current_property_id_2, 'gardens_property_menu_2');
-				garden_current_property_id_2	= property_table[index]['id']; // Update because previous one might have been deleted.
+				index							= build_properties_property_menu(gardens_current_property_id_2, 'gardens_property_menu_2');
+				gardens_current_property_id_2	= property_table[index]['id']; // Update because previous one might have been deleted.
 			}
 		},
 		'json'
@@ -1951,7 +1951,6 @@ $(function()
 		change: function(event, data)
 		{
 			gardens_property_menu_1_changed(data);
-			event.preventDefault();
 		}
 	});
 
