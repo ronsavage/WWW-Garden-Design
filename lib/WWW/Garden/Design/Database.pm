@@ -834,8 +834,8 @@ sub process_garden_submit
 	$self -> logger -> debug('Database.process_garden_submit(...)');
 
 	my($action)			= $$item{action};
+	my($garden_name)	= $$item{name};
 	my($id)				= $$item{id};
-	my($name)			= $$item{name};
 	my($property_name)	= $$item{property_name};
 	my($result) 		= {garden_id => 0};
 	my($table_name)		= 'gardens';
@@ -843,7 +843,7 @@ sub process_garden_submit
 	my($fields)			=
 	{
 		description	=> $$item{description},
-		name		=> $name,
+		name		=> $garden_name,
 		property_id	=> $$item{property_id},
 		publish		=> $$item{publish},
 	};
@@ -860,9 +860,9 @@ sub process_garden_submit
 			$garden{uc $$_{name} } = $$_{id} if ($$_{property_id} == $$item{property_id});
 		}
 
-		if (exists($garden{uc $name}) )
+		if (exists($garden{uc $garden_name}) )
 		{
-			$result = {raw => "Property: $property_name. Garden: $name. That garden name is on file", type => 'Error'};
+			$result = {raw => "Property: $property_name. Garden: $garden_name. That garden name is on file", type => 'Error'};
 		}
 		else
 		{
@@ -873,9 +873,9 @@ sub process_garden_submit
 				{returning => 'id'}
 			) -> hash -> {id};
 
-			$self -> logger -> debug("Table: $table_name. Record id: $id. Action: $action. Property: $property_name. Garden: $name");
+			$self -> logger -> debug("Table: $table_name. Record id: $id. Action: $action. Property: $property_name. Garden: $garden_name");
 
-			$result = {garden_id => $id, raw => "Property: $property_name. Added garden: $name", type => 'Success'};
+			$result = {garden_id => $id, raw => "Property: $property_name. Added garden: $garden_name", type => 'Success'};
 		}
 	}
 	elsif ($action eq 'update')
@@ -898,13 +898,13 @@ sub process_garden_submit
 				{id => $$item{id} }
 			);
 
-			$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Garden: $name. Action: $action");
+			$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Garden: $garden_name. Action: $action");
 
-			$result = {garden_id => $$item{id}, raw => "Property: $property_name. Garden. $name. Action: $action", type => 'Success'};
+			$result = {garden_id => $$item{id}, raw => "Property: $property_name. Garden. $garden_name. Action: $action", type => 'Success'};
 		}
 		else
 		{
-			$result = {raw => 'Cannot update the database. That record was not found', type => 'Error'};
+			$result = {raw => "Property: $property_name. Garden: $garden_name. Cannot update the database. That record was not found", type => 'Error'};
 		}
 	}
 	elsif ($action eq 'delete')
@@ -924,7 +924,7 @@ sub process_garden_submit
 				{id => $$item{id} }
 			);
 
-			my($message) = "Property: $property_name. Garden: $name. Action: $action";
+			my($message) = "Property: $property_name. Garden: $garden_name. Action: $action";
 
 			$self -> logger -> debug("Table '$table_name'. Record id '$id'. $message");
 
@@ -932,12 +932,17 @@ sub process_garden_submit
 		}
 		else
 		{
-			$result = {raw => 'Cannot update the database. That record was not found', type => 'Error'};
+			$result = {raw => "Property: $property_name. Garden: $garden_name. Cannot update the database. That record was not found", type => 'Error'};
 		}
 	}
 	else
 	{
-		$result = {raw => "Unrecognized action: $action. Must be one of 'save', 'update' or 'delete'", type => 'Error'};
+		$result = {raw => "Property: $property_name. Garden: $garden_name. Unrecognized action: $action. Must be one of 'save', 'update' or 'delete'", type => 'Error'};
+	}
+
+	if ($$result{type} eq 'Error')
+	{
+		$self -> app -> log -> error($$result{raw});
 	}
 
 	$gardens_table = $self -> read_gardens_table;
@@ -961,14 +966,14 @@ sub process_property_submit
 
 	my($action)				= $$item{action};
 	my($id)					= $$item{id};
-	my($name)				= $$item{name};
+	my($property_name)		= $$item{name};
 	my($table_name)			= 'properties';
 	my($properties_table)	= $self -> read_table($table_name);
 	my($result) 			= {property_id => 0};
 	my($fields)				=
 	{
 		description	=> $$item{description},
-		name		=> $name,
+		name		=> $property_name,
 		publish		=> $$item{publish},
 	};
 
@@ -984,9 +989,9 @@ sub process_property_submit
 			$property{uc $$_{name} } = $$_{id};
 		}
 
-		if (exists($property{uc $name}) )
+		if (exists($property{uc $property_name}) )
 		{
-			$result = {raw => 'Property: $name. That property name is on file', type => 'Error'};
+			$result = {raw => 'Property: $property_name. That property name is on file', type => 'Error'};
 		}
 		else
 		{
@@ -997,9 +1002,9 @@ sub process_property_submit
 				{returning => 'id'}
 			) -> hash -> {id};
 
-			$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $name. Action: $action");
+			$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
 
-			$result = {property_id => $id, raw => "Added property: $name", type => 'Success'};
+			$result = {property_id => $id, raw => "Added property: $property_name", type => 'Success'};
 		}
 	}
 	elsif ($action eq 'update')
@@ -1022,9 +1027,9 @@ sub process_property_submit
 				{id => $$item{id} }
 			);
 
-			$self -> logger -> debug("Table: $table_name. Record id '$id'. Property: $name. Action: $action");
+			$self -> logger -> debug("Table: $table_name. Record id '$id'. Property: $property_name. Action: $action");
 
-			$result = {property_id => $$item{id}, raw => "Property: $name. Action: $action", type => 'Success'};
+			$result = {property_id => $$item{id}, raw => "Property: $property_name. Action: $action", type => 'Success'};
 		}
 		else
 		{
@@ -1057,11 +1062,11 @@ sub process_property_submit
 
 			if ($found -> isTrue)
 			{
-				my($note) = "Record not deleted because it has gardens";
+				my($note) = "Property not deleted because it has gardens";
 
-				$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $name. $note");
+				$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. $note");
 
-				$result = {raw => "Property: $name. $note", type => 'Error'};
+				$result = {raw => "Property: $property_name. $note", type => 'Error'};
 			}
 			else
 			{
@@ -1071,19 +1076,19 @@ sub process_property_submit
 					{id => $$item{id} }
 				);
 
-				$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $name. Action: $action");
+				$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
 
-				$result = {raw => "Property: $name. Action $action", type => 'Success'};
+				$result = {raw => "Property: $property_name. Action $action", type => 'Success'};
 			}
 		}
 		else
 		{
-			$result = {raw => 'Cannot update the database. That record was not found', type => 'Error'};
+			$result = {raw => "Property: $property_name. Cannot update the database. That record was not found", type => 'Error'};
 		}
 	}
 	else
 	{
-		$result = {raw => "Unrecognized action: $action. Must be one of 'save', 'update' or 'delete'", type => 'Error'};
+		$result = {raw => "Property: $property_name. Unrecognized action: $action. Must be one of 'save', 'update' or 'delete'", type => 'Error'};
 	}
 
 	return
