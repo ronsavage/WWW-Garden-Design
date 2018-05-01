@@ -19,7 +19,7 @@
 		</tr>
 		<tr>
 			<td align = 'center' colspan = '4'>
-				<div class = 'design_garden_toolbar'>
+				<div class = 'design_garden_toolbar'> <!-- Class not defined -->
 					<span id = 'design_property_menu_span'><%== $design_property_menu %></span>
 					<span id = 'design_garden_menu_span'><%== $design_garden_menu %></span>
 				</div>

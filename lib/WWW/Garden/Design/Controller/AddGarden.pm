@@ -21,11 +21,13 @@ sub process
 
 	if ($$item{name} && $$item{property_id})
 	{
+		# In process_garden_submit() all success branches print the raw message plus
+		# other information to the log, so nothing is printed here.
+
 		my($packet) = $$defaults{db} -> process_garden_submit($self -> app, $item);
 
 		$self -> stash(json => $packet);
 		$self -> stash(error => undef);
-		$self -> app -> log -> info($$packet{message}{raw});
 	}
 	else
 	{
