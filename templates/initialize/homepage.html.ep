@@ -1572,7 +1572,10 @@ function submit_new_garden()
 
 	$.post
 	(
-		'/AddGarden', // See routes at end of WWW::Garden::Design.startup().
+		// See routes at end of WWW::Garden::Design.startup().
+		// This route is called in submit_old_garden() with action either 'delete' or 'update'.
+
+		'/AddGarden',
 		{
 			action:			'add',
 			description:	$('#new_garden_description').val(),
@@ -1592,9 +1595,13 @@ function submit_new_garden()
 			gardens_table					= packet.gardens_table;
 			gardens_current_property_id_1	= gardens_current_property_id_2;
 
+			// Replace the upper property menu on the Gardens tab.
+
 			build_property_menu(gardens_current_property_id_1, 'gardens_property_menu_1', packet.gardens_property_menu);
 
 			set_garden_fields_2();
+
+			// Replace the property menu on the Design tab.
 
 			var regexp					= /gardens_property_menu_1/g;
 			var design_menu_name		= 'design_property_menu';
@@ -1622,7 +1629,10 @@ function submit_new_property(action)
 
 	$.post
 	(
-		'/AddProperty', // See routes at end of WWW::Garden::Design.startup().
+		// See routes at end of WWW::Garden::Design.startup().
+		// This route is called in submit_old_property() with action 'delete' or 'update'.
+
+		'/AddProperty',
 		{
 			action:			'add',
 			description:	$('#new_property_description').val(),
@@ -1695,9 +1705,12 @@ function submit_old_garden(action)
 
 	$.post
 	(
-		'/AddGarden', // See routes at end of WWW::Garden::Design.startup().
+		// See routes at end of WWW::Garden::Design.startup().
+		// This route is called in submit_new_garden() with action 'add'.
+
+		'/AddGarden',
 		{
-			action:			action,
+			action:			action, // 'delete' or 'update'.
 			description:	$('#garden_description').val(),
 			id:				gardens_current_garden_id,
 			name:			$('#garden_name').val(),
@@ -1710,6 +1723,8 @@ function submit_old_garden(action)
 			$('#garden_result_div')
 			.empty()
 			.append(packet.message.cooked);
+
+			// Replace the upper garden menu on the Gardens tab.
 
 			gardens_table				= packet.gardens_table;
 			index						= build_garden_menu(gardens_current_property_id_1, gardens_current_garden_id, 'gardens_garden_menu');
@@ -1751,9 +1766,12 @@ function submit_old_property(action)
 
 	$.post
 	(
-		'/AddProperty', // See routes at end of WWW::Garden::Design.startup().
+		// See routes at end of WWW::Garden::Design.startup().
+		// This route is called in submit_new_property() with action 'add'.
+
+		'/AddProperty',
 		{
-			action:			action,
+			action:			action, // 'delete' or 'update'.
 			description:	$('#properties_property_description').val(),
 			id:				properties_current_property_id,
 			name:			name,

@@ -937,7 +937,7 @@ sub process_garden_submit
 	}
 	else
 	{
-		$result = {raw => "Property: $property_name. Garden: $garden_name. Unrecognized action: $action. Must be one of 'save', 'update' or 'delete'", type => 'Error'};
+		$result = {raw => "Property: $property_name. Garden: $garden_name. Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
 	}
 
 	if ($$result{type} eq 'Error')
@@ -1088,7 +1088,7 @@ sub process_property_submit
 	}
 	else
 	{
-		$result = {raw => "Property: $property_name. Unrecognized action: $action. Must be one of 'save', 'update' or 'delete'", type => 'Error'};
+		$result = {raw => "Property: $property_name. Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
 	}
 
 	return
