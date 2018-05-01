@@ -87,12 +87,12 @@ sub homepage
 	# And when a garden is added, the gardens_garden_menu menu is updated (on the Gardens page),
 	# as well as the garden menu on the Design page, i.e. the design_garden_menu.
 
-	$$defaults{design_property_menu}		= $$defaults{db} -> build_gardens_property_menu($$defaults{gardens_table}, $self, 'design_property_menu');
-	$$defaults{design_garden_menu}			= $$defaults{db} -> build_garden_menu($$defaults{gardens_table}, $self, 'design_garden_menu');
-	$$defaults{gardens_property_menu_1}		= $$defaults{db} -> build_gardens_property_menu($$defaults{gardens_table}, $self, 'gardens_property_menu_1');
+	$$defaults{design_property_menu}		= $$defaults{db} -> build_gardens_property_menu($self, $$defaults{gardens_table}, 'design_property_menu', 0);
+	$$defaults{design_garden_menu}			= $$defaults{db} -> build_garden_menu($self, $$defaults{gardens_table}, 'design_garden_menu');
+	$$defaults{gardens_property_menu_1}		= $$defaults{db} -> build_gardens_property_menu($self, $$defaults{gardens_table}, 'gardens_property_menu_1', 0);
 	$$defaults{gardens_property_menu_2}		= $$defaults{db} -> build_properties_property_menu($$defaults{properties_table}, 'gardens_property_menu_2', 0);
-	$$defaults{gardens_garden_menu}			= $$defaults{db} -> build_garden_menu($$defaults{gardens_table}, $self, 'gardens_garden_menu');
-	$$defaults{object_menu}					= $$defaults{db} -> build_object_menu($$defaults{objects_table}, $self);
+	$$defaults{gardens_garden_menu}			= $$defaults{db} -> build_garden_menu($self, $$defaults{gardens_table}, 'gardens_garden_menu');
+	$$defaults{object_menu}					= $$defaults{db} -> build_object_menu($self, $$defaults{objects_table});
 	$$defaults{properties_property_menu}	= $$defaults{db} -> build_properties_property_menu($$defaults{properties_table}, 'properties_property_menu', 0);
 
 	$self -> app -> defaults($defaults);

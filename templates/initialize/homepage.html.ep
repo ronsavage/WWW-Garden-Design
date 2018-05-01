@@ -704,36 +704,16 @@ function gardens_property_menu_1_changed(data)
 		{
 			index = build_garden_menu(gardens_current_property_id_1, gardens_current_garden_id, 'gardens_garden_menu');
 
-			alert('gardens_property_menu_1_changed()'
-				+ '. gardens_current_property_id_1: ' + gardens_current_property_id_1
-				+ '. gardens_current_garden_id: ' + gardens_current_garden_id
-				+ '. index: ' + index);
+//			alert('gardens_property_menu_1_changed()'
+//				+ '. gardens_current_property_id_1: ' + gardens_current_property_id_1
+//				+ '. gardens_current_garden_id: ' + gardens_current_garden_id
+//				+ '. index: ' + index);
 
 			set_garden_fields_1(index);
 
 			break;
 		}
 	}
-
-	$('#gardens_property_menu_1_span')
-	.children()
-	.find('option')
-	.each
-	(
-		function()
-		{
-			alert('this.value: ' + this.value + ' & gardens_current_property_id_1: '
-				+ gardens_current_property_id_1);
-
-			if (this.value == gardens_current_property_id_1)
-			{
-				alert('Selecting property id: ' + gardens_current_property_id_1);
-
-				$(this).attr('selected', true);
-			}
-		}
-	)
-	.end();
 
 } // End of gardens_property_menu_1_changed.
 
@@ -2083,7 +2063,23 @@ $(function()
 		return false;
 	});
 
-	$('#property_form')
+	$('#property_form_1')
+	.keypress
+	(
+		function(event)
+		{
+			if (event.which == '13')
+			{
+				event.preventDefault();
+			}
+		}
+	)
+	.submit(function()
+	{
+		return false;
+	});
+
+	$('#property_form_2')
 	.keypress
 	(
 		function(event)

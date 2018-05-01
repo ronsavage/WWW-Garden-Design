@@ -5,6 +5,8 @@ use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
+use boolean;
+
 use Data::Dumper::Concise; # For Dumper().
 
 use DBI;
@@ -86,14 +88,14 @@ sub add_flower
 
 sub build_garden_menu
 {
-	my($self, $gardens, $controller, $jquery_id) = @_;
+	my($self, $controller, $gardens_table, $jquery_id) = @_;
 	my($html)			= "<select id = '$jquery_id' name = '$jquery_id'>";
 	my($last_name)		= '';
 	my($property_id)	= $controller -> session('current_property_id');
 
 	my($selected);
 
-	for my $garden (@$gardens)
+	for my $garden (@$gardens_table)
 	{
 		# This test assumes that within a property, all garden names are unique.
 
@@ -121,29 +123,40 @@ sub build_garden_menu
 
 sub build_gardens_property_menu
 {
-	my($self, $gardens, $controller, $jquery_id) = @_;
-	my($html)		= "<select id = '$jquery_id' name = '$jquery_id'>";
-	my($last_name)	= '';
+	my($self, $controller, $gardens_table, $jquery_id, $select_property_id) = @_;
 
-	my($selected);
+	my(%property_name);
 
-	for my $garden (@$gardens)
+	for my $garden (@$gardens_table)
 	{
-		if ($last_name eq '')
-		{
-			# Set this on the 1st menu item.
+		$property_name{$$garden{property_name} } = $$garden{property_id};
+	}
 
-			$selected = 'selected';
+	my($found)			= false;
+	my($html)			= "<select id = '$jquery_id' name = '$jquery_id'>";
+	my($selected)		= '';
+
+	for my $property_name (sort keys %property_name)
+	{
+		my($property_id) = $property_name{$property_name};
+
+		if 	($found -> isFalse &&
+				(
+					($select_property_id == 0) || ($select_property_id == $property_id)
+				)
+			)
+		{
+			# Set this on the 1st menu item or the one desired.
+
+			$found		= true;
+			$selected	= ' selected';
 
 			# current_property_id is used in build_garden_menu().
 
-			$controller -> session(current_property_id => $$garden{property_id});
+			$controller -> session(current_property_id => $property_id);
 		}
 
-		next if ($last_name eq $$garden{property_name});
-
-		$last_name	= $$garden{property_name};
-		$html		.= "<option $selected value = '$$garden{property_id}'>$last_name</option>";
+		$html		.= "<option$selected value = '$property_id'>$property_name</option>";
 		$selected	= '';
 	}
 
@@ -157,7 +170,7 @@ sub build_gardens_property_menu
 
 sub build_object_menu
 {
-	my($self, $objects, $controller) = @_;
+	my($self, $controller, $objects) = @_;
 	my($html)		= "<div class = 'object_toolbar'>"
 						. "<select id = 'object_menu'>";
 	my($last_name)  = '';
@@ -931,7 +944,7 @@ sub process_garden_submit
 
 	return
 	{
-		gardens_property_menu	=> $self -> build_gardens_property_menu($gardens_table, $controller, 'gardens_property_menu_1'),
+		gardens_property_menu	=> $self -> build_gardens_property_menu($controller, $gardens_table, 'gardens_property_menu_1', $$item{property_id}),
 		gardens_table			=> $gardens_table,
 		message					=> $self -> format_raw_message($result),
 	};

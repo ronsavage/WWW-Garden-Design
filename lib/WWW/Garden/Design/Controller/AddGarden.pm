@@ -25,6 +25,7 @@ sub process
 
 		$self -> stash(json => $packet);
 		$self -> stash(error => undef);
+		$self -> app -> log -> info($$packet{message}{raw});
 	}
 	else
 	{
