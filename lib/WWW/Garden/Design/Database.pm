@@ -1096,7 +1096,7 @@ sub process_property_submit
 	{
 		property_table	=> $self -> read_properties_table,
 		message			=> $self -> format_raw_message($result),
-		property_menu	=> $self -> build_properties_property_menu($self -> read_table('properties'), 'gardens_property_menu_1', $$result{property_id}),
+		property_menu	=> $self -> build_properties_property_menu($self -> read_table('properties'), 'properties_property_menu', $$result{property_id}),
 	};
 
 } # End of process_property_submit.
