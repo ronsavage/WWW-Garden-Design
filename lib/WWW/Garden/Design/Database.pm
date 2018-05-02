@@ -208,34 +208,42 @@ sub build_properties_property_menu
 	my($html)		= "<select id = '$jquery_id' name = '$jquery_id'>";
 	my($last_name)	= '';
 
+	my($id);
 	my($name);
 	my($selected);
 
 	for my $property (sort{$$a{name} cmp $$b{name} } @$properties)
 	{
-		$name = $$property{name};
+		# $id can never be 0, but $default_id can be.
 
-		if ($default_id > 0)
+		$id		= $$property{id};
+		$name	= $$property{name};
+
+		if ($default_id == $id)
 		{
 			# Set given id as selected.
 
 			$default_id	= 0;
 			$last_name	= $name;
-			$selected	= 'selected';
+			$selected	= ' selected';
+		}
+		elsif ($default_id > 0)
+		{
+			$selected = '';
 		}
 		elsif ($last_name eq '')
 		{
 			# Set first id as selected if no id given.
 
 			$last_name	= $name;
-			$selected	= 'selected';
+			$selected	= ' selected';
 		}
 		else
 		{
-			$selected = ''; # Reset it.
+			$selected = '';
 		}
 
-		$html		.= "<option $selected value = '$$property{id}'>$name</option>";
+		$html		.= "<option$selected value = '$$property{id}'>$name</option>";
 		$selected	= '';
 	}
 

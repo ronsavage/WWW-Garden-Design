@@ -1,6 +1,8 @@
-package WWW::Garden::Design::Controller::AddProperty;
+package WWW::Garden::Design::Controller::Property;
 
 use Mojo::Base 'Mojolicious::Controller';
+
+use Data::Dumper::Concise; # For Dumper().
 
 use Moo;
 
@@ -12,7 +14,7 @@ sub process
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('AddProperty.process()');
+	$self -> app -> log -> debug('Property.process()');
 
 	my($defaults)	= $self -> app -> defaults;
 	my($item)		= $self -> req -> params -> to_hash;
@@ -25,6 +27,8 @@ sub process
 		# other information to the log, so nothing is printed here.
 
 		my($packet) = $$defaults{db} -> process_property_submit($item);
+
+		$self -> app -> log -> debug('properties_property_menu: ' . Dumper($$packet{property_menu}) );
 
 		$self -> stash(json => $packet);
 		$self -> stash(error => undef);

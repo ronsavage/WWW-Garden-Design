@@ -1,4 +1,4 @@
-package WWW::Garden::Design::Controller::AddGarden;
+package WWW::Garden::Design::Controller::Garden;
 
 use Mojo::Base 'Mojolicious::Controller';
 
@@ -12,7 +12,7 @@ sub process
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('AddGarden.process()');
+	$self -> app -> log -> debug('Garden.process()');
 
 	my($defaults)	= $self -> app -> defaults;
 	my($item)		= $self -> req -> params -> to_hash;
