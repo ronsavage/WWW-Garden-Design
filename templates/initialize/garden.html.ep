@@ -48,8 +48,8 @@
 			<td colspan = '2'><br /></td>
 		</tr>
 		<tr>
-			<td align = 'left' width = '33%'><input type = 'submit' value = 'Update' onclick = 'submit_old_garden("update")'/></td>
-			<td align = 'center' width = '33%'><input type = 'submit' value = 'Delete' onclick = 'submit_old_garden("delete")'/></td>
+			<td align = 'left' width = '33%'><input type = 'submit' value = 'Update' onclick = 'update_garden("update")'/></td>
+			<td align = 'center' width = '33%'><input type = 'submit' value = 'Delete' onclick = 'update_garden("delete")'/></td>
 			<td align = 'right' width = '33%'><input type = 'reset' value = 'Reset' /></td>
 		</tr>
 	</table>
@@ -102,7 +102,7 @@
 		<tr>
 			<td colspan = '3'><br /></td>
 		</tr>
-			<td align = 'left' width = '33%'><input type = 'submit' value = 'Save' onclick = 'submit_new_garden()'/></td>
+			<td align = 'left' width = '33%'><input type = 'submit' value = 'Save' onclick = 'add_garden()'/></td>
 			<td width = '33%'></td>
 			<td align = 'right' width = '33%'><input type = 'reset' value = 'Reset' /></td>
 	</table>

@@ -306,6 +306,122 @@ $(function()
 
 // -----------------------------------------------
 
+function add_garden()
+{
+	var name = $('#new_garden_name').val();
+
+	if (name == '')
+	{
+		alert('Error: The garden name is mandatory');
+
+		return;
+	}
+
+	var index			= gardens_property_menu_2.selectedIndex;
+	var property_name	= gardens_property_menu_2.options[index].text;
+	var property_id		= gardens_property_menu_2.options[index].value; // Not used.
+
+	$.post
+	(
+		// See routes at end of WWW::Garden::Design.startup().
+		// This route is called in submit_old_garden() with action either 'delete' or 'update'.
+
+		'/AddGarden',
+		{
+			action:			'add',
+			description:	$('#new_garden_description').val(),
+			id:				0,
+			name:			name,
+			property_id:	gardens_current_property_id_2,
+			property_name:	property_name,
+			publish:		$('#new_garden_publish').prop('checked') ? 'Yes' : 'No',
+		},
+		function(packet)
+		{
+			$('#garden_result_div')
+			.empty()
+			.append(packet.message.cooked);
+
+			gardens_current_garden_id		= packet.message.garden_id;
+			gardens_table					= packet.gardens_table;
+			gardens_current_property_id_1	= gardens_current_property_id_2;
+
+			// Update the upper property menu on the Gardens tab.
+			// In particular, the new garden might be the first for this property.
+
+			build_property_menu(gardens_current_property_id_1, 'gardens_property_menu_1', packet.property_menu);
+
+			// Update the property menu on the Design tab.
+			// In particular, the new garden might be the first for this property.
+
+			var regexp					= /gardens_property_menu_1/g;
+			var design_menu_name		= 'design_property_menu';
+			var design_property_menu	= packet.gardens_property_menu.replace(regexp, design_menu_name);
+
+			build_property_menu(gardens_current_property_id_1, design_menu_name, design_property_menu);
+
+			// Reset the fields for the lower property on the Gardens tab.
+
+			set_garden_fields_2();
+		},
+		'json'
+	);
+
+} // End of add_garden.
+
+// -----------------------------------------------
+
+function add_property(action)
+{
+	var name = $('#new_property_name').val();
+
+	if (name == '')
+	{
+		alert('Error: The property name is mandatory');
+
+		return;
+	}
+
+	$.post
+	(
+		// See routes at end of WWW::Garden::Design.startup().
+		// This route is called in submit_old_property() with action 'delete' or 'update'.
+
+		'/AddProperty',
+		{
+			action:			'add',
+			description:	$('#new_property_description').val(),
+			id:				0,
+			name:			name,
+			publish:		$('#new_property_publish').prop('checked') ? 'Yes' : 'No'
+		},
+		function(packet)
+		{
+			$('#property_result_div')
+			.empty()
+			.append(packet.message.cooked);
+
+			// Update the property menu on the Properties tab.
+
+			properties_current_property_id	= packet.message.property_id;	// On Properties tab.
+			gardens_current_property_id_2	= packet.message.property_id;	// Lower property menu on Gardens tab.
+			property_table					= packet.property_table;
+			index							= build_properties_property_menu(properties_current_property_id, 'properties_property_menu');
+
+			set_property_fields(index);
+
+			// Update the lower property menu on the Gardens tab.
+			// A new property cannot have any gardens, so no other property menus need updating.
+
+			index = build_properties_property_menu(gardens_current_property_id_2, 'gardens_property_menu_2');
+		},
+		'json'
+	);
+
+} // End of add_property.
+
+// -----------------------------------------------
+
 function build_attribute_id(kind, name, value)
 {
 	// We must allow for:
@@ -1555,113 +1671,6 @@ function submit_details()
 
 // -----------------------------------------------
 
-function submit_new_garden()
-{
-	var name = $('#new_garden_name').val();
-
-	if (name == '')
-	{
-		alert('Error: The garden name is mandatory');
-
-		return;
-	}
-
-	var index			= gardens_property_menu_2.selectedIndex;
-	var property_name	= gardens_property_menu_2.options[index].text;
-	var property_id		= gardens_property_menu_2.options[index].value; // Not used.
-
-	$.post
-	(
-		// See routes at end of WWW::Garden::Design.startup().
-		// This route is called in submit_old_garden() with action either 'delete' or 'update'.
-
-		'/AddGarden',
-		{
-			action:			'add',
-			description:	$('#new_garden_description').val(),
-			id:				0,
-			name:			name,
-			property_id:	gardens_current_property_id_2,
-			property_name:	property_name,
-			publish:		$('#new_garden_publish').prop('checked') ? 'Yes' : 'No',
-		},
-		function(packet)
-		{
-			$('#garden_result_div')
-			.empty()
-			.append(packet.message.cooked);
-
-			gardens_current_garden_id		= packet.message.garden_id;
-			gardens_table					= packet.gardens_table;
-			gardens_current_property_id_1	= gardens_current_property_id_2;
-
-			// Replace the upper property menu on the Gardens tab.
-
-			build_property_menu(gardens_current_property_id_1, 'gardens_property_menu_1', packet.gardens_property_menu);
-
-			set_garden_fields_2();
-
-			// Replace the property menu on the Design tab.
-
-			var regexp					= /gardens_property_menu_1/g;
-			var design_menu_name		= 'design_property_menu';
-			var design_property_menu	= packet.gardens_property_menu.replace(regexp, design_menu_name);
-
-			build_property_menu(gardens_current_property_id_1, design_menu_name, design_property_menu);
-		},
-		'json'
-	);
-
-} // End of submit_new_garden.
-
-// -----------------------------------------------
-
-function submit_new_property(action)
-{
-	var name = $('#new_property_name').val();
-
-	if (name == '')
-	{
-		alert('Error: The property name is mandatory');
-
-		return;
-	}
-
-	$.post
-	(
-		// See routes at end of WWW::Garden::Design.startup().
-		// This route is called in submit_old_property() with action 'delete' or 'update'.
-
-		'/AddProperty',
-		{
-			action:			'add',
-			description:	$('#new_property_description').val(),
-			id:				0,
-			name:			name,
-			publish:		$('#new_property_publish').prop('checked') ? 'Yes' : 'No'
-		},
-		function(packet)
-		{
-			$('#property_result_div')
-			.empty()
-			.append(packet.message.cooked);
-
-			properties_current_property_id	= packet.message.property_id;	// On Properties tab.
-			gardens_current_property_id_2	= packet.message.property_id;	// On Gardens tab.
-			property_table					= packet.property_table;
-			index							= build_properties_property_menu(properties_current_property_id, 'properties_property_menu');
-
-			set_property_fields(index);
-
-			index = build_properties_property_menu(gardens_current_property_id_2, 'gardens_property_menu_2');
-		},
-		'json'
-	);
-
-} // End of submit_new_property.
-
-// -----------------------------------------------
-
 function submit_object()
 {
 	$.ajax
@@ -1694,111 +1703,6 @@ function submit_object()
 	});
 
 } // End of submit_object.
-
-// -----------------------------------------------
-
-function submit_old_garden(action)
-{
-	var index			= gardens_property_menu_1.selectedIndex;
-	var property_name	= gardens_property_menu_1.options[index].text;
-	var property_id		= gardens_property_menu_1.options[index].value; // Not used.
-
-	$.post
-	(
-		// See routes at end of WWW::Garden::Design.startup().
-		// This route is called in submit_new_garden() with action 'add'.
-
-		'/AddGarden',
-		{
-			action:			action, // 'delete' or 'update'.
-			description:	$('#garden_description').val(),
-			id:				gardens_current_garden_id,
-			name:			$('#garden_name').val(),
-			property_id:	gardens_current_property_id_1,
-			property_name:	property_name,
-			publish:		$('#garden_publish').prop('checked') ? 'Yes' : 'No',
-		},
-		function(packet)
-		{
-			$('#garden_result_div')
-			.empty()
-			.append(packet.message.cooked);
-
-			// Replace the upper garden menu on the Gardens tab.
-
-			gardens_table				= packet.gardens_table;
-			index						= build_garden_menu(gardens_current_property_id_1, gardens_current_garden_id, 'gardens_garden_menu');
-			gardens_current_garden_id	= gardens_table[index]['id']; // Update because previous one might have been deleted.
-
-			set_garden_fields_1(index);
-		},
-		'json'
-	);
-
-} // End of submit_old_garden.
-
-// -----------------------------------------------
-
-function submit_old_property(action)
-{
-	var has_gardens	= false;
-	var name		= $('#properties_property_name').val();
-
-	for (var i = 0; i < gardens_table.length; i++)
-	{
-		if (name == gardens_table[i]['property_name'])
-		{
-			has_gardens = true;
-
-			break;
-		}
-	}
-
-	if ( (action == 'delete') && (has_gardens == false) )
-	{
-		var ok = confirm('Are you sure you wish to delete property ' + name + '?');
-
-		if (ok == false)
-		{
-			return;
-		}
-	}
-
-	$.post
-	(
-		// See routes at end of WWW::Garden::Design.startup().
-		// This route is called in submit_new_property() with action 'add'.
-
-		'/AddProperty',
-		{
-			action:			action, // 'delete' or 'update'.
-			description:	$('#properties_property_description').val(),
-			id:				properties_current_property_id,
-			name:			name,
-			publish:		$('#properties_property_publish').prop('checked') ? 'Yes' : 'No'
-		},
-		function(packet)
-		{
-			$('#property_result_div')
-			.empty()
-			.append(packet.message.cooked);
-
-			properties_current_property_id	= packet.message.property_id;
-			property_table					= packet.property_table;
-			index							= build_properties_property_menu(properties_current_property_id, 'properties_property_menu');
-
-			set_property_fields(index);
-
-			if (action == 'delete')
-			{
-				index							= build_properties_property_menu(gardens_current_property_id_2, 'gardens_property_menu_2');
-				gardens_current_property_id_2	= property_table[index]['id']; // Update because previous one might have been deleted.
-			}
-		},
-		'json'
-	);
-
-} // End of submit_old_property.
 
 // -----------------------------------------------
 
@@ -1854,6 +1758,112 @@ function submit_search()
 	});
 
 } // End of submit_search.
+
+// -----------------------------------------------
+
+function update_garden(action)
+{
+	var index			= gardens_property_menu_1.selectedIndex;
+	var property_name	= gardens_property_menu_1.options[index].text;
+	var property_id		= gardens_property_menu_1.options[index].value; // Not used.
+
+	$.post
+	(
+		// See routes at end of WWW::Garden::Design.startup().
+		// This route is called in submit_new_garden() with action 'add'.
+
+		'/AddGarden',
+		{
+			action:			action, // 'delete' or 'update'.
+			description:	$('#garden_description').val(),
+			id:				gardens_current_garden_id,
+			name:			$('#garden_name').val(),
+			property_id:	gardens_current_property_id_1,
+			property_name:	property_name,
+			publish:		$('#garden_publish').prop('checked') ? 'Yes' : 'No',
+		},
+		function(packet)
+		{
+			$('#garden_result_div')
+			.empty()
+			.append(packet.message.cooked);
+
+			// Update the upper garden menu on the Gardens tab.
+
+			gardens_table				= packet.gardens_table;
+			index						= build_garden_menu(gardens_current_property_id_1, gardens_current_garden_id, 'gardens_garden_menu');
+			gardens_current_garden_id	= gardens_table[index]['id']; // Update because previous one might have been deleted.
+
+			set_garden_fields_1(index);
+		},
+		'json'
+	);
+
+} // End of update_garden.
+
+// -----------------------------------------------
+
+function update_property(action)
+{
+	var has_gardens	= false;
+	var name		= $('#properties_property_name').val();
+
+	for (var i = 0; i < gardens_table.length; i++)
+	{
+		if (name == gardens_table[i]['property_name'])
+		{
+			has_gardens = true;
+
+			break;
+		}
+	}
+
+	if ( (action == 'delete') && (has_gardens == false) )
+	{
+		var ok = confirm('Are you sure you wish to delete property ' + name + '?');
+
+		if (ok == false)
+		{
+			return;
+		}
+	}
+
+	$.post
+	(
+		// See routes at end of WWW::Garden::Design.startup().
+		// This route is called in add_property() with action 'add'.
+
+		'/AddProperty',
+		{
+			action:			action, // 'delete' or 'update'.
+			description:	$('#properties_property_description').val(),
+			id:				properties_current_property_id,
+			name:			name,
+			publish:		$('#properties_property_publish').prop('checked') ? 'Yes' : 'No'
+		},
+		function(packet)
+		{
+			$('#property_result_div')
+			.empty()
+			.append(packet.message.cooked);
+
+			// Update the property menu on the Properties tab.
+
+			properties_current_property_id	= packet.message.property_id;
+			property_table					= packet.property_table;
+			index							= build_properties_property_menu(properties_current_property_id, 'properties_property_menu');
+
+			set_property_fields(index);
+
+			// Update the lower property menu on the Gardens tab.
+
+			index							= build_properties_property_menu(gardens_current_property_id_2, 'gardens_property_menu_2');
+			gardens_current_property_id_2	= property_table[index]['id']; // Update because 'current' one might have been deleted.
+		},
+		'json'
+	);
+
+} // End of update_property.
 
 // -----------------------------------------------
 

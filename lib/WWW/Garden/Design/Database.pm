@@ -89,8 +89,8 @@ sub add_flower
 sub build_garden_menu
 {
 	my($self, $controller, $gardens_table, $jquery_id) = @_;
+	my($found)			= false;
 	my($html)			= "<select id = '$jquery_id' name = '$jquery_id'>";
-	my($last_name)		= '';
 	my($property_id)	= $controller -> session('current_property_id');
 
 	my($selected);
@@ -101,15 +101,15 @@ sub build_garden_menu
 
 		next if ($property_id ne $$garden{property_id});
 
-		if ($last_name eq '')
+		if ($found -> isFalse)
 		{
 			# Set this on the 1st menu item.
 
-			$selected = 'selected';
+			$found		= true;
+			$selected	= 'selected';
 		}
 
-		$last_name	= $$garden{name};
-		$html		.= "<option $selected value = '$$garden{id}'>$last_name</option>";
+		$html		.= "<option $selected value = '$$garden{id}'>$$garden{name}</option>";
 		$selected	= '';
 	}
 
@@ -171,26 +171,27 @@ sub build_gardens_property_menu
 sub build_object_menu
 {
 	my($self, $controller, $objects) = @_;
-	my($html)		= "<div class = 'object_toolbar'>"
-						. "<select id = 'object_menu'>";
-	my($last_name)  = '';
+	my($found)	= false;
+	my($html)	= "<div class = 'object_toolbar'>"
+					. "<select id = 'object_menu'>";
 
-	my($selected);
+	my($selected, %seen);
 
 	for my $object (@$objects)
 	{
-		if ($last_name eq '')
+		if ($found -> isFalse)
 		{
 			# Set this on the 1st menu item.
 
-			$selected = 'selected';
+			$found		= true;
+			$selected	= 'selected';
 		}
 
-		next if ($last_name eq $$object{name});
+		next if ($seen{$$object{name} });
 
-		$last_name	= $$object{name};
-		$html		.= "<option $selected value = '$$object{id}'>$last_name</option>";
-		$selected	= '';
+		$html					.= "<option $selected value = '$$object{id}'>$$object{name}</option>";
+		$seen{$$object{name} }	= 1;
+		$selected				= '';
 	}
 
 	$html .= "</select>\n</div>\n";
@@ -949,9 +950,9 @@ sub process_garden_submit
 
 	return
 	{
-		gardens_property_menu	=> $self -> build_gardens_property_menu($controller, $gardens_table, 'gardens_property_menu_1', $$item{property_id}),
-		gardens_table			=> $gardens_table,
-		message					=> $self -> format_raw_message($result),
+		gardens_table	=> $gardens_table,
+		message			=> $self -> format_raw_message($result),
+		property_menu	=> $self -> build_gardens_property_menu($controller, $gardens_table, 'gardens_property_menu_1', $$item{property_id}),
 	};
 
 } # End of process_garden_submit.
@@ -1095,6 +1096,7 @@ sub process_property_submit
 	{
 		property_table	=> $self -> read_properties_table,
 		message			=> $self -> format_raw_message($result),
+		property_menu	=> $self -> build_properties_property_menu($self -> read_table('properties'), 'gardens_property_menu_1', $$result{property_id}),
 	};
 
 } # End of process_property_submit.
