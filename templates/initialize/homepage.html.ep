@@ -405,13 +405,14 @@ function add_property(action)
 
 			properties_current_property_id	= packet.message.property_id;	// On Properties tab.
 			gardens_current_property_id_2	= packet.message.property_id;	// Lower property menu on Gardens tab.
-			property_table					= packet.property_table;
+			properties_table				= packet.properties_table;
 
 			build_property_menu(properties_current_property_id, 'properties_property_menu', packet.property_menu);
 
 			var index = find_index_of_property_id(properties_current_property_id);
 
-			set_properties_property_fields(index);
+			set_properties_property_fields_1(index);
+			set_properties_property_fields_2();
 
 			// Update the lower property menu on the Gardens tab.
 			// A new property cannot have any gardens, so no other property menus need updating.
@@ -712,9 +713,9 @@ function find_index_of_property_id(property_id)
 
 	if (property_id > 0)
 	{
-		for (var i = 0; i < property_table.length; i++)
+		for (var i = 0; i < properties_table.length; i++)
 		{
-			if (property_table[i]['id'] == property_id)
+			if (properties_table[i]['id'] == property_id)
 			{
 				index = i;
 
@@ -1002,9 +1003,9 @@ function get_properties_table()
 		null,
 		function(json)
 		{
-			property_table = json;
+			properties_table = json;
 
-			set_properties_property_fields(0);
+			set_properties_property_fields_1(0);
 		},
 		'json'
 	);
@@ -1410,11 +1411,11 @@ function properties_property_menu_changed(data)
 
 	properties_current_property_id = data.item.value;
 
-	for (var i = 0; i < property_table.length; i++)
+	for (var i = 0; i < properties_table.length; i++)
 	{
-		if (property_table[i]['id'] == properties_current_property_id)
+		if (properties_table[i]['id'] == properties_current_property_id)
 		{
-			set_properties_property_fields(i);
+			set_properties_property_fields_1(i);
 
 			break;
 		}
@@ -1484,20 +1485,35 @@ function set_object_fields(i)
 
 // -----------------------------------------------
 
-function set_properties_property_fields(i)
+function set_properties_property_fields_1(i)
 {
-	properties_current_property_id = property_table[i]['id'];
+	properties_current_property_id = properties_table[i]['id'];
 
 	$('#properties_property_description')
-	.val(property_table[i]['description']);
+	.val(properties_table[i]['description']);
 
 	$('#properties_property_name')
-	.val(property_table[i]['name']);
+	.val(properties_table[i]['name']);
 
-	$('#properties_property_publish') // In property_table, do not use the 'publish' (Yes/No) string!
-	.prop('checked', (property_table[i]['publish'] == 'Yes') ? true : false);
+	$('#properties_property_publish') // In properties_table, do not use the 'publish' (Yes/No) string!
+	.prop('checked', (properties_table[i]['publish'] == 'Yes') ? true : false);
 
-} // End of set_properties_property_fields.
+} // End of set_properties_property_fields_1.
+
+// -----------------------------------------------
+
+function set_properties_property_fields_2()
+{
+	$('#new_property_description')
+	.val('');
+
+	$('#new_property_name')
+	.val('');
+
+	$('#new_property_publish') // In properties_table, do not use the 'publish' (Yes/No) string!
+	.prop('checked', false);
+
+} // End of set_properties_property_fields_2.
 
 // -----------------------------------------------
 
@@ -1838,13 +1854,13 @@ function update_property(action)
 			// Update the property menu on the Properties tab.
 
 			properties_current_property_id	= packet.message.property_id;
-			property_table					= packet.property_table;
+			properties_table				= packet.properties_table;
 
 			build_property_menu(properties_current_property_id, 'properties_property_menu', packet.property_menu);
 
 			var index = find_index_of_property_id(properties_current_property_id);
 
-			set_properties_property_fields(index);
+			set_properties_property_fields_1(index);
 
 			// Update the upper property menu on the Gardens tab.
 			// We do this because an existing property may have been renamed.

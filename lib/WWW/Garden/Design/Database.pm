@@ -1102,9 +1102,9 @@ sub process_property_submit
 
 	return
 	{
-		property_table	=> $self -> read_properties_table,
-		message			=> $self -> format_raw_message($result),
-		property_menu	=> $self -> build_properties_property_menu($self -> read_table('properties'), 'properties_property_menu', $$result{property_id}),
+		properties_table	=> $self -> read_properties_table,
+		message				=> $self -> format_raw_message($result),
+		property_menu		=> $self -> build_properties_property_menu($self -> read_table('properties'), 'properties_property_menu', $$result{property_id}),
 	};
 
 } # End of process_property_submit.
