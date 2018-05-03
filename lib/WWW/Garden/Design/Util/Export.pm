@@ -81,7 +81,6 @@ our $VERSION = '0.95';
 sub BUILD
 {
 	my($self)				= @_;
-	my($constants)			= $self -> db -> constants;
 	my($export_type)		= $self -> export_type;
 	my($standalone_page)	= $self -> standalone_page;
 	my($all)				= $self -> all;
@@ -914,10 +913,9 @@ sub export_icons
 {
 	my($self)		= @_;
 	my($constants)	= $self -> db -> constants;
+	my($objects)	= $self -> db -> read_objects_table;
 
 	$self -> db -> logger -> info("flower_dir: $$constants{flower_dir}");
-
-	my($objects) = $self -> db -> read_objects_table;
 
 	my(@file_names);
 

@@ -444,7 +444,7 @@ sub format_raw_message
 
 sub format_string
 {
-	my($self, $image, $cell_width, $cell_height, $string) = @_;
+	my($self, $cell_width, $cell_height, $image, $string) = @_;
 	my(@words)			= split(/\s+/, $string);
 	my($step_count)		= $#words + 2;
 	my($vertical_step)	= int($cell_height / $step_count);
@@ -505,7 +505,7 @@ sub generate_tile
 	my($file_name)	= $self -> clean_up_icon_name($name);
 
 	$image -> box(fill => $fill);
-	$self -> format_string($image, $$constants{cell_width}, $$constants{cell_height}, $name);
+	$self -> format_string($$constants{cell_width}, $$constants{cell_height}, $image, $name);
 
 	$image -> write(file => "$$object{icon_dir}/$file_name.png");
 
