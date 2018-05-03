@@ -15,6 +15,9 @@ use File::Slurper qw/read_dir/;
 
 use FindBin;
 
+use Imager;
+use Imager::Fill;
+
 use Lingua::EN::Inflect qw/inflect PL_N/; # PL_N: plural of a singular noun.
 
 use Mojo::Pg;
@@ -25,7 +28,7 @@ use Text::CSV::Encoded;
 
 use Time::HiRes qw/gettimeofday tv_interval/;
 
-use Types::Standard qw/Object HashRef/;
+use Types::Standard qw/Any Object HashRef/;
 
 use Unicode::Collate;
 
@@ -60,6 +63,14 @@ has mojo_pg =>
 	required => 0,
 );
 
+has title_font =>
+(
+	default		=> sub{return ''},
+	is			=> 'rw',
+	isa			=> Any,
+	required	=> 0,
+);
+
 our $VERSION = '0.95';
 
 # -----------------------------------------------
@@ -70,7 +81,19 @@ sub BUILD
 	my($config) = $self -> config;
 
 	$self -> mojo_pg(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
-	$self -> constants($self -> read_constants_table); # Warning. Empty at start of import.
+	$self -> constants($self -> read_constants_table); # Warning. Possibly empty at start of import.
+
+	my($constants) = $self -> constants;
+
+	$self -> title_font
+	(
+		Imager::Font -> new
+		(
+			color	=> Imager::Color -> new(0, 0, 0), # Black.
+			file	=> $$constants{tile_font_file},
+			size	=> $$constants{tile_font_size},
+		) || die "Error. Can't define title font: " . Imager -> errstr
+	);
 
 }	# End of BUILD.
 
@@ -416,6 +439,79 @@ sub format_raw_message
 	return $result;
 
 } # End of format_raw_message.
+
+# -----------------------------------------------
+
+sub format_string
+{
+	my($self, $image, $cell_width, $cell_height, $string) = @_;
+	my(@words)			= split(/\s+/, $string);
+	my($step_count)		= $#words + 2;
+	my($vertical_step)	= int($cell_height / $step_count);
+	my($y)				= 0;
+	my(%vowel)			= (a => 1, e => 1, i => 1, o => 1, u => 1);
+
+	my($after_word);
+	my($finished);
+	my($index);
+	my(@letters);
+	my($word);
+
+	for my $step (0 .. $#words)
+	{
+		$y			+= $vertical_step;
+		$word		= $words[$step];
+		@letters	= split(//, $word);
+		$index		= $#letters;
+		$finished	= $index <= 7; # Don't zap the 'a' in the word 'a'.
+
+		while (! $finished)
+		{
+			if ($vowel{$letters[$index]})
+			{
+				splice(@letters, $index, 1);
+			}
+
+			$index--;
+
+			$finished = 1 if ($#letters <= 7);
+		}
+
+		$after_word = join('', @letters);
+
+		$image -> align_string
+		(
+			aa		=> 1,
+			font	=> $self -> title_font,
+			halign	=> 'center',
+			string	=> $after_word,
+			x		=> int($cell_width / 2),
+			y		=> $y,
+		);
+	}
+
+} # End of format_string.
+
+# -----------------------------------------------
+
+sub generate_tile
+{
+	my($self, $constants, $object) = @_;
+	my($color)		= Imager::Color -> new($$object{hex_color});
+	my($fill)		= Imager::Fill -> new(fg => $color, hatch => $$constants{tile_hatch_pattern});
+	my($id)			= $$object{id};
+	my($image)		= Imager -> new(xsize => $$constants{cell_width}, ysize => $$constants{cell_height});
+	my($name)		= $$object{name};
+	my($file_name)	= $self -> clean_up_icon_name($name);
+
+	$image -> box(fill => $fill);
+	$self -> format_string($image, $$constants{cell_width}, $$constants{cell_height}, $name);
+
+	$image -> write(file => "$$object{icon_dir}/$file_name.png");
+
+	return [$name, $file_name];
+
+} # End of generate_tile.
 
 # -----------------------------------------------
 # Return a list.

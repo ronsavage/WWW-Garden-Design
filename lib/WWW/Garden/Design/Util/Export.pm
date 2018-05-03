@@ -9,9 +9,6 @@ use boolean;
 
 use Encode 'encode';
 
-use Imager;
-use Imager::Fill;
-
 use WWW::Garden::Design::Database;
 
 use Mojo::Log;
@@ -25,7 +22,7 @@ use SVG::Grid;
 use Text::CSV;
 use Text::Xslate 'mark_raw';
 
-use Types::Standard qw/Any Int HashRef Str/;
+use Types::Standard qw/Int HashRef Str/;
 
 extends qw/WWW::Garden::Design::Database::Base/;
 
@@ -77,14 +74,6 @@ has standalone_page =>
 	required	=> 0,
 );
 
-has title_font =>
-(
-	default		=> sub{return ''},
-	is			=> 'rw',
-	isa			=> Any,
-	required	=> 0,
-);
-
 our $VERSION = '0.95';
 
 # -----------------------------------------------
@@ -101,16 +90,6 @@ sub BUILD
 	{
 		die "The 'all' flag must be Yes or No'\n";
 	}
-
-	$self -> title_font
-	(
-		Imager::Font -> new
-		(
-			color	=> Imager::Color -> new(0, 0, 0), # Black.
-			file	=> $$constants{tile_font_file},
-			size	=> $$constants{tile_font_size},
-		) || die "Error. Can't define title font: " . Imager -> errstr
-	);
 
 	# Warning: The line in web.site.xml which runs this script must not use command line options.
 	# That means, that whatever options that code needs must be the defaults.
@@ -514,12 +493,12 @@ sub export_all_pages
 			{td => 'Images'},
 		];
 
-		for my $image (@{$$flower{images} })
+		for my $item (@{$$flower{images} })
 		{
 			push @images,
 			[
-				{td => mark_raw($$image{description})},
-				{td => mark_raw("<img src = '$$image{file_name}'>")},
+				{td => mark_raw($$item{description})},
+				{td => mark_raw("<img src = '$$item{file_name}'>")},
 			];
 		}
 
@@ -715,7 +694,7 @@ sub export_garden_layout
 
 	my($x_cell_count)	= $max_x;
 	my($y_cell_count)	= $max_y;
-	my($image)			= SVG::Grid -> new
+	my($grid)			= SVG::Grid -> new
 	(
 		cell_width		=> $$constants{cell_width},
 		cell_height		=> $$constants{cell_height},
@@ -725,12 +704,12 @@ sub export_garden_layout
 		y_offset		=> $$constants{y_offset},
 	);
 
-	$image -> grid(stroke => 'blue');
+	$grid -> grid(stroke => 'blue');
 
 	# 2: Add the object locations to the grid.
 
 	my($file_name);
-	my($image_id);
+	my($grid_id);
 
 	for my $object (@$objects)
 	{
@@ -741,7 +720,7 @@ sub export_garden_layout
 			next if ($garden_id2name{$$feature{garden_id} } ne $garden_name);
 
 			$file_name	= $self -> db -> clean_up_icon_name($$object{name});
-			$image_id	= $image -> svg -> image
+			$grid_id	= $grid -> svg -> image
 			(
 				height	=> $$constants{cell_height},
 				href	=> $$object{icon_url},
@@ -769,7 +748,7 @@ sub export_garden_layout
 		{
 			next if ($garden_id2name{$$location{garden_id} } ne $garden_name);
 
-			$image_id = $image -> image_link
+			$grid_id = $grid -> image_link
 			(
 				href	=> $$flower{web_page_url},
 				image	=> $$flower{thumbnail_url},
@@ -779,42 +758,42 @@ sub export_garden_layout
 				y		=> $$location{y}, # Cell co-ord.
 			);
 
-			$tool_tips{$garden_id}{$image_id} = "$$flower{scientific_name} / $$flower{common_name}";
+			$tool_tips{$garden_id}{$grid_id} = "$$flower{scientific_name} / $$flower{common_name}";
 		}
 	}
 
 	# 4: Add some annotations and write the layout SVG.
 
-	$image -> text
+	$grid -> text
 	(
 		'font-size'		=> 32,
 		'font-weight'	=> '400',
 		text			=> "'$property_name - $garden_name Garden'",
-		x				=> $image -> x_offset + 8,		# Pixel co-ord.
-		y				=> $image -> y_offset / 2 + 8,	# Pixel co-ord.
+		x				=> $grid -> x_offset + 8,		# Pixel co-ord.
+		y				=> $grid -> y_offset / 2 + 8,	# Pixel co-ord.
 	);
-	$image -> text
+	$grid -> text
 	(
 		'font-size'		=> 32,
 		'font-weight'	=> '400',
 		text			=> '--> N',
-		x				=> $image -> width - 2 * $image -> cell_width,	# Pixel co-ord.
-		y				=> $image -> y_offset / 2,						# Pixel co-ord.
+		x				=> $grid -> width - 2 * $grid -> cell_width,	# Pixel co-ord.
+		y				=> $grid -> y_offset / 2,						# Pixel co-ord.
 	);
-	$image -> text
+	$grid -> text
 	(
 		'font-size'		=> 32,
 		'font-weight'	=> '400',
 		text			=> 'Block size: Width: 11.7m. Height: 46m',
-		x				=> $image -> width - 20 * $image -> cell_width,	# Pixel co-ord.
-		y				=> $image -> height,							# Pixel co-ord.
+		x				=> $grid -> width - 20 * $grid -> cell_width,	# Pixel co-ord.
+		y				=> $grid -> height,							# Pixel co-ord.
 	);
 
 	$file_name = "$$constants{homepage_dir}$$constants{flower_url}/$garden_name.garden.layout.svg";
 
 	$self -> db -> logger -> info("Writing to $file_name");
 
-	$image -> write(output_file_name => $file_name);
+	$grid -> write(output_file_name => $file_name);
 
 	# 4: Output some HTML.
 
@@ -881,14 +860,14 @@ EOS
 
 	my(@tips);
 
-	for $image_id (nsort keys %{$tool_tips{$garden_id} })
+	for $grid_id (nsort keys %{$tool_tips{$garden_id} })
 	{
 		$index++;
 
 		# Must use double-quotes in case the common_name contains a single-quote.
 		# And we use a stack because <<EOS added an extra \n to every output line :-(.
 
-		push @tips, qq|\ttool_tips[$index] = {id: '$image_id', text: "$tool_tips{$garden_id}{$image_id}"};|;
+		push @tips, qq|\ttool_tips[$index] = {id: '$grid_id', text: "$tool_tips{$garden_id}{$grid_id}"};|;
 	}
 
 	my($tips) = join("\n", @tips);
@@ -940,30 +919,13 @@ sub export_icons
 
 	my($objects) = $self -> db -> read_objects_table;
 
-	my($color);
-	my($fill, $file_name, @file_names);
-	my($id, $image);
-	my($name);
-	my($x);
-	my($y);
+	my(@file_names);
 
 	for my $object (sort{$$a{name} cmp $$b{name} } @$objects)
 	{
-		next if ($$object{publish} eq 'No');;
+		next if ($$object{publish} eq 'No');
 
-		$color		= Imager::Color -> new($$object{hex_color});
-		$fill		= Imager::Fill -> new(fg => $color, hatch => $$constants{tile_hatch_pattern});
-		$id			= $$object{id};
-		$image		= Imager -> new(xsize => $$constants{cell_width}, ysize => $$constants{cell_height});
-		$name		= $$object{name};
-		$file_name	= $self -> db -> clean_up_icon_name($name);
-
-		push @file_names, [$name, $file_name];
-
-		$image -> box(fill => $fill);
-		$self -> format_string($image, $$constants{cell_width}, $$constants{cell_height}, $name);
-
-		$image -> write(file => "$$object{icon_dir}/$file_name.png");
+		push @file_names, $self -> db -> generate_tile($constants, $object);
 	}
 
 	my(@heading)	= map{ {td => $_} } (qw(Object Icon) );
@@ -981,7 +943,7 @@ sub export_icons
 
 	push @row, [@heading];
 
-	$file_name = "$$constants{homepage_dir}$$constants{icon_dir}/objects.html";
+	my($file_name) = "$$constants{homepage_dir}$$constants{icon_dir}/objects.html";
 
 	open(my $fh, '>', $file_name) || die "Can't open: $file_name: $!\n";
 	print $fh $tx -> render
@@ -1205,58 +1167,6 @@ sub flowers2csv
 
 # -----------------------------------------------
 
-sub format_string
-{
-	my($self, $image, $cell_width, $cell_height, $string) = @_;
-	my(@words)			= split(/\s+/, $string);
-	my($step_count)		= $#words + 2;
-	my($vertical_step)	= int($cell_height / $step_count);
-	my($y)				= 0;
-	my(%vowel)			= (a => 1, e => 1, i => 1, o => 1, u => 1);
-
-	my($after_word);
-	my($finished);
-	my($index);
-	my(@letters);
-	my($word);
-
-	for my $step (0 .. $#words)
-	{
-		$y			+= $vertical_step;
-		$word		= $words[$step];
-		@letters	= split(//, $word);
-		$index		= $#letters;
-		$finished	= $index <= 7; # Don't zap the 'a' in 'a'.
-
-		while (! $finished)
-		{
-			if ($vowel{$letters[$index]})
-			{
-				splice(@letters, $index, 1);
-			}
-
-			$index--;
-
-			$finished = 1 if ($#letters <= 7);
-		}
-
-		$after_word = join('', @letters);
-
-		$image -> align_string
-		(
-			aa		=> 1,
-			font	=> $self -> title_font,
-			halign	=> 'center',
-			string	=> $after_word,
-			x		=> int($cell_width / 2),
-			y		=> $y,
-		);
-	}
-
-} # End of format_string.
-
-# -----------------------------------------------
-
 sub gardens2csv
 {
 	my($self, $csv, $property_id2name)	= @_;
@@ -1325,13 +1235,13 @@ sub images2csv
 
 		$common_name = $$flower{common_name};
 
-		for my $image (sort{$$a{flower_id} cmp $$b{flower_id} } @{$$flower{images} })
+		for my $item (sort{$$a{flower_id} cmp $$b{flower_id} } @{$$flower{images} })
 		{
 			$csv -> combine
 			(
 				$common_name,
-				$$image{description},
-				$$image{raw_name}, # We don't want the whole domain/url!
+				$$item{description},
+				$$item{raw_name}, # We don't want the whole domain/url!
 			);
 
 			print $fh $csv -> string, "\n";
