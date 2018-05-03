@@ -92,6 +92,7 @@ our $VERSION = '0.95';
 sub BUILD
 {
 	my($self)				= @_;
+	my($constants)			= $self -> db -> constants;
 	my($export_type)		= $self -> export_type;
 	my($standalone_page)	= $self -> standalone_page;
 	my($all)				= $self -> all;
@@ -106,8 +107,8 @@ sub BUILD
 		Imager::Font -> new
 		(
 			color	=> Imager::Color -> new(0, 0, 0), # Black.
-			file	=> '/usr/share/fonts/truetype/freefont/FreeMono.ttf',
-			size	=> 16,
+			file	=> $$constants{tile_font_file},
+			size	=> $$constants{tile_font_size},
 		) || die "Error. Can't define title font: " . Imager -> errstr
 	);
 
@@ -119,7 +120,7 @@ sub BUILD
 		'Native' =>
 			{
 				column_name	=> 'native',
-				order		=> 2,
+				order		=> 2, # The value 1 is not used.
 			},
 		'Scientific name' =>
 			{
@@ -951,7 +952,7 @@ sub export_icons
 		next if ($$object{publish} eq 'No');;
 
 		$color		= Imager::Color -> new($$object{hex_color});
-		$fill		= Imager::Fill -> new(fg => $color, hatch => 'dots16');
+		$fill		= Imager::Fill -> new(fg => $color, hatch => $$constants{tile_hatch_pattern});
 		$id			= $$object{id};
 		$image		= Imager -> new(xsize => $$constants{cell_width}, ysize => $$constants{cell_height});
 		$name		= $$object{name};
