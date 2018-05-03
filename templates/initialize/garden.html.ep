@@ -9,7 +9,7 @@
 		</tr>
 		<tr>
 			<td></td>
-			<td align = 'center'>Property menu</td>
+			<td align = 'center'>Properties with Gardens</td>
 			<td align = 'center'>Garden menu</td>
 			<td></td>
 		</tr>
@@ -75,7 +75,7 @@
 			<td colspan = '3'><br /></td>
 		</tr>
 		<tr>
-			<td align = 'center' colspan = '3'>Property menu</td>
+			<td align = 'center' colspan = '3'>All Properties</td>
 		</tr>
 		<tr>
 			<td align = 'center' colspan = '3'>

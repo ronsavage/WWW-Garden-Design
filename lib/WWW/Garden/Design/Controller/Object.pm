@@ -1,4 +1,4 @@
-package WWW::Garden::Design::Controller::AddObject;
+package WWW::Garden::Design::Controller::Object;
 
 use Mojo::Base 'Mojolicious::Controller';
 
@@ -12,26 +12,34 @@ sub process
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('AddObject.process()');
+	$self -> app -> log -> debug('Object.process()');
 
-	my($items) = $self -> req -> params -> to_hash;
+	my($defaults)	= $self -> app -> defaults;
+	my($item)		= $self -> req -> params -> to_hash;
 
-	$self -> app -> log -> debug("param($_) => $$items{$_}") for sort keys %$items;
+	$self -> app -> log -> debug("param($_) => $$item{$_}") for sort keys %$item;
 
-	if ($$items{color_chosen} && $$items{object_name})
+	if ($$item{color_chosen} && $$item{object_name})
 	{
-		my($defaults) = $self -> app -> defaults;
+		# In process_object() all success branches print the raw message plus
+		# other information to the log, so nothing is printed here.
 
-#		$$defaults{db} -> add_object($items);
+		my($packet) = $$defaults{db} -> process_object($item);
 
+		$self -> stash(json => $packet);
 		$self -> stash(error => undef);
 	}
 	else
 	{
-		my($message) = 'Missing color name or object name';
+		my($result) = {object_id => 0, raw => 'Missing color name or object name', type => 'Error'};
+		my($packet)	=
+		{
+			object_table	=> $$defaults{db} -> read_objects_table, # Warning: Not read_table('objects').
+			message			=> $$defaults{db} -> format_raw_message($result),
+		};
 
-		$self -> stash(error => $message);
-		$self -> app -> log -> error($message);
+		$self -> stash(json => $packet);
+		$self -> app -> log -> error($$result{raw});
 	}
 
 	$self -> render;

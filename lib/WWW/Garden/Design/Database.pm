@@ -930,11 +930,11 @@ sub parse_search_text
 
 # --------------------------------------------------
 
-sub process_garden_submit
+sub process_garden
 {
 	my($self, $controller, $item) = @_;
 
-	$self -> logger -> debug('Database.process_garden_submit(...)');
+	$self -> logger -> debug('Database.process_garden(...)');
 
 	my($action)			= $$item{action};
 	my($garden_name)	= $$item{name};
@@ -1057,15 +1057,15 @@ sub process_garden_submit
 		property_menu	=> $self -> build_gardens_property_menu($controller, $gardens_table, 'gardens_property_menu_1', $$item{property_id}),
 	};
 
-} # End of process_garden_submit.
+} # End of process_garden.
 
 # --------------------------------------------------
 
-sub process_property_submit
+sub process_object
 {
 	my($self, $item) = @_;
 
-	$self -> logger -> debug('Database.process_property_submit(...)');
+	$self -> logger -> debug('Database.process_object(...)');
 
 	my($action)				= $$item{action};
 	my($id)					= $$item{id};
@@ -1201,7 +1201,151 @@ sub process_property_submit
 		property_menu		=> $self -> build_properties_property_menu($self -> read_table('properties'), 'properties_property_menu', $$result{property_id}),
 	};
 
-} # End of process_property_submit.
+} # End of process_object.
+
+# --------------------------------------------------
+
+sub process_property
+{
+	my($self, $item) = @_;
+
+	$self -> logger -> debug('Database.process_property(...)');
+
+	my($action)				= $$item{action};
+	my($id)					= $$item{id};
+	my($property_name)		= $$item{name};
+	my($table_name)			= 'properties';
+	my($properties_table)	= $self -> read_table($table_name);
+	my($result) 			= {property_id => 0};
+	my($fields)				=
+	{
+		description	=> $$item{description},
+		name		=> $property_name,
+		publish		=> $$item{publish},
+	};
+
+	my(%property);
+
+	if ($action eq 'add')
+	{
+		# It's a property insert. Is the property name on file?
+		# AddProperty.pm checked that the user entered something!
+
+		for (@$properties_table)
+		{
+			$property{uc $$_{name} } = $$_{id};
+		}
+
+		if (exists($property{uc $property_name}) )
+		{
+			$result = {raw => 'Property: $property_name. That property name is on file', type => 'Error'};
+		}
+		else
+		{
+			$id = $self -> mojo_pg -> insert
+			(
+				$table_name,
+				$fields,
+				{returning => 'id'}
+			) -> hash -> {id};
+
+			$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
+
+			$result = {property_id => $id, raw => "Added property: $property_name", type => 'Success'};
+		}
+	}
+	elsif ($action eq 'update')
+	{
+		# Is the property id on file? AddProperty.pm checked that the user entered something!
+
+		for (@$properties_table)
+		{
+			$property{$$_{id} } = $$_{name};
+		}
+
+		if (exists($property{$id}) )
+		{
+			# It's a property update.
+
+			$self -> mojo_pg -> update
+			(
+				$table_name,
+				$fields,
+				{id => $$item{id} }
+			);
+
+			$self -> logger -> debug("Table: $table_name. Record id '$id'. Property: $property_name. Action: $action");
+
+			$result = {property_id => $$item{id}, raw => "Property: $property_name. Action: $action", type => 'Success'};
+		}
+		else
+		{
+			$result = {raw => 'Cannot update the database. That record was not found', type => 'Error'};
+		}
+	}
+	elsif ($action eq 'delete')
+	{
+		# Is the property id on file? AddProperty.pm checked that the user entered something!
+
+		for (@$properties_table)
+		{
+			$property{$$_{id} } = $$_{name};
+		}
+
+		if (exists($property{$id}) )
+		{
+			# It's a property delete. But does this property have any gardens?
+
+			my($found)			= false;
+			my($garden_table)	= $self -> read_table('gardens');
+
+			for my $garden (@$garden_table)
+			{
+				if ($$garden{property_id} == $$item{id})
+				{
+					$found = true;
+				}
+			}
+
+			if ($found -> isTrue)
+			{
+				my($note) = "Property not deleted because it has gardens";
+
+				$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. $note");
+
+				$result = {raw => "Property: $property_name. $note", type => 'Error'};
+			}
+			else
+			{
+				$self -> mojo_pg -> delete
+				(
+					$table_name,
+					{id => $$item{id} }
+				);
+
+				$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
+
+				$result = {raw => "Property: $property_name. Action $action", type => 'Success'};
+			}
+		}
+		else
+		{
+			$result = {raw => "Property: $property_name. Cannot update the database. That record was not found", type => 'Error'};
+		}
+	}
+	else
+	{
+		$result = {raw => "Property: $property_name. Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
+	}
+
+	return
+	{
+		properties_table	=> $self -> read_properties_table,
+		message				=> $self -> format_raw_message($result),
+		property_menu		=> $self -> build_properties_property_menu($self -> read_table('properties'), 'properties_property_menu', $$result{property_id}),
+	};
+
+} # End of process_property.
 
 # -----------------------------------------------
 

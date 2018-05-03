@@ -21,10 +21,10 @@ sub process
 
 	if ($$item{name} && $$item{property_id})
 	{
-		# In process_garden_submit() all branches print the raw message plus
+		# In process_garden() all branches print the raw message plus
 		# other information to the log, so nothing is printed here.
 
-		my($packet) = $$defaults{db} -> process_garden_submit($self -> app, $item);
+		my($packet) = $$defaults{db} -> process_garden($self -> app, $item);
 
 		$self -> stash(json => $packet);
 		$self -> stash(error => undef);
@@ -34,7 +34,7 @@ sub process
 		my($result) = {garden_id => 0, raw => 'The garden name is mandatory', type => 'Error'};
 		my($packet)	=
 		{
-			garden_table	=> $$defaults{db} -> read_gardens_table,
+			garden_table	=> $$defaults{db} -> read_gardens_table, # Warning: Not read_table('gardens').
 			message			=> $$defaults{db} -> format_raw_message($result),
 		};
 

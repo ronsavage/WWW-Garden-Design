@@ -1459,6 +1459,52 @@ function properties_property_menu_changed(data)
 
 // -----------------------------------------------
 
+function save_object(action)
+{
+	var color_chosen	= $('#color_chosen').val();
+	var object_name		= $('#object_name').val();
+
+	if ( (color_chosen == '') || (object_name == '') )
+	{
+		alert('Error: The color name and object name are mandatory');
+
+		return;
+	}
+
+	$.post
+	(
+		// See routes at end of WWW::Garden::Design.startup().
+		// This route is called in submit_old_property() with action 'delete' or 'update'.
+
+		'/Object',
+		{
+			color_chosen:	color_chosen,
+			color_code:		$('#color_code').val(),
+			color_name:		$('#color_name').val(),
+			object_name:	object_name,
+			object_publish:	$('#object_publish').prop('checked') ? 'Yes' : 'No'
+		},
+		function(packet)
+		{
+			$('#object_result_div')
+			.empty()
+			.append(packet.message.cooked);
+
+/*
+			// Update the property menu on the Properties tab.
+
+			properties_current_property_id	= packet.message.property_id;	// On Properties tab.
+			gardens_current_property_id_2	= packet.message.property_id;	// Lower property menu on Gardens tab.
+			properties_table				= packet.properties_table;
+*/
+		},
+		'json'
+	);
+
+} // End of save_object.
+
+// -----------------------------------------------
+
 function set_garden_fields_1(i)
 {
 	$('#garden_description')
@@ -1706,41 +1752,6 @@ function submit_details()
 	});
 
 } // End of submit_details.
-
-// -----------------------------------------------
-
-function submit_object()
-{
-	$.ajax
-	({
-		data:
-		{
-			color_chosen:	$('#color_chosen').val(),
-			color_code:		$('#color_code').val(),
-			color_name:		$('#color_name').val(),
-			object_name:	$('#object_name').val(),
-			object_publish:	$('#object_publish').prop('checked') ? 'Yes' : 'No'
-		},
-		dataType:	'html',
-		method:		'POST',
-		url:		'/AddObject' // See routes at end of WWW::Garden::Design.startup().
-	})
-	.done(function(html)
-	{
-//		$('#object_result_div')
-//		.empty()
-//		.append(html);
-
-		$('#object_result_div')
-		.empty()
-		.text('Submitted object details');
-	})
-	.fail(function(jqxhr, textStatus, error)
-	{
-		alert('Ajax status: ' + textStatus + ', ' + error);
-	});
-
-} // End of submit_object.
 
 // -----------------------------------------------
 
@@ -2154,7 +2165,7 @@ $(function()
 	)
 	.submit(function()
 	{
-		submit_object();
+		save_object();
 
 		return false;
 	});

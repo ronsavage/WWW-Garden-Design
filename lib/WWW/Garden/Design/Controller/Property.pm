@@ -21,10 +21,10 @@ sub process
 
 	if ($$item{name})
 	{
-		# In process_property_submit() all success branches print the raw message plus
+		# In process_property() all success branches print the raw message plus
 		# other information to the log, so nothing is printed here.
 
-		my($packet) = $$defaults{db} -> process_property_submit($item);
+		my($packet) = $$defaults{db} -> process_property($item);
 
 		$self -> stash(json => $packet);
 		$self -> stash(error => undef);
@@ -34,7 +34,7 @@ sub process
 		my($result) = {garden_id => 0, raw => 'The property name is mandatory', type => 'Error'};
 		my($packet)	=
 		{
-			property_table	=> $$defaults{db} -> read_properties_table,
+			property_table	=> $$defaults{db} -> read_objects_table, # Warning: Not read_table('objects').
 			message			=> $$defaults{db} -> format_raw_message($result),
 		};
 
