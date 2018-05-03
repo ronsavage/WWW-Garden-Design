@@ -356,7 +356,7 @@ function add_garden()
 
 			var regexp			= /gardens_property_menu_1/g;
 			var new_menu_name	= 'design_property_menu';
-			var property_menu	= packet.gardens_property_menu.replace(regexp, new_menu_name);
+			var property_menu	= packet.property_menu.replace(regexp, new_menu_name);
 
 			build_property_menu(gardens_current_property_id_1, new_menu_name, property_menu);
 
@@ -473,7 +473,7 @@ function build_garden_menu(property_id, garden_id, jquery_id)
 	}
 
 	// With a delete, garden_id is 0, so index remains as -1.
-	// In this case I set it to the index of the 1st id in the table.
+	// In this case set it to the index of the 1st id in the table.
 
 	if (index < 0)
 	{
@@ -500,7 +500,7 @@ function build_garden_menu(property_id, garden_id, jquery_id)
 			}
 		});
 	}
-	else
+	else // design_garden_menu.
 	{
 		$(id)
 		.selectmenu();
@@ -573,7 +573,7 @@ function build_property_menu(property_id, jquery_id, property_menu)
 		({
 			change: function(event, data)
 			{
-				properties_property_menu(data);
+				properties_property_menu_changed(data);
 			},
 		});
 
@@ -806,7 +806,8 @@ function gardens_property_menu_1_changed(data)
 	{
 		if (gardens_table[i]['property_id'] == gardens_current_property_id_1)
 		{
-			index = build_garden_menu(gardens_current_property_id_1, gardens_current_garden_id, 'gardens_garden_menu');
+			//gardens_current_garden_id	= gardens_table[i]['id'];
+			index						= build_garden_menu(gardens_current_property_id_1, gardens_current_garden_id, 'gardens_garden_menu');
 
 			set_garden_fields_1(index);
 
