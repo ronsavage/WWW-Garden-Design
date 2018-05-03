@@ -4,7 +4,7 @@ use Mojo::Base 'Mojolicious::Controller';
 
 use Moo;
 
-our $VERSION = '0.95';
+our $VERSION = '0.96';
 
 # -----------------------------------------------
 

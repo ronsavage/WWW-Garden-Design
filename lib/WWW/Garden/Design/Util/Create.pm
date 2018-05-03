@@ -53,7 +53,7 @@ has time_option =>
 	required => 0,
 );
 
-our $VERSION = '0.95';
+our $VERSION = '0.96';
 
 # -----------------------------------------------
 

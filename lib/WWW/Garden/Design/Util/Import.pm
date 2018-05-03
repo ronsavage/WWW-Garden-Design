@@ -30,7 +30,7 @@ has attribute_type_checker =>
 	required	=> 1,
 );
 
-our $VERSION = '0.95';
+our $VERSION = '0.96';
 
 # -----------------------------------------------
 

@@ -10,7 +10,7 @@ use utf8;
 
 use WWW::Garden::Design::Util::ValidateForm;
 
-our $VERSION = '0.95';
+our $VERSION = '0.96';
 
 # -----------------------------------------------
 
