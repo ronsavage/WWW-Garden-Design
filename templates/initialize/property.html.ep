@@ -88,6 +88,7 @@
 			<td align = 'left' width = '33%'><input type = 'submit' value = 'Save' onclick = 'add_property()'/></td>
 			<td width = '33%'></td>
 			<td align = 'right' width = '33%'><input type = 'reset' value = 'Reset' /></td>
+		</tr>
 	</table>
 </form>
 

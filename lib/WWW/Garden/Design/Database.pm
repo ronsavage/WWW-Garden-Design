@@ -1067,10 +1067,16 @@ sub process_object
 
 	$self -> logger -> debug('Database.process_object(...)');
 
+#	color_chosen:	color_chosen,
+#	color_code:		$('#color_code').val(),
+#	color_name:		$('#color_name').val(),
+#	object_name:	object_name,
+#	object_publish:	$('#object_publish').prop('checked') ? 'Yes' : 'No'
+
 	my($action)				= $$item{action};
 	my($id)					= $$item{id};
 	my($property_name)		= $$item{name};
-	my($table_name)			= 'properties';
+	my($table_name)			= 'objects';
 	my($properties_table)	= $self -> read_table($table_name);
 	my($result) 			= {property_id => 0};
 	my($fields)				=
