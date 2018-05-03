@@ -7,8 +7,6 @@ use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use boolean;
 
-use Data::Dumper::Concise; # For Dumper().
-
 use DBI;
 
 use File::Slurper qw/read_dir/;

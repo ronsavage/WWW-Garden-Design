@@ -3,8 +3,6 @@
 use strict;
 use warnings;
 
-use Data::Dumper::Concise; # For Dumper().
-
 use FindBin;
 
 use MojoX::Validate::Util;

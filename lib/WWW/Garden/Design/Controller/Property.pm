@@ -2,8 +2,6 @@ package WWW::Garden::Design::Controller::Property;
 
 use Mojo::Base 'Mojolicious::Controller';
 
-use Data::Dumper::Concise; # For Dumper().
-
 use Moo;
 
 our $VERSION = '0.95';
@@ -27,8 +25,6 @@ sub process
 		# other information to the log, so nothing is printed here.
 
 		my($packet) = $$defaults{db} -> process_property_submit($item);
-
-		$self -> app -> log -> debug('properties_property_menu: ' . Dumper($$packet{property_menu}) );
 
 		$self -> stash(json => $packet);
 		$self -> stash(error => undef);
