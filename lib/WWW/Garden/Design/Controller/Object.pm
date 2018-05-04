@@ -2,6 +2,8 @@ package WWW::Garden::Design::Controller::Object;
 
 use Mojo::Base 'Mojolicious::Controller';
 
+use Data::Dumper::Concise; # For Dumper().
+
 use Moo;
 
 our $VERSION = '0.96';
@@ -25,6 +27,8 @@ sub process
 		# other information to the log, so nothing is printed here.
 
 		my($packet) = $$defaults{db} -> process_object($item);
+
+		$self -> app -> log -> debug('Database.process_object() returned: ' . Dumper($packet) );
 
 		$self -> stash(json => $packet);
 		$self -> stash(error => undef);

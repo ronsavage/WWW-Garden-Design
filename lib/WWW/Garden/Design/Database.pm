@@ -214,7 +214,7 @@ sub build_object_menu
 			$selected	= ' selected';
 		}
 
-		$html		.= "<option $selected value = '$object_id'>$$object{name}</option>";
+		$html		.= "<option$selected value = '$object_id'>$$object{name}</option>";
 		$selected	= '';
 	}
 
@@ -1090,7 +1090,15 @@ sub process_object
 		publish		=> $$item{publish},
 	};
 
-	return {message => {cooked => "hex_color: $$item{color_chosen}"} };
+	$$result{raw}	= "hex_color: $$item{color_chosen}";
+	$$result{type}	= 'Success';
+
+	return
+	{
+		message			=> $self -> format_raw_message($result),
+		object_menu		=> $self -> build_object_menu($objects_table, $$result{object_id}),
+		objects_table	=> $objects_table,
+	};
 
 =pod
 

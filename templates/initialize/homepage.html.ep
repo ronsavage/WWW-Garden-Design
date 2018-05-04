@@ -1859,7 +1859,7 @@ function update_object(action)
 			.empty()
 			.append(packet.message.cooked);
 
-/*
+/* TODO
 			// Update the property menu on the Properties tab.
 
 			properties_current_property_id	= packet.message.property_id;	// On Properties tab.
@@ -1948,17 +1948,6 @@ function update_property(action)
 			// The previously selected property may have been deleted.
 
 			gardens_current_property_id_2 = properties_current_property_id;
-
-			// Update the lower property menu on the Gardens tab.
-/*
-			regexp			= /gardens_property_menu_1/g;
-			new_menu_name	= 'design_property_menu';
-			property_menu	= packet.gardens_property_menu.replace(regexp, new_menu_name);
-
-			build_property_menu(gardens_current_property_id_2, new_menu_name, property_menu);
-
-			gardens_current_property_id_2 = properties_current_property_id
-*/
 		},
 		'json'
 	);
