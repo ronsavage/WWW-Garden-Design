@@ -959,7 +959,7 @@ sub process_garden
 	if ($action eq 'add')
 	{
 		# It's a garden insert. Is the garden name on file?
-		# AddGarden.pm checked that the user entered something!
+		# Garden.pm checked that the user entered something!
 
 		for (@$gardens_table)
 		{
@@ -984,9 +984,37 @@ sub process_garden
 			$result = {garden_id => $id, raw => "Property: $property_name. Added garden: $garden_name", type => 'Success'};
 		}
 	}
+	elsif ($action eq 'delete')
+	{
+		# Is the garden id on file? Garden.pm checked that the user entered something!
+
+		for (@$gardens_table)
+		{
+			$garden{$$_{id} } = $$_{name};
+		}
+
+		if (exists($garden{$id}) )
+		{
+			$self -> mojo_pg -> delete
+			(
+				$table_name,
+				{id => $$item{id} }
+			);
+
+			my($message) = "Property: $property_name. Garden: $garden_name. Action: $action";
+
+			$self -> logger -> debug("Table '$table_name'. Record id '$id'. $message");
+
+			$result = {raw => $message, type => 'Success'};
+		}
+		else
+		{
+			$result = {raw => "Property: $property_name. Garden: $garden_name. Cannot update the database. That record was not found", type => 'Error'};
+		}
+	}
 	elsif ($action eq 'update')
 	{
-		# Is the garden id on file? AddGarden.pm checked that the user entered something!
+		# Is the garden id on file? Garden.pm checked that the user entered something!
 
 		for (@$gardens_table)
 		{
@@ -1007,34 +1035,6 @@ sub process_garden
 			$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Garden: $garden_name. Action: $action");
 
 			$result = {garden_id => $$item{id}, raw => "Property: $property_name. Garden. $garden_name. Action: $action", type => 'Success'};
-		}
-		else
-		{
-			$result = {raw => "Property: $property_name. Garden: $garden_name. Cannot update the database. That record was not found", type => 'Error'};
-		}
-	}
-	elsif ($action eq 'delete')
-	{
-		# Is the garden id on file? AddGarden.pm checked that the user entered something!
-
-		for (@$gardens_table)
-		{
-			$garden{$$_{id} } = $$_{name};
-		}
-
-		if (exists($garden{$id}) )
-		{
-			$self -> mojo_pg -> delete
-			(
-				$table_name,
-				{id => $$item{id} }
-			);
-
-			my($message) = "Property: $property_name. Garden: $garden_name. Action: $action";
-
-			$self -> logger -> debug("Table '$table_name'. Record id '$id'. $message");
-
-			$result = {raw => $message, type => 'Success'};
 		}
 		else
 		{
@@ -1102,12 +1102,12 @@ sub process_object
 
 =pod
 
-	my(%property);
+	my(%object;
 
 	if ($action eq 'add')
 	{
-		# It's a property insert. Is the property name on file?
-		# AddProperty.pm checked that the user entered something!
+		# It's a object insert. Is the object name on file?
+		# Object.pm checked that the user entered something!
 
 		for (@$properties_table)
 		{
@@ -1132,38 +1132,9 @@ sub process_object
 			$result = {property_id => $id, raw => "Added property: $property_name", type => 'Success'};
 		}
 	}
-	elsif ($action eq 'update')
-	{
-		# Is the property id on file? AddProperty.pm checked that the user entered something!
-
-		for (@$properties_table)
-		{
-			$property{$$_{id} } = $$_{name};
-		}
-
-		if (exists($property{$id}) )
-		{
-			# It's a property update.
-
-			$self -> mojo_pg -> update
-			(
-				$table_name,
-				$fields,
-				{id => $$item{id} }
-			);
-
-			$self -> logger -> debug("Table: $table_name. Record id '$id'. Property: $property_name. Action: $action");
-
-			$result = {property_id => $$item{id}, raw => "Property: $property_name. Action: $action", type => 'Success'};
-		}
-		else
-		{
-			$result = {raw => 'Cannot update the database. That record was not found', type => 'Error'};
-		}
-	}
 	elsif ($action eq 'delete')
 	{
-		# Is the property id on file? AddProperty.pm checked that the user entered something!
+		# Is the property id on file? Object.pm checked that the user entered something!
 
 		for (@$properties_table)
 		{
@@ -1209,6 +1180,35 @@ sub process_object
 		else
 		{
 			$result = {raw => "Property: $property_name. Cannot update the database. That record was not found", type => 'Error'};
+		}
+	}
+	elsif ($action eq 'update')
+	{
+		# Is the property id on file? Object.pm checked that the user entered something!
+
+		for (@$properties_table)
+		{
+			$property{$$_{id} } = $$_{name};
+		}
+
+		if (exists($property{$id}) )
+		{
+			# It's a property update.
+
+			$self -> mojo_pg -> update
+			(
+				$table_name,
+				$fields,
+				{id => $$item{id} }
+			);
+
+			$self -> logger -> debug("Table: $table_name. Record id '$id'. Property: $property_name. Action: $action");
+
+			$result = {property_id => $$item{id}, raw => "Property: $property_name. Action: $action", type => 'Success'};
+		}
+		else
+		{
+			$result = {raw => 'Cannot update the database. That record was not found', type => 'Error'};
 		}
 	}
 	else
@@ -1255,7 +1255,7 @@ sub process_property
 	if ($action eq 'add')
 	{
 		# It's a property insert. Is the property name on file?
-		# AddProperty.pm checked that the user entered something!
+		# Property.pm checked that the user entered something!
 
 		for (@$properties_table)
 		{
@@ -1280,38 +1280,9 @@ sub process_property
 			$result = {property_id => $id, raw => "Added property: $property_name", type => 'Success'};
 		}
 	}
-	elsif ($action eq 'update')
-	{
-		# Is the property id on file? AddProperty.pm checked that the user entered something!
-
-		for (@$properties_table)
-		{
-			$property{$$_{id} } = $$_{name};
-		}
-
-		if (exists($property{$id}) )
-		{
-			# It's a property update.
-
-			$self -> mojo_pg -> update
-			(
-				$table_name,
-				$fields,
-				{id => $$item{id} }
-			);
-
-			$self -> logger -> debug("Table: $table_name. Record id '$id'. Property: $property_name. Action: $action");
-
-			$result = {property_id => $$item{id}, raw => "Property: $property_name. Action: $action", type => 'Success'};
-		}
-		else
-		{
-			$result = {raw => 'Cannot update the database. That record was not found', type => 'Error'};
-		}
-	}
 	elsif ($action eq 'delete')
 	{
-		# Is the property id on file? AddProperty.pm checked that the user entered something!
+		# Is the property id on file? Property.pm checked that the user entered something!
 
 		for (@$properties_table)
 		{
@@ -1357,6 +1328,35 @@ sub process_property
 		else
 		{
 			$result = {raw => "Property: $property_name. Cannot update the database. That record was not found", type => 'Error'};
+		}
+	}
+	elsif ($action eq 'update')
+	{
+		# Is the property id on file? Property.pm checked that the user entered something!
+
+		for (@$properties_table)
+		{
+			$property{$$_{id} } = $$_{name};
+		}
+
+		if (exists($property{$id}) )
+		{
+			# It's a property update.
+
+			$self -> mojo_pg -> update
+			(
+				$table_name,
+				$fields,
+				{id => $$item{id} }
+			);
+
+			$self -> logger -> debug("Table: $table_name. Record id '$id'. Property: $property_name. Action: $action");
+
+			$result = {property_id => $$item{id}, raw => "Property: $property_name. Action: $action", type => 'Success'};
+		}
+		else
+		{
+			$result = {raw => 'Cannot update the database. That record was not found', type => 'Error'};
 		}
 	}
 	else
