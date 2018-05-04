@@ -194,7 +194,7 @@ sub build_object_menu
 	my($self, $objects, $default_id) = @_;
 	my($found)	= false;
 	my($html)	= "<div class = 'object_toolbar'>"
-					. "<select id = 'objects_menu'>";
+					. "<select id = 'object_menu'>";
 
 	my($selected);
 
@@ -1209,7 +1209,7 @@ sub process_object
 	return
 	{
 		message			=> $self -> format_raw_message($result),
-		objects_menu	=> $self -> build_object_menu($objects_table, $$result{object_id}),
+		object_menu		=> $self -> build_object_menu($objects_table, $$result{object_id}),
 		objects_table	=> $objects_table,
 	};
 

@@ -92,7 +92,7 @@ sub homepage
 	$$defaults{gardens_property_menu_1}		= $$defaults{db} -> build_gardens_property_menu($self, $$defaults{gardens_table}, 'gardens_property_menu_1', 0);
 	$$defaults{gardens_property_menu_2}		= $$defaults{db} -> build_properties_property_menu($$defaults{properties_table}, 'gardens_property_menu_2', 0);
 	$$defaults{gardens_garden_menu}			= $$defaults{db} -> build_garden_menu($self, $$defaults{gardens_table}, 'gardens_garden_menu');
-	$$defaults{objects_menu}				= $$defaults{db} -> build_object_menu($$defaults{objects_table}, 0);
+	$$defaults{object_menu}					= $$defaults{db} -> build_object_menu($$defaults{objects_table}, 0);
 	$$defaults{properties_property_menu}	= $$defaults{db} -> build_properties_property_menu($$defaults{properties_table}, 'properties_property_menu', 0);
 
 	$self -> app -> defaults($defaults);
@@ -133,7 +133,7 @@ sub homepage
 		gardens_property_menu_2			=> $$defaults{gardens_property_menu_2},
 		joiner							=> $$defaults{joiner},
 		objects_current_object_id		=> $objects_current_object_id,
-		objects_menu					=> $$defaults{objects_menu},
+		object_menu						=> $$defaults{object_menu},
 		properties_current_property_id	=> $properties_current_property_id,
 		properties_property_menu		=> $$defaults{properties_property_menu},
 	);

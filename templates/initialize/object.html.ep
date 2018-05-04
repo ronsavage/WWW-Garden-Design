@@ -9,7 +9,7 @@
 		</tr>
 		<tr>
 			<td align = 'center' colspan = '3'>
-				<span id = 'object_menu_span'><%== $objects_menu %></span>
+				<span id = 'object_menu_span'><%== $object_menu %></span>
 			</td>
 		</tr>
 		<tr>

@@ -76,7 +76,7 @@
 %= include 'initialize/garden', gardens_garden_menu => $gardens_garden_menu, gardens_property_menu_1 => $gardens_property_menu_1, gardens_property_menu_2 => $gardens_property_menu_2
 	</div>
 	<div id = 'global_object_tab'>
-%= include 'initialize/object', objects_menu => $objects_menu
+%= include 'initialize/object', object_menu => $object_menu
 	</div>
 	<div id = 'global_design_tab'>
 %= include 'initialize/design', constants => $constants, design_garden_menu => $design_garden_menu, design_property_menu => $design_property_menu
