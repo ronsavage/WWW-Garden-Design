@@ -1850,8 +1850,8 @@ function update_object(action)
 			color_code:		$('#color_code').val(),
 			color_name:		$('#color_name').val(),
 			id:				objects_current_object_id,
-			object_name:	name,
-			object_publish:	$('#object_publish').prop('checked') ? 'Yes' : 'No'
+			name:			name,
+			publish:		$('#object_publish').prop('checked') ? 'Yes' : 'No'
 		},
 		function(packet)
 		{
@@ -1859,9 +1859,10 @@ function update_object(action)
 			.empty()
 			.append(packet.message.cooked);
 
-			// Update the property menu on the Properties tab.
+			// Update the object menu on the Objects tab.
 
-			objects_current_object_id	= packet.message.object_id;	// On Objects tab.
+			objects_current_object_id	= packet.message.object_id;
+			object_menu					= packet.object_menu;
 			objects_table				= packet.objects_table;
 		},
 		'json'

@@ -21,7 +21,7 @@ sub process
 
 	$self -> app -> log -> debug("param($_) => $$item{$_}") for sort keys %$item;
 
-	if ($$item{color_chosen} && $$item{object_name})
+	if ($$item{color_chosen} && $$item{name})
 	{
 		# In process_object() all success branches print the raw message plus
 		# other information to the log, so nothing is printed here.
@@ -32,7 +32,7 @@ sub process
 	}
 	else
 	{
-		my($result) = {object_id => 0, raw => 'Missing color name or object name', type => 'Error'};
+		my($result) = {object_id => 0, raw => 'Missing color or object name', type => 'Error'};
 		my($packet)	=
 		{
 			object_table	=> $$defaults{db} -> read_objects_table, # Warning: Not read_table('objects').

@@ -1070,13 +1070,6 @@ sub process_object
 
 	$self -> logger -> debug('Database.process_object(...)');
 
-#	color_chosen:	color_chosen,
-#	color_code:		$('#color_code').val(),
-#	color_name:		$('#color_name').val(),
-#	id:				objects_current_object_id,
-#	object_name:	object_name,
-#	object_publish:	$('#object_publish').prop('checked') ? 'Yes' : 'No'
-
 	my($action)			= $$item{action};
 	my($id)				= $$item{id};
 	my($name)			= $$item{name};
@@ -1090,33 +1083,28 @@ sub process_object
 		publish		=> $$item{publish},
 	};
 
-	$$result{raw}	= "hex_color: $$item{color_chosen}";
-	$$result{type}	= 'Success';
+#	color_chosen:	color_chosen,
+#	color_code:		$('#color_code').val(),
+#	color_name:		$('#color_name').val(),
+#	id:				objects_current_object_id,
+#	object_name:	object_name,
+#	object_publish:	$('#object_publish').prop('checked') ? 'Yes' : 'No'
 
-	return
-	{
-		message			=> $self -> format_raw_message($result),
-		object_menu		=> $self -> build_object_menu($objects_table, $$result{object_id}),
-		objects_table	=> $objects_table,
-	};
-
-=pod
-
-	my(%object;
+	my(%object);
 
 	if ($action eq 'add')
 	{
 		# It's a object insert. Is the object name on file?
 		# Object.pm checked that the user entered something!
 
-		for (@$properties_table)
+		for (@$objects_table)
 		{
-			$property{uc $$_{name} } = $$_{id};
+			$object{uc $$_{name} } = $$_{id};
 		}
 
-		if (exists($property{uc $property_name}) )
+		if (exists($object{uc $name}) )
 		{
-			$result = {raw => 'Property: $property_name. That property name is on file', type => 'Error'};
+			$result = {raw => 'Object: $name. That object name is on file', type => 'Error'};
 		}
 		else
 		{
@@ -1127,25 +1115,29 @@ sub process_object
 				{returning => 'id'}
 			) -> hash -> {id};
 
-			$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
+			$self -> logger -> debug("Table: $table_name. Record id: $id. Object: $name. Action: $action");
 
-			$result = {property_id => $id, raw => "Added property: $property_name", type => 'Success'};
+			$result = {object_id => $id, raw => "Added object: $name", type => 'Success'};
 		}
 	}
 	elsif ($action eq 'delete')
 	{
-		# Is the property id on file? Object.pm checked that the user entered something!
+		# Is the object id on file? Object.pm checked that the user entered something!
 
-		for (@$properties_table)
+		for (@$objects_table)
 		{
-			$property{$$_{id} } = $$_{name};
+			$object{$$_{id} } = $$_{name};
 		}
 
-		if (exists($property{$id}) )
+		if (exists($object{$id}) )
 		{
-			# It's a property delete. But does this property have any gardens?
+			# It's a object delete. But is this object used in any gardens?
 
 			my($found)			= false;
+
+=pod
+
+#TODO
 			my($garden_table)	= $self -> read_table('gardens');
 
 			for my $garden (@$garden_table)
@@ -1156,13 +1148,15 @@ sub process_object
 				}
 			}
 
+=cut
+
 			if ($found -> isTrue)
 			{
-				my($note) = "Property not deleted because it has gardens";
+				my($note) = "Object not deleted because it is used in some gardens";
 
-				$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. $note");
+				$self -> logger -> debug("Table: $table_name. Record id: $id. Object: $name. $note");
 
-				$result = {raw => "Property: $property_name. $note", type => 'Error'};
+				$result = {raw => "Object: $name. $note", type => 'Error'};
 			}
 			else
 			{
@@ -1172,28 +1166,28 @@ sub process_object
 					{id => $$item{id} }
 				);
 
-				$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
+				$self -> logger -> debug("Table: $table_name. Record id: $id. Object: $name. Action: $action");
 
-				$result = {raw => "Property: $property_name. Action $action", type => 'Success'};
+				$result = {raw => "Object: $name. Action $action", type => 'Success'};
 			}
 		}
 		else
 		{
-			$result = {raw => "Property: $property_name. Cannot update the database. That record was not found", type => 'Error'};
+			$result = {raw => "Object: $name. Cannot update the database. That record was not found", type => 'Error'};
 		}
 	}
 	elsif ($action eq 'update')
 	{
-		# Is the property id on file? Object.pm checked that the user entered something!
+		# Is the object id on file? Object.pm checked that the user entered something!
 
-		for (@$properties_table)
+		for (@$objects_table)
 		{
-			$property{$$_{id} } = $$_{name};
+			$object{$$_{id} } = $$_{name};
 		}
 
-		if (exists($property{$id}) )
+		if (exists($object{$id}) )
 		{
-			# It's a property update.
+			# It's a object update.
 
 			$self -> mojo_pg -> update
 			(
@@ -1202,18 +1196,18 @@ sub process_object
 				{id => $$item{id} }
 			);
 
-			$self -> logger -> debug("Table: $table_name. Record id '$id'. Property: $property_name. Action: $action");
+			$self -> logger -> debug("Table: $table_name. Record id '$id'. Object: $name. Action: $action");
 
-			$result = {property_id => $$item{id}, raw => "Property: $property_name. Action: $action", type => 'Success'};
+			$result = {object_id => $$item{id}, raw => "Object: $name. Action: $action", type => 'Success'};
 		}
 		else
 		{
-			$result = {raw => 'Cannot update the database. That record was not found', type => 'Error'};
+			$result = {raw => "Object: $name. Cannot update the database. That record was not found", type => 'Error'};
 		}
 	}
 	else
 	{
-		$result = {raw => "Property: $property_name. Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
+		$result = {raw => "Object: $name. Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
 	}
 
 	$objects_table = $self -> read_objects_table;
@@ -1224,8 +1218,6 @@ sub process_object
 		object_menu		=> $self -> build_object_menu($objects_table, $$result{object_id}),
 		objects_table	=> $objects_table,
 	};
-
-=cut
 
 } # End of process_object.
 
@@ -1356,7 +1348,7 @@ sub process_property
 		}
 		else
 		{
-			$result = {raw => 'Cannot update the database. That record was not found', type => 'Error'};
+			$result = {raw => "Property: $property_name. Cannot update the database. That record was not found", type => 'Error'};
 		}
 	}
 	else
