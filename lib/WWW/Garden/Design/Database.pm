@@ -1077,18 +1077,22 @@ sub process_object
 #	object_name:	object_name,
 #	object_publish:	$('#object_publish').prop('checked') ? 'Yes' : 'No'
 
-	my($action)				= $$item{action};
-	my($id)					= $$item{id};
-	my($property_name)		= $$item{name};
-	my($table_name)			= 'objects';
-	my($properties_table)	= $self -> read_table($table_name);
-	my($result) 			= {property_id => 0};
-	my($fields)				=
+	my($action)			= $$item{action};
+	my($id)				= $$item{id};
+	my($name)			= $$item{name};
+	my($table_name)		= 'objects';
+	my($objects_table)	= $self -> read_table($table_name);
+	my($result) 		= {object_id => 0};
+	my($fields)			=
 	{
-		description	=> $$item{description},
-		name		=> $property_name,
+		hex_color	=> $$item{color_chosen},
+		name		=> $name,
 		publish		=> $$item{publish},
 	};
+
+	return {message => {cooked => "hex_color: $$item{color_chosen}"} };
+
+=pod
 
 	my(%property);
 
@@ -1204,7 +1208,7 @@ sub process_object
 		$result = {raw => "Property: $property_name. Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
 	}
 
-	my($objects_table) = $self -> read_objects_table;
+	$objects_table = $self -> read_objects_table;
 
 	return
 	{
@@ -1212,6 +1216,8 @@ sub process_object
 		object_menu		=> $self -> build_object_menu($objects_table, $$result{object_id}),
 		objects_table	=> $objects_table,
 	};
+
+=cut
 
 } # End of process_object.
 

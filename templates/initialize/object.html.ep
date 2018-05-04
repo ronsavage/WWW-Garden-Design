@@ -84,6 +84,8 @@
 			<td align = 'right' width = '33%'><input type = 'reset' value = 'Reset' /></td>
 		</tr>
 	</table>
+
+	<input id = 'color_chosen' type = 'hidden' />
 </form>
 <form name = 'object_form_2' id = 'object_form_2'>
 	%= csrf_field
@@ -173,5 +175,5 @@
 		</tr>
 	</table>
 
-	<input id = 'color_chosen' type = 'hidden' />
+	<input id = 'new_color_chosen' type = 'hidden' />
 </form>
