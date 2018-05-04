@@ -72,6 +72,22 @@ sub design_object
 
 # -----------------------------------------------
 
+sub features
+{
+	my($self) = @_;
+
+	$self -> app -> log -> debug('GetTable.features()');
+
+	my($defaults)		= $self -> app -> defaults;
+	my($features_table)	= $$defaults{db} -> read_features_table;
+
+	$self -> app -> log -> debug('GetTable.features(). Size of features_table: ' . scalar @$features_table);
+	$self -> render(json => $object_table);
+
+} # End of features.
+
+# -----------------------------------------------
+
 sub gardens
 {
 	my($self) = @_;
@@ -85,22 +101,6 @@ sub gardens
 	$self -> render(json => $gardens_table);
 
 } # End of gardens.
-
-# -----------------------------------------------
-
-sub objects
-{
-	my($self) = @_;
-
-	$self -> app -> log -> debug('GetTable.objects()');
-
-	my($defaults)		= $self -> app -> defaults;
-	my($object_table)	= $$defaults{db} -> read_objects_table;
-
-	$self -> app -> log -> debug('GetTable.objects(). Size of object_table: ' . scalar @$object_table);
-	$self -> render(json => $object_table);
-
-} # End of objects.
 
 # -----------------------------------------------
 

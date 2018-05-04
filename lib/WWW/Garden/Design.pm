@@ -130,6 +130,7 @@ sub startup
 	$r -> route('/AddFlower')					-> to('AddFlower#process');
 	$r -> route('/AutoComplete')				-> to('AutoComplete#display');
 	$r -> route('/Design')						-> to('Design#process');
+	$r -> route('/Feature')						-> to('Feature#process');
 	$r -> route('/Garden')						-> to('Garden#process');
 	$r -> route('/GetFlowerDetails')			-> to('GetFlowerDetails#display');
 	$r -> route('/GetTable/attribute_types')	-> to('GetTable#attribute_types');
@@ -138,7 +139,6 @@ sub startup
 	$r -> route('/GetTable/gardens')			-> to('GetTable#gardens');
 	$r -> route('/GetTable/objects')			-> to('GetTable#objects');
 	$r -> route('/GetTable/properties')			-> to('GetTable#properties');
-	$r -> route('/Object')						-> to('Object#process');
 	$r -> route('/Property')					-> to('Property#process');
 	$r -> route('/Search')						-> to('Search#display');
 

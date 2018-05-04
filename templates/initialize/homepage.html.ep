@@ -36,7 +36,7 @@
 		<li><a href = '#global_details_tab'><span>Details</span></a></li>
 		<li><a href = '#global_property_tab'><span>Properties</span></a></li>
 		<li><a href = '#global_garden_tab'><span>Gardens</span></a></li>
-		<li><a href = '#global_object_tab'><span>Objects</span></a></li>
+		<li><a href = '#global_feature_tab'><span>Features</span></a></li>
 		<li><a href = '#global_design_tab'><span>Design</span></a></li>
 		<li><a href = '#global_help_tab'><span>Help</span></a></li>
 	</ul>
@@ -75,8 +75,8 @@
 	<div id = 'global_garden_tab'>
 %= include 'initialize/garden', gardens_garden_menu => $gardens_garden_menu, gardens_property_menu_1 => $gardens_property_menu_1, gardens_property_menu_2 => $gardens_property_menu_2
 	</div>
-	<div id = 'global_object_tab'>
-%= include 'initialize/object', object_menu => $object_menu
+	<div id = 'global_feature_tab'>
+%= include 'initialize/feature', feature_menu => $feature_menu
 	</div>
 	<div id = 'global_design_tab'>
 %= include 'initialize/design', constants => $constants, design_garden_menu => $design_garden_menu, design_property_menu => $design_property_menu
@@ -112,12 +112,12 @@ var attribute_types_table			= [];
 var chosen_thing					= '';	// These are the current ids within each menu, for use in Ajax calls:
 var design_current_garden_id		= 0;	// o Garden menu id on the Design tab.
 var design_current_property_id		= 0;	// o Property menu id on the Design tab.
+var features_current_feature_id		= <%== $features_current_feature_id %>;		// o Feature menu id on the Features tab.
+var features_table					= [];
 var gardens_current_garden_id		= <%== $gardens_current_garden_id %>;		// o Update/delete garden menu id on the Gardens tab.
 var gardens_current_property_id_1	= <%== $gardens_current_property_id_1 %>;	// o Update/delete garden property menu id on the Gardens tab.
 var gardens_current_property_id_2	= <%== $properties_current_property_id %>;	// o New garden property menu id on the Gardens tab.
 var gardens_table					= [];	// Just gardens, with their corresponding properties and designs.
-var objects_current_object_id		= <%== $objects_current_object_id %>;		// o Object menu id on the Objects tab.
-var objects_table					= [];
 var properties_current_property_id	= <%== $properties_current_property_id %>;	// o Property menu id on the Properties tab.
 var properties_table				= [];	// All properties, even if they don't have gardens.
 var window_width					= 0;
@@ -231,14 +231,14 @@ $(function()
 
 $(function()
 {
-	$('#object_name')
+	$('#feature_name')
 	.autocomplete
 	({
-		source:		'/AutoComplete?type=object_name', // See routes at end of WWW::Garden::Design.startup().
+		source:		'/AutoComplete?type=feature_name', // See routes at end of WWW::Garden::Design.startup().
 		minLength:	2,
 		select:		function(event, ui)
 		{
-			$('#object_name')
+			$('#feature_name')
 			.empty()
 			.append(ui.item ? ui.item.value : '-');
 		}
@@ -794,6 +794,34 @@ function design_property_menu_changed(data)
 // -----------------------------------------------
 // Note: Changed means the user changed the selected item.
 
+function feature_menu_changed(data)
+{
+	//	for( key in data )
+	//	{
+	//		alert( "key is " + [ key ] + ", value is " + data[ key ] );
+	//	}
+
+	// Typical keys for data.item are:
+	//	o label => The feature item's text (name column value).
+	//	o value => The feature item's # (primary key column value).
+
+	features_current_feature_id = data.item.value;
+
+	for (var i = 0; i < features_table.length; i++)
+	{
+		if (features_table[i]['id'] == features_current_feature_id)
+		{
+			set_feature_fields(i);
+
+			break;
+		}
+	}
+
+} // End of feature_menu_changed.
+
+// -----------------------------------------------
+// Note: Changed means the user changed the selected item.
+
 function gardens_garden_menu_changed(data)
 {
 	//	for( key in data )
@@ -995,24 +1023,24 @@ function get_gardens_table()
 } // End of get_gardens_table.
 
 // -----------------------------------------------
-// Warning: This function cannot be used to populate object_menu_span
+// Warning: This function cannot be used to populate feature_menu_span
 // since that involves changing the DOM, but the function is called from within
 // the document ready context which assumes the DOM has stopped changing.
 // Warning: See also comment within code.
 
-function get_objects_table()
+function get_features_table()
 {
 	$.get
 	(
-		'/GetTable/objects', // See routes at end of WWW::Garden::Design.startup().
+		'/GetTable/features', // See routes at end of WWW::Garden::Design.startup().
 		null,
 		function(json)
 		{
-			objects_table = json;
+			features_table = json;
 
-			set_object_fields(0);
+			set_feature_fields(0);
 
-			// Warning: get_gardens_table() is not called where get_objects_table() is called,
+			// Warning: get_gardens_table() is not called where get_features_table() is called,
 			// because when placed there it pauses for 15 seconds.
 
 			get_gardens_table();
@@ -1021,7 +1049,7 @@ function get_objects_table()
 		'json'
 	);
 
-} // End of get_objects_table.
+} // End of get_features_table.
 
 // -----------------------------------------------
 // Warning: This function cannot be used to populate gardens_garden_menu_span
@@ -1054,34 +1082,6 @@ function get_search_image_size_string()
 	return "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
 
 } // End of get_search_image_size_string.
-
-// -----------------------------------------------
-// Note: Changed means the user changed the selected item.
-
-function object_menu_changed(data)
-{
-	//	for( key in data )
-	//	{
-	//		alert( "key is " + [ key ] + ", value is " + data[ key ] );
-	//	}
-
-	// Typical keys for data.item are:
-	//	o label => The object item's text (name column value).
-	//	o value => The object item's # (primary key column value).
-
-	objects_current_object_id = data.item.value;
-
-	for (var i = 0; i < objects_table.length; i++)
-	{
-		if (objects_table[i]['id'] == objects_current_object_id)
-		{
-			set_object_fields(i);
-
-			break;
-		}
-	}
-
-} // End of object_menu_changed.
 
 // -----------------------------------------------
 
@@ -1458,6 +1458,36 @@ function properties_property_menu_changed(data)
 
 // -----------------------------------------------
 
+function set_feature_fields(i)
+{
+	$('#color_code')
+	.val(features_table[i]['hex_color']);
+
+	$('#feature_name')
+	.val(features_table[i]['name'])
+	.focus();
+
+	$('#feature_icon')
+	.attr('src', features_table[i]['icon_url']);
+
+	$('#color_spectrum')
+	.spectrum('set', features_table[i]['hex_color']);
+
+	$('#color_swatch_chosen')
+	.css('background-color', features_table[i]['hex_color']);
+
+	$('#feature_publish')
+	.prop('checked', (features_table[i]['publish'] == 'Yes') ? true : false);
+
+	// Put color in hidden form field for submit.
+
+	$('#color_chosen')
+	.val(features_table[i]['hex_color']);
+
+} // End of set_feature_fields.
+
+// -----------------------------------------------
+
 function set_garden_fields_1(i)
 {
 	$('#garden_description')
@@ -1485,36 +1515,6 @@ function set_garden_fields_2()
 	.prop('checked', false);
 
 } // End of set_garden_fields_2.
-
-// -----------------------------------------------
-
-function set_object_fields(i)
-{
-	$('#color_code')
-	.val(objects_table[i]['hex_color']);
-
-	$('#object_name')
-	.val(objects_table[i]['name'])
-	.focus();
-
-	$('#object_icon')
-	.attr('src', objects_table[i]['icon_url']);
-
-	$('#color_spectrum')
-	.spectrum('set', objects_table[i]['hex_color']);
-
-	$('#color_swatch_chosen')
-	.css('background-color', objects_table[i]['hex_color']);
-
-	$('#object_publish')
-	.prop('checked', (objects_table[i]['publish'] == 'Yes') ? true : false);
-
-	// Put color in hidden form field for submit.
-
-	$('#color_chosen')
-	.val(objects_table[i]['hex_color']);
-
-} // End of set_object_fields.
 
 // -----------------------------------------------
 
@@ -1816,13 +1816,13 @@ function update_garden(action)
 
 // -----------------------------------------------
 
-function update_object(action)
+function update_feature(action)
 {
-	var name = $('#object_name').val();
+	var name = $('#feature_name').val();
 
 	if (action == 'delete')
 	{
-		var ok = confirm('Are you sure you wish to delete the object ' + name + '?');
+		var ok = confirm('Are you sure you wish to delete the feature ' + name + '?');
 
 		if (ok == false)
 		{
@@ -1834,7 +1834,7 @@ function update_object(action)
 
 	if ( (color_chosen == '') || (name == '') )
 	{
-		alert('Error: Both the color name and object name are mandatory');
+		alert('Error: Both the color name and feature name are mandatory');
 
 		return;
 	}
@@ -1843,32 +1843,32 @@ function update_object(action)
 	(
 		// See routes at end of WWW::Garden::Design.startup().
 
-		'/Object',
+		'/Feature',
 		{
 			action:			action, // 'delete' or 'update'.
 			color_chosen:	color_chosen,
 			color_code:		$('#color_code').val(),
 			color_name:		$('#color_name').val(),
-			id:				objects_current_object_id,
+			id:				features_current_feature_id,
 			name:			name,
-			publish:		$('#object_publish').prop('checked') ? 'Yes' : 'No'
+			publish:		$('#feature_publish').prop('checked') ? 'Yes' : 'No'
 		},
 		function(packet)
 		{
-			$('#object_result_div')
+			$('#feature_result_div')
 			.empty()
 			.append(packet.message.cooked);
 
-			// Update the object menu on the Objects tab.
+			// Update the feature menu on the Features tab.
 
-			objects_current_object_id	= packet.message.object_id;
-			object_menu					= packet.object_menu;
-			objects_table				= packet.objects_table;
+			features_current_feature_id	= packet.message.feature_id;
+			feature_menu				= packet.feature_menu;
+			features_table				= packet.features_table;
 		},
 		'json'
 	);
 
-} // End of update_object.
+} // End of update_feature.
 
 // -----------------------------------------------
 
@@ -1958,14 +1958,14 @@ $(function()
 {
 	$('.design_garden_toolbar').controlgroup();
 	$('.gardens_gardentoolbar').controlgroup();
-	$('.object_toolbar').controlgroup();
+	$('.feature_toolbar').controlgroup();
 
 	window_width	= window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 	window_height	= window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
 	set_virtual_parameters();
 	get_attribute_types();
-	get_objects_table();	// This also gets the gardens and properties tables. Warning: See code for comment.
+	get_features_table();	// This also gets the gardens and properties tables. Warning: See code for comment.
 
 	// Enable the tabs before trying to work with them.
 
@@ -2081,6 +2081,64 @@ $(function()
 		return false;
 	});
 
+	// ========
+	// Features
+	// ========
+
+	$('#feature_form_1')
+	.keypress
+	(
+		function(event)
+		{
+			if (event.which == '13')
+			{
+				event.preventDefault();
+			}
+		}
+	)
+	.submit(function()
+	{
+		return false;
+	});
+
+	$('#feature_form_2')
+	.keypress
+	(
+		function(event)
+		{
+			if (event.which == '13')
+			{
+				event.preventDefault();
+			}
+		}
+	)
+	.submit(function()
+	{
+		return false;
+	});
+
+	$('#feature_menu')
+	.selectmenu
+	({
+		change: function(event, data)
+		{
+			feature_menu_changed(data);
+		}
+	});
+
+	// If the Features tab is selected, give the focus to the feature name.
+	// TODO: (a) Does this do anything? and (b) Do other tabs have the same sort of code?
+
+	$('#global_feature_tab')
+	.tabs
+	({
+		activate: function(event, ui)
+		{
+			$('#feature_name')
+			.focus();
+		}
+	});
+
 	// =======
 	// Gardens
 	// =======
@@ -2141,64 +2199,6 @@ $(function()
 		change: function(event, data)
 		{
 			gardens_property_menu_2_changed(data);
-		}
-	});
-
-	// =======
-	// Objects
-	// =======
-
-	$('#object_form_1')
-	.keypress
-	(
-		function(event)
-		{
-			if (event.which == '13')
-			{
-				event.preventDefault();
-			}
-		}
-	)
-	.submit(function()
-	{
-		return false;
-	});
-
-	$('#object_form_2')
-	.keypress
-	(
-		function(event)
-		{
-			if (event.which == '13')
-			{
-				event.preventDefault();
-			}
-		}
-	)
-	.submit(function()
-	{
-		return false;
-	});
-
-	$('#object_menu')
-	.selectmenu
-	({
-		change: function(event, data)
-		{
-			object_menu_changed(data);
-		}
-	});
-
-	// If the Objects tab is selected, give the focus to the object name.
-	// TODO: (a) Does this do anything? and (b) Do other tabs have the same sort of code?
-
-	$('#global_object_tab')
-	.tabs
-	({
-		activate: function(event, ui)
-		{
-			$('#object_name')
-			.focus();
 		}
 	});
 

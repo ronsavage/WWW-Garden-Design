@@ -189,22 +189,22 @@ sub build_gardens_property_menu
 
 # -----------------------------------------------
 
-sub build_object_menu
+sub build_feature_menu
 {
-	my($self, $objects, $default_id) = @_;
+	my($self, $features, $default_id) = @_;
 	my($found)	= false;
-	my($html)	= "<div class = 'object_toolbar'>"
-					. "<select id = 'object_menu'>";
+	my($html)	= "<div class = 'feature_toolbar'>"
+					. "<select id = 'feature_menu'>";
 
 	my($selected);
 
-	for my $object (@$objects)
+	for my $feature (@$features)
 	{
-		my($object_id) = $$object{id};
+		my($feature_id) = $$feature{id};
 
 		if 	($found -> isFalse &&
 				(
-					($default_id == 0) || ($default_id == $object_id)
+					($default_id == 0) || ($default_id == $feature_id)
 				)
 			)
 		{
@@ -214,7 +214,7 @@ sub build_object_menu
 			$selected	= ' selected';
 		}
 
-		$html		.= "<option$selected value = '$object_id'>$$object{name}</option>";
+		$html		.= "<option$selected value = '$feature_id'>$$feature{name}</option>";
 		$selected	= '';
 	}
 
@@ -222,7 +222,7 @@ sub build_object_menu
 
 	return $html;
 
-} # End of build_object_menu.
+} # End of build_feature_menu.
 
 # -----------------------------------------------
 
@@ -497,18 +497,18 @@ sub format_string
 
 sub generate_tile
 {
-	my($self, $constants, $object) = @_;
-	my($color)		= Imager::Color -> new($$object{hex_color});
+	my($self, $constants, $feature) = @_;
+	my($color)		= Imager::Color -> new($$feature{hex_color});
 	my($fill)		= Imager::Fill -> new(fg => $color, hatch => $$constants{tile_hatch_pattern});
-	my($id)			= $$object{id};
+	my($id)			= $$feature{id};
 	my($image)		= Imager -> new(xsize => $$constants{cell_width}, ysize => $$constants{cell_height});
-	my($name)		= $$object{name};
+	my($name)		= $$feature{name};
 	my($file_name)	= $self -> clean_up_icon_name($name);
 
 	$image -> box(fill => $fill);
 	$self -> format_string($$constants{cell_width}, $$constants{cell_height}, $image, $name);
 
-	$image -> write(file => "$$object{icon_dir}/$file_name.png");
+	$image -> write(file => "$$feature{icon_dir}/$file_name.png");
 
 	return [$name, $file_name];
 
@@ -533,14 +533,14 @@ sub get_autocomplete_flower_list
 # -----------------------------------------------
 # Return a list.
 
-sub get_autocomplete_object_list
+sub get_autocomplete_feature_list
 {
 	my($self, $key)	= @_;
 	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
 
-	return [$self -> mojo_pg -> query("select distinct name from objects where upper(name) like '%$key%'") -> hashes -> each];
+	return [$self -> mojo_pg -> query("select distinct name from features where upper(name) like '%$key%'") -> hashes -> each];
 
-} # End of get_autocomplete_object_list.
+} # End of get_autocomplete_feature_list.
 
 # -----------------------------------------------
 # Return the shortest item in the list.
@@ -716,20 +716,20 @@ sub get_flower_by_id
 
 # --------------------------------------------------
 
-sub get_object_by_name
+sub get_feature_by_name
 {
 	my($self, $key)	= @_;
 	my($constants)	= $self -> constants;
 	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
 	$key			= "\U%$key"; # \U => Convert to upper-case.
-	my($sql)		= "select name from objects where upper(name) like ?";
+	my($sql)		= "select name from features where upper(name) like ?";
 	my(@result)		= $self -> mojo_pg -> query($sql, $key) -> hashes;
 	my($icon_name)	= $self -> clean_up_icon_name($result[0]);
 	$icon_name		= length($icon_name) > 0 ? "$$constants{homepage_url}$$constants{icon_url}/$icon_name.png" : '';
 
 	return $icon_name;
 
-} # End of get_object_by_name.
+} # End of get_feature_by_name.
 
 # -----------------------------------------------
 
@@ -933,6 +933,165 @@ sub parse_search_text
 
 # --------------------------------------------------
 
+sub process_feature
+{
+	my($self, $item) = @_;
+
+	$self -> logger -> debug('Database.process_feature(...)');
+
+	my($action)			= $$item{action};
+	my($id)				= $$item{id};
+	my($name)			= $$item{name};
+	my($table_name)		= 'features';
+	my($features_table)	= $self -> read_table($table_name);
+	my($result) 		= {feature_id => 0};
+	my($fields)			=
+	{
+		hex_color	=> $$item{color_chosen},
+		name		=> $name,
+		publish		=> $$item{publish},
+	};
+
+#	color_chosen:	color_chosen,
+#	color_code:		$('#color_code').val(),
+#	color_name:		$('#color_name').val(),
+#	id:				features_current_feature_id,
+#	name:			object_name,
+#	publish:		$('#feature_publish').prop('checked') ? 'Yes' : 'No'
+
+	my(%feature);
+
+	if ($action eq 'add')
+	{
+		# It's a feature insert. Is the feature name on file?
+		# Feature.pm checked that the user entered something!
+
+		for (@$features_table)
+		{
+			$feature{uc $$_{name} } = $$_{id};
+		}
+
+		if (exists($feature{uc $name}) )
+		{
+			$result = {raw => 'Feature: $name. That feature name is on file', type => 'Error'};
+		}
+		else
+		{
+			$id = $self -> mojo_pg -> insert
+			(
+				$table_name,
+				$fields,
+				{returning => 'id'}
+			) -> hash -> {id};
+
+			$self -> logger -> debug("Table: $table_name. Record id: $id. Feature: $name. Action: $action");
+
+			$result = {feature_id => $id, raw => "Added feature: $name", type => 'Success'};
+		}
+	}
+	elsif ($action eq 'delete')
+	{
+		# Is the feature id on file? Feature.pm checked that the user entered something!
+
+		for (@$features_table)
+		{
+			$feature{$$_{id} } = $$_{name};
+		}
+
+		if (exists($feature{$id}) )
+		{
+			# It's a feature delete. But is this feature used in any gardens?
+
+			my($found)			= false;
+
+=pod
+
+#TODO
+			my($garden_table)	= $self -> read_table('gardens');
+
+			for my $garden (@$garden_table)
+			{
+				if ($$garden{property_id} == $$item{id})
+				{
+					$found = true;
+				}
+			}
+
+=cut
+
+			if ($found -> isTrue)
+			{
+				my($note) = "Feature not deleted because it is used in some gardens";
+
+				$self -> logger -> debug("Table: $table_name. Record id: $id. Feature: $name. $note");
+
+				$result = {raw => "Feature: $name. $note", type => 'Error'};
+			}
+			else
+			{
+				$self -> mojo_pg -> delete
+				(
+					$table_name,
+					{id => $$item{id} }
+				);
+
+				$self -> logger -> debug("Table: $table_name. Record id: $id. Feature: $name. Action: $action");
+
+				$result = {raw => "Feature: $name. Action $action", type => 'Success'};
+			}
+		}
+		else
+		{
+			$result = {raw => "Feature: $name. Cannot update the database. That record was not found", type => 'Error'};
+		}
+	}
+	elsif ($action eq 'update')
+	{
+		# Is the feature id on file? Feature.pm checked that the user entered something!
+
+		for (@$features_table)
+		{
+			$feature{$$_{id} } = $$_{name};
+		}
+
+		if (exists($feature{$id}) )
+		{
+			# It's a feature update.
+
+			$self -> mojo_pg -> update
+			(
+				$table_name,
+				$fields,
+				{id => $$item{id} }
+			);
+
+			$self -> logger -> debug("Table: $table_name. Record id '$id'. Feature: $name. Action: $action");
+
+			$result = {feature_id => $$item{id}, raw => "Feature: $name. Action: $action", type => 'Success'};
+		}
+		else
+		{
+			$result = {raw => "Feature: $name. Cannot update the database. That record was not found", type => 'Error'};
+		}
+	}
+	else
+	{
+		$result = {raw => "Feature: $name. Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
+	}
+
+	$features_table = $self -> read_features_table;
+
+	return
+	{
+		message			=> $self -> format_raw_message($result),
+		feature_menu	=> $self -> build_feature_menu($features_table, $$result{feature_id}),
+		features_table	=> $features_table,
+	};
+
+} # End of process_feature.
+
+# --------------------------------------------------
+
 sub process_garden
 {
 	my($self, $controller, $item) = @_;
@@ -1061,165 +1220,6 @@ sub process_garden
 	};
 
 } # End of process_garden.
-
-# --------------------------------------------------
-
-sub process_object
-{
-	my($self, $item) = @_;
-
-	$self -> logger -> debug('Database.process_object(...)');
-
-	my($action)			= $$item{action};
-	my($id)				= $$item{id};
-	my($name)			= $$item{name};
-	my($table_name)		= 'objects';
-	my($objects_table)	= $self -> read_table($table_name);
-	my($result) 		= {object_id => 0};
-	my($fields)			=
-	{
-		hex_color	=> $$item{color_chosen},
-		name		=> $name,
-		publish		=> $$item{publish},
-	};
-
-#	color_chosen:	color_chosen,
-#	color_code:		$('#color_code').val(),
-#	color_name:		$('#color_name').val(),
-#	id:				objects_current_object_id,
-#	object_name:	object_name,
-#	object_publish:	$('#object_publish').prop('checked') ? 'Yes' : 'No'
-
-	my(%object);
-
-	if ($action eq 'add')
-	{
-		# It's a object insert. Is the object name on file?
-		# Object.pm checked that the user entered something!
-
-		for (@$objects_table)
-		{
-			$object{uc $$_{name} } = $$_{id};
-		}
-
-		if (exists($object{uc $name}) )
-		{
-			$result = {raw => 'Object: $name. That object name is on file', type => 'Error'};
-		}
-		else
-		{
-			$id = $self -> mojo_pg -> insert
-			(
-				$table_name,
-				$fields,
-				{returning => 'id'}
-			) -> hash -> {id};
-
-			$self -> logger -> debug("Table: $table_name. Record id: $id. Object: $name. Action: $action");
-
-			$result = {object_id => $id, raw => "Added object: $name", type => 'Success'};
-		}
-	}
-	elsif ($action eq 'delete')
-	{
-		# Is the object id on file? Object.pm checked that the user entered something!
-
-		for (@$objects_table)
-		{
-			$object{$$_{id} } = $$_{name};
-		}
-
-		if (exists($object{$id}) )
-		{
-			# It's a object delete. But is this object used in any gardens?
-
-			my($found)			= false;
-
-=pod
-
-#TODO
-			my($garden_table)	= $self -> read_table('gardens');
-
-			for my $garden (@$garden_table)
-			{
-				if ($$garden{property_id} == $$item{id})
-				{
-					$found = true;
-				}
-			}
-
-=cut
-
-			if ($found -> isTrue)
-			{
-				my($note) = "Object not deleted because it is used in some gardens";
-
-				$self -> logger -> debug("Table: $table_name. Record id: $id. Object: $name. $note");
-
-				$result = {raw => "Object: $name. $note", type => 'Error'};
-			}
-			else
-			{
-				$self -> mojo_pg -> delete
-				(
-					$table_name,
-					{id => $$item{id} }
-				);
-
-				$self -> logger -> debug("Table: $table_name. Record id: $id. Object: $name. Action: $action");
-
-				$result = {raw => "Object: $name. Action $action", type => 'Success'};
-			}
-		}
-		else
-		{
-			$result = {raw => "Object: $name. Cannot update the database. That record was not found", type => 'Error'};
-		}
-	}
-	elsif ($action eq 'update')
-	{
-		# Is the object id on file? Object.pm checked that the user entered something!
-
-		for (@$objects_table)
-		{
-			$object{$$_{id} } = $$_{name};
-		}
-
-		if (exists($object{$id}) )
-		{
-			# It's a object update.
-
-			$self -> mojo_pg -> update
-			(
-				$table_name,
-				$fields,
-				{id => $$item{id} }
-			);
-
-			$self -> logger -> debug("Table: $table_name. Record id '$id'. Object: $name. Action: $action");
-
-			$result = {object_id => $$item{id}, raw => "Object: $name. Action: $action", type => 'Success'};
-		}
-		else
-		{
-			$result = {raw => "Object: $name. Cannot update the database. That record was not found", type => 'Error'};
-		}
-	}
-	else
-	{
-		$result = {raw => "Object: $name. Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
-	}
-
-	$objects_table = $self -> read_objects_table;
-
-	return
-	{
-		message			=> $self -> format_raw_message($result),
-		object_menu		=> $self -> build_object_menu($objects_table, $$result{object_id}),
-		objects_table	=> $objects_table,
-	};
-
-} # End of process_object.
 
 # --------------------------------------------------
 
@@ -1535,7 +1535,7 @@ sub read_gardens_table
 		}
 
 
-		for my $table_name (qw/flower_locations object_locations/)
+		for my $table_name (qw/flower_locations feature_locations/)
 		{
 			$$record{$table_name} = $self -> read_garden_dependencies($table_name, $$record{id});
 		}
@@ -1557,41 +1557,41 @@ sub read_gardens_table
 
 # --------------------------------------------------
 
-sub read_object_dependencies
+sub read_feature_dependencies
 {
-	my($self, $table_name, $object_id) = @_;
+	my($self, $table_name, $feature_id) = @_;
 
 	# Return an arrayref of hashrefs.
 
-	return [$self -> mojo_pg -> query("select * from $table_name where object_id = $object_id") -> hashes -> each];
+	return [$self -> mojo_pg -> query("select * from $table_name where feature_id = $feature_id") -> hashes -> each];
 
-} # End of read_object_dependencies.
+} # End of read_feature_dependencies.
 
 # --------------------------------------------------
 
-sub read_objects_table
+sub read_features_table
 {
 	my($self)		= @_;
 	my($constants)	= $self -> constants;
 
 	my($record, @records);
 
-	for my $object (@{$self -> read_table('objects')})
+	for my $feature (@{$self -> read_table('features')})
 	{
 		$record	= {};
 
-		for my $key (keys %$object)
+		for my $key (keys %$feature)
 		{
-			$$record{$key} = $$object{$key};
+			$$record{$key} = $$feature{$key};
 		}
 
 		$$record{icon_dir}	= "$$constants{homepage_dir}$$constants{icon_dir}";
-		$$record{icon_file}	= $self -> clean_up_icon_name($$object{name});
+		$$record{icon_file}	= $self -> clean_up_icon_name($$feature{name});
 		$$record{icon_url}	= "$$constants{homepage_url}$$constants{icon_url}/$$record{icon_file}.png";
 
-		for my $table_name (qw/object_locations/)
+		for my $table_name (qw/feature_locations/)
 		{
-			$$record{$table_name} = $self -> read_object_dependencies($table_name, $$record{id});
+			$$record{$table_name} = $self -> read_feature_dependencies($table_name, $$record{id});
 		}
 
 		push @records, $record;
@@ -1601,7 +1601,7 @@ sub read_objects_table
 
 	return [sort{$$a{name} cmp $$b{name} } @records];
 
-} # End of read_objects_table.
+} # End of read_features_table.
 
 # --------------------------------------------------
 

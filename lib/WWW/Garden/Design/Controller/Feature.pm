@@ -1,4 +1,4 @@
-package WWW::Garden::Design::Controller::Object;
+package WWW::Garden::Design::Controller::Feature;
 
 use Mojo::Base 'Mojolicious::Controller';
 
@@ -14,7 +14,7 @@ sub process
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('Object.process()');
+	$self -> app -> log -> debug('Feature.process()');
 
 	my($defaults)	= $self -> app -> defaults;
 	my($item)		= $self -> req -> params -> to_hash;
@@ -23,19 +23,19 @@ sub process
 
 	if ($$item{color_chosen} && $$item{name})
 	{
-		# In process_object() all success branches print the raw message plus
+		# In process_feature() all success branches print the raw message plus
 		# other information to the log, so nothing is printed here.
 
-		my($packet) = $$defaults{db} -> process_object($item);
+		my($packet) = $$defaults{db} -> process_feature($item);
 
 		$self -> stash(json => $packet);
 	}
 	else
 	{
-		my($result) = {object_id => 0, raw => 'Missing color or object name', type => 'Error'};
+		my($result) = {feature_id => 0, raw => 'Missing color or feature name', type => 'Error'};
 		my($packet)	=
 		{
-			object_table	=> $$defaults{db} -> read_objects_table, # Warning: Not read_table('objects').
+			feature_table	=> $$defaults{db} -> read_features_table, # Warning: Not read_table('features').
 			message			=> $$defaults{db} -> format_raw_message($result),
 		};
 
