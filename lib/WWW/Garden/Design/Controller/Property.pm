@@ -27,7 +27,6 @@ sub process
 		my($packet) = $$defaults{db} -> process_property($item);
 
 		$self -> stash(json => $packet);
-		$self -> stash(error => undef);
 	}
 	else
 	{

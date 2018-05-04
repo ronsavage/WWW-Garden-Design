@@ -1859,13 +1859,10 @@ function update_object(action)
 			.empty()
 			.append(packet.message.cooked);
 
-/* TODO
 			// Update the property menu on the Properties tab.
 
-			properties_current_property_id	= packet.message.property_id;	// On Properties tab.
-			gardens_current_property_id_2	= packet.message.property_id;	// Lower property menu on Gardens tab.
-			properties_table				= packet.properties_table;
-*/
+			objects_current_object_id	= packet.message.object_id;	// On Objects tab.
+			objects_table				= packet.objects_table;
 		},
 		'json'
 	);
@@ -1977,58 +1974,16 @@ $(function()
 		active: 1
 	});
 
-	$('#design_property_menu')
-	.selectmenu
+	$("#global_details_tab")
+	.tabs
 	({
-		change: function(event, data)
-		{
-			design_property_menu_changed(data);
-		}
+		active: 0
 	});
 
-	$('#gardens_garden_menu')
-	.selectmenu
+	$("#global_help_tab")
+	.tabs
 	({
-		change: function(event, data)
-		{
-			gardens_garden_menu_changed(data);
-		}
-	});
-
-	$('#gardens_property_menu_1')
-	.selectmenu
-	({
-		change: function(event, data)
-		{
-			gardens_property_menu_1_changed(data);
-		}
-	});
-
-	$('#gardens_property_menu_2')
-	.selectmenu
-	({
-		change: function(event, data)
-		{
-			gardens_property_menu_2_changed(data);
-		}
-	});
-
-	$('#object_menu')
-	.selectmenu
-	({
-		change: function(event, data)
-		{
-			object_menu_changed(data);
-		}
-	});
-
-	$('#properties_property_menu')
-	.selectmenu
-	({
-		change: function(event, data)
-		{
-			properties_property_menu_changed(data);
-		}
+		active: 0
 	});
 
 	// If the Search tab is selected, give the focus to the search text.
@@ -2043,31 +1998,9 @@ $(function()
 		}
 	});
 
-	// If the Objects tab is selected, give the focus to the object name.
-
-	$('#global_object_tab')
-	.tabs
-	({
-		activate: function(event, ui)
-		{
-			$('#object_name')
-			.focus();
-		}
-	});
-
-	// Active sub-tabs for Detail and Help.
-
-	$("#global_details_tab")
-	.tabs
-	({
-		active: 0
-	});
-
-	$("#global_help_tab")
-	.tabs
-	({
-		active: 0
-	});
+	// ======
+	// Colors
+	// ======
 
 	$('#color_spectrum')
 	.spectrum
@@ -2085,6 +2018,10 @@ $(function()
 		showInput:			true,
 		showPalette:		true
 	});
+
+	// =======
+	// Designs
+	// =======
 
 	$('#design_flower')
 	.blur(function()
@@ -2122,6 +2059,19 @@ $(function()
 		get_design_object_icon();
 	});
 
+	$('#design_property_menu')
+	.selectmenu
+	({
+		change: function(event, data)
+		{
+			design_property_menu_changed(data);
+		}
+	});
+
+	// =======
+	// Details
+	// =======
+
 	$('#details_form')
 	.submit(function()
 	{
@@ -2129,6 +2079,10 @@ $(function()
 
 		return false;
 	});
+
+	// =======
+	// Gardens
+	// =======
 
 	$('#garden_form_1')
 	.keypress
@@ -2162,7 +2116,38 @@ $(function()
 		return false;
 	});
 
-	$('#object_form')
+	$('#gardens_garden_menu')
+	.selectmenu
+	({
+		change: function(event, data)
+		{
+			gardens_garden_menu_changed(data);
+		}
+	});
+
+	$('#gardens_property_menu_1')
+	.selectmenu
+	({
+		change: function(event, data)
+		{
+			gardens_property_menu_1_changed(data);
+		}
+	});
+
+	$('#gardens_property_menu_2')
+	.selectmenu
+	({
+		change: function(event, data)
+		{
+			gardens_property_menu_2_changed(data);
+		}
+	});
+
+	// =======
+	// Objects
+	// =======
+
+	$('#object_form_1')
 	.keypress
 	(
 		function(event)
@@ -2175,10 +2160,50 @@ $(function()
 	)
 	.submit(function()
 	{
-		save_object();
-
 		return false;
 	});
+
+	$('#object_form_2')
+	.keypress
+	(
+		function(event)
+		{
+			if (event.which == '13')
+			{
+				event.preventDefault();
+			}
+		}
+	)
+	.submit(function()
+	{
+		return false;
+	});
+
+	$('#object_menu')
+	.selectmenu
+	({
+		change: function(event, data)
+		{
+			object_menu_changed(data);
+		}
+	});
+
+	// If the Objects tab is selected, give the focus to the object name.
+	// TODO: (a) Does this do anything? and (b) Do other tabs have the same sort of code?
+
+	$('#global_object_tab')
+	.tabs
+	({
+		activate: function(event, ui)
+		{
+			$('#object_name')
+			.focus();
+		}
+	});
+
+	// ==========
+	// Properties
+	// ==========
 
 	$('#property_form_1')
 	.keypress
@@ -2211,6 +2236,19 @@ $(function()
 	{
 		return false;
 	});
+
+	$('#properties_property_menu')
+	.selectmenu
+	({
+		change: function(event, data)
+		{
+			properties_property_menu_changed(data);
+		}
+	});
+
+	// ========
+	// Searches
+	// ========
 
 	$('#search_form')
 	.submit(function()

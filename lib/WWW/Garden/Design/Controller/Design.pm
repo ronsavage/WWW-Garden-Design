@@ -60,11 +60,11 @@ EOS
 
 # -----------------------------------------------
 
-sub save
+sub process
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('Design.save()');
+	$self -> app -> log -> debug('Design.process()');
 
 	my($defaults)	= $self -> app -> defaults;
 	my($validator)	= WWW::Garden::Design::Util::ValidateForm -> new;
@@ -88,7 +88,7 @@ sub save
 
 	$self -> render;
 
-} # End of save.
+} # End of process.
 
 # -----------------------------------------------
 

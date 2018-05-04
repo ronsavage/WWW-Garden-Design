@@ -28,10 +28,7 @@ sub process
 
 		my($packet) = $$defaults{db} -> process_object($item);
 
-		$self -> app -> log -> debug('Database.process_object() returned: ' . Dumper($packet) );
-
 		$self -> stash(json => $packet);
-		$self -> stash(error => undef);
 	}
 	else
 	{

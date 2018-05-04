@@ -129,7 +129,7 @@ sub startup
 	$r -> route('/')							-> to('Initialize#homepage');
 	$r -> route('/AddFlower')					-> to('AddFlower#process');
 	$r -> route('/AutoComplete')				-> to('AutoComplete#display');
-	$r -> route('/Design')						-> to('Design#save');
+	$r -> route('/Design')						-> to('Design#process');
 	$r -> route('/Garden')						-> to('Garden#process');
 	$r -> route('/GetFlowerDetails')			-> to('GetFlowerDetails#display');
 	$r -> route('/GetTable/attribute_types')	-> to('GetTable#attribute_types');
