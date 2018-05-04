@@ -144,7 +144,7 @@ sub build_garden_menu
 
 sub build_gardens_property_menu
 {
-	my($self, $controller, $gardens_table, $jquery_id, $select_property_id) = @_;
+	my($self, $controller, $gardens_table, $jquery_id, $default_id) = @_;
 
 	my(%property_name);
 
@@ -163,7 +163,7 @@ sub build_gardens_property_menu
 
 		if 	($found -> isFalse &&
 				(
-					($select_property_id == 0) || ($select_property_id == $property_id)
+					($default_id == 0) || ($default_id == $property_id)
 				)
 			)
 		{
@@ -191,28 +191,31 @@ sub build_gardens_property_menu
 
 sub build_object_menu
 {
-	my($self, $controller, $objects) = @_;
+	my($self, $objects, $default_id) = @_;
 	my($found)	= false;
 	my($html)	= "<div class = 'object_toolbar'>"
-					. "<select id = 'object_menu'>";
+					. "<select id = 'objects_menu'>";
 
-	my($selected, %seen);
+	my($selected);
 
 	for my $object (@$objects)
 	{
-		if ($found -> isFalse)
+		my($object_id) = $$object{id};
+
+		if 	($found -> isFalse &&
+				(
+					($default_id == 0) || ($default_id == $object_id)
+				)
+			)
 		{
-			# Set this on the 1st menu item.
+			# Set this on the 1st menu item or the one desired.
 
 			$found		= true;
-			$selected	= 'selected';
+			$selected	= ' selected';
 		}
 
-		next if ($seen{$$object{name} });
-
-		$html					.= "<option $selected value = '$$object{id}'>$$object{name}</option>";
-		$seen{$$object{name} }	= 1;
-		$selected				= '';
+		$html		.= "<option $selected value = '$object_id'>$$object{name}</option>";
+		$selected	= '';
 	}
 
 	$html .= "</select>\n</div>\n";
@@ -1070,6 +1073,7 @@ sub process_object
 #	color_chosen:	color_chosen,
 #	color_code:		$('#color_code').val(),
 #	color_name:		$('#color_name').val(),
+#	id:				objects_current_object_id,
 #	object_name:	object_name,
 #	object_publish:	$('#object_publish').prop('checked') ? 'Yes' : 'No'
 
@@ -1200,11 +1204,13 @@ sub process_object
 		$result = {raw => "Property: $property_name. Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
 	}
 
+	my($objects_table) = $self -> read_objects_table;
+
 	return
 	{
-		properties_table	=> $self -> read_properties_table,
-		message				=> $self -> format_raw_message($result),
-		property_menu		=> $self -> build_properties_property_menu($self -> read_table('properties'), 'properties_property_menu', $$result{property_id}),
+		message			=> $self -> format_raw_message($result),
+		objects_menu	=> $self -> build_object_menu($objects_table, $$result{object_id}),
+		objects_table	=> $objects_table,
 	};
 
 } # End of process_object.

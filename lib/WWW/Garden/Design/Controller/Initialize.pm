@@ -92,7 +92,7 @@ sub homepage
 	$$defaults{gardens_property_menu_1}		= $$defaults{db} -> build_gardens_property_menu($self, $$defaults{gardens_table}, 'gardens_property_menu_1', 0);
 	$$defaults{gardens_property_menu_2}		= $$defaults{db} -> build_properties_property_menu($$defaults{properties_table}, 'gardens_property_menu_2', 0);
 	$$defaults{gardens_garden_menu}			= $$defaults{db} -> build_garden_menu($self, $$defaults{gardens_table}, 'gardens_garden_menu');
-	$$defaults{object_menu}					= $$defaults{db} -> build_object_menu($self, $$defaults{objects_table});
+	$$defaults{objects_menu}				= $$defaults{db} -> build_object_menu($$defaults{objects_table}, 0);
 	$$defaults{properties_property_menu}	= $$defaults{db} -> build_properties_property_menu($$defaults{properties_table}, 'properties_property_menu', 0);
 
 	$self -> app -> defaults($defaults);
@@ -113,6 +113,10 @@ sub homepage
 	my($gardens_current_garden_id)		= $$defaults{gardens_table}[0]{id};
 	my($gardens_current_property_id_1)	= $$defaults{gardens_table}[0]{property_id};
 
+	# Find the id of the 1st object on the Objects tab.
+
+	my($objects_current_object_id) = $$defaults{objects_table}[0]{id};
+
 	# These parameters are passed to homepage.html.ep for incorporation into JS code.
 
 	$self -> render
@@ -128,7 +132,8 @@ sub homepage
 		gardens_property_menu_1			=> $$defaults{gardens_property_menu_1},
 		gardens_property_menu_2			=> $$defaults{gardens_property_menu_2},
 		joiner							=> $$defaults{joiner},
-		object_menu						=> $$defaults{object_menu},
+		objects_current_object_id		=> $objects_current_object_id,
+		objects_menu					=> $$defaults{objects_menu},
 		properties_current_property_id	=> $properties_current_property_id,
 		properties_property_menu		=> $$defaults{properties_property_menu},
 	);

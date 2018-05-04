@@ -76,7 +76,7 @@
 %= include 'initialize/garden', gardens_garden_menu => $gardens_garden_menu, gardens_property_menu_1 => $gardens_property_menu_1, gardens_property_menu_2 => $gardens_property_menu_2
 	</div>
 	<div id = 'global_object_tab'>
-%= include 'initialize/object', object_menu => $object_menu
+%= include 'initialize/object', objects_menu => $objects_menu
 	</div>
 	<div id = 'global_design_tab'>
 %= include 'initialize/design', constants => $constants, design_garden_menu => $design_garden_menu, design_property_menu => $design_property_menu
@@ -110,15 +110,16 @@
 
 var attribute_types_table			= [];
 var chosen_thing					= '';	// These are the current ids within each menu, for use in Ajax calls:
-var design_current_garden_id		= 0;	// o Garden menu on the Design tab.
-var design_current_property_id		= 0;	// o Property menu on the Design tab.
-var properties_current_property_id	= <%== $properties_current_property_id %>;	// o Property menu on the Properties tab.
-var properties_table				= [];	// All properties, even if they don't have gardens.
-var gardens_current_garden_id		= <%== $gardens_current_garden_id %>;		// o Update/delete garden menu on the Gardens tab.
-var gardens_current_property_id_1	= <%== $gardens_current_property_id_1 %>;	// o Update/delete garden property menu on the Gardens tab.
-var gardens_current_property_id_2	= <%== $properties_current_property_id %>;	// o New garden property menu on the Gardens tab.
+var design_current_garden_id		= 0;	// o Garden menu id on the Design tab.
+var design_current_property_id		= 0;	// o Property menu id on the Design tab.
+var gardens_current_garden_id		= <%== $gardens_current_garden_id %>;		// o Update/delete garden menu id on the Gardens tab.
+var gardens_current_property_id_1	= <%== $gardens_current_property_id_1 %>;	// o Update/delete garden property menu id on the Gardens tab.
+var gardens_current_property_id_2	= <%== $properties_current_property_id %>;	// o New garden property menu id on the Gardens tab.
 var gardens_table					= [];	// Just gardens, with their corresponding properties and designs.
-var object_table					= [];
+var objects_current_object_id		= <%== $objects_current_object_id %>;		// o Object menu id on the Objects tab.
+var objects_table					= [];
+var properties_current_property_id	= <%== $properties_current_property_id %>;	// o Property menu id on the Properties tab.
+var properties_table				= [];	// All properties, even if they don't have gardens.
 var window_width					= 0;
 var window_height					= 0;
 
@@ -324,7 +325,6 @@ function add_garden()
 	$.post
 	(
 		// See routes at end of WWW::Garden::Design.startup().
-		// This route is called in submit_old_garden() with action either 'delete' or 'update'.
 
 		'/Garden',
 		{
@@ -385,7 +385,6 @@ function add_property(action)
 	$.post
 	(
 		// See routes at end of WWW::Garden::Design.startup().
-		// This route is called in submit_old_property() with action 'delete' or 'update'.
 
 		'/Property',
 		{
@@ -1001,7 +1000,7 @@ function get_gardens_table()
 // the document ready context which assumes the DOM has stopped changing.
 // Warning: See also comment within code.
 
-function get_object_table()
+function get_objects_table()
 {
 	$.get
 	(
@@ -1009,11 +1008,11 @@ function get_object_table()
 		null,
 		function(json)
 		{
-			object_table = json;
+			objects_table = json;
 
 			set_object_fields(0);
 
-			// Warning: get_gardens_table() is not called where get_object_table() is called,
+			// Warning: get_gardens_table() is not called where get_objects_table() is called,
 			// because when placed there it pauses for 15 seconds.
 
 			get_gardens_table();
@@ -1022,7 +1021,7 @@ function get_object_table()
 		'json'
 	);
 
-} // End of get_object_table.
+} // End of get_objects_table.
 
 // -----------------------------------------------
 // Warning: This function cannot be used to populate gardens_garden_menu_span
@@ -1072,9 +1071,9 @@ function object_menu_changed(data)
 
 	current_object_id = data.item.value;
 
-	for (var i = 0; i < object_table.length; i++)
+	for (var i = 0; i < objects_table.length; i++)
 	{
-		if (object_table[i]['id'] == current_object_id)
+		if (objects_table[i]['id'] == current_object_id)
 		{
 			set_object_fields(i);
 
@@ -1459,52 +1458,6 @@ function properties_property_menu_changed(data)
 
 // -----------------------------------------------
 
-function save_object(action)
-{
-	var color_chosen	= $('#color_chosen').val();
-	var object_name		= $('#object_name').val();
-
-	if ( (color_chosen == '') || (object_name == '') )
-	{
-		alert('Error: The color name and object name are mandatory');
-
-		return;
-	}
-
-	$.post
-	(
-		// See routes at end of WWW::Garden::Design.startup().
-		// This route is called in submit_old_property() with action 'delete' or 'update'.
-
-		'/Object',
-		{
-			color_chosen:	color_chosen,
-			color_code:		$('#color_code').val(),
-			color_name:		$('#color_name').val(),
-			object_name:	object_name,
-			object_publish:	$('#object_publish').prop('checked') ? 'Yes' : 'No'
-		},
-		function(packet)
-		{
-			$('#object_result_div')
-			.empty()
-			.append(packet.message.cooked);
-
-/*
-			// Update the property menu on the Properties tab.
-
-			properties_current_property_id	= packet.message.property_id;	// On Properties tab.
-			gardens_current_property_id_2	= packet.message.property_id;	// Lower property menu on Gardens tab.
-			properties_table				= packet.properties_table;
-*/
-		},
-		'json'
-	);
-
-} // End of save_object.
-
-// -----------------------------------------------
-
 function set_garden_fields_1(i)
 {
 	$('#garden_description')
@@ -1538,28 +1491,28 @@ function set_garden_fields_2()
 function set_object_fields(i)
 {
 	$('#color_code')
-	.val(object_table[i]['hex_color']);
+	.val(objects_table[i]['hex_color']);
 
 	$('#object_name')
-	.val(object_table[i]['name'])
+	.val(objects_table[i]['name'])
 	.focus();
 
 	$('#object_icon')
-	.attr('src', object_table[i]['icon_url']);
+	.attr('src', objects_table[i]['icon_url']);
 
 	$('#color_spectrum')
-	.spectrum('set', object_table[i]['hex_color']);
+	.spectrum('set', objects_table[i]['hex_color']);
 
 	$('#color_swatch_chosen')
-	.css('background-color', object_table[i]['hex_color']);
+	.css('background-color', objects_table[i]['hex_color']);
 
 	$('#object_publish')
-	.prop('checked', (object_table[i]['publish'] == 'Yes') ? true : false);
+	.prop('checked', (objects_table[i]['publish'] == 'Yes') ? true : false);
 
 	// Put color in hidden form field for submit.
 
 	$('#color_chosen')
-	.val(object_table[i]['hex_color']);
+	.val(objects_table[i]['hex_color']);
 
 } // End of set_object_fields.
 
@@ -1812,6 +1765,18 @@ function submit_search()
 
 function update_garden(action)
 {
+	var name = $('#garden_name').val();
+
+	if (action == 'delete')
+	{
+		var ok = confirm('Are you sure you wish to delete the garden ' + name + '?');
+
+		if (ok == false)
+		{
+			return;
+		}
+	}
+
 	var index			= gardens_property_menu_1.selectedIndex;
 	var property_name	= gardens_property_menu_1.options[index].text;
 	var property_id		= gardens_property_menu_1.options[index].value; // Not used.
@@ -1819,14 +1784,13 @@ function update_garden(action)
 	$.post
 	(
 		// See routes at end of WWW::Garden::Design.startup().
-		// This route is called in submit_new_garden() with action 'add'.
 
 		'/Garden',
 		{
 			action:			action, // 'delete' or 'update'.
 			description:	$('#garden_description').val(),
 			id:				gardens_current_garden_id,
-			name:			$('#garden_name').val(),
+			name:			name,
 			property_id:	gardens_current_property_id_1,
 			property_name:	property_name,
 			publish:		$('#garden_publish').prop('checked') ? 'Yes' : 'No',
@@ -1852,6 +1816,64 @@ function update_garden(action)
 
 // -----------------------------------------------
 
+function update_object(action)
+{
+	var name = $('#object_name').val();
+
+	if (action == 'delete')
+	{
+		var ok = confirm('Are you sure you wish to delete the object ' + name + '?');
+
+		if (ok == false)
+		{
+			return;
+		}
+	}
+
+	var color_chosen = $('#color_chosen').val();
+
+	if ( (color_chosen == '') || (name == '') )
+	{
+		alert('Error: Both the color name and object name are mandatory');
+
+		return;
+	}
+
+	$.post
+	(
+		// See routes at end of WWW::Garden::Design.startup().
+
+		'/Object',
+		{
+			action:			action, // 'delete' or 'update'.
+			color_chosen:	color_chosen,
+			color_code:		$('#color_code').val(),
+			color_name:		$('#color_name').val(),
+			id:				objects_current_object_id,
+			object_name:	name,
+			object_publish:	$('#object_publish').prop('checked') ? 'Yes' : 'No'
+		},
+		function(packet)
+		{
+			$('#object_result_div')
+			.empty()
+			.append(packet.message.cooked);
+
+/*
+			// Update the property menu on the Properties tab.
+
+			properties_current_property_id	= packet.message.property_id;	// On Properties tab.
+			gardens_current_property_id_2	= packet.message.property_id;	// Lower property menu on Gardens tab.
+			properties_table				= packet.properties_table;
+*/
+		},
+		'json'
+	);
+
+} // End of update_object.
+
+// -----------------------------------------------
+
 function update_property(action)
 {
 	var has_gardens	= false;
@@ -1867,9 +1889,9 @@ function update_property(action)
 		}
 	}
 
-	if ( (action == 'delete') && (has_gardens == false) )
+	if (action == 'delete')
 	{
-		var ok = confirm('Are you sure you wish to delete property ' + name + '?');
+		var ok = confirm('Are you sure you wish to delete the property ' + name + '?');
 
 		if (ok == false)
 		{
@@ -1880,7 +1902,6 @@ function update_property(action)
 	$.post
 	(
 		// See routes at end of WWW::Garden::Design.startup().
-		// This route is called in add_property() with action 'add'.
 
 		'/Property',
 		{
@@ -1957,7 +1978,7 @@ $(function()
 
 	set_virtual_parameters();
 	get_attribute_types();
-	get_object_table();	// This also gets the gardens and properties tables. Warning: See code for comment.
+	get_objects_table();	// This also gets the gardens and properties tables. Warning: See code for comment.
 
 	// Enable the tabs before trying to work with them.
 
