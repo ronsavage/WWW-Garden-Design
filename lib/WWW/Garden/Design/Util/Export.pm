@@ -712,24 +712,24 @@ sub export_garden_layout
 	my($file_name);
 	my($grid_id);
 
-	$self -> db -> logger -> debug('Features: ' . Dumper($features) );
-
 	for my $feature (@$features)
 	{
 		next if ($$feature{publish} eq 'No');
 
-		for my $feature (@{$$feature{feature_locations} })
+		for my $item (@{$$feature{feature_locations} })
 		{
-			next if ($garden_id2name{$$feature{garden_id} } ne $garden_name);
+			next if ($garden_id2name{$$item{garden_id} } ne $garden_name);
 
-			$file_name	= $self -> db -> clean_up_icon_name($$feature{name});
+			$self -> db -> logger -> debug('Export.export_garden_layout(). href: ' . $$item{icon_url});
+
+			$file_name	= $self -> db -> clean_up_icon_name($$item{name});
 			$grid_id	= $grid -> svg -> image
 			(
 				height	=> $$constants{cell_height},
-				href	=> $$feature{icon_url},
+				href	=> $$item{icon_url},
 				width	=> $$constants{cell_width},
-				x		=> $x_offset + $$constants{cell_width} * $$feature{x}, # Cell co-ord.
-				y		=> $y_offset + $$constants{cell_height} * $$feature{y}, # Cell co-ord.
+				x		=> $x_offset + $$constants{cell_width} * $$item{x}, # Cell co-ord.
+				y		=> $y_offset + $$constants{cell_height} * $$item{y}, # Cell co-ord.
 			);
 		}
 	}
