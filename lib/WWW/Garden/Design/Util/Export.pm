@@ -7,8 +7,6 @@ use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use boolean;
 
-use Data::Dumper::Concise; # For Dumper().
-
 use Encode 'encode';
 
 use WWW::Garden::Design::Database;
@@ -712,15 +710,13 @@ sub export_garden_layout
 	my($file_name);
 	my($grid_id);
 
-	for my $feature (@$features)
+	for my $item (@$features)
 	{
-		next if ($$feature{publish} eq 'No');
+		next if ($$item{publish} eq 'No');
 
-		for my $item (@{$$feature{feature_locations} })
+		for my $feature (@{$$item{feature_locations} })
 		{
-			next if ($garden_id2name{$$item{garden_id} } ne $garden_name);
-
-			$self -> db -> logger -> debug('Export.export_garden_layout(). href: ' . $$item{icon_url});
+			next if ($garden_id2name{$$feature{garden_id} } ne $garden_name);
 
 			$file_name	= $self -> db -> clean_up_icon_name($$item{name});
 			$grid_id	= $grid -> svg -> image
@@ -728,8 +724,8 @@ sub export_garden_layout
 				height	=> $$constants{cell_height},
 				href	=> $$item{icon_url},
 				width	=> $$constants{cell_width},
-				x		=> $x_offset + $$constants{cell_width} * $$item{x}, # Cell co-ord.
-				y		=> $y_offset + $$constants{cell_height} * $$item{y}, # Cell co-ord.
+				x		=> $x_offset + $$constants{cell_width} * $$feature{x}, # Cell co-ord.
+				y		=> $y_offset + $$constants{cell_height} * $$feature{y}, # Cell co-ord.
 			);
 		}
 	}
