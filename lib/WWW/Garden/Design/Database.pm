@@ -79,17 +79,28 @@ sub BUILD
 	my($config) = $self -> config;
 
 	$self -> mojo_pg(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
-	$self -> constants($self -> read_constants_table); # Warning. Possibly empty at start of import.
+	$self -> constants($self -> read_constants_table);
 
 	my($constants) = $self -> constants;
+
+	my($font_file)	= $$constants{tile_font_file};
+	my($font_size)	= $$constants{tile_font_size};
+
+	# If we're at the start of an import, the above 2 variables will be empty, so use defaults.
+
+	if (! defined $font_file)
+	{
+		$font_file	= '/usr/share/fonts/truetype/freefont/FreeMono.ttf';
+		$font_size	= 16;
+	}
 
 	$self -> title_font
 	(
 		Imager::Font -> new
 		(
 			color	=> Imager::Color -> new(0, 0, 0), # Black.
-			file	=> $$constants{tile_font_file},
-			size	=> $$constants{tile_font_size},
+			file	=> $font_file,
+			size	=> $font_size,
 		) || die "Error. Can't define title font: " . Imager -> errstr
 	);
 
