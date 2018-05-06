@@ -7,6 +7,8 @@ use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use boolean;
 
+use Data::Dumper::Concise; # For Dumper().
+
 use Encode 'encode';
 
 use WWW::Garden::Design::Database;
@@ -709,6 +711,8 @@ sub export_garden_layout
 
 	my($file_name);
 	my($grid_id);
+
+	$self -> db -> logger -> debug('Features: ' . Dumper($features) );
 
 	for my $feature (@$features)
 	{
