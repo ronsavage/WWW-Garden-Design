@@ -956,7 +956,7 @@ sub process_feature
 #	color_code:		$('#color_code').val(),
 #	color_name:		$('#color_name').val(),
 #	id:				features_current_feature_id,
-#	name:			object_name,
+#	name:			feature_name,
 #	publish:		$('#feature_publish').prop('checked') ? 'Yes' : 'No'
 
 	my(%feature);

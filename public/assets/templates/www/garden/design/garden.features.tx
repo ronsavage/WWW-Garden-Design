@@ -1,13 +1,13 @@
 <html>
 	<head>
-		<title>Garden Objects</title>
+		<title>Garden Features</title>
 		<meta http-equiv = "Content-Type" content = "text/html; charset=UTF-8" />
 	</head>
 	<body>
 
-		<h1 align = 'center'>Garden Objects</h1>
+		<h1 align = 'center'>Garden Features</h1>
 
-		<table align = 'center' border = '1' summary = 'List of garden objects'>
+		<table align = 'center' border = '1' summary = 'List of garden features'>
 		: for $row -> $item {
 		: if $~item.is_first {
 		<thead>

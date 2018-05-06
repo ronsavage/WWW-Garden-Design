@@ -209,16 +209,16 @@ $(function()
 
 $(function()
 {
-	$('#design_object')
+	$('#design_feature')
 	.autocomplete
 	({
-		source:		'/AutoComplete?type=design_object', // See routes at end of WWW::Garden::Design.startup().
+		source:		'/AutoComplete?type=design_feature', // See routes at end of WWW::Garden::Design.startup().
 		minLength:	2,
 		select:		function(event, ui)
 		{
 			if (ui.item)
 			{
-				$('#design_object')
+				$('#design_feature')
 				.empty()
 				.append(ui.item.value);
 			}
@@ -954,41 +954,41 @@ function get_design_flower_icon()
 
 // -----------------------------------------------
 
-function get_design_object()
+function get_design_feature()
 {
 	$.ajax
 	({
 		data:
 		{
-			design_object: $('#design_object').val()
+			design_feature: $('#design_feature').val()
 		},
 		dataType:	'text',
 		method:		'POST',
-		url:		'/GetTable/design_object', // See routes at end of WWW::Garden::Design.startup().
+		url:		'/GetTable/design_feature', // See routes at end of WWW::Garden::Design.startup().
 	})
 	.done(function(image_path)
 	{
 		if (image_path.length > 0)
 		{
-			$('#design_object_thumbnail')
+			$('#design_feature_thumbnail')
 			.html("<img src = '" + image_path + "' " + get_design_image_size_string() + '>');
 		}
 	});
 
-} // End of get_design_object.
+} // End of get_design_feature.
 
 // -----------------------------------------------
 
-function get_design_object_icon()
+function get_design_feature_icon()
 {
-	var html = $('#design_object_thumbnail').html();
+	var html = $('#design_feature_thumbnail').html();
 
 	if (html.length > 0)
 	{
 		chosen_thing = html;
 	}
 
-} // End of get_design_object_icon.
+} // End of get_design_feature_icon.
 
 // -----------------------------------------------
 
@@ -2048,16 +2048,16 @@ $(function()
 		}
 	);
 
-	$('#design_object')
+	$('#design_feature')
 	.blur(function()
 	{
-		get_design_object();
+		get_design_feature();
 	});
 
-	$('#design_object_thumbnail')
+	$('#design_feature_thumbnail')
 	.click(function()
 	{
-		get_design_object_icon();
+		get_design_feature_icon();
 	});
 
 	$('#design_property_menu')

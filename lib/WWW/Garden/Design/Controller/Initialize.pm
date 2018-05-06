@@ -72,8 +72,8 @@ sub homepage
 	$self -> app -> log -> debug('Initialize.homepage()');
 
 	my($defaults)					= $self -> app -> defaults;
+	$$defaults{features_table}		= $$defaults{db} -> read_features_table; # Warning: Not read_table('features').
 	$$defaults{gardens_table}		= $$defaults{db} -> read_gardens_table; # Warning: Not read_table('gardens').
-	$$defaults{objects_table}		= $$defaults{db} -> read_objects_table; # Warning: Not read_table('objects').
 	$$defaults{properties_table}	= $$defaults{db} -> read_table('properties');
 	my($attribute_elements)			= $self -> build_js_for_attributes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields});
 
@@ -89,10 +89,10 @@ sub homepage
 
 	$$defaults{design_property_menu}		= $$defaults{db} -> build_gardens_property_menu($self, $$defaults{gardens_table}, 'design_property_menu', 0);
 	$$defaults{design_garden_menu}			= $$defaults{db} -> build_garden_menu($self, $$defaults{gardens_table}, 'design_garden_menu');
+	$$defaults{feature_menu}				= $$defaults{db} -> build_feature_menu($$defaults{features_table}, 0);
 	$$defaults{gardens_property_menu_1}		= $$defaults{db} -> build_gardens_property_menu($self, $$defaults{gardens_table}, 'gardens_property_menu_1', 0);
 	$$defaults{gardens_property_menu_2}		= $$defaults{db} -> build_properties_property_menu($$defaults{properties_table}, 'gardens_property_menu_2', 0);
 	$$defaults{gardens_garden_menu}			= $$defaults{db} -> build_garden_menu($self, $$defaults{gardens_table}, 'gardens_garden_menu');
-	$$defaults{object_menu}					= $$defaults{db} -> build_object_menu($$defaults{objects_table}, 0);
 	$$defaults{properties_property_menu}	= $$defaults{db} -> build_properties_property_menu($$defaults{properties_table}, 'properties_property_menu', 0);
 
 	$self -> app -> defaults($defaults);
@@ -113,9 +113,9 @@ sub homepage
 	my($gardens_current_garden_id)		= $$defaults{gardens_table}[0]{id};
 	my($gardens_current_property_id_1)	= $$defaults{gardens_table}[0]{property_id};
 
-	# Find the id of the 1st object on the Objects tab.
+	# Find the id of the 1st feature on the Features tab.
 
-	my($objects_current_object_id) = $$defaults{objects_table}[0]{id};
+	my($features_current_feature_id) = $$defaults{features_table}[0]{id};
 
 	# These parameters are passed to homepage.html.ep for incorporation into JS code.
 
@@ -125,6 +125,8 @@ sub homepage
 		constants						=> $$defaults{constants_table},
 		design_garden_menu				=> $$defaults{design_garden_menu},
 		design_property_menu			=> $$defaults{design_property_menu},
+		features_current_feature_id		=> $features_current_feature_id,
+		feature_menu					=> $$defaults{feature_menu},
 		gardens_current_garden_id		=> $gardens_current_garden_id,
 		gardens_current_property_id_1	=> $gardens_current_property_id_1,
 		gardens_current_property_id_2	=> $properties_current_property_id,
@@ -132,8 +134,6 @@ sub homepage
 		gardens_property_menu_1			=> $$defaults{gardens_property_menu_1},
 		gardens_property_menu_2			=> $$defaults{gardens_property_menu_2},
 		joiner							=> $$defaults{joiner},
-		objects_current_object_id		=> $objects_current_object_id,
-		object_menu						=> $$defaults{object_menu},
 		properties_current_property_id	=> $properties_current_property_id,
 		properties_property_menu		=> $$defaults{properties_property_menu},
 	);

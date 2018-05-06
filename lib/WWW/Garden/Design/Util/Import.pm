@@ -65,9 +65,8 @@ sub populate_all_tables
 	});
 
 	my(%attribute_type_keys);
-	my(%flower_keys);
+	my(%flower_keys, %feature_keys);
 	my(%garden_keys);
-	my(%object_keys);
 	my(%property_keys);
 
 	$self -> populate_attribute_types_table($path, $csv, \%attribute_type_keys);
@@ -76,8 +75,8 @@ sub populate_all_tables
 	$self -> populate_properties_table($path, $csv, \%property_keys);
 	$self -> populate_gardens_table($path, $csv, \%garden_keys, \%property_keys);
 	$self -> populate_flower_locations_table($path, $csv, \%flower_keys, \%property_keys, \%garden_keys);
-	$self -> populate_objects_table($path, $csv, \%object_keys);
-	$self -> populate_object_locations_table($path, $csv, \%property_keys, \%garden_keys, \%object_keys);
+	$self -> populate_features_table($path, $csv, \%feature_keys);
+	$self -> populate_feature_locations_table($path, $csv, \%property_keys, \%garden_keys, \%feature_keys);
 	$self -> populate_attributes_table($path, $csv, \%attribute_type_keys, \%flower_keys);
 	$self -> populate_notes_table($path, $csv, \%flower_keys);
 	$self -> populate_images_table($path, $csv, \%flower_keys);
@@ -232,6 +231,115 @@ sub populate_constants_table
 	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_constants_table.
+
+# -----------------------------------------------
+
+sub populate_feature_locations_table
+{
+	my($self, $path, $csv, $property_keys, $garden_keys, $feature_keys) = @_;
+	my($table_name) = 'feature_locations';
+	$path           =~ s/flowers/$table_name/;
+
+	open(my $io, '<', $path) || die "Can't open($path): $!\n";
+
+	$csv -> column_names($csv -> getline($io) );
+
+	my($count)	= 0;
+	my($max_x)	= 0;
+	my($max_y)	= 0;
+
+	my(@xy, $x);
+	my($y);
+
+	for my $item (@{$csv -> getline_hr_all($io) })
+	{
+		$count++;
+
+		# Column names are in alphabetical order.
+
+		for my $column (qw/property_name garden_name name xy/)
+		{
+			if (! defined $$item{$column})
+			{
+				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
+			}
+		}
+
+		next if (length($$item{xy}) == 0);
+
+		@xy = split(/\s/, $$item{xy});
+
+		for my $i (0 .. $#xy)
+		{
+			($x, $y)	= split(/,/, $xy[$i]);
+			$max_x		= $x if ($x > $max_x);
+			$max_y		= $y if ($y > $max_y);
+
+			$self -> db -> insert_hashref
+			(
+				$table_name,
+				{
+					feature_id	=> $$feature_keys{$$item{name} },
+					garden_id	=> $$garden_keys{$$item{garden_name} },
+					property_id	=> $$property_keys{$$item{property_name} },
+					x			=> $x,
+					y			=> $y,
+				}
+			);
+		}
+	}
+
+	close $io;
+
+	$self -> db -> logger -> info("Max (x, y) = ($max_x, $max_y)");
+	$self -> db -> logger -> info("Read $count records into '$table_name'");
+
+}	# End of populate_feature_locations_table.
+
+# -----------------------------------------------
+
+sub populate_features_table
+{
+	my($self, $path, $csv, $feature_keys) = @_;
+	my($table_name) = 'features';
+	$path           =~ s/flowers/$table_name/;
+
+	open(my $io, '<', $path) || die "Can't open($path): $!\n";
+
+	$csv -> column_names($csv -> getline($io) );
+
+	my($count) = 0;
+
+	for my $item (@{$csv -> getline_hr_all($io) })
+	{
+		$count++;
+
+		# Column names are in alphabetical order.
+
+		for my $column (qw/hex_color name publish/)
+		{
+			if (! defined $$item{$column})
+			{
+				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
+			}
+		}
+
+		$$feature_keys{$$item{name} } = $self -> db -> insert_hashref
+		(
+			$table_name,
+			{
+				hex_color	=> $$item{hex_color},
+				name		=> $$item{name},
+				publish		=> $$item{publish},
+			}
+		);
+	}
+
+	close $io;
+
+	$self -> db -> logger -> info("Read $count records into '$table_name'");
+
+}	# End of populate_features_table.
 
 # -----------------------------------------------
 
@@ -559,115 +667,6 @@ sub populate_notes_table
 	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_notes_table.
-
-# -----------------------------------------------
-
-sub populate_object_locations_table
-{
-	my($self, $path, $csv, $property_keys, $garden_keys, $object_keys) = @_;
-	my($table_name) = 'object_locations';
-	$path           =~ s/flowers/$table_name/;
-
-	open(my $io, '<', $path) || die "Can't open($path): $!\n";
-
-	$csv -> column_names($csv -> getline($io) );
-
-	my($count)	= 0;
-	my($max_x)	= 0;
-	my($max_y)	= 0;
-
-	my(@xy, $x);
-	my($y);
-
-	for my $item (@{$csv -> getline_hr_all($io) })
-	{
-		$count++;
-
-		# Column names are in alphabetical order.
-
-		for my $column (qw/property_name garden_name name xy/)
-		{
-			if (! defined $$item{$column})
-			{
-				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
-			}
-		}
-
-		next if (length($$item{xy}) == 0);
-
-		@xy = split(/\s/, $$item{xy});
-
-		for my $i (0 .. $#xy)
-		{
-			($x, $y)	= split(/,/, $xy[$i]);
-			$max_x		= $x if ($x > $max_x);
-			$max_y		= $y if ($y > $max_y);
-
-			$self -> db -> insert_hashref
-			(
-				$table_name,
-				{
-					garden_id	=> $$garden_keys{$$item{garden_name} },
-					object_id	=> $$object_keys{$$item{name} },
-					property_id	=> $$property_keys{$$item{property_name} },
-					x			=> $x,
-					y			=> $y,
-				}
-			);
-		}
-	}
-
-	close $io;
-
-	$self -> db -> logger -> info("Max (x, y) = ($max_x, $max_y)");
-	$self -> db -> logger -> info("Read $count records into '$table_name'");
-
-}	# End of populate_object_locations_table.
-
-# -----------------------------------------------
-
-sub populate_objects_table
-{
-	my($self, $path, $csv, $object_keys) = @_;
-	my($table_name) = 'objects';
-	$path           =~ s/flowers/$table_name/;
-
-	open(my $io, '<', $path) || die "Can't open($path): $!\n";
-
-	$csv -> column_names($csv -> getline($io) );
-
-	my($count) = 0;
-
-	for my $item (@{$csv -> getline_hr_all($io) })
-	{
-		$count++;
-
-		# Column names are in alphabetical order.
-
-		for my $column (qw/hex_color name publish/)
-		{
-			if (! defined $$item{$column})
-			{
-				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
-			}
-		}
-
-		$$object_keys{$$item{name} } = $self -> db -> insert_hashref
-		(
-			$table_name,
-			{
-				hex_color	=> $$item{hex_color},
-				name		=> $$item{name},
-				publish		=> $$item{publish},
-			}
-		);
-	}
-
-	close $io;
-
-	$self -> db -> logger -> info("Read $count records into '$table_name'");
-
-}	# End of populate_objects_table.
 
 # -----------------------------------------------
 

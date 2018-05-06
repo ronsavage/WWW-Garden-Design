@@ -250,12 +250,12 @@ sub as_csv
 	$self -> notes2csv($csv, $flowers);
 	$self -> urls2csv($csv, $flowers);
 
-	my($objects)			= $self -> objects2csv($csv);
+	my($features)			= $self -> features2csv($csv);
 	my($property_id2name)	= $self -> properties2csv($csv);
 	my($garden_id2name)		= $self -> gardens2csv($csv, $property_id2name);
 
 	$self -> flower_locations2csv($csv, $flowers, $property_id2name, $garden_id2name);
-	$self -> object_locations2csv($csv, $objects, $property_id2name, $garden_id2name);
+	$self -> feature_locations2csv($csv, $features, $property_id2name, $garden_id2name);
 	$self -> db -> logger -> info('Finished exporting all CSV files');
 
 	# Return 0 for OK and 1 for error.
@@ -610,7 +610,7 @@ sub export_garden_layout
 	my($self, $gardens_table, $garden_name) = @_;
 	my($constants)		= $self -> db -> constants;
 	my($flowers)		= $self -> db -> read_flowers_table;
-	my($objects)		= $self -> db -> read_objects_table;
+	my($features)		= $self -> db -> read_features_table;
 	my($max_x)			= 0;
 	my($max_y)			= 0;
 	my($property_found)	= false;
@@ -637,13 +637,13 @@ sub export_garden_layout
 
 	my($garden_id) = $garden_name2id{$garden_name};
 
-	my(%object_name);
+	my(%feature_name);
 
-	for my $object (@$objects)
+	for my $feature (@$features)
 	{
-		next if ($$object{publish} eq 'No');
+		next if ($$feature{publish} eq 'No');
 
-		$object_name{$$object{id} } = $$object{name};
+		$feature_name{$$feature{id} } = $$feature{name};
 	}
 
 	# 1: Set the parameters.
@@ -674,11 +674,11 @@ sub export_garden_layout
 
 	$self -> db -> logger -> info("Max (x, y) after processing 'flower_locations': ($max_x, $max_y)");
 
-	for my $object (@$objects)
+	for my $feature (@$features)
 	{
-		next if ($$object{publish} eq 'No');
+		next if ($$feature{publish} eq 'No');
 
-		for my $feature (@{$$object{object_locations} })
+		for my $feature (@{$$feature{feature_locations} })
 		{
 			next if ($garden_id2name{$$feature{garden_id} } ne $garden_name);
 
@@ -689,7 +689,7 @@ sub export_garden_layout
 		}
 	}
 
-	$self -> db -> logger -> info("Max (x, y) after processing 'object_locations': ($max_x, $max_y)");
+	$self -> db -> logger -> info("Max (x, y) after processing 'feature_locations': ($max_x, $max_y)");
 
 	my($x_cell_count)	= $max_x;
 	my($y_cell_count)	= $max_y;
@@ -705,24 +705,24 @@ sub export_garden_layout
 
 	$grid -> grid(stroke => 'blue');
 
-	# 2: Add the object locations to the grid.
+	# 2: Add the feature locations to the grid.
 
 	my($file_name);
 	my($grid_id);
 
-	for my $object (@$objects)
+	for my $feature (@$features)
 	{
-		next if ($$object{publish} eq 'No');
+		next if ($$feature{publish} eq 'No');
 
-		for my $feature (@{$$object{object_locations} })
+		for my $feature (@{$$feature{feature_locations} })
 		{
 			next if ($garden_id2name{$$feature{garden_id} } ne $garden_name);
 
-			$file_name	= $self -> db -> clean_up_icon_name($$object{name});
+			$file_name	= $self -> db -> clean_up_icon_name($$feature{name});
 			$grid_id	= $grid -> svg -> image
 			(
 				height	=> $$constants{cell_height},
-				href	=> $$object{icon_url},
+				href	=> $$feature{icon_url},
 				width	=> $$constants{cell_width},
 				x		=> $x_offset + $$constants{cell_width} * $$feature{x}, # Cell co-ord.
 				y		=> $y_offset + $$constants{cell_height} * $$feature{y}, # Cell co-ord.
@@ -913,20 +913,20 @@ sub export_icons
 {
 	my($self)		= @_;
 	my($constants)	= $self -> db -> constants;
-	my($objects)	= $self -> db -> read_objects_table;
+	my($features)	= $self -> db -> read_features_table;
 
 	$self -> db -> logger -> info("flower_dir: $$constants{flower_dir}");
 
 	my(@file_names);
 
-	for my $object (sort{$$a{name} cmp $$b{name} } @$objects)
+	for my $feature (sort{$$a{name} cmp $$b{name} } @$features)
 	{
-		next if ($$object{publish} eq 'No');
+		next if ($$feature{publish} eq 'No');
 
-		push @file_names, $self -> db -> generate_tile($constants, $object);
+		push @file_names, $self -> db -> generate_tile($constants, $feature);
 	}
 
-	my(@heading)	= map{ {td => $_} } (qw(Object Icon) );
+	my(@heading)	= map{ {td => $_} } (qw(Feature Icon) );
 	my(@row)		= [@heading];
 	my($tx)			= Text::Xslate -> new
 	(
@@ -941,13 +941,13 @@ sub export_icons
 
 	push @row, [@heading];
 
-	my($file_name) = "$$constants{homepage_dir}$$constants{icon_dir}/objects.html";
+	my($file_name) = "$$constants{homepage_dir}$$constants{icon_dir}/features.html";
 
 	open(my $fh, '>', $file_name) || die "Can't open: $file_name: $!\n";
 	print $fh $tx -> render
 	(
 		(
-			'garden.objects.tx',
+			'garden.features.tx',
 			{
 				row => \@row,
 			}
@@ -1057,6 +1057,108 @@ sub export_layouts
 	}
 
 } # End of export_layouts.
+
+# -----------------------------------------------
+
+sub feature_locations2csv
+{
+	my($self, $csv, $features, $property_id2name, $garden_id2name) = @_;
+	my($file_name) = $self -> output_file =~ s/flowers.csv/feature_locations.csv/r;
+
+	$self -> db -> logger -> info("Writing to $file_name");
+
+	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
+
+	# Column names are in order left-to-right.
+
+	$csv -> combine(qw/name property_name garden_name xy/);
+
+	print $fh $csv -> string, "\n";
+
+	my($feature_name);
+	my($garden_name);
+	my(%location);
+	my($property_name);
+
+	for my $feature (@$features)
+	{
+		next if ($$feature{publish} eq 'No');
+
+		%location		= ();
+		$feature_name	= $$feature{name};
+
+		for my $feature (@{$$feature{feature_locations} })
+		{
+			$garden_name							= $$garden_id2name{$$feature{garden_id} };
+			$property_name							= $$property_id2name{$$feature{property_id} };
+			$location{$property_name}				= {} if (! $location{$property_name});
+			$location{$property_name}{$garden_name}	= [] if (! $location{$property_name}{$garden_name});
+
+			push @{$location{$property_name}{$garden_name} }, "$$feature{x},$$feature{y}";
+		}
+
+		for $property_name (sort keys %location)
+		{
+			for $garden_name (sort keys %{$location{$property_name} })
+			{
+				$csv -> combine
+				(
+					$feature_name,
+					$property_name,
+					$garden_name,
+					join(' ', nsort @{$location{$property_name}{$garden_name} }),
+				);
+
+				print $fh $csv -> string, "\n";
+			}
+		}
+	}
+
+	close $fh;
+
+	$self -> db -> logger -> info("Wrote $file_name");
+
+} # End of feature_locations2csv.
+
+# -----------------------------------------------
+
+sub features2csv
+{
+	my($self, $csv) = @_;
+	my($features)	= $self -> db -> read_features_table; # Returns a sorted array ref.
+	my($file_name)	= $self -> output_file =~ s/flowers.csv/features.csv/r;
+
+	$self -> db -> logger -> info("Writing to $file_name");
+
+	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
+
+	# Column names are in order left-to-right.
+
+	$csv -> combine(qw/name hex_color publish/);
+
+	print $fh $csv -> string, "\n";
+
+	for my $feature (@$features)
+	{
+		next if ($$feature{publish} eq 'No');
+
+		$csv -> combine
+		(
+			$$feature{name},
+			$$feature{hex_color},
+			$$feature{publish},
+		);
+
+		print $fh $csv -> string, "\n";
+	}
+
+	close $fh;
+
+	$self -> db -> logger -> info("Wrote $file_name");
+
+	return $features;
+
+} # End of features2csv.
 
 # -----------------------------------------------
 
@@ -1294,108 +1396,6 @@ sub notes2csv
 	$self -> db -> logger -> info("Wrote $file_name");
 
 } # End of notes2csv.
-
-# -----------------------------------------------
-
-sub object_locations2csv
-{
-	my($self, $csv, $objects, $property_id2name, $garden_id2name) = @_;
-	my($file_name) = $self -> output_file =~ s/flowers.csv/object_locations.csv/r;
-
-	$self -> db -> logger -> info("Writing to $file_name");
-
-	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
-
-	# Column names are in order left-to-right.
-
-	$csv -> combine(qw/name property_name garden_name xy/);
-
-	print $fh $csv -> string, "\n";
-
-	my($garden_name);
-	my(%location);
-	my($object_name);
-	my($property_name);
-
-	for my $object (@$objects)
-	{
-		next if ($$object{publish} eq 'No');
-
-		%location		= ();
-		$object_name	= $$object{name};
-
-		for my $feature (@{$$object{object_locations} })
-		{
-			$garden_name							= $$garden_id2name{$$feature{garden_id} };
-			$property_name							= $$property_id2name{$$feature{property_id} };
-			$location{$property_name}				= {} if (! $location{$property_name});
-			$location{$property_name}{$garden_name}	= [] if (! $location{$property_name}{$garden_name});
-
-			push @{$location{$property_name}{$garden_name} }, "$$feature{x},$$feature{y}";
-		}
-
-		for $property_name (sort keys %location)
-		{
-			for $garden_name (sort keys %{$location{$property_name} })
-			{
-				$csv -> combine
-				(
-					$object_name,
-					$property_name,
-					$garden_name,
-					join(' ', nsort @{$location{$property_name}{$garden_name} }),
-				);
-
-				print $fh $csv -> string, "\n";
-			}
-		}
-	}
-
-	close $fh;
-
-	$self -> db -> logger -> info("Wrote $file_name");
-
-} # End of object_locations2csv.
-
-# -----------------------------------------------
-
-sub objects2csv
-{
-	my($self, $csv) = @_;
-	my($objects)	= $self -> db -> read_objects_table; # Returns a sorted array ref.
-	my($file_name)	= $self -> output_file =~ s/flowers.csv/objects.csv/r;
-
-	$self -> db -> logger -> info("Writing to $file_name");
-
-	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
-
-	# Column names are in order left-to-right.
-
-	$csv -> combine(qw/name hex_color publish/);
-
-	print $fh $csv -> string, "\n";
-
-	for my $object (@$objects)
-	{
-		next if ($$object{publish} eq 'No');
-
-		$csv -> combine
-		(
-			$$object{name},
-			$$object{hex_color},
-			$$object{publish},
-		);
-
-		print $fh $csv -> string, "\n";
-	}
-
-	close $fh;
-
-	$self -> db -> logger -> info("Wrote $file_name");
-
-	return $objects;
-
-} # End of objects2csv.
 
 # -----------------------------------------------
 

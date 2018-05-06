@@ -48,14 +48,14 @@ sub design_flower
 
 # -----------------------------------------------
 
-sub design_object
+sub design_feature
 {
 	my($self)			= @_;
-	my($design_object)	= $self -> param('design_object') || '';
+	my($design_feature)	= $self -> param('design_feature') || '';
 
-	$self -> app -> log -> debug('GetTable.design_object()');
+	$self -> app -> log -> debug('GetTable.design_feature()');
 
-	if (length($design_object) < 2)
+	if (length($design_feature) < 2)
 	{
 		$self -> stash(icon_name => '');
 		$self -> render();
@@ -64,11 +64,11 @@ sub design_object
 	{
 		my($defaults) = $self -> app -> defaults;
 
-		$self -> stash(icon_name => $$defaults{db} -> get_object_by_name($design_object) );
+		$self -> stash(icon_name => $$defaults{db} -> get_feature_by_name($design_feature) );
 		$self -> render;
 	}
 
-} # End of design_object.
+} # End of design_feature.
 
 # -----------------------------------------------
 
@@ -82,7 +82,7 @@ sub features
 	my($features_table)	= $$defaults{db} -> read_features_table;
 
 	$self -> app -> log -> debug('GetTable.features(). Size of features_table: ' . scalar @$features_table);
-	$self -> render(json => $object_table);
+	$self -> render(json => $feature_table);
 
 } # End of features.
 

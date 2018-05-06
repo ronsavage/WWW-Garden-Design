@@ -135,9 +135,9 @@ sub startup
 	$r -> route('/GetFlowerDetails')			-> to('GetFlowerDetails#display');
 	$r -> route('/GetTable/attribute_types')	-> to('GetTable#attribute_types');
 	$r -> route('/GetTable/design_flower')		-> to('GetTable#design_flower');
-	$r -> route('/GetTable/design_object')		-> to('GetTable#design_object');
+	$r -> route('/GetTable/design_feature')		-> to('GetTable#design_feature');
 	$r -> route('/GetTable/gardens')			-> to('GetTable#gardens');
-	$r -> route('/GetTable/objects')			-> to('GetTable#objects');
+	$r -> route('/GetTable/features')			-> to('GetTable#features');
 	$r -> route('/GetTable/properties')			-> to('GetTable#properties');
 	$r -> route('/Property')					-> to('Property#process');
 	$r -> route('/Search')						-> to('Search#display');

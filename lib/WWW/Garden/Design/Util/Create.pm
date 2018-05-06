@@ -118,8 +118,8 @@ attributes
 properties
 gardens
 flower_locations
-objects
-object_locations
+features
+feature_locations
 notes
 images
 urls
@@ -197,6 +197,50 @@ SQL
 	$self -> report($table_name, 'Created', $result);
 
 }	# End of create_constants_table.
+
+# --------------------------------------------------
+
+sub create_feature_locations_table
+{
+	my($self)        = @_;
+	my($table_name)  = 'feature_locations';
+	my($primary_key) = $self -> creator -> generate_primary_key_sql($table_name);
+	my($engine)      = $self -> engine;
+	my($result)      = $self -> creator -> create_table(<<SQL);
+create table $table_name
+(
+id			$primary_key,
+feature_id	int references features(id),
+garden_id	int references gardens(id),
+property_id	int references properties(id),
+x			integer not null,
+y			integer not null
+) $engine
+SQL
+	$self -> report($table_name, 'Created', $result);
+
+}	# End of create_feature_locations_table.
+
+# --------------------------------------------------
+
+sub create_features_table
+{
+	my($self)        = @_;
+	my($table_name)  = 'features';
+	my($primary_key) = $self -> creator -> generate_primary_key_sql($table_name);
+	my($engine)      = $self -> engine;
+	my($result)      = $self -> creator -> create_table(<<SQL);
+create table $table_name
+(
+id			$primary_key,
+hex_color	varchar(255) not null,
+name		varchar(255) not null,
+publish		varchar(255) not null
+) $engine
+SQL
+	$self -> report($table_name, 'Created', $result);
+
+}	# End of create_features_table.
 
 # --------------------------------------------------
 
@@ -315,50 +359,6 @@ SQL
 
 # --------------------------------------------------
 
-sub create_object_locations_table
-{
-	my($self)        = @_;
-	my($table_name)  = 'object_locations';
-	my($primary_key) = $self -> creator -> generate_primary_key_sql($table_name);
-	my($engine)      = $self -> engine;
-	my($result)      = $self -> creator -> create_table(<<SQL);
-create table $table_name
-(
-id			$primary_key,
-garden_id	int references gardens(id),
-object_id	int references objects(id),
-property_id	int references properties(id),
-x			integer not null,
-y			integer not null
-) $engine
-SQL
-	$self -> report($table_name, 'Created', $result);
-
-}	# End of create_object_locations_table.
-
-# --------------------------------------------------
-
-sub create_objects_table
-{
-	my($self)        = @_;
-	my($table_name)  = 'objects';
-	my($primary_key) = $self -> creator -> generate_primary_key_sql($table_name);
-	my($engine)      = $self -> engine;
-	my($result)      = $self -> creator -> create_table(<<SQL);
-create table $table_name
-(
-id			$primary_key,
-hex_color	varchar(255) not null,
-name		varchar(255) not null,
-publish		varchar(255) not null
-) $engine
-SQL
-	$self -> report($table_name, 'Created', $result);
-
-}	# End of create_objects_table.
-
-# --------------------------------------------------
-
 sub create_properties_table
 {
 	my($self)        = @_;
@@ -411,8 +411,8 @@ sub drop_all_tables
 urls
 images
 notes
-object_locations
-objects
+feature_locations
+features
 flower_locations
 gardens
 properties

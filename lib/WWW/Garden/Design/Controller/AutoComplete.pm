@@ -21,9 +21,9 @@ sub display
 		aliases			=> ['aliases',			'flowers'],
 		common_name		=> ['common_name',		'flowers'],
 		design_flower	=> ['*',				'flowers'],
-		design_object	=> ['*',				'objects'],
+		design_feature	=> ['*',				'features'],
+		feature_name	=> ['name',				'features'],
 		garden_name		=> ['name',				'gardens'],
-		object_name		=> ['name',				'objects'],
 		property_name	=> ['name',				'properties'],
 		scientific_name	=> ['scientific_name',	'flowers'],
 	);
@@ -41,15 +41,15 @@ sub display
 	# 'flowers' table: scientific_name, common_name and aliases.
 	# Warning: This use '*' in %context above means the methods in Database.pm which search %context
 	# must skip it. See Database.get_autocomplete_item() and Database.get_autocomplete_list().
-	# Likewise for 'design_object'.
+	# Likewise for 'design_feature'.
 
 	if ($type eq 'design_flower')
 	{
 		$self -> render(json => $$defaults{db} -> get_autocomplete_flower_list(uc $key) );
 	}
-	elsif ($type eq 'design_object')
+	elsif ($type eq 'design_feature')
 	{
-		$self -> render(json => $$defaults{db} -> get_autocomplete_object_list(uc $key) );
+		$self -> render(json => $$defaults{db} -> get_autocomplete_feature_list(uc $key) );
 	}
 	elsif ($want_single_item{$type})
 	{
