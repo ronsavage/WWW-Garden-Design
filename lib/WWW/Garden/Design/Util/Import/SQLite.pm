@@ -1,5 +1,6 @@
 package WWW::Garden::Design::Util::Import::SQLite;
 
+use parent WWW::Garden::Design::Util::Import;
 use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
@@ -10,7 +11,7 @@ use Moo;
 
 use Text::CSV::Encoded;
 
-extends 'WWW::Garden::Design::Util::Import';
+use WWW::Garden::Design::Database::SQLite;
 
 our $VERSION = '0.96';
 
@@ -23,26 +24,13 @@ sub BUILD
 
 	$self -> db
 	(
-		WWW::Garden::Design::Database::Import -> new
+		WWW::Garden::Design::Database::SQLite -> new
 		(
 			logger => Mojo::Log -> new(path => $log_path)
 		)
 	);
 
 }	# End of BUILD.
-
-# -----------------------------------------------
-
-sub insert_hashref
-{
-	my($self, $table_name, $hashref) = @_;
-
-	return ${$self -> dbh -> insert
-	(
-		$table_name, {map{($_ => $$hashref{$_})} keys %$hashref} }
-	) -> hash}{id};
-
-} # End of insert_hashref.
 
 # -----------------------------------------------
 

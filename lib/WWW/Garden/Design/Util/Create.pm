@@ -63,10 +63,11 @@ sub BUILD
 	my($config)	= $self -> config;
 	my($attr)	=
 	{
-		AutoCommit => defined($$config{AutoCommit}) ? $$config{AutoCommit} : 1,
-		RaiseError => defined($$config{RaiseError}) ? $$config{RaiseError} : 1,
+		AutoCommit 			=> $$config{AutoCommit},
+		mysql_enable_utf8	=> $$config{mysql_enable_utf8},	#Ignored if not using MySQL.
+		RaiseError 			=> $$config{RaiseError},
+		sqlite_unicode		=> $$config{sqlite_unicode},	#Ignored if not using SQLite.
 	};
-	$$attr{sqlite_unicode} = 1 if ( ($$config{dsn} =~ /SQLite/i) && $$config{sqlite_unicode});
 
 	$self -> dbh(DBI -> connect($$config{dsn}, $$config{username}, $$config{password}, $attr) );
 	$self -> dbh -> do('PRAGMA foreign_keys = ON') if ($$config{dsn} =~ /SQLite/i);
