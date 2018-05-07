@@ -40,25 +40,18 @@ has constants =>
 	required	=> 0,
 );
 
-has dbh =>
-(
-	is       => 'rw',
-	isa      => Object,
-	required => 0,
-);
-
 has logger =>
 (
-	is       => 'rw',
-	isa      => Object,
-	required => 1,
+	is			=> 'rw',
+	isa			=> Object,
+	required	=> 1,
 );
 
-has mojo_pg =>
+has pg =>
 (
-	is       => 'rw',
-	isa      => Object,
-	required => 0,
+	is			=> 'rw',
+	isa			=> Object,
+	required	=> 0,
 );
 
 has title_font =>
@@ -75,14 +68,26 @@ our $VERSION = '0.96';
 
 sub BUILD
 {
-	my($self)   = @_;
-	my($config) = $self -> config;
+	my($self)  	= @_;
+	my($config)	= $self -> config;
 
-	$self -> mojo_pg(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
+	$self -> pg(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
+
+	# This code was used for Pg, MySQL and SQLite, but now Pg is used everywhere.
+	#
+	#my(%attributes) =
+	#(
+	#	AutoCommit 			=> $$config{AutoCommit},
+	#	mysql_enable_utf8	=> $$config{mysql_enable_utf8},	#Ignored if not using MySQL.
+	#	RaiseError 			=> $$config{RaiseError},
+	#	sqlite_unicode		=> $$config{sqlite_unicode},	#Ignored if not using SQLite.
+	#);
+	#
+	#$self -> dbh(DBI -> connect($$config{dsn}, $$config{username}, $$config{password}, \%attributes) );
+
 	$self -> constants($self -> read_constants_table);
 
-	my($constants) = $self -> constants;
-
+	my($constants)	= $self -> constants;
 	my($font_file)	= $$constants{tile_font_file};
 	my($font_size)	= $$constants{tile_font_size};
 
@@ -537,7 +542,7 @@ sub get_autocomplete_flower_list
 						. "or upper(common_name) like '%$key%' "
 						. "or upper(aliases) like '%$key%'";
 
-	return [$self -> mojo_pg -> query($sql) -> hashes -> each];
+	return [$self -> pg -> query($sql) -> hashes -> each];
 
 } # End of get_autocomplete_flower_list.
 
@@ -549,7 +554,7 @@ sub get_autocomplete_feature_list
 	my($self, $key)	= @_;
 	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
 
-	return [$self -> mojo_pg -> query("select distinct name from features where upper(name) like '%$key%'") -> hashes -> each];
+	return [$self -> pg -> query("select distinct name from features where upper(name) like '%$key%'") -> hashes -> each];
 
 } # End of get_autocomplete_feature_list.
 
@@ -583,7 +588,7 @@ sub get_autocomplete_item
 		}
 
 		$sql	= "select distinct $search_column from $table_name where upper($search_column) like '%$key%'";
-		@item	= $self -> mojo_pg -> query($sql) -> hashes -> each;
+		@item	= $self -> pg -> query($sql) -> hashes -> each;
 
 		if ($#item >= 0)
 		{
@@ -649,7 +654,7 @@ sub get_autocomplete_list
 		# Using 'select distinct ...' did not weed out duplicates.
 
 		$sql	= "select $search_column from $table_name where upper($search_column) like '%$key%'";
-		@list	= map{$$_[0]} $self -> mojo_pg -> query($sql) -> arrays -> each;
+		@list	= map{$$_[0]} $self -> pg -> query($sql) -> arrays -> each;
 
 		push @result, grep{! $seen{$_} } @list;
 
@@ -670,7 +675,7 @@ sub get_flower_by_both_names
 	$key			= uc $key;
 	my(@key)		= split('/', $key);
 	my($sql)		= "select pig_latin from flowers where upper(scientific_name) like ? and upper(common_name) like ?";
-	my(@result)		= $self -> mojo_pg -> query($sql, $key[0], $key[1]) -> hashes;
+	my(@result)		= $self -> pg -> query($sql, $key[0], $key[1]) -> hashes;
 	my($pig_latin)	= $#result >= 0 ? "$$constants{homepage_url}$$constants{image_url}/$result[0].0.jpg" : '';
 
 	return $pig_latin;
@@ -684,7 +689,7 @@ sub get_flower_by_id
 	my($self, $flower_id)		= @_;
 	my($attribute_types_table)	= $self -> read_table('attribute_types');
 	my($sql)					= "select * from flowers where id = $flower_id";
-	my($query)					= $self -> mojo_pg -> query($sql);
+	my($query)					= $self -> pg -> query($sql);
 	my($flower)					= $query -> hash;
 
 	$query -> finish;
@@ -734,7 +739,7 @@ sub get_feature_by_name
 	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
 	$key			= "\U%$key"; # \U => Convert to upper-case.
 	my($sql)		= "select name from features where upper(name) like ?";
-	my(@result)		= $self -> mojo_pg -> query($sql, $key) -> hashes;
+	my(@result)		= $self -> pg -> query($sql, $key) -> hashes;
 	my($icon_name)	= $self -> clean_up_icon_name($result[0]);
 	$icon_name		= length($icon_name) > 0 ? "$$constants{homepage_url}$$constants{icon_url}/$icon_name.png" : '';
 
@@ -748,7 +753,7 @@ sub insert_hashref
 {
 	my($self, $table_name, $hashref) = @_;
 
-	return ${$self -> mojo_pg -> insert
+	return ${$self -> pg -> insert
 	(
 		$table_name, {map{($_ => $$hashref{$_})} keys %$hashref}, {returning => ['id']}
 	) -> hash}{id};
@@ -988,7 +993,7 @@ sub process_feature
 		}
 		else
 		{
-			$id = $self -> mojo_pg -> insert
+			$id = $self -> pg -> insert
 			(
 				$table_name,
 				$fields,
@@ -1040,7 +1045,7 @@ sub process_feature
 			}
 			else
 			{
-				$self -> mojo_pg -> delete
+				$self -> pg -> delete
 				(
 					$table_name,
 					{id => $$item{id} }
@@ -1069,7 +1074,7 @@ sub process_feature
 		{
 			# It's a feature update.
 
-			$self -> mojo_pg -> update
+			$self -> pg -> update
 			(
 				$table_name,
 				$fields,
@@ -1142,7 +1147,7 @@ sub process_garden
 		}
 		else
 		{
-			$id = $self -> mojo_pg -> insert
+			$id = $self -> pg -> insert
 			(
 				$table_name,
 				$fields,
@@ -1165,7 +1170,7 @@ sub process_garden
 
 		if (exists($garden{$id}) )
 		{
-			$self -> mojo_pg -> delete
+			$self -> pg -> delete
 			(
 				$table_name,
 				{id => $$item{id} }
@@ -1195,7 +1200,7 @@ sub process_garden
 		{
 			# It's a garden update.
 
-			$self -> mojo_pg -> update
+			$self -> pg -> update
 			(
 				$table_name,
 				$fields,
@@ -1271,7 +1276,7 @@ sub process_property
 		}
 		else
 		{
-			$id = $self -> mojo_pg -> insert
+			$id = $self -> pg -> insert
 			(
 				$table_name,
 				$fields,
@@ -1317,7 +1322,7 @@ sub process_property
 			}
 			else
 			{
-				$self -> mojo_pg -> delete
+				$self -> pg -> delete
 				(
 					$table_name,
 					{id => $$item{id} }
@@ -1346,7 +1351,7 @@ sub process_property
 		{
 			# It's a property update.
 
-			$self -> mojo_pg -> update
+			$self -> pg -> update
 			(
 				$table_name,
 				$fields,
@@ -1399,7 +1404,7 @@ sub read_flower_dependencies
 
 	# Return an arrayref of hashrefs.
 
-	return [$self -> mojo_pg -> query("select * from $table_name where flower_id = $flower_id") -> hashes -> each];
+	return [$self -> pg -> query("select * from $table_name where flower_id = $flower_id") -> hashes -> each];
 
 } # End of read_flower_dependencies.
 
@@ -1512,7 +1517,7 @@ sub read_garden_dependencies
 
 	# Return an arrayref of hashrefs.
 
-	return [$self -> mojo_pg -> query("select * from $table_name where garden_id = $garden_id") -> hashes -> each];
+	return [$self -> pg -> query("select * from $table_name where garden_id = $garden_id") -> hashes -> each];
 
 } # End of read_garden_dependencies.
 
@@ -1574,7 +1579,7 @@ sub read_feature_dependencies
 
 	# Return an arrayref of hashrefs.
 
-	return [$self -> mojo_pg -> query("select * from $table_name where feature_id = $feature_id") -> hashes -> each];
+	return [$self -> pg -> query("select * from $table_name where feature_id = $feature_id") -> hashes -> each];
 
 } # End of read_feature_dependencies.
 
@@ -1635,7 +1640,7 @@ sub read_table
 
 	# Return an arrayref of hashrefs.
 
-	return [$self -> mojo_pg -> query("select * from $table_name") -> hashes -> each];
+	return [$self -> pg -> query("select * from $table_name") -> hashes -> each];
 
 } # End of read_table.
 
@@ -1856,7 +1861,7 @@ sub trim
 sub upper_name2id_map
 {
 	my($self, $table_name)	= @_;
-	my(%result)				= map{($$_{name} => $$_{id})} $self -> mojo_pg -> query("select upper(name) as name, id from $table_name") -> hashes -> each;
+	my(%result)				= map{($$_{name} => $$_{id})} $self -> pg -> query("select upper(name) as name, id from $table_name") -> hashes -> each;
 
 	return {%result};
 
