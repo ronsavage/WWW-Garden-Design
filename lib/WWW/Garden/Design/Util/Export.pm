@@ -7,6 +7,8 @@ use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use boolean;
 
+use Data::Dumper::Concise; # For Dumper().
+
 use Encode 'encode';
 
 use WWW::Garden::Design::Database;
@@ -608,6 +610,9 @@ sub export_all_pages
 sub export_garden_layout
 {
 	my($self, $gardens_table, $garden_name) = @_;
+
+	$self -> db -> logger -> debug("export_garden_layout(). Processing garden '$garden_name'");
+
 	my($constants)		= $self -> db -> constants;
 	my($flowers)		= $self -> db -> read_flowers_table;
 	my($features)		= $self -> db -> read_features_table;
@@ -717,6 +722,8 @@ sub export_garden_layout
 		for my $feature (@{$$item{feature_locations} })
 		{
 			next if ($garden_id2name{$$feature{garden_id} } ne $garden_name);
+
+			$self -> db -> logger -> info("");
 
 			$file_name	= $self -> db -> clean_up_icon_name($$item{name});
 			$grid_id	= $grid -> svg -> image
