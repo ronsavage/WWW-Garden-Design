@@ -15,30 +15,30 @@ use WWW::Garden::Design::Util::Filer;
 
 # ------------------------------------------------
 
-sub test_object_locations
+sub test_feature_locations
 {
 	my($filer, $checker, $test_count) = @_;
 
-	# 1: Read objects.csv in order to later validate the name column of object_locations.csv.
+	# 1: Read features.csv in order to later validate the name column of feature_locations.csv.
 
-	my(%objects);
+	my(%features);
 
-	my($path)				= "$FindBin::Bin/../data/objects.csv";
-	my($objects)			= $filer -> read_csv_file($path);
-	$objects{$$_{name} }	= 1 for @$objects;
+	my($path)				= "$FindBin::Bin/../data/features.csv";
+	my($features)			= $filer -> read_csv_file($path);
+	$features{$$_{name} }	= 1 for @$features;
 
-	# 2: Read object_locations.csv.
+	# 2: Read feature_locations.csv.
 
-	my($table_name)			= 'object_locations';
-	$path					=~ s/objects/$table_name/;
-	my($object_locations)	= $filer -> read_csv_file($path);
+	my($table_name)			= 'feature_locations';
+	$path					=~ s/features/$table_name/;
+	my($feature_locations)	= $filer -> read_csv_file($path);
 
 	# 2: Read properties.csv.
 
 	my(%properties);
 
 	$table_name				= 'properties';
-	$path					=~ s/object_locations/$table_name/;
+	$path					=~ s/feature_locations/$table_name/;
 	my($properties)			= $filer -> read_csv_file($path);
 	$properties{$$_{name} }	= 1 for @$properties;
 
@@ -51,10 +51,10 @@ sub test_object_locations
 	my($gardens)				= $filer -> read_csv_file($path);
 	$gardens{$$_{garden_name} }	= 1 for @$gardens;
 
-	# 3: Validate the headings in object_locations.csv.
+	# 3: Validate the headings in feature_locations.csv.
 
 	my(@expected_headings)	= sort(qw/name property_name garden_name xy/);
-	my(@got_headings)		= sort keys %{$$object_locations[0]};
+	my(@got_headings)		= sort keys %{$$feature_locations[0]};
 
 	my($result);
 
@@ -70,14 +70,14 @@ sub test_object_locations
 		ok($result == 1, "Heading '$expected_headings[$i]' ok"); $test_count++;
 	}
 
-	# 4: Validate the data in object_locations.csv.
+	# 4: Validate the data in feature_locations.csv.
 
 	my($garden_name);
 	my($name);
 	my($property_name);
 	my($xy, @xy, %xy);
 
-	for my $params (@$object_locations)
+	for my $params (@$feature_locations)
 	{
 		# Check names.
 
@@ -85,11 +85,11 @@ sub test_object_locations
 		$garden_name	= $$params{garden_name};
 		$property_name	= $$params{property_name};
 
-		ok($checker -> check_key_exists(\%objects, $name) == 1, "Object name '$name'. Name present in objects.csv"); $test_count++;
+		ok($checker -> check_key_exists(\%features, $name) == 1, "Feature name '$name'. Name present in features.csv"); $test_count++;
 
 		for my $column (@expected_headings)
 		{
-			ok($checker -> check_key_exists($params, $column) == 1, "Object name '$name', value '$$params{$column}' ok"); $test_count++;
+			ok($checker -> check_key_exists($params, $column) == 1, "Feature name '$name', value '$$params{$column}' ok"); $test_count++;
 		}
 
 		for $xy (split(/\s+/, $$params{xy}) )
@@ -101,8 +101,8 @@ sub test_object_locations
 
 			$xy{$property_name}{$garden_name}{$xy}++;
 
-			ok($checker -> check_ascii_digits({x => $xy[0]}, 'x') == 1, "Object name '$name', xy '$xy'. X ok"); $test_count++;
-			ok($checker -> check_ascii_digits({y => $xy[1]}, 'y') == 1, "Object name '$name', xy '$xy'. Y ok"); $test_count++;
+			ok($checker -> check_ascii_digits({x => $xy[0]}, 'x') == 1, "Feature name '$name', xy '$xy'. X ok"); $test_count++;
+			ok($checker -> check_ascii_digits({y => $xy[1]}, 'y') == 1, "Feature name '$name', xy '$xy'. Y ok"); $test_count++;
 		}
 
 		ok ($checker -> check_key_exists(\%properties, $property_name) == 1, "Property name '$property_name' ok"); $test_count++;
@@ -122,14 +122,14 @@ sub test_object_locations
 
 	return $test_count;
 
-} # End of test_object_locations.
+} # End of test_feature_locations.
 
 # ------------------------------------------------
 
 my($checker)	= MojoX::Validate::Util -> new;
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;
 my($test_count)	= 0;
-$test_count		= test_object_locations($filer, $checker, $test_count);
+$test_count		= test_feature_locations($filer, $checker, $test_count);
 
 print "# Internal test count: $test_count\n";
 
