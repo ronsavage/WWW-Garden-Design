@@ -5,8 +5,6 @@ use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
-use boolean;
-
 use DBI;
 
 use File::Slurper qw/read_dir/;
