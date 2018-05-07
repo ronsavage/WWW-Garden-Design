@@ -71,8 +71,6 @@ sub BUILD
 	my($self)  	= @_;
 	my($config)	= $self -> config;
 
-	$self -> pg(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
-
 	# This code was used for Pg, MySQL and SQLite, but now Pg is used everywhere.
 	#
 	#my(%attributes) =
@@ -85,19 +83,12 @@ sub BUILD
 	#
 	#$self -> dbh(DBI -> connect($$config{dsn}, $$config{username}, $$config{password}, \%attributes) );
 
+	$self -> pg(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
 	$self -> constants($self -> read_constants_table);
 
 	my($constants)	= $self -> constants;
-	my($font_file)	= $$constants{tile_font_file};
-	my($font_size)	= $$constants{tile_font_size};
-
-	# If we're at the start of an import, the above 2 variables will be empty, so use defaults.
-
-	if (! defined $font_file)
-	{
-		$font_file	= '/usr/share/fonts/truetype/freefont/FreeMono.ttf';
-		$font_size	= 16;
-	}
+	my($font_file)	= $$constants{tile_font_file} || $$config{tile_font_file};
+	my($font_size)	= $$constants{tile_font_size} || $$config{tile_font_size};
 
 	$self -> title_font
 	(
@@ -1855,17 +1846,6 @@ sub trim
 	return $value;
 
 } # End of trim.
-
-# -----------------------------------------------
-
-sub upper_name2id_map
-{
-	my($self, $table_name)	= @_;
-	my(%result)				= map{($$_{name} => $$_{id})} $self -> pg -> query("select upper(name) as name, id from $table_name") -> hashes -> each;
-
-	return {%result};
-
-} # End of upper_name2id_map.
 
 # --------------------------------------------------
 
