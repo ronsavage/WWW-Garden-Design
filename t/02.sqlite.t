@@ -35,16 +35,18 @@ my($checker)	= MojoX::Validate::Util -> new;
 my($simple)		= DBIx::Simple -> new($dbh);
 my(%expected)	=
 (
-	attribute_types	=>   4,
-	attributes		=> 708,
-	colors 			=> 674,
-	flowers			=> 179,
-	gardens			=>   5,
-	images			=> 462,
-	notes			=> 748,
-	objects			=>  28,
-	properties		=>   3,
-	urls			=> 211,
+	attribute_types		=>   4,
+	attributes			=> 712,
+	constants			=>  31,
+	feature_locations	=>  29,
+	features			=>  35,
+	flower_locations	=> 137,
+	flowers				=> 182,
+	gardens				=>   2,
+	images				=> 509,
+	notes				=> 777,
+	properties			=>   2,
+	urls				=> 217,
 );
 
 my($result);
