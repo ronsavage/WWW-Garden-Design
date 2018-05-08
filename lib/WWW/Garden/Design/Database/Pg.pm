@@ -18,8 +18,11 @@ our $VERSION = '0.96';
 
 sub BUILD
 {
-	my($self)  	= @_;
-	my($config)	= $self -> config;
+	my($self) = @_;
+
+	$self -> init_config(); # Inside WWW::Garden::Design::Util::Config.
+
+	my($config) = $self -> config;
 
 	$self -> db(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
 	$self -> constants($self -> read_constants_table);

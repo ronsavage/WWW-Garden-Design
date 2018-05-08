@@ -32,14 +32,14 @@ our $VERSION = '0.96';
 
 # -----------------------------------------------
 
-sub BUILD
+sub init_config
 {
 	my($self) = @_;
 	my($path) = "$ENV{HOME}/perl.modules/WWW-Garden-Design/config/www.garden.design.conf";
 
 	$self -> config($self -> _init_config($path) );
 
-} # End of BUILD.
+} # End of init_config.
 
 # -----------------------------------------------
 

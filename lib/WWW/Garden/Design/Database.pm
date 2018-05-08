@@ -18,6 +18,8 @@ use Lingua::EN::Inflect qw/inflect PL_N/; # PL_N: plural of a singular noun.
 
 use Text::CSV::Encoded;
 
+use Time::HiRes qw/gettimeofday tv_interval/;
+
 use Types::Standard qw/Any Object HashRef/;
 
 use Unicode::Collate;

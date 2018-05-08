@@ -1,8 +1,8 @@
-package WWW::Garden::Design::Util::Import;
+package WWW::Garden::Design::Import::Pg;
 
 use Moo;
 
-with qw/WWW::Garden::Design::Util::Config WWW::Garden::Design::Database::Pg/;
+with 'WWW::Garden::Design::Util::Import';
 
 use strict;
 use warnings;
@@ -11,6 +11,8 @@ use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 use Mojo::Log;
 
 use Types::Standard qw/Object/;
+
+use WWW::Garden::Design::Database::Pg;
 
 has db =>
 (
@@ -30,7 +32,7 @@ sub BUILD
 
 	$self -> db
 	(
-		WWW::Garden::Design::Database -> new
+		WWW::Garden::Design::Database::Pg -> new
 		(
 			logger => Mojo::Log -> new(path => $log_path)
 		)

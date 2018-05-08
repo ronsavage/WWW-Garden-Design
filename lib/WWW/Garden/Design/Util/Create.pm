@@ -1,5 +1,9 @@
 package WWW::Garden::Design::Util::Create;
 
+use Moo;
+
+with 'WWW::Garden::Design::Util::Config';
+
 use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
@@ -10,11 +14,7 @@ use DBIx::Admin::CreateTable;
 
 use Mojo::Log;
 
-use Moo;
-
 use Types::Standard qw/ArrayRef HashRef Object Str/;
-
-extends 'WWW::Garden::Design::Util::Config';
 
 has creator =>
 (
@@ -59,7 +59,10 @@ our $VERSION = '0.96';
 
 sub BUILD
 {
-	my($self)	= @_;
+	my($self) = @_;
+
+	$self -> init_config(); # Inside WWW::Garden::Design::Util::Config.
+
 	my($config)	= $self -> config;
 	my($attr)	=
 	{
