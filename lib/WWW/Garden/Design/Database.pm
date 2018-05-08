@@ -1,11 +1,11 @@
 package WWW::Garden::Design::Database;
 
+use Moo::Role;
+
 use boolean;
 use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
-
-use DBI;
 
 use File::Slurper qw/read_dir/;
 
@@ -16,19 +16,11 @@ use Imager::Fill;
 
 use Lingua::EN::Inflect qw/inflect PL_N/; # PL_N: plural of a singular noun.
 
-use Mojo::Pg;
-
-use Moo;
-
 use Text::CSV::Encoded;
-
-use Time::HiRes qw/gettimeofday tv_interval/;
 
 use Types::Standard qw/Any Object HashRef/;
 
 use Unicode::Collate;
-
-extends 'WWW::Garden::Design::Util::Config';
 
 has constants =>
 (
@@ -38,18 +30,18 @@ has constants =>
 	required	=> 0,
 );
 
+has db =>
+(
+	is			=> 'rw',
+	isa			=> Any,
+	required	=> 0,
+);
+
 has logger =>
 (
 	is			=> 'rw',
 	isa			=> Object,
 	required	=> 1,
-);
-
-has pg =>
-(
-	is			=> 'rw',
-	isa			=> Object,
-	required	=> 0,
 );
 
 has title_font =>
@@ -61,32 +53,6 @@ has title_font =>
 );
 
 our $VERSION = '0.96';
-
-# -----------------------------------------------
-
-sub BUILD
-{
-	my($self)  	= @_;
-	my($config)	= $self -> config;
-
-	$self -> pg(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
-	$self -> constants($self -> read_constants_table);
-
-	my($constants)	= $self -> constants;
-	my($font_file)	= $$constants{tile_font_file} || $$config{tile_font_file};
-	my($font_size)	= $$constants{tile_font_size} || $$config{tile_font_size};
-
-	$self -> title_font
-	(
-		Imager::Font -> new
-		(
-			color	=> Imager::Color -> new(0, 0, 0), # Black.
-			file	=> $font_file,
-			size	=> $font_size,
-		) || die "Error. Can't define title font: " . Imager -> errstr
-	);
-
-}	# End of BUILD.
 
 # --------------------------------------------------
 
@@ -507,158 +473,6 @@ sub generate_tile
 
 } # End of generate_tile.
 
-# -----------------------------------------------
-# Return a list.
-
-sub get_autocomplete_flower_list
-{
-	my($self, $key)	= @_;
-	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
-	my($sql)		= "select distinct concat(scientific_name, '/', common_name) from flowers "
-						. "where upper(scientific_name) like '%$key%' "
-						. "or upper(common_name) like '%$key%' "
-						. "or upper(aliases) like '%$key%'";
-
-	return [$self -> pg -> query($sql) -> hashes -> each];
-
-} # End of get_autocomplete_flower_list.
-
-# -----------------------------------------------
-# Return a list.
-
-sub get_autocomplete_feature_list
-{
-	my($self, $key)	= @_;
-	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
-
-	return [$self -> pg -> query("select distinct name from features where upper(name) like '%$key%'") -> hashes -> each];
-
-} # End of get_autocomplete_feature_list.
-
-# -----------------------------------------------
-# Return the shortest item in the list.
-
-sub get_autocomplete_item
-{
-	my($self, $context, $type, $key) = @_;
-	$key =~ s/\'/\'\'/g; # Since we're using Pg.
-
-	my(@item);
-	my(@result);
-	my($sql);
-
-	for my $index (keys %$context)
-	{
-		my($search_column)	= $$context{$index}[0];
-		my($table_name)		= $$context{$index}[1];
-
-		# $search_column is a special case. See AutoComplete.pm and get_autocomplete_flower_list() above.
-
-		next if ($search_column eq '*');
-
-		# If we're not searching then we're processing the Add screen.
-		# In that case, we're only interested in one $index at a time.
-
-		if ( ($type ne 'search') && ($index ne $type) )
-		{
-			next;
-		}
-
-		$sql	= "select distinct $search_column from $table_name where upper($search_column) like '%$key%'";
-		@item	= $self -> pg -> query($sql) -> hashes -> each;
-
-		if ($#item >= 0)
-		{
-			push @result, $item[0]{$search_column};
-		}
-	}
-
-	my($min_length) = 99; # Arbitrary.
-
-	my($min_value);
-
-	for (@result)
-	{
-		if (length($_) < $min_length)
-		{
-			$min_length	= length($_);
-			$min_value	= $_;
-		}
-	}
-
-	if ($min_value)
-	{
-		$self -> logger -> info("Return <$min_value>");
-
-		return [$min_value];
-	}
-	else
-	{
-		return [];
-	}
-
-} # End of get_autocomplete_item.
-
-# -----------------------------------------------
-# Return a list.
-
-sub get_autocomplete_list
-{
-	my($self, $context, $type, $key) = @_;
-	$key =~ s/\'/\'\'/g; # Since we're using Pg.
-
-	my(@list);
-	my(@result);
-	my($sql, %seen);
-
-	for my $index (keys %$context)
-	{
-		my($search_column)	= $$context{$index}[0];
-		my($table_name)		= $$context{$index}[1];
-
-		# $search_column is a special case. See AutoComplete.pm and get_autocomplete_flower_list() above.
-
-		next if ($search_column eq '*');
-
-		# If we're not searching then we're processing the Add screen.
-		# In that case, we're only interested in one $index at a time.
-
-		if ( ($type ne 'search') && ($index ne $type) )
-		{
-			next;
-		}
-
-		# Using 'select distinct ...' did not weed out duplicates.
-
-		$sql	= "select $search_column from $table_name where upper($search_column) like '%$key%'";
-		@list	= map{$$_[0]} $self -> pg -> query($sql) -> arrays -> each;
-
-		push @result, grep{! $seen{$_} } @list;
-
-		$seen{$_} = 1 for @list;
-	}
-
-	return [@result];
-
-} # End of get_autocomplete_list.
-
-# --------------------------------------------------
-
-sub get_flower_by_both_names
-{
-	my($self, $key)	= @_;
-	my($constants)	= $self -> constants;
-	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
-	$key			= uc $key;
-	my(@key)		= split('/', $key);
-	my($sql)		= "select pig_latin from flowers where upper(scientific_name) like ? and upper(common_name) like ?";
-	my(@result)		= $self -> pg -> query($sql, $key[0], $key[1]) -> hashes;
-	my($pig_latin)	= $#result >= 0 ? "$$constants{homepage_url}$$constants{image_url}/$result[0].0.jpg" : '';
-
-	return $pig_latin;
-
-} # End of get_flower_by_both_names.
-
 # --------------------------------------------------
 
 sub get_flower_by_id
@@ -666,7 +480,7 @@ sub get_flower_by_id
 	my($self, $flower_id)		= @_;
 	my($attribute_types_table)	= $self -> read_table('attribute_types');
 	my($sql)					= "select * from flowers where id = $flower_id";
-	my($query)					= $self -> pg -> query($sql);
+	my($query)					= $self -> db -> query($sql);
 	my($flower)					= $query -> hash;
 
 	$query -> finish;
@@ -707,30 +521,13 @@ sub get_flower_by_id
 
 } # End of get_flower_by_id.
 
-# --------------------------------------------------
-
-sub get_feature_by_name
-{
-	my($self, $key)	= @_;
-	my($constants)	= $self -> constants;
-	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
-	$key			= "\U%$key"; # \U => Convert to upper-case.
-	my($sql)		= "select name from features where upper(name) like ?";
-	my(@result)		= $self -> pg -> query($sql, $key) -> hashes;
-	my($icon_name)	= $self -> clean_up_icon_name($result[0]);
-	$icon_name		= length($icon_name) > 0 ? "$$constants{homepage_url}$$constants{icon_url}/$icon_name.png" : '';
-
-	return $icon_name;
-
-} # End of get_feature_by_name.
-
 # -----------------------------------------------
 
 sub insert_hashref
 {
 	my($self, $table_name, $hashref) = @_;
 
-	return ${$self -> pg -> insert
+	return ${$self -> db -> insert
 	(
 		$table_name, {map{($_ => $$hashref{$_})} keys %$hashref}, {returning => ['id']}
 	) -> hash}{id};
@@ -970,7 +767,7 @@ sub process_feature
 		}
 		else
 		{
-			$id = $self -> pg -> insert
+			$id = $self -> db -> insert
 			(
 				$table_name,
 				$fields,
@@ -1022,7 +819,7 @@ sub process_feature
 			}
 			else
 			{
-				$self -> pg -> delete
+				$self -> db -> delete
 				(
 					$table_name,
 					{id => $$item{id} }
@@ -1051,7 +848,7 @@ sub process_feature
 		{
 			# It's a feature update.
 
-			$self -> pg -> update
+			$self -> db -> update
 			(
 				$table_name,
 				$fields,
@@ -1124,7 +921,7 @@ sub process_garden
 		}
 		else
 		{
-			$id = $self -> pg -> insert
+			$id = $self -> db -> insert
 			(
 				$table_name,
 				$fields,
@@ -1147,7 +944,7 @@ sub process_garden
 
 		if (exists($garden{$id}) )
 		{
-			$self -> pg -> delete
+			$self -> db -> delete
 			(
 				$table_name,
 				{id => $$item{id} }
@@ -1177,7 +974,7 @@ sub process_garden
 		{
 			# It's a garden update.
 
-			$self -> pg -> update
+			$self -> db -> update
 			(
 				$table_name,
 				$fields,
@@ -1253,7 +1050,7 @@ sub process_property
 		}
 		else
 		{
-			$id = $self -> pg -> insert
+			$id = $self -> db -> insert
 			(
 				$table_name,
 				$fields,
@@ -1299,7 +1096,7 @@ sub process_property
 			}
 			else
 			{
-				$self -> pg -> delete
+				$self -> db -> delete
 				(
 					$table_name,
 					{id => $$item{id} }
@@ -1328,7 +1125,7 @@ sub process_property
 		{
 			# It's a property update.
 
-			$self -> pg -> update
+			$self -> db -> update
 			(
 				$table_name,
 				$fields,
@@ -1381,7 +1178,7 @@ sub read_flower_dependencies
 
 	# Return an arrayref of hashrefs.
 
-	return [$self -> pg -> query("select * from $table_name where flower_id = $flower_id") -> hashes -> each];
+	return [$self -> db -> query("select * from $table_name where flower_id = $flower_id") -> hashes -> each];
 
 } # End of read_flower_dependencies.
 
@@ -1494,7 +1291,7 @@ sub read_garden_dependencies
 
 	# Return an arrayref of hashrefs.
 
-	return [$self -> pg -> query("select * from $table_name where garden_id = $garden_id") -> hashes -> each];
+	return [$self -> db -> query("select * from $table_name where garden_id = $garden_id") -> hashes -> each];
 
 } # End of read_garden_dependencies.
 
@@ -1556,7 +1353,7 @@ sub read_feature_dependencies
 
 	# Return an arrayref of hashrefs.
 
-	return [$self -> pg -> query("select * from $table_name where feature_id = $feature_id") -> hashes -> each];
+	return [$self -> db -> query("select * from $table_name where feature_id = $feature_id") -> hashes -> each];
 
 } # End of read_feature_dependencies.
 
@@ -1617,7 +1414,7 @@ sub read_table
 
 	# Return an arrayref of hashrefs.
 
-	return [$self -> pg -> query("select * from $table_name") -> hashes -> each];
+	return [$self -> db -> query("select * from $table_name") -> hashes -> each];
 
 } # End of read_table.
 

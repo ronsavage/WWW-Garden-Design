@@ -1,12 +1,12 @@
 package WWW::Garden::Design::Util::Config;
 
+use Moo::Role;
+
 use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use Config::Tiny;
-
-use Moo;
 
 use Path::Tiny; # For path().
 
