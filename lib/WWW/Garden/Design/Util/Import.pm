@@ -1,7 +1,6 @@
 package WWW::Garden::Design::Util::Import;
 
 use strict;
-use utf8;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
@@ -18,7 +17,7 @@ use Text::CSV::Encoded;
 use WWW::Garden::Design::Database;
 use WWW::Garden::Design::Validation::AttributeTypes;
 
-extends qw/WWW::Garden::Design::Database::Base/;
+extends 'WWW::Garden::Design::Database::Base';
 
 use Types::Standard qw/Object/;
 

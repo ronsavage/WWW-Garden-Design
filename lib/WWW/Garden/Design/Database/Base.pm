@@ -10,7 +10,7 @@ use Moo;
 
 use Types::Standard qw/Object/;
 
-extends qw/WWW::Garden::Design::Util::Config/;
+extends 'WWW::Garden::Design::Util::Config';
 
 has db =>
 (

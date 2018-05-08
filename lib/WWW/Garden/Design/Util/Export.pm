@@ -24,7 +24,7 @@ use Text::Xslate 'mark_raw';
 
 use Types::Standard qw/Int HashRef Str/;
 
-extends qw/WWW::Garden::Design::Database::Base/;
+extends 'WWW::Garden::Design::Database::Base';
 
 has all =>
 (

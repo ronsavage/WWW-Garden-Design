@@ -82,7 +82,7 @@ sub features
 	my($features_table)	= $$defaults{db} -> read_features_table;
 
 	$self -> app -> log -> debug('GetTable.features(). Size of features_table: ' . scalar @$features_table);
-	$self -> render(json => $feature_table);
+	$self -> render(json => $features_table);
 
 } # End of features.
 

@@ -28,7 +28,7 @@ use Types::Standard qw/Any Object HashRef/;
 
 use Unicode::Collate;
 
-extends qw/WWW::Garden::Design::Util::Config/;
+extends 'WWW::Garden::Design::Util::Config';
 
 has constants =>
 (
@@ -68,18 +68,6 @@ sub BUILD
 {
 	my($self)  	= @_;
 	my($config)	= $self -> config;
-
-	# This code was used for Pg, MySQL and SQLite, but now Pg is used everywhere.
-	#
-	#my(%attributes) =
-	#(
-	#	AutoCommit 			=> $$config{AutoCommit},
-	#	mysql_enable_utf8	=> $$config{mysql_enable_utf8},	#Ignored if not using MySQL.
-	#	RaiseError 			=> $$config{RaiseError},
-	#	sqlite_unicode		=> $$config{sqlite_unicode},	#Ignored if not using SQLite.
-	#);
-	#
-	#$self -> dbh(DBI -> connect($$config{dsn}, $$config{username}, $$config{password}, \%attributes) );
 
 	$self -> pg(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
 	$self -> constants($self -> read_constants_table);

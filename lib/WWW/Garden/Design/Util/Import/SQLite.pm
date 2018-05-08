@@ -1,6 +1,5 @@
 package WWW::Garden::Design::Util::Import::SQLite;
 
-use parent WWW::Garden::Design::Util::Import;
 use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
@@ -13,6 +12,14 @@ use Text::CSV::Encoded;
 
 use WWW::Garden::Design::Database::SQLite;
 
+use Types::Standard qw/Object/;
+
+has db =>
+(
+	is       => 'rw',
+	isa      => Object, # 'WWW::Garden::Design::Database::SQLite'.
+	required => 0,
+);
 our $VERSION = '0.96';
 
 # -----------------------------------------------

@@ -1,6 +1,5 @@
 package WWW::Garden::Design::Database::SQLite;
 
-use parent WWW::Garden::Design::Database;
 use boolean;
 use strict;
 use warnings;
@@ -25,6 +24,8 @@ use Types::Standard qw/Object/;
 
 use Unicode::Collate;
 
+extends 'WWW::Garden::Design::Util::Config';
+
 has dbh =>
 (
 	is			=> 'rw',
@@ -47,6 +48,7 @@ sub BUILD
 {
 	my($self)		= @_;
 	my($config)		= $self -> config;
+
 	my(%attributes)	=
 	(
 		AutoCommit 			=> $$config{AutoCommit},

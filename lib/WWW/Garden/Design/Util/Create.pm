@@ -14,7 +14,7 @@ use Moo;
 
 use Types::Standard qw/ArrayRef HashRef Object Str/;
 
-extends qw/WWW::Garden::Design::Util::Config/;
+extends 'WWW::Garden::Design::Util::Config';
 
 has creator =>
 (
