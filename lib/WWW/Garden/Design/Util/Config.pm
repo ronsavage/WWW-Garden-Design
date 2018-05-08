@@ -20,14 +20,6 @@ has config =>
 	required => 1,
 );
 
-has config_name =>
-(
-	default  => sub{return 'www.garden.design.conf'},
-	is       => 'rw',
-	isa      => Str,
-	required => 0,
-);
-
 has config_path =>
 (
 	default  => sub{return ''},
@@ -43,7 +35,7 @@ our $VERSION = '0.96';
 sub BUILD
 {
 	my($self) = @_;
-	my($path) = "$ENV{HOME}/perl.modules/WWW-Garden-Design/config/" . $self -> config_name;
+	my($path) = "$ENV{HOME}/perl.modules/WWW-Garden-Design/config/www.garden.design.conf";
 
 	$self -> config($self -> _init_config($path) );
 
@@ -106,11 +98,8 @@ See L<WWW::Garden::Design/Installation>.
 
 =head2 config()
 
-Returns a hashref of options read from C<config/www.garden.design.conf>.
-
-=head2 config_name()
-
-Returns a string with the value 'www.garden.design.conf'.
+Returns a hashref of options read from the config file, which defaults to
+C<config/www.garden.design.conf>.
 
 =head2 config_path()
 

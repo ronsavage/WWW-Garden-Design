@@ -1,7 +1,6 @@
 package WWW::Garden::Design::Util::Export;
 
 use strict;
-use utf8;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
@@ -1354,6 +1353,32 @@ sub images2csv
 	$self -> db -> logger -> info("Wrote $file_name");
 
 } # End of images2csv.
+
+# -----------------------------------------------
+
+sub init_datatable
+{
+	my($self) = @_;
+
+	return <<EOS;
+	\$(function()
+	{
+		\$('#result_table').DataTable
+		({
+			'columnDefs':
+			[
+				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Native.
+				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Scientific name.
+				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Common name.
+				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Aliases.
+				{'cellType':'th','orderable':false,'searchable':false,'type':'html'}	// Thumbnail.
+			],
+			'order': [ [1, 'asc'] ]
+		});
+	});
+EOS
+
+}	# End of init_datatable.
 
 # -----------------------------------------------
 

@@ -14,8 +14,6 @@ use Moo;
 
 use Types::Standard qw/Object/;
 
-use utf8;
-
 has validator =>
 (
 	default		=> sub{return MojoX::Validate::Util -> new},

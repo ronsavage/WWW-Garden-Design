@@ -6,8 +6,6 @@ use Date::Simple;
 
 use Moo;
 
-use utf8;
-
 use WWW::Garden::Design::Util::ValidateForm;
 
 our $VERSION = '0.96';

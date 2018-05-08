@@ -3,12 +3,8 @@ package WWW::Garden::Design;
 use Mojo::Base 'Mojolicious';
 
 use WWW::Garden::Design::Database;
-use WWW::Garden::Design::Util::Config;
-use WWW::Garden::Design::Util::ValidateForm;
 
 use Moo;
-
-use utf8;
 
 our $VERSION = '0.96';
 
@@ -107,7 +103,6 @@ sub startup
 
 	my($defaults);
 
-	$$defaults{config}					= WWW::Garden::Design::Util::Config -> new -> config;
 	$$defaults{db}						= WWW::Garden::Design::Database -> new(logger => $self -> app -> log);
 	$$defaults{constants_table}			= $$defaults{db} -> read_constants_table; # Warning: Not read_table('constants').
 	$$defaults{attributes_table}		= $$defaults{db} -> read_table('attributes');

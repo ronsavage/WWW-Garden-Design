@@ -4,19 +4,7 @@ use Mojo::Base 'Mojolicious::Controller';
 
 use boolean;
 
-use WWW::Garden::Design::Util::Config;
-
 use Moo;
-
-use Types::Standard qw/Any/;
-
-has config =>
-(
-	default  => sub{return WWW::Garden::Design::Util::Config -> new},
-	is       => 'ro',
-	isa      => Any,
-	required => 0,
-);
 
 our $VERSION = '0.96';
 
