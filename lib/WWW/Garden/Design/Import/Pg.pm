@@ -2,7 +2,7 @@ package WWW::Garden::Design::Import::Pg;
 
 use Moo;
 
-with 'WWW::Garden::Design::Util::Import';
+with 'WWW::Garden::Design::Import';
 
 use strict;
 use warnings;

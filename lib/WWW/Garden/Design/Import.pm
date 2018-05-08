@@ -1,4 +1,4 @@
-package WWW::Garden::Design::Util::Import;
+package WWW::Garden::Design::Import;
 
 use Moo::Role;
 
@@ -14,17 +14,7 @@ use Mojo::Log;
 
 use Text::CSV::Encoded;
 
-use WWW::Garden::Design::Validation::AttributeTypes;
-
 use Types::Standard qw/Object/;
-
-has attribute_type_checker =>
-(
-	default		=> sub{return WWW::Garden::Design::Validation::AttributeTypes -> new},
-	is			=> 'ro',
-	isa			=> Object,
-	required	=> 1,
-);
 
 our $VERSION = '0.96';
 
