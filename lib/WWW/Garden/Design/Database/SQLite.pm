@@ -1,30 +1,16 @@
 package WWW::Garden::Design::Database::SQLite;
 
-use boolean;
+use Moo;
+
+with qw/WWW::Garden::Design::Util::Config WWW::Garden::Design::Database/;
+
 use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
-use DBI;
-
 use DBIx::Simple;
 
-use FindBin;
-
 use Imager;
-use Imager::Fill;
-
-use Lingua::EN::Inflect qw/inflect PL_N/; # PL_N: plural of a singular noun.
-
-use Moo;
-
-use Text::CSV::Encoded;
-
-use Types::Standard qw/Object/;
-
-use Unicode::Collate;
-
-extends 'WWW::Garden::Design::Util::Config';
 
 has dbh =>
 (
