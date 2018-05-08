@@ -12,6 +12,5 @@ perl -Ilib scripts/create.tables.pl
 if [ "$FLOWER_DB" == "Pg" ]; then
 	time perl -Ilib scripts/populate.pg.tables.pl
 else
-#	time perl -Ilib scripts/populate.sqlite.tables.pl
-	echo Skip populate
+	time perl -Ilib scripts/populate.sqlite.tables.pl
 fi

@@ -1,4 +1,4 @@
-package WWW::Garden::Design::Import::Pg;
+package WWW::Garden::Design::Import::SQLite;
 
 use Moo;
 
@@ -12,12 +12,12 @@ use Mojo::Log;
 
 use Types::Standard qw/Object/;
 
-use WWW::Garden::Design::Database::Pg;
+use WWW::Garden::Design::Database::SQLite;
 
 has db =>
 (
 	is       => 'rw',
-	isa      => Object, # 'WWW::Garden::Design::Database::Pg'.
+	isa      => Object, # 'WWW::Garden::Design::Database::SQLite'.
 	required => 0,
 );
 
@@ -32,7 +32,7 @@ sub BUILD
 
 	$self -> db
 	(
-		WWW::Garden::Design::Database::Pg -> new
+		WWW::Garden::Design::Database::SQLite -> new
 		(
 			logger => Mojo::Log -> new(path => $log_path)
 		)

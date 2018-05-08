@@ -8,6 +8,8 @@ use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
+use DBI;
+
 use DBIx::Simple;
 
 use Imager;
@@ -34,13 +36,11 @@ sub BUILD
 {
 	my($self)		= @_;
 	my($config)		= $self -> config;
-
 	my(%attributes)	=
 	(
-		AutoCommit 			=> $$config{AutoCommit},
-		mysql_enable_utf8	=> $$config{mysql_enable_utf8},	#Ignored if not using MySQL.
-		RaiseError 			=> $$config{RaiseError},
-		sqlite_unicode		=> $$config{sqlite_unicode},	#Ignored if not using SQLite.
+		AutoCommit 		=> $$config{AutoCommit},
+		RaiseError 		=> $$config{RaiseError},
+		sqlite_unicode	=> $$config{sqlite_unicode},
 	);
 
 	$self -> dbh(DBI -> connect($$config{dsn}, $$config{username}, $$config{password}, \%attributes) );
