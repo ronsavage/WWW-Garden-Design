@@ -45,7 +45,7 @@ sub design_details
 	$self -> process_design_property($app, $defaults, \%errors, $joiner, $params);
 
 ###############################
-	$$params{success}	= true;
+	$$params{success}	= true; # TODO.
 ###############################
 
 	return $params;

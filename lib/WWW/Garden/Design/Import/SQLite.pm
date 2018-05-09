@@ -13,6 +13,7 @@ use Mojo::Log;
 use Types::Standard qw/Object/;
 
 use WWW::Garden::Design::Database::SQLite;
+use WWW::Garden::Design::Util::Config;
 
 has db =>
 (
@@ -27,14 +28,17 @@ our $VERSION = '0.96';
 
 sub BUILD
 {
-	my($self)		= @_;
-	my($log_path)	= "$ENV{HOME}/perl.modules/WWW-Garden-Design/log/development.log";
+	my($self) = @_;
+
+	$self -> init_config;	# Lives in WWW::Garden::Design::Util::Config.
+
+	my($config) = $self -> config;
 
 	$self -> db
 	(
 		WWW::Garden::Design::Database::SQLite -> new
 		(
-			logger => Mojo::Log -> new(path => $log_path)
+			logger => Mojo::Log -> new(path => $$config{log_path})
 		)
 	);
 

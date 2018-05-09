@@ -31,7 +31,8 @@ sub BUILD
 {
 	my($self) = @_;
 
-	$self -> init_config(); # Inside WWW::Garden::Design::Util::Config.
+	$self -> init_config;	# Lives in WWW::Garden::Design::Util::Config.
+	$self -> init_imager;	# Lives in WWW::Garden::Design::Database.
 
 	my($config)		= $self -> config;
 	my(%attributes)	=
@@ -45,7 +46,6 @@ sub BUILD
 	$self -> dbh -> do('PRAGMA foreign_keys = ON') if ($$config{dsn} =~ /SQLite/i);
 
 	$self -> db(DBIx::Simple -> new($self -> dbh) );
-	$self -> constants($self -> read_constants_table);
 
 }	# End of BUILD.
 

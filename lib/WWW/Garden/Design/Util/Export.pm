@@ -9,6 +9,7 @@ use boolean;
 use Encode 'encode';
 
 use WWW::Garden::Design::Database;
+use WWW::Garden::Design::Util::Config;
 
 use Mojo::Log;
 
@@ -22,8 +23,6 @@ use Text::CSV;
 use Text::Xslate 'mark_raw';
 
 use Types::Standard qw/Int HashRef Str/;
-
-extends 'WWW::Garden::Design::Database::Base';
 
 has all =>
 (
@@ -79,7 +78,11 @@ our $VERSION = '0.96';
 
 sub BUILD
 {
-	my($self)				= @_;
+	my($self) = @_;
+
+	$self -> init_config(); # Lives in WWW::Garden::Design::Util::Config.
+
+	my($config)	= $self -> config;
 	my($export_type)		= $self -> export_type;
 	my($standalone_page)	= $self -> standalone_page;
 	my($all)				= $self -> all;
@@ -139,13 +142,11 @@ sub BUILD
 		$self -> standalone_page(1);
 	}
 
-	my($log_path) = "$ENV{HOME}/perl.modules/WWW-Garden-Design/log/development.log";
-
 	$self -> db
 	(
 		WWW::Garden::Design::Database -> new
 		(
-			logger => Mojo::Log -> new(path => $log_path)
+			logger => Mojo::Log -> new(path => $$config{log_path})
 		)
 	);
 

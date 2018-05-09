@@ -61,7 +61,7 @@ sub BUILD
 {
 	my($self) = @_;
 
-	$self -> init_config(); # Inside WWW::Garden::Design::Util::Config.
+	$self -> init_config(); # Lives in WWW::Garden::Design::Util::Config.
 
 	my($config)	= $self -> config;
 	my($attr)	=
@@ -88,12 +88,9 @@ sub BUILD
 	(
 		$self -> creator -> db_vendor =~ /(?:Mysql)/i ? 'engine=innodb' : ''
 	);
-
-	my($log_path) = "$ENV{HOME}/perl.modules/WWW-Garden-Design/log/development.log";
-
 	$self -> logger
 	(
-		Mojo::Log -> new(path => $log_path)
+		Mojo::Log -> new(path => $$config{log_path})
 	);
 
 	$self -> time_option

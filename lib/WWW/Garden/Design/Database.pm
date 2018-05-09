@@ -251,111 +251,6 @@ sub clean_up_icon_name
 
 } # End of clean_up_icon_name.
 
-# -----------------------------------------------
-
-sub crosscheck
-{
-	my($self)	= @_;
-	my($path)	= "$FindBin::Bin/../data/constants.csv";
-	my($csv)	= Text::CSV::Encoded -> new
-	({
-		allow_whitespace => 1,
-		encoding_in      => 'utf-8',
-	});
-
-	open(my $io, '<', $path) || die "Can't open($path): $!\n";
-
-	$csv -> column_names($csv -> getline($io) );
-
-	my(%constants);
-
-	my($row) = 0;
-
-	for my $item (@{$csv -> getline_hr_all($io) })
-	{
-		$row++;
-
-		# Column names are in alphabetical order.
-
-		for my $column (qw/name value/)
-		{
-			if (! defined $$item{$column})
-			{
-				print "File: $path. Row: $row. Column $column undefined. \n";
-			}
-		}
-
-		$constants{$$item{name} } = $$item{value};
-	}
-
-	close $io;
-
-	my($homepage_dir)	= $constants{homepage_dir};
-	my($homepage_url)	= $constants{homepage_url};
-	my($image_dir)		= $constants{image_dir};
-	my($image_path)		= "$homepage_dir$image_dir";
-	my($flowers)		= $self -> read_flowers_table;
-
-	# Read in the actual file names.
-
-	my(%file_list);
-
-	my(@entries)						= read_dir $image_path;
-	@entries							= sort grep{! -d "$image_path/$_"} @entries; # Can't call sort directly on output of read_dir!
-	$file_list{file_names}				= [@entries];
-	@{$file_list{name_hash} }{@entries}	= (1) x @entries;
-
-	# Check that the files which ought to be there, are.
-
-	my($count);
-	my($common_name);
-	my($file_name);
-	my($image);
-	my($pig_latin);
-	my(%real_name);
-	my($scientific_name);
-
-	for my $flower (@$flowers)
-	{
-		$common_name			= $$flower{common_name};
-		$scientific_name		= $$flower{scientific_name};
-		$pig_latin				= $self -> scientific_name2pig_latin($flowers, $scientific_name, $common_name);
-		$file_name				= "$pig_latin.0.jpg";
-		$real_name{$file_name}	= 1;
-
-		if (! $file_list{name_hash}{$file_name})
-		{
-			print "Missing thumbnail: $file_name\n";
-		}
-
-		for $image (@{$$flower{images} })
-		{
-			$file_name				= $$image{file_name} =~ s/\Q$homepage_url$image_dir\/\E//r;
-			$real_name{$file_name}	= 1;
-
-			if (! $file_list{name_hash}{$file_name})
-			{
-				print "Missing image: $file_name\n";
-			}
-		}
-	}
-
-	# Check for any unexpected files, .i.e present in the directory but not in images.csv.
-
-	for my $file_name (@{$file_list{file_names} })
-	{
-		if (! $real_name{$file_name})
-		{
-				print "Unexpected image: $file_name\n";
-		}
-	}
-
-	# Return 0 for OK and 1 for error.
-
-	return 0;
-
-} # End of crosscheck.
-
 # --------------------------------------------------
 
 sub format_height_width
@@ -556,6 +451,31 @@ sub get_flower_by_id
 	return $flower;
 
 } # End of get_flower_by_id.
+
+# -----------------------------------------------
+
+sub init_imager
+{
+	my($self)	= @_;
+	my($config)	= $self -> config;
+
+	$self -> constants($self -> read_constants_table); # Might be empty at the start of an import.
+
+	my($constants)	= $self -> constants;
+	my($font_file)	= $$constants{tile_font_file} || $$config{tile_font_file};
+	my($font_size)	= $$constants{tile_font_size} || $$config{tile_font_size};
+
+	$self -> title_font
+	(
+		Imager::Font -> new
+		(
+			color	=> Imager::Color -> new(0, 0, 0), # Black.
+			file	=> $font_file,
+			size	=> $font_size,
+		) || die "Error. Can't define title font: " . Imager -> errstr
+	);
+
+} # End of init_imager;
 
 # -----------------------------------------------
 

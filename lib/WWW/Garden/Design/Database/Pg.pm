@@ -20,26 +20,12 @@ sub BUILD
 {
 	my($self) = @_;
 
-	$self -> init_config(); # Inside WWW::Garden::Design::Util::Config.
+	$self -> init_config;	# Lives in WWW::Garden::Design::Util::Config.
+	$self -> init_imager;	# Lives in WWW::Garden::Design::Database.
 
 	my($config) = $self -> config;
 
 	$self -> db(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
-	$self -> constants($self -> read_constants_table);
-
-	my($constants)	= $self -> constants;
-	my($font_file)	= $$constants{tile_font_file} || $$config{tile_font_file};
-	my($font_size)	= $$constants{tile_font_size} || $$config{tile_font_size};
-
-	$self -> title_font
-	(
-		Imager::Font -> new
-		(
-			color	=> Imager::Color -> new(0, 0, 0), # Black.
-			file	=> $font_file,
-			size	=> $font_size,
-		) || die "Error. Can't define title font: " . Imager -> errstr
-	);
 
 }	# End of BUILD.
 
