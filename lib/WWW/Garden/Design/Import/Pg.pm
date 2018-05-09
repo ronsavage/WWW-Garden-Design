@@ -2,7 +2,7 @@ package WWW::Garden::Design::Import::Pg;
 
 use Moo;
 
-with 'WWW::Garden::Design::Import';
+with qw/WWW::Garden::Design::Util::Config WWW::Garden::Design::Import/;
 
 use strict;
 use warnings;
@@ -10,17 +10,7 @@ use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use Mojo::Log;
 
-use Types::Standard qw/Object/;
-
 use WWW::Garden::Design::Database::Pg;
-use WWW::Garden::Design::Util::Config;
-
-has db =>
-(
-	is       => 'rw',
-	isa      => Object, # 'WWW::Garden::Design::Database::Pg'.
-	required => 0,
-);
 
 our $VERSION = '0.96';
 
@@ -30,16 +20,13 @@ sub BUILD
 {
 	my($self) = @_;
 
-	$self -> init_config;	# Lives in WWW::Garden::Design::Util::Config.
+	$self -> init_config;   # Lives in WWW::Garden::Design::Util::Config.
 
 	my($config) = $self -> config;
 
-	$self -> db
+	WWW::Garden::Design::Database::Pg -> new
 	(
-		WWW::Garden::Design::Database::Pg -> new
-		(
-			logger => Mojo::Log -> new(path => $$config{log_path})
-		)
+		logger => Mojo::Log -> new(path => $$config{log_path})
 	);
 
 }	# End of BUILD.
