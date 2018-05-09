@@ -72,8 +72,9 @@ sub homepage
 	$self -> app -> log -> debug('Initialize.homepage()');
 
 	my($defaults)					= $self -> app -> defaults;
-	$$defaults{features_table}		= $$defaults{db} -> read_features_table; # Warning: Not read_table('features').
-	$$defaults{gardens_table}		= $$defaults{db} -> read_gardens_table; # Warning: Not read_table('gardens').
+	$$defaults{constants_table}		= $$defaults{db} -> read_constants_table;	# Warning: Not read_table('constants').
+	$$defaults{features_table}		= $$defaults{db} -> read_features_table;	# Warning: Not read_table('features').
+	$$defaults{gardens_table}		= $$defaults{db} -> read_gardens_table;		# Warning: Not read_table('gardens').
 	$$defaults{properties_table}	= $$defaults{db} -> read_table('properties');
 	my($attribute_elements)			= $self -> build_js_for_attributes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields});
 

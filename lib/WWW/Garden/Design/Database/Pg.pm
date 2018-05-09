@@ -178,39 +178,66 @@ sub get_autocomplete_list
 
 } # End of get_autocomplete_list.
 
-# --------------------------------------------------
+# -----------------------------------------------
 
-sub get_feature_by_name
+sub insert_hashref
 {
-	my($self, $key)	= @_;
-	my($constants)	= $self -> constants;
-	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
-	$key			= "\U%$key"; # \U => Convert to upper-case.
-	my($sql)		= "select name from features where upper(name) like ?";
-	my(@result)		= $self -> db -> query($sql, $key) -> hashes;
-	my($icon_name)	= $self -> clean_up_icon_name($result[0]);
-	$icon_name		= length($icon_name) > 0 ? "$$constants{homepage_url}$$constants{icon_url}/$icon_name.png" : '';
+	my($self, $table_name, $hashref) = @_;
 
-	return $icon_name;
+	return ${$self -> db -> insert
+	(
+		$table_name, {map{($_ => $$hashref{$_})} keys %$hashref}, {returning => ['id']}
+	) -> hash}{id};
 
-} # End of get_feature_by_name.
+} # End of insert_hashref.
 
 # --------------------------------------------------
 
-sub get_flower_by_both_names
+sub read_feature_dependencies
 {
-	my($self, $key)	= @_;
-	my($constants)	= $self -> constants;
-	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
-	$key			= uc $key;
-	my(@key)		= split('/', $key);
-	my($sql)		= "select pig_latin from flowers where upper(scientific_name) like ? and upper(common_name) like ?";
-	my(@result)		= $self -> db -> query($sql, $key[0], $key[1]) -> hashes;
-	my($pig_latin)	= $#result >= 0 ? "$$constants{homepage_url}$$constants{image_url}/$result[0].0.jpg" : '';
+	my($self, $table_name, $feature_id) = @_;
 
-	return $pig_latin;
+	# Return an arrayref of hashrefs.
 
-} # End of get_flower_by_both_names.
+	return [$self -> db -> query("select * from $table_name where feature_id = $feature_id") -> hashes -> each];
+
+} # End of read_feature_dependencies.
+
+# --------------------------------------------------
+
+sub read_flower_dependencies
+{
+	my($self, $table_name, $flower_id) = @_;
+
+	# Return an arrayref of hashrefs.
+
+	return [$self -> db -> query("select * from $table_name where flower_id = $flower_id") -> hashes -> each];
+
+} # End of read_flower_dependencies.
+
+# --------------------------------------------------
+
+sub read_garden_dependencies
+{
+	my($self, $table_name, $garden_id) = @_;
+
+	# Return an arrayref of hashrefs.
+
+	return [$self -> db -> query("select * from $table_name where garden_id = $garden_id") -> hashes -> each];
+
+} # End of read_garden_dependencies.
+
+# --------------------------------------------------
+
+sub read_table
+{
+	my($self, $table_name) = @_;
+
+	# Return an arrayref of hashrefs.
+
+	return [$self -> db -> query("select * from $table_name") -> hashes -> each];
+
+} # End of read_table.
 
 # --------------------------------------------------
 
