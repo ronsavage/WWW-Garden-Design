@@ -86,12 +86,16 @@
 		    <ul>
 		        <li><a href = '#search_help_tab'><span>Searching</span></a></li>
 		        <li><a href = '#faq_help_tab'><span>FAQ</span></a></li>
+		        <li><a href = '#about_tab'><span>About</span></a></li>
 		    </ul>
 		    <div id = 'search_help_tab'>
 %= include 'initialize/search_help'
 			</div>
 		    <div id = 'faq_help_tab'>
 %= include 'initialize/faq_help'
+			</div>
+		    <div id = 'about_tab'>
+%= include 'initialize/about', version => $version
 			</div>
 		</div>
 	</div>

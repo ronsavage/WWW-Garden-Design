@@ -139,6 +139,7 @@ sub homepage
 		joiner							=> $$defaults{joiner},
 		properties_current_property_id	=> $properties_current_property_id,
 		properties_property_menu		=> $$defaults{properties_property_menu},
+		version							=> $VERSION,
 	);
 
 } # End of homepage.
