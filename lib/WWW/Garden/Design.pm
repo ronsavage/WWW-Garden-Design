@@ -2,7 +2,7 @@ package WWW::Garden::Design;
 
 use Mojo::Base 'Mojolicious';
 
-use WWW::Garden::Design::Database;
+use WWW::Garden::Design::Database::Pg;
 
 use Moo;
 
@@ -103,7 +103,7 @@ sub startup
 
 	my($defaults);
 
-	$$defaults{db}						= WWW::Garden::Design::Database -> new(logger => $self -> app -> log);
+	$$defaults{db}						= WWW::Garden::Design::Database::Pg -> new(logger => $self -> app -> log);
 	$$defaults{constants_table}			= $$defaults{db} -> read_constants_table; # Warning: Not read_table('constants').
 	$$defaults{attributes_table}		= $$defaults{db} -> read_table('attributes');
 	$$defaults{attribute_types_table}	= $$defaults{db} -> read_table('attribute_types');
