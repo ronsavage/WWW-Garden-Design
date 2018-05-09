@@ -45,6 +45,7 @@ sub BUILD
 	$self -> dbh -> do('PRAGMA foreign_keys = ON') if ($$config{dsn} =~ /SQLite/i);
 
 	$self -> db(DBIx::Simple -> new($self -> dbh) );
+	$self -> constants($self -> read_constants_table);
 
 }	# End of BUILD.
 

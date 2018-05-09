@@ -1195,6 +1195,42 @@ sub read_constants_table
 
 # --------------------------------------------------
 
+sub read_features_table
+{
+	my($self)		= @_;
+	my($constants)	= $self -> constants;
+
+	my($record, @records);
+
+	for my $feature (@{$self -> read_table('features')})
+	{
+		$record	= {};
+
+		for my $key (keys %$feature)
+		{
+			$$record{$key} = $$feature{$key};
+		}
+
+		$$record{icon_dir}	= "$$constants{homepage_dir}$$constants{icon_dir}";
+		$$record{icon_file}	= $self -> clean_up_icon_name($$feature{name});
+		$$record{icon_url}	= "$$constants{homepage_url}$$constants{icon_url}/$$record{icon_file}.png";
+
+		for my $table_name (qw/feature_locations/)
+		{
+			$$record{$table_name} = $self -> read_feature_dependencies($table_name, $$record{id});
+		}
+
+		push @records, $record;
+	}
+
+	# Return an arrayref of hashrefs.
+
+	return [sort{$$a{name} cmp $$b{name} } @records];
+
+} # End of read_features_table.
+
+# --------------------------------------------------
+
 sub read_flowers_table
 {
 	my($self)					= @_;
@@ -1343,44 +1379,6 @@ sub read_gardens_table
 	return [sort{$$a{property_name} cmp $$b{property_name} || $$a{name} cmp $$b{name} } @records];
 
 } # End of read_gardens_table.
-
-# --------------------------------------------------
-
-sub read_features_table
-{
-	my($self)		= @_;
-	my($constants)	= $self -> constants;
-
-	$self -> logger -> debug('Database.read_features_table(). constants: ' . Dumper($constants) );
-
-	my($record, @records);
-
-	for my $feature (@{$self -> read_table('features')})
-	{
-		$record	= {};
-
-		for my $key (keys %$feature)
-		{
-			$$record{$key} = $$feature{$key};
-		}
-
-		$$record{icon_dir}	= "$$constants{homepage_dir}$$constants{icon_dir}";
-		$$record{icon_file}	= $self -> clean_up_icon_name($$feature{name});
-		$$record{icon_url}	= "$$constants{homepage_url}$$constants{icon_url}/$$record{icon_file}.png";
-
-		for my $table_name (qw/feature_locations/)
-		{
-			$$record{$table_name} = $self -> read_feature_dependencies($table_name, $$record{id});
-		}
-
-		push @records, $record;
-	}
-
-	# Return an arrayref of hashrefs.
-
-	return [sort{$$a{name} cmp $$b{name} } @records];
-
-} # End of read_features_table.
 
 # --------------------------------------------------
 

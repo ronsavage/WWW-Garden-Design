@@ -4,6 +4,8 @@ use Mojo::Base 'Mojolicious::Controller';
 
 use Moo;
 
+use Data::Dumper::Concise; # For Dumper().
+
 our $VERSION = '0.96';
 
 # -----------------------------------------------
