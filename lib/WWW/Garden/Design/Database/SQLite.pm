@@ -14,6 +14,8 @@ use DBIx::Simple;
 
 use Imager;
 
+use Types::Standard qw/Object/;
+
 has dbh =>
 (
 	is			=> 'rw',
@@ -34,7 +36,10 @@ our $VERSION = '0.96';
 
 sub BUILD
 {
-	my($self)		= @_;
+	my($self) = @_;
+
+	$self -> init_config(); # Inside WWW::Garden::Design::Util::Config.
+
 	my($config)		= $self -> config;
 	my(%attributes)	=
 	(
