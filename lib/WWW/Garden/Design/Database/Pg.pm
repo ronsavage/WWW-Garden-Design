@@ -2,16 +2,29 @@ package WWW::Garden::Design::Database::Pg;
 
 use Moo;
 
-with qw/WWW::Garden::Design::Util::Config WWW::Garden::Design::Database/;
+with 'WWW::Garden::Design::Database';
 
 use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
+use Data::Dumper::Concise; # For Dumper().
+
 use Imager;
 
-use Mojo::Log;
 use Mojo::Pg;
+
+use Types::Standard qw/HashRef/;
+
+use WWW::Garden::Design::Util::Config;
+
+has config =>
+(
+	default		=> sub{WWW::Garden::Design::Util::Config -> new -> config},
+	is			=> 'rw',
+	isa			=> HashRef,
+	required	=> 0,
+);
 
 our $VERSION = '0.96';
 
@@ -19,14 +32,13 @@ our $VERSION = '0.96';
 
 sub BUILD
 {
-	my($self) = @_;
-
-	$self -> init_config;	# Lives in WWW::Garden::Design::Util::Config.
-
-	my($config) = $self -> config;
+	my($self)	= @_;
+	my($config)	= $self -> config;
 
 	$self -> constants($self -> read_constants_table); # Might be empty at the start of an import.
 	$self -> db(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
+
+	print Dumper($self -> db);
 
 	my($constants)	= $self -> constants;
 	my($font_file)	= $$constants{tile_font_file} || $$config{tile_font_file};

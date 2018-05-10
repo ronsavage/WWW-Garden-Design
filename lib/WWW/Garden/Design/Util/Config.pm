@@ -1,12 +1,12 @@
 package WWW::Garden::Design::Util::Config;
 
-use Moo::Role;
-
 use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use Config::Tiny;
+
+use Moo;
 
 use Path::Tiny; # For path().
 
@@ -32,14 +32,14 @@ our $VERSION = '0.96';
 
 # -----------------------------------------------
 
-sub init_config
+sub BUILD
 {
 	my($self) = @_;
 	my($path) = 'config/www.garden.design.conf';
 
 	$self -> config($self -> _init_config($path) );
 
-} # End of init_config.
+} # End of BUILD.
 
 # -----------------------------------------------
 

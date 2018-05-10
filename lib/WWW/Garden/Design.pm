@@ -174,8 +174,8 @@ sub initialize_defaults
 	# and the corresponding JS variable of the 2nd property menu on the Gardens tab.
 	# And we sort the properties because the property menu is sorted, and we default to the 1st item.
 
-	@{$$defaults{properties_table} } 				= sort{$$a{name} cmp $$b{name} } @{$$defaults{properties_table} };
-	$$defaults{$properties_current_property_id})	= $$defaults{properties_table}[0]{id};
+	@{$$defaults{properties_table} } 			= sort{$$a{name} cmp $$b{name} } @{$$defaults{properties_table} };
+	$$defaults{properties_current_property_id}	= $$defaults{properties_table}[0]{id};
 
 	# Find the id of the 1st garden on the Gardens tab. It is sorted in Database.read_gardens_table().
 

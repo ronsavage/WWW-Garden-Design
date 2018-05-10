@@ -16,6 +16,16 @@ use Imager;
 
 use Types::Standard qw/Object/;
 
+use WWW::Garden::Design::Util::Config;
+
+has config =>
+(
+	default		=> sub{WWW::Garden::Design::Util::Config -> new -> config},
+	is			=> 'rw',
+	isa			=> Object,
+	required	=> 0,
+);
+
 has dbh =>
 (
 	is			=> 'rw',
@@ -29,11 +39,7 @@ our $VERSION = '0.96';
 
 sub BUILD
 {
-	my($self) = @_;
-
-	$self -> init_config;	# Lives in WWW::Garden::Design::Util::Config.
-	$self -> init_imager;	# Lives in WWW::Garden::Design::Database.
-
+	my($self)		= @_;
 	my($config)		= $self -> config;
 	my(%attributes)	=
 	(
@@ -46,6 +52,7 @@ sub BUILD
 	$self -> dbh -> do('PRAGMA foreign_keys = ON') if ($$config{dsn} =~ /SQLite/i);
 
 	$self -> db(DBIx::Simple -> new($self -> dbh) );
+	$self -> init_imager;	# Lives in WWW::Garden::Design::Database.
 
 }	# End of BUILD.
 

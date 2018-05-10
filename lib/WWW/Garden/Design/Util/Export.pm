@@ -24,11 +24,21 @@ use Text::Xslate 'mark_raw';
 
 use Types::Standard qw/Int HashRef Str/;
 
+use WWW::Garden::Design::Util::Config;
+
 has all =>
 (
 	default		=> sub{return 'No'},
 	is			=> 'rw',
 	isa			=> Str,
+	required	=> 0,
+);
+
+has config =>
+(
+	default		=> sub{WWW::Garden::Design::Util::Config -> new -> config},
+	is			=> 'rw',
+	isa			=> HashRef,
 	required	=> 0,
 );
 
@@ -78,11 +88,8 @@ our $VERSION = '0.96';
 
 sub BUILD
 {
-	my($self) = @_;
-
-	$self -> init_config(); # Lives in WWW::Garden::Design::Util::Config.
-
-	my($config)	= $self -> config;
+	my($self)				= @_;
+	my($config)				= $self -> config;
 	my($export_type)		= $self -> export_type;
 	my($standalone_page)	= $self -> standalone_page;
 	my($all)				= $self -> all;

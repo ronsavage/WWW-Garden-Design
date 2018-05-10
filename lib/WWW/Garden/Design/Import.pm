@@ -22,7 +22,7 @@ sub populate_all_tables
 {
 	my($self) = @_;
 
-	$self -> logger -> debug('Populating all tables');
+	$self -> db -> logger -> debug('Populating all tables');
 
 	my($path) = "$FindBin::Bin/../data/flowers.csv";
 	my($csv)  = Text::CSV::Encoded -> new
@@ -79,21 +79,21 @@ sub populate_attributes_table
 		{
 			if (! defined $$item{$column})
 			{
-				$self -> logger -> error("$table_name. Row: $count. Column $column undefined");
+				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
 			}
 		}
 
 		if (! defined $$attribute_type_keys{$$item{attribute_name} })
 		{
-			$self -> logger -> error("$table_name. Row: $count. Attribute name '$$item{attribute_name}' undefined");
+			$self -> db -> logger -> error("$table_name. Row: $count. Attribute name '$$item{attribute_name}' undefined");
 		}
 
 		if (! defined $$flower_keys{$$item{common_name} })
 		{
-			$self -> logger -> error("$table_name. Row: $count. Common name '$$item{common_name}' undefined");
+			$self -> db -> logger -> error("$table_name. Row: $count. Common name '$$item{common_name}' undefined");
 		}
 
-		$self -> insert_hashref
+		$self -> db -> insert_hashref
 		(
 			$table_name,
 			{
@@ -106,7 +106,7 @@ sub populate_attributes_table
 
 	close $io;
 
-	$self -> logger -> info("Read $count records into '$table_name'");
+	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_attributes_table.
 
@@ -134,11 +134,11 @@ sub populate_attribute_types_table
 		{
 			if (! defined $$item{$column})
 			{
-				$self -> logger -> error("$table_name. Row: $count. Column $column undefined");
+				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
 			}
 		}
 
-		$$attribute_type_keys{$$item{name} } = $self -> insert_hashref
+		$$attribute_type_keys{$$item{name} } = $self -> db -> insert_hashref
 		(
 			$table_name,
 			{
@@ -151,7 +151,7 @@ sub populate_attribute_types_table
 
 	close $io;
 
-	$self -> logger -> info("Read $count records into '$table_name'");
+	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_attribute_types_table.
 
@@ -179,11 +179,11 @@ sub populate_constants_table
 		{
 			if (! defined $$item{$column})
 			{
-				$self -> logger -> error("$table_name. Row: $count. Column $column undefined");
+				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
 			}
 		}
 
-		$self -> insert_hashref
+		$self -> db -> insert_hashref
 		(
 			$table_name,
 			{
@@ -195,7 +195,7 @@ sub populate_constants_table
 
 	close $io;
 
-	$self -> logger -> info("Read $count records into '$table_name'");
+	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_constants_table.
 
@@ -228,7 +228,7 @@ sub populate_feature_locations_table
 		{
 			if (! defined $$item{$column})
 			{
-				$self -> logger -> error("$table_name. Row: $count. Column $column undefined");
+				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
 			}
 		}
 
@@ -242,7 +242,7 @@ sub populate_feature_locations_table
 			$max_x		= $x if ($x > $max_x);
 			$max_y		= $y if ($y > $max_y);
 
-			$self -> insert_hashref
+			$self -> db -> insert_hashref
 			(
 				$table_name,
 				{
@@ -258,8 +258,8 @@ sub populate_feature_locations_table
 
 	close $io;
 
-	$self -> logger -> info("Max (x, y) = ($max_x, $max_y)");
-	$self -> logger -> info("Read $count records into '$table_name'");
+	$self -> db -> logger -> info("Max (x, y) = ($max_x, $max_y)");
+	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_feature_locations_table.
 
@@ -287,11 +287,11 @@ sub populate_features_table
 		{
 			if (! defined $$item{$column})
 			{
-				$self -> logger -> error("$table_name. Row: $count. Column $column undefined");
+				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
 			}
 		}
 
-		$$feature_keys{$$item{name} } = $self -> insert_hashref
+		$$feature_keys{$$item{name} } = $self -> db -> insert_hashref
 		(
 			$table_name,
 			{
@@ -304,7 +304,7 @@ sub populate_features_table
 
 	close $io;
 
-	$self -> logger -> info("Read $count records into '$table_name'");
+	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_features_table.
 
@@ -337,7 +337,7 @@ sub populate_flower_locations_table
 		{
 			if (! defined $$item{$column})
 			{
-				$self -> logger -> error("$table_name. Row: $count. Column $column undefined");
+				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
 			}
 		}
 
@@ -345,21 +345,21 @@ sub populate_flower_locations_table
 
 		if (! defined $$flower_keys{$$item{common_name} })
 		{
-			$self -> logger -> error("$table_name. Row: $count. Common name '$$item{common_name}' undefined");
+			$self -> db -> logger -> error("$table_name. Row: $count. Common name '$$item{common_name}' undefined");
 
 			next;
 		}
 
 		if (! defined $$property_keys{$$item{property_name} })
 		{
-			$self -> logger -> error("$table_name. Row: $count. Property '$$item{property_name}' undefined");
+			$self -> db -> logger -> error("$table_name. Row: $count. Property '$$item{property_name}' undefined");
 
 			next;
 		}
 
 		if (! defined $$garden_keys{$$item{garden_name} })
 		{
-			$self -> logger -> error("$table_name. Row: $count. Garden '$$item{garden_name}' undefined");
+			$self -> db -> logger -> error("$table_name. Row: $count. Garden '$$item{garden_name}' undefined");
 
 			next;
 		}
@@ -372,7 +372,7 @@ sub populate_flower_locations_table
 			$max_x		= $x if ($x > $max_x);
 			$max_y		= $y if ($y > $max_y);
 
-			$self -> insert_hashref
+			$self -> db -> insert_hashref
 			(
 				$table_name,
 				{
@@ -388,8 +388,8 @@ sub populate_flower_locations_table
 
 	close $io;
 
-	$self -> logger -> info("Max (x, y) = ($max_x, $max_y)");
-	$self -> logger -> info("Read $count records into '$table_name'");
+	$self -> db -> logger -> info("Max (x, y) = ($max_x, $max_y)");
+	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_flower_locations_table.
 
@@ -424,7 +424,7 @@ sub populate_flowers_table
 		{
 			if (! defined $$item{$column})
 			{
-				$self -> logger -> error("$table_name. Row: $count. Column $column undefined");
+				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
 			}
 		}
 
@@ -433,12 +433,12 @@ sub populate_flowers_table
 
 		if ($common_name{$common_name})
 		{
-			$self -> logger -> info("$table_name. Row: $count. Duplicate common_name: $common_name");
+			$self -> db -> logger -> info("$table_name. Row: $count. Duplicate common_name: $common_name");
 		}
 
 		if ($scientific_name{$scientific_name})
 		{
-			$self -> logger -> info("$table_name. Row: $count. Duplicate scientific_name: $scientific_name");
+			$self -> db -> logger -> info("$table_name. Row: $count. Duplicate scientific_name: $scientific_name");
 		}
 
 		$common_name{$common_name}			= 0 if (! $common_name{$common_name});
@@ -453,10 +453,10 @@ sub populate_flowers_table
 	{
 		$common_name				= $$item{common_name};
 		$scientific_name			= $$item{scientific_name};
-		$pig_latin					= $self -> scientific_name2pig_latin($lines, $scientific_name, $common_name);
-		($max_height, $min_height)	= $self -> validate_size($table_name, $count, lc $self -> trim($$item{height}), lc $self -> trim($$item{height}) );
-		($max_width, $min_width)	= $self -> validate_size($table_name, $count, lc $self -> trim($$item{width}), lc $self -> trim($$item{width}) );
-		$$flower_keys{$common_name}	= $self -> insert_hashref
+		$pig_latin					= $self -> db -> scientific_name2pig_latin($lines, $scientific_name, $common_name);
+		($max_height, $min_height)	= $self -> db -> validate_size($table_name, $count, lc $self -> trim($$item{height}), lc $self -> trim($$item{height}) );
+		($max_width, $min_width)	= $self -> db -> validate_size($table_name, $count, lc $self -> trim($$item{width}), lc $self -> trim($$item{width}) );
+		$$flower_keys{$common_name}	= $self -> db -> insert_hashref
 		(
 			$table_name,
 			{
@@ -477,7 +477,7 @@ sub populate_flowers_table
 
 	close $io;
 
-	$self -> logger -> info("Read $count records into '$table_name'");
+	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_flowers_table.
 
@@ -510,7 +510,7 @@ sub populate_gardens_table
 		{
 			if (! defined $$item{$column})
 			{
-				$self -> logger -> error("$table_name. Row: $count. Column $column undefined");
+				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
 			}
 		}
 
@@ -528,7 +528,7 @@ sub populate_gardens_table
 
 	close $io;
 
-	$self -> logger -> info("Read $count records into '$table_name'");
+	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_gardens_table.
 
@@ -556,18 +556,18 @@ sub populate_images_table
 		{
 			if (! defined $$item{$column})
 			{
-				$self -> logger -> error("$table_name. Row: $count. Column $column undefined");
+				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
 			}
 		}
 
 		if (! defined $$flower_keys{$$item{common_name} })
 		{
-			$self -> logger -> error("$table_name. Row: $count. Common name '$$item{common_name}' undefined");
+			$self -> db -> logger -> error("$table_name. Row: $count. Common name '$$item{common_name}' undefined");
 
 			next;
 		}
 
-		$self -> insert_hashref
+		$self -> db -> insert_hashref
 		(
 			$table_name,
 			{
@@ -580,7 +580,7 @@ sub populate_images_table
 
 	close $io;
 
-	$self -> logger -> info("Read $count records into '$table_name'");
+	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_images_table.
 
@@ -608,18 +608,18 @@ sub populate_notes_table
 		{
 			if (! defined $$item{$column})
 			{
-				$self -> logger -> error("$table_name. Row: $count. Column $column undefined");
+				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
 			}
 		}
 
 		if (! defined $$flower_keys{$$item{common_name} })
 		{
-			$self -> logger -> error("$table_name. Row: $count. Common name '$$item{common_name}' undefined");
+			$self -> db -> logger -> error("$table_name. Row: $count. Common name '$$item{common_name}' undefined");
 
 			next;
 		}
 
-		$self -> insert_hashref
+		$self -> db -> insert_hashref
 		(
 			$table_name,
 			{
@@ -631,7 +631,7 @@ sub populate_notes_table
 
 	close $io;
 
-	$self -> logger -> info("Read $count records into '$table_name'");
+	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_notes_table.
 
@@ -664,7 +664,7 @@ sub populate_properties_table
 		{
 			if (! defined $$item{$column})
 			{
-				$self -> logger -> error("$table_name. Row: $count. Column $column undefined");
+				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
 			}
 		}
 
@@ -681,7 +681,7 @@ sub populate_properties_table
 
 	close $io;
 
-	$self -> logger -> info("Read $count records into '$table_name'");
+	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_properties_table.
 
@@ -709,18 +709,18 @@ sub populate_urls_table
 		{
 			if (! defined $$item{$column})
 			{
-				$self -> logger -> error("$table_name. Row: $count. Column $column undefined");
+				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
 			}
 		}
 
 		if (! defined $$flower_keys{$$item{common_name} })
 		{
-			$self -> logger -> error("$table_name. Row: $count. Common name '$$item{common_name}' undefined");
+			$self -> db -> logger -> error("$table_name. Row: $count. Common name '$$item{common_name}' undefined");
 
 			next;
 		}
 
-		$self -> insert_hashref
+		$self -> db -> insert_hashref
 		(
 			$table_name,
 			{
@@ -732,7 +732,7 @@ sub populate_urls_table
 
 	close $io;
 
-	$self -> logger -> info("Read $count records into '$table_name'");
+	$self -> db -> logger -> info("Read $count records into '$table_name'");
 
 }	# End of populate_urls_table.
 
@@ -762,7 +762,7 @@ sub validate_size
 		}
 		else
 		{
-			$self -> logger -> info("$table_name. Row: $count. Cannot interpret height or width");
+			$self -> db -> logger -> info("$table_name. Row: $count. Cannot interpret height or width");
 		}
 
 		if ($unit eq 'm')

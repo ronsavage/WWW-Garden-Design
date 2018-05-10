@@ -15,6 +15,14 @@ use Types::Standard qw/Object/;
 use WWW::Garden::Design::Database::SQLite;
 use WWW::Garden::Design::Util::Config;
 
+has config =>
+(
+	default		=> sub{WWW::Garden::Design::Util::Config -> new -> config},
+	is			=> 'rw',
+	isa			=> HashRef,
+	required	=> 0,
+);
+
 has db =>
 (
 	is       => 'rw',
@@ -28,11 +36,8 @@ our $VERSION = '0.96';
 
 sub BUILD
 {
-	my($self) = @_;
-
-	$self -> init_config;	# Lives in WWW::Garden::Design::Util::Config.
-
-	my($config) = $self -> config;
+	my($self)	= @_;
+	my($config)	= $self -> config;
 
 	$self -> db
 	(

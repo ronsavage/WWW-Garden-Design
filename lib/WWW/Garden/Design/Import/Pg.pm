@@ -2,13 +2,42 @@ package WWW::Garden::Design::Import::Pg;
 
 use Moo;
 
-with qw/WWW::Garden::Design::Util::Config WWW::Garden::Design::Database::Pg WWW::Garden::Design::Import/;
+with 'WWW::Garden::Design::Import';
 
 use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
+use Mojo::Log;
+
+use Types::Standard qw/HashRef/;
+
+use WWW::Garden::Design::Database::Pg;
+use WWW::Garden::Design::Util::Config;
+
+has config =>
+(
+	default		=> sub{WWW::Garden::Design::Util::Config -> new -> config},
+	is			=> 'rw',
+	isa			=> HashRef,
+	required	=> 0,
+);
+
 our $VERSION = '0.96';
+
+# -----------------------------------------------
+
+sub BUILD
+{
+	my($self)	= @_;
+	my($config)	= $self -> config;
+
+	WWW::Garden::Design::Database::Pg -> new
+	(
+		logger => Mojo::Log -> new(path => $$config{log_path})
+	);
+
+} # End of BUILD.
 
 # -----------------------------------------------
 

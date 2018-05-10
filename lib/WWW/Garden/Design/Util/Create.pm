@@ -2,8 +2,6 @@ package WWW::Garden::Design::Util::Create;
 
 use Moo;
 
-with 'WWW::Garden::Design::Util::Config';
-
 use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
@@ -14,43 +12,55 @@ use DBIx::Admin::CreateTable;
 
 use Mojo::Log;
 
+use Moo;
+
 use Types::Standard qw/ArrayRef HashRef Object Str/;
+
+use WWW::Garden::Design::Util::Config;
+
+has config =>
+(
+	default		=> sub{WWW::Garden::Design::Util::Config -> new -> config},
+	is			=> 'rw',
+	isa			=> HashRef,
+	required	=> 0,
+);
 
 has creator =>
 (
-	is       => 'rw',
-	isa      => Object, # 'DBIx::Admin::CreateTable'.
-	required => 0,
+	is			=> 'rw',
+	isa			=> Object, # 'DBIx::Admin::CreateTable'.
+	required	=> 0,
 );
 
 has dbh =>
 (
-	is       => 'rw',
-	isa      => Object,
-	required => 0,
+	is			=> 'rw',
+	isa			=> Object,
+	required	=> 0,
 );
 
 has engine =>
 (
-	default  => sub{return ''},
-	is       => 'rw',
-	isa      => Str,
-	required => 0,
+	default		=> sub{return ''},
+	is			=> 'rw',
+	isa			=> Str,
+	required	=> 0,
 );
 
 has logger =>
 (
-	is       => 'rw',
-	isa      => Object,
-	required => 0,
+	is			=> 'rw',
+	isa			=> Object,
+	required	=> 0,
 );
 
 has time_option =>
 (
-	default  => sub{return ''},
-	is       => 'rw',
-	isa      => Str,
-	required => 0,
+	default		=> sub{return ''},
+	is			=> 'rw',
+	isa			=> Str,
+	required	=> 0,
 );
 
 our $VERSION = '0.96';
@@ -59,10 +69,7 @@ our $VERSION = '0.96';
 
 sub BUILD
 {
-	my($self) = @_;
-
-	$self -> init_config(); # Lives in WWW::Garden::Design::Util::Config.
-
+	my($self)	= @_;
 	my($config)	= $self -> config;
 	my($attr)	=
 	{
