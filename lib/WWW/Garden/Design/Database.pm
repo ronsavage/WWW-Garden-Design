@@ -454,31 +454,6 @@ sub get_flower_by_id
 
 # -----------------------------------------------
 
-sub init_imager
-{
-	my($self)	= @_;
-	my($config)	= $self -> config;
-
-	$self -> constants($self -> read_constants_table); # Might be empty at the start of an import.
-
-	my($constants)	= $self -> constants;
-	my($font_file)	= $$constants{tile_font_file} || $$config{tile_font_file};
-	my($font_size)	= $$constants{tile_font_size} || $$config{tile_font_size};
-
-	$self -> title_font
-	(
-		Imager::Font -> new
-		(
-			color	=> Imager::Color -> new(0, 0, 0), # Black.
-			file	=> $font_file,
-			size	=> $font_size,
-		) || die "Error. Can't define title font: " . Imager -> errstr
-	);
-
-} # End of init_imager;
-
-# -----------------------------------------------
-
 sub parse_attribute_checkboxes
 {
 	my($self, $defaults, $search_attributes)	= @_;

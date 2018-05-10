@@ -8,19 +8,7 @@ use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
-use Mojo::Log;
-
 our $VERSION = '0.96';
-
-# -----------------------------------------------
-
-sub BUILD
-{
-	my($self) = @_;
-
-	$self -> init_db; # Lives in WWW::Garden::Design::Database::Pg.
-
-}	# End of BUILD.
 
 # -----------------------------------------------
 

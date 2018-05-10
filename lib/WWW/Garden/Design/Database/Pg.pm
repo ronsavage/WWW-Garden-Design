@@ -1,6 +1,6 @@
 package WWW::Garden::Design::Database::Pg;
 
-use Moo::Role;
+use Moo;
 
 with qw/WWW::Garden::Design::Util::Config WWW::Garden::Design::Database/;
 
@@ -14,6 +14,36 @@ use Mojo::Log;
 use Mojo::Pg;
 
 our $VERSION = '0.96';
+
+# -----------------------------------------------
+
+sub BUILD
+{
+	my($self) = @_;
+
+	$self -> init_config;	# Lives in WWW::Garden::Design::Util::Config.
+
+	my($config) = $self -> config;
+
+	$self -> constants($self -> read_constants_table); # Might be empty at the start of an import.
+	$self -> db(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
+
+	my($constants)	= $self -> constants;
+	my($font_file)	= $$constants{tile_font_file} || $$config{tile_font_file};
+	my($font_size)	= $$constants{tile_font_size} || $$config{tile_font_size};
+
+	$self -> title_font
+	(
+		Imager::Font -> new
+		(
+			color	=> Imager::Color -> new(0, 0, 0), # Black.
+			file	=> $font_file,
+			size	=> $font_size,
+		) || die "Error. Can't define title font: " . Imager -> errstr
+	);
+	$self -> init_imager;	# Lives in WWW::Garden::Design::Database. Requires db() to have been set.
+
+} # End of BUILD;
 
 # -----------------------------------------------
 # Return a list.
@@ -149,22 +179,6 @@ sub get_autocomplete_list
 	return [@result];
 
 } # End of get_autocomplete_list.
-
-# -----------------------------------------------
-
-sub init_db
-{
-	my($self) = @_;
-
-	$self -> init_config;	# Lives in WWW::Garden::Design::Util::Config.
-
-	my($config) = $self -> config;
-
-	$self -> logger(Mojo::Log -> new(path => $$config{log_path}) );
-	$self -> db(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
-	$self -> init_imager;	# Lives in WWW::Garden::Design::Database. Requires db() to have been set.
-
-}	# End of init_db.
 
 # -----------------------------------------------
 
