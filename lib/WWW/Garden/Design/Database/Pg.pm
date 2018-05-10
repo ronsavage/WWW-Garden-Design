@@ -1,6 +1,6 @@
 package WWW::Garden::Design::Database::Pg;
 
-use Moo;
+use Moo::Role;
 
 with qw/WWW::Garden::Design::Util::Config WWW::Garden::Design::Database/;
 
@@ -10,24 +10,10 @@ use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use Imager;
 
+use Mojo::Log;
 use Mojo::Pg;
 
 our $VERSION = '0.96';
-
-# -----------------------------------------------
-
-sub BUILD
-{
-	my($self) = @_;
-
-	$self -> init_config;	# Lives in WWW::Garden::Design::Util::Config.
-	$self -> init_imager;	# Lives in WWW::Garden::Design::Database.
-
-	my($config) = $self -> config;
-
-	$self -> db(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
-
-}	# End of BUILD.
 
 # -----------------------------------------------
 # Return a list.
@@ -163,6 +149,23 @@ sub get_autocomplete_list
 	return [@result];
 
 } # End of get_autocomplete_list.
+
+# -----------------------------------------------
+
+sub init_db
+{
+	my($self) = @_;
+
+	$self -> init_config;	# Lives in WWW::Garden::Design::Util::Config.
+
+	my($config) = $self -> config;
+
+	$self -> logger(Mojo::Log -> new(path => $$config{log_path}) );
+
+	$self -> db(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
+	$self -> init_imager;	# Lives in WWW::Garden::Design::Database. Requires db() to have been set.
+
+}	# End of init_db.
 
 # -----------------------------------------------
 

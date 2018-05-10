@@ -45,7 +45,7 @@ has logger =>
 (
 	is			=> 'rw',
 	isa			=> Object,
-	required	=> 1,
+	required	=> 0,
 );
 
 has title_font =>
