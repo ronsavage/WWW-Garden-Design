@@ -161,7 +161,6 @@ sub init_db
 	my($config) = $self -> config;
 
 	$self -> logger(Mojo::Log -> new(path => $$config{log_path}) );
-
 	$self -> db(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
 	$self -> init_imager;	# Lives in WWW::Garden::Design::Database. Requires db() to have been set.
 

@@ -2,69 +2,13 @@ package WWW::Garden::Design;
 
 use Mojo::Base 'Mojolicious';
 
-use WWW::Garden::Design::Database::Pg;
-
 use Moo;
 
+with 'WWW::Garden::Design::Database::Pg';
+
+use Data::Dumper::Concise; # For Dumper().
+
 our $VERSION = '0.96';
-
-# -----------------------------------------------
-
-sub build_attribute_ids
-{
-	my($self, $kind, $attribute_type_fields, $attribute_type_names) = @_;
-
-	my($id);
-	my($name);
-
-	return
-	[
-		map
-		{
-			$name = $$attribute_type_names[$_];
-			[
-				map
-				{
-					$id = "${kind}_${name}_$_" =~ s/ /_/gr;
-					$id	=~ s/-/_/g;
-
-					$id;
-				} @{$$attribute_type_fields{$name} }
-			]
-		} 0 .. $#$attribute_type_names
-	];
-
-} # End of build_attribute_ids.
-
-# -----------------------------------------------
-
-sub build_attribute_type_fields
-{
-	my($self, $attribute_types_table) = @_;
-
-	my(%attribute_type_fields);
-
-	for (sort{$$a{sequence} <=> $$b{sequence} } @$attribute_types_table)
-	{
-		$attribute_type_fields{$$_{name} } = [split(/\s*,\s+/, $$_{range})];
-	}
-
-	return \%attribute_type_fields;
-
-} # End of build_attribute_type_fields.
-
-# -----------------------------------------------
-
-sub build_attribute_type_names
-{
-	my($self, $attribute_types_table) = @_;
-
-	my(@fields);
-	my($name);
-
-	return [map{$$_{name} } sort{$$a{sequence} <=> $$b{sequence} } @$attribute_types_table];
-
-} # End of build_attribute_type_names.
 
 # ------------------------------------------------
 # This method will run once at server start.
@@ -98,22 +42,6 @@ sub startup
 					scoreboard  => '/tmp/mojolicious',
 				});
 	$self -> plugin('TagHelpers');
-
-	# Stash some gobal variables.
-
-	my($defaults);
-
-	$$defaults{db}						= WWW::Garden::Design::Database::Pg -> new(logger => $self -> app -> log);
-	$$defaults{constants_table}			= $$defaults{db} -> read_constants_table; # Warning: Not read_table('constants').
-	$$defaults{attributes_table}		= $$defaults{db} -> read_table('attributes');
-	$$defaults{attribute_types_table}	= $$defaults{db} -> read_table('attribute_types');
-	$$defaults{attribute_type_names}	= $self -> build_attribute_type_names($$defaults{attribute_types_table});
-	$$defaults{attribute_type_fields}	= $self -> build_attribute_type_fields($$defaults{attribute_types_table});
-	$$defaults{attribute_attribute_ids}	= $self -> build_attribute_ids('attribute', $$defaults{attribute_type_fields}, $$defaults{attribute_type_names});
-	$$defaults{joiner}					= '«»'; # Must match joiner in homepage.html.ep.
-	$$defaults{search_attribute_ids}	= $self -> build_attribute_ids('search', $$defaults{attribute_type_fields}, $$defaults{attribute_type_names});
-
-	$self -> defaults($defaults);
 
 	# Router.
 

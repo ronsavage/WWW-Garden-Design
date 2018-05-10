@@ -15,10 +15,7 @@ sub attribute_types
 	my($self) = @_;
 
 	$self -> app -> log -> debug('GetTable.attribute_types()');
-
-	my($defaults) = $self -> app -> defaults;
-
-	$self -> render(json => $$defaults{db} -> read_table('attribute_types') );
+	$self -> render(json => $self -> app -> read_table('attribute_types') );
 
 } # End of attribute_types.
 
@@ -38,9 +35,7 @@ sub design_flower
 	}
 	else
 	{
-		my($defaults) = $self -> app -> defaults;
-
-		$self -> stash(thumbnail_name => $$defaults{db} -> get_flower_by_both_names($design_flower) );
+		$self -> stash(thumbnail_name => $self -> app -> get_flower_by_both_names($design_flower) );
 		$self -> render;
 	}
 
@@ -62,9 +57,7 @@ sub design_feature
 	}
 	else
 	{
-		my($defaults) = $self -> app -> defaults;
-
-		$self -> stash(icon_name => $$defaults{db} -> get_feature_by_name($design_feature) );
+		$self -> stash(icon_name => $self -> app -> get_feature_by_name($design_feature) );
 		$self -> render;
 	}
 
@@ -78,8 +71,7 @@ sub features
 
 	$self -> app -> log -> debug('GetTable.features()');
 
-	my($defaults)		= $self -> app -> defaults;
-	my($features_table)	= $$defaults{db} -> read_features_table;
+	my($features_table) = $self -> app -> read_features_table;
 
 	$self -> app -> log -> debug('GetTable.features(). Size of features_table: ' . scalar @$features_table);
 	$self -> render(json => $features_table);
@@ -94,8 +86,7 @@ sub gardens
 
 	$self -> app -> log -> debug('GetTable.gardens()');
 
-	my($defaults)		= $self -> app -> defaults;
-	my($gardens_table)	= $$defaults{db} -> read_gardens_table;
+	my($gardens_table) = $self -> app -> read_gardens_table;
 
 	$self -> app -> log -> debug('GetTable.gardens(). Size of gardens_table: ' . scalar @$gardens_table);
 	$self -> render(json => $gardens_table);
@@ -110,8 +101,7 @@ sub properties
 
 	$self -> app -> log -> debug('GetTable.properties()');
 
-	my($defaults)			= $self -> app -> defaults;
-	my($properties_table)	= $$defaults{db} -> read_properties_table;
+	my($properties_table) = $self -> app -> read_properties_table;
 
 	$self -> app -> log -> debug('GetTable.properties(). Size of properties_table: ' . scalar @$properties_table);
 	$self -> render(json => $properties_table);

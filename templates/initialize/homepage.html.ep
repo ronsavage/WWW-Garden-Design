@@ -690,7 +690,7 @@ function confirm_design_reset()
 function confirm_design_save()
 {
 	var flower_list			= [];
-	var joiner				= '<%== $joiner %>'; // Must match $joiner in Design.pm.
+	var joiner				= '<%== $joiner %>';
 	var match				= new Array();
 	var thing_count			= 0;
 	var virtual_cell_count	= <%== $$constants{virtual_cell_count} %>;
@@ -1607,7 +1607,7 @@ function submit_details()
 <%== $attribute_elements %>
 	var attribute_list = [];
 
-	var joiner = '<%== $joiner %>'; // Must match $joiner in Design.pm.
+	var joiner = '<%== $joiner %>';
 
 	var id;
 	var key;

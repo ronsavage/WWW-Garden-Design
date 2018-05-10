@@ -18,7 +18,7 @@ sub BUILD
 {
 	my($self) = @_;
 
-	$self -> init_db;   # Lives in WWW::Garden::Design::Database::Pg.
+	$self -> init_db; # Lives in WWW::Garden::Design::Database::Pg.
 
 }	# End of BUILD.
 
