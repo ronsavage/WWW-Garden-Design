@@ -7,7 +7,7 @@ use open      qw(:std :utf8); # Undeclared streams in UTF-8.
 
 use Getopt::Long;
 
-use WWW::Garden::Design::Util::Export;
+use WWW::Garden::Design::Export::Pg;
 
 use Pod::Usage;
 
@@ -31,7 +31,7 @@ if ($option_parser -> getoptions
 	$option{export_type}     = 0 if (! defined $option{export_type});
 	$option{standalone_page} = 0 if (! defined $option{standalone_page});
 
-	print WWW::Garden::Design::Util::Export -> new
+	print WWW::Garden::Design::Export::Pg -> new
 		(
 			export_type     => $option{export_type},
 			standalone_page => $option{standalone_page},
