@@ -33,6 +33,34 @@ sub BUILD
 }	# End of BUILD.
 
 # -----------------------------------------------
+# Warning: This method must be here and not upstairs, in WWW::Garden::Design::Export,
+# because it's also called by Local::Website when rebuilding savage.net.au/Flowers.html.
+
+sub init_datatable
+{
+	my($self) = @_;
+
+	return <<EOS;
+	\$(function()
+	{
+		\$('#result_table').DataTable
+		({
+			'columnDefs':
+			[
+				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Native.
+				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Scientific name.
+				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Common name.
+				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Aliases.
+				{'cellType':'th','orderable':false,'searchable':false,'type':'html'}	// Thumbnail.
+			],
+			'order': [ [1, 'asc'] ]
+		});
+	});
+EOS
+
+}	# End of init_datatable.
+
+# -----------------------------------------------
 
 1;
 
