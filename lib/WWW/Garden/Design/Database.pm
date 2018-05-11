@@ -26,6 +26,16 @@ use Types::Standard qw/Any Object HashRef/;
 
 use Unicode::Collate;
 
+use WWW::Garden::Design::Util::Config;
+
+has config =>
+(
+	default		=> sub{WWW::Garden::Design::Util::Config -> new -> config},
+	is			=> 'rw',
+	isa			=> HashRef,
+	required	=> 0,
+);
+
 has constants =>
 (
 	default		=> sub{return {} },

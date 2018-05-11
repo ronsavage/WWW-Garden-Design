@@ -16,16 +16,6 @@ use Mojo::Pg;
 
 use Types::Standard qw/HashRef/;
 
-use WWW::Garden::Design::Util::Config;
-
-has config =>
-(
-	default		=> sub{WWW::Garden::Design::Util::Config -> new -> config},
-	is			=> 'rw',
-	isa			=> HashRef,
-	required	=> 0,
-);
-
 our $VERSION = '0.96';
 
 # -----------------------------------------------
@@ -35,12 +25,10 @@ sub BUILD
 	my($self)	= @_;
 	my($config)	= $self -> config;
 
-	$self -> constants($self -> read_constants_table); # Might be empty at the start of an import.
 	$self -> db(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
+	$self -> constants($self -> read_constants_table); # Uses db()!
 
-	print Dumper($self -> db);
-
-	my($constants)	= $self -> constants;
+	my($constants)	= $self -> constants; # Might be empty at the start of an import.
 	my($font_file)	= $$constants{tile_font_file} || $$config{tile_font_file};
 	my($font_size)	= $$constants{tile_font_size} || $$config{tile_font_size};
 
@@ -53,7 +41,6 @@ sub BUILD
 			size	=> $font_size,
 		) || die "Error. Can't define title font: " . Imager -> errstr
 	);
-	$self -> init_imager;	# Lives in WWW::Garden::Design::Database. Requires db() to have been set.
 
 } # End of BUILD;
 

@@ -6,13 +6,22 @@ use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
+use Data::Dumper::Concise; # For Dumper().
+
 use File::Slurper qw/read_text/;
 
 use FindBin;
 
 use Text::CSV::Encoded;
 
-use Types::Standard qw/Object/;
+use Types::Standard qw/Any/;
+
+has db =>
+(
+	is			=> 'rw',
+	isa			=> Any,
+	required	=> 0,
+);
 
 our $VERSION = '0.96';
 
@@ -454,8 +463,8 @@ sub populate_flowers_table
 		$common_name				= $$item{common_name};
 		$scientific_name			= $$item{scientific_name};
 		$pig_latin					= $self -> db -> scientific_name2pig_latin($lines, $scientific_name, $common_name);
-		($max_height, $min_height)	= $self -> db -> validate_size($table_name, $count, lc $self -> trim($$item{height}), lc $self -> trim($$item{height}) );
-		($max_width, $min_width)	= $self -> db -> validate_size($table_name, $count, lc $self -> trim($$item{width}), lc $self -> trim($$item{width}) );
+		($max_height, $min_height)	= $self -> validate_size($table_name, $count, lc $self -> db -> trim($$item{height}), lc $self -> db -> trim($$item{height}) );
+		($max_width, $min_width)	= $self -> validate_size($table_name, $count, lc $self -> db -> trim($$item{width}), lc $self -> db -> trim($$item{width}) );
 		$$flower_keys{$common_name}	= $self -> db -> insert_hashref
 		(
 			$table_name,
@@ -514,7 +523,7 @@ sub populate_gardens_table
 			}
 		}
 
-		$$garden_keys{$$item{garden_name} } = $self -> insert_hashref
+		$$garden_keys{$$item{garden_name} } = $self -> db -> insert_hashref
 		(
 			$table_name,
 			{
@@ -668,7 +677,7 @@ sub populate_properties_table
 			}
 		}
 
-		$$property_keys{$$item{name} } = $self -> insert_hashref
+		$$property_keys{$$item{name} } = $self -> db -> insert_hashref
 		(
 			$table_name,
 			{

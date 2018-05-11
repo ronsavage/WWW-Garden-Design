@@ -8,6 +8,8 @@ use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
+use Data::Dumper::Concise; # For Dumper().
+
 use Mojo::Log;
 
 use Types::Standard qw/HashRef/;
@@ -32,9 +34,12 @@ sub BUILD
 	my($self)	= @_;
 	my($config)	= $self -> config;
 
-	WWW::Garden::Design::Database::Pg -> new
+	$self -> db
 	(
-		logger => Mojo::Log -> new(path => $$config{log_path})
+		WWW::Garden::Design::Database::Pg -> new
+		(
+			logger => Mojo::Log -> new(path => $$config{log_path})
+		)
 	);
 
 } # End of BUILD.
