@@ -2,11 +2,13 @@ package WWW::Garden::Design::Database::SQLite;
 
 use Moo;
 
-with qw/WWW::Garden::Design::Util::Config WWW::Garden::Design::Database/;
+with 'WWW::Garden::Design::Database';
 
 use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
+
+use Data::Dumper::Concise; # For Dumper().
 
 use DBI;
 
@@ -15,16 +17,6 @@ use DBIx::Simple;
 use Imager;
 
 use Types::Standard qw/Object/;
-
-use WWW::Garden::Design::Util::Config;
-
-has config =>
-(
-	default		=> sub{WWW::Garden::Design::Util::Config -> new -> config},
-	is			=> 'rw',
-	isa			=> Object,
-	required	=> 0,
-);
 
 has dbh =>
 (
@@ -52,7 +44,21 @@ sub BUILD
 	$self -> dbh -> do('PRAGMA foreign_keys = ON') if ($$config{dsn} =~ /SQLite/i);
 
 	$self -> db(DBIx::Simple -> new($self -> dbh) );
-	$self -> init_imager;	# Lives in WWW::Garden::Design::Database.
+	$self -> constants($self -> read_constants_table); # Uses db()!
+
+	my($constants)	= $self -> constants; # Might be empty at the start of an import.
+	my($font_file)	= $$constants{tile_font_file} || $$config{tile_font_file};
+	my($font_size)	= $$constants{tile_font_size} || $$config{tile_font_size};
+
+	$self -> title_font
+	(
+		Imager::Font -> new
+		(
+			color	=> Imager::Color -> new(0, 0, 0), # Black.
+			file	=> $font_file,
+			size	=> $font_size,
+		) || die "Error. Can't define title font: " . Imager -> errstr
+	);
 
 }	# End of BUILD.
 

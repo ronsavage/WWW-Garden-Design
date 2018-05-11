@@ -8,9 +8,11 @@ use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
+use Data::Dumper::Concise; # For Dumper().
+
 use Mojo::Log;
 
-use Types::Standard qw/Object/;
+use Types::Standard qw/HashRef/;
 
 use WWW::Garden::Design::Database::SQLite;
 use WWW::Garden::Design::Util::Config;
@@ -21,13 +23,6 @@ has config =>
 	is			=> 'rw',
 	isa			=> HashRef,
 	required	=> 0,
-);
-
-has db =>
-(
-	is       => 'rw',
-	isa      => Object, # 'WWW::Garden::Design::Database::SQLite'.
-	required => 0,
 );
 
 our $VERSION = '0.96';
@@ -47,7 +42,7 @@ sub BUILD
 		)
 	);
 
-}	# End of BUILD.
+} # End of BUILD.
 
 # -----------------------------------------------
 
