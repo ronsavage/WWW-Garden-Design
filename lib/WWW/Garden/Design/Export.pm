@@ -1,6 +1,9 @@
-package WWW::Garden::Design::Util::Export;
+package WWW::Garden::Design::Export;
+
+use Moo::Role;
 
 use strict;
+use utf8;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
@@ -13,8 +16,6 @@ use WWW::Garden::Design::Util::Config;
 
 use Mojo::Log;
 
-use Moo;
-
 use Sort::Naturally;
 
 use SVG::Grid;
@@ -22,7 +23,7 @@ use SVG::Grid;
 use Text::CSV;
 use Text::Xslate 'mark_raw';
 
-use Types::Standard qw/Int HashRef Str/;
+use Types::Standard qw/Any Int HashRef Str/;
 
 use WWW::Garden::Design::Util::Config;
 
@@ -39,6 +40,13 @@ has config =>
 	default		=> sub{WWW::Garden::Design::Util::Config -> new -> config},
 	is			=> 'rw',
 	isa			=> HashRef,
+	required	=> 0,
+);
+
+has db =>
+(
+	is			=> 'rw',
+	isa			=> Any,
 	required	=> 0,
 );
 
@@ -519,7 +527,7 @@ sub export_all_pages
 			{
 				if ($#links < 0)
 				{
-					push @links, [{td => "Auto-generated links for $scientific_name => $common_name"}];
+					push @links, [{td => "Auto-generated links for $scientific_name aka $common_name"}];
 				}
 
 				($other_id, $other_pig_latin, $other_common_name) = ($$item[0], $$item[1], $$item[2]);
@@ -1387,6 +1395,73 @@ sub init_datatable
 EOS
 
 }	# End of init_datatable.
+
+# -----------------------------------------------
+
+sub init_export
+{
+	my($self)				= @_;
+	my($export_type)		= $self -> export_type;
+	my($standalone_page)	= $self -> standalone_page;
+	my($all)				= $self -> all;
+
+	if ($all !~ /^(?:No|Yes)$/i)
+	{
+		die "The 'all' flag must be Yes or No'\n";
+	}
+
+	# Warning: The line in web.site.xml which runs this script must not use command line options.
+	# That means, that whatever options that code needs must be the defaults.
+
+	$self -> export_columns
+	({
+		'Native' =>
+			{
+				column_name	=> 'native',
+				order		=> 2, # The value 1 is not used.
+			},
+		'Scientific name' =>
+			{
+				column_name	=> 'scientific_name',
+				order		=> 3,
+			},
+		'Common name' =>
+			{
+				column_name	=> 'common_name',
+				order		=> 4,
+			},
+		'Aliases' =>
+			{
+				column_name	=> 'aliases',
+				order		=> 5,
+			},
+		'Thumbnail <span class = "index">(clickable)</span>' =>
+			{
+				column_name	=> 'thumbnail_file_name',
+				order		=> 6,
+			},
+	});
+
+	if ($export_type < 0)
+	{
+		$self -> export_type(0);
+	}
+	elsif ($export_type > 1)
+	{
+		$self -> export_type(1);
+	}
+
+	if ($standalone_page < 0)
+	{
+		$self -> standalone_page(0);
+	}
+	elsif ($standalone_page > 1)
+	{
+		$self -> standalone_page(1);
+	}
+
+
+}	# End of init_export.
 
 # -----------------------------------------------
 

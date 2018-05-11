@@ -1,5 +1,7 @@
 package WWW::Garden::Design;
 
+use utf8;
+
 use Mojo::Base 'Mojolicious';
 
 use Moo;
