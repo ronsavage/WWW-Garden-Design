@@ -6,6 +6,9 @@ use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use Config::Tiny;
 
+use File::HomeDir;
+use File::Spec;
+
 use Moo;
 
 use Path::Tiny; # For path().
@@ -34,8 +37,12 @@ our $VERSION = '0.96';
 
 sub BUILD
 {
-	my($self) = @_;
-	my($path) = 'config/www.garden.design.conf';
+	my($self)			= @_;
+	my($module)			= __PACKAGE__; # Aka WWW::Garden::Design.
+	my($module_dir)		= $module;
+	$module_dir			=~ s/::/-/g;
+	my($config_name)	= 'www.garden.design.conf';
+	my($path)			= File::Spec -> catfile(File::HomeDir -> my_dist_config($module_dir), $config_name);
 
 	$self -> config($self -> _init_config($path) );
 
