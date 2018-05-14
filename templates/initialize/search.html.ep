@@ -1,8 +1,7 @@
 <form name = 'search_form' id = 'search_form'>
 	<!-- We don't use Mojo's csrf_field because it does not generate an id, so jQuery has a problem -->
-	<!-- TODO: And we don't use the next line because $csrf_token in not defined and Mojo has started complaining -->
-	<!-- So to hide the $csrf_token in the next line, I've deleted the $ prefix. Mojo ignore the comments tokens -->
-	<!-- <input id = 'csrf_token' type = 'hidden' value = '<%= csrf_token %>'> -->
+	<input id = 'csrf_token' type = 'hidden' value = '<%= $csrf_token %>'>
+
 	<table align = 'center'>
 		<tr>
 			<td colspan = '2'><div class = 'blue_centered'>Search</div><br /></td>
