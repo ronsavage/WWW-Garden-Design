@@ -16,7 +16,7 @@ sub homepage
 
 	$self -> app -> log -> debug('Initialize.homepage()');
 
-	my($defaults) = $self -> defaults;
+	my($defaults) = $self -> app -> defaults;
 
 	# These parameters are passed to homepage.html.ep for incorporation into JS code.
 

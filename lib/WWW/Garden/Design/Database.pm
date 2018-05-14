@@ -80,12 +80,64 @@ sub add_flower
 
 # -----------------------------------------------
 
+sub analyze_gardens_property_menu
+{
+	my($self, $gardens_table, $default_id) = @_;
+
+	$self -> logger -> debug("Database.analyze_gardens_property_menu(). Entered");
+
+	my(%property_name);
+
+	for my $garden (@$gardens_table)
+	{
+		$property_name{$$garden{property_name} } = $$garden{property_id};
+	}
+
+	my($current_property_id)	= 0;
+	my($found)					= false;
+
+	# Warning: Apart from the HTML stuff, this code is the same as in build_gardens_property_menu(),
+	# because that way we can get build_garden_menu() to use that method to replicate the logic here.
+
+	for my $property_name (sort keys %property_name)
+	{
+		my($property_id) = $property_name{$property_name};
+
+		if 	($found -> isFalse &&
+				(
+					($default_id == 0) || ($default_id == $property_id)
+				)
+			)
+		{
+			# Set this on the 1st menu item (default_id == 0) or the one desired.
+
+			$found = true;
+
+			# current_property_id is used in build_garden_menu().
+
+			$current_property_id = $property_id;
+
+			$self -> logger -> debug("Database.analyze_gardens_property_menu(). property_id: $property_id");
+		}
+	}
+
+	return $current_property_id;
+
+} # End of analyze_gardens_property_menu.
+
+# -----------------------------------------------
+
 sub build_garden_menu
 {
 	my($self, $controller, $gardens_table, $jquery_id) = @_;
+
+	$self -> logger -> debug('Database.build_garden_menu(). Entered');
+
+	my($property_id)	= $self -> analyze_gardens_property_menu($gardens_table, 0);
 	my($found)			= false;
 	my($html)			= "<select id = '$jquery_id' name = '$jquery_id'>";
-	my($property_id)	= $controller -> session('current_property_id');
+
+	$self -> logger -> debug("Database.build_garden_menu(). property_id: $property_id");
 
 	my($selected);
 
@@ -119,6 +171,8 @@ sub build_gardens_property_menu
 {
 	my($self, $controller, $gardens_table, $jquery_id, $default_id) = @_;
 
+	$self -> logger -> debug("Database.build_gardens_property_menu(default_id: $default_id). Entered");
+
 	my(%property_name);
 
 	for my $garden (@$gardens_table)
@@ -126,9 +180,12 @@ sub build_gardens_property_menu
 		$property_name{$$garden{property_name} } = $$garden{property_id};
 	}
 
-	my($found)			= false;
-	my($html)			= "<select id = '$jquery_id' name = '$jquery_id'>";
-	my($selected)		= '';
+	my($found)		= false;
+	my($html)		= "<select id = '$jquery_id' name = '$jquery_id'>";
+	my($selected)	= '';
+
+	# Warning: Apart from the HTML stuff, this code is the same as in analyze_gardens_property_menu(),
+	# because that way we can get build_garden_menu() to use that method to replicate the logic here.
 
 	for my $property_name (sort keys %property_name)
 	{
@@ -144,10 +201,6 @@ sub build_gardens_property_menu
 
 			$found		= true;
 			$selected	= ' selected';
-
-			# current_property_id is used in build_garden_menu().
-
-			$controller -> session(current_property_id => $property_id);
 		}
 
 		$html		.= "<option$selected value = '$property_id'>$property_name</option>";

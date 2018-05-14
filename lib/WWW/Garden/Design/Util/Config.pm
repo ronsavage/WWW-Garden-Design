@@ -38,7 +38,7 @@ our $VERSION = '0.96';
 sub BUILD
 {
 	my($self)			= @_;
-	my($module)			= __PACKAGE__; # Aka WWW::Garden::Design.
+	my($module)			= 'WWW::Garden::Design';
 	my($module_dir)		= $module;
 	$module_dir			=~ s/::/-/g;
 	my($config_name)	= 'www.garden.design.conf';
