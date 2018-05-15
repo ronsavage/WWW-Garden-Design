@@ -2074,7 +2074,6 @@ $(function()
 	({
 		change:				function(color)
 							{
-								alert('new_color_chosen: ' + color.toHexString() );
 								$('#new_color_chosen')
 								.val(color.toHexString() ); // Put color in hidden form field for submit.
 

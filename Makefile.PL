@@ -65,6 +65,7 @@ my(%params) =
 		'Text::CSV::Encoded'		=> 0.22,
 		'Text::Xslate'				=> 1.0007,
 		'Time::HiRes'				=> 1.9741,
+		'Try::Tiny'					=> 0.30,
 		'Types::Standard'			=> 0.032,
 		'Unicode::Collate'			=> 1.04,
 		'URI::Find::Schemeless'		=> 20160806,

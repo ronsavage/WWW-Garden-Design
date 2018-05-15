@@ -852,15 +852,15 @@ EOS
 
 sub export_icons
 {
-	my($self)		= @_;
-	my($constants)	= $self -> db -> constants;
-	my($features)	= $self -> db -> read_features_table;
+	my($self)			= @_;
+	my($constants)		= $self -> db -> constants;
+	my($features_table)	= $self -> db -> read_features_table;
 
 	$self -> db -> logger -> info("flower_dir: $$constants{flower_dir}");
 
 	my(@file_names);
 
-	for my $feature (sort{$$a{name} cmp $$b{name} } @$features)
+	for my $feature (sort{$$a{name} cmp $$b{name} } @$features_table)
 	{
 		next if ($$feature{publish} eq 'No');
 

@@ -22,6 +22,8 @@ use Text::CSV::Encoded;
 
 use Time::HiRes qw/gettimeofday tv_interval/;
 
+use Try::Tiny;
+
 use Types::Standard qw/Any Object HashRef/;
 
 use Unicode::Collate;
@@ -423,9 +425,22 @@ sub generate_tile
 	$image -> box(fill => $fill);
 	$self -> format_string($$constants{cell_width}, $$constants{cell_height}, $image, $name);
 
-	$image -> write(file => "$$feature{icon_dir}/$file_name.png");
+	$file_name = "$$feature{icon_dir}/$file_name.png";
 
-	return [$name, $file_name];
+	my($result);
+
+	try
+	{
+		$image -> write(file => $file_name);
+
+		$result = 'OK';
+	}
+	catch
+	{
+		$result = "Unable to write file: $file_name";
+	};
+
+	return [$name, $file_name, $result];
 
 } # End of generate_tile.
 
@@ -508,6 +523,30 @@ sub get_flower_by_id
 	return $flower;
 
 } # End of get_flower_by_id.
+
+# -----------------------------------------------
+
+sub init_title_font
+{
+	my($self, $config) = @_;
+
+	$self -> constants($self -> read_constants_table); # Uses db()!
+
+	my($constants)	= $self -> constants; # Might be empty at the start of an import.
+	my($font_file)	= $$constants{tile_font_file} || $$config{tile_font_file};
+	my($font_size)	= $$constants{tile_font_size} || $$config{tile_font_size};
+
+	$self -> title_font
+	(
+		Imager::Font -> new
+		(
+			color	=> Imager::Color -> new(0, 0, 0), # Black.
+			file	=> $font_file,
+			size	=> $font_size,
+		) || die "Error. Can't define title font: " . Imager -> errstr
+	);
+
+} # End of init_title_font.
 
 # -----------------------------------------------
 
@@ -738,7 +777,7 @@ sub process_feature
 
 		if (exists($feature{uc $name}) )
 		{
-			$result = {raw => 'Feature: $name. That feature name is on file', type => 'Error'};
+			$result = {raw => "Feature: $name. That feature name is on file", type => 'Error'};
 		}
 		else
 		{
@@ -839,6 +878,31 @@ sub process_feature
 	}
 
 	$features_table = $self -> read_features_table;
+
+	if ( ($action eq 'add') || ($action eq 'update') )
+	{
+		# Find the index of the new/updated feature.
+
+		my($index) = -1;
+
+		for my $feature (sort{$$a{name} cmp $$b{name} } @$features_table)
+		{
+			$index++;
+
+			last if ($$feature{name} eq $name);
+		}
+
+		# generate_tile() returns [feature name, file name, error or ''].
+
+		my($constants)	= $self -> constants;
+		my(@status)		= $self -> generate_tile($constants, @$features_table[$index]);
+
+		if ($status[2] ne 'OK')
+		{
+			$$result{raw}	= $status[2];
+			$$result{type}	= 'Error';
+		}
+	}
 
 	return
 	{

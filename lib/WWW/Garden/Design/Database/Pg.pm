@@ -26,21 +26,7 @@ sub BUILD
 	my($config)	= $self -> config;
 
 	$self -> db(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
-	$self -> constants($self -> read_constants_table); # Uses db()!
-
-	my($constants)	= $self -> constants; # Might be empty at the start of an import.
-	my($font_file)	= $$constants{tile_font_file} || $$config{tile_font_file};
-	my($font_size)	= $$constants{tile_font_size} || $$config{tile_font_size};
-
-	$self -> title_font
-	(
-		Imager::Font -> new
-		(
-			color	=> Imager::Color -> new(0, 0, 0), # Black.
-			file	=> $font_file,
-			size	=> $font_size,
-		) || die "Error. Can't define title font: " . Imager -> errstr
-	);
+	$self -> init_title_font($config); # Uses db()!
 
 } # End of BUILD;
 
