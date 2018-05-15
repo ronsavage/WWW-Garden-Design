@@ -151,7 +151,7 @@
 		</tr>
 		<tr>
 			<td>Color spectrum: </td>
-			<td colspan = '2'><input type = 'text' class = 'new_color_spectrum' id = 'color_spectrum' /></div></td>
+			<td colspan = '2'><input type = 'text' class = 'new_color_spectrum' id = 'new_color_spectrum' /></div></td>
 		</tr>
 		<tr>
 			<td>Color chosen: <span class = 'alert'>*</span> </td>

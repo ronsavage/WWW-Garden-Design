@@ -311,6 +311,51 @@ $(function()
 
 // -----------------------------------------------
 
+function add_feature(action)
+{
+	var name			= $('#new_feature_name').val();
+	var color_chosen	= $('#new_color_chosen').val();
+
+	if ( (color_chosen == '') || (name == '') )
+	{
+		alert('Error: Both the color name and feature name are mandatory');
+
+		return;
+	}
+
+	$.post
+	(
+		// See routes at end of WWW::Garden::Design.startup().
+
+		'/Feature',
+		{
+			action:			'add',
+			color_chosen:	color_chosen,
+			color_code:		$('#new_color_code').val(),
+			color_name:		$('#new_color_name').val(),
+			id:				0,
+			name:			name,
+			publish:		$('#new_feature_publish').prop('checked') ? 'Yes' : 'No'
+		},
+		function(packet)
+		{
+			$('#feature_result_div')
+			.empty()
+			.append(packet.message.cooked);
+
+			// Update the feature menu on the Features tab.
+
+			features_current_feature_id	= packet.message.feature_id;
+			feature_menu				= packet.feature_menu;
+			features_table				= packet.features_table;
+		},
+		'json'
+	);
+
+} // End of add_feature.
+
+// -----------------------------------------------
+
 function add_garden()
 {
 	var name = $('#new_garden_name').val();
@@ -2016,6 +2061,24 @@ $(function()
 								.val(color.toHexString() ); // Put color in hidden form field for submit.
 
 								$('#color_swatch_chosen')
+								.css('background-color', color.toHexString() );
+							},
+		color:				'white',
+		preferredFormat:	'hex',
+		showInput:			true,
+		showPalette:		true
+	});
+
+	$('#new_color_spectrum')
+	.spectrum
+	({
+		change:				function(color)
+							{
+								alert('new_color_chosen: ' + color.toHexString() );
+								$('#new_color_chosen')
+								.val(color.toHexString() ); // Put color in hidden form field for submit.
+
+								$('#new_color_swatch_chosen')
 								.css('background-color', color.toHexString() );
 							},
 		color:				'white',

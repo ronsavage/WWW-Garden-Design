@@ -116,8 +116,6 @@ sub analyze_gardens_property_menu
 			# current_property_id is used in build_garden_menu().
 
 			$current_property_id = $property_id;
-
-			$self -> logger -> debug("Database.analyze_gardens_property_menu(). property_id: $property_id");
 		}
 	}
 
@@ -136,10 +134,7 @@ sub build_garden_menu
 	my($property_id)	= $self -> analyze_gardens_property_menu($gardens_table, 0);
 	my($found)			= false;
 	my($html)			= "<select id = '$jquery_id' name = '$jquery_id'>";
-
-	$self -> logger -> debug("Database.build_garden_menu(). property_id: $property_id");
-
-	my($selected);
+	my($selected)		= '';
 
 	for my $garden (@$gardens_table)
 	{
@@ -218,11 +213,10 @@ sub build_gardens_property_menu
 sub build_feature_menu
 {
 	my($self, $features, $default_id) = @_;
-	my($found)	= false;
-	my($html)	= "<div class = 'feature_toolbar'>"
-					. "<select id = 'feature_menu'>";
-
-	my($selected);
+	my($found)		= false;
+	my($html)		= "<div class = 'feature_toolbar'>"
+						. "<select id = 'feature_menu'>";
+	my($selected)	= '';
 
 	for my $feature (@$features)
 	{
