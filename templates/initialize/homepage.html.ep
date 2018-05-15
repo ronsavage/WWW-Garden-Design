@@ -1695,7 +1695,7 @@ function submit_details()
 		},
 		dataType:	'html',
 		method:		'POST',
-		url:		'/AddFlower' // See routes at end of WWW::Garden::Design.startup().
+		url:		'/Flower' // See routes at end of WWW::Garden::Design.startup().
 	})
 	.done(function(html)
 	{

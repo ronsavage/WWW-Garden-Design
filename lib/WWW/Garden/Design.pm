@@ -4,11 +4,11 @@ use utf8;
 
 use Mojo::Base 'Mojolicious';
 
+use Data::Dumper::Concise; # For Dumper().
+
 use Moo;
 
 use WWW::Garden::Design::Database::Pg;
-
-use Data::Dumper::Concise; # For Dumper().
 
 our $VERSION = '0.96';
 
@@ -153,6 +153,11 @@ sub initialize_defaults
 
 	$self -> defaults($defaults);
 
+	$self -> app -> log -> debug("properties_current_property_id: $$defaults{properties_current_property_id}");
+	$self -> app -> log -> debug("gardens_current_property_id_1: $$defaults{gardens_current_property_id_1}");
+	$self -> app -> log -> debug("gardens_current_garden_id: $$defaults{gardens_current_garden_id}");
+	$self -> app -> log -> debug("features_current_feature_id: $$defaults{features_current_feature_id}");
+
 } # End of initialize_defaults.
 
 # ------------------------------------------------
@@ -187,7 +192,7 @@ sub startup
 					scoreboard  => '/tmp/mojolicious',
 				});
 	$self -> plugin('TagHelpers');
-	$self -> initialize_defaults; # For global access.
+	$self -> initialize_defaults; # For access inside all controllers.
 
 	# Router.
 
@@ -196,10 +201,10 @@ sub startup
 	$r -> namespaces(['WWW::Garden::Design::Controller']);
 
 	$r -> route('/')							-> to('Initialize#homepage');
-	$r -> route('/AddFlower')					-> to('AddFlower#process');
 	$r -> route('/AutoComplete')				-> to('AutoComplete#display');
 	$r -> route('/Design')						-> to('Design#process');
 	$r -> route('/Feature')						-> to('Feature#process');
+	$r -> route('/Flower')						-> to('Flower#process');
 	$r -> route('/Garden')						-> to('Garden#process');
 	$r -> route('/GetFlowerDetails')			-> to('GetFlowerDetails#display');
 	$r -> route('/GetTable/attribute_types')	-> to('GetTable#attribute_types');
