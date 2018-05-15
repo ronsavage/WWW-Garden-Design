@@ -768,21 +768,15 @@ sub process_feature
 			# It's a feature delete. But is this feature used in any gardens?
 
 			my($found)			= false;
+			my($feature_table)	= $self -> read_table('features');
 
-=pod
-
-#TODO
-			my($garden_table)	= $self -> read_table('gardens');
-
-			for my $garden (@$garden_table)
+			for my $feature (@$feature_table)
 			{
-				if ($$garden{property_id} == $$item{id})
+				if ($$feature{property_id} == $$item{id})
 				{
 					$found = true;
 				}
 			}
-
-=cut
 
 			if ($found -> isTrue)
 			{
