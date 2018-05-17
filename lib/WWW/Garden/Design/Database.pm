@@ -370,6 +370,7 @@ sub format_string
 	my(%vowel)			= (a => 1, e => 1, i => 1, o => 1, u => 1);
 
 	my($after_word);
+	my($candidate);
 	my($finished);
 	my($index);
 	my(@letters);
@@ -380,14 +381,36 @@ sub format_string
 		$y			+= $vertical_step;
 		$word		= $words[$step];
 		@letters	= split(//, $word);
+
+		# Algorithm: Shrink the word letter-by-letter, from the right-hand end.
+		# Don't try to shrink short words.
+		# In particular, don't zap the letter 'a' in the word 'a'.
+		# Index is the offset of the last letter in the word.
+
 		$index		= $#letters;
-		$finished	= $index <= 7; # Don't zap the 'a' in the word 'a'.
+		$finished	= ($index <= 7) ? 1 : 0;
+
+		$self -> logger -> debug("Database.format_string(). index: $index. finished: $finished. "
+			. "word: $word. Letters: <" . join(',', @letters) . '>');
 
 		while (! $finished)
 		{
 			if ($vowel{$letters[$index]})
 			{
+				# There are vowels left in the word, so zap them.
+
 				splice(@letters, $index, 1);
+			}
+			else
+			{
+				$candidate = join('', @letters);
+
+				if (length($candidate) > 7)
+				{
+					# The word is still too long, so zap letters.
+
+					splice(@letters, $#letters, 1);
+				}
 			}
 
 			$index--;
@@ -396,6 +419,9 @@ sub format_string
 		}
 
 		$after_word = join('', @letters);
+
+		$self -> logger -> debug("Database.format_string(). index: $index. finished: $finished. "
+			. "word: $word. Letters now: <$after_word>");
 
 		$image -> align_string
 		(
@@ -877,7 +903,8 @@ sub process_feature
 		$result = {raw => "Feature: $name. Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
 	}
 
-	$features_table = $self -> read_features_table;
+	$features_table		= $self -> read_features_table;
+	my($tile_status)	= ['N/A', 'N/A', 'N/A'];
 
 	if ( ($action eq 'add') || ($action eq 'update') )
 	{
@@ -895,11 +922,11 @@ sub process_feature
 		# generate_tile() returns [feature name, file name, error or ''].
 
 		my($constants)	= $self -> constants;
-		my(@status)		= $self -> generate_tile($constants, @$features_table[$index]);
+		$tile_status	= $self -> generate_tile($constants, @$features_table[$index]);
 
-		if ($status[2] ne 'OK')
+		if ($$tile_status[2] ne 'OK')
 		{
-			$$result{raw}	= $status[2];
+			$$result{raw}	= $$tile_status[2];
 			$$result{type}	= 'Error';
 		}
 	}
@@ -909,6 +936,7 @@ sub process_feature
 		message			=> $self -> format_raw_message($result),
 		feature_menu	=> $self -> build_feature_menu($features_table, $$result{feature_id}),
 		features_table	=> $features_table,
+		tile_status		=> $tile_status,
 	};
 
 } # End of process_feature.
