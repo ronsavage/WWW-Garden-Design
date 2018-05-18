@@ -9,6 +9,7 @@ use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use Data::Dumper::Concise; # For Dumper().
 
+use File::Copy;
 use File::Slurper qw/read_dir/;
 
 use FindBin;
@@ -373,15 +374,13 @@ sub generate_tile
 	$image -> box(fill => $fill);
 	$self -> shrink_string($$constants{cell_width}, $$constants{cell_height}, $image, $name);
 
-	$self -> logger -> debug('constants: ' . Dumper($constants) );
-
 	my($icon_name)	= "$$feature{icon_dir}/$file_name.png";
 	my($result)		=
 	{
 		name		=> $name,
 		file_name	=> $icon_name,
-		file_url	=> "$$feature{icon_url}/$file_name.png",
-		message		=> '',
+		file_url	=> $$feature{icon_url},
+		message		=> 'Icon file created',
 		type		=> 'Success'
 	};
 
@@ -394,6 +393,34 @@ sub generate_tile
 		$$result{message}	= "Unable to write file: $icon_name";
 		$$result{type}		= 'Error';
 	};
+
+	if ($$result{type} eq 'Success')
+	{
+		# If the constant 'doc_root' is present and points to a directory,
+		# we copy the new file into it so the web server can see it.
+
+		my($doc_root) = $$constants{doc_root};
+
+		if ($doc_root && -d $doc_root)
+		{
+			my($icon_dest) = "$$constants{doc_root}/$$constants{icon_dir}/$file_name.png";
+
+			if (copy($icon_name, $icon_dest) == 0)
+			{
+				$$result{message}	= "Unable to write file: $icon_dest";
+				$$result{type}		= 'Error';
+			}
+			else
+			{
+				$self -> logger -> debug("Copy $icon_name, $icon_dest");
+			}
+		}
+		else
+		{
+			$$result{message}	= "The 'constants' does not contain doc_root or it's not a directory";
+			$$result{type}		= 'Error';
+		}
+	}
 
 	return $result;
 

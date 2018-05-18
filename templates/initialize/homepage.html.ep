@@ -1920,6 +1920,8 @@ function update_feature(action)
 
 			if (packet.message.type != 'Error')
 			{
+				alert(packet.tile_status.file_url);
+
 				$('#feature_icon')
 				.html("<img src = '" + packet.tile_status.file_url + "' " + get_feature_image_size_string() + '>');
 			}
