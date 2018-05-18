@@ -373,22 +373,27 @@ sub generate_tile
 	$image -> box(fill => $fill);
 	$self -> shrink_string($$constants{cell_width}, $$constants{cell_height}, $image, $name);
 
-	$file_name = "$$feature{icon_dir}/$file_name.png";
-
-	my($result);
+	my($icon_name)	= "$$feature{icon_dir}/$file_name.png";
+	my($result)		=
+	{
+		name		=> $name,
+		file_name	=> $icon_name,
+		file_url	=> "$$feature{icon_url}/$file_name.png",
+		message		=> '',
+		type		=> 'Success'
+	};
 
 	try
 	{
-		$image -> write(file => $file_name);
-
-		$result = 'OK';
+		$image -> write(file => $icon_name);
 	}
 	catch
 	{
-		$result = "Unable to write file: $file_name";
+		$$result{message}	= "Unable to write file: $icon_name";
+		$$result{type}		= 'Error';
 	};
 
-	return [$name, $file_name, $result];
+	return $result;
 
 } # End of generate_tile.
 
@@ -783,7 +788,7 @@ sub process_feature
 
 				$self -> logger -> debug("Table: $table_name. Record id: $id. Feature: $name. Action: $action");
 
-				$result = {raw => "Action $action. Status: Success", type => 'Success'};
+				$result = {raw => "Action $action", type => 'Success'};
 			}
 		}
 		else
@@ -813,7 +818,7 @@ sub process_feature
 
 			$self -> logger -> debug("Table: $table_name. Record id '$id'. Feature: $name. Action: $action");
 
-			$result = {feature_id => $$item{id}, raw => "Action: $action. Status: Success", type => 'Success'};
+			$result = {feature_id => $$item{id}, raw => "Action: $action", type => 'Success'};
 		}
 		else
 		{
@@ -826,7 +831,7 @@ sub process_feature
 	}
 
 	$features_table		= $self -> read_features_table;
-	my($tile_status)	= ['N/A', 'N/A', 'N/A'];
+	my($tile_status)	= ['N/A', 'N/A', 'N/A', 'Success'];
 
 	if ( ($action eq 'add') || ($action eq 'update') )
 	{
@@ -841,14 +846,14 @@ sub process_feature
 			last if ($$feature{name} eq $name);
 		}
 
-		# generate_tile() returns [feature name, file name, error or ''].
+		# generate_tile() returns [feature name, file name, doc root path, error or ''].
 
 		my($constants)	= $self -> constants;
 		$tile_status	= $self -> generate_tile($constants, @$features_table[$index]);
 
-		if ($$tile_status[2] ne 'OK')
+		if ($$tile_status{type} eq 'Error')
 		{
-			$$result{raw}	= $$tile_status[2];
+			$$result{raw}	= $$tile_status{type};
 			$$result{type}	= 'Error';
 		}
 	}
@@ -933,7 +938,7 @@ sub process_garden
 				{id => $$item{id} }
 			);
 
-			my($message) = "Action: $action. Status: Success";
+			my($message) = "Action: $action";
 
 			$self -> logger -> debug("Table '$table_name'. Record id '$id'. $message");
 
@@ -966,7 +971,7 @@ sub process_garden
 
 			$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Garden: $garden_name. Action: $action");
 
-			$result = {garden_id => $$item{id}, raw => "Action: $action. Status: Success", type => 'Success'};
+			$result = {garden_id => $$item{id}, raw => "Action: $action", type => 'Success'};
 		}
 		else
 		{
@@ -1087,7 +1092,7 @@ sub process_property
 
 				$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
 
-				$result = {raw => "Action $action. Status: Success", type => 'Success'};
+				$result = {raw => "Action $action", type => 'Success'};
 			}
 		}
 		else
@@ -1117,7 +1122,7 @@ sub process_property
 
 			$self -> logger -> debug("Table: $table_name. Record id '$id'. Property: $property_name. Action: $action");
 
-			$result = {property_id => $$item{id}, raw => "Action: $action. Status: Success", type => 'Success'};
+			$result = {property_id => $$item{id}, raw => "Action: $action", type => 'Success'};
 		}
 		else
 		{
@@ -1478,12 +1483,10 @@ sub shrink_string
 	my($self, $cell_width, $cell_height, $image, $string) = @_;
 	my(@words)			= split(/\s+/, $string);
 	$#words				= 2 if ($#words > 2); # Limit arbitrarily to 3 words.
-	my($step_count)		= $#words;
-	my($vertical_step)	= int($cell_height / $step_count);
+	my($vertical_step)	= int($cell_height / scalar @words);
 	my($y)				= 0;
 	my(%vowel)			= (a => 1, e => 1, i => 1, o => 1, u => 1);
 
-	my($after_word);
 	my($candidate);
 	my($finished);
 	my($index);
@@ -1505,9 +1508,6 @@ sub shrink_string
 		$index		= $#letters;
 		$finished	= ($index <= 7) ? true : false;
 
-		$self -> logger -> debug("1 Database.shrink_string(). index: $index. finished: $finished. "
-			. "word: $word. Letters: <" . join(',', @letters) . '>');
-
 		while ($finished -> isFalse)
 		{
 			if ($vowel{$letters[$index]})
@@ -1527,9 +1527,6 @@ sub shrink_string
 		$word		= join('', @letters);
 		$finished	= (length($word) <= 7) ? true : false;
 
-		$self -> logger -> debug("2 Database.shrink_string(). index: $index. finished: $finished. "
-			. "word: $word. Letters: <" . join(',', @letters) . '>');
-
 		while ($finished -> isFalse)
 		{
 			# The word is too long, so zap letters.
@@ -1541,17 +1538,12 @@ sub shrink_string
 			$finished = true if (length($word) <= 7);
 		}
 
-		$after_word = join('', @letters);
-
-		$self -> logger -> debug("Database.shrink_string(). index: $index. finished: $finished. "
-			. "word: $word. Letters now: <$after_word>");
-
 		$image -> align_string
 		(
 			aa		=> 1,
 			font	=> $self -> title_font,
 			halign	=> 'center',
-			string	=> $after_word,
+			string	=> $word,
 			x		=> int($cell_width / 2),
 			y		=> $y,
 		);

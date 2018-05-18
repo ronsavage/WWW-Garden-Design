@@ -1050,6 +1050,16 @@ function get_design_image_size_string()
 } // End of get_design_image_size_string.
 
 // -----------------------------------------------
+
+function get_feature_image_size_string()
+{
+	var thumbnail_size = <%== $$constants{virtual_cell_size} %>;
+
+	return "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
+
+} // End of get_feature_image_size_string.
+
+// -----------------------------------------------
 // Warning: This function cannot be used to populate gardens_garden_menu_span
 // since that involves changing the DOM, but the function is called from within
 // the document ready context which assumes the DOM has stopped changing.
@@ -1907,6 +1917,12 @@ function update_feature(action)
 			$('#feature_result_div')
 			.empty()
 			.append(packet.message.cooked);
+
+			if (packet.message.type != 'Error')
+			{
+				$('#feature_icon')
+				.html("<img src = '" + packet.tile_status.file_url + "' " + get_feature_image_size_string() + '>');
+			}
 
 			// Update the feature menu on the Features tab.
 
