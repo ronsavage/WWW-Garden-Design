@@ -373,6 +373,8 @@ sub generate_tile
 	$image -> box(fill => $fill);
 	$self -> shrink_string($$constants{cell_width}, $$constants{cell_height}, $image, $name);
 
+	$self -> logger -> debug('constants: ' . Dumper($constants) );
+
 	my($icon_name)	= "$$feature{icon_dir}/$file_name.png";
 	my($result)		=
 	{
