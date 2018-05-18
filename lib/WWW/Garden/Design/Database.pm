@@ -360,84 +360,6 @@ sub format_raw_message
 
 # -----------------------------------------------
 
-sub format_string
-{
-	my($self, $cell_width, $cell_height, $image, $string) = @_;
-	my(@words)			= split(/\s+/, $string);
-	my($step_count)		= $#words + 2;
-	my($vertical_step)	= int($cell_height / $step_count);
-	my($y)				= 0;
-	my(%vowel)			= (a => 1, e => 1, i => 1, o => 1, u => 1);
-
-	my($after_word);
-	my($candidate);
-	my($finished);
-	my($index);
-	my(@letters);
-	my($word);
-
-	for my $step (0 .. $#words)
-	{
-		$y			+= $vertical_step;
-		$word		= $words[$step];
-		@letters	= split(//, $word);
-
-		# Algorithm: Shrink the word letter-by-letter, from the right-hand end.
-		# Don't try to shrink short words.
-		# In particular, don't zap the letter 'a' in the word 'a'.
-		# Index is the offset of the last letter in the word.
-
-		$index		= $#letters;
-		$finished	= ($index <= 7) ? 1 : 0;
-
-		$self -> logger -> debug("Database.format_string(). index: $index. finished: $finished. "
-			. "word: $word. Letters: <" . join(',', @letters) . '>');
-
-		while (! $finished)
-		{
-			if ($vowel{$letters[$index]})
-			{
-				# There are vowels left in the word, so zap them.
-
-				splice(@letters, $index, 1);
-			}
-			else
-			{
-				$candidate = join('', @letters);
-
-				if (length($candidate) > 7)
-				{
-					# The word is still too long, so zap letters.
-
-					splice(@letters, $#letters, 1);
-				}
-			}
-
-			$index--;
-
-			$finished = 1 if ($#letters <= 7);
-		}
-
-		$after_word = join('', @letters);
-
-		$self -> logger -> debug("Database.format_string(). index: $index. finished: $finished. "
-			. "word: $word. Letters now: <$after_word>");
-
-		$image -> align_string
-		(
-			aa		=> 1,
-			font	=> $self -> title_font,
-			halign	=> 'center',
-			string	=> $after_word,
-			x		=> int($cell_width / 2),
-			y		=> $y,
-		);
-	}
-
-} # End of format_string.
-
-# -----------------------------------------------
-
 sub generate_tile
 {
 	my($self, $constants, $feature) = @_;
@@ -449,7 +371,7 @@ sub generate_tile
 	my($file_name)	= $self -> clean_up_icon_name($name);
 
 	$image -> box(fill => $fill);
-	$self -> format_string($$constants{cell_width}, $$constants{cell_height}, $image, $name);
+	$self -> shrink_string($$constants{cell_width}, $$constants{cell_height}, $image, $name);
 
 	$file_name = "$$feature{icon_dir}/$file_name.png";
 
@@ -803,7 +725,7 @@ sub process_feature
 
 		if (exists($feature{uc $name}) )
 		{
-			$result = {raw => "Feature: $name. That feature name is on file", type => 'Error'};
+			$result = {raw => "That feature name is on file", type => 'Error'};
 		}
 		else
 		{
@@ -849,7 +771,7 @@ sub process_feature
 
 				$self -> logger -> debug("Table: $table_name. Record id: $id. Feature: $name. $note");
 
-				$result = {raw => "Feature: $name. $note", type => 'Error'};
+				$result = {raw => $note, type => 'Error'};
 			}
 			else
 			{
@@ -861,12 +783,12 @@ sub process_feature
 
 				$self -> logger -> debug("Table: $table_name. Record id: $id. Feature: $name. Action: $action");
 
-				$result = {raw => "Feature: $name. Action $action", type => 'Success'};
+				$result = {raw => "Action $action. Status: Success", type => 'Success'};
 			}
 		}
 		else
 		{
-			$result = {raw => "Feature: $name. Cannot update the database. That record was not found", type => 'Error'};
+			$result = {raw => "Cannot update the database. That record was not found", type => 'Error'};
 		}
 	}
 	elsif ($action eq 'update')
@@ -891,16 +813,16 @@ sub process_feature
 
 			$self -> logger -> debug("Table: $table_name. Record id '$id'. Feature: $name. Action: $action");
 
-			$result = {feature_id => $$item{id}, raw => "Feature: $name. Action: $action", type => 'Success'};
+			$result = {feature_id => $$item{id}, raw => "Action: $action. Status: Success", type => 'Success'};
 		}
 		else
 		{
-			$result = {raw => "Feature: $name. Cannot update the database. That record was not found", type => 'Error'};
+			$result = {raw => "Cannot update the database. That record was not found", type => 'Error'};
 		}
 	}
 	else
 	{
-		$result = {raw => "Feature: $name. Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
+		$result = {raw => "Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
 	}
 
 	$features_table		= $self -> read_features_table;
@@ -978,7 +900,7 @@ sub process_garden
 
 		if (exists($garden{uc $garden_name}) )
 		{
-			$result = {raw => "Property: $property_name. Garden: $garden_name. That garden name is on file", type => 'Error'};
+			$result = {raw => 'That garden name is on file', type => 'Error'};
 		}
 		else
 		{
@@ -991,7 +913,7 @@ sub process_garden
 
 			$self -> logger -> debug("Table: $table_name. Record id: $id. Action: $action. Property: $property_name. Garden: $garden_name");
 
-			$result = {garden_id => $id, raw => "Property: $property_name. Added garden: $garden_name", type => 'Success'};
+			$result = {garden_id => $id, raw => "Added garden: $garden_name", type => 'Success'};
 		}
 	}
 	elsif ($action eq 'delete')
@@ -1011,7 +933,7 @@ sub process_garden
 				{id => $$item{id} }
 			);
 
-			my($message) = "Property: $property_name. Garden: $garden_name. Action: $action";
+			my($message) = "Action: $action. Status: Success";
 
 			$self -> logger -> debug("Table '$table_name'. Record id '$id'. $message");
 
@@ -1019,7 +941,7 @@ sub process_garden
 		}
 		else
 		{
-			$result = {raw => "Property: $property_name. Garden: $garden_name. Cannot update the database. That record was not found", type => 'Error'};
+			$result = {raw => "Cannot update the database. That record was not found", type => 'Error'};
 		}
 	}
 	elsif ($action eq 'update')
@@ -1044,16 +966,16 @@ sub process_garden
 
 			$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Garden: $garden_name. Action: $action");
 
-			$result = {garden_id => $$item{id}, raw => "Property: $property_name. Garden. $garden_name. Action: $action", type => 'Success'};
+			$result = {garden_id => $$item{id}, raw => "Action: $action. Status: Success", type => 'Success'};
 		}
 		else
 		{
-			$result = {raw => "Property: $property_name. Garden: $garden_name. Cannot update the database. That record was not found", type => 'Error'};
+			$result = {raw => 'Cannot update the database. That record was not found', type => 'Error'};
 		}
 	}
 	else
 	{
-		$result = {raw => "Property: $property_name. Garden: $garden_name. Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
+		$result = {raw => "Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
 	}
 
 	if ($$result{type} eq 'Error')
@@ -1107,7 +1029,7 @@ sub process_property
 
 		if (exists($property{uc $property_name}) )
 		{
-			$result = {raw => 'Property: $property_name. That property name is on file', type => 'Error'};
+			$result = {raw => ' That property name is on file', type => 'Error'};
 		}
 		else
 		{
@@ -1153,7 +1075,7 @@ sub process_property
 
 				$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. $note");
 
-				$result = {raw => "Property: $property_name. $note", type => 'Error'};
+				$result = {raw => $note, type => 'Error'};
 			}
 			else
 			{
@@ -1165,12 +1087,12 @@ sub process_property
 
 				$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
 
-				$result = {raw => "Property: $property_name. Action $action", type => 'Success'};
+				$result = {raw => "Action $action. Status: Success", type => 'Success'};
 			}
 		}
 		else
 		{
-			$result = {raw => "Property: $property_name. Cannot update the database. That record was not found", type => 'Error'};
+			$result = {raw => "Cannot update the database. That record was not found", type => 'Error'};
 		}
 	}
 	elsif ($action eq 'update')
@@ -1195,16 +1117,16 @@ sub process_property
 
 			$self -> logger -> debug("Table: $table_name. Record id '$id'. Property: $property_name. Action: $action");
 
-			$result = {property_id => $$item{id}, raw => "Property: $property_name. Action: $action", type => 'Success'};
+			$result = {property_id => $$item{id}, raw => "Action: $action. Status: Success", type => 'Success'};
 		}
 		else
 		{
-			$result = {raw => "Property: $property_name. Cannot update the database. That record was not found", type => 'Error'};
+			$result = {raw => "Cannot update the database. That record was not found", type => 'Error'};
 		}
 	}
 	else
 	{
-		$result = {raw => "Property: $property_name. Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
+		$result = {raw => "Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
 	}
 
 	return
@@ -1548,6 +1470,94 @@ sub search
 	return ([sort{$$a{common_name} cmp $$b{common_name} } @$result_set], $request);
 
 } # End of search.
+
+# -----------------------------------------------
+
+sub shrink_string
+{
+	my($self, $cell_width, $cell_height, $image, $string) = @_;
+	my(@words)			= split(/\s+/, $string);
+	$#words				= 2 if ($#words > 2); # Limit arbitrarily to 3 words.
+	my($step_count)		= $#words;
+	my($vertical_step)	= int($cell_height / $step_count);
+	my($y)				= 0;
+	my(%vowel)			= (a => 1, e => 1, i => 1, o => 1, u => 1);
+
+	my($after_word);
+	my($candidate);
+	my($finished);
+	my($index);
+	my(@letters);
+	my($word);
+
+	for my $step (0 .. $#words)
+	{
+		$y += $vertical_step; # Vertical position of word on tile.
+
+		# Algorithm: Shrink the word letter-by-letter, from the right-hand end.
+		# Don't try to shrink short words.
+		# In particular, don't zap the letter 'a' in the word 'a'.
+		# Index is the offset of the last letter in the word.
+		# Step 1: Zap vowels.
+
+		$word		= $words[$step];
+		@letters	= split(//, $word);
+		$index		= $#letters;
+		$finished	= ($index <= 7) ? true : false;
+
+		$self -> logger -> debug("1 Database.shrink_string(). index: $index. finished: $finished. "
+			. "word: $word. Letters: <" . join(',', @letters) . '>');
+
+		while ($finished -> isFalse)
+		{
+			if ($vowel{$letters[$index]})
+			{
+				# There are vowels left in the word, so zap them.
+
+				splice(@letters, $index, 1);
+			}
+
+			$index--;
+
+			$finished = true if ( ($index < 0) || ($#letters <= 7) );
+		}
+
+		# Step 2: Zap letters.
+
+		$word		= join('', @letters);
+		$finished	= (length($word) <= 7) ? true : false;
+
+		$self -> logger -> debug("2 Database.shrink_string(). index: $index. finished: $finished. "
+			. "word: $word. Letters: <" . join(',', @letters) . '>');
+
+		while ($finished -> isFalse)
+		{
+			# The word is too long, so zap letters.
+
+			substr($word, length($word) - 1) = '';
+
+			$index--;
+
+			$finished = true if (length($word) <= 7);
+		}
+
+		$after_word = join('', @letters);
+
+		$self -> logger -> debug("Database.shrink_string(). index: $index. finished: $finished. "
+			. "word: $word. Letters now: <$after_word>");
+
+		$image -> align_string
+		(
+			aa		=> 1,
+			font	=> $self -> title_font,
+			halign	=> 'center',
+			string	=> $after_word,
+			x		=> int($cell_width / 2),
+			y		=> $y,
+		);
+	}
+
+} # End of shrink_string.
 
 # -----------------------------------------------
 
