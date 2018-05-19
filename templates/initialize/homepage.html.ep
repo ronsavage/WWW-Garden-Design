@@ -343,6 +343,12 @@ function add_feature(action)
 			.empty()
 			.append(packet.message.cooked);
 
+			if (packet.message.type != 'Error')
+			{
+				$('#new_feature_icon')
+				.attr('src', packet.tile_status.file_url);
+			}
+
 			// Update the feature menu on the Features tab.
 
 			features_current_feature_id	= packet.message.feature_id;
@@ -1920,10 +1926,8 @@ function update_feature(action)
 
 			if (packet.message.type != 'Error')
 			{
-				alert(packet.tile_status.file_url);
-
 				$('#feature_icon')
-				.html("<img src = '" + packet.tile_status.file_url + "' " + get_feature_image_size_string() + '>');
+				.attr('src', packet.tile_status.file_url);
 			}
 
 			// Update the feature menu on the Features tab.

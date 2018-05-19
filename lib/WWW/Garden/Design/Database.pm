@@ -394,6 +394,8 @@ sub generate_tile
 		$$result{type}		= 'Error';
 	};
 
+	$self -> logger -> debug('Constants: ' . Dumper($constants) );
+
 	if ($$result{type} eq 'Success')
 	{
 		# If the constant 'doc_root' is present and points to a directory,
@@ -412,7 +414,7 @@ sub generate_tile
 			}
 			else
 			{
-				$self -> logger -> debug("Copy $icon_name, $icon_dest");
+				$self -> logger -> debug("Copy $icon_name to $icon_dest");
 			}
 		}
 		else
@@ -1512,7 +1514,7 @@ sub shrink_string
 	my($self, $cell_width, $cell_height, $image, $string) = @_;
 	my(@words)			= split(/\s+/, $string);
 	$#words				= 2 if ($#words > 2); # Limit arbitrarily to 3 words.
-	my($vertical_step)	= int($cell_height / scalar @words);
+	my($vertical_step)	= int($cell_height / (scalar @words + 1) );
 	my($y)				= 0;
 	my(%vowel)			= (a => 1, e => 1, i => 1, o => 1, u => 1);
 
