@@ -11,7 +11,7 @@ our $VERSION = '0.96';
 sub display
 {
 	my($self)	= @_;
-	my($key)	= $self -> param('term')	|| ''; # jquery forces use of 'term'.
+	my($key)	= $self -> param('term')	|| ''; # jQuery forces use of 'term'.
 	my($type)	= $self -> param('type')	|| '';
 
 	$self -> app -> log -> debug("AutoComplete.display(key: $key, type: $type)");
@@ -45,19 +45,19 @@ sub display
 
 	if ($type eq 'design_flower')
 	{
-		$self -> render(json => $$defaults{db} -> get_autocomplete_flower_list(uc $key) );
+		$self -> render(json => $$defaults{db} -> autocomplete_flower_list(uc $key) );
 	}
 	elsif ($type eq 'design_feature')
 	{
-		$self -> render(json => $$defaults{db} -> get_autocomplete_feature_list(uc $key) );
+		$self -> render(json => $$defaults{db} -> autocomplete_feature_list(uc $key) );
 	}
 	elsif ($want_single_item{$type})
 	{
-		$self -> render(json => $$defaults{db} -> get_autocomplete_item(\%context, $type, uc $key) );
+		$self -> render(json => $$defaults{db} -> autocomplete_item(\%context, uc $key, $type) );
 	}
 	else
 	{
-		$self -> render(json => $$defaults{db} -> get_autocomplete_list(\%context, $type, uc $key) );
+		$self -> render(json => $$defaults{db} -> autocomplete_list(\%context, uc $key, $type) );
 	}
 
 } # End of display.

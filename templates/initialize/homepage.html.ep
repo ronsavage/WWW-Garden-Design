@@ -169,28 +169,6 @@ $(function()
 
 $(function()
 {
-	$('#garden_name')
-	.autocomplete
-	({
-		source:		'/AutoComplete?type=garden_name', // See routes at end of WWW::Garden::Design.startup().
-		minLength:	2,
-		select:		function(event, ui)
-		{
-			if (ui.item)
-			{
-				$('#garden_name')
-				.empty()
-				.append(ui.item.value);
-			}
-		}
-	});
-
-}); // End of autocomplete function.
-
-// -----------------------------------------------
-
-$(function()
-{
 	$('#design_flower')
 	.autocomplete
 	({
@@ -245,6 +223,28 @@ $(function()
 			$('#feature_name')
 			.empty()
 			.append(ui.item ? ui.item.value : '-');
+		}
+	});
+
+}); // End of autocomplete function.
+
+// -----------------------------------------------
+
+$(function()
+{
+	$('#garden_name')
+	.autocomplete
+	({
+		source:		'/AutoComplete?type=garden_name', // See routes at end of WWW::Garden::Design.startup().
+		minLength:	2,
+		select:		function(event, ui)
+		{
+			if (ui.item)
+			{
+				$('#garden_name')
+				.empty()
+				.append(ui.item.value);
+			}
 		}
 	});
 
@@ -1017,7 +1017,7 @@ function get_design_flower()
 		if (image_path.length > 0)
 		{
 			$('#design_flower_thumbnail')
-			.arrt('src', image_path);
+			.attr('src', image_path);
 		}
 	});
 

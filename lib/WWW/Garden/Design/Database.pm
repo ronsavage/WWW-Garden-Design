@@ -106,7 +106,7 @@ sub analyze_gardens_property_menu
 	{
 		my($property_id) = $property_name{$property_name};
 
-		if 	($found -> isFalse &&
+		if	($found -> isFalse &&
 				(
 					($default_id == 0) || ($default_id == $property_id)
 				)
@@ -310,6 +310,28 @@ sub clean_up_icon_name
 	return $file_name;
 
 } # End of clean_up_icon_name.
+
+# --------------------------------------------------
+
+sub find_unique_items
+{
+	my($self, $sql) = @_;
+
+	my(@list) = map{$$_[0]} $self -> db -> query($sql) -> arrays -> each;
+
+	my(@result);
+	my(%seen);
+
+	for my $item (@list)
+	{
+		push @result, $item if (! $seen{$item});
+
+		$seen{$item} = 1;
+	}
+
+	return [sort @result];
+
+} # End of find_unique_items.
 
 # --------------------------------------------------
 

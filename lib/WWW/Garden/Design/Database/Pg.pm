@@ -33,7 +33,22 @@ sub BUILD
 # -----------------------------------------------
 # Return a list.
 
-sub get_autocomplete_flower_list
+sub autocomplete_feature_list
+{
+	my($self, $key)	= @_;
+	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
+	my($sql)		= "select distinct name from features where upper(name) like '%$key%'";
+
+	$self -> logger -> debug("Database.Pg.autocomplete_feature_list(key: $key). Entered");
+
+	return $self -> find_unique_items($sql); # Yes, despite 'distinct' above.
+
+} # End of _autocomplete_feature_list.
+
+# -----------------------------------------------
+# Return a list.
+
+sub autocomplete_flower_list
 {
 	my($self, $key)	= @_;
 	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
@@ -42,29 +57,21 @@ sub get_autocomplete_flower_list
 						. "or upper(common_name) like '%$key%' "
 						. "or upper(aliases) like '%$key%'";
 
-	return [$self -> db -> query($sql) -> hashes -> each];
+	$self -> logger -> debug("Database.Pg.autocomplete_flower_list(key: $key). Entered");
 
-} # End of get_autocomplete_flower_list.
+	return $self -> find_unique_items($sql); # Yes, despite 'distinct' above.
 
-# -----------------------------------------------
-# Return a list.
-
-sub get_autocomplete_feature_list
-{
-	my($self, $key)	= @_;
-	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
-
-	return [$self -> db -> query("select distinct name from features where upper(name) like '%$key%'") -> hashes -> each];
-
-} # End of get_autocomplete_feature_list.
+} # End of autocomplete_flower_list.
 
 # -----------------------------------------------
 # Return the shortest item in the list.
 
-sub get_autocomplete_item
+sub autocomplete_item
 {
-	my($self, $context, $type, $key) = @_;
+	my($self, $context, $key, $type) = @_;
 	$key =~ s/\'/\'\'/g; # Since we're using Pg.
+
+	$self -> logger -> debug("Database.Pg.autocomplete_item(... key: $key. type: $type). Entered");
 
 	my(@item);
 	my(@result);
@@ -120,15 +127,17 @@ sub get_autocomplete_item
 		return [];
 	}
 
-} # End of get_autocomplete_item.
+} # End of autocomplete_item.
 
 # -----------------------------------------------
 # Return a list.
 
-sub get_autocomplete_list
+sub autocomplete_list
 {
-	my($self, $context, $type, $key) = @_;
+	my($self, $context, $key, $type) = @_;
 	$key =~ s/\'/\'\'/g; # Since we're using Pg.
+
+	$self -> logger -> debug("Database.Pg.autocomplete_list(... key: $key. type: $type). Entered");
 
 	my(@list);
 	my(@result);
@@ -161,9 +170,9 @@ sub get_autocomplete_list
 		$seen{$_} = 1 for @list;
 	}
 
-	return [@result];
+	return [sort @result];
 
-} # End of get_autocomplete_list.
+} # End of autocomplete_list.
 
 # -----------------------------------------------
 
