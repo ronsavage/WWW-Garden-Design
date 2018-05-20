@@ -57,7 +57,7 @@
 			<td colspan = '3'><hr /></td>
 		</tr>
 		<tr>
-			<td colspan = '3'><div id = 'property_result_div'></div></span></td>
+			<td colspan = '3'>Messages: <div id = 'property_result_div'></div></span></td>
 		</tr>
 		<tr>
 			<td colspan = '3'><hr /></td>

@@ -131,44 +131,6 @@ var window_height					= 0;
 
 $(function()
 {
-	$('#aliases')
-	.autocomplete
-	({
-		source:		'/AutoComplete?type=aliases', // See routes at end of WWW::Garden::Design.startup().
-		minLength:	2,
-		select:		function(event, ui)
-		{
-			$('#aliases')
-			.empty()
-			.append(ui.item ? ui.item.value : '-');
-		}
-	});
-
-}); // End of autocomplete function.
-
-// -----------------------------------------------
-
-$(function()
-{
-	$('#common_name')
-	.autocomplete
-	({
-		source:		'/AutoComplete?type=common_name', // See routes at end of WWW::Garden::Design.startup().
-		minLength:	2,
-		select:		function(event, ui)
-		{
-			$('#common_name')
-			.empty()
-			.append(ui.item ? ui.item.value : '-');
-		}
-	});
-
-}); // End of autocomplete function.
-
-// -----------------------------------------------
-
-$(function()
-{
 	$('#design_flower')
 	.autocomplete
 	({
@@ -272,24 +234,6 @@ $(function()
 
 }); // End of autocomplete function.
 
-// -----------------------------------------------
-
-$(function()
-{
-	$('#scientific_name')
-	.autocomplete
-	({
-		source:		'/AutoComplete?type=scientific_name', // See routes at end of WWW::Garden::Design.startup().
-		minLength:	2,
-		select:		function(event, ui)
-		{
-			$('#scientific_name')
-			.empty()
-			.append(ui.item ? ui.item.value : '-');
-		}
-	});
-
-}); // End of autocomplete function.
 
 // -----------------------------------------------
 

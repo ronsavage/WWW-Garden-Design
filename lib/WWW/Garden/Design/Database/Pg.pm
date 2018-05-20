@@ -82,7 +82,7 @@ sub autocomplete_item
 		my($search_column)	= $$context{$index}[0];
 		my($table_name)		= $$context{$index}[1];
 
-		# $search_column is a special case. See AutoComplete.pm and get_autocomplete_flower_list() above.
+		# $search_column is a special case. See AutoComplete.pm and autocomplete_flower_list() above.
 
 		next if ($search_column eq '*');
 
@@ -148,7 +148,7 @@ sub autocomplete_list
 		my($search_column)	= $$context{$index}[0];
 		my($table_name)		= $$context{$index}[1];
 
-		# $search_column is a special case. See AutoComplete.pm and get_autocomplete_flower_list() above.
+		# $search_column is a special case. See AutoComplete.pm and autocomplete_flower_list() above.
 
 		next if ($search_column eq '*');
 
