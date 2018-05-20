@@ -184,6 +184,9 @@ sub get_feature_by_name
 	$key			= "\U%$key"; # \U => Convert to upper-case.
 	my($sql)		= "select name from features where upper(name) like ?";
 	my(@result)		= $self -> db -> query($sql, $key) -> hashes -> each;
+
+	$self -> logger -> debug("Database.Pg.get_feature_by_name(). key: $key. results: " . Dumper(@result) );
+
 	my($icon_name)	= $self -> clean_up_icon_name($result[0]{name});
 	$icon_name		= length($icon_name) > 0 ? "$$constants{homepage_url}$$constants{icon_url}/$icon_name.png" : '';
 
