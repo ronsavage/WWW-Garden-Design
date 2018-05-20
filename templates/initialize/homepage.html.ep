@@ -352,8 +352,9 @@ function add_feature(action)
 			// Update the feature menu on the Features tab.
 
 			features_current_feature_id	= packet.message.feature_id;
-			feature_menu				= packet.feature_menu;
 			features_table				= packet.features_table;
+
+			build_feature_menu(features_current_feature_id, 'feature_menu', packet.feature_menu);
 		},
 		'json'
 	);
@@ -499,6 +500,35 @@ function build_attribute_id(kind, name, value)
 
 // -----------------------------------------------
 
+function build_feature_menu(feature_id, jquery_id, feature_menu)
+{
+	var id = '#' + jquery_id;
+
+	$(id + '_span')
+	.empty()
+	.append(feature_menu);
+
+	var data		= new Object;
+	data.item		= new Object;
+	data.item.value	= feature_id;
+
+	$(id).selectmenu();
+
+	$(id)
+	.selectmenu
+	({
+		change: function(event, data)
+		{
+			feature_menu_changed(data);
+		}
+	});
+
+	feature_menu_changed(data);
+
+} // End of build_feature_menu.
+
+// -----------------------------------------------
+
 function build_garden_menu(property_id, garden_id, jquery_id)
 {
 	// Firstly, try to find the garden_id within the property.
@@ -599,7 +629,6 @@ function build_garden_menu(property_id, garden_id, jquery_id)
 } // End of build_garden_menu.
 
 // -----------------------------------------------
-// This function is only called from submit_new_garden(), which cannot change the property menu.
 
 function build_property_menu(property_id, jquery_id, property_menu)
 {
