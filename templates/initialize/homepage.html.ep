@@ -944,6 +944,44 @@ function get_attribute_types()
 
 // -----------------------------------------------
 
+function get_design_feature()
+{
+	$.ajax
+	({
+		data:
+		{
+			design_feature: $('#design_feature').val()
+		},
+		dataType:	'text',
+		method:		'POST',
+		url:		'/GetTable/design_feature', // See routes at end of WWW::Garden::Design.startup().
+	})
+	.done(function(image_path)
+	{
+		if (image_path.length > 0)
+		{
+			$('#design_feature_thumbnail')
+			.html("<img src = '" + image_path + "'>"); // + get_design_image_size_string() + '>');
+		}
+	});
+
+} // End of get_design_feature.
+
+// -----------------------------------------------
+
+function get_design_feature_icon()
+{
+	var html = $('#design_feature_thumbnail').html();
+
+	if (html.length > 0)
+	{
+		chosen_thing = html;
+	}
+
+} // End of get_design_feature_icon.
+
+// -----------------------------------------------
+
 function get_design_flower()
 {
 	$.ajax
@@ -971,7 +1009,7 @@ function get_design_flower()
 
 function get_design_flower_icon()
 {
-	var html = $('#design_flower_thumbnail').html(); // + get_design_image_size_string() + '>');
+	var html = $('#design_flower_thumbnail').html();
 
 	if (html.length > 0)
 	{
@@ -979,46 +1017,6 @@ function get_design_flower_icon()
 	}
 
 } // End of get_design_flower_icon.
-
-// -----------------------------------------------
-
-function get_design_feature()
-{
-	$.ajax
-	({
-		data:
-		{
-			design_feature: $('#design_feature').val()
-		},
-		dataType:	'text',
-		method:		'POST',
-		url:		'/GetTable/design_feature', // See routes at end of WWW::Garden::Design.startup().
-	})
-	.done(function(image_path)
-	{
-		if (image_path.length > 0)
-		{
-			alert('feature: ' + image_path);
-
-			$('#design_feature_thumbnail')
-			.html("<img src = '" + image_path + "'>"); // + get_design_image_size_string() + '>');
-		}
-	});
-
-} // End of get_design_feature.
-
-// -----------------------------------------------
-
-function get_design_feature_icon()
-{
-	var html = $('#design_feature_thumbnail').html();
-
-	if (html.length > 0)
-	{
-		chosen_thing = html;
-	}
-
-} // End of get_design_feature_icon.
 
 // -----------------------------------------------
 
