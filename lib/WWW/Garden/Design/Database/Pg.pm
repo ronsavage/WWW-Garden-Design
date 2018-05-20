@@ -184,11 +184,8 @@ sub get_feature_by_name
 	$key			= "\U%$key"; # \U => Convert to upper-case.
 	my($sql)		= "select name from features where upper(name) like ?";
 	my(@result)		= $self -> db -> query($sql, $key) -> hashes -> each;
-
-	$self -> logger -> debug("Database.Pg.get_feature_by_name(). key: $key. results: " . Dumper(@result) );
-
-	my($icon_name)	= $self -> clean_up_icon_name($result[0]{name});
-	$icon_name		= length($icon_name) > 0 ? "$$constants{homepage_url}$$constants{icon_url}/$icon_name.png" : '';
+	my($file_name)	= $self -> clean_up_icon_name($result[0]{name});
+	$icon_name		= length($icon_name) > 0 ? "$$constants{homepage_url}$$constants{icon_url}/$file_name.png" : '';
 
 	return $icon_name;
 
@@ -205,7 +202,8 @@ sub get_flower_by_both_names
 	my(@key)		= split('/', $key);
 	my($sql)		= "select pig_latin from flowers where upper(scientific_name) like ? and upper(common_name) like ?";
 	my(@result)		= $self -> db -> query($sql, $key[0], $key[1]) -> hashes -> each;
-	my($pig_latin)	= $#result >= 0 ? "$$constants{homepage_url}$$constants{image_url}/$result[0]{pig_latin}.0.jpg" : '';
+	my($file_name)	= $result[0]{pig_latin};
+	my($pig_latin)	= $#result >= 0 ? "$$constants{homepage_url}$$constants{image_url}/$file_name.0.jpg" : '';
 
 	return $pig_latin;
 
