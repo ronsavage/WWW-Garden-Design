@@ -185,9 +185,8 @@ sub get_feature_by_name
 	my($sql)		= "select name from features where upper(name) like ?";
 	my(@result)		= $self -> db -> query($sql, $key) -> hashes -> each;
 	my($file_name)	= $self -> clean_up_icon_name($result[0]{name});
-	$icon_name		= length($icon_name) > 0 ? "$$constants{homepage_url}$$constants{icon_url}/$file_name.png" : '';
 
-	return $icon_name;
+	return length($file_name) > 0 ? "$$constants{homepage_url}$$constants{icon_url}/$file_name.png" : '';
 
 } # End of get_feature_by_name.
 
@@ -203,9 +202,8 @@ sub get_flower_by_both_names
 	my($sql)		= "select pig_latin from flowers where upper(scientific_name) like ? and upper(common_name) like ?";
 	my(@result)		= $self -> db -> query($sql, $key[0], $key[1]) -> hashes -> each;
 	my($file_name)	= $result[0]{pig_latin};
-	my($pig_latin)	= $#result >= 0 ? "$$constants{homepage_url}$$constants{image_url}/$file_name.0.jpg" : '';
 
-	return $pig_latin;
+	return length($file_name) > 0 ? "$$constants{homepage_url}$$constants{image_url}/$file_name.0.jpg" : '';
 
 } # End of get_flower_by_both_names.
 

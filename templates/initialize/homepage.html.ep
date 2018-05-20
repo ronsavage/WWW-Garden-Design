@@ -216,7 +216,51 @@ $(function()
 
 $(function()
 {
-	$('#property_name')
+	$('#new_garden_name')
+	.autocomplete
+	({
+		source:		'/AutoComplete?type=garden_name', // See routes at end of WWW::Garden::Design.startup().
+		minLength:	2,
+		select:		function(event, ui)
+		{
+			if (ui.item)
+			{
+				$('#garden_name')
+				.empty()
+				.append(ui.item.value);
+			}
+		}
+	});
+
+}); // End of autocomplete function.
+
+// -----------------------------------------------
+
+$(function()
+{
+	$('#new_property_name')
+	.autocomplete
+	({
+		source:		'/AutoComplete?type=property_name', // See routes at end of WWW::Garden::Design.startup().
+		minLength:	2,
+		select:		function(event, ui)
+		{
+			if (ui.item)
+			{
+				$('#property_name')
+				.empty()
+				.append(ui.item.value);
+			}
+		}
+	});
+
+}); // End of autocomplete function.
+
+// -----------------------------------------------
+
+$(function()
+{
+	$('#properties_property_name')
 	.autocomplete
 	({
 		source:		'/AutoComplete?type=property_name', // See routes at end of WWW::Garden::Design.startup().
@@ -2086,6 +2130,18 @@ $(function()
 	// Designs
 	// =======
 
+	$('#design_feature')
+	.blur(function()
+	{
+		get_design_feature();
+	});
+
+	$('#design_feature_thumbnail')
+	.click(function()
+	{
+		get_design_feature_icon();
+	});
+
 	$('#design_flower')
 	.blur(function()
 	{
@@ -2109,18 +2165,6 @@ $(function()
 			}
 		}
 	);
-
-	$('#design_feature')
-	.blur(function()
-	{
-		get_design_feature();
-	});
-
-	$('#design_feature_thumbnail')
-	.click(function()
-	{
-		get_design_feature_icon();
-	});
 
 	$('#design_property_menu')
 	.selectmenu
