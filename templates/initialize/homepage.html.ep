@@ -113,7 +113,7 @@
 // Storage for info read in below from the database.
 
 var attribute_types_table			= [];
-var chosen_thing					= '';	// These are the current ids within each menu, for use in Ajax calls:
+var chosen_thing					= '';	// These 2 below are the current ids within each menu, for use in Ajax calls:
 var design_current_garden_id		= 0;	// o Garden menu id on the Design tab.
 var design_current_property_id		= 0;	// o Property menu id on the Design tab.
 var features_current_feature_id		= <%== $features_current_feature_id %>;		// o Feature menu id on the Features tab.
@@ -234,7 +234,6 @@ $(function()
 
 }); // End of autocomplete function.
 
-
 // -----------------------------------------------
 
 $(function()
@@ -251,6 +250,7 @@ $(function()
 			.append(ui.item ? ui.item.value : "-");
 		}
 	});
+
 }); // End of autocomplete function.
 
 // -----------------------------------------------
@@ -961,7 +961,7 @@ function get_design_flower()
 		if (image_path.length > 0)
 		{
 			$('#design_flower_thumbnail')
-			.attr('src', image_path);
+			.html("<img src = '" + image_path + "'>");
 		}
 	});
 
@@ -971,7 +971,7 @@ function get_design_flower()
 
 function get_design_flower_icon()
 {
-	var html = $('#design_flower_thumbnail').html();
+	var html = $('#design_flower_thumbnail').html(); // + get_design_image_size_string() + '>');
 
 	if (html.length > 0)
 	{
@@ -999,7 +999,7 @@ function get_design_feature()
 		if (image_path.length > 0)
 		{
 			$('#design_feature_thumbnail')
-			.html("<img src = '" + image_path + "' " + get_design_image_size_string() + '>');
+			.html("<img src = '" + image_path + "' "); // + get_design_image_size_string() + '>');
 		}
 	});
 

@@ -174,6 +174,40 @@ sub autocomplete_list
 
 } # End of autocomplete_list.
 
+# --------------------------------------------------
+
+sub get_feature_by_name
+{
+	my($self, $key)	= @_;
+	my($constants)	= $self -> constants;
+	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
+	$key			= "\U%$key"; # \U => Convert to upper-case.
+	my($sql)		= "select name from features where upper(name) like ?";
+	my(@result)		= $self -> db -> query($sql, $key) -> hashes -> each;
+	my($icon_name)	= $self -> clean_up_icon_name($result[0]{name});
+	$icon_name		= length($icon_name) > 0 ? "$$constants{homepage_url}$$constants{icon_url}/$icon_name.png" : '';
+
+	return $icon_name;
+
+} # End of get_feature_by_name.
+
+# --------------------------------------------------
+
+sub get_flower_by_both_names
+{
+	my($self, $key)	= @_;
+	my($constants)	= $self -> constants;
+	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
+	$key			= uc $key;
+	my(@key)		= split('/', $key);
+	my($sql)		= "select pig_latin from flowers where upper(scientific_name) like ? and upper(common_name) like ?";
+	my(@result)		= $self -> db -> query($sql, $key[0], $key[1]) -> hashes -> each;
+	my($pig_latin)	= $#result >= 0 ? "$$constants{homepage_url}$$constants{image_url}/$result[0]{pig_latin}.0.jpg" : '';
+
+	return $pig_latin;
+
+} # End of get_flower_by_both_names.
+
 # -----------------------------------------------
 
 sub insert_hashref
