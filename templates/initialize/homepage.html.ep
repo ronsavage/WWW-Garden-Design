@@ -1962,8 +1962,9 @@ function update_feature(action)
 			// Update the feature menu on the Features tab.
 
 			features_current_feature_id	= packet.message.feature_id;
-			feature_menu				= packet.feature_menu;
 			features_table				= packet.features_table;
+
+			build_feature_menu(features_current_feature_id, 'feature_menu', packet.feature_menu);
 		},
 		'json'
 	);
