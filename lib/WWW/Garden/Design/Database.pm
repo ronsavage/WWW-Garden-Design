@@ -394,8 +394,6 @@ sub generate_tile
 		$$result{type}		= 'Error';
 	};
 
-	$self -> logger -> debug('Constants: ' . Dumper($constants) );
-
 	if ($$result{type} eq 'Success')
 	{
 		# If the constant 'doc_root' is present and points to a directory,

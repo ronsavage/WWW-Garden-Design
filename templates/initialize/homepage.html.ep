@@ -988,7 +988,7 @@ function get_design_flower()
 		if (image_path.length > 0)
 		{
 			$('#design_flower_thumbnail')
-			.html("<img src = '" + image_path + "' " + get_design_image_size_string() + '>');
+			.arrt('src', image_path);
 		}
 	});
 
