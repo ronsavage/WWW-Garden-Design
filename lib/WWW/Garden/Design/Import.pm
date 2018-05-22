@@ -9,6 +9,7 @@ use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 use Data::Dumper::Concise; # For Dumper().
 
 use File::Slurper qw/read_text/;
+use File::Spec;
 
 use FindBin;
 
@@ -33,7 +34,7 @@ sub populate_all_tables
 
 	$self -> db -> logger -> debug('Populating all tables');
 
-	my($path) = "$FindBin::Bin/../data/flowers.csv";
+	my($path) = File::Spec -> catfile($FindBin::Bin, '..', 'data', 'flowers.csv');
 	my($csv)  = Text::CSV::Encoded -> new
 	({
 		allow_whitespace => 1,

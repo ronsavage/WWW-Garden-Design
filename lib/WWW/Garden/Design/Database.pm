@@ -13,8 +13,6 @@ use File::Copy;
 use File::Slurper qw/read_dir/;
 use File::Spec;
 
-use FindBin;
-
 use Imager;
 use Imager::Fill;
 
