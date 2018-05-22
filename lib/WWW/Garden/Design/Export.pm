@@ -881,7 +881,7 @@ sub export_icons
 
 	for my $item (@file_names)
 	{
-		push @row, [{td => $$item[0]}, {td => mark_raw("<object data = '$$constants{homepage_url}$$constants{icon_url}/$$item[1].png'></object>")}];
+		push @row, [{td => $$item{name} }, {td => mark_raw("<object data = '$$constants{homepage_url}$$constants{icon_url}/$$item{file_name}.png'></object>")}];
 	}
 
 	push @row, [@heading];
