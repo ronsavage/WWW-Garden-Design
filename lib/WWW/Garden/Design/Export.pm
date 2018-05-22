@@ -11,6 +11,8 @@ use boolean;
 
 use Encode 'encode';
 
+use File::Spec;
+
 use WWW::Garden::Design::Database;
 use WWW::Garden::Design::Util::Config;
 
@@ -348,8 +350,9 @@ sub export_all_pages
 	my($attribute_types_table)	= $self -> db -> read_table('attribute_types');
 	my($constants)				= $self -> db -> constants;
 	my($flowers)				= $self -> db -> read_flowers_table;
+	my($target_dir)				= File::Spec -> catfile($$constants{homepage_dir}, $$constants{flower_dir});
 
-	$self -> db -> logger -> info("flower_dir: $$constants{flower_dir}");
+	$self -> db -> logger -> info("Export.export_all_pages(). Output directory: $target_dir");
 
 	# Process each flower looking for others with the same prefix.
 	# The reason for using common name here is it helps when 2
@@ -511,7 +514,7 @@ sub export_all_pages
 			];
 		}
 
-		$web_page_name = "$$constants{homepage_dir}$$constants{flower_dir}/$pig_latin.html";
+		$web_page_name = File::Spec -> catfile($$constants{homepage_dir}, $$constants{flower_dir}, "$pig_latin.html");
 
 		$self -> db -> logger -> info("Writing $web_page_name");
 
@@ -729,7 +732,7 @@ sub export_garden_layout
 		y				=> $grid -> height,							# Pixel co-ord.
 	);
 
-	my($file_name) = "$$constants{homepage_dir}$$constants{flower_url}/$garden_name.garden.layout.svg";
+	my($file_name) = File::Spec -> catfile($$constants{homepage_dir}, $$constants{flower_dir}, "$garden_name.garden.layout.svg");
 
 	$self -> db -> logger -> info("Writing to $file_name");
 
@@ -836,7 +839,7 @@ $tips
 </html>
 EOS
 
-	$file_name = "$$constants{homepage_dir}$$constants{flower_url}/$garden_name.garden.layout.html";
+	$file_name = File::Spec -> catfile($$constants{homepage_dir}, $$constants{flower_dir}, "$garden_name.garden.layout.html");
 
 	$self -> db -> logger -> info("Writing to $file_name");
 
@@ -855,8 +858,9 @@ sub export_icons
 	my($self)			= @_;
 	my($constants)		= $self -> db -> constants;
 	my($features_table)	= $self -> db -> read_features_table;
+	my($target_dir)		= File::Spec -> catfile($$constants{homepage_dir}, $$constants{flower_dir});
 
-	$self -> db -> logger -> info("flower_dir: $$constants{flower_dir}");
+	$self -> db -> logger -> info("Export.export_icons(). Output directory: $target_dir");
 
 	my(@file_names);
 
@@ -882,7 +886,7 @@ sub export_icons
 
 	push @row, [@heading];
 
-	my($file_name) = "$$constants{homepage_dir}$$constants{icon_dir}/features.html";
+	my($file_name) = File::Spec -> catfile($$constants{homepage_dir}, $$constants{icon_dir}, 'features.html');
 
 	open(my $fh, '>', $file_name) || die "Can't open: $file_name: $!\n";
 	print $fh $tx -> render

@@ -2114,6 +2114,9 @@ $(function()
 	({
 		change:				function(color)
 							{
+								$('#new_color_code')
+								.val(color.toHexString() ); // Make code visible to the user.
+
 								$('#new_color_chosen')
 								.val(color.toHexString() ); // Put color in hidden form field for submit.
 
@@ -2229,19 +2232,6 @@ $(function()
 		change: function(event, data)
 		{
 			feature_menu_changed(data);
-		}
-	});
-
-	// If the Features tab is selected, give the focus to the feature name.
-	// TODO: (a) Does this do anything? and (b) Do other tabs have the same sort of code?
-
-	$('#global_feature_tab')
-	.tabs
-	({
-		activate: function(event, ui)
-		{
-			$('#feature_name')
-			.focus();
 		}
 	});
 

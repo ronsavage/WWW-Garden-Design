@@ -7,6 +7,8 @@ use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 use open      qw(:std :utf8); # Undeclared streams in UTF-8.
 
+use File::Spec;
+
 use Getopt::Long;
 
 use WWW::Garden::Design::Database::Pg;
@@ -57,7 +59,7 @@ sub crosscheck
 	my($homepage_dir)	= $constants{homepage_dir};
 	my($homepage_url)	= $constants{homepage_url};
 	my($image_dir)		= $constants{image_dir};
-	my($image_path)		= "$homepage_dir$image_dir";
+	my($image_path)		= File::Spec -> catfile($homepage_dir, $image_dir);
 	my($flowers)		= $self -> read_flowers_table;
 
 	# Read in the actual file names.
@@ -65,7 +67,7 @@ sub crosscheck
 	my(%file_list);
 
 	my(@entries)						= read_dir $image_path;
-	@entries							= sort grep{! -d "$image_path/$_"} @entries; # Can't call sort directly on output of read_dir!
+	@entries							= sort grep{! -d File::Spec -> catfile($image_path, $_)} @entries; # Can't call sort directly on output of read_dir!
 	$file_list{file_names}				= [@entries];
 	@{$file_list{name_hash} }{@entries}	= (1) x @entries;
 
@@ -78,6 +80,7 @@ sub crosscheck
 	my($pig_latin);
 	my(%real_name);
 	my($scientific_name);
+	my($target_dir);
 
 	for my $flower (@$flowers)
 	{
@@ -94,7 +97,8 @@ sub crosscheck
 
 		for $image (@{$$flower{images} })
 		{
-			$file_name				= $$image{file_name} =~ s/\Q$homepage_url$image_dir\/\E//r;
+			$target_dir				= File::Spec -> catdir($homepage_url, $image_dir);
+			$file_name				= $$image{file_name} =~ s/\Q$target_dir\/\E//r;
 			$real_name{$file_name}	= 1;
 
 			if (! $file_list{name_hash}{$file_name})

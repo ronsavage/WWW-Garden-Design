@@ -11,6 +11,7 @@ use Data::Dumper::Concise; # For Dumper().
 
 use File::Copy;
 use File::Slurper qw/read_dir/;
+use File::Spec;
 
 use FindBin;
 
@@ -396,7 +397,7 @@ sub generate_tile
 	$image -> box(fill => $fill);
 	$self -> shrink_string($$constants{cell_width}, $$constants{cell_height}, $image, $name);
 
-	my($icon_name)	= "$$feature{icon_dir}/$file_name.png";
+	my($icon_name)	= File::Spec -> catfile($$feature{icon_dir}, "$file_name.png");
 	my($result)		=
 	{
 		name		=> $name,
@@ -425,7 +426,7 @@ sub generate_tile
 
 		if ($doc_root && -d $doc_root)
 		{
-			my($icon_dest) = "$$constants{doc_root}/$$constants{icon_dir}/$file_name.png";
+			my($icon_dest) = File::Spec -> catfile($$constants{doc_root}, $$constants{icon_dir}, "$file_name.png");
 
 			if (copy($icon_name, $icon_dest) == 0)
 			{
@@ -1193,7 +1194,7 @@ sub read_features_table
 			$$record{$key} = $$feature{$key};
 		}
 
-		$$record{icon_dir}	= "$$constants{homepage_dir}$$constants{icon_dir}";
+		$$record{icon_dir}	= File::Spec -> catfile($$constants{homepage_dir}, $$constants{icon_dir});
 		$$record{icon_file}	= $self -> clean_up_icon_name($$feature{name});
 		$$record{icon_url}	= "$$constants{homepage_url}$$constants{icon_url}/$$record{icon_file}.png";
 
