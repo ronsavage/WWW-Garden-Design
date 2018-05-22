@@ -240,7 +240,7 @@ The Search Engine is started by the Mojolicious command scripts/start.sh:
 
 	scripts/flowers daemon -clients 2 -listen http://*:3008 &
 
-Which runs scripts/flowers:
+Which runs scripts/hypnotoad.pl:
 
 	#!/usr/bin/env perl
 
