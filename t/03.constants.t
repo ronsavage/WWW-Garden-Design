@@ -92,6 +92,7 @@ my($expected_constants) =
 	css_class4headings		=> 'black_on_reddish_title',
 	design_thumbnail_size	=> 'Integer',
 	detail_thumbnail_size	=> 'Integer',
+	doc_root				=> '/run/shm/html',
 	flower_dir				=> 'Flowers',
 	flower_url				=> '/Flowers',
 	flower_url4js			=> '/Flowers',
