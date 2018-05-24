@@ -184,7 +184,7 @@ sub get_feature_by_name
 	$key			= "\U%$key"; # \U => Convert to upper-case.
 	my($sql)		= "select name from features where upper(name) like ?";
 	my(@result)		= $self -> db -> query($sql, $key) -> hashes -> each;
-	my($file_name)	= $self -> clean_up_icon_name($result[0]{name});
+	my($file_name)	= ($#result >= 0) ? $self -> clean_up_icon_name($result[0]{name}) : '';
 
 	return length($file_name) > 0 ? "$$constants{homepage_url}$$constants{icon_url}/$file_name.png" : '';
 
@@ -201,7 +201,7 @@ sub get_flower_by_both_names
 	my(@key)		= split('/', $key);
 	my($sql)		= "select pig_latin from flowers where upper(scientific_name) like ? and upper(common_name) like ?";
 	my(@result)		= $self -> db -> query($sql, $key[0], $key[1]) -> hashes -> each;
-	my($file_name)	= $result[0]{pig_latin};
+	my($file_name)	= ($#result >= 0) ? $result[0]{pig_latin} : '';
 
 	return length($file_name) > 0 ? "$$constants{homepage_url}$$constants{image_url}/$file_name.0.jpg" : '';
 
