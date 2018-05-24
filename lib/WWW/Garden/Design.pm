@@ -382,6 +382,10 @@ or run:
 	make test
 	make install
 
+=head1 References
+
+L<HumaneJS|http://wavded.github.com/humane-js/> - A simple, modern, browser notification system.
+
 =head1 Machine-Readable Change Log
 
 The file Changes was converted into Changelog.ini by L<Module::Metadata::Changes>.

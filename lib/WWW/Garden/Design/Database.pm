@@ -368,7 +368,7 @@ sub format_height_width
 } # End of format_height_width.
 
 # -----------------------------------------------
-# Using "<span class = 'centered $class'>$$result{type}</span>" only centers it within the span 'garden_result_div'.
+# The cooked message is now not used, since I adopted humane-js.
 
 sub format_raw_message
 {
@@ -874,10 +874,14 @@ sub process_feature
 		}
 	}
 
+	$self -> logger -> info("Type: $$result{type}. $$result{raw}");
+
+	$id = defined($$result{feature_id}) ? $$result{feature_id} : 0;
+
 	return
 	{
 		message			=> $self -> format_raw_message($result),
-		feature_menu	=> $self -> build_feature_menu($features_table, $$result{feature_id}),
+		feature_menu	=> $self -> build_feature_menu($features_table, $id),
 		features_table	=> $features_table,
 		tile_status		=> $tile_status,
 	};
@@ -999,10 +1003,7 @@ sub process_garden
 		$result = {raw => "Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
 	}
 
-	if ($$result{type} eq 'Error')
-	{
-		$self -> app -> log -> error($$result{raw});
-	}
+	$self -> logger -> info("Type: $$result{type}. $$result{raw}");
 
 	$gardens_table = $self -> read_gardens_table;
 
@@ -1150,11 +1151,15 @@ sub process_property
 		$result = {raw => "Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
 	}
 
+	$self -> logger -> info("Type: $$result{type}. $$result{raw}");
+
+	$id = defined($$result{property_id}) ? $$result{property_id} : 0;
+
 	return
 	{
 		properties_table	=> $self -> read_properties_table,
 		message				=> $self -> format_raw_message($result),
-		property_menu		=> $self -> build_properties_property_menu($self -> read_table('properties'), 'properties_property_menu', $$result{property_id}),
+		property_menu		=> $self -> build_properties_property_menu($self -> read_table('properties'), 'properties_property_menu', $id),
 	};
 
 } # End of process_property.

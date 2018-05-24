@@ -61,12 +61,6 @@
 			<td colspan = '3'><hr /></td>
 		</tr>
 		<tr>
-			<td colspan = '3'>Messages: <span id = 'garden_result_div'></span></td>
-		</tr>
-		<tr>
-			<td colspan = '3'><hr /></td>
-		</tr>
-		<tr>
 			<td width = '33%'></td>
 			<td align = 'center'><div class = 'blue_centered'>Add a New Garden</div></td>
 			<td width = '33%'></td>
