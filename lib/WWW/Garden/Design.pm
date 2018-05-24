@@ -153,10 +153,10 @@ sub initialize_defaults
 
 	$self -> defaults($defaults);
 
-	$self -> app -> log -> debug("properties_current_property_id: $$defaults{properties_current_property_id}");
-	$self -> app -> log -> debug("gardens_current_property_id_1: $$defaults{gardens_current_property_id_1}");
-	$self -> app -> log -> debug("gardens_current_garden_id: $$defaults{gardens_current_garden_id}");
-	$self -> app -> log -> debug("features_current_feature_id: $$defaults{features_current_feature_id}");
+	#$self -> app -> log -> debug("properties_current_property_id: $$defaults{properties_current_property_id}");
+	#$self -> app -> log -> debug("gardens_current_property_id_1: $$defaults{gardens_current_property_id_1}");
+	#$self -> app -> log -> debug("gardens_current_garden_id: $$defaults{gardens_current_garden_id}");
+	#$self -> app -> log -> debug("features_current_feature_id: $$defaults{features_current_feature_id}");
 
 } # End of initialize_defaults.
 

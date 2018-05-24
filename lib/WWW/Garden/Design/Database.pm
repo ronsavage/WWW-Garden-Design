@@ -86,7 +86,7 @@ sub analyze_gardens_property_menu
 {
 	my($self, $gardens_table, $default_id) = @_;
 
-	$self -> logger -> debug("Database.analyze_gardens_property_menu(). Entered");
+	#$self -> logger -> debug("Database.analyze_gardens_property_menu(). Entered");
 
 	my(%property_name);
 
@@ -131,7 +131,7 @@ sub build_garden_menu
 {
 	my($self, $controller, $gardens_table, $jquery_id) = @_;
 
-	$self -> logger -> debug('Database.build_garden_menu(). Entered');
+	#$self -> logger -> debug('Database.build_garden_menu(). Entered');
 
 	my($property_id)	= $self -> analyze_gardens_property_menu($gardens_table, 0);
 	my($found)			= false;
@@ -168,7 +168,7 @@ sub build_gardens_property_menu
 {
 	my($self, $controller, $gardens_table, $jquery_id, $default_id) = @_;
 
-	$self -> logger -> debug("Database.build_gardens_property_menu(default_id: $default_id). Entered");
+	#$self -> logger -> debug("Database.build_gardens_property_menu(default_id: $default_id). Entered");
 
 	my(%property_name);
 
@@ -523,7 +523,7 @@ sub parse_attribute_checkboxes
 {
 	my($self, $defaults, $search_attributes)	= @_;
 
-	$self -> logger -> debug('Database.parse_attribute_checkboxes()');
+	#$self -> logger -> debug('Database.parse_attribute_checkboxes()');
 
 	my($attribute_type_names)					= $$defaults{attribute_type_names};
 	my($attribute_type_fields)					= $$defaults{attribute_type_fields};
@@ -578,7 +578,7 @@ sub parse_search_attributes
 {
 	my($self, $defaults, $search_attributes) = @_;
 
-	$self -> logger -> debug('Database.parse_search_attributes()');
+	#$self -> logger -> debug('Database.parse_search_attributes()');
 
 	my($checkboxes)			= $self -> parse_attribute_checkboxes($defaults, $search_attributes);
 	my(@type_names)			= keys %$checkboxes;
@@ -652,7 +652,7 @@ sub parse_search_text
 {
 	my($self, $search_text)	= @_;
 
-	$self -> logger -> debug("Database.parse_search_text($search_text)");
+	#$self -> logger -> debug("Database.parse_search_text($search_text)");
 
 	my($request) =
 	{
@@ -710,7 +710,7 @@ sub process_feature
 {
 	my($self, $item) = @_;
 
-	$self -> logger -> debug('Database.process_feature(...)');
+	#$self -> logger -> debug('Database.process_feature(...)');
 
 	my($action)			= $$item{action};
 	my($id)				= $$item{id};
@@ -757,7 +757,7 @@ sub process_feature
 				{returning => 'id'}
 			) -> hash -> {id};
 
-			$self -> logger -> debug("Table: $table_name. Record id: $id. Feature: $name. Action: $action");
+			$self -> logger -> info("Table: $table_name. Record id: $id. Feature: $name. Action: $action");
 
 			$result = {feature_id => $id, raw => "Added feature: $name", type => 'Success'};
 		}
@@ -790,7 +790,7 @@ sub process_feature
 			{
 				my($note) = "Feature not deleted because it is used in some gardens";
 
-				$self -> logger -> debug("Table: $table_name. Record id: $id. Feature: $name. $note");
+				$self -> logger -> info("Table: $table_name. Record id: $id. Feature: $name. $note");
 
 				$result = {raw => $note, type => 'Error'};
 			}
@@ -802,7 +802,7 @@ sub process_feature
 					{id => $$item{id} }
 				);
 
-				$self -> logger -> debug("Table: $table_name. Record id: $id. Feature: $name. Action: $action");
+				$self -> logger -> info("Table: $table_name. Record id: $id. Feature: $name. Action: $action");
 
 				$result = {raw => "Action $action", type => 'Success'};
 			}
@@ -832,7 +832,7 @@ sub process_feature
 				{id => $$item{id} }
 			);
 
-			$self -> logger -> debug("Table: $table_name. Record id '$id'. Feature: $name. Action: $action");
+			$self -> logger -> info("Table: $table_name. Record id '$id'. Feature: $name. Action: $action");
 
 			$result = {feature_id => $$item{id}, raw => "Action: $action", type => 'Success'};
 		}
@@ -890,7 +890,7 @@ sub process_garden
 {
 	my($self, $controller, $item) = @_;
 
-	$self -> logger -> debug('Database.process_garden(...)');
+	#$self -> logger -> debug('Database.process_garden(...)');
 
 	my($action)			= $$item{action};
 	my($garden_name)	= $$item{name};
@@ -932,7 +932,7 @@ sub process_garden
 				{returning => 'id'}
 			) -> hash -> {id};
 
-			$self -> logger -> debug("Table: $table_name. Record id: $id. Action: $action. Property: $property_name. Garden: $garden_name");
+			$self -> logger -> info("Table: $table_name. Record id: $id. Action: $action. Property: $property_name. Garden: $garden_name");
 
 			$result = {garden_id => $id, raw => "Added garden: $garden_name", type => 'Success'};
 		}
@@ -956,7 +956,7 @@ sub process_garden
 
 			my($message) = "Action: $action";
 
-			$self -> logger -> debug("Table '$table_name'. Record id '$id'. $message");
+			$self -> logger -> info("Table '$table_name'. Record id '$id'. $message");
 
 			$result = {raw => $message, type => 'Success'};
 		}
@@ -985,7 +985,7 @@ sub process_garden
 				{id => $$item{id} }
 			);
 
-			$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Garden: $garden_name. Action: $action");
+			$self -> logger -> info("Table: $table_name. Record id: $id. Property: $property_name. Garden: $garden_name. Action: $action");
 
 			$result = {garden_id => $$item{id}, raw => "Action: $action", type => 'Success'};
 		}
@@ -1021,7 +1021,7 @@ sub process_property
 {
 	my($self, $item) = @_;
 
-	$self -> logger -> debug('Database.process_property(...)');
+	#$self -> logger -> debug('Database.process_property(...)');
 
 	my($action)				= $$item{action};
 	my($id)					= $$item{id};
@@ -1061,7 +1061,7 @@ sub process_property
 				{returning => 'id'}
 			) -> hash -> {id};
 
-			$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
+			$self -> logger -> info("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
 
 			$result = {property_id => $id, raw => "Added property: $property_name", type => 'Success'};
 		}
@@ -1094,7 +1094,7 @@ sub process_property
 			{
 				my($note) = "Property not deleted because it has gardens";
 
-				$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. $note");
+				$self -> logger -> info("Table: $table_name. Record id: $id. Property: $property_name. $note");
 
 				$result = {raw => $note, type => 'Error'};
 			}
@@ -1106,7 +1106,7 @@ sub process_property
 					{id => $$item{id} }
 				);
 
-				$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
+				$self -> logger -> info("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
 
 				$result = {raw => "Action $action", type => 'Success'};
 			}
@@ -1136,7 +1136,7 @@ sub process_property
 				{id => $$item{id} }
 			);
 
-			$self -> logger -> debug("Table: $table_name. Record id '$id'. Property: $property_name. Action: $action");
+			$self -> logger -> info("Table: $table_name. Record id '$id'. Property: $property_name. Action: $action");
 
 			$result = {property_id => $$item{id}, raw => "Action: $action", type => 'Success'};
 		}

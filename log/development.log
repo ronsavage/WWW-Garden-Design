@@ -1,0 +1,111 @@
+[Thu May 24 11:11:11 2018] [debug] Database.build_gardens_property_menu(default_id: 0). Entered
+[Thu May 24 11:11:11 2018] [debug] Database.build_garden_menu(). Entered
+[Thu May 24 11:11:11 2018] [debug] Database.analyze_gardens_property_menu(). Entered
+[Thu May 24 11:11:11 2018] [debug] Database.build_gardens_property_menu(default_id: 0). Entered
+[Thu May 24 11:11:11 2018] [debug] Database.build_garden_menu(). Entered
+[Thu May 24 11:11:11 2018] [debug] Database.analyze_gardens_property_menu(). Entered
+[Thu May 24 11:11:11 2018] [debug] properties_current_property_id: 1
+[Thu May 24 11:11:11 2018] [debug] gardens_current_property_id_1: 1
+[Thu May 24 11:11:11 2018] [debug] gardens_current_garden_id: 1
+[Thu May 24 11:11:11 2018] [debug] features_current_feature_id: 1
+[Thu May 24 11:11:11 2018] [info] Listening at "http://localhost:3008"
+[Thu May 24 11:11:58 2018] [info] ------------------------------
+[Thu May 24 11:11:58 2018] [debug] GET "/AutoComplete"
+[Thu May 24 11:11:58 2018] [debug] Routing to controller "WWW::Garden::Design::Controller::AutoComplete" and action "display"
+[Thu May 24 11:11:58 2018] [debug] AutoComplete.display(key: Demo, type: property_name)
+[Thu May 24 11:11:58 2018] [debug] Database.Pg.autocomplete_item(... key: DEMO. type: property_name). Entered
+[Thu May 24 11:11:58 2018] [debug] 200 OK (0.004416s, 226.449/s)
+[Thu May 24 11:12:01 2018] [info] ------------------------------
+[Thu May 24 11:12:01 2018] [debug] POST "/Property"
+[Thu May 24 11:12:01 2018] [debug] Routing to controller "WWW::Garden::Design::Controller::Property" and action "process"
+[Thu May 24 11:12:01 2018] [debug] Property.process()
+[Thu May 24 11:12:01 2018] [debug] param(action) => add
+[Thu May 24 11:12:01 2018] [debug] param(description) => 
+[Thu May 24 11:12:01 2018] [debug] param(id) => 0
+[Thu May 24 11:12:01 2018] [debug] param(name) => Demo
+[Thu May 24 11:12:01 2018] [debug] param(publish) => No
+[Thu May 24 11:12:01 2018] [debug] Database.process_property(...)
+[Thu May 24 11:12:01 2018] [debug] Table: properties. Record id: 3. Property: Demo. Action: add
+[Thu May 24 11:12:01 2018] [debug] 200 OK (0.021464s, 46.590/s)
+[Thu May 24 11:12:11 2018] [info] ------------------------------
+[Thu May 24 11:12:11 2018] [debug] GET "/AutoComplete"
+[Thu May 24 11:12:11 2018] [debug] Routing to controller "WWW::Garden::Design::Controller::AutoComplete" and action "display"
+[Thu May 24 11:12:11 2018] [debug] AutoComplete.display(key: Display, type: garden_name)
+[Thu May 24 11:12:11 2018] [debug] Database.Pg.autocomplete_item(... key: DISPLAY. type: garden_name). Entered
+[Thu May 24 11:12:11 2018] [debug] 200 OK (0.002437s, 410.341/s)
+[Thu May 24 11:12:12 2018] [info] ------------------------------
+[Thu May 24 11:12:12 2018] [debug] GET "/AutoComplete"
+[Thu May 24 11:12:12 2018] [debug] Routing to controller "WWW::Garden::Design::Controller::AutoComplete" and action "display"
+[Thu May 24 11:12:12 2018] [debug] AutoComplete.display(key: Display , type: garden_name)
+[Thu May 24 11:12:12 2018] [debug] Database.Pg.autocomplete_item(... key: DISPLAY . type: garden_name). Entered
+[Thu May 24 11:12:12 2018] [debug] 200 OK (0.00179s, 558.659/s)
+[Thu May 24 11:12:13 2018] [info] ------------------------------
+[Thu May 24 11:12:13 2018] [debug] GET "/AutoComplete"
+[Thu May 24 11:12:13 2018] [debug] Routing to controller "WWW::Garden::Design::Controller::AutoComplete" and action "display"
+[Thu May 24 11:12:13 2018] [debug] AutoComplete.display(key: Display garden, type: garden_name)
+[Thu May 24 11:12:13 2018] [debug] Database.Pg.autocomplete_item(... key: DISPLAY GARDEN. type: garden_name). Entered
+[Thu May 24 11:12:13 2018] [debug] 200 OK (0.002307s, 433.463/s)
+[Thu May 24 11:12:15 2018] [info] ------------------------------
+[Thu May 24 11:12:15 2018] [debug] POST "/Garden"
+[Thu May 24 11:12:15 2018] [debug] Routing to controller "WWW::Garden::Design::Controller::Garden" and action "process"
+[Thu May 24 11:12:15 2018] [debug] Garden.process()
+[Thu May 24 11:12:15 2018] [debug] param(action) => add
+[Thu May 24 11:12:15 2018] [debug] param(description) => 
+[Thu May 24 11:12:15 2018] [debug] param(id) => 0
+[Thu May 24 11:12:15 2018] [debug] param(name) => Display garden
+[Thu May 24 11:12:15 2018] [debug] param(property_id) => 3
+[Thu May 24 11:12:15 2018] [debug] param(property_name) => Demo
+[Thu May 24 11:12:15 2018] [debug] param(publish) => No
+[Thu May 24 11:12:15 2018] [debug] Database.process_garden(...)
+[Thu May 24 11:12:15 2018] [debug] Table: gardens. Record id: 3. Action: add. Property: Demo. Garden: Display garden
+[Thu May 24 11:12:15 2018] [debug] Database.build_gardens_property_menu(default_id: 3). Entered
+[Thu May 24 11:12:15 2018] [debug] 200 OK (0.044794s, 22.324/s)
+[Thu May 24 11:12:26 2018] [info] ------------------------------
+[Thu May 24 11:12:26 2018] [debug] GET "/AutoComplete"
+[Thu May 24 11:12:26 2018] [debug] Routing to controller "WWW::Garden::Design::Controller::AutoComplete" and action "display"
+[Thu May 24 11:12:26 2018] [debug] AutoComplete.display(key: New gard, type: garden_name)
+[Thu May 24 11:12:26 2018] [debug] Database.Pg.autocomplete_item(... key: NEW GARD. type: garden_name). Entered
+[Thu May 24 11:12:26 2018] [debug] 200 OK (0.00148s, 675.676/s)
+[Thu May 24 11:12:26 2018] [info] ------------------------------
+[Thu May 24 11:12:26 2018] [debug] GET "/AutoComplete"
+[Thu May 24 11:12:26 2018] [debug] Routing to controller "WWW::Garden::Design::Controller::AutoComplete" and action "display"
+[Thu May 24 11:12:26 2018] [debug] AutoComplete.display(key: New garden, type: garden_name)
+[Thu May 24 11:12:26 2018] [debug] Database.Pg.autocomplete_item(... key: NEW GARDEN. type: garden_name). Entered
+[Thu May 24 11:12:26 2018] [debug] 200 OK (0.002329s, 429.369/s)
+[Thu May 24 11:12:28 2018] [info] ------------------------------
+[Thu May 24 11:12:28 2018] [debug] POST "/Garden"
+[Thu May 24 11:12:28 2018] [debug] Routing to controller "WWW::Garden::Design::Controller::Garden" and action "process"
+[Thu May 24 11:12:28 2018] [debug] Garden.process()
+[Thu May 24 11:12:28 2018] [debug] param(action) => add
+[Thu May 24 11:12:28 2018] [debug] param(description) => 
+[Thu May 24 11:12:28 2018] [debug] param(id) => 0
+[Thu May 24 11:12:28 2018] [debug] param(name) => New garden
+[Thu May 24 11:12:28 2018] [debug] param(property_id) => 3
+[Thu May 24 11:12:28 2018] [debug] param(property_name) => Demo
+[Thu May 24 11:12:28 2018] [debug] param(publish) => No
+[Thu May 24 11:12:28 2018] [debug] Database.process_garden(...)
+[Thu May 24 11:12:28 2018] [debug] Table: gardens. Record id: 4. Action: add. Property: Demo. Garden: New garden
+[Thu May 24 11:12:28 2018] [debug] Database.build_gardens_property_menu(default_id: 3). Entered
+[Thu May 24 11:12:28 2018] [debug] 200 OK (0.256698s, 3.896/s)
+[Thu May 24 11:12:31 2018] [info] ------------------------------
+[Thu May 24 11:13:10 2018] [info] ------------------------------
+[Thu May 24 11:13:10 2018] [debug] POST "/Feature"
+[Thu May 24 11:13:10 2018] [debug] Routing to controller "WWW::Garden::Design::Controller::Feature" and action "process"
+[Thu May 24 11:13:10 2018] [debug] Feature.process()
+[Thu May 24 11:13:10 2018] [debug] param(action) => add
+[Thu May 24 11:13:10 2018] [debug] param(color_chosen) => #948a8a
+[Thu May 24 11:13:10 2018] [debug] param(color_code) => #948a8a
+[Thu May 24 11:13:10 2018] [debug] param(color_name) => 
+[Thu May 24 11:13:10 2018] [debug] param(id) => 0
+[Thu May 24 11:13:10 2018] [debug] param(name) => Birdcage
+[Thu May 24 11:13:10 2018] [debug] param(publish) => No
+[Thu May 24 11:13:10 2018] [debug] Database.process_feature(...)
+[Thu May 24 11:13:10 2018] [debug] Table: features. Record id: 36. Feature: Birdcage. Action: add
+[Thu May 24 11:13:10 2018] [debug] Copy /home/ron/savage.net.au/Flowers/icons/Birdcage.png to /run/shm/html/Flowers/icons/Birdcage.png
+[Thu May 24 11:13:10 2018] [debug] 200 OK (0.052802s, 18.939/s)
+[Thu May 24 11:13:13 2018] [info] ------------------------------
+[Thu May 24 11:13:13 2018] [debug] GET "/AutoComplete"
+[Thu May 24 11:13:13 2018] [debug] Routing to controller "WWW::Garden::Design::Controller::AutoComplete" and action "display"
+[Thu May 24 11:13:13 2018] [debug] AutoComplete.display(key: Birdcage, type: feature_name)
+[Thu May 24 11:13:13 2018] [debug] Database.Pg.autocomplete_list(... key: BIRDCAGE. type: feature_name). Entered
+[Thu May 24 11:13:13 2018] [debug] 200 OK (0.001121s, 892.061/s)
