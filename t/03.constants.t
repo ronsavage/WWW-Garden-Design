@@ -5,8 +5,6 @@ use warnings;
 
 use FindBin;
 
-use Mojolicious::Validator;
-
 use Test::More;
 
 use Text::CSV::Encoded;
