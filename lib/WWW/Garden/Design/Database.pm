@@ -776,11 +776,11 @@ sub process_feature
 			# It's a feature delete. But is this feature used in any gardens?
 
 			my($found)			= false;
-			my($feature_table)	= $self -> read_table('features');
+			my($feature_table)	= $self -> read_table('feature_locations');
 
 			for my $feature (@$feature_table)
 			{
-				if ($$feature{property_id} == $$item{id})
+				if ($$feature{feature_id} == $$item{id})
 				{
 					$found = true;
 				}
@@ -804,12 +804,21 @@ sub process_feature
 
 				$self -> logger -> info("Table: $table_name. Record id: $id. Feature: $name. Action: $action");
 
-				$result = {raw => "Action $action", type => 'Success'};
+				# After a delete we default the id to the feature whose name is 1st sorted alphabetically.
+
+				my($min_id) = 999_999;
+
+				for (@$features_table)
+				{
+					$min_id = $$_{id} if ($$_{id} < $min_id); # We hope somebody's home :-).
+				}
+
+				$result = {id => $min_id, raw => "Action $action", type => 'Success'};
 			}
 		}
 		else
 		{
-			$result = {raw => "Cannot update the database. That record was not found", type => 'Error'};
+			$result = {raw => "Cannot update the database. That feature was not found", type => 'Error'};
 		}
 	}
 	elsif ($action eq 'update')
@@ -838,7 +847,7 @@ sub process_feature
 		}
 		else
 		{
-			$result = {raw => "Cannot update the database. That record was not found", type => 'Error'};
+			$result = {raw => "Cannot update the database. That feature was not found", type => 'Error'};
 		}
 	}
 	else
@@ -966,7 +975,7 @@ sub process_garden
 		}
 		else
 		{
-			$result = {raw => "Cannot update the database. That record was not found", type => 'Error'};
+			$result = {raw => "Cannot update the database. That garden was not found", type => 'Error'};
 		}
 	}
 	elsif ($action eq 'update')
@@ -995,7 +1004,7 @@ sub process_garden
 		}
 		else
 		{
-			$result = {raw => 'Cannot update the database. That record was not found', type => 'Error'};
+			$result = {raw => 'Cannot update the database. That garden was not found', type => 'Error'};
 		}
 	}
 	else
@@ -1114,7 +1123,7 @@ sub process_property
 		}
 		else
 		{
-			$result = {raw => "Cannot update the database. That record was not found", type => 'Error'};
+			$result = {raw => "Cannot update the database. That property was not found", type => 'Error'};
 		}
 	}
 	elsif ($action eq 'update')
@@ -1143,7 +1152,7 @@ sub process_property
 		}
 		else
 		{
-			$result = {raw => "Cannot update the database. That record was not found", type => 'Error'};
+			$result = {raw => "Cannot update the database. That property was not found", type => 'Error'};
 		}
 	}
 	else

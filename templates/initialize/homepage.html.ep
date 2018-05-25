@@ -308,7 +308,7 @@ function add_feature(action)
 
 	if ( (color_chosen == '') || (name == '') )
 	{
-		alert('Error: Both the color name and feature name are mandatory');
+		user_message('Both the color name and feature name are mandatory', 'Error');
 
 		return;
 	}
@@ -357,7 +357,7 @@ function add_garden()
 
 	if (name == '')
 	{
-		alert('Error: The garden name is mandatory');
+		user_message('The garden name is mandatory', 'Error');
 
 		return;
 	}
@@ -419,7 +419,7 @@ function add_property(action)
 
 	if (name == '')
 	{
-		alert('Error: The property name is mandatory');
+		user_message('The property name is mandatory', 'Error');
 
 		return;
 	}
@@ -784,7 +784,7 @@ function confirm_design_save()
 
 	if (thing_count == 0)
 	{
-		alert('No thumbnails planted in the virtual garden!');
+		user_message('No thumbnails planted in the virtual garden!', 'Error');
 	}
 	else
 	{
@@ -1848,7 +1848,7 @@ function update_feature(action)
 
 	if ( (color_chosen == '') || (name == '') )
 	{
-		alert('Error: Both the color name and feature name are mandatory');
+		user_message('Both the color name and feature name are mandatory', 'Error');
 
 		return;
 	}
@@ -1883,17 +1883,16 @@ function update_feature(action)
 			{
 				$('#feature_icon')
 				.attr('src', packet.tile_status.file_url);
+
+				// Update the feature menu on the Features tab.
+
+				features_current_feature_id	= packet.message.feature_id;
+				features_table				= packet.features_table;
+
+				build_feature_menu(features_current_feature_id, 'feature_menu', packet.feature_menu);
+
+				set_feature_fields(0);
 			}
-
-			// Update the feature menu on the Gardens tab.
-			// We do this because an existing feature may have been renamed.
-
-			features_current_feature_id	= packet.message.feature_id;
-			features_table				= packet.features_table;
-
-			build_feature_menu(features_current_feature_id, 'feature_menu', packet.feature_menu);
-
-			set_garden_fields_1(index);
 
 			user_feedback(packet.message);
 		},
@@ -1910,7 +1909,7 @@ function update_garden(action)
 
 	if (name == '')
 	{
-		alert('Error: The garden name is mandatory');
+		user_message('The garden name is mandatory', 'Error');
 
 		return;
 	}
@@ -1968,7 +1967,7 @@ function update_property(action)
 
 	if (name == '')
 	{
-		alert('Error: The property name is mandatory');
+		user_message('The property name is mandatory', 'Error');
 
 		return;
 	}
@@ -1987,7 +1986,7 @@ function update_property(action)
 
 	if ( (action == 'delete') && (has_gardens == true) )
 	{
-		alert('Error: You cannot delete a property which has gardens');
+		user_message('You cannot delete a property which has gardens', 'Error');
 
 		return;
 	}
@@ -2075,6 +2074,18 @@ function user_feedback(message)
 	}
 
 } // End of user_feedback.
+
+// -----------------------------------------------
+
+function user_message(message, type)
+{
+	var obj		= new Object;
+	obj.raw		= message;
+	obj.type	= type;
+
+	user_feedback(obj);
+
+} // End of user_message.
 
 // -----------------------------------------------
 
