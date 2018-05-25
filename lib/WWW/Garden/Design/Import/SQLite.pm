@@ -1,23 +1,48 @@
-package WWW::Garden::Design::Database::Base;
+package WWW::Garden::Design::Import::SQLite;
+
+use Moo;
+
+with 'WWW::Garden::Design::Import';
 
 use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
-use Moo;
+use Data::Dumper::Concise; # For Dumper().
 
-use Types::Standard qw/Object/;
+use Mojo::Log;
 
-extends 'WWW::Garden::Design::Util::Config';
+use Types::Standard qw/HashRef/;
 
-has db =>
+use WWW::Garden::Design::Database::SQLite;
+use WWW::Garden::Design::Util::Config;
+
+has config =>
 (
-	is       => 'rw',
-	isa      => Object, # 'WWW::Garden::Design::Database'.
-	required => 0,
+	default		=> sub{WWW::Garden::Design::Util::Config -> new -> config},
+	is			=> 'rw',
+	isa			=> HashRef,
+	required	=> 0,
 );
 
 our $VERSION = '0.96';
+
+# -----------------------------------------------
+
+sub BUILD
+{
+	my($self)	= @_;
+	my($config)	= $self -> config;
+
+	$self -> db
+	(
+		WWW::Garden::Design::Database::SQLite -> new
+		(
+			logger => Mojo::Log -> new(path => $$config{log_path})
+		)
+	);
+
+} # End of BUILD.
 
 # -----------------------------------------------
 
@@ -51,7 +76,7 @@ My homepage: L<https://savage.net.au/>.
 
 =head1 Copyright
 
-Australian copyright (c) 2013, Ron Savage.
+Australian copyright (c) 2018, Ron Savage.
 
 	All Programs of mine are 'OSI Certified Open Source Software';
 	you can redistribute them and/or modify them under the terms of

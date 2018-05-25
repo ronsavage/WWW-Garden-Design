@@ -7,11 +7,11 @@ use open      qw(:std :utf8); # Undeclared streams in UTF-8.
 
 use Getopt::Long;
 
-use WWW::Garden::Design::Util::Export;
+use WWW::Garden::Design::Export::Pg;
 
 use Pod::Usage;
 
-# -------------------------------
+# -----------------------------------------------
 
 my($option_parser) = Getopt::Long::Parser -> new;
 
@@ -19,14 +19,13 @@ my(%option);
 
 if ($option_parser -> getoptions
 (
- \%option,
-	'all=s',
+	\%option,
 	'help',
 ) )
 {
 	pod2usage(1) if ($option{'help'});
 
-	exit WWW::Garden::Design::Util::Export -> new -> export_all_pages;
+	exit WWW::Garden::Design::Export::Pg -> new(%option) -> export_icons;
 }
 else
 {
@@ -39,14 +38,13 @@ __END__
 
 =head1 NAME
 
-export.all.pages.pl - Export a page for each flower.
+export.icons.pl - Convert entries in the objects table into icons
 
 =head1 SYNOPSIS
 
-export.all.pages.pl [options]
+export.icons.pl [options]
 
 	Options:
-	-all Yes or No
 	-help
 
 All switches can be reduced to a single letter.
@@ -54,20 +52,6 @@ All switches can be reduced to a single letter.
 Exit value: 0.
 
 =head1 OPTIONS
-
-=item o all => Yes or No
-
-=over 4
-
-=item o Yes
-
-Export everything.
-
-=item o No
-
-Respect property/garden/flower-level publish flag.
-
-=back
 
 =over 4
 

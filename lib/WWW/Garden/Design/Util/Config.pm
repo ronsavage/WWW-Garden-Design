@@ -6,6 +6,9 @@ use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use Config::Tiny;
 
+use File::HomeDir;
+use File::Spec;
+
 use Moo;
 
 use Path::Tiny; # For path().
@@ -34,8 +37,12 @@ our $VERSION = '0.96';
 
 sub BUILD
 {
-	my($self) = @_;
-	my($path) = "$ENV{HOME}/perl.modules/WWW-Garden-Design/config/www.garden.design.conf";
+	my($self)			= @_;
+	my($module)			= 'WWW::Garden::Design';
+	my($module_dir)		= $module;
+	$module_dir			=~ s/::/-/g;
+	my($config_name)	= 'www.garden.design.conf';
+	my($path)			= File::Spec -> catfile(File::HomeDir -> my_dist_config($module_dir), $config_name);
 
 	$self -> config($self -> _init_config($path) );
 
@@ -121,7 +128,7 @@ L<Home page|https://savage.net.au/index.html>.
 
 =head1 Copyright
 
-Australian copyright (c) 2013, Ron Savage.
+Australian copyright (c) 2018, Ron Savage.
 	All Programs of mine are 'OSI Certified Open Source Software';
 	you can redistribute them and/or modify them under the terms of
 	The Artistic License V 2, a copy of which is available at:

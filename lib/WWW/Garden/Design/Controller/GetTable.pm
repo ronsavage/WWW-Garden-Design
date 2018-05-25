@@ -24,30 +24,6 @@ sub attribute_types
 
 # -----------------------------------------------
 
-sub design_flower
-{
-	my($self)			= @_;
-	my($design_flower)	= $self -> param('design_flower') || '';
-
-	$self -> app -> log -> debug('GetTable.design_flower()');
-
-	if (length($design_flower) < 2)
-	{
-		$self -> stash(thumbnail_name => '');
-		$self -> render();
-	}
-	else
-	{
-		my($defaults) = $self -> app -> defaults;
-
-		$self -> stash(thumbnail_name => $$defaults{db} -> get_flower_by_both_names($design_flower) );
-		$self -> render;
-	}
-
-} # End of design_flower.
-
-# -----------------------------------------------
-
 sub design_feature
 {
 	my($self)			= @_;
@@ -69,6 +45,30 @@ sub design_feature
 	}
 
 } # End of design_feature.
+
+# -----------------------------------------------
+
+sub design_flower
+{
+	my($self)			= @_;
+	my($design_flower)	= $self -> param('design_flower') || '';
+
+	$self -> app -> log -> debug('GetTable.design_flower()');
+
+	if (length($design_flower) < 2)
+	{
+		$self -> stash(thumbnail_name => '');
+		$self -> render();
+	}
+	else
+	{
+		my($defaults) = $self -> app -> defaults;
+
+		$self -> stash(thumbnail_name => $$defaults{db} -> get_flower_by_both_names($design_flower) );
+		$self -> render;
+	}
+
+} # End of design_flower.
 
 # -----------------------------------------------
 
@@ -150,7 +150,7 @@ My homepage: L<https://savage.net.au/>.
 
 =head1 Copyright
 
-Australian copyright (c) 2013, Ron Savage.
+Australian copyright (c) 2018, Ron Savage.
 
 	All Programs of mine are 'OSI Certified Open Source Software';
 	you can redistribute them and/or modify them under the terms of

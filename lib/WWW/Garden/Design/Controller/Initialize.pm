@@ -4,6 +4,8 @@ use Mojo::Base 'Mojolicious::Controller';
 
 use Moo;
 
+use Data::Dumper::Concise; # For Dumper().
+
 our $VERSION = '0.96';
 
 # -----------------------------------------------
@@ -41,29 +43,6 @@ sub build_check_boxes
 } # End of build_check_boxes.
 
 # -----------------------------------------------
-#	attributes['Native']		= ['No', 'Yes', 'Unknown'];
-#	attributes['Sun tolerance']	= ['Full_sun', 'Part_shade', 'Shade', 'Unknown'];
-
-sub build_js_for_attributes
-{
-	my($self, $type_names, $type_fields)	= @_;
-	my($attribute_elements)					= "\tvar attributes = new Object;\n\n";
-
-	my($temp_name);
-
-	for my $type_name (sort @$type_names)
-	{
-		$temp_name			= $type_name =~ s/ /_/gr;
-		$attribute_elements	.= "\tattributes['$temp_name'] = ["
-								. join(', ', map{"'$_'"} @{$$type_fields{$type_name} })
-								. "];\n";
-	}
-
-	return $attribute_elements;
-
-} # End of build_js_for_attributes.
-
-# -----------------------------------------------
 
 sub homepage
 {
@@ -71,71 +50,32 @@ sub homepage
 
 	$self -> app -> log -> debug('Initialize.homepage()');
 
-	my($defaults)					= $self -> app -> defaults;
-	$$defaults{features_table}		= $$defaults{db} -> read_features_table; # Warning: Not read_table('features').
-	$$defaults{gardens_table}		= $$defaults{db} -> read_gardens_table; # Warning: Not read_table('gardens').
-	$$defaults{properties_table}	= $$defaults{db} -> read_table('properties');
-	my($attribute_elements)			= $self -> build_js_for_attributes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields});
+	my($defaults) = $self -> app -> defaults;
 
-	# Warning: build_gardens_property_menu() sets a value in the session read by build_garden_menu(),
-	# so it must be called first.
-	#
-	# A note on the property menus on the Gardens tab:
-	# o gardens_property_menu_1 => Properties which have gardens.
-	# o gardens_property_menu_2 => All properties, since any property is allowed to have gardens added.
-	# Also, when a new property is added, only the latter menu gets updated (on the Gardens page).
-	# And when a garden is added, the gardens_garden_menu menu is updated (on the Gardens page),
-	# as well as the garden menu on the Design page, i.e. the design_garden_menu.
-
-	$$defaults{design_property_menu}		= $$defaults{db} -> build_gardens_property_menu($self, $$defaults{gardens_table}, 'design_property_menu', 0);
-	$$defaults{design_garden_menu}			= $$defaults{db} -> build_garden_menu($self, $$defaults{gardens_table}, 'design_garden_menu');
-	$$defaults{feature_menu}				= $$defaults{db} -> build_feature_menu($$defaults{features_table}, 0);
-	$$defaults{gardens_property_menu_1}		= $$defaults{db} -> build_gardens_property_menu($self, $$defaults{gardens_table}, 'gardens_property_menu_1', 0);
-	$$defaults{gardens_property_menu_2}		= $$defaults{db} -> build_properties_property_menu($$defaults{properties_table}, 'gardens_property_menu_2', 0);
-	$$defaults{gardens_garden_menu}			= $$defaults{db} -> build_garden_menu($self, $$defaults{gardens_table}, 'gardens_garden_menu');
-	$$defaults{properties_property_menu}	= $$defaults{db} -> build_properties_property_menu($$defaults{properties_table}, 'properties_property_menu', 0);
-
-	$self -> app -> defaults($defaults);
 	$self -> stash(attribute_check_boxes	=> $self -> build_check_boxes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields}, $$defaults{attribute_attribute_ids}) );
 	$self -> stash(csrf_token				=> $self -> session('csrf_token') );
 	$self -> stash(search_check_boxes		=> $self -> build_check_boxes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields}, $$defaults{search_attribute_ids}) );
-
-	# Find the id of the 1st property on the Properties tab.
-	# This is needed to initialize a JS variable of the same name,
-	# and the corresponding JS variable of the 2nd property menu on the Gardens tab.
-	# And we sort the properties because the property menu is sorted, and we default to the 1st item.
-
-	@{$$defaults{properties_table} } 	= sort{$$a{name} cmp $$b{name} } @{$$defaults{properties_table} };
-	my($properties_current_property_id)	= $$defaults{properties_table}[0]{id};
-
-	# Find the id of the 1st garden on the Gardens tab. It is sorted in Database.read_gardens_table().
-
-	my($gardens_current_garden_id)		= $$defaults{gardens_table}[0]{id};
-	my($gardens_current_property_id_1)	= $$defaults{gardens_table}[0]{property_id};
-
-	# Find the id of the 1st feature on the Features tab.
-
-	my($features_current_feature_id) = $$defaults{features_table}[0]{id};
 
 	# These parameters are passed to homepage.html.ep for incorporation into JS code.
 
 	$self -> render
 	(
-		attribute_elements				=> $attribute_elements,
+		attribute_elements				=> $$defaults{attribute_elements},
 		constants						=> $$defaults{constants_table},
 		design_garden_menu				=> $$defaults{design_garden_menu},
 		design_property_menu			=> $$defaults{design_property_menu},
-		features_current_feature_id		=> $features_current_feature_id,
+		features_current_feature_id		=> $$defaults{features_current_feature_id},
 		feature_menu					=> $$defaults{feature_menu},
-		gardens_current_garden_id		=> $gardens_current_garden_id,
-		gardens_current_property_id_1	=> $gardens_current_property_id_1,
-		gardens_current_property_id_2	=> $properties_current_property_id,
+		gardens_current_garden_id		=> $$defaults{gardens_current_garden_id},
+		gardens_current_property_id_1	=> $$defaults{gardens_current_property_id_1},
+		gardens_current_property_id_2	=> $$defaults{properties_current_property_id},
 		gardens_garden_menu				=> $$defaults{gardens_garden_menu},
 		gardens_property_menu_1			=> $$defaults{gardens_property_menu_1},
 		gardens_property_menu_2			=> $$defaults{gardens_property_menu_2},
-		joiner							=> $$defaults{joiner},
-		properties_current_property_id	=> $properties_current_property_id,
+		joiner							=> '«»',
+		properties_current_property_id	=> $$defaults{properties_current_property_id},
 		properties_property_menu		=> $$defaults{properties_property_menu},
+		version							=> $VERSION,
 	);
 
 } # End of homepage.
@@ -172,7 +112,7 @@ My homepage: L<https://savage.net.au/>.
 
 =head1 Copyright
 
-Australian copyright (c) 2013, Ron Savage.
+Australian copyright (c) 2018, Ron Savage.
 
 	All Programs of mine are 'OSI Certified Open Source Software';
 	you can redistribute them and/or modify them under the terms of

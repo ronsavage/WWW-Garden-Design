@@ -1,6 +1,9 @@
-package WWW::Garden::Design::Util::Export;
+package WWW::Garden::Design::Export;
+
+use Moo::Role;
 
 use strict;
+use utf8;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
@@ -8,11 +11,12 @@ use boolean;
 
 use Encode 'encode';
 
+use File::Spec;
+
 use WWW::Garden::Design::Database;
+use WWW::Garden::Design::Util::Config;
 
 use Mojo::Log;
-
-use Moo;
 
 use Sort::Naturally;
 
@@ -21,15 +25,30 @@ use SVG::Grid;
 use Text::CSV;
 use Text::Xslate 'mark_raw';
 
-use Types::Standard qw/Int HashRef Str/;
+use Types::Standard qw/Any Int HashRef Str/;
 
-extends 'WWW::Garden::Design::Database::Base';
+use WWW::Garden::Design::Util::Config;
 
 has all =>
 (
 	default		=> sub{return 'No'},
 	is			=> 'rw',
 	isa			=> Str,
+	required	=> 0,
+);
+
+has config =>
+(
+	default		=> sub{WWW::Garden::Design::Util::Config -> new -> config},
+	is			=> 'rw',
+	isa			=> HashRef,
+	required	=> 0,
+);
+
+has db =>
+(
+	is			=> 'rw',
+	isa			=> Any,
 	required	=> 0,
 );
 
@@ -74,82 +93,6 @@ has standalone_page =>
 );
 
 our $VERSION = '0.96';
-
-# -----------------------------------------------
-
-sub BUILD
-{
-	my($self)				= @_;
-	my($export_type)		= $self -> export_type;
-	my($standalone_page)	= $self -> standalone_page;
-	my($all)				= $self -> all;
-
-	if ($all !~ /^(?:No|Yes)$/i)
-	{
-		die "The 'all' flag must be Yes or No'\n";
-	}
-
-	# Warning: The line in web.site.xml which runs this script must not use command line options.
-	# That means, that whatever options that code needs must be the defaults.
-
-	$self -> export_columns
-	({
-		'Native' =>
-			{
-				column_name	=> 'native',
-				order		=> 2, # The value 1 is not used.
-			},
-		'Scientific name' =>
-			{
-				column_name	=> 'scientific_name',
-				order		=> 3,
-			},
-		'Common name' =>
-			{
-				column_name	=> 'common_name',
-				order		=> 4,
-			},
-		'Aliases' =>
-			{
-				column_name	=> 'aliases',
-				order		=> 5,
-			},
-		'Thumbnail <span class = "index">(clickable)</span>' =>
-			{
-				column_name	=> 'thumbnail_file_name',
-				order		=> 6,
-			},
-	});
-
-	if ($export_type < 0)
-	{
-		$self -> export_type(0);
-	}
-	elsif ($export_type > 1)
-	{
-		$self -> export_type(1);
-	}
-
-	if ($standalone_page < 0)
-	{
-		$self -> standalone_page(0);
-	}
-	elsif ($standalone_page > 1)
-	{
-		$self -> standalone_page(1);
-	}
-
-	my($log_path) = "$ENV{HOME}/perl.modules/WWW-Garden-Design/log/development.log";
-
-	$self -> db
-	(
-		WWW::Garden::Design::Database -> new
-		(
-			logger => Mojo::Log -> new(path => $log_path)
-		)
-	);
-
-}	# End of BUILD.
 
 # -----------------------------------------------
 
@@ -407,8 +350,9 @@ sub export_all_pages
 	my($attribute_types_table)	= $self -> db -> read_table('attribute_types');
 	my($constants)				= $self -> db -> constants;
 	my($flowers)				= $self -> db -> read_flowers_table;
+	my($target_dir)				= File::Spec -> catfile($$constants{homepage_dir}, $$constants{flower_dir});
 
-	$self -> db -> logger -> info("flower_dir: $$constants{flower_dir}");
+	$self -> db -> logger -> info("Export.export_all_pages(). Output directory: $target_dir");
 
 	# Process each flower looking for others with the same prefix.
 	# The reason for using common name here is it helps when 2
@@ -511,7 +455,7 @@ sub export_all_pages
 			{
 				if ($#links < 0)
 				{
-					push @links, [{td => "Auto-generated links for $scientific_name => $common_name"}];
+					push @links, [{td => "Auto-generated links for $scientific_name aka $common_name"}];
 				}
 
 				($other_id, $other_pig_latin, $other_common_name) = ($$item[0], $$item[1], $$item[2]);
@@ -570,7 +514,7 @@ sub export_all_pages
 			];
 		}
 
-		$web_page_name = "$$constants{homepage_dir}$$constants{flower_dir}/$pig_latin.html";
+		$web_page_name = File::Spec -> catfile($$constants{homepage_dir}, $$constants{flower_dir}, "$pig_latin.html");
 
 		$self -> db -> logger -> info("Writing $web_page_name");
 
@@ -788,7 +732,7 @@ sub export_garden_layout
 		y				=> $grid -> height,							# Pixel co-ord.
 	);
 
-	my($file_name) = "$$constants{homepage_dir}$$constants{flower_url}/$garden_name.garden.layout.svg";
+	my($file_name) = File::Spec -> catfile($$constants{homepage_dir}, $$constants{flower_dir}, "$garden_name.garden.layout.svg");
 
 	$self -> db -> logger -> info("Writing to $file_name");
 
@@ -895,7 +839,7 @@ $tips
 </html>
 EOS
 
-	$file_name = "$$constants{homepage_dir}$$constants{flower_url}/$garden_name.garden.layout.html";
+	$file_name = File::Spec -> catfile($$constants{homepage_dir}, $$constants{flower_dir}, "$garden_name.garden.layout.html");
 
 	$self -> db -> logger -> info("Writing to $file_name");
 
@@ -911,15 +855,16 @@ EOS
 
 sub export_icons
 {
-	my($self)		= @_;
-	my($constants)	= $self -> db -> constants;
-	my($features)	= $self -> db -> read_features_table;
+	my($self)			= @_;
+	my($constants)		= $self -> db -> constants;
+	my($features_table)	= $self -> db -> read_features_table;
+	my($target_dir)		= File::Spec -> catfile($$constants{homepage_dir}, $$constants{flower_dir});
 
-	$self -> db -> logger -> info("flower_dir: $$constants{flower_dir}");
+	$self -> db -> logger -> info("Export.export_icons(). Output directory: $target_dir");
 
 	my(@file_names);
 
-	for my $feature (sort{$$a{name} cmp $$b{name} } @$features)
+	for my $feature (sort{$$a{name} cmp $$b{name} } @$features_table)
 	{
 		next if ($$feature{publish} eq 'No');
 
@@ -936,12 +881,12 @@ sub export_icons
 
 	for my $item (@file_names)
 	{
-		push @row, [{td => $$item[0]}, {td => mark_raw("<object data = '$$constants{homepage_url}$$constants{icon_url}/$$item[1].png'></object>")}];
+		push @row, [{td => $$item{name} }, {td => mark_raw("<object data = '$$constants{homepage_url}$$constants{icon_url}/$$item{file_name}.png'></object>")}];
 	}
 
 	push @row, [@heading];
 
-	my($file_name) = "$$constants{homepage_dir}$$constants{icon_dir}/features.html";
+	my($file_name) = File::Spec -> catfile($$constants{homepage_dir}, $$constants{icon_dir}, 'features.html');
 
 	open(my $fh, '>', $file_name) || die "Can't open: $file_name: $!\n";
 	print $fh $tx -> render
@@ -1015,7 +960,7 @@ sub export_layout_guide
 	<tr><td><a href = 'https://github.com/bgrins/spectrum'>The github repo</a> of the free Javascript package which provides a color spectrum...</td></tr>
 	<tr><td>... and the corresponding <a href = 'https://bgrins.github.io/spectrum/'>on-line docs</a></td></tr>
 	<tr><td><a href = 'http://nurseriesonline.com.au'>Nurseries OnLine - A great Australian website</a></td></tr>
-	<tr><td><a href = 'http://www.flowersforums.com/forums/'>A great place to ask for help: Flower Forums</a></td></tr>
+	<tr><td><a href = 'http://www.flowersforums.com/forums/'>Flower Forums - A great place to ask for help</a></td></tr>
 	<tr><td><a href = 'http://www.LabourofLoveLandscaping.com'>Some identification assistance kindly provided by Kate Kennedy Butler</a></td></tr>
 	<tr><td><a href = 'http://www.theplantlist.org/'>The Plant List - A working list of all plant species</a></td></tr>
 	<tr><td><a href = 'http://www.plantnet.org/'>PlantNet - Identify plants via pix</a></td></tr>
@@ -1356,29 +1301,70 @@ sub images2csv
 
 # -----------------------------------------------
 
-sub init_datatable
+sub init_export
 {
-	my($self) = @_;
+	my($self)				= @_;
+	my($export_type)		= $self -> export_type;
+	my($standalone_page)	= $self -> standalone_page;
+	my($all)				= $self -> all;
 
-	return <<EOS;
-	\$(function()
+	if ($all !~ /^(?:No|Yes)$/i)
 	{
-		\$('#result_table').DataTable
-		({
-			'columnDefs':
-			[
-				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Native.
-				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Scientific name.
-				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Common name.
-				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Aliases.
-				{'cellType':'th','orderable':false,'searchable':false,'type':'html'}	// Thumbnail.
-			],
-			'order': [ [1, 'asc'] ]
-		});
-	});
-EOS
+		die "The 'all' flag must be Yes or No'\n";
+	}
 
-}	# End of init_datatable.
+	# Warning: The line in web.site.xml which runs this script must not use command line options.
+	# That means, that whatever options that code needs must be the defaults.
+
+	$self -> export_columns
+	({
+		'Native' =>
+			{
+				column_name	=> 'native',
+				order		=> 2, # The value 1 is not used.
+			},
+		'Scientific name' =>
+			{
+				column_name	=> 'scientific_name',
+				order		=> 3,
+			},
+		'Common name' =>
+			{
+				column_name	=> 'common_name',
+				order		=> 4,
+			},
+		'Aliases' =>
+			{
+				column_name	=> 'aliases',
+				order		=> 5,
+			},
+		'Thumbnail <span class = "index">(clickable)</span>' =>
+			{
+				column_name	=> 'thumbnail_file_name',
+				order		=> 6,
+			},
+	});
+
+	if ($export_type < 0)
+	{
+		$self -> export_type(0);
+	}
+	elsif ($export_type > 1)
+	{
+		$self -> export_type(1);
+	}
+
+	if ($standalone_page < 0)
+	{
+		$self -> standalone_page(0);
+	}
+	elsif ($standalone_page > 1)
+	{
+		$self -> standalone_page(1);
+	}
+
+
+}	# End of init_export.
 
 # -----------------------------------------------
 
@@ -1542,7 +1528,7 @@ My homepage: L<https://savage.net.au/>.
 
 =head1 Copyright
 
-Australian copyright (c) 2013, Ron Savage.
+Australian copyright (c) 2018, Ron Savage.
 
 	All Programs of mine are 'OSI Certified Open Source Software';
 	you can redistribute them and/or modify them under the terms of

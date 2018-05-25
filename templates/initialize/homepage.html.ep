@@ -12,6 +12,7 @@
 	<link rel = 'stylesheet' type = 'text/css' href='http://127.0.0.1/assets/js/jQuery/datatables.min.css'>
 	<!-- Warning: The next line must not be put after the spectrum line, or the CSS in it fails to work. -->
 	<link rel = 'stylesheet' type = 'text/css' href = '/assets/css/www/garden/design/homepage.css'>
+	<link rel = 'stylesheet' type = 'text/css' href = '/assets/css/www/garden/design/humane-js/themes/boldlight.css'>
 	<link rel = 'stylesheet' type = 'text/css' href = 'http://127.0.0.1/assets/js/spectrum/spectrum.css'>
 	<style>
 		.overflow_scroll
@@ -86,12 +87,16 @@
 		    <ul>
 		        <li><a href = '#search_help_tab'><span>Searching</span></a></li>
 		        <li><a href = '#faq_help_tab'><span>FAQ</span></a></li>
+		        <li><a href = '#about_tab'><span>About</span></a></li>
 		    </ul>
 		    <div id = 'search_help_tab'>
 %= include 'initialize/search_help'
 			</div>
 		    <div id = 'faq_help_tab'>
 %= include 'initialize/faq_help'
+			</div>
+		    <div id = 'about_tab'>
+%= include 'initialize/about', version => $version
 			</div>
 		</div>
 	</div>
@@ -103,13 +108,14 @@
 %= javascript 'http://127.0.0.1/assets/js/jQuery/jquery-ui-1.12.1/jquery-ui.min.js'
 %= javascript 'http://127.0.0.1/assets/js/jQuery/datatables.min.js'
 %= javascript 'http://127.0.0.1/assets/js/spectrum/spectrum.js'
+%= javascript '/assets/templates/www/garden/design/humane-js/humane.min.js'
 
 <script type = 'text/javascript'>
 
 // Storage for info read in below from the database.
 
 var attribute_types_table			= [];
-var chosen_thing					= '';	// These are the current ids within each menu, for use in Ajax calls:
+var chosen_thing					= '';	// These 2 below are the current ids within each menu, for use in Ajax calls:
 var design_current_garden_id		= 0;	// o Garden menu id on the Design tab.
 var design_current_property_id		= 0;	// o Property menu id on the Design tab.
 var features_current_feature_id		= <%== $features_current_feature_id %>;		// o Feature menu id on the Features tab.
@@ -122,66 +128,6 @@ var properties_current_property_id	= <%== $properties_current_property_id %>;	//
 var properties_table				= [];	// All properties, even if they don't have gardens.
 var window_width					= 0;
 var window_height					= 0;
-
-// -----------------------------------------------
-
-$(function()
-{
-	$('#aliases')
-	.autocomplete
-	({
-		source:		'/AutoComplete?type=aliases', // See routes at end of WWW::Garden::Design.startup().
-		minLength:	2,
-		select:		function(event, ui)
-		{
-			$('#aliases')
-			.empty()
-			.append(ui.item ? ui.item.value : '-');
-		}
-	});
-
-}); // End of autocomplete function.
-
-// -----------------------------------------------
-
-$(function()
-{
-	$('#common_name')
-	.autocomplete
-	({
-		source:		'/AutoComplete?type=common_name', // See routes at end of WWW::Garden::Design.startup().
-		minLength:	2,
-		select:		function(event, ui)
-		{
-			$('#common_name')
-			.empty()
-			.append(ui.item ? ui.item.value : '-');
-		}
-	});
-
-}); // End of autocomplete function.
-
-// -----------------------------------------------
-
-$(function()
-{
-	$('#garden_name')
-	.autocomplete
-	({
-		source:		'/AutoComplete?type=garden_name', // See routes at end of WWW::Garden::Design.startup().
-		minLength:	2,
-		select:		function(event, ui)
-		{
-			if (ui.item)
-			{
-				$('#garden_name')
-				.empty()
-				.append(ui.item.value);
-			}
-		}
-	});
-
-}); // End of autocomplete function.
 
 // -----------------------------------------------
 
@@ -250,7 +196,51 @@ $(function()
 
 $(function()
 {
-	$('#property_name')
+	$('#garden_name')
+	.autocomplete
+	({
+		source:		'/AutoComplete?type=garden_name', // See routes at end of WWW::Garden::Design.startup().
+		minLength:	2,
+		select:		function(event, ui)
+		{
+			if (ui.item)
+			{
+				$('#garden_name')
+				.empty()
+				.append(ui.item.value);
+			}
+		}
+	});
+
+}); // End of autocomplete function.
+
+// -----------------------------------------------
+
+$(function()
+{
+	$('#new_garden_name')
+	.autocomplete
+	({
+		source:		'/AutoComplete?type=garden_name', // See routes at end of WWW::Garden::Design.startup().
+		minLength:	2,
+		select:		function(event, ui)
+		{
+			if (ui.item)
+			{
+				$('#garden_name')
+				.empty()
+				.append(ui.item.value);
+			}
+		}
+	});
+
+}); // End of autocomplete function.
+
+// -----------------------------------------------
+
+$(function()
+{
+	$('#new_property_name')
 	.autocomplete
 	({
 		source:		'/AutoComplete?type=property_name', // See routes at end of WWW::Garden::Design.startup().
@@ -272,16 +262,19 @@ $(function()
 
 $(function()
 {
-	$('#scientific_name')
+	$('#properties_property_name')
 	.autocomplete
 	({
-		source:		'/AutoComplete?type=scientific_name', // See routes at end of WWW::Garden::Design.startup().
+		source:		'/AutoComplete?type=property_name', // See routes at end of WWW::Garden::Design.startup().
 		minLength:	2,
 		select:		function(event, ui)
 		{
-			$('#scientific_name')
-			.empty()
-			.append(ui.item ? ui.item.value : '-');
+			if (ui.item)
+			{
+				$('#property_name')
+				.empty()
+				.append(ui.item.value);
+			}
 		}
 	});
 
@@ -303,7 +296,58 @@ $(function()
 			.append(ui.item ? ui.item.value : "-");
 		}
 	});
+
 }); // End of autocomplete function.
+
+// -----------------------------------------------
+
+function add_feature(action)
+{
+	var name			= $('#new_feature_name').val();
+	var color_chosen	= $('#new_color_chosen').val();
+
+	if ( (color_chosen == '') || (name == '') )
+	{
+		user_message('Both the color name and feature name are mandatory', 'Error');
+
+		return;
+	}
+
+	$.post
+	(
+		// See routes at end of WWW::Garden::Design.startup().
+
+		'/Feature',
+		{
+			action:			'add',
+			color_chosen:	color_chosen,
+			color_code:		$('#new_color_code').val(),
+			color_name:		$('#new_color_name').val(),
+			id:				0,
+			name:			name,
+			publish:		$('#new_feature_publish').prop('checked') ? 'Yes' : 'No'
+		},
+		function(packet)
+		{
+			if (packet.message.type != 'Error')
+			{
+				$('#new_feature_icon')
+				.attr('src', packet.tile_status.file_url);
+			}
+
+			// Update the feature menu on the Features tab.
+
+			features_current_feature_id	= packet.message.feature_id;
+			features_table				= packet.features_table;
+
+			build_feature_menu(features_current_feature_id, 'feature_menu', packet.feature_menu);
+
+			user_feedback(packet.message);
+		},
+		'json'
+	);
+
+} // End of add_feature.
 
 // -----------------------------------------------
 
@@ -313,7 +357,7 @@ function add_garden()
 
 	if (name == '')
 	{
-		alert('Error: The garden name is mandatory');
+		user_message('The garden name is mandatory', 'Error');
 
 		return;
 	}
@@ -338,10 +382,6 @@ function add_garden()
 		},
 		function(packet)
 		{
-			$('#garden_result_div')
-			.empty()
-			.append(packet.message.cooked);
-
 			gardens_current_garden_id		= packet.message.garden_id;
 			gardens_table					= packet.gardens_table;
 			gardens_current_property_id_1	= gardens_current_property_id_2;
@@ -363,6 +403,8 @@ function add_garden()
 			// Reset the fields for the lower property on the Gardens tab.
 
 			set_garden_fields_2();
+
+			user_feedback(packet.message);
 		},
 		'json'
 	);
@@ -377,7 +419,7 @@ function add_property(action)
 
 	if (name == '')
 	{
-		alert('Error: The property name is mandatory');
+		user_message('The property name is mandatory', 'Error');
 
 		return;
 	}
@@ -396,10 +438,6 @@ function add_property(action)
 		},
 		function(packet)
 		{
-			$('#property_result_div')
-			.empty()
-			.append(packet.message.cooked);
-
 			// Update the property menu on the Properties tab.
 
 			properties_current_property_id	= packet.message.property_id;	// On Properties tab.
@@ -421,6 +459,8 @@ function add_property(action)
 			var property_menu	= packet.property_menu.replace(regexp, new_menu_name);
 
 			build_property_menu(gardens_current_property_id_2, new_menu_name, property_menu);
+
+			user_feedback(packet.message);
 		},
 		'json'
 	);
@@ -441,6 +481,35 @@ function build_attribute_id(kind, name, value)
 	return '#' + kind + '_' + name + '_' + value;
 
 } // End of build_attribute_id.
+
+// -----------------------------------------------
+
+function build_feature_menu(feature_id, jquery_id, feature_menu)
+{
+	var id = '#' + jquery_id;
+
+	$(id + '_span')
+	.empty()
+	.append(feature_menu);
+
+	var data		= new Object;
+	data.item		= new Object;
+	data.item.value	= feature_id;
+
+	$(id).selectmenu();
+
+	$(id)
+	.selectmenu
+	({
+		change: function(event, data)
+		{
+			feature_menu_changed(data);
+		}
+	});
+
+	feature_menu_changed(data);
+
+} // End of build_feature_menu.
 
 // -----------------------------------------------
 
@@ -544,7 +613,6 @@ function build_garden_menu(property_id, garden_id, jquery_id)
 } // End of build_garden_menu.
 
 // -----------------------------------------------
-// This function is only called from submit_new_garden(), which cannot change the property menu.
 
 function build_property_menu(property_id, jquery_id, property_menu)
 {
@@ -686,7 +754,7 @@ function confirm_design_reset()
 function confirm_design_save()
 {
 	var flower_list			= [];
-	var joiner				= '<%== $joiner %>'; // Must match $joiner in Design.pm.
+	var joiner				= '<%== $joiner %>';
 	var match				= new Array();
 	var thing_count			= 0;
 	var virtual_cell_count	= <%== $$constants{virtual_cell_count} %>;
@@ -716,7 +784,7 @@ function confirm_design_save()
 
 	if (thing_count == 0)
 	{
-		alert('No thumbnails planted in the virtual garden!');
+		user_message('No thumbnails planted in the virtual garden!', 'Error');
 	}
 	else
 	{
@@ -916,44 +984,6 @@ function get_attribute_types()
 
 // -----------------------------------------------
 
-function get_design_flower()
-{
-	$.ajax
-	({
-		data:
-		{
-			design_flower: $('#design_flower').val()
-		},
-		dataType:	'text',
-		method:		'POST',
-		url:		'/GetTable/design_flower', // See routes at end of WWW::Garden::Design.startup().
-	})
-	.done(function(image_path)
-	{
-		if (image_path.length > 0)
-		{
-			$('#design_flower_thumbnail')
-			.html("<img src = '" + image_path + "' " + get_design_image_size_string() + '>');
-		}
-	});
-
-} // End of get_design_flower.
-
-// -----------------------------------------------
-
-function get_design_flower_icon()
-{
-	var html = $('#design_flower_thumbnail').html();
-
-	if (html.length > 0)
-	{
-		chosen_thing = html;
-	}
-
-} // End of get_design_flower_icon.
-
-// -----------------------------------------------
-
 function get_design_feature()
 {
 	$.ajax
@@ -971,7 +1001,7 @@ function get_design_feature()
 		if (image_path.length > 0)
 		{
 			$('#design_feature_thumbnail')
-			.html("<img src = '" + image_path + "' " + get_design_image_size_string() + '>');
+			.html("<img src = '" + image_path + "'>"); // + get_design_image_size_string() + '>');
 		}
 	});
 
@@ -992,6 +1022,44 @@ function get_design_feature_icon()
 
 // -----------------------------------------------
 
+function get_design_flower()
+{
+	$.ajax
+	({
+		data:
+		{
+			design_flower: $('#design_flower').val()
+		},
+		dataType:	'text',
+		method:		'POST',
+		url:		'/GetTable/design_flower', // See routes at end of WWW::Garden::Design.startup().
+	})
+	.done(function(image_path)
+	{
+		if (image_path.length > 0)
+		{
+			$('#design_flower_thumbnail')
+			.html("<img src = '" + image_path + "'>"); // + get_design_image_size_string() + '>');
+		}
+	});
+
+} // End of get_design_flower.
+
+// -----------------------------------------------
+
+function get_design_flower_icon()
+{
+	var html = $('#design_flower_thumbnail').html();
+
+	if (html.length > 0)
+	{
+		chosen_thing = html;
+	}
+
+} // End of get_design_flower_icon.
+
+// -----------------------------------------------
+
 function get_design_image_size_string()
 {
 	var thumbnail_size = <%== $$constants{virtual_cell_size} %>;
@@ -999,6 +1067,16 @@ function get_design_image_size_string()
 	return "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
 
 } // End of get_design_image_size_string.
+
+// -----------------------------------------------
+
+function get_feature_image_size_string()
+{
+	var thumbnail_size = <%== $$constants{virtual_cell_size} %>;
+
+	return "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
+
+} // End of get_feature_image_size_string.
 
 // -----------------------------------------------
 // Warning: This function cannot be used to populate gardens_garden_menu_span
@@ -1603,7 +1681,7 @@ function submit_details()
 <%== $attribute_elements %>
 	var attribute_list = [];
 
-	var joiner = '<%== $joiner %>'; // Must match $joiner in Design.pm.
+	var joiner = '<%== $joiner %>';
 
 	var id;
 	var key;
@@ -1691,7 +1769,7 @@ function submit_details()
 		},
 		dataType:	'html',
 		method:		'POST',
-		url:		'/AddFlower' // See routes at end of WWW::Garden::Design.startup().
+		url:		'/Flower' // See routes at end of WWW::Garden::Design.startup().
 	})
 	.done(function(html)
 	{
@@ -1763,9 +1841,78 @@ function submit_search()
 
 // -----------------------------------------------
 
+function update_feature(action)
+{
+	var color_chosen	= $('#color_chosen').val();
+	var name			= $('#feature_name').val();
+
+	if ( (color_chosen == '') || (name == '') )
+	{
+		user_message('Both the color name and feature name are mandatory', 'Error');
+
+		return;
+	}
+
+	if (action == 'delete')
+	{
+		var ok = confirm('Are you sure you wish to delete the feature ' + name + '?');
+
+		if (ok == false)
+		{
+			return;
+		}
+	}
+
+	$.post
+	(
+		// See routes at end of WWW::Garden::Design.startup().
+
+		'/Feature',
+		{
+			action:			action, // 'delete' or 'update'.
+			color_chosen:	color_chosen,
+			color_code:		$('#color_code').val(),
+			color_name:		$('#color_name').val(),
+			id:				features_current_feature_id,
+			name:			name,
+			publish:		$('#feature_publish').prop('checked') ? 'Yes' : 'No'
+		},
+		function(packet)
+		{
+			if (packet.message.type != 'Error')
+			{
+				$('#feature_icon')
+				.attr('src', packet.tile_status.file_url);
+
+				// Update the feature menu on the Features tab.
+
+				features_current_feature_id	= packet.message.feature_id;
+				features_table				= packet.features_table;
+
+				build_feature_menu(features_current_feature_id, 'feature_menu', packet.feature_menu);
+
+				set_feature_fields(0);
+			}
+
+			user_feedback(packet.message);
+		},
+		'json'
+	);
+
+} // End of update_feature.
+
+// -----------------------------------------------
+
 function update_garden(action)
 {
 	var name = $('#garden_name').val();
+
+	if (name == '')
+	{
+		user_message('The garden name is mandatory', 'Error');
+
+		return;
+	}
 
 	if (action == 'delete')
 	{
@@ -1797,10 +1944,6 @@ function update_garden(action)
 		},
 		function(packet)
 		{
-			$('#garden_result_div')
-			.empty()
-			.append(packet.message.cooked);
-
 			// Update the upper garden menu on the Gardens tab.
 
 			gardens_table				= packet.gardens_table;
@@ -1808,6 +1951,8 @@ function update_garden(action)
 			gardens_current_garden_id	= gardens_table[index]['id']; // Update because previous one might have been deleted.
 
 			set_garden_fields_1(index);
+
+			user_feedback(packet.message);
 		},
 		'json'
 	);
@@ -1816,66 +1961,18 @@ function update_garden(action)
 
 // -----------------------------------------------
 
-function update_feature(action)
+function update_property(action)
 {
-	var name = $('#feature_name').val();
+	var name = $('#properties_property_name').val();
 
-	if (action == 'delete')
+	if (name == '')
 	{
-		var ok = confirm('Are you sure you wish to delete the feature ' + name + '?');
-
-		if (ok == false)
-		{
-			return;
-		}
-	}
-
-	var color_chosen = $('#color_chosen').val();
-
-	if ( (color_chosen == '') || (name == '') )
-	{
-		alert('Error: Both the color name and feature name are mandatory');
+		user_message('The property name is mandatory', 'Error');
 
 		return;
 	}
 
-	$.post
-	(
-		// See routes at end of WWW::Garden::Design.startup().
-
-		'/Feature',
-		{
-			action:			action, // 'delete' or 'update'.
-			color_chosen:	color_chosen,
-			color_code:		$('#color_code').val(),
-			color_name:		$('#color_name').val(),
-			id:				features_current_feature_id,
-			name:			name,
-			publish:		$('#feature_publish').prop('checked') ? 'Yes' : 'No'
-		},
-		function(packet)
-		{
-			$('#feature_result_div')
-			.empty()
-			.append(packet.message.cooked);
-
-			// Update the feature menu on the Features tab.
-
-			features_current_feature_id	= packet.message.feature_id;
-			feature_menu				= packet.feature_menu;
-			features_table				= packet.features_table;
-		},
-		'json'
-	);
-
-} // End of update_feature.
-
-// -----------------------------------------------
-
-function update_property(action)
-{
-	var has_gardens	= false;
-	var name		= $('#properties_property_name').val();
+	var has_gardens = false;
 
 	for (var i = 0; i < gardens_table.length; i++)
 	{
@@ -1885,6 +1982,13 @@ function update_property(action)
 
 			break;
 		}
+	}
+
+	if ( (action == 'delete') && (has_gardens == true) )
+	{
+		user_message('You cannot delete a property which has gardens', 'Error');
+
+		return;
 	}
 
 	if (action == 'delete')
@@ -1911,10 +2015,6 @@ function update_property(action)
 		},
 		function(packet)
 		{
-			$('#property_result_div')
-			.empty()
-			.append(packet.message.cooked);
-
 			// Update the property menu on the Properties tab.
 
 			properties_current_property_id	= packet.message.property_id;
@@ -1931,7 +2031,7 @@ function update_property(action)
 
 			var regexp			= /properties_property_menu/g;
 			var new_menu_name	= 'gardens_property_menu_1';
-			var property_menu	= packet.gardens_property_menu.replace(regexp, new_menu_name);
+			var property_menu	= packet.property_menu.replace(regexp, new_menu_name);
 
 			build_property_menu(gardens_current_property_id_1, new_menu_name, property_menu);
 
@@ -1939,18 +2039,53 @@ function update_property(action)
 
 			regexp			= /gardens_property_menu_1/g;
 			new_menu_name	= 'design_property_menu';
-			property_menu	= packet.gardens_property_menu.replace(regexp, new_menu_name);
+			property_menu	= packet.property_menu.replace(regexp, new_menu_name);
 
 			build_property_menu(gardens_current_property_id_2, new_menu_name, property_menu);
 
 			// The previously selected property may have been deleted.
 
 			gardens_current_property_id_2 = properties_current_property_id;
+
+			user_feedback(packet.message);
 		},
 		'json'
 	);
 
 } // End of update_property.
+
+// -----------------------------------------------
+
+function user_feedback(message)
+{
+	var boldlight = humane.create({baseCls: 'humane-boldlight', timeout: 3000})
+
+	if (message.type == 'Error')
+	{
+		boldlight.error = boldlight.spawn({addnCls: 'humane-boldlight-error'});
+
+		boldlight.error(message.raw);
+	}
+	else
+	{
+		boldlight.success = boldlight.spawn({addnCls: 'humane-boldlight-success'});
+
+		boldlight.success('Success: ' + message.raw);
+	}
+
+} // End of user_feedback.
+
+// -----------------------------------------------
+
+function user_message(message, type)
+{
+	var obj		= new Object;
+	obj.raw		= message;
+	obj.type	= type;
+
+	user_feedback(obj);
+
+} // End of user_message.
 
 // -----------------------------------------------
 
@@ -2020,9 +2155,41 @@ $(function()
 		showPalette:		true
 	});
 
+	$('#new_color_spectrum')
+	.spectrum
+	({
+		change:				function(color)
+							{
+								$('#new_color_code')
+								.val(color.toHexString() ); // Make code visible to the user.
+
+								$('#new_color_chosen')
+								.val(color.toHexString() ); // Put color in hidden form field for submit.
+
+								$('#new_color_swatch_chosen')
+								.css('background-color', color.toHexString() );
+							},
+		color:				'white',
+		preferredFormat:	'hex',
+		showInput:			true,
+		showPalette:		true
+	});
+
 	// =======
 	// Designs
 	// =======
+
+	$('#design_feature')
+	.blur(function()
+	{
+		get_design_feature();
+	});
+
+	$('#design_feature_thumbnail')
+	.click(function()
+	{
+		get_design_feature_icon();
+	});
 
 	$('#design_flower')
 	.blur(function()
@@ -2047,18 +2214,6 @@ $(function()
 			}
 		}
 	);
-
-	$('#design_feature')
-	.blur(function()
-	{
-		get_design_feature();
-	});
-
-	$('#design_feature_thumbnail')
-	.click(function()
-	{
-		get_design_feature_icon();
-	});
 
 	$('#design_property_menu')
 	.selectmenu
@@ -2123,19 +2278,6 @@ $(function()
 		change: function(event, data)
 		{
 			feature_menu_changed(data);
-		}
-	});
-
-	// If the Features tab is selected, give the focus to the feature name.
-	// TODO: (a) Does this do anything? and (b) Do other tabs have the same sort of code?
-
-	$('#global_feature_tab')
-	.tabs
-	({
-		activate: function(event, ui)
-		{
-			$('#feature_name')
-			.focus();
 		}
 	});
 

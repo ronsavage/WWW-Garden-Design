@@ -45,7 +45,7 @@ sub design_details
 	$self -> process_design_property($app, $defaults, \%errors, $joiner, $params);
 
 ###############################
-	$$params{success}	= true;
+	$$params{success}	= true; # TODO.
 ###############################
 
 	return $params;
@@ -447,7 +447,7 @@ My homepage: L<https://savage.net.au/>.
 
 =head1 Copyright
 
-Australian copyright (c) 2013, Ron Savage.
+Australian copyright (c) 2018, Ron Savage.
 
 	All Programs of mine are 'OSI Certified Open Source Software';
 	you can redistribute them and/or modify them under the terms of

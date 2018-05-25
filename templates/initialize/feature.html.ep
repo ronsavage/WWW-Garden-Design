@@ -94,12 +94,6 @@
 			<td colspan = '3'><hr /></td>
 		</tr>
 		<tr>
-			<td colspan = '3'><div id = 'feature_result_div'></div></span></td>
-		</tr>
-		<tr>
-			<td colspan = '3'><hr /></td>
-		</tr>
-		<tr>
 			<td width = '33%'></td>
 			<td align = 'center'><div class = 'blue_centered'>Add a New Feature</div></td>
 			<td width = '33%'></td>
@@ -151,7 +145,7 @@
 		</tr>
 		<tr>
 			<td>Color spectrum: </td>
-			<td colspan = '2'><input type = 'text' class = 'new_color_spectrum' id = 'color_spectrum' /></div></td>
+			<td colspan = '2'><input type = 'text' class = 'new_color_spectrum' id = 'new_color_spectrum' /></div></td>
 		</tr>
 		<tr>
 			<td>Color chosen: <span class = 'alert'>*</span> </td>

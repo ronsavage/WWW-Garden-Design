@@ -1,6 +1,7 @@
 <form name = 'search_form' id = 'search_form'>
 	<!-- We don't use Mojo's csrf_field because it does not generate an id, so jQuery has a problem -->
 	<input id = 'csrf_token' type = 'hidden' value = '<%= $csrf_token %>'>
+
 	<table align = 'center'>
 		<tr>
 			<td colspan = '2'><div class = 'blue_centered'>Search</div><br /></td>

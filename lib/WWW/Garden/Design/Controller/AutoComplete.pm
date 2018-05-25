@@ -11,21 +11,18 @@ our $VERSION = '0.96';
 sub display
 {
 	my($self)	= @_;
-	my($key)	= $self -> param('term')	|| ''; # jquery forces use of 'term'.
+	my($key)	= $self -> param('term')	|| ''; # jQuery forces use of 'term'.
 	my($type)	= $self -> param('type')	|| '';
 
 	$self -> app -> log -> debug("AutoComplete.display(key: $key, type: $type)");
 
 	my(%context) =
 	(	# Form field		Table column		Table name.
-		aliases			=> ['aliases',			'flowers'],
-		common_name		=> ['common_name',		'flowers'],
 		design_flower	=> ['*',				'flowers'],
 		design_feature	=> ['*',				'features'],
 		feature_name	=> ['name',				'features'],
 		garden_name		=> ['name',				'gardens'],
 		property_name	=> ['name',				'properties'],
-		scientific_name	=> ['scientific_name',	'flowers'],
 	);
 	my(%want_single_item) =
 	(
@@ -40,24 +37,24 @@ sub display
 	# petains to just one column of the flower database, so we search these 3 columns in the
 	# 'flowers' table: scientific_name, common_name and aliases.
 	# Warning: This use '*' in %context above means the methods in Database.pm which search %context
-	# must skip it. See Database.get_autocomplete_item() and Database.get_autocomplete_list().
+	# must skip it. See Database.autocomplete_item() and Database.autocomplete_list().
 	# Likewise for 'design_feature'.
 
 	if ($type eq 'design_flower')
 	{
-		$self -> render(json => $$defaults{db} -> get_autocomplete_flower_list(uc $key) );
+		$self -> render(json => $$defaults{db} -> autocomplete_flower_list(uc $key) );
 	}
 	elsif ($type eq 'design_feature')
 	{
-		$self -> render(json => $$defaults{db} -> get_autocomplete_feature_list(uc $key) );
+		$self -> render(json => $$defaults{db} -> autocomplete_feature_list(uc $key) );
 	}
 	elsif ($want_single_item{$type})
 	{
-		$self -> render(json => $$defaults{db} -> get_autocomplete_item(\%context, $type, uc $key) );
+		$self -> render(json => $$defaults{db} -> autocomplete_item(\%context, uc $key, $type) );
 	}
 	else
 	{
-		$self -> render(json => $$defaults{db} -> get_autocomplete_list(\%context, $type, uc $key) );
+		$self -> render(json => $$defaults{db} -> autocomplete_list(\%context, uc $key, $type) );
 	}
 
 } # End of display.
@@ -94,7 +91,7 @@ My homepage: L<https://savage.net.au/>.
 
 =head1 Copyright
 
-Australian copyright (c) 2013, Ron Savage.
+Australian copyright (c) 2018, Ron Savage.
 
 	All Programs of mine are 'OSI Certified Open Source Software';
 	you can redistribute them and/or modify them under the terms of

@@ -7,11 +7,11 @@ use open      qw(:std :utf8); # Undeclared streams in UTF-8.
 
 use Getopt::Long;
 
-use WWW::Garden::Design::Util::Export;
+use WWW::Garden::Design::Export::Pg;
 
 use Pod::Usage;
 
-# -------------------------------
+# -----------------------------------------------
 
 my($option_parser) = Getopt::Long::Parser -> new;
 
@@ -19,15 +19,15 @@ my(%option);
 
 if ($option_parser -> getoptions
 (
- \%option,
+	\%option,
 	'all=s',
 	'help',
-	'property_name=s'
+	'output_file=s',
 ) )
 {
 	pod2usage(1) if ($option{'help'});
 
-	exit WWW::Garden::Design::Util::Export -> new(%option) -> export_layouts;
+	exit WWW::Garden::Design::Export::Pg -> new(%option) -> as_csv;
 }
 else
 {
@@ -40,16 +40,16 @@ __END__
 
 =head1 NAME
 
-export.layouts.pl - Export various *.svg and *.html files.
+export.as.csv.pl - Output flowers db to CSV
 
 =head1 SYNOPSIS
 
-export.layouts.pl [options]
+export.as.csv.pl [options]
 
 	Options:
 	-all Yes or No
 	-help
-	-property_name aName
+	-output_file aCSVFileName
 
 All switches can be reduced to a single letter.
 
@@ -77,11 +77,13 @@ Respect property/garden/flower-level publish flag.
 
 Print help and exit.
 
-=item o property_name => aName
+=item o output_file => aCSVFileName
 
-The name of the property for which all gardens will have their layouts exported.
+The name of a CSV file to write.
 
-Default: 'Ron'.
+By default, nothing is written.
+
+Default: ''.
 
 =back
 

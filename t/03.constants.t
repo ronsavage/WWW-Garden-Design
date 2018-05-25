@@ -5,8 +5,6 @@ use warnings;
 
 use FindBin;
 
-use Mojolicious::Validator;
-
 use Test::More;
 
 use Text::CSV::Encoded;
@@ -92,14 +90,15 @@ my($expected_constants) =
 	css_class4headings		=> 'black_on_reddish_title',
 	design_thumbnail_size	=> 'Integer',
 	detail_thumbnail_size	=> 'Integer',
-	flower_dir				=> '/Flowers',
+	doc_root				=> '/run/shm/html',
+	flower_dir				=> 'Flowers',
 	flower_url				=> '/Flowers',
 	flower_url4js			=> '/Flowers',
 	height_latitude			=> 'Integer',
 	homepage_dir			=> '/home/ron/savage.net.au',
 	homepage_url			=> 'http://127.0.0.1',
 	homepage_url4js			=> 'http://127.0.0.1',
-	icon_dir				=> '/Flowers/icons',
+	icon_dir				=> 'Flowers/icons',
 	icon_url				=> '/Flowers/icons',
 	icon_url4js				=> '/Flowers/icons',
 	image_dir				=> '/Flowers/images',

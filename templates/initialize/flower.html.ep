@@ -5,6 +5,12 @@
 			<td colspan = '3'><div class = 'blue_centered'>Flower</div><br /></td>
 		</tr>
 		<tr>
+			<td colspan = '3'>Note: These 5 sub-tabs are populated by clicking on search result thumbnails</td>
+		</tr>
+		<tr>
+			<td colspan = '3'><br /></td>
+		</tr>
+		<tr>
 			<td rowspan = '7'>
 				<table class = 'table_margin_auto'>
 					<tr>

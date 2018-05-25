@@ -1,4 +1,4 @@
-package WWW::Garden::Design::Controller::AddFlower;
+package WWW::Garden::Design::Controller::Flower;
 
 use Mojo::Base 'Mojolicious::Controller';
 
@@ -16,7 +16,7 @@ sub format_details
 {
 	my($self, $item) = @_;
 
-	$self -> app -> log -> debug('Details.format_details(...)');
+	$self -> app -> log -> debug('Flower.format_details(...)');
 
 	my($html) = "<tr>\n";
 
@@ -37,7 +37,7 @@ sub format_errors
 {
 	my($self, $params) = @_;
 
-	$self -> app -> log -> debug('Details.format_errors(...)');
+	$self -> app -> log -> debug('Flower.format_errors(...)');
 
 	my($html) = '';
 
@@ -67,7 +67,7 @@ sub process
 {
 	my($self) = @_;
 
-	$self -> app -> log -> debug('AddFlower.process()');
+	$self -> app -> log -> debug('Flower.process()');
 
 	my($defaults)	= $self -> app -> defaults;
 	my($validator)	= WWW::Garden::Design::Util::ValidateForm -> new;
@@ -125,7 +125,7 @@ My homepage: L<https://savage.net.au/>.
 
 =head1 Copyright
 
-Australian copyright (c) 2013, Ron Savage.
+Australian copyright (c) 2018, Ron Savage.
 
 	All Programs of mine are 'OSI Certified Open Source Software';
 	you can redistribute them and/or modify them under the terms of

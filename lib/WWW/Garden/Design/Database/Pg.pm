@@ -1,4 +1,4 @@
-package WWW::Garden::Design::Database::SQLite;
+package WWW::Garden::Design::Database::Pg;
 
 use Moo;
 
@@ -10,20 +10,11 @@ use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use Data::Dumper::Concise; # For Dumper().
 
-use DBI;
-
-use DBIx::Simple;
-
 use Imager;
 
-use Types::Standard qw/Object/;
+use Mojo::Pg;
 
-has dbh =>
-(
-	is			=> 'rw',
-	isa			=> Object,
-	required	=> 0,
-);
+use Types::Standard qw/HashRef/;
 
 our $VERSION = '0.96';
 
@@ -31,22 +22,13 @@ our $VERSION = '0.96';
 
 sub BUILD
 {
-	my($self)		= @_;
-	my($config)		= $self -> config;
-	my(%attributes)	=
-	(
-		AutoCommit 		=> $$config{AutoCommit},
-		RaiseError 		=> $$config{RaiseError},
-		sqlite_unicode	=> $$config{sqlite_unicode},
-	);
+	my($self)	= @_;
+	my($config)	= $self -> config;
 
-	$self -> dbh(DBI -> connect($$config{dsn}, $$config{username}, $$config{password}, \%attributes) );
-	$self -> dbh -> do('PRAGMA foreign_keys = ON') if ($$config{dsn} =~ /SQLite/i);
-
-	$self -> db(DBIx::Simple -> new($self -> dbh) );
+	$self -> db(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
 	$self -> init_title_font($config); # Uses db()!
 
-}	# End of BUILD.
+} # End of BUILD;
 
 # -----------------------------------------------
 # Return a list.
@@ -57,11 +39,11 @@ sub autocomplete_feature_list
 	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
 	my($sql)		= "select distinct name from features where upper(name) like '%$key%'";
 
-	$self -> logger -> debug("Database.SQLite.autocomplete_feature_list(key: $key). Entered");
+	$self -> logger -> debug("Database.Pg.autocomplete_feature_list(key: $key). Entered");
 
 	return $self -> find_unique_items($sql); # Yes, despite 'distinct' above.
 
-} # End of autocomplete_feature_list.
+} # End of _autocomplete_feature_list.
 
 # -----------------------------------------------
 # Return a list.
@@ -75,7 +57,7 @@ sub autocomplete_flower_list
 						. "or upper(common_name) like '%$key%' "
 						. "or upper(aliases) like '%$key%'";
 
-	$self -> logger -> debug("Database.SQLite.autocomplete_flower_list(key: $key). Entered");
+	$self -> logger -> debug("Database.Pg.autocomplete_flower_list(key: $key). Entered");
 
 	return $self -> find_unique_items($sql); # Yes, despite 'distinct' above.
 
@@ -86,10 +68,10 @@ sub autocomplete_flower_list
 
 sub autocomplete_item
 {
-	my($self, $context, $type, $key) = @_;
+	my($self, $context, $key, $type) = @_;
 	$key =~ s/\'/\'\'/g; # Since we're using Pg.
 
-	$self -> logger -> debug("Database.SQLite.autocomplete_item(... key: $key. type: $type). Entered");
+	$self -> logger -> debug("Database.Pg.autocomplete_item(... key: $key. type: $type). Entered");
 
 	my(@item);
 	my(@result);
@@ -113,7 +95,7 @@ sub autocomplete_item
 		}
 
 		$sql	= "select distinct $search_column from $table_name where upper($search_column) like '%$key%'";
-		@item	= $self -> db -> query($sql) -> hashes;
+		@item	= $self -> db -> query($sql) -> hashes -> each;
 
 		if ($#item >= 0)
 		{
@@ -152,10 +134,10 @@ sub autocomplete_item
 
 sub autocomplete_list
 {
-	my($self, $context, $type, $key) = @_;
+	my($self, $context, $key, $type) = @_;
 	$key =~ s/\'/\'\'/g; # Since we're using Pg.
 
-	$self -> logger -> debug("Database.SQLite.autocomplete_list(... key: $key. type: $type). Entered");
+	$self -> logger -> debug("Database.Pg.autocomplete_list(... key: $key. type: $type). Entered");
 
 	my(@list);
 	my(@result);
@@ -181,16 +163,49 @@ sub autocomplete_list
 		# Using 'select distinct ...' did not weed out duplicates.
 
 		$sql	= "select $search_column from $table_name where upper($search_column) like '%$key%'";
-		@list	= map{$$_[0]} $self -> db -> query($sql) -> arrays;
+		@list	= map{$$_[0]} $self -> db -> query($sql) -> arrays -> each;
 
 		push @result, grep{! $seen{$_} } @list;
 
 		$seen{$_} = 1 for @list;
 	}
 
-	return [@result];
+	return [sort @result];
 
 } # End of autocomplete_list.
+
+# --------------------------------------------------
+
+sub get_feature_by_name
+{
+	my($self, $key)	= @_;
+	my($constants)	= $self -> constants;
+	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
+	$key			= "\U%$key"; # \U => Convert to upper-case.
+	my($sql)		= "select name from features where upper(name) like ?";
+	my(@result)		= $self -> db -> query($sql, $key) -> hashes -> each;
+	my($file_name)	= ($#result >= 0) ? $self -> clean_up_icon_name($result[0]{name}) : '';
+
+	return length($file_name) > 0 ? "$$constants{homepage_url}$$constants{icon_url}/$file_name.png" : '';
+
+} # End of get_feature_by_name.
+
+# --------------------------------------------------
+
+sub get_flower_by_both_names
+{
+	my($self, $key)	= @_;
+	my($constants)	= $self -> constants;
+	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
+	$key			= uc $key;
+	my(@key)		= split('/', $key);
+	my($sql)		= "select pig_latin from flowers where upper(scientific_name) like ? and upper(common_name) like ?";
+	my(@result)		= $self -> db -> query($sql, $key[0], $key[1]) -> hashes -> each;
+	my($file_name)	= ($#result >= 0) ? $result[0]{pig_latin} : '';
+
+	return length($file_name) > 0 ? "$$constants{homepage_url}$$constants{image_url}/$file_name.0.jpg" : '';
+
+} # End of get_flower_by_both_names.
 
 # -----------------------------------------------
 
@@ -198,10 +213,10 @@ sub insert_hashref
 {
 	my($self, $table_name, $hashref) = @_;
 
-	$self -> db -> insert($table_name, {map{($_ => $$hashref{$_})} keys %$hashref})
-		|| die $self -> db -> error;
-
-	return $self -> db -> last_insert_id(undef, undef, $table_name, undef);
+	return ${$self -> db -> insert
+	(
+		$table_name, {map{($_ => $$hashref{$_})} keys %$hashref}, {returning => ['id']}
+	) -> hash}{id};
 
 } # End of insert_hashref.
 
@@ -213,7 +228,7 @@ sub read_feature_dependencies
 
 	# Return an arrayref of hashrefs.
 
-	return [$self -> db -> query("select * from $table_name where feature_id = $feature_id") -> hashes];
+	return [$self -> db -> query("select * from $table_name where feature_id = $feature_id") -> hashes -> each];
 
 } # End of read_feature_dependencies.
 
@@ -225,7 +240,7 @@ sub read_flower_dependencies
 
 	# Return an arrayref of hashrefs.
 
-	return [$self -> db -> query("select * from $table_name where flower_id = $flower_id") -> hashes];
+	return [$self -> db -> query("select * from $table_name where flower_id = $flower_id") -> hashes -> each];
 
 } # End of read_flower_dependencies.
 
@@ -237,7 +252,7 @@ sub read_garden_dependencies
 
 	# Return an arrayref of hashrefs.
 
-	return [$self -> db -> query("select * from $table_name where garden_id = $garden_id") -> hashes];
+	return [$self -> db -> query("select * from $table_name where garden_id = $garden_id") -> hashes -> each];
 
 } # End of read_garden_dependencies.
 
@@ -245,13 +260,11 @@ sub read_garden_dependencies
 
 sub read_table
 {
-	my($self, $table_name)	= @_;
-	my($sql)				= "select * from $table_name";
-	my($set)				= $self -> db -> query($sql) || die $self -> db -> db -> error;
+	my($self, $table_name) = @_;
 
 	# Return an arrayref of hashrefs.
 
-	return [$set -> hashes];
+	return [$self -> db -> query("select * from $table_name") -> hashes -> each];
 
 } # End of read_table.
 

@@ -57,12 +57,6 @@
 			<td colspan = '3'><hr /></td>
 		</tr>
 		<tr>
-			<td colspan = '3'><div id = 'property_result_div'></div></span></td>
-		</tr>
-		<tr>
-			<td colspan = '3'><hr /></td>
-		</tr>
-		<tr>
 			<td width = '33%'></td>
 			<td align = 'center'><div class = 'blue_centered'>Add a New Property</div></td>
 			<td width = '33%'></td>

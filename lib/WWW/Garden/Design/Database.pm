@@ -1,34 +1,42 @@
 package WWW::Garden::Design::Database;
 
+use Moo::Role;
+
 use boolean;
 use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
-use DBI;
+use Data::Dumper::Concise; # For Dumper().
 
+use File::Copy;
 use File::Slurper qw/read_dir/;
-
-use FindBin;
+use File::Spec;
 
 use Imager;
 use Imager::Fill;
 
 use Lingua::EN::Inflect qw/inflect PL_N/; # PL_N: plural of a singular noun.
 
-use Mojo::Pg;
-
-use Moo;
-
 use Text::CSV::Encoded;
 
 use Time::HiRes qw/gettimeofday tv_interval/;
+
+use Try::Tiny;
 
 use Types::Standard qw/Any Object HashRef/;
 
 use Unicode::Collate;
 
-extends 'WWW::Garden::Design::Util::Config';
+use WWW::Garden::Design::Util::Config;
+
+has config =>
+(
+	default		=> sub{WWW::Garden::Design::Util::Config -> new -> config},
+	is			=> 'rw',
+	isa			=> HashRef,
+	required	=> 0,
+);
 
 has constants =>
 (
@@ -38,14 +46,14 @@ has constants =>
 	required	=> 0,
 );
 
-has logger =>
+has db =>
 (
 	is			=> 'rw',
-	isa			=> Object,
-	required	=> 1,
+	isa			=> Any,
+	required	=> 0,
 );
 
-has pg =>
+has logger =>
 (
 	is			=> 'rw',
 	isa			=> Object,
@@ -62,32 +70,6 @@ has title_font =>
 
 our $VERSION = '0.96';
 
-# -----------------------------------------------
-
-sub BUILD
-{
-	my($self)  	= @_;
-	my($config)	= $self -> config;
-
-	$self -> pg(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
-	$self -> constants($self -> read_constants_table);
-
-	my($constants)	= $self -> constants;
-	my($font_file)	= $$constants{tile_font_file} || $$config{tile_font_file};
-	my($font_size)	= $$constants{tile_font_size} || $$config{tile_font_size};
-
-	$self -> title_font
-	(
-		Imager::Font -> new
-		(
-			color	=> Imager::Color -> new(0, 0, 0), # Black.
-			file	=> $font_file,
-			size	=> $font_size,
-		) || die "Error. Can't define title font: " . Imager -> errstr
-	);
-
-}	# End of BUILD.
-
 # --------------------------------------------------
 
 sub add_flower
@@ -100,14 +82,61 @@ sub add_flower
 
 # -----------------------------------------------
 
+sub analyze_gardens_property_menu
+{
+	my($self, $gardens_table, $default_id) = @_;
+
+	#$self -> logger -> debug("Database.analyze_gardens_property_menu(). Entered");
+
+	my(%property_name);
+
+	for my $garden (@$gardens_table)
+	{
+		$property_name{$$garden{property_name} } = $$garden{property_id};
+	}
+
+	my($current_property_id)	= 0;
+	my($found)					= false;
+
+	# Warning: Apart from the HTML stuff, this code is the same as in build_gardens_property_menu(),
+	# because that way we can get build_garden_menu() to use that method to replicate the logic here.
+
+	for my $property_name (sort keys %property_name)
+	{
+		my($property_id) = $property_name{$property_name};
+
+		if	($found -> isFalse &&
+				(
+					($default_id == 0) || ($default_id == $property_id)
+				)
+			)
+		{
+			# Set this on the 1st menu item (default_id == 0) or the one desired.
+
+			$found = true;
+
+			# current_property_id is used in build_garden_menu().
+
+			$current_property_id = $property_id;
+		}
+	}
+
+	return $current_property_id;
+
+} # End of analyze_gardens_property_menu.
+
+# -----------------------------------------------
+
 sub build_garden_menu
 {
 	my($self, $controller, $gardens_table, $jquery_id) = @_;
+
+	#$self -> logger -> debug('Database.build_garden_menu(). Entered');
+
+	my($property_id)	= $self -> analyze_gardens_property_menu($gardens_table, 0);
 	my($found)			= false;
 	my($html)			= "<select id = '$jquery_id' name = '$jquery_id'>";
-	my($property_id)	= $controller -> session('current_property_id');
-
-	my($selected);
+	my($selected)		= '';
 
 	for my $garden (@$gardens_table)
 	{
@@ -139,6 +168,8 @@ sub build_gardens_property_menu
 {
 	my($self, $controller, $gardens_table, $jquery_id, $default_id) = @_;
 
+	#$self -> logger -> debug("Database.build_gardens_property_menu(default_id: $default_id). Entered");
+
 	my(%property_name);
 
 	for my $garden (@$gardens_table)
@@ -146,9 +177,12 @@ sub build_gardens_property_menu
 		$property_name{$$garden{property_name} } = $$garden{property_id};
 	}
 
-	my($found)			= false;
-	my($html)			= "<select id = '$jquery_id' name = '$jquery_id'>";
-	my($selected)		= '';
+	my($found)		= false;
+	my($html)		= "<select id = '$jquery_id' name = '$jquery_id'>";
+	my($selected)	= '';
+
+	# Warning: Apart from the HTML stuff, this code is the same as in analyze_gardens_property_menu(),
+	# because that way we can get build_garden_menu() to use that method to replicate the logic here.
 
 	for my $property_name (sort keys %property_name)
 	{
@@ -164,10 +198,6 @@ sub build_gardens_property_menu
 
 			$found		= true;
 			$selected	= ' selected';
-
-			# current_property_id is used in build_garden_menu().
-
-			$controller -> session(current_property_id => $property_id);
 		}
 
 		$html		.= "<option$selected value = '$property_id'>$property_name</option>";
@@ -185,11 +215,10 @@ sub build_gardens_property_menu
 sub build_feature_menu
 {
 	my($self, $features, $default_id) = @_;
-	my($found)	= false;
-	my($html)	= "<div class = 'feature_toolbar'>"
-					. "<select id = 'feature_menu'>";
-
-	my($selected);
+	my($found)		= false;
+	my($html)		= "<div class = 'feature_toolbar'>"
+						. "<select id = 'feature_menu'>";
+	my($selected)	= '';
 
 	for my $feature (@$features)
 	{
@@ -281,110 +310,27 @@ sub clean_up_icon_name
 
 } # End of clean_up_icon_name.
 
-# -----------------------------------------------
+# --------------------------------------------------
 
-sub crosscheck
+sub find_unique_items
 {
-	my($self)	= @_;
-	my($path)	= "$FindBin::Bin/../data/constants.csv";
-	my($csv)	= Text::CSV::Encoded -> new
-	({
-		allow_whitespace => 1,
-		encoding_in      => 'utf-8',
-	});
+	my($self, $sql) = @_;
 
-	open(my $io, '<', $path) || die "Can't open($path): $!\n";
+	my(@list) = map{$$_[0]} $self -> db -> query($sql) -> arrays -> each;
 
-	$csv -> column_names($csv -> getline($io) );
+	my(@result);
+	my(%seen);
 
-	my(%constants);
-
-	my($row) = 0;
-
-	for my $item (@{$csv -> getline_hr_all($io) })
+	for my $item (@list)
 	{
-		$row++;
+		push @result, $item if (! $seen{$item});
 
-		# Column names are in alphabetical order.
-
-		for my $column (qw/name value/)
-		{
-			if (! defined $$item{$column})
-			{
-				print "File: $path. Row: $row. Column $column undefined. \n";
-			}
-		}
-
-		$constants{$$item{name} } = $$item{value};
+		$seen{$item} = 1;
 	}
 
-	close $io;
+	return [sort @result];
 
-	my($homepage_dir)	= $constants{homepage_dir};
-	my($homepage_url)	= $constants{homepage_url};
-	my($image_dir)		= $constants{image_dir};
-	my($image_path)		= "$homepage_dir$image_dir";
-	my($flowers)		= $self -> read_flowers_table;
-
-	# Read in the actual file names.
-
-	my(%file_list);
-
-	my(@entries)						= read_dir $image_path;
-	@entries							= sort grep{! -d "$image_path/$_"} @entries; # Can't call sort directly on output of read_dir!
-	$file_list{file_names}				= [@entries];
-	@{$file_list{name_hash} }{@entries}	= (1) x @entries;
-
-	# Check that the files which ought to be there, are.
-
-	my($count);
-	my($common_name);
-	my($file_name);
-	my($image);
-	my($pig_latin);
-	my(%real_name);
-	my($scientific_name);
-
-	for my $flower (@$flowers)
-	{
-		$common_name			= $$flower{common_name};
-		$scientific_name		= $$flower{scientific_name};
-		$pig_latin				= $self -> scientific_name2pig_latin($flowers, $scientific_name, $common_name);
-		$file_name				= "$pig_latin.0.jpg";
-		$real_name{$file_name}	= 1;
-
-		if (! $file_list{name_hash}{$file_name})
-		{
-			print "Missing thumbnail: $file_name\n";
-		}
-
-		for $image (@{$$flower{images} })
-		{
-			$file_name				= $$image{file_name} =~ s/\Q$homepage_url$image_dir\/\E//r;
-			$real_name{$file_name}	= 1;
-
-			if (! $file_list{name_hash}{$file_name})
-			{
-				print "Missing image: $file_name\n";
-			}
-		}
-	}
-
-	# Check for any unexpected files, .i.e present in the directory but not in images.csv.
-
-	for my $file_name (@{$file_list{file_names} })
-	{
-		if (! $real_name{$file_name})
-		{
-				print "Unexpected image: $file_name\n";
-		}
-	}
-
-	# Return 0 for OK and 1 for error.
-
-	return 0;
-
-} # End of crosscheck.
+} # End of find_unique_items.
 
 # --------------------------------------------------
 
@@ -422,7 +368,7 @@ sub format_height_width
 } # End of format_height_width.
 
 # -----------------------------------------------
-# Using "<span class = 'centered $class'>$$result{type}</span>" only centers it within the span 'garden_result_div'.
+# The cooked message is now not used, since I adopted humane-js.
 
 sub format_raw_message
 {
@@ -433,58 +379,6 @@ sub format_raw_message
 	return $result;
 
 } # End of format_raw_message.
-
-# -----------------------------------------------
-
-sub format_string
-{
-	my($self, $cell_width, $cell_height, $image, $string) = @_;
-	my(@words)			= split(/\s+/, $string);
-	my($step_count)		= $#words + 2;
-	my($vertical_step)	= int($cell_height / $step_count);
-	my($y)				= 0;
-	my(%vowel)			= (a => 1, e => 1, i => 1, o => 1, u => 1);
-
-	my($after_word);
-	my($finished);
-	my($index);
-	my(@letters);
-	my($word);
-
-	for my $step (0 .. $#words)
-	{
-		$y			+= $vertical_step;
-		$word		= $words[$step];
-		@letters	= split(//, $word);
-		$index		= $#letters;
-		$finished	= $index <= 7; # Don't zap the 'a' in the word 'a'.
-
-		while (! $finished)
-		{
-			if ($vowel{$letters[$index]})
-			{
-				splice(@letters, $index, 1);
-			}
-
-			$index--;
-
-			$finished = 1 if ($#letters <= 7);
-		}
-
-		$after_word = join('', @letters);
-
-		$image -> align_string
-		(
-			aa		=> 1,
-			font	=> $self -> title_font,
-			halign	=> 'center',
-			string	=> $after_word,
-			x		=> int($cell_width / 2),
-			y		=> $y,
-		);
-	}
-
-} # End of format_string.
 
 # -----------------------------------------------
 
@@ -499,165 +393,59 @@ sub generate_tile
 	my($file_name)	= $self -> clean_up_icon_name($name);
 
 	$image -> box(fill => $fill);
-	$self -> format_string($$constants{cell_width}, $$constants{cell_height}, $image, $name);
+	$self -> shrink_string($$constants{cell_width}, $$constants{cell_height}, $image, $name);
 
-	$image -> write(file => "$$feature{icon_dir}/$file_name.png");
+	my($icon_name)	= File::Spec -> catfile($$feature{icon_dir}, "$file_name.png");
+	my($result)		=
+	{
+		name		=> $name,
+		file_name	=> $icon_name,
+		file_url	=> $$feature{icon_url},
+		message		=> 'Icon file created',
+		type		=> 'Success'
+	};
 
-	return [$name, $file_name];
+	try
+	{
+		$image -> write(file => $icon_name);
+	}
+	catch
+	{
+		$$result{message}	= "Unable to write file: $icon_name";
+		$$result{type}		= 'Error';
+	};
+
+	if ($$result{type} eq 'Success')
+	{
+		# If the constant 'doc_root' is present and points to a directory,
+		# we copy the new file into it so the web server can see it.
+
+		my($doc_root) = $$constants{doc_root};
+
+		if ($doc_root && -d $doc_root)
+		{
+			my($icon_dest) = File::Spec -> catfile($$constants{doc_root}, $$constants{icon_dir}, "$file_name.png");
+
+			if (copy($icon_name, $icon_dest) == 0)
+			{
+				$$result{message}	= "Unable to write file: $icon_dest";
+				$$result{type}		= 'Error';
+			}
+			else
+			{
+				$self -> logger -> debug("Copy $icon_name to $icon_dest");
+			}
+		}
+		else
+		{
+			$$result{message}	= "The 'constants' does not contain doc_root or it's not a directory";
+			$$result{type}		= 'Error';
+		}
+	}
+
+	return $result;
 
 } # End of generate_tile.
-
-# -----------------------------------------------
-# Return a list.
-
-sub get_autocomplete_flower_list
-{
-	my($self, $key)	= @_;
-	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
-	my($sql)		= "select distinct concat(scientific_name, '/', common_name) from flowers "
-						. "where upper(scientific_name) like '%$key%' "
-						. "or upper(common_name) like '%$key%' "
-						. "or upper(aliases) like '%$key%'";
-
-	return [$self -> pg -> query($sql) -> hashes -> each];
-
-} # End of get_autocomplete_flower_list.
-
-# -----------------------------------------------
-# Return a list.
-
-sub get_autocomplete_feature_list
-{
-	my($self, $key)	= @_;
-	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
-
-	return [$self -> pg -> query("select distinct name from features where upper(name) like '%$key%'") -> hashes -> each];
-
-} # End of get_autocomplete_feature_list.
-
-# -----------------------------------------------
-# Return the shortest item in the list.
-
-sub get_autocomplete_item
-{
-	my($self, $context, $type, $key) = @_;
-	$key =~ s/\'/\'\'/g; # Since we're using Pg.
-
-	my(@item);
-	my(@result);
-	my($sql);
-
-	for my $index (keys %$context)
-	{
-		my($search_column)	= $$context{$index}[0];
-		my($table_name)		= $$context{$index}[1];
-
-		# $search_column is a special case. See AutoComplete.pm and get_autocomplete_flower_list() above.
-
-		next if ($search_column eq '*');
-
-		# If we're not searching then we're processing the Add screen.
-		# In that case, we're only interested in one $index at a time.
-
-		if ( ($type ne 'search') && ($index ne $type) )
-		{
-			next;
-		}
-
-		$sql	= "select distinct $search_column from $table_name where upper($search_column) like '%$key%'";
-		@item	= $self -> pg -> query($sql) -> hashes -> each;
-
-		if ($#item >= 0)
-		{
-			push @result, $item[0]{$search_column};
-		}
-	}
-
-	my($min_length) = 99; # Arbitrary.
-
-	my($min_value);
-
-	for (@result)
-	{
-		if (length($_) < $min_length)
-		{
-			$min_length	= length($_);
-			$min_value	= $_;
-		}
-	}
-
-	if ($min_value)
-	{
-		$self -> logger -> info("Return <$min_value>");
-
-		return [$min_value];
-	}
-	else
-	{
-		return [];
-	}
-
-} # End of get_autocomplete_item.
-
-# -----------------------------------------------
-# Return a list.
-
-sub get_autocomplete_list
-{
-	my($self, $context, $type, $key) = @_;
-	$key =~ s/\'/\'\'/g; # Since we're using Pg.
-
-	my(@list);
-	my(@result);
-	my($sql, %seen);
-
-	for my $index (keys %$context)
-	{
-		my($search_column)	= $$context{$index}[0];
-		my($table_name)		= $$context{$index}[1];
-
-		# $search_column is a special case. See AutoComplete.pm and get_autocomplete_flower_list() above.
-
-		next if ($search_column eq '*');
-
-		# If we're not searching then we're processing the Add screen.
-		# In that case, we're only interested in one $index at a time.
-
-		if ( ($type ne 'search') && ($index ne $type) )
-		{
-			next;
-		}
-
-		# Using 'select distinct ...' did not weed out duplicates.
-
-		$sql	= "select $search_column from $table_name where upper($search_column) like '%$key%'";
-		@list	= map{$$_[0]} $self -> pg -> query($sql) -> arrays -> each;
-
-		push @result, grep{! $seen{$_} } @list;
-
-		$seen{$_} = 1 for @list;
-	}
-
-	return [@result];
-
-} # End of get_autocomplete_list.
-
-# --------------------------------------------------
-
-sub get_flower_by_both_names
-{
-	my($self, $key)	= @_;
-	my($constants)	= $self -> constants;
-	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
-	$key			= uc $key;
-	my(@key)		= split('/', $key);
-	my($sql)		= "select pig_latin from flowers where upper(scientific_name) like ? and upper(common_name) like ?";
-	my(@result)		= $self -> pg -> query($sql, $key[0], $key[1]) -> hashes;
-	my($pig_latin)	= $#result >= 0 ? "$$constants{homepage_url}$$constants{image_url}/$result[0].0.jpg" : '';
-
-	return $pig_latin;
-
-} # End of get_flower_by_both_names.
 
 # --------------------------------------------------
 
@@ -666,10 +454,8 @@ sub get_flower_by_id
 	my($self, $flower_id)		= @_;
 	my($attribute_types_table)	= $self -> read_table('attribute_types');
 	my($sql)					= "select * from flowers where id = $flower_id";
-	my($query)					= $self -> pg -> query($sql);
-	my($flower)					= $query -> hash;
-
-	$query -> finish;
+	my($query)					= $self -> db -> query($sql);
+	my($flower)					= $query -> hash; # Only 1 record can match, so no need to call finish().
 
 	my(%attribute_type);
 
@@ -707,35 +493,29 @@ sub get_flower_by_id
 
 } # End of get_flower_by_id.
 
-# --------------------------------------------------
-
-sub get_feature_by_name
-{
-	my($self, $key)	= @_;
-	my($constants)	= $self -> constants;
-	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
-	$key			= "\U%$key"; # \U => Convert to upper-case.
-	my($sql)		= "select name from features where upper(name) like ?";
-	my(@result)		= $self -> pg -> query($sql, $key) -> hashes;
-	my($icon_name)	= $self -> clean_up_icon_name($result[0]);
-	$icon_name		= length($icon_name) > 0 ? "$$constants{homepage_url}$$constants{icon_url}/$icon_name.png" : '';
-
-	return $icon_name;
-
-} # End of get_feature_by_name.
-
 # -----------------------------------------------
 
-sub insert_hashref
+sub init_title_font
 {
-	my($self, $table_name, $hashref) = @_;
+	my($self, $config) = @_;
 
-	return ${$self -> pg -> insert
+	$self -> constants($self -> read_constants_table); # Uses db()!
+
+	my($constants)	= $self -> constants; # Might be empty at the start of an import.
+	my($font_file)	= $$constants{tile_font_file} || $$config{tile_font_file};
+	my($font_size)	= $$constants{tile_font_size} || $$config{tile_font_size};
+
+	$self -> title_font
 	(
-		$table_name, {map{($_ => $$hashref{$_})} keys %$hashref}, {returning => ['id']}
-	) -> hash}{id};
+		Imager::Font -> new
+		(
+			color	=> Imager::Color -> new(0, 0, 0), # Black.
+			file	=> $font_file,
+			size	=> $font_size,
+		) || die "Error. Can't define title font: " . Imager -> errstr
+	);
 
-} # End of insert_hashref.
+} # End of init_title_font.
 
 # -----------------------------------------------
 
@@ -743,7 +523,7 @@ sub parse_attribute_checkboxes
 {
 	my($self, $defaults, $search_attributes)	= @_;
 
-	$self -> logger -> debug('Database.parse_attribute_checkboxes()');
+	#$self -> logger -> debug('Database.parse_attribute_checkboxes()');
 
 	my($attribute_type_names)					= $$defaults{attribute_type_names};
 	my($attribute_type_fields)					= $$defaults{attribute_type_fields};
@@ -798,7 +578,7 @@ sub parse_search_attributes
 {
 	my($self, $defaults, $search_attributes) = @_;
 
-	$self -> logger -> debug('Database.parse_search_attributes()');
+	#$self -> logger -> debug('Database.parse_search_attributes()');
 
 	my($checkboxes)			= $self -> parse_attribute_checkboxes($defaults, $search_attributes);
 	my(@type_names)			= keys %$checkboxes;
@@ -872,7 +652,7 @@ sub parse_search_text
 {
 	my($self, $search_text)	= @_;
 
-	$self -> logger -> debug("Database.parse_search_text($search_text)");
+	#$self -> logger -> debug("Database.parse_search_text($search_text)");
 
 	my($request) =
 	{
@@ -930,7 +710,7 @@ sub process_feature
 {
 	my($self, $item) = @_;
 
-	$self -> logger -> debug('Database.process_feature(...)');
+	#$self -> logger -> debug('Database.process_feature(...)');
 
 	my($action)			= $$item{action};
 	my($id)				= $$item{id};
@@ -966,18 +746,18 @@ sub process_feature
 
 		if (exists($feature{uc $name}) )
 		{
-			$result = {raw => 'Feature: $name. That feature name is on file', type => 'Error'};
+			$result = {raw => "That feature name is on file", type => 'Error'};
 		}
 		else
 		{
-			$id = $self -> pg -> insert
+			$id = $self -> db -> insert
 			(
 				$table_name,
 				$fields,
 				{returning => 'id'}
 			) -> hash -> {id};
 
-			$self -> logger -> debug("Table: $table_name. Record id: $id. Feature: $name. Action: $action");
+			$self -> logger -> info("Table: $table_name. Record id: $id. Feature: $name. Action: $action");
 
 			$result = {feature_id => $id, raw => "Added feature: $name", type => 'Success'};
 		}
@@ -996,46 +776,49 @@ sub process_feature
 			# It's a feature delete. But is this feature used in any gardens?
 
 			my($found)			= false;
+			my($feature_table)	= $self -> read_table('feature_locations');
 
-=pod
-
-#TODO
-			my($garden_table)	= $self -> read_table('gardens');
-
-			for my $garden (@$garden_table)
+			for my $feature (@$feature_table)
 			{
-				if ($$garden{property_id} == $$item{id})
+				if ($$feature{feature_id} == $$item{id})
 				{
 					$found = true;
 				}
 			}
 
-=cut
-
 			if ($found -> isTrue)
 			{
 				my($note) = "Feature not deleted because it is used in some gardens";
 
-				$self -> logger -> debug("Table: $table_name. Record id: $id. Feature: $name. $note");
+				$self -> logger -> info("Table: $table_name. Record id: $id. Feature: $name. $note");
 
-				$result = {raw => "Feature: $name. $note", type => 'Error'};
+				$result = {raw => $note, type => 'Error'};
 			}
 			else
 			{
-				$self -> pg -> delete
+				$self -> db -> delete
 				(
 					$table_name,
 					{id => $$item{id} }
 				);
 
-				$self -> logger -> debug("Table: $table_name. Record id: $id. Feature: $name. Action: $action");
+				$self -> logger -> info("Table: $table_name. Record id: $id. Feature: $name. Action: $action");
 
-				$result = {raw => "Feature: $name. Action $action", type => 'Success'};
+				# After a delete we default the id to the feature whose name is 1st sorted alphabetically.
+
+				my($min_id) = 999_999;
+
+				for (@$features_table)
+				{
+					$min_id = $$_{id} if ($$_{id} < $min_id); # We hope somebody's home :-).
+				}
+
+				$result = {id => $min_id, raw => "Action $action", type => 'Success'};
 			}
 		}
 		else
 		{
-			$result = {raw => "Feature: $name. Cannot update the database. That record was not found", type => 'Error'};
+			$result = {raw => "Cannot update the database. That feature was not found", type => 'Error'};
 		}
 	}
 	elsif ($action eq 'update')
@@ -1051,34 +834,65 @@ sub process_feature
 		{
 			# It's a feature update.
 
-			$self -> pg -> update
+			$self -> db -> update
 			(
 				$table_name,
 				$fields,
 				{id => $$item{id} }
 			);
 
-			$self -> logger -> debug("Table: $table_name. Record id '$id'. Feature: $name. Action: $action");
+			$self -> logger -> info("Table: $table_name. Record id '$id'. Feature: $name. Action: $action");
 
-			$result = {feature_id => $$item{id}, raw => "Feature: $name. Action: $action", type => 'Success'};
+			$result = {feature_id => $$item{id}, raw => "Action: $action", type => 'Success'};
 		}
 		else
 		{
-			$result = {raw => "Feature: $name. Cannot update the database. That record was not found", type => 'Error'};
+			$result = {raw => "Cannot update the database. That feature was not found", type => 'Error'};
 		}
 	}
 	else
 	{
-		$result = {raw => "Feature: $name. Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
+		$result = {raw => "Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
 	}
 
-	$features_table = $self -> read_features_table;
+	$features_table		= $self -> read_features_table;
+	my($tile_status)	= ['N/A', 'N/A', 'N/A', 'Success'];
+
+	if ( ($action eq 'add') || ($action eq 'update') )
+	{
+		# Find the index of the new/updated feature.
+
+		my($index) = -1;
+
+		for my $feature (sort{$$a{name} cmp $$b{name} } @$features_table)
+		{
+			$index++;
+
+			last if ($$feature{name} eq $name);
+		}
+
+		# generate_tile() returns [feature name, file name, doc root path, error or ''].
+
+		my($constants)	= $self -> constants;
+		$tile_status	= $self -> generate_tile($constants, @$features_table[$index]);
+
+		if ($$tile_status{type} eq 'Error')
+		{
+			$$result{raw}	= $$tile_status{type};
+			$$result{type}	= 'Error';
+		}
+	}
+
+	$self -> logger -> info("Type: $$result{type}. $$result{raw}");
+
+	$id = defined($$result{feature_id}) ? $$result{feature_id} : 0;
 
 	return
 	{
 		message			=> $self -> format_raw_message($result),
-		feature_menu	=> $self -> build_feature_menu($features_table, $$result{feature_id}),
+		feature_menu	=> $self -> build_feature_menu($features_table, $id),
 		features_table	=> $features_table,
+		tile_status		=> $tile_status,
 	};
 
 } # End of process_feature.
@@ -1089,7 +903,7 @@ sub process_garden
 {
 	my($self, $controller, $item) = @_;
 
-	$self -> logger -> debug('Database.process_garden(...)');
+	#$self -> logger -> debug('Database.process_garden(...)');
 
 	my($action)			= $$item{action};
 	my($garden_name)	= $$item{name};
@@ -1120,20 +934,20 @@ sub process_garden
 
 		if (exists($garden{uc $garden_name}) )
 		{
-			$result = {raw => "Property: $property_name. Garden: $garden_name. That garden name is on file", type => 'Error'};
+			$result = {raw => 'That garden name is on file', type => 'Error'};
 		}
 		else
 		{
-			$id = $self -> pg -> insert
+			$id = $self -> db -> insert
 			(
 				$table_name,
 				$fields,
 				{returning => 'id'}
 			) -> hash -> {id};
 
-			$self -> logger -> debug("Table: $table_name. Record id: $id. Action: $action. Property: $property_name. Garden: $garden_name");
+			$self -> logger -> info("Table: $table_name. Record id: $id. Action: $action. Property: $property_name. Garden: $garden_name");
 
-			$result = {garden_id => $id, raw => "Property: $property_name. Added garden: $garden_name", type => 'Success'};
+			$result = {garden_id => $id, raw => "Added garden: $garden_name", type => 'Success'};
 		}
 	}
 	elsif ($action eq 'delete')
@@ -1147,21 +961,21 @@ sub process_garden
 
 		if (exists($garden{$id}) )
 		{
-			$self -> pg -> delete
+			$self -> db -> delete
 			(
 				$table_name,
 				{id => $$item{id} }
 			);
 
-			my($message) = "Property: $property_name. Garden: $garden_name. Action: $action";
+			my($message) = "Action: $action";
 
-			$self -> logger -> debug("Table '$table_name'. Record id '$id'. $message");
+			$self -> logger -> info("Table '$table_name'. Record id '$id'. $message");
 
 			$result = {raw => $message, type => 'Success'};
 		}
 		else
 		{
-			$result = {raw => "Property: $property_name. Garden: $garden_name. Cannot update the database. That record was not found", type => 'Error'};
+			$result = {raw => "Cannot update the database. That garden was not found", type => 'Error'};
 		}
 	}
 	elsif ($action eq 'update')
@@ -1177,31 +991,28 @@ sub process_garden
 		{
 			# It's a garden update.
 
-			$self -> pg -> update
+			$self -> db -> update
 			(
 				$table_name,
 				$fields,
 				{id => $$item{id} }
 			);
 
-			$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Garden: $garden_name. Action: $action");
+			$self -> logger -> info("Table: $table_name. Record id: $id. Property: $property_name. Garden: $garden_name. Action: $action");
 
-			$result = {garden_id => $$item{id}, raw => "Property: $property_name. Garden. $garden_name. Action: $action", type => 'Success'};
+			$result = {garden_id => $$item{id}, raw => "Action: $action", type => 'Success'};
 		}
 		else
 		{
-			$result = {raw => "Property: $property_name. Garden: $garden_name. Cannot update the database. That record was not found", type => 'Error'};
+			$result = {raw => 'Cannot update the database. That garden was not found', type => 'Error'};
 		}
 	}
 	else
 	{
-		$result = {raw => "Property: $property_name. Garden: $garden_name. Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
+		$result = {raw => "Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
 	}
 
-	if ($$result{type} eq 'Error')
-	{
-		$self -> app -> log -> error($$result{raw});
-	}
+	$self -> logger -> info("Type: $$result{type}. $$result{raw}");
 
 	$gardens_table = $self -> read_gardens_table;
 
@@ -1220,7 +1031,7 @@ sub process_property
 {
 	my($self, $item) = @_;
 
-	$self -> logger -> debug('Database.process_property(...)');
+	#$self -> logger -> debug('Database.process_property(...)');
 
 	my($action)				= $$item{action};
 	my($id)					= $$item{id};
@@ -1249,18 +1060,18 @@ sub process_property
 
 		if (exists($property{uc $property_name}) )
 		{
-			$result = {raw => 'Property: $property_name. That property name is on file', type => 'Error'};
+			$result = {raw => ' That property name is on file', type => 'Error'};
 		}
 		else
 		{
-			$id = $self -> pg -> insert
+			$id = $self -> db -> insert
 			(
 				$table_name,
 				$fields,
 				{returning => 'id'}
 			) -> hash -> {id};
 
-			$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
+			$self -> logger -> info("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
 
 			$result = {property_id => $id, raw => "Added property: $property_name", type => 'Success'};
 		}
@@ -1293,26 +1104,26 @@ sub process_property
 			{
 				my($note) = "Property not deleted because it has gardens";
 
-				$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. $note");
+				$self -> logger -> info("Table: $table_name. Record id: $id. Property: $property_name. $note");
 
-				$result = {raw => "Property: $property_name. $note", type => 'Error'};
+				$result = {raw => $note, type => 'Error'};
 			}
 			else
 			{
-				$self -> pg -> delete
+				$self -> db -> delete
 				(
 					$table_name,
 					{id => $$item{id} }
 				);
 
-				$self -> logger -> debug("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
+				$self -> logger -> info("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
 
-				$result = {raw => "Property: $property_name. Action $action", type => 'Success'};
+				$result = {raw => "Action $action", type => 'Success'};
 			}
 		}
 		else
 		{
-			$result = {raw => "Property: $property_name. Cannot update the database. That record was not found", type => 'Error'};
+			$result = {raw => "Cannot update the database. That property was not found", type => 'Error'};
 		}
 	}
 	elsif ($action eq 'update')
@@ -1328,32 +1139,36 @@ sub process_property
 		{
 			# It's a property update.
 
-			$self -> pg -> update
+			$self -> db -> update
 			(
 				$table_name,
 				$fields,
 				{id => $$item{id} }
 			);
 
-			$self -> logger -> debug("Table: $table_name. Record id '$id'. Property: $property_name. Action: $action");
+			$self -> logger -> info("Table: $table_name. Record id '$id'. Property: $property_name. Action: $action");
 
-			$result = {property_id => $$item{id}, raw => "Property: $property_name. Action: $action", type => 'Success'};
+			$result = {property_id => $$item{id}, raw => "Action: $action", type => 'Success'};
 		}
 		else
 		{
-			$result = {raw => "Property: $property_name. Cannot update the database. That record was not found", type => 'Error'};
+			$result = {raw => "Cannot update the database. That property was not found", type => 'Error'};
 		}
 	}
 	else
 	{
-		$result = {raw => "Property: $property_name. Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
+		$result = {raw => "Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
 	}
+
+	$self -> logger -> info("Type: $$result{type}. $$result{raw}");
+
+	$id = defined($$result{property_id}) ? $$result{property_id} : 0;
 
 	return
 	{
 		properties_table	=> $self -> read_properties_table,
 		message				=> $self -> format_raw_message($result),
-		property_menu		=> $self -> build_properties_property_menu($self -> read_table('properties'), 'properties_property_menu', $$result{property_id}),
+		property_menu		=> $self -> build_properties_property_menu($self -> read_table('properties'), 'properties_property_menu', $id),
 	};
 
 } # End of process_property.
@@ -1375,15 +1190,39 @@ sub read_constants_table
 
 # --------------------------------------------------
 
-sub read_flower_dependencies
+sub read_features_table
 {
-	my($self, $table_name, $flower_id) = @_;
+	my($self)		= @_;
+	my($constants)	= $self -> constants;
+
+	my($record, @records);
+
+	for my $feature (@{$self -> read_table('features')})
+	{
+		$record	= {};
+
+		for my $key (keys %$feature)
+		{
+			$$record{$key} = $$feature{$key};
+		}
+
+		$$record{icon_dir}	= File::Spec -> catfile($$constants{homepage_dir}, $$constants{icon_dir});
+		$$record{icon_file}	= $self -> clean_up_icon_name($$feature{name});
+		$$record{icon_url}	= "$$constants{homepage_url}$$constants{icon_url}/$$record{icon_file}.png";
+
+		for my $table_name (qw/feature_locations/)
+		{
+			$$record{$table_name} = $self -> read_feature_dependencies($table_name, $$record{id});
+		}
+
+		push @records, $record;
+	}
 
 	# Return an arrayref of hashrefs.
 
-	return [$self -> pg -> query("select * from $table_name where flower_id = $flower_id") -> hashes -> each];
+	return [sort{$$a{name} cmp $$b{name} } @records];
 
-} # End of read_flower_dependencies.
+} # End of read_features_table.
 
 # --------------------------------------------------
 
@@ -1488,18 +1327,6 @@ sub read_flowers_table
 
 # --------------------------------------------------
 
-sub read_garden_dependencies
-{
-	my($self, $table_name, $garden_id) = @_;
-
-	# Return an arrayref of hashrefs.
-
-	return [$self -> pg -> query("select * from $table_name where garden_id = $garden_id") -> hashes -> each];
-
-} # End of read_garden_dependencies.
-
-# --------------------------------------------------
-
 sub read_gardens_table
 {
 	my($self)				= @_;
@@ -1550,54 +1377,6 @@ sub read_gardens_table
 
 # --------------------------------------------------
 
-sub read_feature_dependencies
-{
-	my($self, $table_name, $feature_id) = @_;
-
-	# Return an arrayref of hashrefs.
-
-	return [$self -> pg -> query("select * from $table_name where feature_id = $feature_id") -> hashes -> each];
-
-} # End of read_feature_dependencies.
-
-# --------------------------------------------------
-
-sub read_features_table
-{
-	my($self)		= @_;
-	my($constants)	= $self -> constants;
-
-	my($record, @records);
-
-	for my $feature (@{$self -> read_table('features')})
-	{
-		$record	= {};
-
-		for my $key (keys %$feature)
-		{
-			$$record{$key} = $$feature{$key};
-		}
-
-		$$record{icon_dir}	= "$$constants{homepage_dir}$$constants{icon_dir}";
-		$$record{icon_file}	= $self -> clean_up_icon_name($$feature{name});
-		$$record{icon_url}	= "$$constants{homepage_url}$$constants{icon_url}/$$record{icon_file}.png";
-
-		for my $table_name (qw/feature_locations/)
-		{
-			$$record{$table_name} = $self -> read_feature_dependencies($table_name, $$record{id});
-		}
-
-		push @records, $record;
-	}
-
-	# Return an arrayref of hashrefs.
-
-	return [sort{$$a{name} cmp $$b{name} } @records];
-
-} # End of read_features_table.
-
-# --------------------------------------------------
-
 sub read_properties_table
 {
 	my($self)		= @_;
@@ -1608,18 +1387,6 @@ sub read_properties_table
 	return [sort{$$a{name} cmp $$b{name} } @{$self -> read_table('properties')}];
 
 } # End of read_properties_table.
-
-# --------------------------------------------------
-
-sub read_table
-{
-	my($self, $table_name) = @_;
-
-	# Return an arrayref of hashrefs.
-
-	return [$self -> pg -> query("select * from $table_name") -> hashes -> each];
-
-} # End of read_table.
 
 # --------------------------------------------------
 
@@ -1738,6 +1505,81 @@ sub search
 	return ([sort{$$a{common_name} cmp $$b{common_name} } @$result_set], $request);
 
 } # End of search.
+
+# -----------------------------------------------
+
+sub shrink_string
+{
+	my($self, $cell_width, $cell_height, $image, $string) = @_;
+	my(@words)			= split(/\s+/, $string);
+	$#words				= 2 if ($#words > 2); # Limit arbitrarily to 3 words.
+	my($vertical_step)	= int($cell_height / (scalar @words + 1) );
+	my($y)				= 0;
+	my(%vowel)			= (a => 1, e => 1, i => 1, o => 1, u => 1);
+
+	my($candidate);
+	my($finished);
+	my($index);
+	my(@letters);
+	my($word);
+
+	for my $step (0 .. $#words)
+	{
+		$y += $vertical_step; # Vertical position of word on tile.
+
+		# Algorithm: Shrink the word letter-by-letter, from the right-hand end.
+		# Don't try to shrink short words.
+		# In particular, don't zap the letter 'a' in the word 'a'.
+		# Index is the offset of the last letter in the word.
+		# Step 1: Zap vowels.
+
+		$word		= $words[$step];
+		@letters	= split(//, $word);
+		$index		= $#letters;
+		$finished	= ($index <= 7) ? true : false;
+
+		while ($finished -> isFalse)
+		{
+			if ($vowel{$letters[$index]})
+			{
+				# There are vowels left in the word, so zap them.
+
+				splice(@letters, $index, 1);
+			}
+
+			$index--;
+
+			$finished = true if ( ($index < 0) || ($#letters <= 7) );
+		}
+
+		# Step 2: Zap letters.
+
+		$word		= join('', @letters);
+		$finished	= (length($word) <= 7) ? true : false;
+
+		while ($finished -> isFalse)
+		{
+			# The word is too long, so zap letters.
+
+			substr($word, length($word) - 1) = '';
+
+			$index--;
+
+			$finished = true if (length($word) <= 7);
+		}
+
+		$image -> align_string
+		(
+			aa		=> 1,
+			font	=> $self -> title_font,
+			halign	=> 'center',
+			string	=> $word,
+			x		=> int($cell_width / 2),
+			y		=> $y,
+		);
+	}
+
+} # End of shrink_string.
 
 # -----------------------------------------------
 
@@ -1865,7 +1707,7 @@ My homepage: L<https://savage.net.au/>.
 
 =head1 Copyright
 
-Australian copyright (c) 2013, Ron Savage.
+Australian copyright (c) 2018, Ron Savage.
 
 	All Programs of mine are 'OSI Certified Open Source Software';
 	you can redistribute them and/or modify them under the terms of

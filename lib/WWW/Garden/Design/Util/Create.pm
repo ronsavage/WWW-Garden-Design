@@ -1,5 +1,7 @@
 package WWW::Garden::Design::Util::Create;
 
+use Moo;
+
 use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
@@ -14,43 +16,51 @@ use Moo;
 
 use Types::Standard qw/ArrayRef HashRef Object Str/;
 
-extends 'WWW::Garden::Design::Util::Config';
+use WWW::Garden::Design::Util::Config;
+
+has config =>
+(
+	default		=> sub{WWW::Garden::Design::Util::Config -> new -> config},
+	is			=> 'rw',
+	isa			=> HashRef,
+	required	=> 0,
+);
 
 has creator =>
 (
-	is       => 'rw',
-	isa      => Object, # 'DBIx::Admin::CreateTable'.
-	required => 0,
+	is			=> 'rw',
+	isa			=> Object, # 'DBIx::Admin::CreateTable'.
+	required	=> 0,
 );
 
 has dbh =>
 (
-	is       => 'rw',
-	isa      => Object,
-	required => 0,
+	is			=> 'rw',
+	isa			=> Object,
+	required	=> 0,
 );
 
 has engine =>
 (
-	default  => sub{return ''},
-	is       => 'rw',
-	isa      => Str,
-	required => 0,
+	default		=> sub{return ''},
+	is			=> 'rw',
+	isa			=> Str,
+	required	=> 0,
 );
 
 has logger =>
 (
-	is       => 'rw',
-	isa      => Object,
-	required => 0,
+	is			=> 'rw',
+	isa			=> Object,
+	required	=> 0,
 );
 
 has time_option =>
 (
-	default  => sub{return ''},
-	is       => 'rw',
-	isa      => Str,
-	required => 0,
+	default		=> sub{return ''},
+	is			=> 'rw',
+	isa			=> Str,
+	required	=> 0,
 );
 
 our $VERSION = '0.96';
@@ -85,12 +95,9 @@ sub BUILD
 	(
 		$self -> creator -> db_vendor =~ /(?:Mysql)/i ? 'engine=innodb' : ''
 	);
-
-	my($log_path) = "$ENV{HOME}/perl.modules/WWW-Garden-Design/log/development.log";
-
 	$self -> logger
 	(
-		Mojo::Log -> new(path => $log_path)
+		Mojo::Log -> new(path => $$config{log_path})
 	);
 
 	$self -> time_option
@@ -493,7 +500,7 @@ My homepage: L<https://savage.net.au/>.
 
 =head1 Copyright
 
-Australian copyright (c) 2013, Ron Savage.
+Australian copyright (c) 2018, Ron Savage.
 
 	All Programs of mine are 'OSI Certified Open Source Software';
 	you can redistribute them and/or modify them under the terms of

@@ -7,7 +7,7 @@ use open      qw(:std :utf8); # Undeclared streams in UTF-8.
 
 use Getopt::Long;
 
-use WWW::Garden::Design::Util::Export;
+use WWW::Garden::Design::Export::Pg;
 
 use Pod::Usage;
 
@@ -26,7 +26,7 @@ if ($option_parser -> getoptions
 {
 	pod2usage(1) if ($option{'help'});
 
-	print WWW::Garden::Design::Util::Export -> new -> export_layout_guide;
+	print WWW::Garden::Design::Export::Pg -> new -> export_layout_guide;
 
 	exit 0;
 }

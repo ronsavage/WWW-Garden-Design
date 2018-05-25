@@ -1,41 +1,30 @@
-package WWW::Garden::Design::Util::Import;
+package WWW::Garden::Design::Import;
+
+use Moo::Role;
 
 use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
+use Data::Dumper::Concise; # For Dumper().
+
 use File::Slurper qw/read_text/;
+use File::Spec;
 
 use FindBin;
 
-use Mojo::Log;
-
-use Moo;
-
 use Text::CSV::Encoded;
 
-use WWW::Garden::Design::Database;
+use Types::Standard qw/Any/;
 
-extends 'WWW::Garden::Design::Database::Base';
+has db =>
+(
+	is			=> 'rw',
+	isa			=> Any,
+	required	=> 0,
+);
 
 our $VERSION = '0.96';
-
-# -----------------------------------------------
-
-sub BUILD
-{
-	my($self)		= @_;
-	my($log_path)	= "$ENV{HOME}/perl.modules/WWW-Garden-Design/log/development.log";
-
-	$self -> db
-	(
-		WWW::Garden::Design::Database -> new
-		(
-			logger => Mojo::Log -> new(path => $log_path)
-		)
-	);
-
-}	# End of BUILD.
 
 # -----------------------------------------------
 
@@ -45,7 +34,7 @@ sub populate_all_tables
 
 	$self -> db -> logger -> debug('Populating all tables');
 
-	my($path) = "$FindBin::Bin/../data/flowers.csv";
+	my($path) = File::Spec -> catfile($FindBin::Bin, '..', 'data', 'flowers.csv');
 	my($csv)  = Text::CSV::Encoded -> new
 	({
 		allow_whitespace => 1,
@@ -831,7 +820,7 @@ My homepage: L<https://savage.net.au/>.
 
 =head1 Copyright
 
-Australian copyright (c) 2013, Ron Savage.
+Australian copyright (c) 2018, Ron Savage.
 
 	All Programs of mine are 'OSI Certified Open Source Software';
 	you can redistribute them and/or modify them under the terms of

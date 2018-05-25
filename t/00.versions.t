@@ -19,6 +19,8 @@ use DBI;
 use DBIx::Admin::CreateTable;
 use DBIx::Simple;
 use Encode;
+use File::HomeDir;
+use File::Spec;
 use File::Slurper;
 use FindBin;
 use Getopt::Long;
@@ -40,6 +42,7 @@ use Text::CSV;
 use Text::CSV::Encoded;
 use Text::Xslate;
 use Time::HiRes;
+use Try::Tiny;
 use Types::Standard;
 use Unicode::Collate;
 use URI::Find::Schemeless;
@@ -62,6 +65,8 @@ my(@modules) = qw
 	DBIx::Admin::CreateTable
 	DBIx::Simple
 	Encode
+	File::HomeDir
+	File::Spec
 	File::Slurper
 	FindBin
 	Getopt::Long
@@ -83,6 +88,7 @@ my(@modules) = qw
 	Text::CSV::Encoded
 	Text::Xslate
 	Time::HiRes
+	Try::Tiny
 	Types::Standard
 	Unicode::Collate
 	URI::Find::Schemeless
