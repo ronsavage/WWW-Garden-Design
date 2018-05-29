@@ -1540,6 +1540,28 @@ function properties_property_menu_changed(data)
 
 // -----------------------------------------------
 
+function report_discrepancies(action)
+{
+	$.ajax
+	({
+		data:
+		{
+		},
+		dataType:	'text',
+		method:		'POST',
+		url:		'/Report/discrepancies', // See routes at end of WWW::Garden::Design.startup().
+	})
+	.done(function(html)
+	{
+		$('#discrepancy_result_div')
+		.empty()
+		.append(html);
+	});
+
+} // End of report_discrepancies.
+
+// -----------------------------------------------
+
 function set_feature_fields(i)
 {
 	$('#color_code')

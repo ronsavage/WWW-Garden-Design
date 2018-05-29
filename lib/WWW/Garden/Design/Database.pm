@@ -82,6 +82,71 @@ sub add_flower
 
 # -----------------------------------------------
 
+sub analyze_discrepancies
+{
+	my($self) = @_;
+
+	#$self -> logger -> debug("Database.analyze_discrepancies(). Entered");
+
+	$self -> constants($self -> read_constants_table); # Uses db()!
+
+	my($homepage_dir)	= $constants{homepage_dir};
+	my($homepage_url)	= $constants{homepage_url};
+	my($image_dir)		= $constants{image_dir};
+	my($image_path)		= File::Spec -> catfile($homepage_dir, $image_dir);
+	my($flowers)		= $self -> read_flowers_table;
+
+	# Read in the actual file names.
+
+	my(%file_list);
+
+	my(@entries)						= read_dir $image_path;
+	@entries							= sort grep{! -d File::Spec -> catfile($image_path, $_)} @entries; # Can't call sort directly on output of read_dir!
+	$file_list{file_names}				= [@entries];
+	@{$file_list{name_hash} }{@entries}	= (1) x @entries;
+
+	# Check that the files which ought to be there, are.
+
+	my($common_name);
+	my($file_name);
+	my($image);
+	my($pig_latin);
+	my(%real_name, @result);
+	my($scientific_name);
+	my($target_dir);
+
+	for my $flower (@$flowers)
+	{
+		$common_name			= $$flower{common_name};
+		$scientific_name		= $$flower{scientific_name};
+		$pig_latin				= $self -> scientific_name2pig_latin($flowers, $scientific_name, $common_name);
+		$file_name				= "$pig_latin.0.jpg";
+		$real_name{$file_name}	= 1;
+
+		if (! $file_list{name_hash}{$file_name})
+		{
+			push @result, {context => 'Thumbnail', file => $file_name, type => 'Missing'};
+		}
+
+		for $image (@{$$flower{images} })
+		{
+			$target_dir				= File::Spec -> catdir($homepage_url, $image_dir);
+			$file_name				= $$image{file_name} =~ s/\Q$target_dir\/\E//r;
+			$real_name{$file_name}	= 1;
+
+			if (! $file_list{name_hash}{$file_name})
+			{
+				push @result, {context => 'Image', file => $file_name, type => 'Missing'};
+			}
+		}
+	}
+
+	return $current_property_id;
+
+} # End of analyze_discrepancies.
+
+# -----------------------------------------------
+
 sub analyze_gardens_property_menu
 {
 	my($self, $gardens_table, $default_id) = @_;
