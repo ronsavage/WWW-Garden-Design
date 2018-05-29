@@ -83,7 +83,7 @@ sub populate_attributes_table
 	{
 		$count++;
 
-		# Column names are in alphabetical order.
+		# Column names are tested in alphabetical order.
 
 		for my $column (qw/attribute_name common_name range/)
 		{
@@ -138,7 +138,7 @@ sub populate_attribute_types_table
 	{
 		$count++;
 
-		# Column names are in alphabetical order.
+		# Column names are tested in alphabetical order.
 
 		for my $column (qw/name range sequence/)
 		{
@@ -183,7 +183,7 @@ sub populate_constants_table
 	{
 		$count++;
 
-		# Column names are in alphabetical order.
+		# Column names are tested in alphabetical order.
 
 		for my $column (qw/name value/)
 		{
@@ -232,7 +232,7 @@ sub populate_feature_locations_table
 	{
 		$count++;
 
-		# Column names are in alphabetical order.
+		# Column names are tested in alphabetical order.
 
 		for my $column (qw/property_name garden_name name xy/)
 		{
@@ -291,7 +291,7 @@ sub populate_features_table
 	{
 		$count++;
 
-		# Column names are in alphabetical order.
+		# Column names are tested in alphabetical order.
 
 		for my $column (qw/hex_color name publish/)
 		{
@@ -341,7 +341,7 @@ sub populate_flower_locations_table
 	{
 		$count++;
 
-		# Column names are in alphabetical order.
+		# Column names are tested in alphabetical order.
 
 		for my $column (qw/common_name property_name garden_name xy/)
 		{
@@ -428,7 +428,7 @@ sub populate_flowers_table
 	{
 		$count++;
 
-		# Column names are in alphabetical order.
+		# Column names are tested in alphabetical order.
 
 		for my $column (qw/aliases common_name height publish scientific_name width/)
 		{
@@ -514,7 +514,7 @@ sub populate_gardens_table
 	{
 		$count++;
 
-		# Column names are in alphabetical order.
+		# Column names are tested in alphabetical order.
 
 		for my $column (qw/garden_name description property_name publish/)
 		{
@@ -560,7 +560,7 @@ sub populate_images_table
 	{
 		$count++;
 
-		# Column names are in alphabetical order.
+		# Column names are tested in alphabetical order.
 
 		for my $column (qw/common_name description file_name/)
 		{
@@ -612,7 +612,7 @@ sub populate_notes_table
 	{
 		$count++;
 
-		# Column names are in alphabetical order.
+		# Column names are tested in alphabetical order.
 
 		for my $column (qw/common_name note/)
 		{
@@ -668,7 +668,7 @@ sub populate_properties_table
 	{
 		$count++;
 
-		# Column names are in alphabetical order.
+		# Column names are tested in alphabetical order.
 
 		for my $column (qw/description name/)
 		{
@@ -713,7 +713,7 @@ sub populate_urls_table
 	{
 		$count++;
 
-		# Column names are in alphabetical order.
+		# Column names are tested in alphabetical order.
 
 		for my $column (qw/common_name url/)
 		{

@@ -41,7 +41,7 @@ sub crosscheck
 	{
 		$row++;
 
-		# Column names are in alphabetical order.
+		# Column names are tested in alphabetical order.
 
 		for my $column (qw/name value/)
 		{

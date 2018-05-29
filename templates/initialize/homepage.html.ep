@@ -39,6 +39,7 @@
 		<li><a href = '#global_garden_tab'><span>Gardens</span></a></li>
 		<li><a href = '#global_feature_tab'><span>Features</span></a></li>
 		<li><a href = '#global_design_tab'><span>Design</span></a></li>
+		<li><a href = '#global_report_tab'><span>Reports</span></a></li>
 		<li><a href = '#global_help_tab'><span>Help</span></a></li>
 	</ul>
 	<div id = 'global_search_tab'>
@@ -81,6 +82,9 @@
 	</div>
 	<div id = 'global_design_tab'>
 %= include 'initialize/design', constants => $constants, design_garden_menu => $design_garden_menu, design_property_menu => $design_property_menu
+	</div>
+	<div id = 'global_report_tab'>
+%= include 'initialize/reports'
 	</div>
 	<div id = 'global_help_tab'>
 		<div id = 'help_div'>
