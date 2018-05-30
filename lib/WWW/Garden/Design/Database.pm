@@ -110,30 +110,29 @@ sub analyze_discrepancies
 	my($file_name);
 	my($image);
 	my($pig_latin);
-	my(%real_name, @result);
+	my(@result);
 	my($scientific_name);
 	my($target_dir);
 
 	for my $flower (@$flowers)
 	{
-		$common_name			= $$flower{common_name};
-		$scientific_name		= $$flower{scientific_name};
-		$pig_latin				= $self -> scientific_name2pig_latin($flowers, $scientific_name, $common_name);
-		$file_name				= "$pig_latin.0.jpg";
-		$real_name{$file_name}	= 1;
+		$common_name		= $$flower{common_name};
+		$scientific_name	= $$flower{scientific_name};
+		$pig_latin			= $self -> scientific_name2pig_latin($flowers, $scientific_name, $common_name);
+		$file_name			= "$pig_latin.0.jpg";
 
 		if (! $file_list{name_hash}{$file_name})
 		{
+			$file_name = File::Spec -> catdir($image_dir, $file_name);
+
 			push @result, {context => 'Thumbnail', file => $file_name, type => 'Missing'};
 		}
 
 		for $image (@{$$flower{images} })
 		{
-			$target_dir				= File::Spec -> catdir($homepage_dir, $image_dir);
-			$file_name				= $$image{file_name} =~ s/\Q$target_dir\/\E//r;
-			$real_name{$file_name}	= 1;
+			$file_name = File::Spec -> catdir($homepage_dir, $image_dir, $$image{raw_name});
 
-			if (! $file_list{name_hash}{$file_name})
+			if (! -e $file_name)
 			{
 				push @result, {context => 'Image', file => $file_name, type => 'Missing'};
 			}

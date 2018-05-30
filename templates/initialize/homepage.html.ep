@@ -84,7 +84,7 @@
 %= include 'initialize/design', constants => $constants, design_garden_menu => $design_garden_menu, design_property_menu => $design_property_menu
 	</div>
 	<div id = 'global_report_tab'>
-%= include 'initialize/reports'
+%= include 'initialize/report'
 	</div>
 	<div id = 'global_help_tab'>
 		<div id = 'help_div'>
