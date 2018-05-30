@@ -123,7 +123,7 @@ sub analyze_discrepancies
 
 		if (! $file_list{name_hash}{$file_name})
 		{
-			$file_name = File::Spec -> catdir($image_dir, $file_name);
+			$file_name = File::Spec -> catdir($homepage_dir, $image_dir, $file_name);
 
 			push @result, {context => 'Thumbnail', file => $file_name, type => 'Missing'};
 		}
