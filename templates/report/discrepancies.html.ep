@@ -1,0 +1,20 @@
+<table align = 'center' class = 'datatable' id = 'report_result_table'>
+	<thead>
+		<tr>
+			<th>Context</th>
+			<th>Type</th>
+			<th>File</th>
+		</tr>
+	</thead>
+	<tbody>
+	%== $result_html
+	</tbody>
+	<tfoot>
+		<tr>
+			<th>Context</th>
+			<th>Type</th>
+			<th>File</th>
+		</tr>
+	</tfoot>
+</table>
+

@@ -10,6 +10,33 @@ our $VERSION = '0.96';
 
 # -----------------------------------------------
 
+sub format_discrepancies
+{
+	my($self, $items) = @_;
+
+	$self -> app -> log -> debug('Details.format_discrepancies(...)');
+
+	my($html) = '';
+
+	for my $item (@$items)
+	{
+		$html .= <<EOS;
+<tr>
+	<td>$$item{context}</td>
+	<td>$$item{type}</td>
+	<td>$$item{file}</td>
+</tr>
+EOS
+
+	$self -> app -> log -> debug("context: $$item{context}. type: $$item{type}. file: $$item{file}");
+	}
+
+	return $html;
+
+} # End of format_discrepancies.
+
+# -----------------------------------------------
+
 sub discrepancies
 {
 	my($self) = @_;
@@ -17,9 +44,10 @@ sub discrepancies
 	$self -> app -> log -> debug('Report.discrepancies()');
 
 	my($defaults)	= $self -> app -> defaults;
-	my($html)		= $$defaults{db} -> analyze_discrepancies;
+	my($items)		= $$defaults{db} -> analyze_discrepancies;
 
-	$self -> render(json => $html);
+	$self -> stash(result_html	=> $self -> format_discrepancies($items) );
+	$self -> render;
 
 } # End of discrepancies.
 

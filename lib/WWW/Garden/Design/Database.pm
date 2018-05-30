@@ -88,11 +88,10 @@ sub analyze_discrepancies
 
 	#$self -> logger -> debug("Database.analyze_discrepancies(). Entered");
 
-	$self -> constants($self -> read_constants_table); # Uses db()!
-
-	my($homepage_dir)	= $constants{homepage_dir};
-	my($homepage_url)	= $constants{homepage_url};
-	my($image_dir)		= $constants{image_dir};
+	my($constants)		= $self -> read_constants_table; # Uses db()!
+	my($homepage_dir)	= $$constants{homepage_dir};
+	my($homepage_url)	= $$constants{homepage_url};
+	my($image_dir)		= $$constants{image_dir};
 	my($image_path)		= File::Spec -> catfile($homepage_dir, $image_dir);
 	my($flowers)		= $self -> read_flowers_table;
 
@@ -130,7 +129,7 @@ sub analyze_discrepancies
 
 		for $image (@{$$flower{images} })
 		{
-			$target_dir				= File::Spec -> catdir($homepage_url, $image_dir);
+			$target_dir				= File::Spec -> catdir($homepage_dir, $image_dir);
 			$file_name				= $$image{file_name} =~ s/\Q$target_dir\/\E//r;
 			$real_name{$file_name}	= 1;
 
@@ -141,7 +140,7 @@ sub analyze_discrepancies
 		}
 	}
 
-	return $current_property_id;
+	return [@result];
 
 } # End of analyze_discrepancies.
 
