@@ -14,7 +14,7 @@ sub format_discrepancies
 {
 	my($self, $items) = @_;
 
-	$self -> app -> log -> debug('Details.format_discrepancies(...)');
+	$self -> app -> log -> debug('Report.format_discrepancies(...)');
 
 	my($html) = '';
 

@@ -2415,6 +2415,16 @@ $(function()
 		}
 	});
 
+	$('#report_form_1')
+	.submit(function()
+	{
+		return false;
+	});
+
+	// ======
+	// Report
+	// ======
+
 	// ========
 	// Searches
 	// ========
