@@ -84,7 +84,18 @@
 %= include 'initialize/design', constants => $constants, design_garden_menu => $design_garden_menu, design_property_menu => $design_property_menu
 	</div>
 	<div id = 'global_report_tab'>
-%= include 'initialize/report'
+		<div id = 'report_div'>
+		    <ul>
+		        <li><a href = '#activity_tab'><span>Activity</span></a></li>
+		        <li><a href = '#crosscheck_tab'><span>Crosscheck</span></a></li>
+		    </ul>
+		    <div id = 'activity_tab'>
+%= include 'initialize/activity'
+			</div>
+		    <div id = 'crosscheck_tab'>
+%= include 'initialize/crosscheck'
+			</div>
+		</div>
 	</div>
 	<div id = 'global_help_tab'>
 		<div id = 'help_div'>
@@ -2148,6 +2159,12 @@ $(function()
 		active: 0
 	});
 
+	$("#global_report_tab")
+	.tabs
+	({
+		active: 0
+	});
+
 	// If the Search tab is selected, give the focus to the search text.
 
 	$('#global_tab_div')
@@ -2415,7 +2432,7 @@ $(function()
 		}
 	});
 
-	$('#report_form_1')
+	$('#crosscheck_form_1')
 	.submit(function()
 	{
 		return false;
