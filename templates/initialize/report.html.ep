@@ -11,7 +11,7 @@
 			<td align = 'center'><br /></td>
 		</tr>
 		<tr>
-			<td align = 'center'><input type = 'submit' value = 'Report' onclick = 'report_crosscheck()'/></td>
+			<td align = 'center'><input type = 'submit' value = 'Report' onclick = 'crosscheck()'/></td>
 		</tr>
 	</table>
 </form>

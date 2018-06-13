@@ -812,6 +812,28 @@ function confirm_design_save()
 
 // -----------------------------------------------
 
+function crosscheck(action)
+{
+	$.ajax
+	({
+		data:
+		{
+		},
+		dataType:	'text',
+		method:		'POST',
+		url:		'/Report/crosscheck', // See routes at end of WWW::Garden::Design.startup().
+	})
+	.done(function(html)
+	{
+		$('#crosscheck_result_div')
+		.empty()
+		.append(html);
+	});
+
+} // End of crosscheck.
+
+// -----------------------------------------------
+
 function find_index_of_property_id(property_id)
 {
 	var index = 0;
@@ -1537,28 +1559,6 @@ function properties_property_menu_changed(data)
 	}
 
 } // End of properties_property_menu_changed.
-
-// -----------------------------------------------
-
-function report_crosscheck(action)
-{
-	$.ajax
-	({
-		data:
-		{
-		},
-		dataType:	'text',
-		method:		'POST',
-		url:		'/Report/crosscheck', // See routes at end of WWW::Garden::Design.startup().
-	})
-	.done(function(html)
-	{
-		$('#crosscheck_result_div')
-		.empty()
-		.append(html);
-	});
-
-} // End of report_crosscheck.
 
 // -----------------------------------------------
 

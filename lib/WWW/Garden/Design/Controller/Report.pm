@@ -17,7 +17,7 @@ sub crosscheck
 	$self -> app -> log -> debug('Report.crosscheck()');
 
 	my($defaults)	= $self -> app -> defaults;
-	my($items)		= $$defaults{db} -> analyze_crosscheck;
+	my($items)		= $$defaults{db} -> crosscheck;
 
 	$self -> stash(result_html	=> $self -> format_crosscheck($items) );
 	$self -> render;
