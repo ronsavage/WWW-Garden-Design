@@ -2,18 +2,18 @@
 	%= csrf_field
 	<table align = 'center' class = 'bordered table_stripes' width = '50%'>
 		<tr>
-			<td align = 'center'><h3 class = 'blue_centered'>Report</h3></td>
+			<td align = 'center'><h3 class = 'blue_centered'>Crosscheck</h3></td>
 		</tr>
 		<tr>
-			<td align = 'center'>Report cases where an expected image is missing or an image exists but is not used</td>
+			<td align = 'center'>Report inconsistencies in the database</td>
 		</tr>
 		<tr>
 			<td align = 'center'><br /></td>
 		</tr>
 		<tr>
-			<td align = 'center'><input type = 'submit' value = 'Report' onclick = 'report_discrepancies()'/></td>
+			<td align = 'center'><input type = 'submit' value = 'Report' onclick = 'report_crosscheck()'/></td>
 		</tr>
 	</table>
 </form>
 
-<div id = 'discrepancy_result_div'></div>
+<div id = 'crosscheck_result_div'></div>

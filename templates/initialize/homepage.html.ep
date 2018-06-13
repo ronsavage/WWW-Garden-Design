@@ -1540,7 +1540,7 @@ function properties_property_menu_changed(data)
 
 // -----------------------------------------------
 
-function report_discrepancies(action)
+function report_crosscheck(action)
 {
 	$.ajax
 	({
@@ -1549,16 +1549,16 @@ function report_discrepancies(action)
 		},
 		dataType:	'text',
 		method:		'POST',
-		url:		'/Report/discrepancies', // See routes at end of WWW::Garden::Design.startup().
+		url:		'/Report/crosscheck', // See routes at end of WWW::Garden::Design.startup().
 	})
 	.done(function(html)
 	{
-		$('#discrepancy_result_div')
+		$('#crosscheck_result_div')
 		.empty()
 		.append(html);
 	});
 
-} // End of report_discrepancies.
+} // End of report_crosscheck.
 
 // -----------------------------------------------
 

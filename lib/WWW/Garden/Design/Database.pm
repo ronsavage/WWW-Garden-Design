@@ -82,11 +82,11 @@ sub add_flower
 
 # -----------------------------------------------
 
-sub analyze_discrepancies
+sub analyze_crosscheck
 {
 	my($self) = @_;
 
-	#$self -> logger -> debug("Database.analyze_discrepancies(). Entered");
+	#$self -> logger -> debug("Database.analyze_crosscheck(). Entered");
 
 	my($constants)		= $self -> read_constants_table; # Uses db()!
 	my($homepage_dir)	= $$constants{homepage_dir};
@@ -141,7 +141,7 @@ sub analyze_discrepancies
 
 	return [@result];
 
-} # End of analyze_discrepancies.
+} # End of analyze_crosscheck.
 
 # -----------------------------------------------
 

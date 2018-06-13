@@ -10,11 +10,27 @@ our $VERSION = '0.96';
 
 # -----------------------------------------------
 
-sub format_discrepancies
+sub crosscheck
+{
+	my($self) = @_;
+
+	$self -> app -> log -> debug('Report.crosscheck()');
+
+	my($defaults)	= $self -> app -> defaults;
+	my($items)		= $$defaults{db} -> analyze_crosscheck;
+
+	$self -> stash(result_html	=> $self -> format_crosscheck($items) );
+	$self -> render;
+
+} # End of crosscheck.
+
+# -----------------------------------------------
+
+sub format_crosscheck
 {
 	my($self, $items) = @_;
 
-	$self -> app -> log -> debug('Report.format_discrepancies(...)');
+	$self -> app -> log -> debug('Report.format_crosscheck(...)');
 
 	my($html) = '';
 
@@ -33,23 +49,7 @@ EOS
 
 	return $html;
 
-} # End of format_discrepancies.
-
-# -----------------------------------------------
-
-sub discrepancies
-{
-	my($self) = @_;
-
-	$self -> app -> log -> debug('Report.discrepancies()');
-
-	my($defaults)	= $self -> app -> defaults;
-	my($items)		= $$defaults{db} -> analyze_discrepancies;
-
-	$self -> stash(result_html	=> $self -> format_discrepancies($items) );
-	$self -> render;
-
-} # End of discrepancies.
+} # End of format_crosscheck.
 
 # -----------------------------------------------
 
