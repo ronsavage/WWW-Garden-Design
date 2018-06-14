@@ -323,7 +323,7 @@ function add_feature(action)
 
 	if ( (color_chosen == '') || (name == '') )
 	{
-		user_message('Both the color name and feature name are mandatory', 'Error');
+		user_message('Error', 'Both the color name and feature name are mandatory');
 
 		return;
 	}
@@ -372,7 +372,7 @@ function add_garden()
 
 	if (name == '')
 	{
-		user_message('The garden name is mandatory', 'Error');
+		user_message('Error', 'The garden name is mandatory');
 
 		return;
 	}
@@ -434,7 +434,7 @@ function add_property(action)
 
 	if (name == '')
 	{
-		user_message('The property name is mandatory', 'Error');
+		user_message('Error', 'The property name is mandatory');
 
 		return;
 	}
@@ -799,7 +799,7 @@ function confirm_design_save()
 
 	if (thing_count == 0)
 	{
-		user_message('No thumbnails planted in the virtual garden!', 'Error');
+		user_message('Error', 'No thumbnails planted in the virtual garden!');
 	}
 	else
 	{
@@ -1885,7 +1885,7 @@ function update_feature(action)
 
 	if ( (color_chosen == '') || (name == '') )
 	{
-		user_message('Both the color name and feature name are mandatory', 'Error');
+		user_message('Error', 'Both the color name and feature name are mandatory');
 
 		return;
 	}
@@ -1946,7 +1946,7 @@ function update_garden(action)
 
 	if (name == '')
 	{
-		user_message('The garden name is mandatory', 'Error');
+		user_message('Error', 'The garden name is mandatory');
 
 		return;
 	}
@@ -2004,7 +2004,7 @@ function update_property(action)
 
 	if (name == '')
 	{
-		user_message('The property name is mandatory', 'Error');
+		user_message('Error', 'The property name is mandatory');
 
 		return;
 	}
@@ -2023,7 +2023,7 @@ function update_property(action)
 
 	if ( (action == 'delete') && (has_gardens == true) )
 	{
-		user_message('You cannot delete a property which has gardens', 'Error');
+		user_message('Error', 'You cannot delete a property which has gardens');
 
 		return;
 	}
@@ -2114,11 +2114,11 @@ function user_feedback(message)
 
 // -----------------------------------------------
 
-function user_message(message, outcome)
+function user_message(outcome, raw)
 {
 	var obj		= new Object;
-	obj.raw		= message;
 	obj.outcome	= outcome;
+	obj.raw		= raw;
 
 	user_feedback(obj);
 
