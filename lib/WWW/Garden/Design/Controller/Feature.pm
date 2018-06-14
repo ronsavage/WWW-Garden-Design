@@ -32,7 +32,7 @@ sub process
 	}
 	else
 	{
-		my($result) = {feature_id => 0, raw => 'Missing color or feature name', type => 'Error'};
+		my($result) = {feature_id => 0, outcome => 'Error', raw => 'Missing color or feature name'};
 		my($packet)	=
 		{
 			feature_table	=> $$defaults{db} -> read_features_table, # Warning: Not read_table('features').

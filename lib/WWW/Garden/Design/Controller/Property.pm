@@ -30,7 +30,7 @@ sub process
 	}
 	else
 	{
-		my($result) = {garden_id => 0, raw => 'The property name is mandatory', type => 'Error'};
+		my($result) = {garden_id => 0, outcome => 'Error', raw => 'The property name is mandatory'};
 		my($packet)	=
 		{
 			property_table	=> $$defaults{db} -> read_features_table, # Warning: Not read_table('features').

@@ -344,7 +344,7 @@ function add_feature(action)
 		},
 		function(packet)
 		{
-			if (packet.message.type != 'Error')
+			if (packet.message.outcome != 'Error')
 			{
 				$('#new_feature_icon')
 				.attr('src', packet.tile_status.file_url);
@@ -1916,7 +1916,7 @@ function update_feature(action)
 		},
 		function(packet)
 		{
-			if (packet.message.type != 'Error')
+			if (packet.message.outcome != 'Error')
 			{
 				$('#feature_icon')
 				.attr('src', packet.tile_status.file_url);
@@ -2097,7 +2097,7 @@ function user_feedback(message)
 {
 	var boldlight = humane.create({baseCls: 'humane-boldlight', timeout: 3000})
 
-	if (message.type == 'Error')
+	if (message.outcome == 'Error')
 	{
 		boldlight.error = boldlight.spawn({addnCls: 'humane-boldlight-error'});
 
@@ -2114,11 +2114,11 @@ function user_feedback(message)
 
 // -----------------------------------------------
 
-function user_message(message, type)
+function user_message(message, outcome)
 {
 	var obj		= new Object;
 	obj.raw		= message;
-	obj.type	= type;
+	obj.outcome	= outcome;
 
 	user_feedback(obj);
 

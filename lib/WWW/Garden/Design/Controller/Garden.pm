@@ -30,7 +30,7 @@ sub process
 	}
 	else
 	{
-		my($result) = {garden_id => 0, raw => 'The garden name is mandatory', type => 'Error'};
+		my($result) = {garden_id => 0, outcome => 'Error', raw => 'The garden name is mandatory'};
 		my($packet)	=
 		{
 			garden_table	=> $$defaults{db} -> read_gardens_table, # Warning: Not read_table('gardens').

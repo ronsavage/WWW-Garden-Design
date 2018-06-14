@@ -355,7 +355,7 @@ sub crosscheck
 		{
 			$file_name = File::Spec -> catdir($homepage_dir, $image_dir, $file_name);
 
-			push @result, {context => 'Thumbnail', file => $file_name, type => 'Missing'};
+			push @result, {context => 'Thumbnail', file => $file_name, outcome => 'Missing'};
 		}
 
 		for $image (@{$$flower{images} })
@@ -364,7 +364,7 @@ sub crosscheck
 
 			if (! -e $file_name)
 			{
-				push @result, {context => 'Image', file => $file_name, type => 'Missing'};
+				push @result, {context => 'Image', file => $file_name, outcome => 'Missing'};
 			}
 		}
 	}
@@ -465,7 +465,7 @@ sub generate_tile
 		file_name	=> $icon_name,
 		file_url	=> $$feature{icon_url},
 		message		=> 'Icon file created',
-		type		=> 'Success'
+		outcome		=> 'Success'
 	};
 
 	try
@@ -475,7 +475,7 @@ sub generate_tile
 	catch
 	{
 		$$result{message}	= "Unable to write file: $icon_name";
-		$$result{type}		= 'Error';
+		$$result{outcome}	= 'Error';
 	};
 
 	if ($$result{type} eq 'Success')
@@ -492,7 +492,7 @@ sub generate_tile
 			if (copy($icon_name, $icon_dest) == 0)
 			{
 				$$result{message}	= "Unable to write file: $icon_dest";
-				$$result{type}		= 'Error';
+				$$result{outcome}	= 'Error';
 			}
 			else
 			{
@@ -502,7 +502,7 @@ sub generate_tile
 		else
 		{
 			$$result{message}	= "The 'constants' does not contain doc_root or it's not a directory";
-			$$result{type}		= 'Error';
+			$$result{outcome}	= 'Error';
 		}
 	}
 
@@ -780,7 +780,7 @@ sub process_feature
 	my($name)			= $$item{name};
 	my($table_name)		= 'features';
 	my($features_table)	= $self -> read_table($table_name);
-	my($result) 		= {feature_id => 0};
+	my($result) 		= {feature_id => 0, outcome => 'Success'};
 	my($fields)			=
 	{
 		hex_color	=> $$item{color_chosen},
@@ -809,7 +809,7 @@ sub process_feature
 
 		if (exists($feature{uc $name}) )
 		{
-			$result = {raw => "That feature name is on file", type => 'Error'};
+			$result = {outcome => 'Error', raw => "That feature name is on file"};
 		}
 		else
 		{
@@ -822,7 +822,7 @@ sub process_feature
 
 			$self -> logger -> info("Table: $table_name. Record id: $id. Feature: $name. Action: $action");
 
-			$result = {feature_id => $id, raw => "Added feature: $name", type => 'Success'};
+			$result = {feature_id => $id, raw => "Added feature: $name"};
 		}
 	}
 	elsif ($action eq 'delete')
@@ -855,7 +855,7 @@ sub process_feature
 
 				$self -> logger -> info("Table: $table_name. Record id: $id. Feature: $name. $note");
 
-				$result = {raw => $note, type => 'Error'};
+				$result = {outcome => 'Error', raw => $note};
 			}
 			else
 			{
@@ -876,12 +876,12 @@ sub process_feature
 					$min_id = $$_{id} if ($$_{id} < $min_id); # We sure hope somebody's home :-).
 				}
 
-				$result = {id => $min_id, raw => "Action $action", type => 'Success'};
+				$result = {id => $min_id, raw => "Action $action"};
 			}
 		}
 		else
 		{
-			$result = {raw => "Cannot update the database. That feature was not found", type => 'Error'};
+			$result = {outcome => 'Error', raw => "Cannot update the database. That feature was not found"};
 		}
 	}
 	elsif ($action eq 'update')
@@ -906,16 +906,16 @@ sub process_feature
 
 			$self -> logger -> info("Table: $table_name. Record id '$id'. Feature: $name. Action: $action");
 
-			$result = {feature_id => $$item{id}, raw => "Action: $action", type => 'Success'};
+			$result = {feature_id => $$item{id}, raw => "Action: $action"};
 		}
 		else
 		{
-			$result = {raw => "Cannot update the database. That feature was not found", type => 'Error'};
+			$result = {outcome => 'Error', raw => "Cannot update the database. That feature was not found"};
 		}
 	}
 	else
 	{
-		$result = {raw => "Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
+		$result = {outcome => 'Error', raw => "Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'"};
 	}
 
 	$features_table		= $self -> read_features_table;
@@ -939,14 +939,14 @@ sub process_feature
 		my($constants)	= $self -> constants;
 		$tile_status	= $self -> generate_tile($constants, @$features_table[$index]);
 
-		if ($$tile_status{type} eq 'Error')
+		if ($$tile_status{outcome} eq 'Error')
 		{
-			$$result{raw}	= $$tile_status{type};
-			$$result{type}	= 'Error';
+			$$result{raw}		= $$tile_status{message};
+			$$result{outcome}	= 'Error';
 		}
 	}
 
-	$self -> logger -> info("Type: $$result{type}. $$result{raw}");
+	$self -> logger -> info("Outcome: $$result{outcome}. $$result{raw}");
 
 	$id = defined($$result{feature_id}) ? $$result{feature_id} : 0;
 
@@ -972,7 +972,7 @@ sub process_garden
 	my($garden_name)	= $$item{name};
 	my($id)				= $$item{id};
 	my($property_name)	= $$item{property_name};
-	my($result) 		= {garden_id => 0};
+	my($result) 		= {garden_id => 0, outcome => 'Success'};
 	my($table_name)		= 'gardens';
 	my($gardens_table)	= $self -> read_table($table_name);
 	my($fields)			=
@@ -997,7 +997,7 @@ sub process_garden
 
 		if (exists($garden{uc $garden_name}) )
 		{
-			$result = {raw => 'That garden name is on file', type => 'Error'};
+			$result = {outcome => 'Error', raw => 'That garden name is on file'};
 		}
 		else
 		{
@@ -1010,7 +1010,7 @@ sub process_garden
 
 			$self -> logger -> info("Table: $table_name. Record id: $id. Action: $action. Property: $property_name. Garden: $garden_name");
 
-			$result = {garden_id => $id, raw => "Added garden: $garden_name", type => 'Success'};
+			$result = {garden_id => $id, raw => "Added garden: $garden_name"};
 		}
 	}
 	elsif ($action eq 'delete')
@@ -1034,11 +1034,11 @@ sub process_garden
 
 			$self -> logger -> info("Table '$table_name'. Record id '$id'. $message");
 
-			$result = {raw => $message, type => 'Success'};
+			$result = {raw => $message};
 		}
 		else
 		{
-			$result = {raw => "Cannot update the database. That garden was not found", type => 'Error'};
+			$result = {outcome => 'Error', raw => "Cannot update the database. That garden was not found"};
 		}
 	}
 	elsif ($action eq 'update')
@@ -1063,19 +1063,19 @@ sub process_garden
 
 			$self -> logger -> info("Table: $table_name. Record id: $id. Property: $property_name. Garden: $garden_name. Action: $action");
 
-			$result = {garden_id => $$item{id}, raw => "Action: $action", type => 'Success'};
+			$result = {garden_id => $$item{id}, raw => "Action: $action"};
 		}
 		else
 		{
-			$result = {raw => 'Cannot update the database. That garden was not found', type => 'Error'};
+			$result = {outcome => 'Error', raw => 'Cannot update the database. That garden was not found'};
 		}
 	}
 	else
 	{
-		$result = {raw => "Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
+		$result = {outcome => 'Error', raw => "Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'"};
 	}
 
-	$self -> logger -> info("Type: $$result{type}. $$result{raw}");
+	$self -> logger -> info("Outcome: $$result{outcome}. $$result{raw}");
 
 	$gardens_table = $self -> read_gardens_table;
 
@@ -1101,7 +1101,7 @@ sub process_property
 	my($property_name)		= $$item{name};
 	my($table_name)			= 'properties';
 	my($properties_table)	= $self -> read_table($table_name);
-	my($result) 			= {property_id => 0};
+	my($result) 			= {property_id => 0, outcome => 'Success'};
 	my($fields)				=
 	{
 		description	=> $$item{description},
@@ -1123,7 +1123,7 @@ sub process_property
 
 		if (exists($property{uc $property_name}) )
 		{
-			$result = {raw => ' That property name is on file', type => 'Error'};
+			$result = {outcome => 'Error', raw => ' That property name is on file'};
 		}
 		else
 		{
@@ -1136,7 +1136,7 @@ sub process_property
 
 			$self -> logger -> info("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
 
-			$result = {property_id => $id, raw => "Added property: $property_name", type => 'Success'};
+			$result = {property_id => $id, raw => "Added property: $property_name"};
 		}
 	}
 	elsif ($action eq 'delete')
@@ -1169,7 +1169,7 @@ sub process_property
 
 				$self -> logger -> info("Table: $table_name. Record id: $id. Property: $property_name. $note");
 
-				$result = {raw => $note, type => 'Error'};
+				$result = {outcome => 'Error', raw => $note};
 			}
 			else
 			{
@@ -1181,12 +1181,12 @@ sub process_property
 
 				$self -> logger -> info("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
 
-				$result = {raw => "Action $action", type => 'Success'};
+				$result = {raw => "Action $action"};
 			}
 		}
 		else
 		{
-			$result = {raw => "Cannot update the database. That property was not found", type => 'Error'};
+			$result = {outcome => 'Error', raw => "Cannot update the database. That property was not found"};
 		}
 	}
 	elsif ($action eq 'update')
@@ -1211,19 +1211,19 @@ sub process_property
 
 			$self -> logger -> info("Table: $table_name. Record id '$id'. Property: $property_name. Action: $action");
 
-			$result = {property_id => $$item{id}, raw => "Action: $action", type => 'Success'};
+			$result = {property_id => $$item{id}, raw => "Action: $action"};
 		}
 		else
 		{
-			$result = {raw => "Cannot update the database. That property was not found", type => 'Error'};
+			$result = {outcome => 'Error', raw => "Cannot update the database. That property was not found"};
 		}
 	}
 	else
 	{
-		$result = {raw => "Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'", type => 'Error'};
+		$result = {outcome => 'Error', raw => "Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'"};
 	}
 
-	$self -> logger -> info("Type: $$result{type}. $$result{raw}");
+	$self -> logger -> info("Outcome: $$result{outcome}. $$result{raw}");
 
 	$id = defined($$result{property_id}) ? $$result{property_id} : 0;
 
