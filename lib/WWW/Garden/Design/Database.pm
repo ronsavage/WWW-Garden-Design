@@ -867,13 +867,13 @@ sub process_feature
 
 				$self -> logger -> info("Table: $table_name. Record id: $id. Feature: $name. Action: $action");
 
-				# After a delete we default the id to the feature whose name is 1st sorted alphabetically.
+				# After a delete we default the id to the feature whose name is sorted 1st alphabetically.
 
-				my($min_id) = 999_999;
+				my($min_id) = 999_999_999;
 
 				for (@$features_table)
 				{
-					$min_id = $$_{id} if ($$_{id} < $min_id); # We hope somebody's home :-).
+					$min_id = $$_{id} if ($$_{id} < $min_id); # We sure hope somebody's home :-).
 				}
 
 				$result = {id => $min_id, raw => "Action $action", type => 'Success'};
