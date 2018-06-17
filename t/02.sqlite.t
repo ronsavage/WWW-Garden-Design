@@ -34,7 +34,7 @@ $dbh -> do('PRAGMA foreign_keys = ON') if ($$config{dsn} =~ /SQLite/i);
 my($checker)	= MojoX::Validate::Util -> new;
 my($simple)		= DBIx::Simple -> new($dbh);
 my(%expected)	=
-(
+(	# We omit the log table since we don't know how many records it has at any time.
 	attribute_types		=>   4,
 	attributes			=> 712,
 	constants			=>  31,
