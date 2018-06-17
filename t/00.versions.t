@@ -19,6 +19,7 @@ use DBI;
 use DBIx::Admin::CreateTable;
 use DBIx::Simple;
 use Encode;
+use File::Copy;
 use File::HomeDir;
 use File::Spec;
 use File::Slurper;
@@ -26,12 +27,15 @@ use FindBin;
 use Getopt::Long;
 use Imager;
 use Imager::Fill;
+use lib;
 use Lingua::EN::Inflect;
 use Mojolicious;
 use Mojo::Base;
 use Mojo::Log;
+use Mojo::Pg;
 use MojoX::Validate::Util;
 use Moo;
+use Moo::Role;
 use Params::Classify;
 use Path::Tiny;
 use Pod::Usage;
@@ -65,6 +69,7 @@ my(@modules) = qw
 	DBIx::Admin::CreateTable
 	DBIx::Simple
 	Encode
+	File::Copy
 	File::HomeDir
 	File::Spec
 	File::Slurper
@@ -72,12 +77,15 @@ my(@modules) = qw
 	Getopt::Long
 	Imager
 	Imager::Fill
+	lib
 	Lingua::EN::Inflect
 	Mojolicious
 	Mojo::Base
 	Mojo::Log
+	Mojo::Pg
 	MojoX::Validate::Util
 	Moo
+	Moo::Role
 	Params::Classify
 	Path::Tiny
 	Pod::Usage
