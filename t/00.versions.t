@@ -35,7 +35,6 @@ use Mojo::Log;
 use Mojo::Pg;
 use MojoX::Validate::Util;
 use Moo;
-use #Moo::Role;
 use Params::Classify;
 use Path::Tiny;
 use Pod::Usage;
