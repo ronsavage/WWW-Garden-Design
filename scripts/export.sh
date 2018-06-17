@@ -8,11 +8,11 @@ fi
 
 if [ "$FLOWER_DB" == "Pg" ]; then
 	time perl -Ilib scripts/export.all.pg.pages.pl
-	time perl -Ilib scripts/export.pg.icons.pl
+	time perl -Ilib scripts/export.pg.features.pl
 	time perl -Ilib scripts/export.pg.layouts.pl
 else
 	time perl -Ilib scripts/export.all.sqlite.pages.pl
-	time perl -Ilib scripts/export.sqlite.icons.pl
+	time perl -Ilib scripts/export.sqlite.features.pl
 	time perl -Ilib scripts/export.sqlite.layouts.pl
 fi
 

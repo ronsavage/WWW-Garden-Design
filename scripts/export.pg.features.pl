@@ -25,7 +25,7 @@ if ($option_parser -> getoptions
 {
 	pod2usage(1) if ($option{'help'});
 
-	exit WWW::Garden::Design::Export::Pg -> new(%option) -> export_icons;
+	exit WWW::Garden::Design::Export::Pg -> new(%option) -> export_features;
 }
 else
 {
@@ -38,11 +38,11 @@ __END__
 
 =head1 NAME
 
-export.icons.pl - Convert entries in the objects table into icons
+export.pg.features.pl - Convert entries in the features table into icons
 
 =head1 SYNOPSIS
 
-export.icons.pl [options]
+export.pg.features.pl [options]
 
 	Options:
 	-help
