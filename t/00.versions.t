@@ -35,7 +35,7 @@ use Mojo::Log;
 use Mojo::Pg;
 use MojoX::Validate::Util;
 use Moo;
-use Moo::Role;
+use #Moo::Role;
 use Params::Classify;
 use Path::Tiny;
 use Pod::Usage;
@@ -85,7 +85,7 @@ my(@modules) = qw
 	Mojo::Pg
 	MojoX::Validate::Util
 	Moo
-	Moo::Role
+	#Moo::Role
 	Params::Classify
 	Path::Tiny
 	Pod::Usage
