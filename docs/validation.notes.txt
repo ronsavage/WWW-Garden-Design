@@ -54,8 +54,8 @@ o detail_thumbnail_size is the thumbnail size for the Details/Flower sub-tab pix
 o flower_dir is the location of the *.html files, the per-flower web pages, relative to homepage_dir.
 o flower_url is the location of the *.html files, the per-flower web pages, relative to homepage_url.
 	Used by JS so it must be in single-quotes.
-o icon_dir is the location of the *.png files, the tiles of the objects, relative to homepage_dir.
-o icon_url is the location of the *.png files, the tiles of the objects, relative to homepage_url.
+o feature_dir is the location of the *.png files, the tiles of the objects, relative to homepage_dir.
+o feature_url is the location of the *.png files, the tiles of the objects, relative to homepage_url.
 	Used by JS so it must be in single-quotes.
 o image_dir is the location of the *.jpg files, the per-flower pix, relative to homepage_dir.
 o image_url is the location of the *.jpg files, the per-flower pix, relative to homepage_url.

@@ -33,14 +33,14 @@ sub design_feature
 
 	if (length($design_feature) < 2)
 	{
-		$self -> stash(icon_name => '');
+		$self -> stash(feature_name => '');
 		$self -> render();
 	}
 	else
 	{
 		my($defaults) = $self -> app -> defaults;
 
-		$self -> stash(icon_name => $$defaults{db} -> get_feature_by_name($design_feature) );
+		$self -> stash(feature_name => $$defaults{db} -> get_feature_by_name($design_feature) );
 		$self -> render;
 	}
 

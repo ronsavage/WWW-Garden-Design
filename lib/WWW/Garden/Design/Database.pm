@@ -301,14 +301,14 @@ sub build_properties_property_menu
 
 # --------------------------------------------------
 
-sub clean_up_icon_name
+sub clean_up_feature_name
 {
 	my($self, $name)	= @_;
 	my($file_name)		= $name =~ s/\s/./gr;
 
 	return $file_name;
 
-} # End of clean_up_icon_name.
+} # End of clean_up_feature_name.
 
 # -----------------------------------------------
 
@@ -321,14 +321,14 @@ sub crosscheck
 	my($constants)		= $self -> read_constants_table; # Uses db()!
 	my($homepage_dir)	= $$constants{homepage_dir};
 	my($homepage_url)	= $$constants{homepage_url};
-	my($image_dir)		= $$constants{image_dir};
-	my($image_path)		= File::Spec -> catfile($homepage_dir, $image_dir);
 	my($flowers)		= $self -> read_flowers_table;
 
-	# Read in the actual file names.
+	# Read in the actual image names.
 
 	my(%file_list);
 
+	my($image_dir)						= $$constants{image_dir};
+	my($image_path)						= File::Spec -> catfile($homepage_dir, $image_dir);
 	my(@entries)						= read_dir $image_path;
 	@entries							= sort grep{! -d File::Spec -> catfile($image_path, $_)} @entries; # Can't call sort directly on output of read_dir!
 	$file_list{file_names}				= [@entries];
@@ -368,6 +368,10 @@ sub crosscheck
 			}
 		}
 	}
+
+	# Read in the features table.
+
+	my($features) = $self -> read_features_table; # Uses db()!
 
 	return [@result];
 
@@ -453,28 +457,28 @@ sub generate_tile
 	my($id)			= $$feature{id};
 	my($image)		= Imager -> new(xsize => $$constants{cell_width}, ysize => $$constants{cell_height});
 	my($name)		= $$feature{name};
-	my($file_name)	= $self -> clean_up_icon_name($name);
+	my($file_name)	= $self -> clean_up_feature_name($name);
 
 	$image -> box(fill => $fill);
 	$self -> shrink_string($$constants{cell_width}, $$constants{cell_height}, $image, $name);
 
-	my($icon_name)	= File::Spec -> catfile($$feature{icon_dir}, "$file_name.png");
-	my($result)		=
+	my($feature_name)	= File::Spec -> catfile($$feature{feature_dir}, "$file_name.png");
+	my($result)			=
 	{
 		name		=> $name,
-		file_name	=> $icon_name,
-		file_url	=> $$feature{icon_url},
-		message		=> 'Icon file created',
+		file_name	=> $feature_name,
+		file_url	=> $$feature{feature_url},
+		message		=> "Feature's icon file created",
 		outcome		=> 'Success'
 	};
 
 	try
 	{
-		$image -> write(file => $icon_name);
+		$image -> write(file => $feature_name);
 	}
 	catch
 	{
-		$$result{message}	= "Unable to write file: $icon_name";
+		$$result{message}	= "Unable to write file: $feature_name";
 		$$result{outcome}	= 'Error';
 	};
 
@@ -487,16 +491,16 @@ sub generate_tile
 
 		if ($doc_root && -d $doc_root)
 		{
-			my($icon_dest) = File::Spec -> catfile($$constants{doc_root}, $$constants{icon_dir}, "$file_name.png");
+			my($feature_dest) = File::Spec -> catfile($$constants{doc_root}, $$constants{feature_dir}, "$file_name.png");
 
-			if (copy($icon_name, $icon_dest) == 0)
+			if (copy($feature_name, $feature_dest) == 0)
 			{
-				$$result{message}	= "Unable to write file: $icon_dest";
+				$$result{message}	= "Unable to write file: $feature_dest";
 				$$result{outcome}	= 'Error';
 			}
 			else
 			{
-				$self -> logger -> debug("Copy $icon_name to $icon_dest");
+				$self -> logger -> debug("Copy $feature_name to $feature_dest");
 			}
 		}
 		else
@@ -1269,9 +1273,9 @@ sub read_features_table
 			$$record{$key} = $$feature{$key};
 		}
 
-		$$record{icon_dir}	= File::Spec -> catfile($$constants{homepage_dir}, $$constants{icon_dir});
-		$$record{icon_file}	= $self -> clean_up_icon_name($$feature{name});
-		$$record{icon_url}	= "$$constants{homepage_url}$$constants{icon_url}/$$record{icon_file}.png";
+		$$record{feature_dir}	= File::Spec -> catfile($$constants{homepage_dir}, $$constants{feature_dir});
+		$$record{feature_file}	= $self -> clean_up_feature_name($$feature{name});
+		$$record{feature_url}	= "$$constants{homepage_url}$$constants{feature_url}/$$record{feature_file}.png";
 
 		for my $table_name (qw/feature_locations/)
 		{

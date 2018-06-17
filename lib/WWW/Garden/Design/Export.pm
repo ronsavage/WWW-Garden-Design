@@ -548,6 +548,64 @@ sub export_all_pages
 
 # -----------------------------------------------
 
+sub export_features
+{
+	my($self)			= @_;
+	my($constants)		= $self -> db -> constants;
+	my($features_table)	= $self -> db -> read_features_table;
+	my($target_dir)		= File::Spec -> catfile($$constants{homepage_dir}, $$constants{flower_dir});
+
+	$self -> db -> logger -> info("Export.export_features(). Output directory: $target_dir");
+
+	my(@file_names);
+
+	for my $feature (sort{$$a{name} cmp $$b{name} } @$features_table)
+	{
+		next if ($$feature{publish} eq 'No');
+
+		push @file_names, $self -> db -> generate_tile($constants, $feature);
+	}
+
+	my(@heading)	= map{ {td => $_} } (qw(Feature Icon) );
+	my(@row)		= [@heading];
+	my($tx)			= Text::Xslate -> new
+	(
+		input_layer	=> '',
+		path		=> $$constants{template_path},
+	);
+
+	for my $item (@file_names)
+	{
+		push @row, [{td => $$item{name} }, {td => mark_raw("<object data = '$$constants{homepage_url}$$constants{feature_url}/$$item{file_name}.png'></object>")}];
+	}
+
+	push @row, [@heading];
+
+	my($file_name) = File::Spec -> catfile($$constants{homepage_dir}, $$constants{feature_dir}, 'features.html');
+
+	open(my $fh, '>', $file_name) || die "Can't open: $file_name: $!\n";
+	print $fh $tx -> render
+	(
+		(
+			'garden.features.tx',
+			{
+				row => \@row,
+			}
+		)
+	);
+
+	close $fh;
+
+	$self -> db -> logger -> info('Finished exporting all features');
+
+	# Return 0 for OK and 1 for error.
+
+	return 0;
+
+} # End of export_features.
+
+# -----------------------------------------------
+
 sub export_garden_layout
 {
 	my($self, $gardens_table, $garden_name) = @_;
@@ -666,7 +724,7 @@ sub export_garden_layout
 			$grid_id = $grid -> svg -> image
 			(
 				height	=> $$constants{cell_height},
-				href	=> $$item{icon_url},
+				href	=> $$item{feature_url},
 				width	=> $$constants{cell_width},
 				x		=> $x_offset + $$constants{cell_width} * $$feature{x}, # Cell co-ord.
 				y		=> $y_offset + $$constants{cell_height} * $$feature{y}, # Cell co-ord.
@@ -850,64 +908,6 @@ EOS
 	$self -> db -> logger -> info("Finished exporting garden layout for the '$garden_name' garden");
 
 } # End of export_garden_layout.
-
-# -----------------------------------------------
-
-sub export_icons
-{
-	my($self)			= @_;
-	my($constants)		= $self -> db -> constants;
-	my($features_table)	= $self -> db -> read_features_table;
-	my($target_dir)		= File::Spec -> catfile($$constants{homepage_dir}, $$constants{flower_dir});
-
-	$self -> db -> logger -> info("Export.export_icons(). Output directory: $target_dir");
-
-	my(@file_names);
-
-	for my $feature (sort{$$a{name} cmp $$b{name} } @$features_table)
-	{
-		next if ($$feature{publish} eq 'No');
-
-		push @file_names, $self -> db -> generate_tile($constants, $feature);
-	}
-
-	my(@heading)	= map{ {td => $_} } (qw(Feature Icon) );
-	my(@row)		= [@heading];
-	my($tx)			= Text::Xslate -> new
-	(
-		input_layer	=> '',
-		path		=> $$constants{template_path},
-	);
-
-	for my $item (@file_names)
-	{
-		push @row, [{td => $$item{name} }, {td => mark_raw("<object data = '$$constants{homepage_url}$$constants{icon_url}/$$item{file_name}.png'></object>")}];
-	}
-
-	push @row, [@heading];
-
-	my($file_name) = File::Spec -> catfile($$constants{homepage_dir}, $$constants{icon_dir}, 'features.html');
-
-	open(my $fh, '>', $file_name) || die "Can't open: $file_name: $!\n";
-	print $fh $tx -> render
-	(
-		(
-			'garden.features.tx',
-			{
-				row => \@row,
-			}
-		)
-	);
-
-	close $fh;
-
-	$self -> db -> logger -> info('Finished exporting all icons');
-
-	# Return 0 for OK and 1 for error.
-
-	return 0;
-
-} # End of export_icons.
 
 # -----------------------------------------------
 

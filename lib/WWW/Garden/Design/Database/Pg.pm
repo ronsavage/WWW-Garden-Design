@@ -184,9 +184,9 @@ sub get_feature_by_name
 	$key			= "\U%$key"; # \U => Convert to upper-case.
 	my($sql)		= "select name from features where upper(name) like ?";
 	my(@result)		= $self -> db -> query($sql, $key) -> hashes -> each;
-	my($file_name)	= ($#result >= 0) ? $self -> clean_up_icon_name($result[0]{name}) : '';
+	my($file_name)	= ($#result >= 0) ? $self -> clean_up_feature_name($result[0]{name}) : '';
 
-	return length($file_name) > 0 ? "$$constants{homepage_url}$$constants{icon_url}/$file_name.png" : '';
+	return length($file_name) > 0 ? "$$constants{homepage_url}$$constants{feature_url}/$file_name.png" : '';
 
 } # End of get_feature_by_name.
 
