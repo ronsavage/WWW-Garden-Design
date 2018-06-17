@@ -119,6 +119,7 @@ sub create_all_tables
 
 	for my $table_name
 (qw/
+log
 constants
 flowers
 attribute_types
@@ -347,6 +348,30 @@ SQL
 
 # --------------------------------------------------
 
+sub create_log_table
+{
+	my($self)        = @_;
+	my($table_name)  = 'log';
+	my($primary_key) = $self -> creator -> generate_primary_key_sql($table_name);
+	my($engine)      = $self -> engine;
+	my($result)      = $self -> creator -> create_table(<<SQL);
+create table $table_name
+(
+id			$primary_key,
+action		varchar(255) not null,
+context		varchar(255) not null,
+key			integer not null,
+name		varchar(255) not null,
+note		text not null,
+outcome		varchar(255) not null
+) $engine
+SQL
+	$self -> report($table_name, 'Created', $result);
+
+}	# End of create_log_table.
+
+# --------------------------------------------------
+
 sub create_notes_table
 {
 	my($self)        = @_;
@@ -428,6 +453,7 @@ attributes
 attribute_types
 flowers
 constants
+log
 /)
 	{
 		$self -> drop_table($table_name);
