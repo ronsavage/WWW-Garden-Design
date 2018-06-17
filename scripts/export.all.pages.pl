@@ -21,7 +21,7 @@ if ( (! $db_type) || ($db_type !~ /^(Pg|SQLite)$/) )
 	print "Env var FLOWER_DB must match /^(Pg|SQLite)\$/\n";
 }
 
-my($option_parser) = Getopt::Long::Parser -> new;
+my($option_parser)	= Getopt::Long::Parser -> new;
 
 my(%option);
 
@@ -34,14 +34,20 @@ if ($option_parser -> getoptions
 {
 	pod2usage(1) if ($option{'help'});
 
+	print "Exporting the $db_type flowers database. \n";
+
+	my($db);
+
 	if ($db_type eq 'Pg')
 	{
-		exit WWW::Garden::Design::Export::Pg -> new -> export_all_pages;
+		$db = WWW::Garden::Design::Export::Pg -> new;
 	}
 	else
 	{
-		exit WWW::Garden::Design::Export::SQLite -> new -> export_all_pages;
+		$db = WWW::Garden::Design::Export::SQLite -> new;
 	}
+
+	exit $db -> new -> export_all_pages;
 }
 else
 {
