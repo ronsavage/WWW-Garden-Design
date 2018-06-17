@@ -440,8 +440,8 @@ sub format_height_width
 sub format_raw_message
 {
 	my($self, $result)	= @_;
-	my($class)			= ($$result{type} eq 'Success') ? 'success' : 'error';
-	$$result{cooked}	= "<h2 class = 'centered'><span class = '$class'>$$result{type}</span>: $$result{raw}</h2>";
+	my($class)			= ($$result{outcome} eq 'Success') ? 'success' : 'error';
+	$$result{cooked}	= "<h2 class = 'centered'><span class = '$class'>$$result{outcome}</span>: $$result{raw}</h2>";
 
 	return $result;
 
@@ -482,7 +482,7 @@ sub generate_tile
 		$$result{outcome}	= 'Error';
 	};
 
-	if ($$result{type} eq 'Success')
+	if ($$result{outcome} eq 'Success')
 	{
 		# If the constant 'doc_root' is present and points to a directory,
 		# we copy the new file into it so the web server can see it.

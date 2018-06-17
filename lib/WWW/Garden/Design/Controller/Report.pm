@@ -39,7 +39,7 @@ sub format_crosscheck
 		$html .= <<EOS;
 <tr>
 	<td>$$item{context}</td>
-	<td>$$item{type}</td>
+	<td>$$item{outcome}</td>
 	<td>$$item{file}</td>
 </tr>
 EOS
