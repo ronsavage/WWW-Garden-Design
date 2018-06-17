@@ -347,6 +347,13 @@ SQL
 }	# End of create_images_table.
 
 # --------------------------------------------------
+# In the log table:
+# o action	=> 'add', 'delete', 'export', 'import', 'update'.
+# o context	=> 'flower', etc.
+# o key		=> Either 0 or a primary key associated with the context.
+# o name	=> The name of the thing.
+# o note	=> Any text. May contain other primary keys, e.g. when garden also has a property.
+# o outcome	=> 'Success' or 'Error'.
 
 sub create_log_table
 {
@@ -360,6 +367,7 @@ create table $table_name
 id			$primary_key,
 action		varchar(255) not null,
 context		varchar(255) not null,
+file_name	varchar(255) not null,
 key			integer not null,
 name		varchar(255) not null,
 note		text not null,
