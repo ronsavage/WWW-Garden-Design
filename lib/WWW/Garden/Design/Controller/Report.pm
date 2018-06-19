@@ -44,7 +44,7 @@ sub format_crosscheck
 </tr>
 EOS
 
-	$self -> app -> log -> debug("context: $$item{context}. type: $$item{type}. file: $$item{file}");
+	$self -> app -> log -> debug("context: $$item{context}. type: $$item{outcome}. file: $$item{file}");
 	}
 
 	return $html;

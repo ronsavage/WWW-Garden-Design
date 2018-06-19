@@ -323,7 +323,7 @@ sub crosscheck
 	my($homepage_url)	= $$constants{homepage_url};
 	my($flowers)		= $self -> read_flowers_table;
 
-	# Read in the actual image names.
+	# Read in the flower image names.
 
 	my(%file_list);
 
@@ -372,6 +372,31 @@ sub crosscheck
 	# Read in the features table.
 
 	my($features) = $self -> read_features_table; # Uses db()!
+
+	# Read in the feature icon names.
+
+	my($feature_file);
+	my(%icon_list);
+
+	my($feature_dir)		= $$constants{feature_dir};
+	my($feature_path)		= File::Spec -> catfile($homepage_dir, $feature_dir);
+	@entries				= read_dir $feature_path;
+	@entries				= sort grep{! -d File::Spec -> catfile($feature_path, $_)} @entries; # Can't call sort directly on output of read_dir!
+	@icon_list{@entries}	= (1) x @entries;
+
+	# Check that the files which ought to be there, are.
+
+	for my $feature (@$features)
+	{
+		$feature_file = "$$feature{feature_file}.png";
+
+		if (! $icon_list{$feature_file})
+		{
+			$feature_file = File::Spec -> catfile($homepage_dir, $feature_dir, $feature_file);
+
+			push @result, {context => 'Feature', file => $feature_file, outcome => 'Missing'};
+		}
+	}
 
 	return [@result];
 
