@@ -3,7 +3,7 @@
 	<thead>
 		<tr>
 			<th>Context</th>
-			<th>Type</th>
+			<th>Outcome</th>
 			<th>File</th>
 		</tr>
 	</thead>
@@ -13,7 +13,7 @@
 	<tfoot>
 		<tr>
 			<th>Context</th>
-			<th>Type</th>
+			<th>Outcome</th>
 			<th>File</th>
 		</tr>
 	</tfoot>

@@ -327,18 +327,21 @@ sub crosscheck
 
 	my(%file_list);
 
+	my($action)							= 'crosscheck';
 	my($image_dir)						= $$constants{image_dir};
 	my($image_path)						= File::Spec -> catfile($homepage_dir, $image_dir);
 	my(@entries)						= read_dir $image_path;
 	@entries							= sort grep{! -d File::Spec -> catfile($image_path, $_)} @entries; # Can't call sort directly on output of read_dir!
 	$file_list{file_names}				= [@entries];
 	@{$file_list{name_hash} }{@entries}	= (1) x @entries;
+	my($log_table_name)					= 'log';
+	my($table_name)						= 'flowers';
 
 	# Check that the files which ought to be there, are.
 
 	my($common_name);
-	my($file_name);
-	my($image);
+	my($file_name, $fields);
+	my($image, $id);
 	my($pig_latin);
 	my(@result);
 	my($scientific_name);
@@ -356,6 +359,26 @@ sub crosscheck
 			$file_name = File::Spec -> catdir($homepage_dir, $image_dir, $file_name);
 
 			push @result, {context => 'Thumbnail', file => $file_name, outcome => 'Missing'};
+
+			$fields =
+			{
+				action		=> 'Crosscheck',
+				context		=> 'Thumbnail',
+				file_name	=> $file_name,
+				key			=> 0,
+				name		=> $scientific_name,
+				note		=> '',
+				outcome		=> 'Missing',
+			};
+
+			$id = $self -> db -> insert
+			(
+				$log_table_name,
+				$fields,
+				{returning => 'id'}
+			) -> hash -> {id};
+
+			$self -> logger -> info("Table: $table_name. Log record id: $id. Flower: $scientific_name. Action: $action. Outcome: Missing");
 		}
 
 		for $image (@{$$flower{images} })
@@ -365,6 +388,26 @@ sub crosscheck
 			if (! -e $file_name)
 			{
 				push @result, {context => 'Image', file => $file_name, outcome => 'Missing'};
+
+				$fields =
+				{
+					action		=> 'Crosscheck',
+					context		=> 'Image',
+					file_name	=> $file_name,
+					key			=> 0,
+					name		=> $scientific_name,
+					note		=> '',
+					outcome		=> 'Missing',
+				};
+
+				$id = $self -> db -> insert
+				(
+					$log_table_name,
+					$fields,
+					{returning => 'id'}
+				) -> hash -> {id};
+
+				$self -> logger -> info("Table: $table_name. Log record id: $id. Feature: $scientific_name. Action: $action. Outcome: Missing");
 			}
 		}
 	}
@@ -383,6 +426,7 @@ sub crosscheck
 	@entries				= read_dir $feature_path;
 	@entries				= sort grep{! -d File::Spec -> catfile($feature_path, $_)} @entries; # Can't call sort directly on output of read_dir!
 	@icon_list{@entries}	= (1) x @entries;
+	$table_name				= 'features';
 
 	# Check that the files which ought to be there, are.
 
@@ -392,9 +436,29 @@ sub crosscheck
 
 		if (! $icon_list{$feature_file})
 		{
-			$feature_file = File::Spec -> catfile($homepage_dir, $feature_dir, $feature_file);
+			$file_name = File::Spec -> catfile($homepage_dir, $feature_dir, $feature_file);
 
-			push @result, {context => 'Feature', file => $feature_file, outcome => 'Missing'};
+			push @result, {context => 'Feature', file => $file_name, outcome => 'Missing'};
+
+			$fields =
+			{
+				action		=> 'Crosscheck',
+				context		=> 'Feature',
+				file_name	=> $file_name,
+				key			=> 0,
+				name		=> $$feature{name},
+				note		=> '',
+				outcome		=> 'Missing',
+			};
+
+			$id = $self -> db -> insert
+			(
+				$log_table_name,
+				$fields,
+				{returning => 'id'}
+			) -> hash -> {id};
+
+			$self -> logger -> info("Table: $table_name. Log record id: $id. Feature: $scientific_name. Action: $action. Outcome: Missing");
 		}
 	}
 
