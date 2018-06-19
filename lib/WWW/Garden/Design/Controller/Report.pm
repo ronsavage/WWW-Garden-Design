@@ -43,8 +43,6 @@ sub format_crosscheck
 	<td>$$item{file}</td>
 </tr>
 EOS
-
-	$self -> app -> log -> debug("context: $$item{context}. type: $$item{outcome}. file: $$item{file}");
 	}
 
 	return $html;
