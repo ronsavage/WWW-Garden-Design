@@ -327,21 +327,22 @@ sub crosscheck
 
 	my(%file_list);
 
-	my($action)							= 'crosscheck';
 	my($image_dir)						= $$constants{image_dir};
 	my($image_path)						= File::Spec -> catfile($homepage_dir, $image_dir);
 	my(@entries)						= read_dir $image_path;
 	@entries							= sort grep{! -d File::Spec -> catfile($image_path, $_)} @entries; # Can't call sort directly on output of read_dir!
 	$file_list{file_names}				= [@entries];
 	@{$file_list{name_hash} }{@entries}	= (1) x @entries;
+	my($action)							= 'crosscheck';
 	my($log_table_name)					= 'log';
 	my($table_name)						= 'flowers';
 
 	# Check that the files which ought to be there, are.
 
-	my($common_name);
+	my($common_name, $context);
 	my($file_name, $fields);
 	my($image, $id);
+	my($log_id);
 	my($pig_latin);
 	my(@result);
 	my($scientific_name);
@@ -356,14 +357,15 @@ sub crosscheck
 
 		if (! $file_list{name_hash}{$file_name})
 		{
-			$file_name = File::Spec -> catdir($homepage_dir, $image_dir, $file_name);
+			$context	= 'Thumbnail';
+			$file_name	= File::Spec -> catdir($homepage_dir, $image_dir, $file_name);
 
 			push @result, {context => 'Thumbnail', file => $file_name, outcome => 'Missing'};
 
 			$fields =
 			{
-				action		=> 'Crosscheck',
-				context		=> 'Thumbnail',
+				action		=> $action,
+				context		=> $context,
 				file_name	=> $file_name,
 				key			=> 0,
 				name		=> $scientific_name,
@@ -371,14 +373,12 @@ sub crosscheck
 				outcome		=> 'Missing',
 			};
 
-			$id = $self -> db -> insert
+			$log_id = $self -> db -> insert
 			(
 				$log_table_name,
 				$fields,
 				{returning => 'id'}
 			) -> hash -> {id};
-
-			$self -> logger -> info("Table: $table_name. Log record id: $id. Flower: $scientific_name. Action: $action. Outcome: Missing");
 		}
 
 		for $image (@{$$flower{images} })
@@ -389,10 +389,11 @@ sub crosscheck
 			{
 				push @result, {context => 'Image', file => $file_name, outcome => 'Missing'};
 
-				$fields =
+				$context	= 'Image';
+				$fields		=
 				{
-					action		=> 'Crosscheck',
-					context		=> 'Image',
+					action		=> $action,
+					context		=> $context,
 					file_name	=> $file_name,
 					key			=> 0,
 					name		=> $scientific_name,
@@ -400,14 +401,12 @@ sub crosscheck
 					outcome		=> 'Missing',
 				};
 
-				$id = $self -> db -> insert
+				$log_id = $self -> db -> insert
 				(
 					$log_table_name,
 					$fields,
 					{returning => 'id'}
 				) -> hash -> {id};
-
-				$self -> logger -> info("Table: $table_name. Log record id: $id. Feature: $scientific_name. Action: $action. Outcome: Missing");
 			}
 		}
 	}
@@ -426,6 +425,7 @@ sub crosscheck
 	@entries				= read_dir $feature_path;
 	@entries				= sort grep{! -d File::Spec -> catfile($feature_path, $_)} @entries; # Can't call sort directly on output of read_dir!
 	@icon_list{@entries}	= (1) x @entries;
+	$context				= 'Feature';
 	$table_name				= 'features';
 
 	# Check that the files which ought to be there, are.
@@ -442,7 +442,7 @@ sub crosscheck
 
 			$fields =
 			{
-				action		=> 'Crosscheck',
+				action		=> $action,
 				context		=> 'Feature',
 				file_name	=> $file_name,
 				key			=> 0,
@@ -451,14 +451,12 @@ sub crosscheck
 				outcome		=> 'Missing',
 			};
 
-			$id = $self -> db -> insert
+			$log_id = $self -> db -> insert
 			(
 				$log_table_name,
 				$fields,
 				{returning => 'id'}
 			) -> hash -> {id};
-
-			$self -> logger -> info("Table: $table_name. Log record id: $id. Feature: $scientific_name. Action: $action. Outcome: Missing");
 		}
 	}
 
@@ -870,6 +868,7 @@ sub process_feature
 
 	my($action)			= $$item{action};
 	my($id)				= $$item{id};
+	my($log_table_name)	= 'log';
 	my($name)			= $$item{name};
 	my($table_name)		= 'features';
 	my($features_table)	= $self -> read_table($table_name);
@@ -889,6 +888,7 @@ sub process_feature
 #	publish:		$('#feature_publish').prop('checked') ? 'Yes' : 'No'
 
 	my(%feature);
+	my($log_id);
 
 	if ($action eq 'add')
 	{
@@ -966,7 +966,7 @@ sub process_feature
 
 				for (@$features_table)
 				{
-					$min_id = $$_{id} if ($$_{id} < $min_id); # We sure hope somebody's home :-).
+					$min_id = $$_{id} if ($$_{id} < $min_id); # TODO: Ensure loop ends. Use List::Utils.
 				}
 
 				$result = {%$result, id => $min_id, raw => "Action $action"};
@@ -1011,8 +1011,25 @@ sub process_feature
 		$result = {%$result, outcome => 'Error', raw => "Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'"};
 	}
 
+	$fields =
+	{
+		action		=> $action,
+		context		=> 'Feature',
+		file_name	=> '',
+		key			=> $id,
+		name		=> $name,
+		note		=> $$result{raw},
+		outcome		=> $$result{outcome},
+	};
+
+	$log_id = $self -> db -> insert
+	(
+		$log_table_name,
+		$fields,
+		{returning => 'id'}
+	) -> hash -> {id};
+
 	$features_table		= $self -> read_features_table;
-	my($log_table_name)	= 'log';
 	my($tile_status)	= ['N/A', 'N/A', 'N/A', 'Success'];
 
 	if ( ($$result{outcome} eq 'Success') && ( ($action eq 'add') || ($action eq 'update') ) )
@@ -1055,14 +1072,12 @@ sub process_feature
 			outcome		=> $$tile_status{outcome},
 		};
 
-		$id = $self -> db -> insert
+		$log_id = $self -> db -> insert
 		(
 			$log_table_name,
 			$fields,
 			{returning => 'id'}
 		) -> hash -> {id};
-
-		$self -> logger -> info("Table: $table_name. Log record id: $id. Feature: $$tile_status{name}. Action: $action. Outcome: $$tile_status{outcome}");
 	}
 
 	$self -> logger -> info("Outcome: $$result{outcome}. $$result{raw}");
