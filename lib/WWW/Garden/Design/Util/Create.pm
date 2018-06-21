@@ -359,6 +359,7 @@ sub create_log_table
 {
 	my($self)        = @_;
 	my($table_name)  = 'log';
+	my($time_option) = $self -> time_option;
 	my($primary_key) = $self -> creator -> generate_primary_key_sql($table_name);
 	my($engine)      = $self -> engine;
 	my($result)      = $self -> creator -> create_table(<<SQL);
@@ -371,7 +372,8 @@ file_name	varchar(255) not null,
 key			integer not null,
 name		varchar(255) not null,
 note		text not null,
-outcome		varchar(255) not null
+outcome		varchar(255) not null,
+timestamp	timestamp $time_option not null default current_timestamp
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);
