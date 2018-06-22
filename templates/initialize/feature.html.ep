@@ -58,6 +58,10 @@
 			<td colspan = '2'><input id = 'color_name' type = 'text' size = '50' maxlength = '100'></td>
 		</tr>
 		<tr>
+			<td></td>
+			<td colspan = '2'>o After clicking on a color, you <span class = 'alert'>must</span> click 'choose'.</td>
+		</tr>
+		<tr>
 			<td>Color spectrum: </td>
 			<td colspan = '2'><input type = 'text' class = 'color_spectrum' id = 'color_spectrum' /></div></td>
 		</tr>
@@ -142,6 +146,10 @@
 		<tr>
 			<td>Color name: </td>
 			<td colspan = '2'><input id = 'new_color_name' type = 'text' size = '50' maxlength = '100'></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td colspan = '2'>o After clicking on a color, you <span class = 'alert'>must</span> click 'choose'.</td>
 		</tr>
 		<tr>
 			<td>Color spectrum: </td>
