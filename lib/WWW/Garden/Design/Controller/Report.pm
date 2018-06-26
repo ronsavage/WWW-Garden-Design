@@ -55,10 +55,11 @@ sub format_activity
 		$html .= <<EOS;
 <tr>
 	<td>$$item{timestamp}</td>
+	<td>$$item{name}</td>
 	<td>$$item{context}</td>
 	<td>$$item{note}</td>
 	<td>$$item{outcome}</td>
-	<td>$$item{file}</td>
+	<td>$$item{file_name}</td>
 </tr>
 EOS
 	}

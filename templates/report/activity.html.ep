@@ -3,10 +3,11 @@
 	<thead>
 		<tr>
 			<th>Timestamp</th>
+			<th>Name</th>
 			<th>Context</th>
 			<th>Note</th>
 			<th>Outcome</th>
-			<th>File</th>
+			<th>File name</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -15,10 +16,11 @@
 	<tfoot>
 		<tr>
 			<th>Timestamp</th>
+			<th>Name</th>
 			<th>Context</th>
 			<th>Note</th>
 			<th>Outcome</th>
-			<th>File</th>
+			<th>File name</th>
 		</tr>
 	</tfoot>
 </table>
