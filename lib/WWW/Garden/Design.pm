@@ -214,6 +214,7 @@ sub startup
 	$r -> route('/GetTable/features')			-> to('GetTable#features');
 	$r -> route('/GetTable/properties')			-> to('GetTable#properties');
 	$r -> route('/Property')					-> to('Property#process');
+	$r -> route('/Report/activity')				-> to('Report#activity');
 	$r -> route('/Report/crosscheck')			-> to('Report#crosscheck');
 	$r -> route('/Search')						-> to('Search#display');
 

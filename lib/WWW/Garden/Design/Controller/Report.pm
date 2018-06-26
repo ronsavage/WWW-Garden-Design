@@ -10,6 +10,22 @@ our $VERSION = '0.96';
 
 # -----------------------------------------------
 
+sub activity
+{
+	my($self) = @_;
+
+	$self -> app -> log -> debug('Report.activity()');
+
+	my($defaults)	= $self -> app -> defaults;
+	my($items)		= $$defaults{db} -> activity;
+
+	$self -> stash(result_html	=> $self -> format_activity($items) );
+	$self -> render;
+
+} # End of activity.
+
+# -----------------------------------------------
+
 sub crosscheck
 {
 	my($self) = @_;
@@ -23,6 +39,33 @@ sub crosscheck
 	$self -> render;
 
 } # End of crosscheck.
+
+# -----------------------------------------------
+
+sub format_activity
+{
+	my($self, $items) = @_;
+
+	$self -> app -> log -> debug('Report.format_activity(...)');
+
+	my($html) = '';
+
+	for my $item (@$items)
+	{
+		$html .= <<EOS;
+<tr>
+	<td>$$item{timestamp}</td>
+	<td>$$item{context}</td>
+	<td>$$item{note}</td>
+	<td>$$item{outcome}</td>
+	<td>$$item{file}</td>
+</tr>
+EOS
+	}
+
+	return $html;
+
+} # End of format_activity.
 
 # -----------------------------------------------
 
