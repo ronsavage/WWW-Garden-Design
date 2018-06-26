@@ -80,9 +80,9 @@ sub activity
 
 	my(@result);
 
-	my($activity) = reverse sort{$$a{timestamp} cmp $$b{timestamp} } $self -> read_table('log'); # Uses db()!
+	my($activity) = sort{$$a{timestamp} cmp $$b{timestamp} } $self -> read_table('log'); # Uses db()!
 
-	for my $record (@$activity)
+	for my $record (reverse @$activity)
 	{
 		push @result,
 		{
