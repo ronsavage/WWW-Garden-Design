@@ -19,6 +19,10 @@ my($db_type) = $ENV{FLOWER_DB};
 if ( (! $db_type) || ($db_type !~ /^(Pg|SQLite)$/) )
 {
 	print "Env var FLOWER_DB must match /^(Pg|SQLite)\$/\n";
+
+	# Return 0 for OK and 1 for error.
+
+	exit 1;
 }
 
 my($option_parser)	= Getopt::Long::Parser -> new;
@@ -46,6 +50,8 @@ if ($option_parser -> getoptions
 	{
 		$db = WWW::Garden::Design::Export::SQLite -> new;
 	}
+
+	# Return 0 for OK and 1 for error.
 
 	exit $db -> new -> export_all_pages;
 }

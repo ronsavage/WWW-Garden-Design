@@ -544,6 +544,10 @@ sub export_all_pages
 
 	$self -> db -> logger -> info('Finished exporting all HTML files');
 
+	# Return 0 for OK and 1 for error.
+
+	return 0;
+
 } # End of export_all_pages.
 
 # -----------------------------------------------
