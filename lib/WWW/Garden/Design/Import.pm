@@ -15,7 +15,15 @@ use FindBin;
 
 use Text::CSV::Encoded;
 
-use Types::Standard qw/Any/;
+use Types::Standard qw/Any HashRef/;
+
+has crossref_locations =>
+(
+	default		=> sub{ return {} },
+	is			=> 'rw',
+	isa			=> HashRef,
+	required	=> 0,
+);
 
 has db =>
 (
@@ -221,11 +229,16 @@ sub populate_feature_locations_table
 
 	$csv -> column_names($csv -> getline($io) );
 
-	my($count)	= 0;
-	my($max_x)	= 0;
-	my($max_y)	= 0;
+	my($crossref_locations)	= $self -> crossref_locations;
+	my($count)				= 0;
+	my($max_x)				= 0;
+	my($max_y)				= 0;
 
-	my(@xy, $x);
+	my($feature_name);
+	my($garden_name);
+	my($property_name);
+	my($tenant, $tenant_name, $type);
+	my(@xy, $x, $xy_pair);
 	my($y);
 
 	for my $item (@{$csv -> getline_hr_all($io) })
@@ -244,21 +257,48 @@ sub populate_feature_locations_table
 
 		next if (length($$item{xy}) == 0);
 
-		@xy = split(/\s/, $$item{xy});
+		$feature_name	= $$item{name};
+		$garden_name	= $$item{garden_name};
+		$property_name	= $$item{property_name};
+		@xy				= split(/\s/, $$item{xy});
 
 		for my $i (0 .. $#xy)
 		{
-			($x, $y)	= split(/,/, $xy[$i]);
+			$xy_pair	= $xy[$i];
+			($x, $y)	= split(/,/, $xy_pair);
 			$max_x		= $x if ($x > $max_x);
 			$max_y		= $y if ($y > $max_y);
+
+			if (defined $$crossref_locations{$xy_pair})
+			{
+				$tenant = $$crossref_locations{$xy_pair};
+
+				if ( ($property_name eq $$tenant{property_name}) && ($garden_name eq $$tenant{garden_name}) )
+				{
+					$type			= $$tenant{type};
+					$tenant_name	= ($type eq 'Flower') ? $$tenant{common_name} : $feature_name;
+
+					$self -> db -> logger -> error("$table_name. Row: $count. Property name: $property_name. "
+						. "Garden name: $garden_name. Feature '$feature_name'. "
+						. "Feature location '$xy_pair' is already in use by '$tenant_name'");
+				}
+			}
+
+			$$crossref_locations{$xy_pair} =
+			{
+				feature_name	=> $feature_name,
+				garden_name		=> $garden_name,
+				property_name	=> $property_name,
+				type			=> 'Feature', # 'Flower' is checked above.
+			};
 
 			$self -> db -> insert_hashref
 			(
 				$table_name,
 				{
-					feature_id	=> $$feature_keys{$$item{name} },
-					garden_id	=> $$garden_keys{$$item{garden_name} },
-					property_id	=> $$property_keys{$$item{property_name} },
+					feature_id	=> $$feature_keys{$feature_name},
+					garden_id	=> $$garden_keys{$garden_name},
+					property_id	=> $$property_keys{$property_name},
 					x			=> $x,
 					y			=> $y,
 				}
@@ -330,11 +370,16 @@ sub populate_flower_locations_table
 
 	$csv -> column_names($csv -> getline($io) );
 
-	my($count)	= 0;
-	my($max_x)	= 0;
-	my($max_y)	= 0;
+	my($count)				= 0;
+	my($crossref_locations)	= {};
+	my($max_x)				= 0;
+	my($max_y)				= 0;
 
-	my(@xy, $x);
+	my($common_name);
+	my($garden_name);
+	my($property_name);
+	my($tenant);
+	my(@xy, $x, $xy_pair);
 	my($y);
 
 	for my $item (@{$csv -> getline_hr_all($io) })
@@ -353,23 +398,27 @@ sub populate_flower_locations_table
 
 		next if (length($$item{xy}) == 0);
 
+		$common_name	= $$item{common_name};
+		$garden_name	= $$item{garden_name};
+		$property_name	= $$item{property_name};
+
 		if (! defined $$flower_keys{$$item{common_name} })
 		{
-			$self -> db -> logger -> error("$table_name. Row: $count. Common name '$$item{common_name}' undefined");
+			$self -> db -> logger -> error("$table_name. Row: $count. Common name '$common_name' undefined");
 
 			next;
 		}
 
-		if (! defined $$property_keys{$$item{property_name} })
+		if (! defined $$garden_keys{$garden_name})
 		{
-			$self -> db -> logger -> error("$table_name. Row: $count. Property '$$item{property_name}' undefined");
+			$self -> db -> logger -> error("$table_name. Row: $count. Garden '$garden_name' undefined");
 
 			next;
 		}
 
-		if (! defined $$garden_keys{$$item{garden_name} })
+		if (! defined $$property_keys{$property_name})
 		{
-			$self -> db -> logger -> error("$table_name. Row: $count. Garden '$$item{garden_name}' undefined");
+			$self -> db -> logger -> error("$table_name. Row: $count. Property '$property_name' undefined");
 
 			next;
 		}
@@ -378,17 +427,41 @@ sub populate_flower_locations_table
 
 		for my $i (0 .. $#xy)
 		{
-			($x, $y)	= split(/,/, $xy[$i]);
+			$xy_pair	= $xy[$i];
+			($x, $y)	= split(/,/, $xy_pair);
 			$max_x		= $x if ($x > $max_x);
 			$max_y		= $y if ($y > $max_y);
+
+			if (defined $$crossref_locations{$xy_pair})
+			{
+				$tenant = $$crossref_locations{$xy_pair};
+
+				# No need to check 'type' because we called this method before calling the code
+				# which reads in the feature locations.
+
+				if ( ($property_name eq $$tenant{property_name}) && ($garden_name eq $$tenant{garden_name}) )
+				{
+					$self -> db -> logger -> error("$table_name. Row: $count. Property name: $property_name. "
+						. "Garden name: $garden_name. Common name '$common_name'. "
+						. "Flower location '$xy_pair' is already in use by '$$tenant{common_name}'");
+				}
+			}
+
+			$$crossref_locations{$xy_pair} =
+			{
+				common_name		=> $common_name,
+				garden_name		=> $garden_name,
+				property_name	=> $property_name,
+				type			=> 'Flower', # Or 'Feature'. These are checked later.
+			};
 
 			$self -> db -> insert_hashref
 			(
 				$table_name,
 				{
-					flower_id	=> $$flower_keys{$$item{common_name} },
-					garden_id	=> $$garden_keys{$$item{garden_name} },
-					property_id	=> $$property_keys{$$item{property_name} },
+					flower_id	=> $$flower_keys{$common_name},
+					garden_id	=> $$garden_keys{$garden_name},
+					property_id	=> $$property_keys{$property_name},
 					x			=> $x,
 					y			=> $y,
 				}
@@ -397,6 +470,8 @@ sub populate_flower_locations_table
 	}
 
 	close $io;
+
+	$self -> crossref_locations($crossref_locations);
 
 	$self -> db -> logger -> info("Max (x, y) = ($max_x, $max_y)");
 	$self -> db -> logger -> info("Read $count records into '$table_name'");
