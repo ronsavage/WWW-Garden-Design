@@ -1,303 +1,303 @@
-[Sun Jul 15 10:59:29 2018] [debug] Dropped table 'urls'
-[Sun Jul 15 10:59:29 2018] [debug] Dropped table 'images'
-[Sun Jul 15 10:59:29 2018] [debug] Dropped table 'notes'
-[Sun Jul 15 10:59:29 2018] [debug] Dropped table 'feature_locations'
-[Sun Jul 15 10:59:29 2018] [debug] Dropped table 'features'
-[Sun Jul 15 10:59:29 2018] [debug] Dropped table 'flower_locations'
-[Sun Jul 15 10:59:29 2018] [debug] Dropped table 'gardens'
-[Sun Jul 15 10:59:29 2018] [debug] Dropped table 'properties'
-[Sun Jul 15 10:59:29 2018] [debug] Dropped table 'attributes'
-[Sun Jul 15 10:59:29 2018] [debug] Dropped table 'attribute_types'
-[Sun Jul 15 10:59:29 2018] [debug] Dropped table 'flowers'
-[Sun Jul 15 10:59:29 2018] [debug] Dropped table 'constants'
-[Sun Jul 15 10:59:29 2018] [debug] Dropped table 'log'
-[Sun Jul 15 10:59:29 2018] [debug] Created table 'log'
-[Sun Jul 15 10:59:29 2018] [debug] Created table 'constants'
-[Sun Jul 15 10:59:30 2018] [debug] Created table 'flowers'
-[Sun Jul 15 10:59:30 2018] [debug] Created table 'attribute_types'
-[Sun Jul 15 10:59:30 2018] [debug] Created table 'attributes'
-[Sun Jul 15 10:59:30 2018] [debug] Created table 'properties'
-[Sun Jul 15 10:59:30 2018] [debug] Created table 'gardens'
-[Sun Jul 15 10:59:30 2018] [debug] Created table 'flower_locations'
-[Sun Jul 15 10:59:30 2018] [debug] Created table 'features'
-[Sun Jul 15 10:59:30 2018] [debug] Created table 'feature_locations'
-[Sun Jul 15 10:59:30 2018] [debug] Created table 'notes'
-[Sun Jul 15 10:59:30 2018] [debug] Created table 'images'
-[Sun Jul 15 10:59:30 2018] [debug] Created table 'urls'
-[Sun Jul 15 10:59:30 2018] [debug] Populating all tables
-[Sun Jul 15 10:59:31 2018] [info] Read 4 records into 'attribute_types'
-[Sun Jul 15 10:59:31 2018] [info] Read 32 records into 'constants'
-[Sun Jul 15 10:59:31 2018] [info] flowers. Row: 3. Duplicate scientific_name: Mandevilla hybrid
-[Sun Jul 15 10:59:31 2018] [info] flowers. Row: 5. Duplicate scientific_name: Alstroemeria
-[Sun Jul 15 10:59:31 2018] [info] flowers. Row: 20. Duplicate scientific_name: Azalea
-[Sun Jul 15 10:59:31 2018] [info] flowers. Row: 21. Duplicate scientific_name: Azalea
-[Sun Jul 15 10:59:31 2018] [info] flowers. Row: 81. Duplicate scientific_name: Fuchsia
-[Sun Jul 15 10:59:31 2018] [info] flowers. Row: 89. Duplicate scientific_name: Grevillea
-[Sun Jul 15 10:59:31 2018] [info] flowers. Row: 90. Duplicate scientific_name: Grevillea
-[Sun Jul 15 10:59:31 2018] [info] flowers. Row: 91. Duplicate scientific_name: Grevillea
-[Sun Jul 15 10:59:31 2018] [info] flowers. Row: 97. Duplicate scientific_name: Heuchera
-[Sun Jul 15 10:59:31 2018] [info] flowers. Row: 101. Duplicate scientific_name: Alyogyne huegelii
-[Sun Jul 15 10:59:31 2018] [info] flowers. Row: 150. Duplicate scientific_name: Plectranthus ecklonii
-[Sun Jul 15 10:59:31 2018] [info] flowers. Row: 158. Duplicate scientific_name: Rosa
-[Sun Jul 15 10:59:31 2018] [info] flowers. Row: 159. Duplicate scientific_name: Rosa
-[Sun Jul 15 10:59:31 2018] [info] flowers. Row: 160. Duplicate scientific_name: Rosa
-[Sun Jul 15 10:59:31 2018] [info] flowers. Row: 164. Duplicate scientific_name: Salvia involucrata
-[Sun Jul 15 10:59:33 2018] [info] flowers. Row: 196. Cannot interpret height or width
-[Sun Jul 15 10:59:33 2018] [info] flowers. Row: 196. Cannot interpret height or width
-[Sun Jul 15 10:59:33 2018] [info] Read 196 records into 'flowers'
-[Sun Jul 15 10:59:33 2018] [info] Read 2 records into 'properties'
-[Sun Jul 15 10:59:33 2018] [info] Read 2 records into 'gardens'
-[Sun Jul 15 10:59:37 2018] [info] Max (x, y) = (29, 67)
-[Sun Jul 15 10:59:37 2018] [info] Read 151 records into 'flower_locations'
-[Sun Jul 15 10:59:37 2018] [info] Read 36 records into 'features'
-[Sun Jul 15 10:59:45 2018] [info] Max (x, y) = (30, 69)
-[Sun Jul 15 10:59:45 2018] [info] Read 30 records into 'feature_locations'
-[Sun Jul 15 10:59:54 2018] [info] Read 748 records into 'attributes'
-[Sun Jul 15 11:00:05 2018] [info] Read 889 records into 'notes'
-[Sun Jul 15 11:00:11 2018] [info] Read 516 records into 'images'
-[Sun Jul 15 11:00:14 2018] [info] Read 217 records into 'urls'
-[Sun Jul 15 11:00:14 2018] [info] Export.export_all_pages(). Output directory: /home/ron/savage.net.au/Flowers
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Abutilon.hybridum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Acanthus.mollis.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Acer.negundo.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Acer.palmatum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Adenanthos.sericeus.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Agastache.aurantiaca.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Allium.schoenoprasum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Allium.tuberosum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Alstroemeria.1.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Alstroemeria.2.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Alstroemeria.pulchella.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Alyogyne.huegelii.1.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Alyogyne.huegelii.2.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Anigozanthos.hybrid.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Anigozanthos.hybrid.kangaroo.paw.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Anigozanthos.hybrid.syn.rambodiam.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Anigozanthos.hybrid.syn.rambubona.kangaroo.paw.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Anigozanthos.viridis.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Aquilegia.flabellata.var.pumila.alba.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Aquilegia.mckana.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Archillea.millifolium.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Artemisia.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Artemisia.vulgaris.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Arum.italicum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Asparagus.setaceus.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Azalea.1.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Azalea.2.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Azalea.3.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Banksia.blechnifolia.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Banksia.spinulosa.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Barbarea.verna.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Begonia.hybrid.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Beta.vulgaris.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Bracteantha.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Brassica.rapa.var.perviridis.red.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Callistemon.viminalis.hybrid.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Camellia.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Campanula.garganica.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Campanula.poscharskyana.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Celosia.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Centella.asiatica.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Cercis.canadensis.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Chorizema.cordatum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Chorizema.varium.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Citrus.japonica.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Citrus.limon.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Citrus.x.latifolia.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Citrus.x.meyeri.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Citrus.x.sinensis.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Colocasia.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Convolvulus.cneorum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Convolvulus.sabatius.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Coriandrum.sativum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Correa.glabra.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Correa.pulchella.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Corymbia.ficifolia.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Cotinus.coggygria.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Crowea.saligna.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Curcuma.longa.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Dampiera.trigona.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Daphne.bholua.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Delphinium.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Dianella.prunina.dp303.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Dianthus.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Dichopogon.strictus.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Dicliptera.suberecta.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Dietes.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Diplarrena.latifolia.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Dodonaea.viscosa.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Elaeocarpus.reticulatus.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Eremorphila.glabra.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Eremorphila.nivea.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Euphorbia.characias.subsp.wulfenii.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Euphorbia.milii.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Eutaxia.obovata.nana.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Ficus.carica.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Fuchsia.1.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Fuchsia.2.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Gazania.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Grevillea.1.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Grevillea.2.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Grevillea.3.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Grevillea.4.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Grevillea.lanigera.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Hardenbergia.violacea.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Hedera.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Heliotropium.arborescens.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Helleborus.argutifolius.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Helleborus.foetidus.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Heuchera.1.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Heuchera.2.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Hibbertia.obtusifolia.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Hibbertia.scandens.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Hibiscus.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Hydrangea.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Hymenosporum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Ipomoea.lacunosa.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Iris.unguicularis.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Iris.unknown.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Isopogon.latifolius.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Jacaranda.mimosifolia.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Kennedia.beckxiana.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Kennedia.coccinea.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Kennedia.macrophylla.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Kennedia.nigricans.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Kennedia.rubicunda.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Kunzea.baxterii.nana.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Lagerstromeia.indica.x.l.fauriei.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Lamium.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Lechenaultia.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Leptospermum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Leptospermum.obovatum.anisophyllea.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Leucojum.vernum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Levisticum.officinale.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Lilium.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Limonium.perezii.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Liriope.muscari.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Lonicera.periclymenum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Loropetalum.chinense.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Loropetalum.chinense.var.rubrum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Lunaria.annua.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Lycium.barbarum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Malus.domestica.3.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Malus.domestica.harmony.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Malus.domestica.leprechaun.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Malus.domestica.pine.golden.pippin.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Malus.domestica.pinkabelle.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Malus.domestica.pitmaston.pine.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Malus.domestica.pom-for-you.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Malus.domestica.pompink.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Mandevilla.hybrid.1.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Mandevilla.hybrid.2.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Mandevilla.laxa.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Mentha.spicata.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Monstera.deliciosa.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Nandina.domestica.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Narcissus.papyraceus.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Nierembergia.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Ocimum.basilicum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Ocimum.kilimandscharicum.x.basilicum.dark.opal.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Oenothera.lindheimeri.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Origanum.vulgare.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Osteospermum.ecklonis.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Ozothamnus.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Pelargonium.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Pennisetum.setaceum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Penstemon.cv.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Persicaria.affinis.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Persicaria.odarata.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Petroselinum.crispum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Philadelphus.mexicanus.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Philotheca.myoporoides.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Phormium.tenax.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Pimelea.rosea.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Plectranthus.caninus.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Plectranthus.ecklonii.1.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Plectranthus.ecklonii.2.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Plectranthus.saccatus.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Portulacaria.afra.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Prostanthera.phylicifolia.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Prunus.armeniaca.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Prunus.persica.nectazee.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Pultenaea.pedunculata.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Rosa.1.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Rosa.2.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Rosa.3.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Rosa.4.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Rosmarinus.officinalis.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Rotheca.myricoides.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Salvia.apiana.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Salvia.involucrata.2.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Salvia.involucrata.3.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Salvia.officinalis.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Siegfredia.darwinioides.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Spinacia.oleracea.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Spiraea.japonica.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Streptosolen.jamesonii.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Strobilanthes.anisophyllus.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Tagetes.erecta.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Tagetes.sp.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Tamarix.aphylla.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Tanacetum.ptarmiciflorum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Tanacetum.vulgare.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Telopea.speciosissima.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Tetragonia.tetragonioides.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Thelionema.caespitosum.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Thryptomene.saxicola.f.c.payne.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Tibouchina.urvilleana.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Tropaeolum.majus.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Valerianella.locusta.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Vigna.unguiculata.subsp.sesquipedalis.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Viola.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Viola.tricolor.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Viola.x.wittrockiana.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Wisteria.html
-[Sun Jul 15 11:00:14 2018] [info] Writing /home/ron/savage.net.au/Flowers/Zantedeschia.elliottiana.html
-[Sun Jul 15 11:00:14 2018] [info] Finished exporting all HTML files
-[Sun Jul 15 11:00:15 2018] [info] Export.export_features(). Output directory: /home/ron/savage.net.au/Flowers
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Air.Conditioner.png to /run/shm/html/Flowers/features/Air.Conditioner.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/BBQ.png to /run/shm/html/Flowers/features/BBQ.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Bench.png to /run/shm/html/Flowers/features/Bench.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Birdbath.png to /run/shm/html/Flowers/features/Birdbath.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Brick.drive.png to /run/shm/html/Flowers/features/Brick.drive.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Brick.fence.png to /run/shm/html/Flowers/features/Brick.fence.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Brick.path.png to /run/shm/html/Flowers/features/Brick.path.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Brick.patio.png to /run/shm/html/Flowers/features/Brick.patio.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Brick.stairs.png to /run/shm/html/Flowers/features/Brick.stairs.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Brick.steps.png to /run/shm/html/Flowers/features/Brick.steps.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Compost.bin.png to /run/shm/html/Flowers/features/Compost.bin.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Deck.png to /run/shm/html/Flowers/features/Deck.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Electricity.meter.png to /run/shm/html/Flowers/features/Electricity.meter.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Footpath.png to /run/shm/html/Flowers/features/Footpath.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Gas.meter.png to /run/shm/html/Flowers/features/Gas.meter.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Gate.png to /run/shm/html/Flowers/features/Gate.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/House.png to /run/shm/html/Flowers/features/House.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Inspection.shaft.png to /run/shm/html/Flowers/features/Inspection.shaft.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Letterbox.png to /run/shm/html/Flowers/features/Letterbox.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Marble.table.png to /run/shm/html/Flowers/features/Marble.table.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Median.strip.png to /run/shm/html/Flowers/features/Median.strip.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Metal.gate.png to /run/shm/html/Flowers/features/Metal.gate.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Pergola.post.png to /run/shm/html/Flowers/features/Pergola.post.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Plug.hole.png to /run/shm/html/Flowers/features/Plug.hole.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Pond.png to /run/shm/html/Flowers/features/Pond.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Rock.png to /run/shm/html/Flowers/features/Rock.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Shed.png to /run/shm/html/Flowers/features/Shed.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Stairs.png to /run/shm/html/Flowers/features/Stairs.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Storm.water.pit.png to /run/shm/html/Flowers/features/Storm.water.pit.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Telephone.pit.png to /run/shm/html/Flowers/features/Telephone.pit.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Tree.png to /run/shm/html/Flowers/features/Tree.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Water.meter.png to /run/shm/html/Flowers/features/Water.meter.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Watertank.png to /run/shm/html/Flowers/features/Watertank.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Wooden.fence.png to /run/shm/html/Flowers/features/Wooden.fence.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Wooden.gate.png to /run/shm/html/Flowers/features/Wooden.gate.png
-[Sun Jul 15 11:00:15 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Wooden.stairs.png to /run/shm/html/Flowers/features/Wooden.stairs.png
-[Sun Jul 15 11:00:15 2018] [info] Finished exporting all features
-[Sun Jul 15 11:00:15 2018] [debug] export_garden_layout(). Processing garden 'Back'
-[Sun Jul 15 11:00:16 2018] [info] Max (x, y) after processing 'flower_locations': (29, 67)
-[Sun Jul 15 11:00:16 2018] [info] Max (x, y) after processing 'feature_locations': (30, 69)
-[Sun Jul 15 11:00:16 2018] [info] Writing to /home/ron/savage.net.au/Flowers/Back.garden.layout.svg
-[Sun Jul 15 11:00:16 2018] [info] Writing to /home/ron/savage.net.au/Flowers/Back.garden.layout.html
-[Sun Jul 15 11:00:16 2018] [info] Finished exporting garden layout for the 'Back' garden
-[Sun Jul 15 11:00:16 2018] [debug] export_garden_layout(). Processing garden 'Front'
-[Sun Jul 15 11:00:16 2018] [info] Max (x, y) after processing 'flower_locations': (29, 33)
-[Sun Jul 15 11:00:16 2018] [info] Max (x, y) after processing 'feature_locations': (30, 34)
+[Sun Jul 15 11:39:02 2018] [debug] Dropped table 'urls'
+[Sun Jul 15 11:39:02 2018] [debug] Dropped table 'images'
+[Sun Jul 15 11:39:02 2018] [debug] Dropped table 'notes'
+[Sun Jul 15 11:39:02 2018] [debug] Dropped table 'feature_locations'
+[Sun Jul 15 11:39:02 2018] [debug] Dropped table 'features'
+[Sun Jul 15 11:39:02 2018] [debug] Dropped table 'flower_locations'
+[Sun Jul 15 11:39:02 2018] [debug] Dropped table 'gardens'
+[Sun Jul 15 11:39:02 2018] [debug] Dropped table 'properties'
+[Sun Jul 15 11:39:02 2018] [debug] Dropped table 'attributes'
+[Sun Jul 15 11:39:02 2018] [debug] Dropped table 'attribute_types'
+[Sun Jul 15 11:39:03 2018] [debug] Dropped table 'flowers'
+[Sun Jul 15 11:39:03 2018] [debug] Dropped table 'constants'
+[Sun Jul 15 11:39:03 2018] [debug] Dropped table 'log'
+[Sun Jul 15 11:39:03 2018] [debug] Created table 'log'
+[Sun Jul 15 11:39:03 2018] [debug] Created table 'constants'
+[Sun Jul 15 11:39:03 2018] [debug] Created table 'flowers'
+[Sun Jul 15 11:39:03 2018] [debug] Created table 'attribute_types'
+[Sun Jul 15 11:39:03 2018] [debug] Created table 'attributes'
+[Sun Jul 15 11:39:03 2018] [debug] Created table 'properties'
+[Sun Jul 15 11:39:03 2018] [debug] Created table 'gardens'
+[Sun Jul 15 11:39:03 2018] [debug] Created table 'flower_locations'
+[Sun Jul 15 11:39:03 2018] [debug] Created table 'features'
+[Sun Jul 15 11:39:03 2018] [debug] Created table 'feature_locations'
+[Sun Jul 15 11:39:04 2018] [debug] Created table 'notes'
+[Sun Jul 15 11:39:04 2018] [debug] Created table 'images'
+[Sun Jul 15 11:39:04 2018] [debug] Created table 'urls'
+[Sun Jul 15 11:39:04 2018] [debug] Populating all tables
+[Sun Jul 15 11:39:04 2018] [info] Read 4 records into 'attribute_types'
+[Sun Jul 15 11:39:04 2018] [info] Read 32 records into 'constants'
+[Sun Jul 15 11:39:04 2018] [info] flowers. Row: 3. Duplicate scientific_name: Mandevilla hybrid
+[Sun Jul 15 11:39:04 2018] [info] flowers. Row: 5. Duplicate scientific_name: Alstroemeria
+[Sun Jul 15 11:39:04 2018] [info] flowers. Row: 20. Duplicate scientific_name: Azalea
+[Sun Jul 15 11:39:04 2018] [info] flowers. Row: 21. Duplicate scientific_name: Azalea
+[Sun Jul 15 11:39:04 2018] [info] flowers. Row: 81. Duplicate scientific_name: Fuchsia
+[Sun Jul 15 11:39:04 2018] [info] flowers. Row: 89. Duplicate scientific_name: Grevillea
+[Sun Jul 15 11:39:04 2018] [info] flowers. Row: 90. Duplicate scientific_name: Grevillea
+[Sun Jul 15 11:39:04 2018] [info] flowers. Row: 91. Duplicate scientific_name: Grevillea
+[Sun Jul 15 11:39:04 2018] [info] flowers. Row: 97. Duplicate scientific_name: Heuchera
+[Sun Jul 15 11:39:04 2018] [info] flowers. Row: 101. Duplicate scientific_name: Alyogyne huegelii
+[Sun Jul 15 11:39:04 2018] [info] flowers. Row: 150. Duplicate scientific_name: Plectranthus ecklonii
+[Sun Jul 15 11:39:04 2018] [info] flowers. Row: 158. Duplicate scientific_name: Rosa
+[Sun Jul 15 11:39:04 2018] [info] flowers. Row: 159. Duplicate scientific_name: Rosa
+[Sun Jul 15 11:39:04 2018] [info] flowers. Row: 160. Duplicate scientific_name: Rosa
+[Sun Jul 15 11:39:04 2018] [info] flowers. Row: 164. Duplicate scientific_name: Salvia involucrata
+[Sun Jul 15 11:39:07 2018] [info] flowers. Row: 196. Cannot interpret height or width
+[Sun Jul 15 11:39:08 2018] [info] flowers. Row: 196. Cannot interpret height or width
+[Sun Jul 15 11:39:08 2018] [info] Read 196 records into 'flowers'
+[Sun Jul 15 11:39:08 2018] [info] Read 2 records into 'properties'
+[Sun Jul 15 11:39:08 2018] [info] Read 2 records into 'gardens'
+[Sun Jul 15 11:39:11 2018] [info] Max (x, y) = (29, 67)
+[Sun Jul 15 11:39:11 2018] [info] Read 150 records into 'flower_locations'
+[Sun Jul 15 11:39:11 2018] [info] Read 36 records into 'features'
+[Sun Jul 15 11:39:20 2018] [info] Max (x, y) = (30, 69)
+[Sun Jul 15 11:39:20 2018] [info] Read 30 records into 'feature_locations'
+[Sun Jul 15 11:39:29 2018] [info] Read 748 records into 'attributes'
+[Sun Jul 15 11:39:39 2018] [info] Read 889 records into 'notes'
+[Sun Jul 15 11:39:46 2018] [info] Read 516 records into 'images'
+[Sun Jul 15 11:39:48 2018] [info] Read 217 records into 'urls'
+[Sun Jul 15 11:39:49 2018] [info] Export.export_all_pages(). Output directory: /home/ron/savage.net.au/Flowers
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Abutilon.hybridum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Acanthus.mollis.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Acer.negundo.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Acer.palmatum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Adenanthos.sericeus.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Agastache.aurantiaca.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Allium.schoenoprasum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Allium.tuberosum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Alstroemeria.1.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Alstroemeria.2.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Alstroemeria.pulchella.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Alyogyne.huegelii.1.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Alyogyne.huegelii.2.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Anigozanthos.hybrid.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Anigozanthos.hybrid.kangaroo.paw.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Anigozanthos.hybrid.syn.rambodiam.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Anigozanthos.hybrid.syn.rambubona.kangaroo.paw.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Anigozanthos.viridis.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Aquilegia.flabellata.var.pumila.alba.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Aquilegia.mckana.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Archillea.millifolium.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Artemisia.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Artemisia.vulgaris.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Arum.italicum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Asparagus.setaceus.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Azalea.1.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Azalea.2.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Azalea.3.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Banksia.blechnifolia.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Banksia.spinulosa.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Barbarea.verna.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Begonia.hybrid.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Beta.vulgaris.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Bracteantha.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Brassica.rapa.var.perviridis.red.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Callistemon.viminalis.hybrid.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Camellia.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Campanula.garganica.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Campanula.poscharskyana.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Celosia.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Centella.asiatica.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Cercis.canadensis.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Chorizema.cordatum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Chorizema.varium.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Citrus.japonica.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Citrus.limon.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Citrus.x.latifolia.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Citrus.x.meyeri.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Citrus.x.sinensis.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Colocasia.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Convolvulus.cneorum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Convolvulus.sabatius.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Coriandrum.sativum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Correa.glabra.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Correa.pulchella.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Corymbia.ficifolia.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Cotinus.coggygria.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Crowea.saligna.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Curcuma.longa.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Dampiera.trigona.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Daphne.bholua.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Delphinium.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Dianella.prunina.dp303.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Dianthus.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Dichopogon.strictus.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Dicliptera.suberecta.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Dietes.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Diplarrena.latifolia.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Dodonaea.viscosa.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Elaeocarpus.reticulatus.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Eremorphila.glabra.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Eremorphila.nivea.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Euphorbia.characias.subsp.wulfenii.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Euphorbia.milii.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Eutaxia.obovata.nana.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Ficus.carica.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Fuchsia.1.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Fuchsia.2.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Gazania.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Grevillea.1.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Grevillea.2.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Grevillea.3.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Grevillea.4.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Grevillea.lanigera.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Hardenbergia.violacea.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Hedera.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Heliotropium.arborescens.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Helleborus.argutifolius.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Helleborus.foetidus.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Heuchera.1.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Heuchera.2.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Hibbertia.obtusifolia.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Hibbertia.scandens.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Hibiscus.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Hydrangea.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Hymenosporum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Ipomoea.lacunosa.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Iris.unguicularis.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Iris.unknown.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Isopogon.latifolius.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Jacaranda.mimosifolia.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Kennedia.beckxiana.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Kennedia.coccinea.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Kennedia.macrophylla.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Kennedia.nigricans.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Kennedia.rubicunda.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Kunzea.baxterii.nana.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Lagerstromeia.indica.x.l.fauriei.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Lamium.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Lechenaultia.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Leptospermum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Leptospermum.obovatum.anisophyllea.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Leucojum.vernum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Levisticum.officinale.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Lilium.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Limonium.perezii.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Liriope.muscari.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Lonicera.periclymenum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Loropetalum.chinense.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Loropetalum.chinense.var.rubrum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Lunaria.annua.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Lycium.barbarum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Malus.domestica.3.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Malus.domestica.harmony.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Malus.domestica.leprechaun.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Malus.domestica.pine.golden.pippin.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Malus.domestica.pinkabelle.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Malus.domestica.pitmaston.pine.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Malus.domestica.pom-for-you.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Malus.domestica.pompink.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Mandevilla.hybrid.1.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Mandevilla.hybrid.2.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Mandevilla.laxa.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Mentha.spicata.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Monstera.deliciosa.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Nandina.domestica.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Narcissus.papyraceus.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Nierembergia.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Ocimum.basilicum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Ocimum.kilimandscharicum.x.basilicum.dark.opal.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Oenothera.lindheimeri.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Origanum.vulgare.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Osteospermum.ecklonis.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Ozothamnus.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Pelargonium.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Pennisetum.setaceum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Penstemon.cv.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Persicaria.affinis.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Persicaria.odarata.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Petroselinum.crispum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Philadelphus.mexicanus.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Philotheca.myoporoides.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Phormium.tenax.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Pimelea.rosea.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Plectranthus.caninus.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Plectranthus.ecklonii.1.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Plectranthus.ecklonii.2.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Plectranthus.saccatus.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Portulacaria.afra.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Prostanthera.phylicifolia.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Prunus.armeniaca.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Prunus.persica.nectazee.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Pultenaea.pedunculata.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Rosa.1.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Rosa.2.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Rosa.3.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Rosa.4.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Rosmarinus.officinalis.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Rotheca.myricoides.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Salvia.apiana.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Salvia.involucrata.2.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Salvia.involucrata.3.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Salvia.officinalis.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Siegfredia.darwinioides.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Spinacia.oleracea.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Spiraea.japonica.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Streptosolen.jamesonii.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Strobilanthes.anisophyllus.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Tagetes.erecta.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Tagetes.sp.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Tamarix.aphylla.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Tanacetum.ptarmiciflorum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Tanacetum.vulgare.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Telopea.speciosissima.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Tetragonia.tetragonioides.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Thelionema.caespitosum.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Thryptomene.saxicola.f.c.payne.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Tibouchina.urvilleana.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Tropaeolum.majus.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Valerianella.locusta.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Vigna.unguiculata.subsp.sesquipedalis.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Viola.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Viola.tricolor.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Viola.x.wittrockiana.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Wisteria.html
+[Sun Jul 15 11:39:49 2018] [info] Writing /home/ron/savage.net.au/Flowers/Zantedeschia.elliottiana.html
+[Sun Jul 15 11:39:49 2018] [info] Finished exporting all HTML files
+[Sun Jul 15 11:39:49 2018] [info] Export.export_features(). Output directory: /home/ron/savage.net.au/Flowers
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Air.Conditioner.png to /run/shm/html/Flowers/features/Air.Conditioner.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/BBQ.png to /run/shm/html/Flowers/features/BBQ.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Bench.png to /run/shm/html/Flowers/features/Bench.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Birdbath.png to /run/shm/html/Flowers/features/Birdbath.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Brick.drive.png to /run/shm/html/Flowers/features/Brick.drive.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Brick.fence.png to /run/shm/html/Flowers/features/Brick.fence.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Brick.path.png to /run/shm/html/Flowers/features/Brick.path.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Brick.patio.png to /run/shm/html/Flowers/features/Brick.patio.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Brick.stairs.png to /run/shm/html/Flowers/features/Brick.stairs.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Brick.steps.png to /run/shm/html/Flowers/features/Brick.steps.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Compost.bin.png to /run/shm/html/Flowers/features/Compost.bin.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Deck.png to /run/shm/html/Flowers/features/Deck.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Electricity.meter.png to /run/shm/html/Flowers/features/Electricity.meter.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Footpath.png to /run/shm/html/Flowers/features/Footpath.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Gas.meter.png to /run/shm/html/Flowers/features/Gas.meter.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Gate.png to /run/shm/html/Flowers/features/Gate.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/House.png to /run/shm/html/Flowers/features/House.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Inspection.shaft.png to /run/shm/html/Flowers/features/Inspection.shaft.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Letterbox.png to /run/shm/html/Flowers/features/Letterbox.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Marble.table.png to /run/shm/html/Flowers/features/Marble.table.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Median.strip.png to /run/shm/html/Flowers/features/Median.strip.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Metal.gate.png to /run/shm/html/Flowers/features/Metal.gate.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Pergola.post.png to /run/shm/html/Flowers/features/Pergola.post.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Plug.hole.png to /run/shm/html/Flowers/features/Plug.hole.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Pond.png to /run/shm/html/Flowers/features/Pond.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Rock.png to /run/shm/html/Flowers/features/Rock.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Shed.png to /run/shm/html/Flowers/features/Shed.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Stairs.png to /run/shm/html/Flowers/features/Stairs.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Storm.water.pit.png to /run/shm/html/Flowers/features/Storm.water.pit.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Telephone.pit.png to /run/shm/html/Flowers/features/Telephone.pit.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Tree.png to /run/shm/html/Flowers/features/Tree.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Water.meter.png to /run/shm/html/Flowers/features/Water.meter.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Watertank.png to /run/shm/html/Flowers/features/Watertank.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Wooden.fence.png to /run/shm/html/Flowers/features/Wooden.fence.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Wooden.gate.png to /run/shm/html/Flowers/features/Wooden.gate.png
+[Sun Jul 15 11:39:49 2018] [debug] Copy /home/ron/savage.net.au/Flowers/features/Wooden.stairs.png to /run/shm/html/Flowers/features/Wooden.stairs.png
+[Sun Jul 15 11:39:49 2018] [info] Finished exporting all features
+[Sun Jul 15 11:39:50 2018] [debug] export_garden_layout(). Processing garden 'Back'
+[Sun Jul 15 11:39:50 2018] [info] Max (x, y) after processing 'flower_locations': (29, 67)
+[Sun Jul 15 11:39:50 2018] [info] Max (x, y) after processing 'feature_locations': (30, 69)
+[Sun Jul 15 11:39:50 2018] [info] Writing to /home/ron/savage.net.au/Flowers/Back.garden.layout.svg
+[Sun Jul 15 11:39:50 2018] [info] Writing to /home/ron/savage.net.au/Flowers/Back.garden.layout.html
+[Sun Jul 15 11:39:50 2018] [info] Finished exporting garden layout for the 'Back' garden
+[Sun Jul 15 11:39:50 2018] [debug] export_garden_layout(). Processing garden 'Front'
+[Sun Jul 15 11:39:51 2018] [info] Max (x, y) after processing 'flower_locations': (29, 33)
+[Sun Jul 15 11:39:51 2018] [info] Max (x, y) after processing 'feature_locations': (30, 34)
