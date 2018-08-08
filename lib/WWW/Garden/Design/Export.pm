@@ -953,10 +953,11 @@ sub export_layout_guide
 </table>
 <table align = 'center' summary = 'Table for a list of articles'>
 	<tr><td align='center'><br /><span class = '$$constants{css_class4headings}' id = 'articles'>Articles</span></td></tr>
-	<tr><td><a href = 'https://savage.net.au/Flowers/html/Garden.Design.Software.html'>2016-12-29: Garden Design Software</a></td></tr>
+	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/Garden.Design.Software.html'>2016-12-29: Garden Design Software</a></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/How.To.Net.Dwarf.Apples.html'>2016-01-03: How To Net Dwarf Apples</a></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/Protecting.Apples.From.Possums.html'>2013-12-08: Protecting Apples From Possums</a></td></tr>
 </table>
+<br />
 <table align = 'center' summary = 'Table for a list of garden layouts'>
 	<tr><td align = 'center'><span class = '$$constants{css_class4headings}' id = 'garden_layouts'>The Garden Layouts</span></td></tr>
 EOS
