@@ -957,21 +957,6 @@ sub export_layout_guide
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/How.To.Net.Dwarf.Apples.html'>2016-01-03: How To Net Dwarf Apples</a></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/Protecting.Apples.From.Possums.html'>2013-12-08: Protecting Apples From Possums</a></td></tr>
 </table>
-<table align = 'center' summary = 'Table for a list of URLs'>
-	<tr><td align = 'center'><br /><span class = '$$constants{css_class4headings}' id = 'various_urls'>Various Links</span></td></tr>
-	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/flowers.schema.svg'>The database schema</a></td></tr>
-	<tr><td><a href = 'https://datatables.net/'>The URL</a> of the free Javascript package which manages the HTML table below</td></tr>
-	<tr><td><a href = 'https://github.com/bgrins/spectrum'>The github repo</a> of the free Javascript package which provides a color spectrum...</td></tr>
-	<tr><td>... and the corresponding <a href = 'https://bgrins.github.io/spectrum/'>on-line docs</a></td></tr>
-	<tr><td><a href = 'http://nurseriesonline.com.au'>Nurseries OnLine - A great Australian website</a></td></tr>
-	<tr><td><a href = 'http://www.flowersforums.com/forums/'>Flower Forums - A great place to ask for help</a></td></tr>
-	<tr><td><a href = 'http://www.LabourofLoveLandscaping.com'>Some identification assistance kindly provided by Kate Kennedy Butler</a></td></tr>
-	<tr><td><a href = 'http://www.theplantlist.org/'>The Plant List - A working list of all plant species</a></td></tr>
-	<tr><td><a href = 'http://www.plantnet.org/'>PlantNet - Identify plants via pix</a></td></tr>
-</table>
-EOS
-
-	$html .= <<EOS;
 <table align = 'center' summary = 'Table for a list of garden layouts'>
 	<tr><td align = 'center'><span class = '$$constants{css_class4headings}' id = 'garden_layouts'>The Garden Layouts</span></td></tr>
 EOS
@@ -985,7 +970,21 @@ EOS
 EOS
 	}
 
-	$html .= "</table>\n";
+	$html .= <<EOS;
+</table>
+<table align = 'center' summary = 'Table for a list of URLs'>
+	<tr><td align = 'center'><br /><span class = '$$constants{css_class4headings}' id = 'various_urls'>Various Links</span></td></tr>
+	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/flowers.schema.svg'>The database schema</a></td></tr>
+	<tr><td><a href = 'https://datatables.net/'>The URL</a> of the free Javascript package which manages the HTML table below</td></tr>
+	<tr><td><a href = 'https://github.com/bgrins/spectrum'>The github repo</a> of the free Javascript package which provides a color spectrum...</td></tr>
+	<tr><td>... and the corresponding <a href = 'https://bgrins.github.io/spectrum/'>on-line docs</a></td></tr>
+	<tr><td><a href = 'http://nurseriesonline.com.au'>Nurseries OnLine - A great Australian website</a></td></tr>
+	<tr><td><a href = 'http://www.flowersforums.com/forums/'>Flower Forums - A great place to ask for help</a></td></tr>
+	<tr><td><a href = 'http://www.LabourofLoveLandscaping.com'>Some identification assistance kindly provided by Kate Kennedy Butler</a></td></tr>
+	<tr><td><a href = 'http://www.theplantlist.org/'>The Plant List - A working list of all plant species</a></td></tr>
+	<tr><td><a href = 'http://www.plantnet.org/'>PlantNet - Identify plants via pix</a></td></tr>
+</table>
+EOS
 
 	return $html;
 
