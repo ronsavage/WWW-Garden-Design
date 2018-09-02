@@ -708,11 +708,6 @@ sub populate_notes_table
 		$note			= $$item{note};
 		$length			= length($note);
 
-		if (substr($note, ($length - 1), 1) eq '.')
-		{
-			substr($note, ($length - 1), 1) = ''; # Chop off trailing full-stop.
-		}
-
 		if (! defined $$flower_keys{$common_name})
 		{
 			$self -> db -> logger -> error("$table_name. Row: $count. Common name '$common_name' undefined");
