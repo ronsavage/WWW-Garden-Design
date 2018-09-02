@@ -5,8 +5,6 @@ use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 use open      qw(:std :utf8); # Undeclared streams in UTF-8.
 
-use File::Slurper qw/read_dir/;
-
 use FindBin;
 
 use WWW::Garden::Design::Util::Filer;
@@ -29,9 +27,9 @@ sub fix
 		print "Table: $key. Row count: ", scalar(@{$data{$key} }), "\n";
 	}
 
-	my($file_name) = 'data/attributes.1.csv';
-
 =pod
+
+	my($file_name) = 'data/attributes.1.csv';
 
 	open(my $fh, '>:encoding(utf-8)', $file_name) || die "Can't open(> $file_name): $!";
 

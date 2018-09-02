@@ -681,7 +681,14 @@ sub populate_notes_table
 
 	$csv -> column_names($csv -> getline($io) );
 
-	my($count) = 0;
+	my($common_name)	= '';
+	my($count)			= 0;	# Counts the total # of lines.
+	my($line_count)		= 0;	# Counts the # of lines per textarea.
+	my($textarea)		= '';	# Accumulates lines per note.
+
+	my($length);
+	my($note);
+	my($previous_name);
 
 	for my $item (@{$csv -> getline_hr_all($io) })
 	{
@@ -697,19 +704,64 @@ sub populate_notes_table
 			}
 		}
 
-		if (! defined $$flower_keys{$$item{common_name} })
-		{
-			$self -> db -> logger -> error("$table_name. Row: $count. Common name '$$item{common_name}' undefined");
+		$common_name	= $$item{common_name};
+		$note			= $$item{note};
+		$length			= length($note);
 
-			next;
+		if (substr($note, ($length - 1), 1) eq '.')
+		{
+			substr($note, ($length - 1), 1) = ''; # Chop off trailing full-stop.
 		}
+
+		if (! defined $$flower_keys{$common_name})
+		{
+			$self -> db -> logger -> error("$table_name. Row: $count. Common name '$common_name' undefined");
+
+			next; # Note: Does not execute the last line in the loop!
+		}
+
+		if ( ($line_count == 0) || ($common_name eq $previous_name) )
+		{
+			$line_count++;
+
+			$textarea .= "$note. "; # Chop off last trailing space later.
+
+			$self -> db -> logger -> debug("Row: $count. previous_name: <$previous_name>. common_name: <$common_name>. line_count: $line_count. note: <$note>");
+		}
+		else
+		{
+			$self -> db -> logger -> debug("Row: $count. previous_name: <$previous_name>. common_name: <$common_name>. line_count: $line_count. Write to db");
+
+			$length								= length($textarea);
+			substr($textarea, ($length - 1), 1)	= ''; # Chop off last trailing space.
+
+			$self -> db -> insert_hashref
+			(
+				$table_name,
+				{
+					flower_id	=> $$flower_keys{$common_name},
+					note		=> $textarea,
+				}
+			);
+
+			$line_count = 1;
+			$textarea	= "$note. ";
+		}
+
+		$previous_name = $common_name;
+	}
+
+	if ($line_count > 0)
+	{
+		$length								= length($textarea);
+		substr($textarea, ($length - 1), 1)	= ''; # Chop off last trailing space.
 
 		$self -> db -> insert_hashref
 		(
 			$table_name,
 			{
-				flower_id	=> $$flower_keys{$$item{common_name} },
-				note		=> $$item{note},
+				flower_id	=> $$flower_keys{$previous_name},
+				note		=> $textarea,
 			}
 		);
 	}
