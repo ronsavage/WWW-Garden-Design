@@ -725,13 +725,9 @@ sub populate_notes_table
 			$line_count++;
 
 			$textarea .= "$note. "; # Chop off last trailing space later.
-
-			$self -> db -> logger -> debug("Row: $count. previous_name: <$previous_name>. common_name: <$common_name>. line_count: $line_count. note: <$note>");
 		}
 		else
 		{
-			$self -> db -> logger -> debug("Row: $count. previous_name: <$previous_name>. common_name: <$common_name>. line_count: $line_count. Write to db");
-
 			$length								= length($textarea);
 			substr($textarea, ($length - 1), 1)	= ''; # Chop off last trailing space.
 
@@ -739,7 +735,7 @@ sub populate_notes_table
 			(
 				$table_name,
 				{
-					flower_id	=> $$flower_keys{$common_name},
+					flower_id	=> $$flower_keys{$previous_name},
 					note		=> $textarea,
 				}
 			);
