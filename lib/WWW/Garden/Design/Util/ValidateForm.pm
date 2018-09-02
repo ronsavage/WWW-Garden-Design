@@ -78,7 +78,6 @@ sub flower_details
 		$self -> process_flower_attributes($app, $defaults, \%errors, $joiner, $params);
 		$self -> process_flower_dimensions($app, $defaults, \%errors, $params);
 		$self -> process_flower_images($app, $defaults, \%errors, $joiner, $params);
-		$self -> process_flower_notes($app, $defaults, \%errors, $joiner, $params);
 		$self -> validator -> check_member($params, 'publish', ['Yes', 'No']);
 		$self -> process_flower_urls($app, $defaults, \%errors, $joiner, $params);
 
@@ -279,73 +278,6 @@ sub process_flower_images
 	}
 
 } # End of process_flower_images.
-
-# -----------------------------------------------
-
-sub process_flower_notes
-{
-	my($self, $app, $defaults, $errors, $joiner, $params) = @_;
-	my($note_list)	= $$params{note_list};
-	my(@notes)		= map{defined($_) ? $_ : ''} split(/$joiner/, $note_list);
-
-	$app -> log -> debug('ValidateForm.process_flower_notes(...)');
-
-	# I'm currently accepting duplicate notes.
-	# Also, ignore empty note without generating an error msg.
-	#
-	# Expected format of @notes:
-	# o [$i]: A string id of the form 'note_\d+'.
-	# o [$i + 1]: The note's text.
-
-	my(@id_length)		= (6, 7); # (Min, Max).
-	my($id_message)		= "$id_length[0] .. $id_length[1] chars";
-	my($prefix_length)	= 20;
-	my(@note_length)	= (0, 250); # (Min, Max).
-	my($note_message)	= "$note_length[0] .. $note_length[1] chars";
-
-	my($id);
-	my($note_length);
-
-	for (my($i) = 0; $i < $#notes; $i += 2)
-	{
-		$note_length = length($notes[$i]);
-
-		# Ignore empty id without generating an error msg.
-
-		next if ($note_length == 0);
-
-		if ( ($note_length < $id_length[0]) || ($note_length > $id_length[1]) || ($notes[$i] !~ /^note_([0-9]{1,2})/) )
-		{
-			$$errors{'note_id'} = [substr($notes[$i], 0, $prefix_length), 'length', $id_message];
-
-			next;
-		}
-
-		$id				= $1;
-		$note_length	= length($notes[$i + 1]);
-
-		if ($note_length > $note_length[1])
-		{
-			$$errors{$notes[$i]} = [substr($notes[$i + 1], 0, $id_length[1]), 'length', $note_message];
-
-			next;
-		}
-
-		if ( ($id >= 1) && ($id <= $$defaults{constants_table}{max_note_count}) )
-		{
-			# We put the individual notes back into %$params for display if necessary (e.g. as errors).
-
-			$$params{$notes[$i]} = $notes[$i + 1];
-
-			$self -> validator -> check_optional({$notes[$i] => $notes[$i + 1]}, $notes[$i]);
-		}
-		else
-		{
-			$$errors{'note_id'} = [substr($notes[$i], 0, $prefix_length), 'length', $id_message];
-		}
-	}
-
-} # End of process_flower_notes.
 
 # -----------------------------------------------
 

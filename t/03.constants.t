@@ -105,7 +105,6 @@ my($expected_constants) =
 	image_url				=> '/Flowers/images',
 	image_url4js			=> '/Flowers/images',
 	max_image_count			=> 'Integer',
-	max_note_count			=> 'Integer',
 	max_url_count			=> 'Integer',
 	search_thumbnail_size	=> 'Integer',
 	template_path			=> '/home/ron/perl.modules/WWW-Garden-Design/public/assets/templates/www/garden/design',

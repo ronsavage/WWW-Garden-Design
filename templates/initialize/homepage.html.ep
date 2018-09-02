@@ -740,22 +740,6 @@ function build_image_ids(sequence)
 
 // -----------------------------------------------
 
-function build_note_ids(sequence)
-{
-	// Names are in alphabetical order.
-
-	var ids	=
-	[
-		'#note_note_' + sequence,		// 0.
-		'#note_sequence_' + sequence	// 1. Not used.
-	];
-
-	return ids;
-
-} // End of build_note_ids.
-
-// -----------------------------------------------
-
 function build_url_ids(sequence)
 {
 	// Names are in alphabetical order.
@@ -1419,44 +1403,9 @@ function populate_details(flower_id)
 		}
 
 		// Notes: Copy notes to the Details/Notes tab.
-		// 1: Remove any existing notes.
-		// This code reuses var id = [].
 
-		note_count = <%== $$constants{max_note_count} %>;
-
-		for (var i = 0; i < note_count; i++)
-		{
-			ids[i] = build_note_ids(i + 1); // Used in this loop and the next.
-
-			// For the HTML column order, see templates/initialize/notes.html.ep.
-
-			$(ids[i][0])
-			.val('');	// Note.
-
-			//$(ids[i][1])
-			//.val('');	// Sequence. Not used.
-		}
-
-		// 2: Loop over all notes owned by this flower.
-		// This code reuses var id = [].
-
-		note_count = (flower['notes'].length > note_count) ? note_count : flower['notes'].length;
-
-		var note;
-
-		for (var i = 0; i < note_count; i++)
-		{
-			note		= flower['notes'][i]['note'];
-			sequence	= flower['notes'][i]['sequence'];
-
-			// For the HTML column order, see templates/initialize/notes.html.ep.
-
-			$(ids[i][0])
-			.val(note);
-
-			//$(ids[i][1])
-			//.val(sequence); Not used.
-		}
+		$('#flower_note')
+		.val(flower['notes']);
 
 		// URLs: Copy urls to the Details/URLs tab.
 		// 1: Remove any existing URLs.
@@ -1780,22 +1729,6 @@ function submit_details()
 		image_list.push('image_' + i, file_name, $(id).val() || '');
 	}
 
-	// Bundle up the notes.
-	// We assume the displayed note numbers are the same as in the for loop,
-	// so we don't include them in the packet sent to the server.
-
-	var note_count	= <%== $$constants{max_note_count} %>;
-	var note_list	= [];
-
-	// Warning: This loop starts from 1 even though elsewhere note loops start from 0.
-
-	for (var i = 1; i <= note_count; i++)
-	{
-		id = '#note_note_' + i;
-
-		note_list.push('note_' + i, $(id).val() );
-	}
-
 	// Bundle up the URLs.
 
 	var url_count	= <%== $$constants{max_url_count} %>;
@@ -1822,7 +1755,7 @@ function submit_details()
 			publish:			$('#flower_publish').prop('checked') ? 'Yes' : 'No',
 			width:				$('#flower_width').val(),
 			image_list:			image_list.join(joiner),
-			note_list:			note_list.join(joiner),
+			notes:				('#flower_note').val(),
 			scientific_name:	$('#flower_scientific_name').val(),
 			url_list:			url_list.join(joiner)
 		},

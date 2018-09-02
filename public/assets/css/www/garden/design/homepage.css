@@ -212,6 +212,15 @@ table.datatable td
 	-moz-border-radius:	;
 }
 
+textarea
+{
+	display:	block;
+	height:		600px;
+	overflow:	auto;
+	resize:		none;
+	width:		600px;
+}
+
 .white_centered
 {
 	background-color:	#ffffff;

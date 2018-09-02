@@ -64,7 +64,6 @@ o height_latitude is the % variation for height/width with the '=' operator, so 
 o homepage_dir is the base directory.
 o homepage_url is the base URL. Used by JS so it must be in single-quotes.
 o max_image_count is the # of lines on the Details/Images sub-tab. Used by JS.
-o max_note_count is the # of lines on the Details/Notes sub-tab. used by JS.
 o max_url_count is the # of lines on the Details/URLs sub-tab. Used by JS.
 o search_thumbnail_size is the thumbnail size of the search result pix.
 o template_path is the location of the *.tx files, the HTML templates used to generate various web pages.

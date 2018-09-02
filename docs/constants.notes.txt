@@ -11,7 +11,6 @@
 "homepage_dir","/home/ron/savage.net.au","The base dir"
 "homepage_url","'https://savage.net.au'","The base URL. Used by JS so it must be in single-quotes"
 "max_image_count","20","The # of lines on the Details/Images sub-tab"
-"max_note_count","20","The # of lines on the Details/Notes sub-tab"
 "max_url_count","10","The # of lines on the Details/URLs sub-tab"
 "search_thumbnail_size","80","The thumbnail size of search result pix"
 "template_path","/home/ron/perl.modules/WWW-Garden-Design/public/assets/templates/www/garden/design","Location of *.tx, the HTML templates"
