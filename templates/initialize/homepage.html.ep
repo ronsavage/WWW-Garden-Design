@@ -1404,7 +1404,8 @@ function populate_details(flower_id)
 
 		// Notes: Copy notes to the Details/Notes tab.
 		// Note: flower['notes'] is an array only ever containing 1 element.
-		// See also Perl sub get_flower_by_id() around line 635.
+		// See also Export.notes2csv() around line 1398.
+		// See also Database.get_flower_by_id() around line 635.
 		// In the Perl search for the string 'array only ever'.
 
 		$('#flower_note')

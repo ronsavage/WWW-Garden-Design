@@ -1395,6 +1395,11 @@ sub notes2csv
 
 		$common_name = $$flower{common_name};
 
+		# Note: $$flower{'notes'} is an array only ever containing 1 element.
+		# See also Database.get_flower_by_id() around line 653.
+		# See also JS function populate_details(flower_id) around line 1405.
+		# In the JS search for the string 'array only ever'.
+
 		for my $note (sort{$$a{flower_id} cmp $$b{flower_id} } @{$$flower{notes} })
 		{
 			$csv -> combine
