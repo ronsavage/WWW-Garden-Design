@@ -736,7 +736,7 @@ sub populate_notes_table
 			);
 
 			$line_count = 1;
-			$textarea	= "$note. ";
+			$textarea	= "$note.\n"; # Chop off last trailing \n later.
 		}
 
 		$previous_name = $common_name;
