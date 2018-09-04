@@ -683,12 +683,8 @@ sub populate_notes_table
 
 	my($common_name)	= '';
 	my($count)			= 0;	# Counts the total # of lines.
-	my($line_count)		= 0;	# Counts the # of lines per textarea.
-	my($textarea)		= '';	# Accumulates lines per note.
 
-	my($length);
 	my($note);
-	my($previous_name);
 
 	for my $item (@{$csv -> getline_hr_all($io) })
 	{
@@ -706,7 +702,6 @@ sub populate_notes_table
 
 		$common_name	= $$item{common_name};
 		$note			= $$item{note};
-		$length			= length($note);
 
 		if (! defined $$flower_keys{$common_name})
 		{
@@ -715,44 +710,12 @@ sub populate_notes_table
 			next; # Note: Does not execute the last line in the loop!
 		}
 
-		if ( ($line_count == 0) || ($common_name eq $previous_name) )
-		{
-			$line_count++;
-
-			$textarea .= "$note.\n"; # Chop off last trailing \n later.
-		}
-		else
-		{
-			$length								= length($textarea);
-			substr($textarea, ($length - 1), 1)	= ''; # Chop off last trailing \n.
-
-			$self -> db -> insert_hashref
-			(
-				$table_name,
-				{
-					flower_id	=> $$flower_keys{$previous_name},
-					note		=> $textarea,
-				}
-			);
-
-			$line_count = 1;
-			$textarea	= "$note.\n"; # Chop off last trailing \n later.
-		}
-
-		$previous_name = $common_name;
-	}
-
-	if ($line_count > 0)
-	{
-		$length								= length($textarea);
-		substr($textarea, ($length - 1), 1)	= ''; # Chop off last trailing \n.
-
 		$self -> db -> insert_hashref
 		(
 			$table_name,
 			{
 				flower_id	=> $$flower_keys{$previous_name},
-				note		=> $textarea,
+				note		=> $note,
 			}
 		);
 	}
