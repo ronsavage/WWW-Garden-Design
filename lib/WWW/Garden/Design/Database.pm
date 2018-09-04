@@ -650,6 +650,9 @@ sub get_flower_by_id
 	for my $table_name (qw/attributes flower_locations images notes urls/)
 	{
 		# Return an arrayref of hashrefs.
+		# Note: $$flower{'notes'} is an array only ever containing 1 element.
+		# See also JS function populate_details(flower_id) around line 1405.
+		# In the JS search for the string 'array only ever'.
 
 		$$flower{$table_name} = $self -> read_flower_dependencies($table_name, $$flower{id});
 	}

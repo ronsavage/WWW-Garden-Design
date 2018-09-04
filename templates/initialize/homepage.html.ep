@@ -1403,9 +1403,12 @@ function populate_details(flower_id)
 		}
 
 		// Notes: Copy notes to the Details/Notes tab.
+		// Note: flower['notes'] is an array only ever containing 1 element.
+		// See also Perl sub get_flower_by_id() around line 635.
+		// In the Perl search for the string 'array only ever'.
 
 		$('#flower_note')
-		.val(flower['notes']);
+		.val(flower['notes'][0]['note']);
 
 		// URLs: Copy urls to the Details/URLs tab.
 		// 1: Remove any existing URLs.

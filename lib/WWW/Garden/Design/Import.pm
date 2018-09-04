@@ -719,12 +719,12 @@ sub populate_notes_table
 		{
 			$line_count++;
 
-			$textarea .= "$note. "; # Chop off last trailing space later.
+			$textarea .= "$note.\n"; # Chop off last trailing \n later.
 		}
 		else
 		{
 			$length								= length($textarea);
-			substr($textarea, ($length - 1), 1)	= ''; # Chop off last trailing space.
+			substr($textarea, ($length - 1), 1)	= ''; # Chop off last trailing \n.
 
 			$self -> db -> insert_hashref
 			(
@@ -745,7 +745,7 @@ sub populate_notes_table
 	if ($line_count > 0)
 	{
 		$length								= length($textarea);
-		substr($textarea, ($length - 1), 1)	= ''; # Chop off last trailing space.
+		substr($textarea, ($length - 1), 1)	= ''; # Chop off last trailing \n.
 
 		$self -> db -> insert_hashref
 		(

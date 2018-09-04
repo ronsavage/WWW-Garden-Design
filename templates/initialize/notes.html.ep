@@ -22,7 +22,7 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td align = 'left'><textarea id = 'flower_note' maxlength = '1000' wrap = 'soft'></td>
+				<td align = 'left'><textarea id = 'flower_note' maxlength = '1000' wrap = 'soft'></textarea></td>
 			</tr>
 		</tbody>
 	</table>
