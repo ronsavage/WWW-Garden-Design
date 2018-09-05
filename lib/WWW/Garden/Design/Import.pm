@@ -714,7 +714,7 @@ sub populate_notes_table
 		(
 			$table_name,
 			{
-				flower_id	=> $$flower_keys{$previous_name},
+				flower_id	=> $$flower_keys{$common_name},
 				note		=> $note,
 			}
 		);
