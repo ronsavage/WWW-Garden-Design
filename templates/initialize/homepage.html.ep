@@ -1735,7 +1735,9 @@ function submit_details()
 
 	// Replace all "" in the notes with '.
 
-	var notes = ('#flower_note').val().replace(/"/g, "'");
+	var regexp	= /"/g;
+	var notes	= $('#flower_note').val();
+	notes		= notes.replace(regexp, "'");
 
 	// Bundle up the URLs.
 
