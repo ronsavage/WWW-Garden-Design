@@ -265,7 +265,7 @@ sub process_flower_images
 
 		if ( ($id >= 1) && ($id <= $$defaults{constants_table}{max_image_count}) )
 		{
-			# We put the individual notes back into %$params for display if necessary (e.g. as errors).
+			# We put the individual images back into %$params for display if necessary (e.g. as errors).
 
 			$$params{$images[$i]} = $images[$i + 1];
 
