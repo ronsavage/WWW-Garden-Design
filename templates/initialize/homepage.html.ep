@@ -1733,6 +1733,10 @@ function submit_details()
 		image_list.push('image_' + i, file_name, $(id).val() || '');
 	}
 
+	// Replace all "" in the notes with '.
+
+	var notes = ('#flower_note').val().replace('/"/g', "'");
+
 	// Bundle up the URLs.
 
 	var url_count	= <%== $$constants{max_url_count} %>;
@@ -1759,7 +1763,7 @@ function submit_details()
 			publish:			$('#flower_publish').prop('checked') ? 'Yes' : 'No',
 			width:				$('#flower_width').val(),
 			image_list:			image_list.join(joiner),
-			notes:				('#flower_note').val(),
+			notes:				notes,
 			scientific_name:	$('#flower_scientific_name').val(),
 			url_list:			url_list.join(joiner)
 		},

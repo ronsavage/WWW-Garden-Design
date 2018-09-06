@@ -39,6 +39,13 @@ body
 	border-width:	1px;
 }
 
+button, input, select, textarea
+{	// https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Styling_HTML_forms.
+	// See also below for more on textarea.
+	font-family:	inherit;
+	font-size:		100%;
+}
+
 .centered
 {
 	text-align: center;
@@ -214,11 +221,12 @@ table.datatable td
 
 textarea
 {
-	display:	block;
-	height:		600px;
-	overflow:	auto;
-	resize:		none;
-	width:		600px;
+	display:		block;
+	height:			400px;
+	overflow:		auto;
+	resize:			none;
+	vertical-align:	top;
+	width:			600px;
 }
 
 .white_centered
