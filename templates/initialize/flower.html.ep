@@ -1,4 +1,4 @@
-<div id = 'flower_div'>
+<form name = 'flower_form_1' id = 'flower_form_1'>
 	%= csrf_field
 	<table align = 'center'>
 		<tr>
@@ -63,6 +63,6 @@
 			</td>
 		</tr>
 	</table>
-</div>
+</form>
 
 <div id = 'flower_result_div'></div>
