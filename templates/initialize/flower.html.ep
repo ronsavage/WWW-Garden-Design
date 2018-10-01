@@ -1,5 +1,5 @@
 <form name = 'flower_form_1' id = 'flower_form_1'>
-	%= csrf_field
+	<input id = 'csrf_token' type = 'hidden' value = '<%= $csrf_token %>'>
 	<table align = 'center'>
 		<tr>
 			<td colspan = '3'><div class = 'blue_centered'>Flower</div><br /></td>

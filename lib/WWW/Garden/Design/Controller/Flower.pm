@@ -75,6 +75,8 @@ sub process
 
 	if ($$params{success})
 	{
+		$self -> app -> log -> debug('Validate: success');
+
 #		$$defaults{db} -> add_flower($params);
 
 		$self -> stash(error	=> undef);
@@ -83,6 +85,8 @@ sub process
 	}
 	else
 	{
+		$self -> app -> log -> debug('Validate: failure');
+
 		$self -> stash(error	=> $self -> format_errors($params) );
 		$self -> stash(details	=> undef);
 		$self -> stash(message	=> $$params{message});
