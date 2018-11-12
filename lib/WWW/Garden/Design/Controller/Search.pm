@@ -73,6 +73,7 @@ sub format
 
 	my($attribute);
 	my($native);
+	my($planted);
 
 	for my $item (@$search_results)
 	{
@@ -91,7 +92,8 @@ sub format
 		# o templates/initialize/homepage.html.ep.
 		# o templates/search/display.html.ep.
 
-		$html .= <<EOS;
+		$planted	= substr($$item{planted}, 0, 10); # Trim the 'planted' date down to yyyy-mm-dd.
+		$html		.= <<EOS;
 <tr>
 	<td>$count</td>
 	<td>$native</td>
@@ -99,6 +101,7 @@ sub format
 	<td>$$item{common_name}</td>
 	<td>$$item{aliases}</td>
 	<td>$$item{hxw}</td>
+	<td>$planted</td>
 	<td>$$item{publish}</td>
 	<td>
 		<button class = 'button' onClick='populate_details($$item{id})'>

@@ -674,6 +674,10 @@ sub get_flower_by_id
 		}
 	}
 
+	# Finally, trim the 'planted' date down to yyyy-mm-dd.
+
+	$$flower{planted} = substr($$flower{planted}, 0, 10);
+
 	# Return a hashref.
 
 	return $flower;
@@ -1718,6 +1722,7 @@ sub search
 				hxw				=> $self -> format_height_width($$flower{height}, $$flower{width}),
 				id				=> $flower_id,
 				pig_latin		=> $pig_latin,
+				planted			=> $$flower{planted},
 				publish			=> $$flower{publish},
 				scientific_name	=> $$flower{scientific_name},
 				thumbnail_url	=> "$$constants_table{homepage_url}$$constants_table{image_url}/$pig_latin.0.jpg",

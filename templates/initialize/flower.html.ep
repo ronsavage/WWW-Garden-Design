@@ -41,6 +41,10 @@
 						<td align = 'left'><input id = 'flower_width' name = 'flower_width' type = 'text' size = '10'></td>
 					</tr>
 					<tr>
+						<td>Planted: </td>
+						<td align = 'left'><span id = 'flower_planted'></span></td>
+					</tr>
+					<tr>
 						<td>Publish: </td>
 						<td align = 'left'><input type = 'checkbox' value = '' id = 'flower_publish'/></td>
 					</tr>
