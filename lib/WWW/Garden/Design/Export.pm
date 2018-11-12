@@ -532,7 +532,7 @@ sub export_all_pages
 							links			=> \@links,
 							note_count		=> scalar(@notes),
 							notes			=> \@notes,
-							planted			=> $$flower{planted},
+							planted			=> substr($$flower{planted}, 0, 10),
 							scientific_name	=> $scientific_name,
 							title			=> $scientific_name,
 							url_count		=> scalar(@urls),
