@@ -218,7 +218,7 @@ sub as_html
 	my(@heading)		= map{ {td => mark_raw($_)} } sort{$columns{$a}{order} <=> $columns{$b}{order} } keys %columns;
 	my($width)			= 40;
 
-	open($fh, '>', '/tmp/flowers.log');
+	open(my $fh, '>', '/tmp/flowers.log');
 	print $fh Dumper(\%columns);
 	print $fh "\n";
 	print $fh \@heading;
