@@ -505,7 +505,7 @@ sub populate_flowers_table
 
 		# Column names are tested in alphabetical order.
 
-		for my $column (qw/aliases common_name height publish scientific_name width/)
+		for my $column (qw/aliases planted common_name height publish scientific_name width/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -548,6 +548,7 @@ sub populate_flowers_table
 				aliases			=> $$item{aliases},
 				common_name		=> $common_name,
 				pig_latin		=> $pig_latin,
+				planted			=> $$item{planted},
 				scientific_name	=> $scientific_name,
 				height			=> $$item{height},
 				max_height		=> $max_height,

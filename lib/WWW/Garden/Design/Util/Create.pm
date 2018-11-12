@@ -280,6 +280,7 @@ sub create_flowers_table
 {
 	my($self)        = @_;
 	my($table_name)  = 'flowers';
+	my($time_option) = $self -> time_option;
 	my($primary_key) = $self -> creator -> generate_primary_key_sql($table_name);
 	my($engine)      = $self -> engine;
 	my($result)      = $self -> creator -> create_table(<<SQL);
@@ -294,6 +295,7 @@ max_width		varchar(255) not null,
 min_height		varchar(255) not null,
 min_width		varchar(255) not null,
 pig_latin		varchar(255) not null,
+planted			timestamp $time_option not null default current_timestamp,
 publish			varchar(255) not null,
 scientific_name	varchar(255) not null,
 width			varchar(255) not null

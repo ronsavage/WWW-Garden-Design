@@ -1185,7 +1185,7 @@ sub flowers2csv
 
 	# Column names are in order left-to-right.
 
-	$csv -> combine(qw/common_name scientific_name aliases height width publish/);
+	$csv -> combine(qw/common_name planted scientific_name aliases height width publish/);
 
 	print $fh $csv -> string, "\n";
 
@@ -1196,6 +1196,7 @@ sub flowers2csv
 		$csv -> combine
 		(
 			$$flower{common_name},
+			$$flower{planted},
 			$$flower{scientific_name},
 			$$flower{aliases},
 			$$flower{height},
