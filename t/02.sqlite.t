@@ -36,17 +36,17 @@ my($simple)		= DBIx::Simple -> new($dbh);
 my(%expected)	=
 (	# We omit the log table since we don't know how many records it has at any time.
 	attribute_types		=>   4,
-	attributes			=> 712,
-	constants			=>  32,
-	feature_locations	=> 699,
-	features			=>  35,
-	flower_locations	=> 240,
-	flowers				=> 182,
+	attributes			=> 748,
+	constants			=>  31,
+	feature_locations	=> 674,
+	features			=>  36,
+	flower_locations	=> 256,
+	flowers				=> 196,
 	gardens				=>   2,
-	images				=> 511,
-	notes				=> 777,
+	images				=> 528,
+	notes				=> 118,
 	properties			=>   2,
-	urls				=> 217,
+	urls				=> 218,
 );
 
 my($result);
