@@ -11,6 +11,9 @@
 	<h1 align = 'center'>Common name: <: $common_name :></h1>
 	<h1 align = 'center'><: $aliases :></h1>
 
+	<h2 align = 'center'>Date planted</h1>
+	<p align = 'center'><: $planted :></p>
+
 	<h2 align = 'center'>Attributes</h1>
 	<table align = 'center' summary = 'Table for plant attributes'>
 	<tr><td>
