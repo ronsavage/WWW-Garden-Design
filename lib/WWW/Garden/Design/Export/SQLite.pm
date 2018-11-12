@@ -51,6 +51,7 @@ sub init_datatable
 				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Scientific name.
 				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Common name.
 				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Aliases.
+				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Planted.
 				{'cellType':'th','orderable':false,'searchable':false,'type':'html'}	// Thumbnail.
 			],
 			'order': [ [1, 'asc'] ]

@@ -266,6 +266,10 @@ sub as_html
 
 				$text = join(',<br>', @aliases, $text);
 			}
+			elsif ($key = 'Planted')
+			{
+				$text = substr($name, 0, 10); # Trim the 'planted' date down to yyyy-mm-dd.
+			}
 			else
 			{
 				$text = $name;
@@ -1327,21 +1331,26 @@ sub init_export
 		'Native' =>
 			{
 				column_name	=> 'native',
-				order		=> 2, # The value 1 is not used.
+				order		=> 1,
 			},
 		'Scientific name' =>
 			{
 				column_name	=> 'scientific_name',
-				order		=> 3,
+				order		=> 2,
 			},
 		'Common name' =>
 			{
 				column_name	=> 'common_name',
-				order		=> 4,
+				order		=> 3,
 			},
 		'Aliases' =>
 			{
 				column_name	=> 'aliases',
+				order		=> 4,
+			},
+		'Planted' =>
+			{
+				column_name	=> 'planted',
 				order		=> 5,
 			},
 		'Thumbnail <span class = "index">(clickable)</span>' =>
