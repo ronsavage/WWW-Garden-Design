@@ -1553,10 +1553,6 @@ sub read_flowers_table
 		push @records, $records{$key};
 	}
 
-	open(my $fh, '>', '/tmp/flowers.log');
-	print $fh Dumper(\@records);
-	close $fh;
-
 	# Return an arrayref of hashrefs.
 
 	return [@records];
