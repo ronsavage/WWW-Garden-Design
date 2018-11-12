@@ -221,6 +221,8 @@ sub as_html
 	my($width)			= 40;
 
 	open(my $fh, '>', '/tmp/flowers.log');
+	print $fh Dumper($flowers);
+	print $fh "\n";
 	print $fh Dumper(\%columns);
 	print $fh "\n";
 	print $fh Dumper(\@heading);
@@ -234,6 +236,8 @@ sub as_html
 	my($offset);
 	my($thumbnail, @tbody);
 	my($text);
+
+	open(my $fh, '>>', '/tmp/flowers.log');
 
 	for my $flower (@$flowers)
 	{
@@ -252,6 +256,8 @@ sub as_html
 		{
 			$column_name	= $columns{$key}{column_name};
 			$name			= ($column_name eq 'native') ? $native : $$flower{$column_name};
+
+			print $fh "key: $key. column_name: $column_name. name: $name. flower{planted}: $$flower{planted}. \n";
 
 			if ($key eq 'Aliases')
 			{
@@ -297,6 +303,8 @@ sub as_html
 
 		push @tbody, [@line];
 	}
+
+	close $fh;
 
 	my(@thead)			= [@heading];
 	my($constants)		= $self -> db -> read_constants_table;
