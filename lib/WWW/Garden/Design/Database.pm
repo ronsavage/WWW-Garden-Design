@@ -1553,6 +1553,8 @@ sub read_flowers_table
 		push @records, $records{$key};
 	}
 
+	$self -> logger -> debug('Database.read_flowers_table()' . Dumper(\@records) );
+
 	# Return an arrayref of hashrefs.
 
 	return [@records];
