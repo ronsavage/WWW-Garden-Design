@@ -1553,7 +1553,9 @@ sub read_flowers_table
 		push @records, $records{$key};
 	}
 
-	$self -> logger -> debug('Database.read_flowers_table()' . Dumper(\@records) );
+	open(my $fh, '>', '/tmp/flowers.log');
+	print $fh Dumper(\@records);
+	close $fh;
 
 	# Return an arrayref of hashrefs.
 
