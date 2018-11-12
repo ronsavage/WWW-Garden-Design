@@ -237,7 +237,7 @@ sub as_html
 	my($thumbnail, @tbody);
 	my($text);
 
-	open(my $fh, '>>', '/tmp/flowers.log');
+	open($fh, '>>', '/tmp/flowers.log');
 
 	for my $flower (@$flowers)
 	{
