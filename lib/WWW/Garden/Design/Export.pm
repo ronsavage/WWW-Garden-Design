@@ -9,6 +9,8 @@ use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use boolean;
 
+use Data::Dumper::Concise; # For Dumper().
+
 use Encode 'encode';
 
 use File::Spec;
