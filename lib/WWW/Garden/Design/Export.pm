@@ -221,7 +221,7 @@ sub as_html
 	open(my $fh, '>', '/tmp/flowers.log');
 	print $fh Dumper(\%columns);
 	print $fh "\n";
-	print $fh \@heading;
+	print $fh Dumper(\@heading);
 	close $fh;
 
 	my(@aliases);
