@@ -42,7 +42,7 @@
 					</tr>
 					<tr>
 						<td>Planted: </td>
-						<td align = 'left'><span id = 'flower_planted'></span></td>
+						<td align = 'left'><input id = 'flower_planted' type = 'text'></td>
 					</tr>
 					<tr>
 						<td>Publish: </td>

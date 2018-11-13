@@ -119,7 +119,7 @@
 
 </body>
 
-%= javascript 'http://127.0.0.1/assets/js/jQuery/jquery-3.2.1.min.js'
+%= javascript 'http://127.0.0.1/assets/js/jQuery/jquery-3.3.1.min.js'
 %= javascript 'http://127.0.0.1/assets/js/jQuery/jquery-ui-1.12.1/jquery-ui.min.js'
 %= javascript 'http://127.0.0.1/assets/js/jQuery/datatables.min.js'
 %= javascript 'http://127.0.0.1/assets/js/spectrum/spectrum.js'
@@ -1251,7 +1251,7 @@ function populate_details(flower_id)
 		.val(flower['height']);
 
 		$('#flower_planted')
-		.text(flower['planted']);
+		.val(flower['planted']);
 
 		$('#flower_publish')
 		.prop('checked', (flower['publish'] == 'Yes') ? true : false);
@@ -2246,6 +2246,17 @@ $(function()
 
 		return false;
 	});
+
+	$('#flower_planted')
+	.datepicker
+	({
+		changeMonth:		true,
+		changeYear:			true,
+		selectOtherMonths:	true,
+		showOtherMonths:	true
+	});
+	$('#flower_planted')
+	.datepicker('option', 'dateFormat', 'yy-mm-dd');
 
 	// ========
 	// Features
