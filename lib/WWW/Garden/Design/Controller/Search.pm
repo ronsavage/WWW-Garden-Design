@@ -35,7 +35,7 @@ sub display
 
 		if ($$request{text_is_clean} -> isTrue)
 		{
-			$self -> app -> log -> debug('Search result: ' . Dumper($search_result) );
+			#$self -> app -> log -> debug('Search result: ' . Dumper($search_result) );
 
 			($match_count, $result_html) = $self -> format($constants_table, $db, $search_result);
 		}
