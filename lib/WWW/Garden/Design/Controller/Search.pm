@@ -4,6 +4,8 @@ use Mojo::Base 'Mojolicious::Controller';
 
 use boolean;
 
+use Data::Dumper::Concise; # For Dumper().
+
 use Moo;
 
 our $VERSION = '0.96';
@@ -33,6 +35,8 @@ sub display
 
 		if ($$request{text_is_clean} -> isTrue)
 		{
+			$self -> app -> log -> debug('Search result: ' . Dumper($search_result) );
+
 			($match_count, $result_html) = $self -> format($constants_table, $db, $search_result);
 		}
 		else

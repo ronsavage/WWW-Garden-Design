@@ -181,9 +181,6 @@ sub startup
 		}
 	);
 
-	# Documentation browser under '/perldoc'.
-
-	$self -> plugin('PODRenderer');
 	$self -> plugin('ServerStatus' =>
 				{
 					allow       => ['127.0.0.1'],

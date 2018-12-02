@@ -796,7 +796,7 @@ sub export_garden_layout
 	(
 		'font-size'		=> 32,
 		'font-weight'	=> '400',
-		text			=> 'Block size: Width: 11.7m. Height: 46m',
+		text			=> 'Block size: Width: 11.7m. Depth: 46m',
 		x				=> $grid -> width - 20 * $grid -> cell_width,	# Pixel co-ord.
 		y				=> $grid -> height,							# Pixel co-ord.
 	);
