@@ -145,23 +145,23 @@ sub attributes2csv
 
 	# Column names are in order left-to-right.
 
-	$csv -> combine(qw/common_name attribute_name range/);
+	$csv -> combine(qw/scientific_name attribute_name range/);
 
 	print $fh $csv -> string, "\n";
 
-	my($common_name);
+	my($scientific_name);
 
-	for my $flower (sort{uc($$a{common_name}) cmp uc($$b{common_name})} @$flowers)
+	for my $flower (sort{uc($$a{scientific_name}) cmp uc($$b{scientific_name})} @$flowers)
 	{
 		next if ($$flower{publish} eq 'No');
 
-		$common_name = $$flower{common_name};
+		$scientific_name = $$flower{scientific_name};
 
 		for my $attribute (@{$$flower{attributes} })
 		{
 			$csv -> combine
 			(
-				$common_name,
+				$scientific_name,
 				$$attribute{name},
 				$$attribute{range},
 			);
@@ -1129,21 +1129,21 @@ sub flower_locations2csv
 
 	# Column names are in order left-to-right.
 
-	$csv -> combine(qw/common_name property_name garden_name xy/);
+	$csv -> combine(qw/scientific_name property_name garden_name xy/);
 
 	print $fh $csv -> string, "\n";
 
-	my($common_name);
 	my($garden_name);
 	my(%location);
 	my($property_name);
+	my($scientific_name);
 
-	for my $flower (sort{uc($$a{common_name}) cmp uc($$b{common_name})} @$flowers)
+	for my $flower (sort{uc($$a{scientific_name}) cmp uc($$b{scientific_name})} @$flowers)
 	{
 		next if ($$flower{publish} eq 'No');
 
-		$common_name	= $$flower{common_name};
-		%location		= ();
+		%location			= ();
+		$scientific_name	= $$flower{scientific_name};
 
 		for my $location (@{$$flower{flower_locations} })
 		{
@@ -1161,7 +1161,7 @@ sub flower_locations2csv
 			{
 				$csv -> combine
 				(
-					$common_name,
+					$scientific_name,
 					$property_name,
 					$garden_name,
 					join(' ', nsort @{$location{$property_name}{$garden_name} }),
@@ -1280,23 +1280,23 @@ sub images2csv
 
 	# Column names are in order left-to-right.
 
-	$csv -> combine(qw/common_name description file_name/);
+	$csv -> combine(qw/scientific_name description file_name/);
 
 	print $fh $csv -> string, "\n";
 
-	my($common_name);
+	my($scientific_name);
 
-	for my $flower (sort{uc($$a{common_name}) cmp uc($$b{common_name})} @$flowers)
+	for my $flower (sort{uc($$a{scientific_name}) cmp uc($$b{scientific_name})} @$flowers)
 	{
 		next if ($$flower{publish} eq 'No');
 
-		$common_name = $$flower{common_name};
+		$scientific_name = $$flower{scientific_name};
 
 		for my $item (sort{$$a{flower_id} cmp $$b{flower_id} } @{$$flower{images} })
 		{
 			$csv -> combine
 			(
-				$common_name,
+				$scientific_name,
 				$$item{description},
 				$$item{raw_name}, # We don't want the whole domain/url!
 			);
@@ -1396,17 +1396,17 @@ sub notes2csv
 
 	# Column names are in order left-to-right.
 
-	$csv -> combine(qw/common_name note/);
+	$csv -> combine(qw/scientific_name note/);
 
 	print $fh $csv -> string, "\n";
 
-	my($common_name);
+	my($scientific_name);
 
-	for my $flower (sort{uc($$a{common_name}) cmp uc($$b{common_name})} @$flowers)
+	for my $flower (sort{uc($$a{scientific_name}) cmp uc($$b{scientific_name})} @$flowers)
 	{
 		next if ($$flower{publish} eq 'No');
 
-		$common_name = $$flower{common_name};
+		$scientific_name = $$flower{scientific_name};
 
 		# Note: $$flower{'notes'} is an array only ever containing 1 element.
 		# See also Database.get_flower_by_id() around line 653.
@@ -1417,7 +1417,7 @@ sub notes2csv
 		{
 			$csv -> combine
 			(
-				$common_name,
+				$scientific_name,
 				$$note{note},
 			);
 
@@ -1488,23 +1488,23 @@ sub urls2csv
 
 	# Column names are in order left-to-right.
 
-	$csv -> combine(qw/common_name url/);
+	$csv -> combine(qw/scientific_name url/);
 
 	print $fh $csv -> string, "\n";
 
-	my($common_name);
+	my($scientific_name);
 
-	for my $flower (sort{uc($$a{common_name}) cmp uc($$b{common_name})} @$flowers)
+	for my $flower (sort{uc($$a{scientific_name}) cmp uc($$b{scientific_name})} @$flowers)
 	{
 		next if ($$flower{publish} eq 'No');
 
-		$common_name = $$flower{common_name};
+		$scientific_name = $$flower{scientific_name};
 
 		for my $url (sort{$$a{flower_id} cmp $$b{flower_id} } @{$$flower{urls} })
 		{
 			$csv -> combine
 			(
-				$common_name,
+				$scientific_name,
 				$$url{url},
 			);
 
