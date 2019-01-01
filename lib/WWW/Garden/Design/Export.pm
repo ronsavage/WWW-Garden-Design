@@ -1202,13 +1202,13 @@ sub flowers2csv
 
 		$csv -> combine
 		(
-			$$flower{common_name},
-			$$flower{planted},
 			$$flower{scientific_name},
+			$$flower{common_name},
 			$$flower{aliases},
 			$$flower{height},
 			$$flower{width},
 			$$flower{publish},
+			$$flower{planted},
 		);
 
 		print $fh $csv -> string, "\n";
