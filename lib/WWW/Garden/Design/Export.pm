@@ -1192,7 +1192,7 @@ sub flowers2csv
 
 	# Column names are in order left-to-right.
 
-	$csv -> combine(qw/common_name planted scientific_name aliases height width publish/);
+	$csv -> combine(qw/scientific_name common_name aliases height width publish planted/);
 
 	print $fh $csv -> string, "\n";
 
