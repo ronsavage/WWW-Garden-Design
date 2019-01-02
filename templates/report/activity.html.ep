@@ -1,26 +1,37 @@
 <br />
-<table align = 'center' class = 'datatable' id = 'activity_result_table'>
-	<thead>
+% if ($result_html) {
+	<table align = 'center' class = 'datatable' id = 'activity_result_table'>
+		<thead>
+			<tr>
+				<th>Timestamp</th>
+				<th>Name</th>
+				<th>Context</th>
+				<th>Note</th>
+				<th>Outcome</th>
+				<th>File name</th>
+			</tr>
+		</thead>
+		<tbody>
+		%== $result_html
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>Timestamp</th>
+				<th>Name</th>
+				<th>Context</th>
+				<th>Note</th>
+				<th>Outcome</th>
+				<th>File name</th>
+			</tr>
+		</tfoot>
+	</table>
+
+% } else {
+
+	<table align = 'center' class = 'bordered table_stripes'>
 		<tr>
-			<th>Timestamp</th>
-			<th>Name</th>
-			<th>Context</th>
-			<th>Note</th>
-			<th>Outcome</th>
-			<th>File name</th>
+			<td>No activity yet</td>
 		</tr>
-	</thead>
-	<tbody>
-	%== $result_html
-	</tbody>
-	<tfoot>
-		<tr>
-			<th>Timestamp</th>
-			<th>Name</th>
-			<th>Context</th>
-			<th>Note</th>
-			<th>Outcome</th>
-			<th>File name</th>
-		</tr>
-	</tfoot>
-</table>
+	</table>
+
+%}

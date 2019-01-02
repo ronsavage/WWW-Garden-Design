@@ -1,20 +1,32 @@
 <br />
-<table align = 'center' class = 'datatable' id = 'crosscheck_result_table'>
-	<thead>
+% if ($result_html) {
+	<table align = 'center' class = 'datatable' id = 'crosscheck_result_table'>
+		<thead>
+			<tr>
+				<th>Context</th>
+				<th>Outcome</th>
+				<th>File</th>
+			</tr>
+		</thead>
+		<tbody>
+		%== $result_html
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>Context</th>
+				<th>Outcome</th>
+				<th>File</th>
+			</tr>
+		</tfoot>
+	</table>
+
+% } else {
+
+	<table align = 'center' class = 'bordered table_stripes'>
 		<tr>
-			<th>Context</th>
-			<th>Outcome</th>
-			<th>File</th>
+			<td>No problems detected</td>
 		</tr>
-	</thead>
-	<tbody>
-	%== $result_html
-	</tbody>
-	<tfoot>
-		<tr>
-			<th>Context</th>
-			<th>Outcome</th>
-			<th>File</th>
-		</tr>
-	</tfoot>
-</table>
+	</table>
+
+%}
+
