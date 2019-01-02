@@ -93,7 +93,7 @@ sub populate_attributes_table
 
 		# Column names are tested in alphabetical order.
 
-		for my $column (qw/attribute_name common_name range/)
+		for my $column (qw/attribute_name range scientific_name/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -106,9 +106,9 @@ sub populate_attributes_table
 			$self -> db -> logger -> error("$table_name. Row: $count. Attribute name '$$item{attribute_name}' undefined");
 		}
 
-		if (! defined $$flower_keys{$$item{common_name} })
+		if (! defined $$flower_keys{$$item{scientific_name} })
 		{
-			$self -> db -> logger -> error("$table_name. Row: $count. Common name '$$item{common_name}' undefined");
+			$self -> db -> logger -> error("$table_name. Row: $count. Scientific name '$$item{scientific_name}' undefined");
 		}
 
 		$self -> db -> insert_hashref
@@ -116,7 +116,7 @@ sub populate_attributes_table
 			$table_name,
 			{
 				attribute_type_id	=> $$attribute_type_keys{$$item{attribute_name} },
-				flower_id			=> $$flower_keys{$$item{common_name} },
+				flower_id			=> $$flower_keys{$$item{scientific_name} },
 				range				=> $$item{range},
 			}
 		);
@@ -275,7 +275,7 @@ sub populate_feature_locations_table
 				if ( ($property_name eq $$tenant{property_name}) && ($garden_name eq $$tenant{garden_name}) )
 				{
 					$type			= $$tenant{type};
-					$tenant_name	= ($type eq 'Flower') ? $$tenant{common_name} : $feature_name;
+					$tenant_name	= ($type eq 'Flower') ? $$tenant{scientific_name} : $feature_name;
 
 					$self -> db -> logger -> error("$table_name. Row: $count. Property name: $property_name. "
 						. "Garden name: $garden_name. Feature '$feature_name'. "
@@ -535,12 +535,12 @@ sub populate_flowers_table
 
 	for my $item (@$lines)
 	{
-		$common_name				= $$item{common_name};
-		$scientific_name			= $$item{scientific_name};
-		$pig_latin					= $self -> db -> scientific_name2pig_latin($lines, $scientific_name, $common_name);
-		($max_height, $min_height)	= $self -> validate_size($table_name, $count, lc $self -> db -> trim($$item{height}), lc $self -> db -> trim($$item{height}) );
-		($max_width, $min_width)	= $self -> validate_size($table_name, $count, lc $self -> db -> trim($$item{width}), lc $self -> db -> trim($$item{width}) );
-		$$flower_keys{$common_name}	= $self -> db -> insert_hashref
+		$common_name					= $$item{common_name};
+		$scientific_name				= $$item{scientific_name};
+		$pig_latin						= $self -> db -> scientific_name2pig_latin($lines, $scientific_name, $common_name);
+		($max_height, $min_height)		= $self -> validate_size($table_name, $count, lc $self -> db -> trim($$item{height}), lc $self -> db -> trim($$item{height}) );
+		($max_width, $min_width)		= $self -> validate_size($table_name, $count, lc $self -> db -> trim($$item{width}), lc $self -> db -> trim($$item{width}) );
+		$$flower_keys{$scientific_name}	= $self -> db -> insert_hashref
 		(
 			$table_name,
 			{

@@ -423,7 +423,7 @@ sub export_all_pages
 			{td => 'Range'},
 		];
 
-		for my $attribute (sort{$$a{name} <=> $$b{name} } @{$$flower{attributes} })
+		for my $attribute (sort{$$a{name} cmp $$b{name} } @{$$flower{attributes} })
 		{
 			push @attributes,
 			[
