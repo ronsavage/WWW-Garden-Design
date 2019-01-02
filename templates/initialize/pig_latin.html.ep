@@ -21,7 +21,7 @@
 			<td colspan = '2'><br></td>
 		</tr>
 		<tr>
-			<td align = 'center' colspan = '2'><input type = 'submit' value = 'Convert' onclick = 'pig_latin()'/></td>
+			<td align = 'center' colspan = '2'><input type = 'submit' value = 'Convert'/></td>
 		</tr>
 	</table>
 </form>

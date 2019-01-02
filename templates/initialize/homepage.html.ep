@@ -2459,6 +2459,19 @@ $(function()
 	// Report
 	// ======
 
+	$('#pig_latin_form_1')
+	.submit(function()
+	{
+		 pig_latin();
+
+		return false;
+	});
+
+	$('#scientific_name')
+	.focus();
+
+pig_latin_form_1
+
 	// ========
 	// Searches
 	// ========

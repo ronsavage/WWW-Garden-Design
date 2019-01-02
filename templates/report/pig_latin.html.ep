@@ -1,1 +1,7 @@
-%== $result
+<br />
+<h3 align = 'center'>Pig Latin</h3>
+<table align = 'center'>
+	<tr><td>
+		%== $result
+	</td></tr>
+</table>
