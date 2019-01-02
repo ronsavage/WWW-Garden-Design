@@ -25,9 +25,9 @@ sub test_flower_locations
 
 	my(%flowers);
 
-	my($path)					= "$FindBin::Bin/../data/flowers.csv";
-	my($flowers)				= $filer -> read_csv_file($path);
-	$flowers{$$_{common_name} }	= 1 for @$flowers;
+	my($path)						= "$FindBin::Bin/../data/flowers.csv";
+	my($flowers)					= $filer -> read_csv_file($path);
+	$flowers{$$_{scientific_name} }	= 1 for @$flowers;
 
 	# 2: Read flower_locations.csv.
 
@@ -55,7 +55,7 @@ sub test_flower_locations
 
 	# 3: Validate the headings in flower_locations.csv.
 
-	my(@expected_headings)	= sort(qw/common_name property_name garden_name xy/);
+	my(@expected_headings)	= sort(qw/scientific_name property_name garden_name xy/);
 	my(@got_headings)		= sort keys %{$$flower_locations[0]};
 
 	my($result);
@@ -74,24 +74,24 @@ sub test_flower_locations
 
 	# 4: Validate the data in flower_locations.csv.
 
-	my($common_name);
 	my($garden_name);
 	my($property_name);
+	my($scientific_name);
 	my($xy, @xy, %xy);
 
 	for my $params (@$flower_locations)
 	{
-		# Check common names.
+		# Check scientific names.
 
-		$common_name	= $$params{common_name};
-		$garden_name	= $$params{garden_name};
-		$property_name	= $$params{property_name};
+		$garden_name		= $$params{garden_name};
+		$property_name		= $$params{property_name};
+		$scientific_name	= $$params{scientific_name};
 
-		ok($checker -> check_key_exists(\%flowers, $common_name) == 1, "Common name '$common_name'. Name present in flowers.csv"); $test_count++;
+		ok($checker -> check_key_exists(\%flowers, $scientific_name) == 1, "Scientific name '$scientific_name'. Name present in flowers.csv"); $test_count++;
 
 		for my $column (@expected_headings)
 		{
-			ok($checker -> check_key_exists($params, $column) == 1, "Common name '$common_name', value '$$params{$column}' ok"); $test_count++;
+			ok($checker -> check_key_exists($params, $column) == 1, "Scientific name '$scientific_name', value '$$params{$column}' ok"); $test_count++;
 		}
 
 		for $xy (split(/\s+/, $$params{xy}) )
@@ -103,8 +103,8 @@ sub test_flower_locations
 
 			$xy{$property_name}{$garden_name}{$xy}++;
 
-			ok($checker -> check_ascii_digits({x => $xy[0]}, 'x') == 1, "Common name '$common_name', xy '$xy'. X ok"); $test_count++;
-			ok($checker -> check_ascii_digits({y => $xy[1]}, 'y') == 1, "Common name '$common_name', xy '$xy'. Y ok"); $test_count++;
+			ok($checker -> check_ascii_digits({x => $xy[0]}, 'x') == 1, "Scientific name '$scientific_name', xy '$xy'. X ok"); $test_count++;
+			ok($checker -> check_ascii_digits({y => $xy[1]}, 'y') == 1, "Scientific name '$scientific_name', xy '$xy'. Y ok"); $test_count++;
 		}
 
 		ok($checker -> check_key_exists(\%properties, $property_name) == 1, "Property name '$property_name' ok"); $test_count++;

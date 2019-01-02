@@ -28,7 +28,7 @@ sub test_attribute_types
 	# 1: Validate the headings in attribute_types.csv.
 	# The headings must be listed here in the same order as in the file.
 
-	my(@expected_headings)	= sort(qw/name sequence range/);
+	my(@expected_headings)	= sort(qw/name range/);
 	my(@got_headings)		= sort keys %{$$attributes_types[0]};
 
 	my($result);
@@ -52,22 +52,15 @@ sub test_attribute_types
 	my($expected_format, $expected_set);
 	my($name);
 	my(@range, $range);
-	my($sequence);
 
 	for my $params (@$attributes_types)
 	{
 		$name				= $$params{name};
 		$expected_format	= $$expected_attribute_types{$name};
-		$expected_set		= [split(/, /, $$expected_format[2])];
+		$expected_set		= [split(/, /, $$expected_format[0])];
 		@range				= split(/, /, $$params{range});
-		$sequence			= $$params{sequence};
 
 		ok($checker -> check_member($params, 'name', $expected_keys), "Attribute type '$name' ok"); $test_count++;
-
-		if ($$expected_format[0] eq 'Integer')
-		{
-			ok($checker -> check_number($params, 'sequence', $$expected_format[1]), "Attribute type '$name'. Sequence '$sequence' ok"); $test_count++;
-		}
 
 		for $range (@range)
 		{
@@ -96,9 +89,9 @@ sub test_attributes
 
 	my(%flowers);
 
-	my($path)					= "$FindBin::Bin/../data/flowers.csv";
-	my($flowers)				= $filer -> read_csv_file($path);
-	$flowers{$$_{common_name} }	= 1 for @$flowers;
+	my($path)						= "$FindBin::Bin/../data/flowers.csv";
+	my($flowers)					= $filer -> read_csv_file($path);
+	$flowers{$$_{scientific_name} }	= 1 for @$flowers;
 
 	# 2: Read attributes.csv.
 
@@ -109,7 +102,7 @@ sub test_attributes
 	# 3: Validate the headings in attributes.csv.
 	# The headings must be listed here in the same order as in the file.
 
-	my(@expected_headings)	= sort ('common_name', 'attribute_name', 'range');
+	my(@expected_headings)	= sort ('scientific_name', 'attribute_name', 'range');
 	my(@got_headings)		= sort keys %{$$attributes[0]};
 
 	my($result);
@@ -131,14 +124,14 @@ sub test_attributes
 
 	my($expected_keys) = [keys %$expected_attribute_types];
 
-	my($common_name, %common_names);
 	my(%got_attributes);
+	my($scientific_name, %scientific_name);
 
 	for my $line (@$flowers)
 	{
-		$common_name					= $$line{common_name};
-		$common_names{$common_name} 	= 1;
-		$got_attributes{$common_name}	= {};
+		$scientific_name					= $$line{scientific_name};
+		$scientific_name{$scientific_name} 	= 1;
+		$got_attributes{$scientific_name}	= {};
 	}
 
 	# Prepare ranges.
@@ -147,9 +140,9 @@ sub test_attributes
 
 	for my $name (keys %$expected_attribute_types)
 	{
-		$expected_attributes{$name}				= {};
-		$expected_attributes{$name}{$_} 		= 1 for (split(/,\s*/, ${$$expected_attribute_types{$name} }[1]));
-		$got_attributes{$common_name}{$name}	= 0;
+		$expected_attributes{$name}					= {};
+		$expected_attributes{$name}{$_} 			= 1 for (split(/,\s*/, ${$$expected_attribute_types{$name} }[1]));
+		$got_attributes{$scientific_name}{$name}	= 0;
 	}
 
 	# Test attributes.csv.
@@ -164,16 +157,16 @@ sub test_attributes
 	{
 		$count++;
 
-		$common_name		= $$params{common_name};
+		$scientific_name	= $$params{scientific_name};
 		$name				= $$params{attribute_name};
 		$expected_format	= $$expected_attribute_types{$name};
-		$expected_set		= [split(/, /, $$expected_format[2])];
+		$expected_set		= [split(/, /, $$expected_format[0])];
 		@range				= split(/, /, $$params{range});
 
-		$got_attributes{$common_name}{$name}++;
+		$got_attributes{$scientific_name}{$name}++;
 
 		ok($checker -> check_member($params, 'attribute_name', $expected_keys), "Attribute '$name' ok"); $test_count++;
-		ok($checker -> check_member($params, 'common_name', [keys %common_names]), "Attribute '$name', common_name '$common_name' ok"); $test_count++;
+		ok($checker -> check_member($params, 'scientific_name', [keys %scientific_name]), "Attribute '$name', scientific_name '$scientific_name' ok"); $test_count++;
 
 		for $range (@range)
 		{
@@ -190,11 +183,11 @@ sub test_attributes
 
 	# Test counts of attribute types.
 
-	for $common_name (sort keys %got_attributes)
+	for $scientific_name (sort keys %got_attributes)
 	{
-		for $name (sort keys %{$got_attributes{$common_name} })
+		for $name (sort keys %{$got_attributes{$scientific_name} })
 		{
-			ok($checker -> check_number($got_attributes{$common_name}, $name, 1) == 1, "Common name '$common_name', attribute '$name' occurs once"); $test_count++;
+			ok($checker -> check_number($got_attributes{$scientific_name}, $name, 1) == 1, "Scientific name '$scientific_name', attribute '$name' occurs once"); $test_count++;
 		}
 	}
 
@@ -206,10 +199,11 @@ sub test_attributes
 
 my($expected_attribute_types) =
 {
-	'Edible'		=> ['Integer', 10, 'No, Bean, Flower, Fruit, Leaf, Stem, Rhizome, Unknown'],
-	'Habit'			=> ['Integer', 20, 'Columnar, Dwarf, Semi-dwarf, Prostrate, Shrub, Tree, Vine, Unknown'],
-	'Native'		=> ['Integer', 30, 'Yes, No, Unknown'],
-	'Sun tolerance'	=> ['Integer', 40, 'Full sun, Part shade, Shade, Unknown'],
+	'Edible'		=> ['No, Bean, Flower, Fruit, Leaf, Stem, Rhizome, Unknown'],
+	'Habit'			=> ['Columnar, Dwarf, Semi-dwarf, Prostrate, Shrub, Tree, Vine, Unknown'],
+	'Kind'			=> ['Generic, Herb, Vegetable'],
+	'Native'		=> ['Yes, No, Unknown'],
+	'Sun tolerance'	=> ['Full sun, Part shade, Shade, Unknown'],
 };
 my($checker)	= MojoX::Validate::Util -> new;
 my($filer)		= WWW::Garden::Design::Util::Filer -> new;

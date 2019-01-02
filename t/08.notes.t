@@ -25,9 +25,9 @@ sub test_notes
 
 	my(%flowers);
 
-	my($path)					= "$FindBin::Bin/../data/flowers.csv";
-	my($flowers)				= $filer -> read_csv_file($path);
-	$flowers{$$_{common_name} }	= 1 for @$flowers;
+	my($path)						= "$FindBin::Bin/../data/flowers.csv";
+	my($flowers)					= $filer -> read_csv_file($path);
+	$flowers{$$_{scientific_name} }	= 1 for @$flowers;
 
 	# 2: Read notes.csv.
 
@@ -37,7 +37,7 @@ sub test_notes
 
 	# 3: Validate the headings in notes.csv.
 
-	my(@expected_headings)	= sort(qw/common_name note/);
+	my(@expected_headings)	= sort(qw/scientific_name note/);
 	my(@got_headings)		= sort keys %{$$notes[0]};
 
 	my($result);
@@ -56,19 +56,19 @@ sub test_notes
 
 	# 4: Validate the data in notes.csv.
 
-	my($common_name);
+	my($scientific_name);
 
 	for my $params (@$notes)
 	{
-		# Check common names.
+		# Check scientific names.
 
-		$common_name = $$params{common_name};
+		$scientific_name = $$params{scientific_name};
 
-		ok($checker -> check_key_exists(\%flowers, $common_name) == 1, "Common name '$common_name'. Name present in flowers.csv"); $test_count++;
+		ok($checker -> check_key_exists(\%flowers, $scientific_name) == 1, "Scientific name '$scientific_name'. Name present in flowers.csv"); $test_count++;
 
 		for my $column (@expected_headings)
 		{
-			ok($checker -> check_key_exists($params, $column) == 1, "Common name '$common_name', value '$$params{$column}' ok"); $test_count++;
+			ok($checker -> check_key_exists($params, $column) == 1, "Scientific name '$scientific_name', value '$$params{$column}' ok"); $test_count++;
 		}
 
 		# Don't check notes. They may be duplicated!
