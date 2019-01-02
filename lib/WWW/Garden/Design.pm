@@ -48,7 +48,7 @@ sub build_attribute_type_fields
 
 	my(%attribute_type_fields);
 
-	for (sort{$$a{sequence} <=> $$b{sequence} } @$attribute_types_table)
+	for (sort{$$a{name} <=> $$b{name} } @$attribute_types_table)
 	{
 		$attribute_type_fields{$$_{name} } = [split(/\s*,\s+/, $$_{range})];
 	}
@@ -66,7 +66,7 @@ sub build_attribute_type_names
 	my(@fields);
 	my($name);
 
-	return [map{$$_{name} } sort{$$a{sequence} <=> $$b{sequence} } @$attribute_types_table];
+	return [map{$$_{name} } sort{$$a{name} <=> $$b{name} } @$attribute_types_table];
 
 } # End of build_attribute_type_names.
 

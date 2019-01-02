@@ -110,7 +110,7 @@ sub attribute_types2csv
 
 	# Column names are in order left-to-right.
 
-	$csv -> combine(qw/name sequence range/);
+	$csv -> combine(qw/name range/);
 
 	print $fh $csv -> string, "\n";
 
@@ -119,7 +119,6 @@ sub attribute_types2csv
 		$csv -> combine
 		(
 			$$attribute_type{name},
-			$$attribute_type{sequence},
 			$$attribute_type{range},
 		);
 
@@ -424,7 +423,7 @@ sub export_all_pages
 			{td => 'Range'},
 		];
 
-		for my $attribute (sort{$$a{sequence} <=> $$b{sequence} } @{$$flower{attributes} })
+		for my $attribute (sort{$$a{name} <=> $$b{name} } @{$$flower{attributes} })
 		{
 			push @attributes,
 			[

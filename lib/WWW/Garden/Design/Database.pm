@@ -690,7 +690,7 @@ sub get_flower_by_id
 		$attribute	= $$flower{attributes}[$i];
 		$id			= $$attribute{attribute_type_id};
 
-		for my $name (qw/name sequence/)
+		for my $name ('name')
 		{
 			$$flower{attributes}[$i]{$name} = $attribute_type{$id}{$name};
 		}
@@ -1532,7 +1532,7 @@ sub read_flowers_table
 			$attribute	= $$record{attributes}[$i];
 			$id			= $$attribute{attribute_type_id};
 
-			for my $name (qw/name sequence/)
+			for my $name ('name')
 			{
 				$$record{attributes}[$i]{$name} = $attribute_type{$id}{$name};
 			}

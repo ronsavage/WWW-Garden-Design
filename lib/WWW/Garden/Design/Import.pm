@@ -148,7 +148,7 @@ sub populate_attribute_types_table
 
 		# Column names are tested in alphabetical order.
 
-		for my $column (qw/name range sequence/)
+		for my $column (qw/name range/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -160,9 +160,8 @@ sub populate_attribute_types_table
 		(
 			$table_name,
 			{
-				name		=> $$item{name},
-				range		=> $$item{range},
-				sequence	=> $$item{sequence},
+				name	=> $$item{name},
+				range	=> $$item{range},
 			}
 		);
 	}
