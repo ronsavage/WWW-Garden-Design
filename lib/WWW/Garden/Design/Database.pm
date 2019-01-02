@@ -339,6 +339,28 @@ sub clean_up_feature_name
 
 } # End of clean_up_feature_name.
 
+# --------------------------------------------------
+
+sub convert2pig_latin
+{
+	my($self, $scientific_name) = @_;
+	my(@chars)		= split(//, $scientific_name);
+	my($pig_latin)	= '';
+
+	for (@chars)
+	{
+		$pig_latin .= $1 if (m|([-_. a-zA-Z0-9])|)
+	}
+
+	$pig_latin	=~ s!^\s!!;
+	$pig_latin	=~ s!\s$!!;
+	$pig_latin	=~ s!\s!\.!g;
+	$pig_latin	=~ s!\.\.!\.!g;
+
+	return ucfirst lc $pig_latin;
+
+} # End of convert2pig_latin.
+
 # -----------------------------------------------
 
 sub crosscheck
@@ -1627,17 +1649,7 @@ sub read_properties_table
 sub scientific_name2pig_latin
 {
 	my($self, $flowers, $scientific_name, $common_name) = @_;
-	my(@chars)		= split(//, $scientific_name);
-	my($pig_latin)	= '';
-
-	for (@chars)
-	{
-		$pig_latin .= $1 if (m|([-_. a-zA-Z0-9])|)
-	}
-
-	$pig_latin	=~ s!^\s!!;
-	$pig_latin	=~ s!\s$!!;
-	$pig_latin	=~ s!\s!\.!g;
+	my($pig_latin) = $self -> convert2pig_latin($scientific_name);
 
 	my(%seen);
 

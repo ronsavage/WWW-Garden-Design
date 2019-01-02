@@ -95,6 +95,28 @@ EOS
 
 # -----------------------------------------------
 
+sub pig_latin
+{
+	my($self) = @_;
+
+	$self -> app -> log -> debug('Report.pig_latin()');
+
+	my($defaults)			= $self -> app -> defaults;
+	my($db)					= $$defaults{db};
+	my($scientific_name)	= $db -> trim($self -> param('scientific_name') );
+
+	$self -> app -> log -> debug("scientific_name: $scientific_name");
+
+	my($pig_latin) = $db -> convert2pig_latin($scientific_name);
+
+	$self -> app -> log -> debug("pig_latin: $pig_latin");
+	$self -> stash(result => $pig_latin);
+	$self -> render;
+
+} # End of pig_latin.
+
+# -----------------------------------------------
+
 1;
 
 =pod

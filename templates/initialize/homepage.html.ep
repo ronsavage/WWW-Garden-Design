@@ -88,12 +88,16 @@
 		    <ul>
 		        <li><a href = '#activity_tab'><span>Activity</span></a></li>
 		        <li><a href = '#crosscheck_tab'><span>Crosscheck</span></a></li>
+		        <li><a href = '#pig_latin_tab'><span>Pig Latin</span></a></li>
 		    </ul>
 		    <div id = 'activity_tab'>
 %= include 'initialize/activity'
 			</div>
 		    <div id = 'crosscheck_tab'>
 %= include 'initialize/crosscheck'
+			</div>
+		    <div id = 'pig_latin_tab'>
+%= include 'initialize/pig_latin'
 			</div>
 		</div>
 	</div>
@@ -1203,6 +1207,34 @@ function get_search_image_size_string()
 	return "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
 
 } // End of get_search_image_size_string.
+
+// -----------------------------------------------
+
+function pig_latin()
+{
+	scientific_name = $('#scientific_name').val();
+
+	if (scientific_name.length > 0)
+	{
+		$.ajax
+		({
+			data:
+			{
+				scientific_name: scientific_name
+			},
+			dataType:	'text',
+			method:		'POST',
+			url:		'/Report/pig_latin', // See routes at end of WWW::Garden::Design.startup().
+		})
+		.done(function(result)
+		{
+			$('#pig_latin_result_div')
+			.empty()
+			.append(result);
+		});
+	}
+
+} // End of pig_latin.
 
 // -----------------------------------------------
 

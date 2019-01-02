@@ -1,0 +1,29 @@
+<form name = 'pig_latin_form_1' id = 'pig_latin_form_1'>
+	%= csrf_field
+	<table align = 'center' class = 'bordered table_stripes' width = '50%'>
+		<tr>
+			<td align = 'center' colspan = '2'><h3 class = 'blue_centered'>Pig Latin</h3></td>
+		</tr>
+		<tr>
+			<td align = 'center' colspan = '2'>Convert a scientific name into a 'pig latin' string</td>
+		</tr>
+		<tr>
+			<td align = 'center' colspan = '2'>Note: Pig latin is used to name image files</td>
+		</tr>
+		<tr>
+			<td align = 'center' colspan = '2'><br /></td>
+		</tr>
+		<tr>
+			<td>Scientific&nbsp;name: </td>
+			<td><input id = 'scientific_name' type = 'text' size = '50' maxlength = '100'></td>
+		</tr>
+		<tr>
+			<td colspan = '2'><br></td>
+		</tr>
+		<tr>
+			<td align = 'center' colspan = '2'><input type = 'submit' value = 'Convert' onclick = 'pig_latin()'/></td>
+		</tr>
+	</table>
+</form>
+
+<div id = 'pig_latin_result_div'></div>
