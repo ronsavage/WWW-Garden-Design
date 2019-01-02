@@ -141,7 +141,7 @@ sub test_attributes
 	for my $name (keys %$expected_attribute_types)
 	{
 		$expected_attributes{$name}					= {};
-		$expected_attributes{$name}{$_} 			= 1 for (split(/,\s*/, ${$$expected_attribute_types{$name} }[1]));
+		$expected_attributes{$name}{$_} 			= 1 for (split(/,\s*/, ${$$expected_attribute_types{$name} }[0]));
 		$got_attributes{$scientific_name}{$name}	= 0;
 	}
 
