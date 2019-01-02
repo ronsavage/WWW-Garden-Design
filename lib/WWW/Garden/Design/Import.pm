@@ -374,9 +374,9 @@ sub populate_flower_locations_table
 	my($max_x)				= 0;
 	my($max_y)				= 0;
 
-	my($common_name);
 	my($garden_name);
 	my($property_name);
+	my($scientific_name);
 	my($tenant);
 	my(@xy, $x, $xy_pair);
 	my($y);
@@ -387,7 +387,7 @@ sub populate_flower_locations_table
 
 		# Column names are tested in alphabetical order.
 
-		for my $column (qw/common_name property_name garden_name xy/)
+		for my $column (qw/property_name garden_name scientific_name xy/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -397,13 +397,13 @@ sub populate_flower_locations_table
 
 		next if (length($$item{xy}) == 0);
 
-		$common_name	= $$item{common_name};
-		$garden_name	= $$item{garden_name};
-		$property_name	= $$item{property_name};
+		$garden_name		= $$item{garden_name};
+		$property_name		= $$item{property_name};
+		$scientific_name	= $$item{scientific_name};
 
-		if (! defined $$flower_keys{$$item{common_name} })
+		if (! defined $$flower_keys{$$item{scientific_name} })
 		{
-			$self -> db -> logger -> error("$table_name. Row: $count. Common name '$common_name' undefined");
+			$self -> db -> logger -> error("$table_name. Row: $count. Scientific name '$scientific_name' undefined");
 
 			next;
 		}
@@ -441,16 +441,16 @@ sub populate_flower_locations_table
 				if ( ($property_name eq $$tenant{property_name}) && ($garden_name eq $$tenant{garden_name}) )
 				{
 					$self -> db -> logger -> error("$table_name. Row: $count. Property name: $property_name. "
-						. "Garden name: $garden_name. Common name '$common_name'. "
-						. "Flower location '$xy_pair' is already in use by '$$tenant{common_name}'");
+						. "Garden name: $garden_name. Scientific name '$scientific_name'. "
+						. "Flower location '$xy_pair' is already in use by '$$tenant{scientific_name}'");
 				}
 			}
 
 			$$crossref_locations{$xy_pair} =
 			{
-				common_name		=> $common_name,
 				garden_name		=> $garden_name,
 				property_name	=> $property_name,
+				scientific_name	=> $scientific_name,
 				type			=> 'Flower', # Or 'Feature'. These are checked later.
 			};
 
@@ -458,7 +458,7 @@ sub populate_flower_locations_table
 			(
 				$table_name,
 				{
-					flower_id	=> $$flower_keys{$common_name},
+					flower_id	=> $$flower_keys{$scientific_name},
 					garden_id	=> $$garden_keys{$garden_name},
 					property_id	=> $$property_keys{$property_name},
 					x			=> $x,
@@ -637,7 +637,7 @@ sub populate_images_table
 
 		# Column names are tested in alphabetical order.
 
-		for my $column (qw/common_name description file_name/)
+		for my $column (qw/description file_name scientific_name/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -645,9 +645,9 @@ sub populate_images_table
 			}
 		}
 
-		if (! defined $$flower_keys{$$item{common_name} })
+		if (! defined $$flower_keys{$$item{scientific_name} })
 		{
-			$self -> db -> logger -> error("$table_name. Row: $count. Common name '$$item{common_name}' undefined");
+			$self -> db -> logger -> error("$table_name. Row: $count. Scientific name '$$item{scientific_name}' undefined");
 
 			next;
 		}
@@ -656,7 +656,7 @@ sub populate_images_table
 		(
 			$table_name,
 			{
-				flower_id	=> $$flower_keys{$$item{common_name} },
+				flower_id	=> $$flower_keys{$$item{scientific_name} },
 				description	=> $$item{description},
 				file_name	=> $$item{file_name},
 			}
@@ -681,8 +681,8 @@ sub populate_notes_table
 
 	$csv -> column_names($csv -> getline($io) );
 
-	my($common_name)	= '';
-	my($count)			= 0;	# Counts the total # of lines.
+	my($count)				= 0;	# Counts the total # of lines.
+	my($scientific_name)	= '';
 
 	my($note);
 
@@ -692,7 +692,7 @@ sub populate_notes_table
 
 		# Column names are tested in alphabetical order.
 
-		for my $column (qw/common_name note/)
+		for my $column (qw/note scientific_name/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -700,12 +700,12 @@ sub populate_notes_table
 			}
 		}
 
-		$common_name	= $$item{common_name};
-		$note			= $$item{note};
+		$note				= $$item{note};
+		$scientific_name	= $$item{scientific_name};
 
-		if (! defined $$flower_keys{$common_name})
+		if (! defined $$flower_keys{$scientific_name})
 		{
-			$self -> db -> logger -> error("$table_name. Row: $count. Common name '$common_name' undefined");
+			$self -> db -> logger -> error("$table_name. Row: $count. Scientific name '$scientific_name' undefined");
 
 			next; # Note: Does not execute the last line in the loop!
 		}
@@ -714,7 +714,7 @@ sub populate_notes_table
 		(
 			$table_name,
 			{
-				flower_id	=> $$flower_keys{$common_name},
+				flower_id	=> $$flower_keys{$scientific_name},
 				note		=> $note,
 			}
 		);
@@ -796,7 +796,7 @@ sub populate_urls_table
 
 		# Column names are tested in alphabetical order.
 
-		for my $column (qw/common_name url/)
+		for my $column (qw/url scientific_name/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -804,9 +804,9 @@ sub populate_urls_table
 			}
 		}
 
-		if (! defined $$flower_keys{$$item{common_name} })
+		if (! defined $$flower_keys{$$item{scientific_name} })
 		{
-			$self -> db -> logger -> error("$table_name. Row: $count. Common name '$$item{common_name}' undefined");
+			$self -> db -> logger -> error("$table_name. Row: $count. Scientific name '$$item{scientific_name}' undefined");
 
 			next;
 		}
@@ -815,7 +815,7 @@ sub populate_urls_table
 		(
 			$table_name,
 			{
-				flower_id	=> $$flower_keys{$$item{common_name} },
+				flower_id	=> $$flower_keys{$$item{scientific_name} },
 				url			=> $$item{url},
 			}
 		);
