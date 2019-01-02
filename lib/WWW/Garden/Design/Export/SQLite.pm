@@ -48,6 +48,7 @@ sub init_datatable
 			'columnDefs':
 			[
 				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Native.
+				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Kind.
 				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Scientific name.
 				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Common name.
 				{'cellType':'th','orderable':true,'searchable':true,'type':'html'},		// Aliases.

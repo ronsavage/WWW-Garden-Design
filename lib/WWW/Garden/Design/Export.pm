@@ -1334,30 +1334,35 @@ sub init_export
 				column_name	=> 'native',
 				order		=> 1,
 			},
+		'Kind' =>
+			{
+				column_name	=> 'kind',
+				order		=> 2,
+			},
 		'Scientific name' =>
 			{
 				column_name	=> 'scientific_name',
-				order		=> 2,
+				order		=> 3,
 			},
 		'Common name' =>
 			{
 				column_name	=> 'common_name',
-				order		=> 3,
+				order		=> 4,
 			},
 		'Aliases' =>
 			{
 				column_name	=> 'aliases',
-				order		=> 4,
+				order		=> 5,
 			},
 		'Planted' =>
 			{
 				column_name	=> 'planted',
-				order		=> 5,
+				order		=> 6,
 			},
 		'Thumbnail <span class = "index">(clickable)</span>' =>
 			{
 				column_name	=> 'thumbnail_file_name',
-				order		=> 6,
+				order		=> 7,
 			},
 	});
 
