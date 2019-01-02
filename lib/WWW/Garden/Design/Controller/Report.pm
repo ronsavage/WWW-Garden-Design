@@ -104,12 +104,8 @@ sub pig_latin
 	my($defaults)			= $self -> app -> defaults;
 	my($db)					= $$defaults{db};
 	my($scientific_name)	= $db -> trim($self -> param('scientific_name') );
+	my($pig_latin)			= $db -> convert2pig_latin($scientific_name);
 
-	$self -> app -> log -> debug("scientific_name: $scientific_name");
-
-	my($pig_latin) = $db -> convert2pig_latin($scientific_name);
-
-	$self -> app -> log -> debug("pig_latin: $pig_latin");
 	$self -> stash(result => $pig_latin);
 	$self -> render;
 
