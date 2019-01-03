@@ -732,6 +732,17 @@ sub init_title_font
 
 # -----------------------------------------------
 
+sub missing_attributes
+{
+	my($self)	= @_;
+	my($sql)	= 'select scientific_name, common_name from flowers where id not in (select flower_id from attributes)';
+
+	return [$self -> db -> query($sql) -> hashes -> each];
+
+} # End of missing_attributes.
+
+# -----------------------------------------------
+
 sub parse_attribute_checkboxes
 {
 	my($self, $defaults, $search_attributes)	= @_;

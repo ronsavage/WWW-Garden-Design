@@ -2,6 +2,8 @@ package WWW::Garden::Design::Controller::Report;
 
 use Mojo::Base 'Mojolicious::Controller';
 
+use Data::Dumper::Concise; # For Dumper().
+
 use Date::Simple;
 
 use Moo;
@@ -92,6 +94,46 @@ EOS
 	return $html;
 
 } # End of format_crosscheck.
+
+# -----------------------------------------------
+
+sub format_missing_attributes
+{
+	my($self, $items) = @_;
+
+	$self -> app -> log -> debug('Report.format_missing_attributes(...)');
+
+	my($html) = '';
+
+	for my $item (@$items)
+	{
+		$html .= <<EOS;
+<tr>
+	<td>$$item{scientific_name}</td>
+	<td>$$item{common_name}</td>
+</tr>
+EOS
+	}
+
+	return $html;
+
+} # End of format_missing_attributes.
+
+# -----------------------------------------------
+
+sub missing_attributes
+{
+	my($self) = @_;
+
+	$self -> app -> log -> debug('Report.missing_attributes()');
+
+	my($defaults)	= $self -> app -> defaults;
+	my($items)		= $$defaults{db} -> missing_attributes;
+
+	$self -> stash(result_html	=> $self -> format_missing_attributes($items) );
+	$self -> render;
+
+} # End of missing_attributes.
 
 # -----------------------------------------------
 

@@ -213,6 +213,7 @@ sub startup
 	$r -> route('/Property')					-> to('Property#process');
 	$r -> route('/Report/activity')				-> to('Report#activity');
 	$r -> route('/Report/crosscheck')			-> to('Report#crosscheck');
+	$r -> route('/Report/missing_attributes')	-> to('Report#missing_attributes');
 	$r -> route('/Report/pig_latin')			-> to('Report#pig_latin');
 	$r -> route('/Search')						-> to('Search#display');
 

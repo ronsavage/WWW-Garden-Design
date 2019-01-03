@@ -1,11 +1,10 @@
 <br>
 % if ($result_html) {
-	<table align = 'center' class = 'datatable' id = 'crosscheck_result_table'>
+	<table align = 'center' class = 'datatable' id = 'missing_attributes_result_table'>
 		<thead>
 			<tr>
-				<th>Context</th>
-				<th>Outcome</th>
-				<th>File</th>
+				<th>Scientific name</th>
+				<th>Common name</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -13,9 +12,8 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<th>Context</th>
-				<th>Outcome</th>
-				<th>File</th>
+				<th>Scientific name</th>
+				<th>Common name</th>
 			</tr>
 		</tfoot>
 	</table>
@@ -24,9 +22,8 @@
 
 	<table align = 'center' class = 'bordered'>
 		<tr>
-			<td>No problems detected</td>
+			<td>No plants have missing attributes</td>
 		</tr>
 	</table>
 
 %}
-

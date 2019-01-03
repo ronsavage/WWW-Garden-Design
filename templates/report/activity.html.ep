@@ -28,7 +28,7 @@
 
 % } else {
 
-	<table align = 'center' class = 'bordered table_stripes'>
+	<table align = 'center' class = 'bordered'>
 		<tr>
 			<td>No activity yet</td>
 		</tr>

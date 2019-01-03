@@ -88,6 +88,7 @@
 		    <ul>
 		        <li><a href = '#activity_tab'><span>Activity</span></a></li>
 		        <li><a href = '#crosscheck_tab'><span>Crosscheck</span></a></li>
+		        <li><a href = '#missing_attributes_tab'><span>Missing Attributes</span></a></li>
 		        <li><a href = '#pig_latin_tab'><span>Pig Latin</span></a></li>
 		    </ul>
 		    <div id = 'activity_tab'>
@@ -95,6 +96,9 @@
 			</div>
 		    <div id = 'crosscheck_tab'>
 %= include 'initialize/crosscheck'
+			</div>
+		    <div id = 'missing_attributes_tab'>
+%= include 'initialize/missing_attributes'
 			</div>
 		    <div id = 'pig_latin_tab'>
 %= include 'initialize/pig_latin'
@@ -1207,6 +1211,28 @@ function get_search_image_size_string()
 	return "width = '" + thumbnail_size + "' height = '" + thumbnail_size + "'";
 
 } // End of get_search_image_size_string.
+
+// -----------------------------------------------
+
+function missing_attributes()
+{
+	$.ajax
+	({
+		data:
+		{
+		},
+		dataType:	'text',
+		method:		'POST',
+		url:		'/Report/missing_attributes', // See routes at end of WWW::Garden::Design.startup().
+	})
+	.done(function(html)
+	{
+		$('#missing_attributes_result_div')
+		.empty()
+		.append(html);
+	});
+
+} // End of missing_attributes.
 
 // -----------------------------------------------
 
@@ -2443,6 +2469,10 @@ $(function()
 		}
 	});
 
+	// =======
+	// Reports
+	// =======
+
 	$('#activity_form_1')
 	.submit(function()
 	{
@@ -2455,9 +2485,11 @@ $(function()
 		return false;
 	});
 
-	// ======
-	// Report
-	// ======
+	$('#missing_attributes_form_1')
+	.submit(function()
+	{
+		return false;
+	});
 
 	$('#pig_latin_form_1')
 	.submit(function()

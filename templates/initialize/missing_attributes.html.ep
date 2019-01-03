@@ -1,0 +1,19 @@
+<form name = 'missing_attributes_form_1' id = 'missing_attributes_form_1'>
+	%= csrf_field
+	<table align = 'center' class = 'bordered table_stripes' width = '50%'>
+		<tr>
+			<td align = 'center'><h3 class = 'blue_centered'>Missing Attributes</h3></td>
+		</tr>
+		<tr>
+			<td align = 'center'>Report plants without records in the attributes table</td>
+		</tr>
+		<tr>
+			<td align = 'center'><br></td>
+		</tr>
+		<tr>
+			<td align = 'center'><input type = 'submit' value = 'Report' onclick = 'missing_attributes()'/></td>
+		</tr>
+	</table>
+</form>
+
+<div id = 'missing_attributes_result_div'></div>
