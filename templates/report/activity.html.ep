@@ -1,4 +1,4 @@
-<br />
+<br>
 % if ($result_html) {
 	<table align = 'center' class = 'datatable' id = 'activity_result_table'>
 		<thead>

@@ -17,7 +17,7 @@
 		<tr>
 			<td class = 'generic_border generic_padding'>2</td>
 			<td class = 'generic_border generic_padding'>Why is my data missing from the communal database (not yet implemented)?</td>
-			<td class = 'generic_border generic_padding'>In rare cases, we find strange characters in files.<br />Most likely they are single- and double-quotes, but are not ISO-8859-1 (ASCII) characters.<br />Typically the text has been copied from a word processor document containing,<br />unfortunately, 'smart' quotes.</td>
+			<td class = 'generic_border generic_padding'>In rare cases, we find strange characters in files.<br>Most likely they are single- and double-quotes, but are not ISO-8859-1 (ASCII) characters.<br>Typically the text has been copied from a word processor document containing,<br>unfortunately, 'smart' quotes.</td>
 		</tr>
 		<tr>
 			<td class = 'generic_border generic_padding'>3</td>
@@ -28,13 +28,13 @@
 			<td class = 'generic_border generic_padding'>4</td>
 			<td class = 'generic_border generic_padding'>Do you know any interesting flower-related web sites?</td>
 			<td class = 'generic_border generic_padding'>
-				<a href = 'http://www.flowersforums.com/forums/'>Flower Forums - A great place to ask for help</a><br />
-				<a href = 'http://www.gardenate.com/'>Gardenate</a><br />
-				<a href = 'http://nurseriesonline.com.au'>NurseriesOnLine</a><br />
-				<a href = 'http://www.plantnet.org/'>PlantNet - Identify plants via pix</a><br />
-				<a href = 'http://smartgardenwatering.com.au'>Smart Garden Watering</a><br />
-				<a href = 'http://www.theplantlist.org/'>The Plant List - A working list of all plant species</a><br />
-				<a href = 'http://wildflowerfinder.org.uk/Menu2/Miscellaneous/SmellsLike.htm'>What some plants smell like</a><br />
+				<a href = 'http://www.flowersforums.com/forums/'>Flower Forums - A great place to ask for help</a><br>
+				<a href = 'http://www.gardenate.com/'>Gardenate</a><br>
+				<a href = 'http://nurseriesonline.com.au'>NurseriesOnLine</a><br>
+				<a href = 'http://www.plantnet.org/'>PlantNet - Identify plants via pix</a><br>
+				<a href = 'http://smartgardenwatering.com.au'>Smart Garden Watering</a><br>
+				<a href = 'http://www.theplantlist.org/'>The Plant List - A working list of all plant species</a><br>
+				<a href = 'http://wildflowerfinder.org.uk/Menu2/Miscellaneous/SmellsLike.htm'>What some plants smell like</a><br>
 			</td>
 		</tr>
 	</tbody>

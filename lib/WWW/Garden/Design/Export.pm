@@ -827,7 +827,7 @@ sub export_garden_layout
 	</head>
 	<body>
 		<h1 class = 'centered'><span class = '$$constants{css_class4headings}' id = 'top'>The '$property_name - $garden_name Garden' Layout</span></h1>
-		<br />
+		<br>
 		<table align = 'center' summary = 'Table for $property_name - $garden_name Garden'>
 			<tr><td>Links</td></tr>
 EOS
@@ -848,7 +848,7 @@ EOS
 			<tr><td><a href = '$$constants{homepage_url}/Flowers.html'>The Flower Catalog</a></td></tr>
 		</table>
 
-		<br />
+		<br>
 
 		<h2 align = 'center'>The '$property_name - $garden_name Garden Layout' (SVG image), with clickable flower thumbnails in situ</h2>
 
@@ -858,7 +858,7 @@ EOS
 			</td></tr>
 		</table>
 
-		<br />
+		<br>
 
 		<table align = 'center' summary = 'First placeholder for link to top'><tr><td align = 'center'><a href = '#top'>Top</a></td></tr></table>
 	</body>
@@ -966,12 +966,12 @@ sub export_layout_guide
 	</tr>
 </table>
 <table align = 'center' summary = 'Table for a list of articles'>
-	<tr><td align='center'><br /><span class = '$$constants{css_class4headings}' id = 'articles'>Articles</span></td></tr>
+	<tr><td align='center'><br><span class = '$$constants{css_class4headings}' id = 'articles'>Articles</span></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/Garden.Design.Software.html'>2016-12-29: Garden Design Software</a></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/How.To.Net.Dwarf.Apples.html'>2016-01-03: How To Net Dwarf Apples</a></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/Protecting.Apples.From.Possums.html'>2013-12-08: Protecting Apples From Possums</a></td></tr>
 </table>
-<br />
+<br>
 <table align = 'center' summary = 'Table for a list of garden layouts'>
 	<tr><td align = 'center'><span class = '$$constants{css_class4headings}' id = 'garden_layouts'>The Garden Layouts</span></td></tr>
 EOS
@@ -988,7 +988,7 @@ EOS
 	$html .= <<EOS;
 </table>
 <table align = 'center' summary = 'Table for a list of URLs'>
-	<tr><td align = 'center'><br /><span class = '$$constants{css_class4headings}' id = 'various_urls'>Various Links</span></td></tr>
+	<tr><td align = 'center'><br><span class = '$$constants{css_class4headings}' id = 'various_urls'>Various Links</span></td></tr>
 	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/flowers.schema.svg'>The database schema</a></td></tr>
 	<tr><td><a href = 'https://datatables.net/'>The URL</a> of the free Javascript package which manages the HTML table below</td></tr>
 	<tr><td><a href = 'https://github.com/bgrins/spectrum'>The github repo</a> of the free Javascript package which provides a color spectrum...</td></tr>

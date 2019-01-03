@@ -2,13 +2,13 @@
 	<input id = 'csrf_token' type = 'hidden' value = '<%= $csrf_token %>'>
 	<table align = 'center'>
 		<tr>
-			<td colspan = '3'><div class = 'blue_centered'>Flower</div><br /></td>
+			<td colspan = '3'><div class = 'blue_centered'>Flower</div><br></td>
 		</tr>
 		<tr>
 			<td colspan = '3'>Note: These 5 sub-tabs are populated by clicking on search result thumbnails</td>
 		</tr>
 		<tr>
-			<td colspan = '3'><br /></td>
+			<td colspan = '3'><br></td>
 		</tr>
 		<tr>
 			<td rowspan = '7'>
@@ -49,14 +49,14 @@
 						<td align = 'left'><input type = 'checkbox' value = '' id = 'flower_publish'/></td>
 					</tr>
 					<tr>
-						<td colspan = '2'><br /></td>
+						<td colspan = '2'><br></td>
 					</tr>
 					<tr>
 						<td colspan = '2'><span class = 'alert'>*</span> indicates a mandatory field</td>
 					</tr>
 					<tr>
 						<td colspan = '2'>
-							<br />
+							<br>
 						</td>
 					</tr>
 					<tr>

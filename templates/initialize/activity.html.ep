@@ -8,7 +8,7 @@
 			<td align = 'center'>Display the activity log, with most recent records at the top</td>
 		</tr>
 		<tr>
-			<td align = 'center'><br /></td>
+			<td align = 'center'><br></td>
 		</tr>
 		<tr>
 			<td align = 'center'><input type = 'submit' value = 'Activity' onclick = 'activity()'/></td>

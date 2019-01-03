@@ -1,4 +1,4 @@
-<br />
+<br>
 % if ($result_html) {
 	<table align = 'center' class = 'datatable' id = 'crosscheck_result_table'>
 		<thead>

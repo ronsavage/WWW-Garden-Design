@@ -6,7 +6,7 @@
 			<td colspan = '4'><div class = 'blue_centered'>Design</div></td>
 		</tr>
 		<tr>
-			<td colspan = '4'><br /></td>
+			<td colspan = '4'><br></td>
 		</tr>
 		<tr>
 			<td align = 'center' colspan = '4'>Operations affecting the whole virtual garden</td>
@@ -26,7 +26,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan = '4'><br /></td>
+			<td colspan = '4'><br></td>
 		</tr>
 		<tr>
 			<td width = '25%'><button type = 'button' onClick = 'return process_design_load()'>Load</button></td>
@@ -38,7 +38,7 @@
 			<td colspan = '4'><hr /></td>
 		</td>
 		<tr>
-			<td align = 'center' colspan = '4'>Search fields for adding and deleting thumbnails<br /></td>
+			<td align = 'center' colspan = '4'>Search fields for adding and deleting thumbnails<br></td>
 		</tr>
 		<tr>
 			<td align = 'center' colspan = '4'> <!-- Why does class centered not work here? -->
@@ -73,7 +73,7 @@
 
 <div id = 'design_result_div'></div>
 
-<br />
+<br>
 <table align = 'center'>
 	<tr><td align = 'center'>Virtual Garden. It's dimensions are <%== $$constants{virtual_cell_count} %>x<%== $$constants{virtual_cell_count} %></td></tr>
 	<tr><td align = 'center'>Pretend the cells are 10cmx10cm or 2mx1.5m, or anything really. The program does not care</td></tr>

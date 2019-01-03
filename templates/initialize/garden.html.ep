@@ -5,7 +5,7 @@
 			<td colspan = '4'><div class = 'blue_centered'>Gardens</div></td>
 		</tr>
 		<tr>
-			<td colspan = '4'><br /></td>
+			<td colspan = '4'><br></td>
 		</tr>
 		<tr>
 			<td></td>
@@ -24,7 +24,7 @@
 	</table>
 	<table align = 'center'>
 		<tr>
-			<td colspan = '2'><br /></td>
+			<td colspan = '2'><br></td>
 		</tr>
 		<tr>
 			<td>Garden name: <span class = 'alert'>*</span> </td>
@@ -39,13 +39,13 @@
 			<td align = 'left' colspan = '2'><input type = 'checkbox' value = '' id = 'garden_publish'/></td>
 		</tr>
 		<tr>
-			<td colspan = '2'><br /></td>
+			<td colspan = '2'><br></td>
 		</tr>
 		<tr>
 			<td colspan = '2'><span class = 'alert'>*</span> indicates a mandatory field</td>
 		</tr>
 		<tr>
-			<td colspan = '2'><br /></td>
+			<td colspan = '2'><br></td>
 		</tr>
 		<tr>
 			<td align = 'left' width = '33%'><input type = 'submit' value = 'Update' onclick = 'update_garden("update")'/></td>
@@ -66,7 +66,7 @@
 			<td width = '33%'></td>
 		</tr>
 		<tr>
-			<td colspan = '3'><br /></td>
+			<td colspan = '3'><br></td>
 		</tr>
 		<tr>
 			<td align = 'center' colspan = '3'>All Properties</td>
@@ -79,7 +79,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan = '3'><br /></td>
+			<td colspan = '3'><br></td>
 		</tr>
 		<tr>
 			<td>Garden name: <span class = 'alert'>*</span> </td>
@@ -94,7 +94,7 @@
 			<td align = 'left' colspan = '2'><input type = 'checkbox' value = '' id = 'new_garden_publish'/></td>
 		</tr>
 		<tr>
-			<td colspan = '3'><br /></td>
+			<td colspan = '3'><br></td>
 		</tr>
 			<td align = 'left' width = '33%'><input type = 'submit' value = 'Save' onclick = 'add_garden()'/></td>
 			<td width = '33%'></td>

@@ -1,4 +1,4 @@
-<br />
+<br>
 
 % if (my $error = stash 'error') {
 

@@ -1,6 +1,6 @@
 <table align = 'center'>
 	<tr>
-		<td colspan = '2'><div class = 'blue_centered'>Attributes</div><br /></td>
+		<td colspan = '2'><div class = 'blue_centered'>Attributes</div><br></td>
 	</tr>
 	<tr>
 		<td align = 'center'>Common name: </td><td><span id = 'attribute_common_name'></span></td>
