@@ -217,6 +217,7 @@ sub as_html
 	my($count)			= 0;
 	my($flowers)		= $self -> db -> read_flowers_table;
 	my(@heading)		= map{ {td => mark_raw($_)} } sort{$columns{$a}{order} <=> $columns{$b}{order} } keys %columns;
+	my(%special_case)	= (Kind => 1, Native => 1); # I.e. not from flowers table.
 	my($width)			= 40;
 
 	my(@aliases);
@@ -226,6 +227,7 @@ sub as_html
 	my(@line);
 	my($native, $name);
 	my($offset);
+	my(%special_value);
 	my($thumbnail, @tbody);
 	my($text);
 
@@ -239,14 +241,18 @@ sub as_html
 
 		for (@{$$flower{attributes} })
 		{
-			$kind	= $$_{range} if ($$_{name} eq 'Kind');
-			$native	= $$_{range} if ($$_{name} eq 'Native');
+			$name = $$_{name};
+
+			if ($special_case{$name})
+			{
+				$special_value{$name} = $$_{range};
+			}
 		}
 
 		for my $key (sort{$columns{$a}{order} <=> $columns{$b}{order} } keys %columns)
 		{
 			$column_name	= $columns{$key}{column_name};
-			$name			= ($column_name eq 'kind') ? $kind : ($column_name eq 'native') ? $native : $$flower{$column_name};
+			$name			= $special_case{ucfirst $column_name} ? $special_value{ucfirst $column_name} : $$flower{$column_name};
 
 			if ($key eq 'Aliases')
 			{
