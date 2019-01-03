@@ -17,7 +17,12 @@
 	<table align = 'center'>
 		<tr>
 			<td colspan = '2'>
-				<span class = 'alert'>Poison Alert!</span>
+			o Herb (under Kind) always refers to the culinary usage
+			</td>
+		</tr>
+		<tr>
+			<td colspan = '2'>
+				<span class = 'alert'>o Poison Alert!</span>
 				You should of course double-check if not triple-check any suggestion that any part of a plant is edible.
 			</td>
 		</tr>
