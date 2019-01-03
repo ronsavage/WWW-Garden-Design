@@ -31,11 +31,11 @@
 			<tr>
 				<th>#</th>
 				<th>Native</th>
+				<th>Kind</th>
 				<th>Scientific name</th>
 				<th>Common name</th>
 				<th>Aliases</th>
 				<th>H x W</th>
-				<th>Planted</th>
 				<th>Publish</th>
 				<th>Edit <span class = 'alert'>(clickable)</span></th>
 			</tr>
@@ -47,11 +47,11 @@
 			<tr>
 				<th>#</th>
 				<th>Native</th>
+				<th>Kind</th>
 				<th>Scientific name</th>
 				<th>Common name</th>
 				<th>Aliases</th>
 				<th>H x W</th>
-				<th>Planted</th>
 				<th>Publish</th>
 				<th>Edit <span class = 'alert'>(clickable)</span></th>
 			</tr>

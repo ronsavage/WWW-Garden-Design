@@ -72,40 +72,44 @@ sub display
 sub format
 {
 	my($self, $constants_table, $db, $search_results) = @_;
-	my($count)	= 0;
-	my($html)	= '';
+	my($count)			= 0;
+	my($html)			= '';
+	my(%special_case)	= (Kind => 1, Native => 1); # I.e. not from flowers table.
 
 	my($attribute);
-	my($native);
-	my($planted);
+	my($name);
+	my(%special_value);
 
 	for my $item (@$search_results)
 	{
 		$count++;
 
-		# Find which of the flower's attributes is 'Native'.
-
-		my($native) = 'N/A';
-
 		for $attribute (@{$$item{attributes} })
 		{
-			$native = $$attribute{range} if ($$attribute{name} eq 'Native');
+			$name = $$attribute{name};
+
+			$self -> app -> log -> error($name);
+
+			if ($special_case{$name})
+			{
+				$special_value{$name} = $$attribute{range};
+				$self -> app -> log -> error("$name: $special_value{$name}");
+			}
 		}
 
 		# Note: Every time you add a column, you must update:
 		# o templates/initialize/homepage.html.ep.
 		# o templates/search/display.html.ep.
 
-		$planted	= substr($$item{planted}, 0, 10); # Trim the 'planted' date down to yyyy-mm-dd.
-		$html		.= <<EOS;
+		$html .= <<EOS;
 <tr>
 	<td>$count</td>
-	<td>$native</td>
+	<td>$special_value{Native}</td>
+	<td>$special_value{Kind}</td>
 	<td>$$item{scientific_name}</td>
 	<td>$$item{common_name}</td>
 	<td>$$item{aliases}</td>
 	<td>$$item{hxw}</td>
-	<td>$planted</td>
 	<td>$$item{publish}</td>
 	<td>
 		<button class = 'button' onClick='populate_details($$item{id})'>
