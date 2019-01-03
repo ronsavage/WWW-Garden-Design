@@ -222,6 +222,7 @@ sub as_html
 	my(@aliases);
 	my($column_name);
 	my(@fields);
+	my($kind);
 	my(@line);
 	my($native, $name);
 	my($offset);
@@ -238,13 +239,14 @@ sub as_html
 
 		for (@{$$flower{attributes} })
 		{
-			$native = $$_{range} if ($$_{name} eq 'Native');
+			$kind	= $$_{range} if ($$_{name} eq 'Kind');
+			$native	= $$_{range} if ($$_{name} eq 'Native');
 		}
 
 		for my $key (sort{$columns{$a}{order} <=> $columns{$b}{order} } keys %columns)
 		{
 			$column_name	= $columns{$key}{column_name};
-			$name			= ($column_name eq 'native') ? $native : $$flower{$column_name};
+			$name			= ($column_name eq 'kind') ? $kind : ($column_name eq 'native') ? $native : $$flower{$column_name};
 
 			if ($key eq 'Aliases')
 			{
@@ -1383,7 +1385,6 @@ sub init_export
 	{
 		$self -> standalone_page(1);
 	}
-
 
 }	# End of init_export.
 
