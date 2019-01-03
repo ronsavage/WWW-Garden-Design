@@ -2470,8 +2470,6 @@ $(function()
 	$('#scientific_name')
 	.focus();
 
-pig_latin_form_1
-
 	// ========
 	// Searches
 	// ========
