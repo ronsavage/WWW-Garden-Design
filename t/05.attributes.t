@@ -201,7 +201,7 @@ my($expected_attribute_types) =
 {
 	'Edible'		=> ['No, Bean, Flower, Fruit, Leaf, Stem, Rhizome, Unknown'],
 	'Habit'			=> ['Columnar, Dwarf, Semi-dwarf, Prostrate, Shrub, Tree, Vine, Unknown'],
-	'Kind'			=> ['Herb, Plant, Vegetable'],
+	'Kind'			=> ['Herb, Plant, Tree, Vegetable'],
 	'Native'		=> ['Yes, No, Unknown'],
 	'Sun tolerance'	=> ['Full sun, Part shade, Shade, Unknown'],
 };
