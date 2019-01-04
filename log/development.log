@@ -1,0 +1,138 @@
+[2019-01-04 15:49:41.88160] [20572] [info] Listening at "http://localhost:3008"
+[2019-01-04 15:49:46.77899] [20572] [info] ------------------------------
+[2019-01-04 15:49:46.78088] [20572] [debug] GET "/" (8067e34d)
+[2019-01-04 15:49:46.78373] [20572] [debug] Routing to controller "WWW::Garden::Design::Controller::Initialize" and action "homepage"
+[2019-01-04 15:49:46.78412] [20572] [debug] Initialize.homepage()
+[2019-01-04 15:49:46.78587] [20572] [debug] Rendering template "initialize/homepage.html.ep"
+[2019-01-04 15:49:46.82894] [20572] [debug] Rendering template "initialize/search.html.ep"
+[2019-01-04 15:49:46.83093] [20572] [debug] Rendering template "initialize/flower.html.ep"
+[2019-01-04 15:49:46.83393] [20572] [debug] Rendering template "initialize/attributes.html.ep"
+[2019-01-04 15:49:46.83577] [20572] [debug] Rendering template "initialize/images.html.ep"
+[2019-01-04 15:49:46.83715] [20572] [debug] Rendering template "initialize/notes.html.ep"
+[2019-01-04 15:49:46.83808] [20572] [debug] Rendering template "initialize/urls.html.ep"
+[2019-01-04 15:49:46.83925] [20572] [debug] Rendering template "initialize/property.html.ep"
+[2019-01-04 15:49:46.84161] [20572] [debug] Rendering template "initialize/garden.html.ep"
+[2019-01-04 15:49:46.84514] [20572] [debug] Rendering template "initialize/feature.html.ep"
+[2019-01-04 15:49:46.84981] [20572] [debug] Rendering template "initialize/design.html.ep"
+[2019-01-04 15:49:46.85233] [20572] [debug] Rendering template "initialize/activity.html.ep"
+[2019-01-04 15:49:46.85331] [20572] [debug] Rendering template "initialize/crosscheck.html.ep"
+[2019-01-04 15:49:46.85430] [20572] [debug] Rendering template "initialize/missing_attributes.html.ep"
+[2019-01-04 15:49:46.85527] [20572] [debug] Rendering template "initialize/pig_latin.html.ep"
+[2019-01-04 15:49:46.85645] [20572] [debug] Rendering template "initialize/search_help.html.ep"
+[2019-01-04 15:49:46.85846] [20572] [debug] Rendering template "initialize/faq_help.html.ep"
+[2019-01-04 15:49:46.86001] [20572] [debug] Rendering template "initialize/about.html.ep"
+[2019-01-04 15:49:46.86295] [20572] [debug] 200 OK (0.082054s, 12.187/s)
+[2019-01-04 15:49:47.57073] [20572] [info] ------------------------------
+[2019-01-04 15:49:47.57115] [20572] [debug] GET "/GetTable/attribute_types" (fac85c92)
+[2019-01-04 15:49:47.57665] [20572] [debug] Routing to controller "WWW::Garden::Design::Controller::GetTable" and action "attribute_types"
+[2019-01-04 15:49:47.57684] [20572] [debug] GetTable.attribute_types()
+[2019-01-04 15:49:47.57790] [20572] [debug] 200 OK (0.006726s, 148.677/s)
+[2019-01-04 15:49:47.57965] [20572] [info] ------------------------------
+[2019-01-04 15:49:47.58016] [20572] [debug] GET "/GetTable/features" (de0545a7)
+[2019-01-04 15:49:47.58086] [20572] [debug] Routing to controller "WWW::Garden::Design::Controller::GetTable" and action "features"
+[2019-01-04 15:49:47.58094] [20572] [debug] GetTable.features()
+[2019-01-04 15:49:47.59544] [20572] [debug] GetTable.features(). Size of features_table: 36
+[2019-01-04 15:49:47.59772] [20572] [debug] 200 OK (0.017156s, 58.289/s)
+[2019-01-04 15:49:48.08758] [20572] [info] ------------------------------
+[2019-01-04 15:49:48.08798] [20572] [debug] GET "/GetTable/gardens" (1ab15890)
+[2019-01-04 15:49:48.08847] [20572] [debug] Routing to controller "WWW::Garden::Design::Controller::GetTable" and action "gardens"
+[2019-01-04 15:49:48.08856] [20572] [debug] GetTable.gardens()
+[2019-01-04 15:49:48.09701] [20572] [debug] GetTable.gardens(). Size of gardens_table: 2
+[2019-01-04 15:49:48.09901] [20572] [debug] 200 OK (0.010968s, 91.174/s)
+[2019-01-04 15:49:48.10082] [20572] [info] ------------------------------
+[2019-01-04 15:49:48.10118] [20572] [debug] GET "/GetTable/properties" (86d7855b)
+[2019-01-04 15:49:48.10171] [20572] [debug] Routing to controller "WWW::Garden::Design::Controller::GetTable" and action "properties"
+[2019-01-04 15:49:48.10187] [20572] [debug] GetTable.properties()
+[2019-01-04 15:49:48.10246] [20572] [debug] GetTable.properties(). Size of properties_table: 2
+[2019-01-04 15:49:48.10276] [20572] [debug] 200 OK (0.001566s, 638.570/s)
+[2019-01-04 15:49:48.12607] [20572] [info] ------------------------------
+[2019-01-04 15:49:54.06799] [20572] [info] ------------------------------
+[2019-01-04 15:49:54.06834] [20572] [debug] GET "/AutoComplete" (02d466b9)
+[2019-01-04 15:49:54.06931] [20572] [debug] Routing to controller "WWW::Garden::Design::Controller::AutoComplete" and action "display"
+[2019-01-04 15:49:54.06953] [20572] [debug] AutoComplete.display(key: ci, type: search)
+[2019-01-04 15:49:54.06959] [20572] [debug] Database.Pg.autocomplete_list(... key: CI. type: search). Entered
+[2019-01-04 15:49:54.07123] [20572] [debug] 200 OK (0.002868s, 348.675/s)
+[2019-01-04 15:49:55.23852] [20572] [info] ------------------------------
+[2019-01-04 15:49:55.23895] [20572] [debug] POST "/Search" (263c6cec)
+[2019-01-04 15:49:55.24160] [20572] [debug] Routing to controller "WWW::Garden::Design::Controller::Search" and action "display"
+[2019-01-04 15:49:55.24398] [20572] [debug] Database.search()
+[2019-01-04 15:49:55.78233] [20572] [info] Match count: 5
+[2019-01-04 15:49:55.78371] [20572] [error] Edible
+[2019-01-04 15:49:55.78379] [20572] [error] Habit
+[2019-01-04 15:49:55.78382] [20572] [error] Kind
+[2019-01-04 15:49:55.78386] [20572] [error] Kind: Tree
+[2019-01-04 15:49:55.78389] [20572] [error] Native
+[2019-01-04 15:49:55.78392] [20572] [error] Native: No
+[2019-01-04 15:49:55.78394] [20572] [error] Sun tolerance
+[2019-01-04 15:49:55.78399] [20572] [error] Edible
+[2019-01-04 15:49:55.78403] [20572] [error] Habit
+[2019-01-04 15:49:55.78405] [20572] [error] Kind
+[2019-01-04 15:49:55.78408] [20572] [error] Kind: Tree
+[2019-01-04 15:49:55.78411] [20572] [error] Native
+[2019-01-04 15:49:55.78414] [20572] [error] Native: No
+[2019-01-04 15:49:55.78417] [20572] [error] Sun tolerance
+[2019-01-04 15:49:55.78420] [20572] [error] Edible
+[2019-01-04 15:49:55.78423] [20572] [error] Habit
+[2019-01-04 15:49:55.78426] [20572] [error] Kind
+[2019-01-04 15:49:55.78429] [20572] [error] Kind: Tree
+[2019-01-04 15:49:55.78431] [20572] [error] Native
+[2019-01-04 15:49:55.78434] [20572] [error] Native: No
+[2019-01-04 15:49:55.78437] [20572] [error] Sun tolerance
+[2019-01-04 15:49:55.78440] [20572] [error] Edible
+[2019-01-04 15:49:55.78443] [20572] [error] Habit
+[2019-01-04 15:49:55.78446] [20572] [error] Kind
+[2019-01-04 15:49:55.78449] [20572] [error] Kind: Tree
+[2019-01-04 15:49:55.78452] [20572] [error] Native
+[2019-01-04 15:49:55.78454] [20572] [error] Native: No
+[2019-01-04 15:49:55.78457] [20572] [error] Sun tolerance
+[2019-01-04 15:49:55.78499] [20572] [error] Edible
+[2019-01-04 15:49:55.78502] [20572] [error] Habit
+[2019-01-04 15:49:55.78505] [20572] [error] Kind
+[2019-01-04 15:49:55.78508] [20572] [error] Kind: Tree
+[2019-01-04 15:49:55.78510] [20572] [error] Native
+[2019-01-04 15:49:55.78513] [20572] [error] Native: No
+[2019-01-04 15:49:55.78516] [20572] [error] Sun tolerance
+[2019-01-04 15:49:55.78543] [20572] [debug] Rendering template "search/display.html.ep"
+[2019-01-04 15:49:55.78746] [20572] [debug] 200 OK (0.548501s, 1.823/s)
+[2019-01-04 15:49:55.78851] [20572] [info] ------------------------------
+[2019-01-04 15:49:55.78882] [20572] [debug] GET "/AutoComplete" (836df1be)
+[2019-01-04 15:49:55.78903] [20572] [debug] Routing to controller "WWW::Garden::Design::Controller::AutoComplete" and action "display"
+[2019-01-04 15:49:55.78920] [20572] [debug] AutoComplete.display(key: citrus, type: search)
+[2019-01-04 15:49:55.78925] [20572] [debug] Database.Pg.autocomplete_list(... key: CITRUS. type: search). Entered
+[2019-01-04 15:49:55.79033] [20572] [debug] 200 OK (0.001497s, 668.003/s)
+[2019-01-04 15:49:57.69419] [20572] [info] ------------------------------
+[2019-01-04 15:49:57.69474] [20572] [debug] POST "/GetFlowerDetails" (22f325c4)
+[2019-01-04 15:49:57.69784] [20572] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlowerDetails" and action "display"
+[2019-01-04 15:49:57.69837] [20572] [debug] GetFlowerDetails.display(flower_id => 47)
+[2019-01-04 15:49:57.70489] [20572] [debug] 200 OK (0.010104s, 98.971/s)
+[2019-01-04 15:49:59.39764] [20572] [info] ------------------------------
+[2019-01-04 15:49:59.39803] [20572] [debug] POST "/Flower" (44ad05be)
+[2019-01-04 15:49:59.41466] [20572] [debug] Routing to controller "WWW::Garden::Design::Controller::Flower" and action "process"
+[2019-01-04 15:49:59.41478] [20572] [debug] Flower.process()
+[2019-01-04 15:49:59.41705] [20572] [debug] aliases => 
+[2019-01-04 15:49:59.41710] [20572] [debug] attribute_list => Edible��Fruit��Habit��Tree��Kind��Tree��Native��No��Sun_tolerance��Full sun
+[2019-01-04 15:49:59.41713] [20572] [debug] common_name => Cumquat
+[2019-01-04 15:49:59.41716] [20572] [debug] csrf_token => 38cac9e93cf545cbd73761795c70f31d381ae3ff
+[2019-01-04 15:49:59.41719] [20572] [debug] errors => HASH(0x468a928)
+[2019-01-04 15:49:59.41722] [20572] [debug] height => 
+[2019-01-04 15:49:59.41725] [20572] [debug] image_list => image_1��Citrus.japonica.1.jpg��Fruit. I never see flowers...��image_2��Citrus.japonica.2.jpg��Fruit unpicked for years,<br>i.e. decoration��image_3������image_4������image_5������image_6������image_7������image_8������image_9������image_10������image_11������image_12������image_13������image_14������image_15������image_16������image_17������image_18������image_19������image_20����
+[2019-01-04 15:49:59.41728] [20572] [debug] message => 
+[2019-01-04 15:49:59.41731] [20572] [debug] notes => 
+[2019-01-04 15:49:59.41734] [20572] [debug] publish => Yes
+[2019-01-04 15:49:59.41736] [20572] [debug] scientific_name => Citrus japonica
+[2019-01-04 15:49:59.41742] [20572] [debug] success => 0
+[2019-01-04 15:49:59.41746] [20572] [debug] url_list => url_1����url_2����url_3����url_4����url_5����url_6����url_7����url_8����url_9����url_10��
+[2019-01-04 15:49:59.41749] [20572] [debug] width => 
+[2019-01-04 15:49:59.41769] [20572] [debug] CSRF. session38cac9e93cf545cbd73761795c70f31d381ae3ff. params: 38cac9e93cf545cbd73761795c70f31d381ae3ff
+[2019-01-04 15:49:59.41779] [20572] [debug] ValidateForm.process_flower_attributes(...)
+[2019-01-04 15:49:59.41784] [20572] [debug] ValidateForm.process_flower_dimensions(height: , width: )
+[2019-01-04 15:49:59.41791] [20572] [debug] ValidateForm.process_flower_images(...)
+[2019-01-04 15:49:59.41803] [20572] [debug] ValidateForm.process_flower_urls(...)
+[2019-01-04 15:49:59.41826] [20572] [debug] Validated params: {
+  publish => "Yes",
+}
+
+[2019-01-04 15:49:59.41832] [20572] [debug] Validate: success
+[2019-01-04 15:49:59.41836] [20572] [debug] Flower.format_details(...)
+[2019-01-04 15:49:59.41859] [20572] [debug] Rendering template "flower/process.html.ep"
+[2019-01-04 15:49:59.42049] [20572] [debug] 200 OK (0.022447s, 44.549/s)

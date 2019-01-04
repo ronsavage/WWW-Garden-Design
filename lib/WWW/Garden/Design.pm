@@ -233,27 +233,22 @@ C<WWW::Garden::Design> - Flower Database, Search Engine and Garden Design
 
 =head1 Synopsis
 
-The Search Engine is started by the Mojolicious command scripts/start.sh:
+The Search Engine is started by the Mojolicious command scripts/morbo.sh (which uses the
+development server morbo):
 
 	#!/bin/bash
 
 	cp /dev/null log/development.log
 
-	scripts/flowers daemon -clients 2 -listen http://*:3008 &
+	morbo -l http://localhost:3008 scripts/design.pl &://*:3008 &
 
-Which runs scripts/hypnotoad.pl:
+Alternately, you can run the production server with scripts/hypnotoad.sh:
 
-	#!/usr/bin/env perl
+	#!/bin/bash
 
-	use strict;
-	use warnings;
+	cp /dev/null log/development.log
 
-	use FindBin;
-	BEGIN { unshift @INC, "$FindBin::Bin/../lib" }
-
-	# Start command line interface for application
-	require Mojolicious::Commands;
-	Mojolicious::Commands->start_app('WWW::Garden::Design');
+	perl scripts/design.pl daemon -l http://localhost:3008 &
 
 =head1 Description
 
