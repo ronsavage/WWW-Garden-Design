@@ -2,8 +2,6 @@ package WWW::Garden::Design::Controller::Report;
 
 use Mojo::Base 'Mojolicious::Controller';
 
-use Data::Dumper::Concise; # For Dumper().
-
 use Date::Simple;
 
 use Moo;
