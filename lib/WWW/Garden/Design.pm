@@ -389,7 +389,10 @@ or run:
 
 =item o Choose the database via an env var
 
-	FLOWER_DB=Pg; export FLOWER_DB
+Warning: The value /^Pg|SQLite$/ is case-sensitive elsewhere in my code.
+
+	FLOWER_DB=Pg; export FLOWER_DB; echo $FLOWER_DB
+	FLOWER_DB=SQLite; export FLOWER_DB; echo $FLOWER_DB
 
 =item o Edit config/www.garden.design.conf
 
