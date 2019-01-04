@@ -383,6 +383,31 @@ or run:
 	make test
 	make install
 
+=head1 Rebuilding the database
+
+=over 4
+
+=item o Choose the database via an env var
+
+	FLOWER_DB=Pg; export FLOWER_DB
+
+=item o Edit config/www.garden.design.conf
+
+Normally you'd comment out 2 of these 3 lines in order to select a database server:
+
+	#dsn  = dbi:SQLite:dbname=data/flowers.sqlite
+	#dsn  = dbi:mysql:database=flowers
+	dsn   = dbi:Pg:dbname=flowers
+
+=item o Run scripts/copy.config.pl
+
+This copies config/www.garden.design.conf into ~/.config/Perl/WWW-Garden-Design/www.garden.design.conf,
+where other code looks for it.
+
+=item o Run scripts/import.export.sh
+
+=back
+
 =head1 References
 
 L<HumaneJS|http://wavded.github.com/humane-js/> - A simple, modern, browser notification system.
