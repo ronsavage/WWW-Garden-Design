@@ -1608,6 +1608,112 @@ function properties_property_menu_changed(data)
 } // End of properties_property_menu_changed.
 
 // -----------------------------------------------
+//		edible:				document.edible.value,
+//		habit:				document.habit.value,
+//		native:				document.native.value,
+//		sun_tolerance:		document.sun_tolerance.value
+
+function save_details()
+{
+	// Bundle up the attributes.
+
+<%== $attribute_elements %>
+	var attribute_list = [];
+
+	var joiner = '<%== $joiner %>';
+
+	var id;
+	var key;
+	var value;
+
+	for (var kind in attributes)
+	{
+		for (var i = 0; i < attributes[kind].length; i++)
+		{
+			id		= build_attribute_id('attribute', kind, attributes[kind][i]);
+			value	= $(id).prop('checked');
+
+			if (value == true)
+			{
+				attribute_list.push(kind + joiner + attributes[kind][i]);
+			}
+		}
+	}
+
+	// Bundle up the images.
+	// We assume the displayed image numbers are the same as in the for loop,
+	// so we don't include them in the packet sent to the server.
+
+	var image_count	= <%== $$constants{max_image_count} %>;
+	var image_list	= [];
+
+	// Warning: This loop starts from 1 even though elsewhere image loops start from 0.
+
+	var file_name;
+
+	for (var i = 1; i <= image_count; i++)
+	{
+		id			= '#image_file_name_' + i;
+		file_name	= $(id).val() || '';
+		id			= '#image_description_' + i;
+
+		image_list.push('image_' + i, file_name, $(id).val() || '');
+	}
+
+	// Replace all "" in the notes with '.
+
+	var regexp	= /"/g;
+	var notes	= $('#flower_note').val();
+	notes		= notes.replace(regexp, "'");
+
+	// Bundle up the URLs.
+
+	var url_count	= <%== $$constants{max_url_count} %>;
+	var url_list	= [];
+
+	// Warning: This loop starts from 1 even though elsewhere URL loops start from 0.
+
+	for (var i = 1; i <= url_count; i++)
+	{
+		id = '#url_url_' + i;
+
+		url_list.push('url_' + i, $(id).val() );
+	}
+
+	$.ajax
+	({
+		data:
+		{
+			aliases:			$('#flower_aliases').val(),
+			attribute_list:		attribute_list.join(joiner),
+			common_name:		$('#flower_common_name').val(),
+			csrf_token:			$('#csrf_token').val(),
+			height:				$('#flower_height').val(),
+			publish:			$('#flower_publish').prop('checked') ? 'Yes' : 'No',
+			width:				$('#flower_width').val(),
+			image_list:			image_list.join(joiner),
+			notes:				notes,
+			scientific_name:	$('#flower_scientific_name').val(),
+			url_list:			url_list.join(joiner)
+		},
+		dataType:	'html',
+		method:		'POST',
+		url:		'/Flower' // See routes at end of WWW::Garden::Design.startup().
+	})
+	.done(function(html)
+	{
+		$('#flower_result_div')
+		.empty()
+		.append(html);
+	})
+	.fail(function(jqxhr, textStatus, error)
+	{
+		alert('Ajax status: ' + textStatus + ', ' + error);
+	});
+
+} // End of save_details.
+
+// -----------------------------------------------
 
 function set_feature_fields(i)
 {
@@ -1740,112 +1846,6 @@ function set_virtual_parameters()
 	});
 
 } // End of set_virtual_parameters.
-
-// -----------------------------------------------
-//		edible:				document.edible.value,
-//		habit:				document.habit.value,
-//		native:				document.native.value,
-//		sun_tolerance:		document.sun_tolerance.value
-
-function submit_details()
-{
-	// Bundle up the attributes.
-
-<%== $attribute_elements %>
-	var attribute_list = [];
-
-	var joiner = '<%== $joiner %>';
-
-	var id;
-	var key;
-	var value;
-
-	for (var kind in attributes)
-	{
-		for (var i = 0; i < attributes[kind].length; i++)
-		{
-			id		= build_attribute_id('attribute', kind, attributes[kind][i]);
-			value	= $(id).prop('checked');
-
-			if (value == true)
-			{
-				attribute_list.push(kind + joiner + attributes[kind][i]);
-			}
-		}
-	}
-
-	// Bundle up the images.
-	// We assume the displayed image numbers are the same as in the for loop,
-	// so we don't include them in the packet sent to the server.
-
-	var image_count	= <%== $$constants{max_image_count} %>;
-	var image_list	= [];
-
-	// Warning: This loop starts from 1 even though elsewhere image loops start from 0.
-
-	var file_name;
-
-	for (var i = 1; i <= image_count; i++)
-	{
-		id			= '#image_file_name_' + i;
-		file_name	= $(id).val() || '';
-		id			= '#image_description_' + i;
-
-		image_list.push('image_' + i, file_name, $(id).val() || '');
-	}
-
-	// Replace all "" in the notes with '.
-
-	var regexp	= /"/g;
-	var notes	= $('#flower_note').val();
-	notes		= notes.replace(regexp, "'");
-
-	// Bundle up the URLs.
-
-	var url_count	= <%== $$constants{max_url_count} %>;
-	var url_list	= [];
-
-	// Warning: This loop starts from 1 even though elsewhere URL loops start from 0.
-
-	for (var i = 1; i <= url_count; i++)
-	{
-		id = '#url_url_' + i;
-
-		url_list.push('url_' + i, $(id).val() );
-	}
-
-	$.ajax
-	({
-		data:
-		{
-			aliases:			$('#flower_aliases').val(),
-			attribute_list:		attribute_list.join(joiner),
-			common_name:		$('#flower_common_name').val(),
-			csrf_token:			$('#csrf_token').val(),
-			height:				$('#flower_height').val(),
-			publish:			$('#flower_publish').prop('checked') ? 'Yes' : 'No',
-			width:				$('#flower_width').val(),
-			image_list:			image_list.join(joiner),
-			notes:				notes,
-			scientific_name:	$('#flower_scientific_name').val(),
-			url_list:			url_list.join(joiner)
-		},
-		dataType:	'html',
-		method:		'POST',
-		url:		'/Flower' // See routes at end of WWW::Garden::Design.startup().
-	})
-	.done(function(html)
-	{
-		$('#flower_result_div')
-		.empty()
-		.append(html);
-	})
-	.fail(function(jqxhr, textStatus, error)
-	{
-		alert('Ajax status: ' + textStatus + ', ' + error);
-	});
-
-} // End of submit_details.
 
 // -----------------------------------------------
 
@@ -2300,7 +2300,7 @@ $(function()
 	$('#details_form')
 	.submit(function()
 	{
-		submit_details();
+		save_details();
 
 		return false;
 	});
