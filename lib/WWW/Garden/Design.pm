@@ -407,7 +407,20 @@ Normally you'd comment out 2 of these 3 lines in order to select a database serv
 This copies config/www.garden.design.conf into ~/.config/Perl/WWW-Garden-Design/www.garden.design.conf,
 where other code looks for it.
 
+=item o Run scripts/populate.db.sh
+
+=head1 Rebuilding the web pages
+
+=over 4
+
+=item o Follow the instructions just above, if necessary, to rebuild the database
+
 =item o Run scripts/import.export.sh
+
+And yes, this does another populate. By studying the code you'll be able to figure out how to skip
+one of these operations.
+
+=back
 
 =back
 
