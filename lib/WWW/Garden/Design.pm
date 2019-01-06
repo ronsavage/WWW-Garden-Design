@@ -9,6 +9,7 @@ use Data::Dumper::Concise; # For Dumper().
 use Moo;
 
 use WWW::Garden::Design::Database::Pg;
+use WWW::Garden::Design::Database::Users;
 
 our $VERSION = '0.96';
 
@@ -181,17 +182,9 @@ sub startup
 		}
 	);
 
-	$self -> plugin('ServerStatus' =>
-				{
-					allow       => ['127.0.0.1'],
-					counterfile => '/tmp/mojolicious/counter.flowers.txt',
-					path        => '/server-status',
-					scoreboard  => '/tmp/mojolicious',
-				});
-	$self -> plugin('TagHelpers');
+	$self -> helper(users => WWW::Garden::Design::Database::Users -> new);
 	$self -> initialize_defaults; # For access inside all controllers.
-
-	# Router.
+	$self -> plugin('TagHelpers');
 
 	my($r) = $self -> routes;
 
