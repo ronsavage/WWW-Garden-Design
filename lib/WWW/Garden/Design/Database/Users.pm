@@ -15,9 +15,9 @@ my %USERS = (ron => 'savage');
 
 sub check
 {
-	my($self, $username, $password) = @_;
+	my($self, $logger, $username, $password) = @_;
 
-	return exists($USERS{$username}) && (secure_compare($USERS{$username}, $password) ) ? 1 : 0;
+	return $USERS{$username} && (secure_compare($USERS{$username}, $password) ) ? 1 : 0;
 
 } # End of check.
 
