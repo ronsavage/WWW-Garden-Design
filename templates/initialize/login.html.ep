@@ -1,0 +1,25 @@
+<form name = 'login_form_1' id = 'login_form_1'>
+	%= csrf_field
+	<table align = 'center' border = '1' class = 'bordered table_stripes' width = '50%'>
+		<tr>
+			<td align = 'center' colspan = '2'><h3 class = 'blue_centered'>Login</h3></td>
+		</tr>
+		<tr>
+			<td align = 'center' colspan = '2'><br></td>
+		</tr>
+		<tr>
+			<td>Username: </td>
+			<td><input id = 'username' type = 'text' size = '25' maxlength = '50'></td>
+		</tr>
+		<tr>
+			<td>Password: </td>
+			<td><input id = 'password' type = 'text' size = '25' maxlength = '50'></td>
+		</tr>
+		<tr>
+			<td colspan = '2'><br></td>
+		</tr>
+		<tr>
+			<td align = 'center' colspan = '2'><input type = 'submit' value = 'Login'></td>
+		</tr>
+	</table>
+</form>
