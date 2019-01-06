@@ -82,6 +82,30 @@ sub homepage
 
 # -----------------------------------------------
 
+sub login
+{
+	my($self) = @_;
+
+	$self -> app -> log -> debug('Initialize.login()');
+
+	my($defaults)	= $self -> app -> defaults;
+	my($users)		= $$defaults{users};
+	my($username)	= $self -> param('username') || '';
+	my($password)	= $self -> param('password') || '';
+	my($check)		= $users -> check($username, $password);
+
+	$self -> app -> log -> debug("username: $username. password: $password. check: $check");
+
+	$self -> render if (! $check);
+
+	$self -> session(user => $username);
+	$self -> flash(message => 'Welcome');
+	$self -> redirect_to('/homepage');
+
+} # End of login.
+
+# -----------------------------------------------
+
 1;
 
 =pod

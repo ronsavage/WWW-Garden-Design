@@ -9,6 +9,7 @@ use Data::Dumper::Concise; # For Dumper().
 use Moo;
 
 use WWW::Garden::Design::Database::Pg;
+use WWW::Garden::Design::Database::Users;
 
 our $VERSION = '0.96';
 
@@ -112,6 +113,7 @@ sub initialize_defaults
 	$$defaults{joiner}					= '«»'; # Used in homepage.html.ep.
 	$$defaults{properties_table}		= $$defaults{db} -> read_table('properties');
 	$$defaults{search_attribute_ids}	= $self -> build_attribute_ids('search', $$defaults{attribute_type_fields}, $$defaults{attribute_type_names});
+	$$defaults{users}					= WWW::Garden::Design::Database::Users -> new;
 	my($attribute_elements)				= $self -> build_js_for_attributes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields});
 
 	# Warning: build_gardens_property_menu() sets a value in the session read by build_garden_menu(),
@@ -187,7 +189,8 @@ sub startup
 
 	$r -> namespaces(['WWW::Garden::Design::Controller']);
 
-	$r -> route('/')							-> to('Initialize#homepage');
+	$r -> route('/homepage')					-> to('Initialize#homepage')	-> name('homepage');
+	$r -> route('/login')						-> to('Initialize#login')		-> name('login');
 	$r -> route('/AutoComplete')				-> to('AutoComplete#display');
 	$r -> route('/Design')						-> to('Design#process');
 	$r -> route('/Feature')						-> to('Feature#process');
