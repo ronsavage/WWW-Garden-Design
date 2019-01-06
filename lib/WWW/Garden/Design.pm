@@ -9,7 +9,6 @@ use Data::Dumper::Concise; # For Dumper().
 use Moo;
 
 use WWW::Garden::Design::Database::Pg;
-use WWW::Garden::Design::Database::Users;
 
 our $VERSION = '0.96';
 
@@ -168,8 +167,6 @@ sub startup
 {
 	my $self = shift;
 
-	$self -> secrets(['757d76331dc264f21ae97b861189bd9d8aa74647']);
-
 	# Log a special line to make the start of each request easy to find in the log.
 	# Of course, nothing is logged by this just because the server restarted.
 
@@ -182,9 +179,9 @@ sub startup
 		}
 	);
 
-	$self -> helper(users => WWW::Garden::Design::Database::Users -> new);
 	$self -> initialize_defaults; # For access inside all controllers.
 	$self -> plugin('TagHelpers');
+	$self -> secrets(['757d76331dc264f21ae97b861189bd9d8aa74647']);
 
 	my($r) = $self -> routes;
 
