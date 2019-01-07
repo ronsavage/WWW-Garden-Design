@@ -594,7 +594,7 @@ sub export_features
 
 	for my $item (@file_names)
 	{
-		push @row, [{td => $$item{name} }, {td => mark_raw("<object data = '$$item{file_name}.png'></object>")}];
+		push @row, [{td => $$item{name} }, {td => mark_raw("<object data = '$$item{file_name}'></object>")}];
 	}
 
 	push @row, [@heading];
