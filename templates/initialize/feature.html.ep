@@ -59,7 +59,7 @@
 		</tr>
 		<tr>
 			<td></td>
-			<td colspan = '2'>o After clicking on a color, you <span class = 'alert'>must</span> click 'choose'.</td>
+			<td colspan = '2'>o After clicking on a color in the spectrum, you <span class = 'alert'>must</span> click 'choose'.</td>
 		</tr>
 		<tr>
 			<td>Color spectrum: </td>
@@ -149,7 +149,7 @@
 		</tr>
 		<tr>
 			<td></td>
-			<td colspan = '2'>o After clicking on a color, you <span class = 'alert'>must</span> click 'choose'.</td>
+			<td colspan = '2'>o After clicking on a color in the spectrum, you <span class = 'alert'>must</span> click 'choose'.</td>
 		</tr>
 		<tr>
 			<td>Color spectrum: </td>
