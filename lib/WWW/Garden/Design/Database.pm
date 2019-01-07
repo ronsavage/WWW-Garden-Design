@@ -1083,7 +1083,7 @@ sub process_feature
 		$result = {%$result, outcome => 'Error', raw => "Unrecognized action: $action. Must be one of 'add', 'update' or 'delete'"};
 	}
 
-	$fields =
+	my($log_fields) =
 	{
 		action		=> $action,
 		context		=> 'Feature',
@@ -1097,7 +1097,7 @@ sub process_feature
 	$log_id = $self -> db -> insert
 	(
 		$log_table_name,
-		$fields,
+		$log_fields,
 		{returning => 'id'}
 	) -> hash -> {id};
 
@@ -1152,9 +1152,9 @@ sub process_feature
 		) -> hash -> {id};
 	}
 
-	$self -> logger -> info("Outcome: $$result{outcome}. $$result{raw}");
-
 	$id = defined($$result{feature_id}) ? $$result{feature_id} : 0;
+
+	$self -> logger -> info("Outcome: $$result{outcome}. $$result{raw}. id: $id");
 
 	return
 	{

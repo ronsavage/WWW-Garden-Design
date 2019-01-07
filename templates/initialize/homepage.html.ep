@@ -1954,7 +1954,7 @@ function update_feature(action)
 
 				build_feature_menu(features_current_feature_id, 'feature_menu', packet.feature_menu);
 
-				set_feature_fields(0);
+				set_feature_fields(features_current_feature_id - 1);
 			}
 
 			user_feedback(packet.message);
