@@ -622,6 +622,8 @@ sub generate_tile
 
 	if ($$result{outcome} eq 'Success')
 	{
+		$self -> logger -> debug("Crated feature tile $feature_name");
+
 		# If the constant 'doc_root' is present and points to a directory,
 		# we copy the new file into it so the web server can see it.
 
@@ -1115,7 +1117,7 @@ sub process_feature
 			last if ($$feature{name} eq $name);
 		}
 
-		# generate_tile() returns:
+		# generate_tile() returns a hashref:
 		# o name		=> $name,
 		# o file_name	=> $feature_name,
 		# o file_url	=> $$feature{feature_url},
