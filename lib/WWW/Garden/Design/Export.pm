@@ -584,7 +584,7 @@ sub export_features
 		push @file_names, $self -> db -> generate_tile($constants, $feature);
 	}
 
-	my(@heading)	= map{ {td => $_} } (qw(Feature Icon) );
+	my(@heading)	= map{ {td => $_} } (qw(Count Feature Icon) );
 	my(@row)		= [@heading];
 	my($tx)			= Text::Xslate -> new
 	(
@@ -592,9 +592,11 @@ sub export_features
 		path		=> $$constants{template_path},
 	);
 
+	my($feature_count) = 0;
+
 	for my $item (@file_names)
 	{
-		push @row, [{td => $$item{name} }, {td => mark_raw("<object data = '$$item{file_url}'></object>")}];
+		push @row, [{td => ++$feature_count}, {td => $$item{name} }, {td => mark_raw("<object data = '$$item{file_url}'></object>")}];
 	}
 
 	push @row, [@heading];
