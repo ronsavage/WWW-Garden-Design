@@ -64,7 +64,7 @@ sub flower_details
 	$$params{success}	= false;
 
 	$app -> log -> debug("$_ => $$params{$_}") for sort keys %$params;
-	$app -> log -> debug('CSRF. session' . $controller -> session('csrf_token') . ". params: $$params{csrf_token}");
+	$app -> log -> debug('CSRF. session: ' . $controller -> session('csrf_token') . ". params: $$params{csrf_token}");
 
 	# %errors is declared at this level so various methods can store into it.
 
@@ -151,11 +151,10 @@ sub process_design_property
 sub process_flower_attributes
 {
 	my($self, $app, $defaults, $errors, $joiner, $params) = @_;
+
 	my($attribute_list)	= $$params{attribute_list};
 	my(@attributes)		= split(/$joiner/, $attribute_list);
 	my($attributes)		= {};
-
-	$app -> log -> debug('ValidateForm.process_flower_attributes(...)');
 
 	my($key);
 
@@ -168,6 +167,7 @@ sub process_flower_attributes
 	}
 
 	my($field);
+	my($result);
 	my($temp_name);
 	my($validated);
 
@@ -175,9 +175,8 @@ sub process_flower_attributes
 	{
 		# 1: Test the name of the attribute.
 
-		$temp_name = "attribute_$key";
-
-		$self -> validator -> check_member({$temp_name => $key}, $temp_name, $$defaults{attribute_type_names});
+		$temp_name	= "attribute_$key";
+		$result		= $self -> validator -> check_member({$temp_name => $key}, $temp_name, $$defaults{attribute_type_names});
 
 		# 2: If that test worked, test all values of the attribute.
 
@@ -187,9 +186,8 @@ sub process_flower_attributes
 		{
 			for $field (@{$$attributes{$key} })
 			{
-				$temp_name = "attribute_${key}_$field";
-
-				$self -> validator -> check_member({$temp_name => $field}, $temp_name, $$defaults{attribute_type_fields}{$key});
+				$temp_name	= "attribute_${key}_$field";
+				$result		= $self -> validator -> check_member({$temp_name => $field}, $temp_name, $$defaults{attribute_type_fields}{$key});
 			}
 		}
 	}

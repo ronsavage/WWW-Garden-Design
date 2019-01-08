@@ -2,6 +2,8 @@ package WWW::Garden::Design::Controller::Flower;
 
 use Mojo::Base 'Mojolicious::Controller';
 
+use Data::Dumper::Concise; # For Dumper().
+
 use Date::Simple;
 
 use Moo;
@@ -72,6 +74,8 @@ sub process
 	my($defaults)	= $self -> app -> defaults;
 	my($validator)	= WWW::Garden::Design::Util::ValidateForm -> new;
 	my($params)		= $validator -> flower_details($self, $defaults);
+
+	$self -> app -> log -> debug('Validation: ' . Dumper($params) );
 
 	if ($$params{success})
 	{
