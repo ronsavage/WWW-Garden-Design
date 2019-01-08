@@ -74,7 +74,7 @@ sub homepage
 		gardens_garden_menu				=> $$defaults{gardens_garden_menu},
 		gardens_property_menu_1			=> $$defaults{gardens_property_menu_1},
 		gardens_property_menu_2			=> $$defaults{gardens_property_menu_2},
-		joiner							=> '«»',
+		joiner							=> '«»', # See also Design.pm line 113. Used in homepage.html.ep.
 		properties_current_property_id	=> $$defaults{properties_current_property_id},
 		properties_property_menu		=> $$defaults{properties_property_menu},
 		version							=> $VERSION,

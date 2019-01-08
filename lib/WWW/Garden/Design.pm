@@ -110,7 +110,7 @@ sub initialize_defaults
 	$$defaults{attribute_elements}		= $self -> build_js_for_attributes($$defaults{attribute_type_names}, $$defaults{attribute_type_fields});
 	$$defaults{features_table}			= $$defaults{db} -> read_features_table;	# Warning: Not read_table('features').
 	$$defaults{gardens_table}			= $$defaults{db} -> read_gardens_table;	# Warning: Not read_table('gardens').
-	$$defaults{joiner}					= '«»'; # Used in homepage.html.ep.
+	$$defaults{joiner}					= '«»'; # See also Initialize.pm line 77. Used in homepage.html.ep.
 	$$defaults{properties_table}		= $$defaults{db} -> read_table('properties');
 	$$defaults{search_attribute_ids}	= $self -> build_attribute_ids('search', $$defaults{attribute_type_fields}, $$defaults{attribute_type_names});
 	$$defaults{users}					= WWW::Garden::Design::Database::Users -> new;

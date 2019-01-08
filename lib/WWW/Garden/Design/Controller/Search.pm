@@ -88,12 +88,9 @@ sub format
 		{
 			$name = $$attribute{name};
 
-			$self -> app -> log -> error($name);
-
 			if ($special_case{$name})
 			{
 				$special_value{$name} = $$attribute{range};
-				$self -> app -> log -> error("$name: $special_value{$name}");
 			}
 		}
 
