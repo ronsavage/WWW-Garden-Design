@@ -103,7 +103,7 @@ sub activity
 
 sub add_flower
 {
-	my($self) = @_;
+	my($self, $params) = @_;
 
 	return '';
 

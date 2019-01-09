@@ -75,13 +75,14 @@ sub process
 	my($validator)	= WWW::Garden::Design::Util::ValidateForm -> new;
 	my($params)		= $validator -> flower_details($self, $defaults);
 
+	$self -> app -> log -> debug("Validation result: $$params{success}");
 	$self -> app -> log -> debug('Validated params: ' . Dumper($params) );
 
-	if ($$params{success})
+	if ($$params{success} eq 'Yes')
 	{
 		$self -> app -> log -> debug('Validate: success');
 
-#		$$defaults{db} -> add_flower($params);
+		$$defaults{db} -> add_flower($params);
 
 		$self -> stash(error	=> undef);
 		$self -> stash(details	=> $self -> format_details($params) );

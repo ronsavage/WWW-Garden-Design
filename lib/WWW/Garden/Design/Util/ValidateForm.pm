@@ -4,8 +4,6 @@ use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
-use boolean;
-
 use Data::Dumper::Concise; # For Dumper().
 
 use MojoX::Validate::Util;
@@ -56,9 +54,9 @@ sub design_details
 	my($params) 		= $controller -> req -> params -> to_hash;
 	$$params{errors}	= {};
 	$$params{message}	= '';
-	$$params{success}	= false;
+	$$params{success}	= 'No';
 
-	$app -> log -> debug("$_ => $$params{$_}") for sort keys %$params;
+	$app -> log -> debug("design_details: $_ => $$params{$_}") for sort keys %$params;
 
 	# %errors is declared at this level so various methods can store into it.
 
@@ -67,7 +65,7 @@ sub design_details
 	$self -> process_design_property($app, $defaults, \%errors, $joiner, $params);
 
 ###############################
-	$$params{success}	= true; # TODO.
+	$$params{success} = 'Yes'; # TODO.
 ###############################
 
 	return $params;
@@ -84,7 +82,7 @@ sub flower_details
 	my($params) 		= $self -> clean_params($controller);
 	$$params{errors}	= {};
 	$$params{message}	= '';
-	$$params{success}	= false;
+	$$params{success}	= 'No';
 
 	$app -> log -> debug("flower_details: $_ => $$params{$_}") for sort keys %$params;
 
@@ -123,7 +121,7 @@ sub flower_details
 	if (scalar keys %errors == 0)
 	{
 		$$params{message}	= 'All fields were validated successfully';
-		$$params{success}	= true;
+		$$params{success}	= 'Yes';
 	}
 	else
 	{
