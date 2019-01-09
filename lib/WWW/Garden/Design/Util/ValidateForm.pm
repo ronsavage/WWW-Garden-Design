@@ -158,43 +158,64 @@ sub process_design_property
 sub process_flower_attributes
 {
 	my($self, $app, $defaults, $errors, $joiner, $params) = @_;
-
 	my($attribute_list)	= $$params{attribute_list};
 	my(@attributes)		= map{$self -> trim($_)} split(/$joiner/, $attribute_list);
 	my($attributes)		= {};
 
-	my($key);
+	$app -> log -> debug('ValidateForm.process_flower_attributes(...)');
+
+	my($name);
 
 	for (my($i) = 0; $i < $#attributes; $i += 2)
 	{
-		$key				= $attributes[$i] =~ s/_/ /gr;
-		$$attributes{$key}	= [] if (! $$attributes{$key});
+		$name				= $attributes[$i] =~ s/_/ /gr;
+		$$attributes{$name}	= [] if (! $$attributes{$name});
 
-		push @{$$attributes{$key} }, $attributes[$i + 1];
+		push @{$$attributes{$name} }, $attributes[$i + 1];
 	}
 
+	my($count) = 0;
+
 	my($field);
+	my($key);
 	my($result);
-	my($temp_name);
 	my($validated);
 
-	for $key (keys %$attributes)
+	for $name (keys %$attributes)
 	{
+		$count++;
+
 		# 1: Test the name of the attribute.
 
-		$temp_name	= "attribute_$key";
-		$result		= $self -> validator -> check_member({$temp_name => $key}, $temp_name, $$defaults{attribute_type_names});
+		$key	= "attribute_$name";
+		$result	= $self -> validator -> check_member({$key => $name}, $key, $$defaults{attribute_type_names});
+
+		if ($result != 1)
+		{
+			$$errors{"attribute_$count"} = ['Name', $name, 'Unknown'];
+
+			next;
+		}
 
 		# 2: If that test worked, test all values of the attribute.
 
 		$validated = $self -> validator -> validation -> output;
 
-		if (exists $$validated{$temp_name})
+		if (exists $$validated{$key})
 		{
-			for $field (@{$$attributes{$key} })
+			for $field (@{$$attributes{$name} })
 			{
-				$temp_name	= "attribute_${key}_$field";
-				$result		= $self -> validator -> check_member({$temp_name => $field}, $temp_name, $$defaults{attribute_type_fields}{$key});
+				$key	= "attribute_${name}_$field";
+				$result	= $self -> validator -> check_member({$key => $field}, $key, $$defaults{attribute_type_fields}{$name});
+
+				if ($result != 1)
+				{
+					$$errors{"attribute_$count"} = ['Value', $field, 'Unexpected'];
+				}
+				else
+				{
+					$$params{$key} = $field;
+				}
 			}
 		}
 	}
@@ -239,8 +260,8 @@ sub process_flower_images
 	my(@image_length)	= (4, 250); # (Min, Max).
 	my($image_message)	= "$image_length[0] .. $image_length[1] chars";
 
-	my($id);
-	my($image_length);
+	my($id, $image_length);
+	my($key);
 
 	for (my($i) = 0; $i < $#images; $i += 3)
 	{
@@ -272,7 +293,9 @@ sub process_flower_images
 		{
 			# We put the individual images back into %$params for display if necessary (e.g. as errors).
 
-			$$params{$images[$i]} = $images[$i + 1];
+			$key					= $images[$i];
+			$$params{"${key}_file"} = $images[$i + 1];
+			$$params{"${key}_text"} = $images[$i + 2];
 
 			$self -> validator -> check_required({$images[$i] => "$images[$i + 1]$joiner$images[$i + 2]"}, $images[$i]);
 		}

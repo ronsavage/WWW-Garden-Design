@@ -100,6 +100,32 @@ sub activity
 } # End of activity.
 
 # --------------------------------------------------
+#[2019-01-09 13:20:36.70747] [16732] [debug] Validated params: {
+#  aliases => "Cape Arid Climber",
+#  attribute_list => "Edible\x{ab}\x{bb}No\x{ab}\x{bb}Habit\x{ab}\x{bb}Vine\x{ab}\x{bb}Kind\x{ab}\x{bb}Plant\x{ab}\x{bb}Native\x{ab}\x{bb}Yes\x{ab}\x{bb}Sun_tolerance\x{ab}\x{bb}Full sun",
+#  common_name => "Kennedia beckxiana",
+#  csrf_token => "f8efd6b6728302552ad9146fc381b100edebae92",
+#  errors => {},
+#  height => "",
+#  image_1_file => "Kennedia.beckxiana.1.jpg",
+#  image_1_text => "Flower",
+#  image_2_file => "Kennedia.beckxiana.2.jpg",
+#  image_2_text => "Leaf",
+#  image_3_file => "Kennedia.beckxiana.3.jpg",
+#  image_3_text => "Buds",
+#  image_4_file => "Kennedia.beckxiana.4.jpg",
+#  image_4_text => "Buds",
+#  image_5_file => "Kennedia.beckxiana.5.jpg",
+#  image_5_text => "Flowers",
+#  image_list => "image_1\x{ab}\x{bb}Kennedia.beckxiana.1.jpg\x{ab}\x{bb}Flower\x{ab}\x{bb}image_2\x{ab}\x{bb}Kennedia.beckxiana.2.jpg\x{ab}\x{bb}Leaf\x{ab}\x{bb}image_3\x{ab}\x{bb}Kennedia.beckxiana.3.jpg\x{ab}\x{bb}Buds\x{ab}\x{bb}image_4\x{ab}\x{bb}Kennedia.beckxiana.4.jpg\x{ab}\x{bb}Buds\x{ab}\x{bb}image_5\x{ab}\x{bb}Kennedia.beckxiana.5.jpg\x{ab}\x{bb}Flowers\x{ab}\x{bb}image_6\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_7\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_8\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_9\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_10\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_11\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_12\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_13\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_14\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_15\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_16\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_17\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_18\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_19\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_20\x{ab}\x{bb}\x{ab}\x{bb}",
+#  message => "All fields were validated successfully",
+#  notes => "A evergreen, vigorous climber with large red and green pea flowers during Spring and early Summer.\nA quick-growing climber useful for growing on fences and other garden structures.\nThrives in a sunny location with well-drained soil.\nWater regularly after planting.\nTip pruning young plants will encourage dense growth.\nCultivate soil before planting.\nDig hole twice the width of the container.\nRemove plant from container and place into the hole so the soil level is the same as the surrounding ground.\nFill hole firmly and water in well even if the soil is moist.\nSuits sandy soils.\nAttracts birds.\nGood for coastal conditions.\nSupplier: <a href = 'http://www.kuranga.com.au/'>Kuranga Native Nursery</a>.",
+#  publish => "Yes",
+#  scientific_name => "Kennedia beckxiana",
+#  success => "Yes",
+#  url_list => "url_1\x{ab}\x{bb}\x{ab}\x{bb}url_2\x{ab}\x{bb}\x{ab}\x{bb}url_3\x{ab}\x{bb}\x{ab}\x{bb}url_4\x{ab}\x{bb}\x{ab}\x{bb}url_5\x{ab}\x{bb}\x{ab}\x{bb}url_6\x{ab}\x{bb}\x{ab}\x{bb}url_7\x{ab}\x{bb}\x{ab}\x{bb}url_8\x{ab}\x{bb}\x{ab}\x{bb}url_9\x{ab}\x{bb}\x{ab}\x{bb}url_10\x{ab}\x{bb}",
+#  width => "",
+#}
 
 sub add_flower
 {
