@@ -180,7 +180,7 @@ sub get_feature_by_name
 	my($constants)	= $self -> constants;
 	$key			=~ s/\'/\'\'/g; # Since we're using Pg.
 	$key			= "\U%$key"; # \U => Convert to upper-case.
-	my($sql)		= "select name from features where upper(name) like ?";
+	my($sql)		= 'select name from features where upper(name) like ?';
 	my(@result)		= $self -> db -> query($sql, $key) -> hashes -> each;
 	my($file_name)	= ($#result >= 0) ? $self -> clean_up_feature_name($result[0]{name}) : '';
 

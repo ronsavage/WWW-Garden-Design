@@ -146,6 +146,19 @@ sub add_flower
 
 	$self -> logger -> debug('Database.add_flower()');
 
+	# 1: Is this plant on file?
+	# Result:
+	# o Hashref: on file. E.g.: {id => 106, scientific_name => "Kennedia beckxiana"}.
+	# o undef => Not on file.
+
+	my($key)		= "\U$$params{scientific_name}"; # \U => Convert to upper-case.
+	my($sql)		= 'select id, scientific_name from flowers where upper(scientific_name) like ?';
+	my($result)		= $self -> db -> query($sql, $key) -> hash;
+	my($id)			= defined($result) ? $$result{id} : 0;
+
+	$self -> logger -> debug('Database.add_flower(). scientific_name: ', Dumper($result) );
+
+	# 2: Reformat attributes prior to saving.
 
 	my(%attribute_name2id);
 
@@ -154,9 +167,7 @@ sub add_flower
 		$attribute_name2id{$$item{name} } = $$item{id};
 	}
 
-	my(%attributes, %attribute_values);
-	my($id);
-	my($key);
+	my($attribute_id, %attribute_values);
 	my($value);
 
 	for my $item (keys %$params)
@@ -164,7 +175,7 @@ sub add_flower
 		next if ( ($item eq 'attribute_list') || ($item !~ /^attribute/) );
 
 		(undef, $key, $value)	= split(/_/, $item);
-		$id						= $attribute_name2id{$key};
+		$attribute_id			= $attribute_name2id{$key}; # TODO.
 		$attribute_values{$key}	= [] if (! defined $attribute_values{$key});
 
 		push @{$attribute_values{$key} }, $value;
