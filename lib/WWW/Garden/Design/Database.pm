@@ -100,36 +100,80 @@ sub activity
 } # End of activity.
 
 # --------------------------------------------------
-#[2019-01-09 13:20:36.70747] [16732] [debug] Validated params: {
-#  aliases => "Cape Arid Climber",
-#  attribute_list => "Edible\x{ab}\x{bb}No\x{ab}\x{bb}Habit\x{ab}\x{bb}Vine\x{ab}\x{bb}Kind\x{ab}\x{bb}Plant\x{ab}\x{bb}Native\x{ab}\x{bb}Yes\x{ab}\x{bb}Sun_tolerance\x{ab}\x{bb}Full sun",
-#  common_name => "Kennedia beckxiana",
+#[2019-01-09 15:23:50.50007] [21870] [debug] Validated params: {
+#  aliases => "Black Coral Pea",
+#  attribute_Edible_No => "No",
+#  attribute_Habit_Vine => "Vine",
+#  attribute_Kind_Plant => "Plant",
+#  attribute_Native_Yes => "Yes",
+#  "attribute_Sun tolerance_Full sun" => "Full sun",
+#  "attribute_Sun tolerance_Part shade" => "Part shade",
+#  "attribute_Sun tolerance_Shade" => "Shade",
+#  attribute_list => "Edible\x{ab}\x{bb}No\x{ab}\x{bb}Habit\x{ab}\x{bb}Vine\x{ab}\x{bb}Kind\x{ab}\x{bb}Plant\x{ab}\x{bb}Native\x{ab}\x{bb}Yes\x{ab}\x{bb}Sun_tolerance\x{ab}\x{bb}Full sun\x{ab}\x{bb}Sun_tolerance\x{ab}\x{bb}Part shade\x{ab}\x{bb}Sun_tolerance\x{ab}\x{bb}Shade",
+#  common_name => "Kennedia nigricans",
 #  csrf_token => "f8efd6b6728302552ad9146fc381b100edebae92",
 #  errors => {},
 #  height => "",
-#  image_1_file => "Kennedia.beckxiana.1.jpg",
-#  image_1_text => "Flower",
-#  image_2_file => "Kennedia.beckxiana.2.jpg",
-#  image_2_text => "Leaf",
-#  image_3_file => "Kennedia.beckxiana.3.jpg",
-#  image_3_text => "Buds",
-#  image_4_file => "Kennedia.beckxiana.4.jpg",
-#  image_4_text => "Buds",
-#  image_5_file => "Kennedia.beckxiana.5.jpg",
-#  image_5_text => "Flowers",
-#  image_list => "image_1\x{ab}\x{bb}Kennedia.beckxiana.1.jpg\x{ab}\x{bb}Flower\x{ab}\x{bb}image_2\x{ab}\x{bb}Kennedia.beckxiana.2.jpg\x{ab}\x{bb}Leaf\x{ab}\x{bb}image_3\x{ab}\x{bb}Kennedia.beckxiana.3.jpg\x{ab}\x{bb}Buds\x{ab}\x{bb}image_4\x{ab}\x{bb}Kennedia.beckxiana.4.jpg\x{ab}\x{bb}Buds\x{ab}\x{bb}image_5\x{ab}\x{bb}Kennedia.beckxiana.5.jpg\x{ab}\x{bb}Flowers\x{ab}\x{bb}image_6\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_7\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_8\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_9\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_10\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_11\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_12\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_13\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_14\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_15\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_16\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_17\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_18\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_19\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_20\x{ab}\x{bb}\x{ab}\x{bb}",
+#  image_1_file => "Kennedia.nigricans.1.jpg",
+#  image_1_text => "Not quite open - no yellow",
+#  image_2_file => "Kennedia.nigricans.2.jpg",
+#  image_2_text => "Just open",
+#  image_3_file => "Kennedia.nigricans.3.jpg",
+#  image_3_text => "Flowers - black and yellow!",
+#  image_4_file => "Kennedia.nigricans.4.jpg",
+#  image_4_text => "Flowers",
+#  image_5_file => "Kennedia.nigricans.5.jpg",
+#  image_5_text => "Leaf",
+#  image_6_file => "Kennedia.nigricans.6.jpg",
+#  image_6_text => "Pod",
+#  image_7_file => "Kennedia.nigricans.7.jpg",
+#  image_7_text => "Leaf, about 7 years old.<br>Length: 18 cm (7 in)",
+#  image_list => "image_1\x{ab}\x{bb}Kennedia.nigricans.1.jpg\x{ab}\x{bb}Not quite open - no yellow\x{ab}\x{bb}image_2\x{ab}\x{bb}Kennedia.nigricans.2.jpg\x{ab}\x{bb}Just open\x{ab}\x{bb}image_3\x{ab}\x{bb}Kennedia.nigricans.3.jpg\x{ab}\x{bb}Flowers - black and yellow!\x{ab}\x{bb}image_4\x{ab}\x{bb}Kennedia.nigricans.4.jpg\x{ab}\x{bb}Flowers\x{ab}\x{bb}image_5\x{ab}\x{bb}Kennedia.nigricans.5.jpg\x{ab}\x{bb}Leaf\x{ab}\x{bb}image_6\x{ab}\x{bb}Kennedia.nigricans.6.jpg\x{ab}\x{bb}Pod\x{ab}\x{bb}image_7\x{ab}\x{bb}Kennedia.nigricans.7.jpg\x{ab}\x{bb}Leaf, about 7 years old.<br>Length: 18 cm (7 in)\x{ab}\x{bb}image_8\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_9\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_10\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_11\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_12\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_13\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_14\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_15\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_16\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_17\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_18\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_19\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_20\x{ab}\x{bb}\x{ab}\x{bb}",
 #  message => "All fields were validated successfully",
-#  notes => "A evergreen, vigorous climber with large red and green pea flowers during Spring and early Summer.\nA quick-growing climber useful for growing on fences and other garden structures.\nThrives in a sunny location with well-drained soil.\nWater regularly after planting.\nTip pruning young plants will encourage dense growth.\nCultivate soil before planting.\nDig hole twice the width of the container.\nRemove plant from container and place into the hole so the soil level is the same as the surrounding ground.\nFill hole firmly and water in well even if the soil is moist.\nSuits sandy soils.\nAttracts birds.\nGood for coastal conditions.\nSupplier: <a href = 'http://www.kuranga.com.au/'>Kuranga Native Nursery</a>.",
+#  notes => "A vigorous climber with twining stems carrying striking pea-flowers from Winter to Summer.\nThe violet-purple or black flowers have a greenish-yellow blotch.\nA hardy climber suitable for screening large areas.\nNot recommended for small areas or weak supporting frames.\nUseful groundcover for embankments.\nAttracts nectar feeding birds.\nBest grown in a sunny to partly shaded position in well-drained soil.\nTolerates periods of drought, light frost and poor soils.\nPrune after flowering to maintain compact growth.\nCultivate soil before planting.\nDig hole twice the width of the container.\nRemove plant from container and place into the hole so the soil level is the same as the surrounding ground.\nFill hole firmly and water in well even if the soil is moist.\nGood for coastal conditions.\nSupplier: <a href = 'http://www.kuranga.com.au/'>Kuranga Native Nursery</a>.",
 #  publish => "Yes",
-#  scientific_name => "Kennedia beckxiana",
+#  scientific_name => "Kennedia nigricans",
 #  success => "Yes",
-#  url_list => "url_1\x{ab}\x{bb}\x{ab}\x{bb}url_2\x{ab}\x{bb}\x{ab}\x{bb}url_3\x{ab}\x{bb}\x{ab}\x{bb}url_4\x{ab}\x{bb}\x{ab}\x{bb}url_5\x{ab}\x{bb}\x{ab}\x{bb}url_6\x{ab}\x{bb}\x{ab}\x{bb}url_7\x{ab}\x{bb}\x{ab}\x{bb}url_8\x{ab}\x{bb}\x{ab}\x{bb}url_9\x{ab}\x{bb}\x{ab}\x{bb}url_10\x{ab}\x{bb}",
+#  url_1 => "https://en.wikipedia.org/wiki/Kennedia_nigricans",
+#  url_2 => "https://en.wikipedia.org/wiki/Kennedia_rubicunda",
+#  url_list => "url_1\x{ab}\x{bb}https://en.wikipedia.org/wiki/Kennedia_nigricans\x{ab}\x{bb}url_2\x{ab}\x{bb}https://en.wikipedia.org/wiki/Kennedia_rubicunda\x{ab}\x{bb}url_3\x{ab}\x{bb}\x{ab}\x{bb}url_4\x{ab}\x{bb}\x{ab}\x{bb}url_5\x{ab}\x{bb}\x{ab}\x{bb}url_6\x{ab}\x{bb}\x{ab}\x{bb}url_7\x{ab}\x{bb}\x{ab}\x{bb}url_8\x{ab}\x{bb}\x{ab}\x{bb}url_9\x{ab}\x{bb}\x{ab}\x{bb}url_10\x{ab}\x{bb}",
 #  width => "",
 #}
 
 sub add_flower
 {
-	my($self, $params) = @_;
+	my($self, $defaults, $params) = @_;
+
+	$self -> logger -> debug('Database.add_flower()');
+
+
+	my(%attribute_name2id);
+
+	for my $item (@{$$defaults{attribute_types_table} })
+	{
+		$attribute_name2id{$$item{name} } = $$item{id};
+	}
+
+	my(%attributes, %attribute_values);
+	my($id);
+	my($key);
+	my($value);
+
+	for my $item (keys %$params)
+	{
+		next if ( ($item eq 'attribute_list') || ($item !~ /^attribute/) );
+
+		(undef, $key, $value)	= split(/_/, $item);
+		$id						= $attribute_name2id{$key};
+		$attribute_values{$key}	= [] if (! defined $attribute_values{$key});
+
+		push @{$attribute_values{$key} }, $value;
+	}
+
+	for my $item (keys %attribute_values)
+	{
+		$attribute_values{$item} = join(', ', @{$attribute_values{$item} });
+	}
 
 	return '';
 

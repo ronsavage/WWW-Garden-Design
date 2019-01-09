@@ -82,7 +82,7 @@ sub process
 	{
 		$self -> app -> log -> debug('Validate: success');
 
-		$$defaults{db} -> add_flower($params);
+		$$defaults{db} -> add_flower($defaults, $params);
 
 		$self -> stash(error	=> undef);
 		$self -> stash(details	=> $self -> format_details($params) );
