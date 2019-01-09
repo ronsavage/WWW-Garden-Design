@@ -80,6 +80,7 @@ sub flower_details
 {
 	my($self, $controller, $defaults) = @_;
 	my($app)			= $controller -> app;
+	my($joiner)			= $$defaults{joiner};
 	my($params) 		= $self -> clean_params($controller);
 	$$params{errors}	= {};
 	$$params{message}	= '';
@@ -91,48 +92,43 @@ sub flower_details
 
 	my(%errors);
 
-	if ($$params{common_name} && $$params{scientific_name})
+	$self -> validator -> check_required($params, 'common_name');
+	$self -> validator -> check_required($params, 'scientific_name');
+
+	$self -> validator -> check_optional($params, 'aliases');
+	$self -> validator -> check_optional($params, 'notes');
+	$self -> validator -> check_member($params, 'publish', ['Yes', 'No']);
+
+	$self -> process_flower_attributes($app, $defaults, \%errors, $joiner, $params);
+	$self -> process_flower_dimensions($app, $defaults, \%errors, $params);
+	$self -> process_flower_images($app, $defaults, \%errors, $joiner, $params);
+	$self -> process_flower_urls($app, $defaults, \%errors, $joiner, $params);
+
+	my(@args, $args);
+	my($result);
+	my($suffix);
+	my($test);
+
+	# Warning: Inside this loop, don't use $$params{$name} because of cases like $$params{url_list},
+	# which splits into url_1, url_2, etc. Here, $name assumes these latter values, which in turn
+	# means $$params{url_list} is defined but $$params{url_1} etc are all undef!
+
+	for my $name (@{$self -> validator -> validation -> failed})
 	{
-		my($joiner) = $$defaults{joiner};
+		($test, $result, @args)	= @{$self -> validator -> validation -> error($name)};
+		$args					= ($#args >= 0) ? join(', ', @args) : '';
+		$errors{$name}			= [$$params{$name}, $test, $args];
+	}
 
-		$self -> process_flower_attributes($app, $defaults, \%errors, $joiner, $params);
-		$self -> process_flower_dimensions($app, $defaults, \%errors, $params);
-		$self -> process_flower_images($app, $defaults, \%errors, $joiner, $params);
-		$self -> validator -> check_member($params, 'publish', ['Yes', 'No']);
-		$self -> process_flower_urls($app, $defaults, \%errors, $joiner, $params);
-
-		$app -> log -> debug('Validated params: ' . Dumper($self -> validator -> validation -> output) );
-
-		my(@args, $args);
-		my($result);
-		my($suffix);
-		my($test);
-
-		# Warning: Inside this loop, don't use $$params{$name} because of cases like $$params{url_list},
-		# which splits into url_1, url_2, etc. Here, $name assumes these latter values, which in turn
-		# means $$params{url_list} is defined but $$params{url_1} etc are all undef!
-
-		for my $name (@{$self -> validator -> validation -> failed})
-		{
-			($test, $result, @args)	= @{$self -> validator -> validation -> error($name)};
-			$args					= ($#args >= 0) ? join(', ', @args) : '';
-			$errors{$name}			= [$$params{$name}, $test, $args];
-		}
-
-		if (scalar keys %errors == 0)
-		{
-			$$params{message}	= 'All fields were validated successfully';
-			$$params{success}	= true;
-		}
-		else
-		{
-			$$params{errors}	= \%errors;
-			$$params{message}	= 'These fields failed validation';
-		}
+	if (scalar keys %errors == 0)
+	{
+		$$params{message}	= 'All fields were validated successfully';
+		$$params{success}	= true;
 	}
 	else
 	{
-		$$params{message} = 'Missing common name or scientific name';
+		$$params{errors}	= \%errors;
+		$$params{message}	= 'These fields failed validation';
 	}
 
 	return $params;

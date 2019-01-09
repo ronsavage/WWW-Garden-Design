@@ -75,7 +75,7 @@ sub process
 	my($validator)	= WWW::Garden::Design::Util::ValidateForm -> new;
 	my($params)		= $validator -> flower_details($self, $defaults);
 
-	$self -> app -> log -> debug('Validation: ' . Dumper($params) );
+	$self -> app -> log -> debug('Validated params: ' . Dumper($params) );
 
 	if ($$params{success})
 	{
