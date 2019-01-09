@@ -92,7 +92,7 @@ sub process
 		$self -> app -> log -> debug('Validate: failure');
 
 		$self -> stash(error	=> $self -> format_errors($params) );
-		$self -> stash(details	=> undef);
+		$self -> stash(details	=> '');
 		$self -> stash(message	=> $$params{message});
 		$self -> app -> log -> error($$params{message});
 	}

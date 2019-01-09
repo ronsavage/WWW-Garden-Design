@@ -17,16 +17,16 @@ sub process
 	$self -> app -> log -> debug('Feature.process()');
 
 	my($defaults)	= $self -> app -> defaults;
-	my($item)		= $self -> req -> params -> to_hash;
+	my($params)		= $self -> req -> params -> to_hash;
 
-	$self -> app -> log -> debug("param($_) => $$item{$_}") for sort keys %$item;
+	$self -> app -> log -> debug("param($_) => $$params{$_}") for sort keys %$params;
 
-	if ($$item{color_chosen} && $$item{name})
+	if ($$params{color_chosen} && $$params{name})
 	{
 		# In process_feature() all success branches print the raw message plus
 		# other information to the log, so nothing is printed here.
 
-		my($packet) = $$defaults{db} -> process_feature($item);
+		my($packet) = $$defaults{db} -> process_feature($params);
 
 		$self -> stash(json => $packet);
 	}

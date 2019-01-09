@@ -934,22 +934,22 @@ sub parse_search_text
 
 sub process_feature
 {
-	my($self, $item) = @_;
+	my($self, $params) = @_;
 
 	#$self -> logger -> debug('Database.process_feature(...)');
 
-	my($action)			= $$item{action};
-	my($id)				= $$item{id};
+	my($action)			= $$params{action};
+	my($id)				= $$params{id};
 	my($log_table_name)	= 'log';
-	my($name)			= $$item{name};
+	my($name)			= $$params{name};
 	my($table_name)		= 'features';
 	my($features_table)	= $self -> read_table($table_name);
 	my($result) 		= {feature_id => 0, outcome => 'Success'};
 	my($fields)			=
 	{
-		hex_color	=> $$item{color_chosen},
+		hex_color	=> $$params{color_chosen},
 		name		=> $name,
-		publish		=> $$item{publish},
+		publish		=> $$params{publish},
 	};
 
 #	color_chosen:	color_chosen,
@@ -1008,7 +1008,7 @@ sub process_feature
 
 			for my $feature (@$feature_table)
 			{
-				if ($$feature{feature_id} == $$item{id})
+				if ($$feature{feature_id} == $$params{id})
 				{
 					$found = true;
 				}
@@ -1027,7 +1027,7 @@ sub process_feature
 				$self -> db -> delete
 				(
 					$table_name,
-					{id => $$item{id} }
+					{id => $$params{id} }
 				);
 
 				$self -> logger -> info("Table: $table_name. Record id: $id. Feature: $name. Action: $action");
@@ -1066,12 +1066,12 @@ sub process_feature
 			(
 				$table_name,
 				$fields,
-				{id => $$item{id} }
+				{id => $$params{id} }
 			);
 
 			$self -> logger -> info("Table: $table_name. Record id '$id'. Feature: $name. Action: $action");
 
-			$result = {%$result, feature_id => $$item{id}, raw => "Action: $action"};
+			$result = {%$result, feature_id => $$params{id}, raw => "Action: $action"};
 		}
 		else
 		{
@@ -1170,23 +1170,23 @@ sub process_feature
 
 sub process_garden
 {
-	my($self, $controller, $item) = @_;
+	my($self, $controller, $params) = @_;
 
 	#$self -> logger -> debug('Database.process_garden(...)');
 
-	my($action)			= $$item{action};
-	my($garden_name)	= $$item{name};
-	my($id)				= $$item{id};
-	my($property_name)	= $$item{property_name};
+	my($action)			= $$params{action};
+	my($garden_name)	= $$params{name};
+	my($id)				= $$params{id};
+	my($property_name)	= $$params{property_name};
 	my($result) 		= {garden_id => 0, outcome => 'Success'};
 	my($table_name)		= 'gardens';
 	my($gardens_table)	= $self -> read_table($table_name);
 	my($fields)			=
 	{
-		description	=> $$item{description},
+		description	=> $$params{description},
 		name		=> $garden_name,
-		property_id	=> $$item{property_id},
-		publish		=> $$item{publish},
+		property_id	=> $$params{property_id},
+		publish		=> $$params{publish},
 	};
 
 	my(%garden);
@@ -1198,7 +1198,7 @@ sub process_garden
 
 		for (@$gardens_table)
 		{
-			$garden{uc $$_{name} } = $$_{id} if ($$_{property_id} == $$item{property_id});
+			$garden{uc $$_{name} } = $$_{id} if ($$_{property_id} == $$params{property_id});
 		}
 
 		if (exists($garden{uc $garden_name}) )
@@ -1233,7 +1233,7 @@ sub process_garden
 			$self -> db -> delete
 			(
 				$table_name,
-				{id => $$item{id} }
+				{id => $$params{id} }
 			);
 
 			my($message) = "Action: $action";
@@ -1264,12 +1264,12 @@ sub process_garden
 			(
 				$table_name,
 				$fields,
-				{id => $$item{id} }
+				{id => $$params{id} }
 			);
 
 			$self -> logger -> info("Table: $table_name. Record id: $id. Property: $property_name. Garden: $garden_name. Action: $action");
 
-			$result = {%$result, garden_id => $$item{id}, raw => "Action: $action"};
+			$result = {%$result, garden_id => $$params{id}, raw => "Action: $action"};
 		}
 		else
 		{
@@ -1289,7 +1289,7 @@ sub process_garden
 	{
 		gardens_table	=> $gardens_table,
 		message			=> $self -> format_raw_message($result),
-		property_menu	=> $self -> build_gardens_property_menu($controller, $gardens_table, 'gardens_property_menu_1', $$item{property_id}),
+		property_menu	=> $self -> build_gardens_property_menu($controller, $gardens_table, 'gardens_property_menu_1', $$params{property_id}),
 	};
 
 } # End of process_garden.
@@ -1298,21 +1298,21 @@ sub process_garden
 
 sub process_property
 {
-	my($self, $item) = @_;
+	my($self, $params) = @_;
 
 	#$self -> logger -> debug('Database.process_property(...)');
 
-	my($action)				= $$item{action};
-	my($id)					= $$item{id};
-	my($property_name)		= $$item{name};
+	my($action)				= $$params{action};
+	my($id)					= $$params{id};
+	my($property_name)		= $$params{name};
 	my($table_name)			= 'properties';
 	my($properties_table)	= $self -> read_table($table_name);
 	my($result) 			= {property_id => 0, outcome => 'Success'};
 	my($fields)				=
 	{
-		description	=> $$item{description},
+		description	=> $$params{description},
 		name		=> $property_name,
-		publish		=> $$item{publish},
+		publish		=> $$params{publish},
 	};
 
 	my(%property);
@@ -1363,7 +1363,7 @@ sub process_property
 
 			for my $garden (@$garden_table)
 			{
-				if ($$garden{property_id} == $$item{id})
+				if ($$garden{property_id} == $$params{id})
 				{
 					$found = true;
 				}
@@ -1382,7 +1382,7 @@ sub process_property
 				$self -> db -> delete
 				(
 					$table_name,
-					{id => $$item{id} }
+					{id => $$params{id} }
 				);
 
 				$self -> logger -> info("Table: $table_name. Record id: $id. Property: $property_name. Action: $action");
@@ -1412,12 +1412,12 @@ sub process_property
 			(
 				$table_name,
 				$fields,
-				{id => $$item{id} }
+				{id => $$params{id} }
 			);
 
 			$self -> logger -> info("Table: $table_name. Record id '$id'. Property: $property_name. Action: $action");
 
-			$result = {%$result, property_id => $$item{id}, raw => "Action: $action"};
+			$result = {%$result, property_id => $$params{id}, raw => "Action: $action"};
 		}
 		else
 		{

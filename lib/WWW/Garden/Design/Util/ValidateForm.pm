@@ -26,6 +26,28 @@ our $VERSION = '0.96';
 
 # -----------------------------------------------
 
+sub clean_params
+{
+	my($self, $controller) = @_;
+	my($params)	= $controller -> req -> params -> to_hash;
+	my($hash)	= {};
+
+	my($key);
+	my($value);
+
+	for my $name (keys %$params)
+	{
+		$key			= $self -> trim($name);
+		$value			= $self -> trim($$params{$name});
+		$$hash{$key}	= $value;
+	}
+
+	return $hash;
+
+} # End of clean_params.
+
+# -----------------------------------------------
+
 sub design_details
 {
 	my($self, $controller, $defaults) = @_;
@@ -58,13 +80,12 @@ sub flower_details
 {
 	my($self, $controller, $defaults) = @_;
 	my($app)			= $controller -> app;
-	my($params) 		= $controller -> req -> params -> to_hash;
+	my($params) 		= $self -> clean_params($controller);
 	$$params{errors}	= {};
 	$$params{message}	= '';
 	$$params{success}	= false;
 
-	$app -> log -> debug("$_ => $$params{$_}") for sort keys %$params;
-	$app -> log -> debug('CSRF. session: ' . $controller -> session('csrf_token') . ". params: $$params{csrf_token}");
+	$app -> log -> debug("flower_details: $_ => $$params{$_}") for sort keys %$params;
 
 	# %errors is declared at this level so various methods can store into it.
 
@@ -72,8 +93,7 @@ sub flower_details
 
 	if ($$params{common_name} && $$params{scientific_name})
 	{
-		my($csrf_ok)	= $controller -> session('csrf_token') eq $$params{csrf_token} ? 1 : 0;
-		my($joiner)		= $$defaults{joiner};
+		my($joiner) = $$defaults{joiner};
 
 		$self -> process_flower_attributes($app, $defaults, \%errors, $joiner, $params);
 		$self -> process_flower_dimensions($app, $defaults, \%errors, $params);
@@ -81,40 +101,33 @@ sub flower_details
 		$self -> validator -> check_member($params, 'publish', ['Yes', 'No']);
 		$self -> process_flower_urls($app, $defaults, \%errors, $joiner, $params);
 
-		if ($csrf_ok == 1)
+		$app -> log -> debug('Validated params: ' . Dumper($self -> validator -> validation -> output) );
+
+		my(@args, $args);
+		my($result);
+		my($suffix);
+		my($test);
+
+		# Warning: Inside this loop, don't use $$params{$name} because of cases like $$params{url_list},
+		# which splits into url_1, url_2, etc. Here, $name assumes these latter values, which in turn
+		# means $$params{url_list} is defined but $$params{url_1} etc are all undef!
+
+		for my $name (@{$self -> validator -> validation -> failed})
 		{
-			$app -> log -> debug('Validated params: ' . Dumper($self -> validator -> validation -> output) );
+			($test, $result, @args)	= @{$self -> validator -> validation -> error($name)};
+			$args					= ($#args >= 0) ? join(', ', @args) : '';
+			$errors{$name}			= [$$params{$name}, $test, $args];
+		}
 
-			my(@args, $args);
-			my($result);
-			my($suffix);
-			my($test);
-
-			# Warning: Inside this loop, don't use $$params{$name} because of cases like $$params{url_list},
-			# which splits into url_1, url_2, etc. Here, $name assumes these latter values, which in turn
-			# means $$params{url_list} is defined but $$params{url_1} etc are all undef!
-
-			for my $name (@{$self -> validator -> validation -> failed})
-			{
-				($test, $result, @args)	= @{$self -> validator -> validation -> error($name)};
-				$args					= ($#args >= 0) ? join(', ', @args) : '';
-				$errors{$name}			= [$$params{$name}, $test, $args];
-			}
-
-			if (scalar keys %errors == 0)
-			{
-				$$params{message}	= 'All fields were validated successfully';
-				$$params{success}	= true;
-			}
-			else
-			{
-				$$params{errors}	= \%errors;
-				$$params{message}	= 'These fields failed validation';
-			}
+		if (scalar keys %errors == 0)
+		{
+			$$params{message}	= 'All fields were validated successfully';
+			$$params{success}	= true;
 		}
 		else
 		{
-			$$params{message} = 'Detected apparent CSRF activity';
+			$$params{errors}	= \%errors;
+			$$params{message}	= 'These fields failed validation';
 		}
 	}
 	else
@@ -153,7 +166,7 @@ sub process_flower_attributes
 	my($self, $app, $defaults, $errors, $joiner, $params) = @_;
 
 	my($attribute_list)	= $$params{attribute_list};
-	my(@attributes)		= split(/$joiner/, $attribute_list);
+	my(@attributes)		= map{$self -> trim($_)} split(/$joiner/, $attribute_list);
 	my($attributes)		= {};
 
 	my($key);
@@ -199,7 +212,7 @@ sub process_flower_attributes
 sub process_flower_dimensions
 {
 	my($self, $app, $defaults, $errors, $params) = @_;
-	my($height)	= $$params{height};
+	my($height)	= $$params{height}; # Already trimmed.
 	my($width)	= $$params{width};
 
 	$app -> log -> debug("ValidateForm.process_flower_dimensions(height: $height, width: $width)");
@@ -214,7 +227,7 @@ sub process_flower_images
 {
 	my($self, $app, $defaults, $errors, $joiner, $params) = @_;
 	my($image_list)	= $$params{image_list};
-	my(@images)		= map{defined($_) ? $_ : ''} split(/$joiner/, $image_list);
+	my(@images)		= map{defined($_) ? $self -> trim($_) : ''} split(/$joiner/, $image_list);
 
 	$app -> log -> debug('ValidateForm.process_flower_images(...)');
 
@@ -283,7 +296,7 @@ sub process_flower_urls
 {
 	my($self, $app, $defaults, $errors, $joiner, $params) = @_;
 	my($url_list)	= $$params{url_list};
-	my(@urls)		= map{defined($_) ? $_ : ''} split(/$joiner/, $url_list);
+	my(@urls)		= map{defined($_) ? $self -> trim($_) : ''} split(/$joiner/, $url_list);
 
 	$app -> log -> debug('ValidateForm.process_flower_urls(...)');
 
@@ -344,6 +357,21 @@ sub process_flower_urls
 	}
 
 } # End of process_flower_urls.
+
+# -----------------------------------------------
+# This sub is duplicated from Database.pm because to call the orginal
+# in each place it's used herein involves just too much complexity.
+
+sub trim
+{
+	my($self, $value) = @_;
+	$value	=~ s/^\s+//;
+	$value	=~ s/\s+$//;
+	$value	=~ s/\s{2,}/ /g;
+
+	return $value;
+
+} # End of trim.
 
 # -----------------------------------------------
 
