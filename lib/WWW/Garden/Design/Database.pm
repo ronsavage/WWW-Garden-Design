@@ -20,6 +20,8 @@ use Lingua::EN::Inflect qw/inflect PL_N/; # PL_N: plural of a singular noun.
 
 use Text::CSV::Encoded;
 
+use Text::Fuzzy;
+
 use Time::HiRes qw/gettimeofday tv_interval/;
 
 use Try::Tiny;
@@ -617,19 +619,25 @@ sub crosscheck
 
 sub find_similarities
 {
-	my($self, $similarities_name) = @_;
-	my($key)	= "%\U$similarities_name%"; # \U => Convert to upper-case.
-	my($sql)	= 'select id, scientific_name, common_name from flowers where upper(scientific_name) like ?';
+	my($self, $target)	= @_;
+	my($flower_table)	= $self -> read_table('flowers');
+	my($matcher)		= Text::Fuzzy -> new($target, max => 3, no_exact => 1, transpositions_ok => 1);
 
-	$self -> logger -> debug("Found similarities. key: $key. sql: $sql");
+	my(%common_name);
+	my($scientific_name, @scientific_name);
 
-#	return [$self -> db -> query($sql, $key) -> hashes -> each];
+	for my $flower (@$flower_table)
+	{
+		$scientific_name							= $$flower{scientific_name};
+		$common_name{$$flower{scientific_name} }	= $$flower{common_name};
 
-	my($result) = [$self -> db -> query($sql, $key) -> hashes -> each];
+		push @scientific_name, $scientific_name;
+	}
 
-	$self -> logger -> debug('Found similarities: ' . Dumper($result) );
+	my(@matches)	= $matcher -> nearestv(\@scientific_name);
+	my(@result)		= map{ {common_name => $common_name{$_}, scientific_name => $_} } @matches;
 
-	return $result;
+	return [@result];
 
 } # End of find_similarities.
 

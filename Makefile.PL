@@ -67,6 +67,7 @@ my(%params) =
 		'SVG::Grid'					=> 1.05,
 		'Text::CSV'					=> 1.33,
 		'Text::CSV::Encoded'		=> 0.22,
+		'Text::Fuzzy'				=> 0.28,
 		'Text::Xslate'				=> 1.0007,
 		'Time::HiRes'				=> 1.9741,
 		'Try::Tiny'					=> 0.30,

@@ -178,6 +178,8 @@ sub pig_latin
 } # End of pig_latin.
 
 # -----------------------------------------------
+# This code could compare each scientific name with all others,
+# but I decided to retain the decision of allowing the user to choose.
 
 sub similarities
 {
@@ -185,10 +187,10 @@ sub similarities
 
 	$self -> app -> log -> debug('Report.similarities()');
 
-	my($defaults)			= $self -> app -> defaults;
-	my($db)					= $$defaults{db};
-	my($similarities_name)	= $db -> trim($self -> param('similarities_name') || '');
-	my($similarities)		= $db -> find_similarities($similarities_name);
+	my($defaults)		= $self -> app -> defaults;
+	my($db)				= $$defaults{db};
+	my($target)			= $db -> trim($self -> param('similarities_name') || '');
+	my($similarities)		= $db -> find_similarities($target);
 
 	$self -> stash(result_html => $self -> format_similarities($similarities) );
 	$self -> render;

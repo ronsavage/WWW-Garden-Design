@@ -5,7 +5,7 @@
 			<td align = 'center' colspan = '2'><h3 class = 'blue_centered'>Similarities in Scientific Names</h3></td>
 		</tr>
 		<tr>
-			<td align = 'center' colspan = '2'>Display plants with scientific names which are oddly similar</td>
+			<td align = 'center' colspan = '2'>Display scientific names which are very similar</td>
 		</tr>
 		<tr>
 			<td align = 'center' colspan = '2'><br></td>
