@@ -615,11 +615,30 @@ sub crosscheck
 
 # --------------------------------------------------
 
+sub find_similarities
+{
+	my($self, $similarities_name) = @_;
+	my($key)	= "%\U$similarities_name%"; # \U => Convert to upper-case.
+	my($sql)	= 'select id, scientific_name, common_name from flowers where upper(scientific_name) like ?';
+
+	$self -> logger -> debug("Found similarities. key: $key. sql: $sql");
+
+#	return [$self -> db -> query($sql, $key) -> hashes -> each];
+
+	my($result) = [$self -> db -> query($sql, $key) -> hashes -> each];
+
+	$self -> logger -> debug('Found similarities: ' . Dumper($result) );
+
+	return $result;
+
+} # End of find_similarities.
+
+# --------------------------------------------------
+
 sub find_unique_items
 {
-	my($self, $sql) = @_;
-
-	my(@list) = map{$$_[0]} $self -> db -> query($sql) -> arrays -> each;
+	my($self, $sql)	= @_;
+	my(@list)		= map{$$_[0]} $self -> db -> query($sql) -> arrays -> each;
 
 	my(@result);
 	my(%seen);

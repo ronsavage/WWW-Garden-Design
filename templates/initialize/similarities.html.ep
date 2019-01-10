@@ -1,0 +1,26 @@
+<form name = 'similarities_form_1' id = 'similarities_form_1'>
+	%= csrf_field
+	<table align = 'center' class = 'bordered table_stripes' width = '50%'>
+		<tr>
+			<td align = 'center' colspan = '2'><h3 class = 'blue_centered'>Similarities in Scientific Names</h3></td>
+		</tr>
+		<tr>
+			<td align = 'center' colspan = '2'>Display plants with scientific names which are oddly similar</td>
+		</tr>
+		<tr>
+			<td align = 'center' colspan = '2'><br></td>
+		</tr>
+		<tr>
+			<td>Scientific&nbsp;name: </td>
+			<td><input id = 'similarities_name' type = 'text' size = '50' maxlength = '100'></td>
+		</tr>
+		<tr>
+			<td colspan = '2'><br></td>
+		</tr>
+		<tr>
+			<td align = 'center' colspan = '2'><input type = 'submit' value = 'Report'/></td>
+		</tr>
+	</table>
+</form>
+
+<div id = 'similarities_result_div'></div>

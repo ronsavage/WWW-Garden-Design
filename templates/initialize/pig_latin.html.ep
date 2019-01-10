@@ -15,7 +15,7 @@
 		</tr>
 		<tr>
 			<td>Scientific&nbsp;name: </td>
-			<td><input id = 'scientific_name' type = 'text' size = '50' maxlength = '100'></td>
+			<td><input id = 'pig_latin_name' type = 'text' size = '50' maxlength = '100'></td>
 		</tr>
 		<tr>
 			<td colspan = '2'><br></td>

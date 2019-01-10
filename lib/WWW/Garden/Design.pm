@@ -207,6 +207,7 @@ sub startup
 	$r -> route('/Report/crosscheck')			-> to('Report#crosscheck');
 	$r -> route('/Report/missing_attributes')	-> to('Report#missing_attributes');
 	$r -> route('/Report/pig_latin')			-> to('Report#pig_latin');
+	$r -> route('/Report/similarities')			-> to('Report#similarities');
 	$r -> route('/Search')						-> to('Search#display');
 
 } # End of startup.

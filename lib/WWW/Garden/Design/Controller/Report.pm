@@ -2,6 +2,8 @@ package WWW::Garden::Design::Controller::Report;
 
 use Mojo::Base 'Mojolicious::Controller';
 
+use Data::Dumper::Concise; # For Dumper().
+
 use Date::Simple;
 
 use Moo;
@@ -119,6 +121,30 @@ EOS
 
 # -----------------------------------------------
 
+sub format_similarities
+{
+	my($self, $items) = @_;
+
+	$self -> app -> log -> debug('Report.format_similarities(...)');
+
+	my($html) = '';
+
+	for my $item (@$items)
+	{
+		$html .= <<EOS;
+<tr>
+	<td>$$item{scientific_name}</td>
+	<td>$$item{common_name}</td>
+</tr>
+EOS
+	}
+
+	return $html;
+
+} # End of format_similarities.
+
+# -----------------------------------------------
+
 sub missing_attributes
 {
 	my($self) = @_;
@@ -141,15 +167,33 @@ sub pig_latin
 
 	$self -> app -> log -> debug('Report.pig_latin()');
 
-	my($defaults)			= $self -> app -> defaults;
-	my($db)					= $$defaults{db};
-	my($scientific_name)	= $db -> trim($self -> param('scientific_name') );
-	my($pig_latin)			= $db -> convert2pig_latin($scientific_name);
+	my($defaults)		= $self -> app -> defaults;
+	my($db)				= $$defaults{db};
+	my($pig_latin_name)	= $db -> trim($self -> param('pig_latin_name') );
+	my($pig_latin)		= $db -> convert2pig_latin($pig_latin_name);
 
 	$self -> stash(result => $pig_latin);
 	$self -> render;
 
 } # End of pig_latin.
+
+# -----------------------------------------------
+
+sub similarities
+{
+	my($self) = @_;
+
+	$self -> app -> log -> debug('Report.similarities()');
+
+	my($defaults)			= $self -> app -> defaults;
+	my($db)					= $$defaults{db};
+	my($similarities_name)	= $db -> trim($self -> param('similarities_name') || '');
+	my($similarities)		= $db -> find_similarities($similarities_name);
+
+	$self -> stash(result_html => $self -> format_similarities($similarities) );
+	$self -> render;
+
+} # End of similarities.
 
 # -----------------------------------------------
 

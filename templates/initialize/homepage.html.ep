@@ -90,6 +90,7 @@
 		        <li><a href = '#crosscheck_tab'><span>Crosscheck</span></a></li>
 		        <li><a href = '#missing_attributes_tab'><span>Missing Attributes</span></a></li>
 		        <li><a href = '#pig_latin_tab'><span>Pig Latin</span></a></li>
+		        <li><a href = '#similarities_tab'><span>Similarities</span></a></li>
 		    </ul>
 		    <div id = 'activity_tab'>
 %= include 'initialize/activity'
@@ -102,6 +103,9 @@
 			</div>
 		    <div id = 'pig_latin_tab'>
 %= include 'initialize/pig_latin'
+			</div>
+		    <div id = 'similarities_tab'>
+%= include 'initialize/similarities'
 			</div>
 		</div>
 	</div>
@@ -1238,15 +1242,15 @@ function missing_attributes()
 
 function pig_latin()
 {
-	scientific_name = $('#scientific_name').val();
+	pig_latin_name = $('#pig_latin_name').val();
 
-	if (scientific_name.length > 0)
+	if (pig_latin_name.length > 0)
 	{
 		$.ajax
 		({
 			data:
 			{
-				scientific_name: scientific_name
+				pig_latin_name: pig_latin_name
 			},
 			dataType:	'text',
 			method:		'POST',
@@ -1846,6 +1850,34 @@ function set_virtual_parameters()
 	});
 
 } // End of set_virtual_parameters.
+
+// -----------------------------------------------
+
+function similarities()
+{
+	similarities_name = $('#similarities_name').val();
+
+	if (similarities_name.length > 0)
+	{
+		$.ajax
+		({
+			data:
+			{
+				similarities_name: similarities_name
+			},
+			dataType:	'text',
+			method:		'POST',
+			url:		'/Report/similarities', // See routes at end of WWW::Garden::Design.startup().
+		})
+		.done(function(result)
+		{
+			$('#similarities_result_div')
+			.empty()
+			.append(result);
+		});
+	}
+
+} // End of similarities.
 
 // -----------------------------------------------
 
@@ -2501,8 +2533,16 @@ $(function()
 		return false;
 	});
 
-	$('#scientific_name')
+	$('#scientific_name') // See templates/initialize/pig_latin.html.ep.
 	.focus();
+
+	$('#similarities_form_1')
+	.submit(function()
+	{
+		 similarities();
+
+		return false;
+	});
 
 	// ========
 	// Searches

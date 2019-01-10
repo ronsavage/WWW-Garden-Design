@@ -1,0 +1,29 @@
+<br>
+% if ($result_html) {
+	<table align = 'center' class = 'datatable' id = 'activity_result_table'>
+		<thead>
+			<tr>
+				<th>Scientific name</th>
+				<th>Common name</th>
+			</tr>
+		</thead>
+		<tbody>
+		%== $result_html
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>Scientific name</th>
+				<th>Common name</th>
+			</tr>
+		</tfoot>
+	</table>
+
+% } else {
+
+	<table align = 'center' class = 'bordered'>
+		<tr>
+			<td>No matches found</td>
+		</tr>
+	</table>
+
+%}
