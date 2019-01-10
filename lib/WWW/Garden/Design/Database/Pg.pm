@@ -14,6 +14,16 @@ use Imager;
 
 use Mojo::Pg;
 
+use Types::Standard qw/Any/;
+
+has mojo_pg =>
+(
+	default		=> sub{''},
+	is			=> 'rw',
+	isa			=> Any,
+	required	=> 0,
+);
+
 our $VERSION = '0.96';
 
 # -----------------------------------------------
@@ -23,7 +33,8 @@ sub BUILD
 	my($self)	= @_;
 	my($config)	= $self -> config;
 
-	$self -> db(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
+	$self -> mojo_pg(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") );
+	$self -> db($self -> mojo_pg -> db);
 	$self -> init_title_font($config); # Uses db()!
 
 } # End of BUILD;
