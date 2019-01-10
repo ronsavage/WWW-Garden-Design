@@ -16,7 +16,7 @@ use Mojo::Pg;
 
 use Types::Standard qw/Any/;
 
-has mojo_pg =>
+has pg =>
 (
 	default		=> sub{''},
 	is			=> 'rw',
@@ -33,8 +33,7 @@ sub BUILD
 	my($self)	= @_;
 	my($config)	= $self -> config;
 
-	$self -> mojo_pg(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") );
-	$self -> db($self -> mojo_pg -> db);
+	$self -> pg(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") );
 	$self -> init_title_font($config); # Uses db()!
 
 } # End of BUILD;
@@ -182,6 +181,14 @@ sub autocomplete_list
 	return [sort @result];
 
 } # End of autocomplete_list.
+
+# --------------------------------------------------
+
+sub db
+{
+	return shift -> pg -> db;
+
+} # End of db.
 
 # --------------------------------------------------
 

@@ -46,13 +46,6 @@ has constants =>
 	required	=> 0,
 );
 
-has db =>
-(
-	is			=> 'rw',
-	isa			=> Any,
-	required	=> 0,
-);
-
 has logger =>
 (
 	is			=> 'rw',
