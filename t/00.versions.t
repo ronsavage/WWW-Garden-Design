@@ -43,6 +43,7 @@ use strict;
 use SVG::Grid;
 use Text::CSV;
 use Text::CSV::Encoded;
+use Text::Fuzzy;
 use Text::Xslate;
 use Time::HiRes;
 use Try::Tiny;
@@ -92,6 +93,7 @@ my(@modules) = qw
 	SVG::Grid
 	Text::CSV
 	Text::CSV::Encoded
+	Text::Fuzzy
 	Text::Xslate
 	Time::HiRes
 	Try::Tiny
