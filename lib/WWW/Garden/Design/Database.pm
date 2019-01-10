@@ -181,9 +181,12 @@ sub add_flower
 		push @{$attribute_values{$key} }, $value;
 	}
 
-	for my $item (keys %attribute_values)
+	# $key takes values like 'Edible', 'Native'.
+	# $attribute_values{$key} takes values like 'Yes', 'Full sun, Part shade'.
+
+	for $key (keys %attribute_values)
 	{
-		$attribute_values{$item} = join(', ', @{$attribute_values{$item} });
+		$attribute_values{$key} = join(', ', @{$attribute_values{$key} });
 	}
 
 	return '';
