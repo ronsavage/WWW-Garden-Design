@@ -532,11 +532,16 @@ sub populate_flowers_table
 	}
 
 	my($pig_latin);
+	my(%seen);
 
 	for my $item (@$lines)
 	{
+		$scientific_name = $$item{scientific_name};
+
+		next if ($seen{$scientific_name});
+
+		$seen{$scientific_name}			= 1;
 		$common_name					= $$item{common_name};
-		$scientific_name				= $$item{scientific_name};
 		$pig_latin						= $self -> db -> scientific_name2pig_latin($lines, $scientific_name, $common_name);
 		($max_height, $min_height)		= $self -> validate_size($table_name, $count, lc $self -> db -> trim($$item{height}), lc $self -> db -> trim($$item{height}) );
 		($max_width, $min_width)		= $self -> validate_size($table_name, $count, lc $self -> db -> trim($$item{width}), lc $self -> db -> trim($$item{width}) );
