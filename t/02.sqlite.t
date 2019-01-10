@@ -46,7 +46,7 @@ my(%expected)	=
 	images				=>  549,
 	notes				=>  129,
 	properties			=>    2,
-	urls				=>  216,
+	urls				=>  219,
 );
 
 my($result);
