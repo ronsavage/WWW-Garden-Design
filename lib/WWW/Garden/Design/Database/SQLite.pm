@@ -16,7 +16,14 @@ use DBIx::Simple;
 
 use Imager;
 
-use Types::Standard qw/Object/;
+use Types::Standard qw/Any Object/;
+
+has db =>
+(
+	is			=> 'rw',
+	isa			=> Any,
+	required	=> 0,
+);
 
 has dbh =>
 (

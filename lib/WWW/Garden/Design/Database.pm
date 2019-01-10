@@ -182,6 +182,27 @@ sub add_flower
 		$attribute_values{$key} = join(', ', @{$attribute_values{$key} });
 	}
 
+	# 3: Reformat images prior to saving.
+	# Warning: The sort is necessary to force image_1_file to appear before image_1_text.
+
+	my(@images);
+
+	for my $item (sort keys %$params)
+	{
+		next if ( ($item eq 'image_list') || ($item !~ /^image/) );
+
+		(undef, $key, $value) = split(/_/, $item);
+
+		if ($value eq 'file')
+		{
+			push @images, [$key, $$params{$item}, 'Placeholder'];
+		}
+		else
+		{
+			$images[$#images][2] = $$params{$item};
+		}
+	}
+
 	return '';
 
 } # End of add_flower.
