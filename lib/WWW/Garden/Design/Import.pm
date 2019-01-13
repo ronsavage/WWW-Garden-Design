@@ -111,7 +111,7 @@ sub populate_attributes_table
 			$self -> db -> logger -> error("$table_name. Row: $count. Scientific name '$$item{scientific_name}' undefined");
 		}
 
-		$self -> db -> insert_hashref
+		$self -> db -> insert
 		(
 			$table_name,
 			{
@@ -156,7 +156,7 @@ sub populate_attribute_types_table
 			}
 		}
 
-		$$attribute_type_keys{$$item{name} } = $self -> db -> insert_hashref
+		$$attribute_type_keys{$$item{name} } = $self -> db -> insert
 		(
 			$table_name,
 			{
@@ -200,7 +200,7 @@ sub populate_constants_table
 			}
 		}
 
-		$self -> db -> insert_hashref
+		$self -> db -> insert
 		(
 			$table_name,
 			{
@@ -291,7 +291,7 @@ sub populate_feature_locations_table
 				type			=> 'Feature', # 'Flower' is checked above.
 			};
 
-			$self -> db -> insert_hashref
+			$self -> db -> insert
 			(
 				$table_name,
 				{
@@ -340,7 +340,7 @@ sub populate_features_table
 			}
 		}
 
-		$$feature_keys{$$item{name} } = $self -> db -> insert_hashref
+		$$feature_keys{$$item{name} } = $self -> db -> insert
 		(
 			$table_name,
 			{
@@ -454,7 +454,7 @@ sub populate_flower_locations_table
 				type			=> 'Flower', # Or 'Feature'. These are checked later.
 			};
 
-			$self -> db -> insert_hashref
+			$self -> db -> insert
 			(
 				$table_name,
 				{
@@ -545,7 +545,7 @@ sub populate_flowers_table
 		$pig_latin						= $self -> db -> scientific_name2pig_latin($lines, $scientific_name, $common_name);
 		($max_height, $min_height)		= $self -> validate_size($table_name, $count, lc $self -> db -> trim($$item{height}), lc $self -> db -> trim($$item{height}) );
 		($max_width, $min_width)		= $self -> validate_size($table_name, $count, lc $self -> db -> trim($$item{width}), lc $self -> db -> trim($$item{width}) );
-		$$flower_keys{$scientific_name}	= $self -> db -> insert_hashref
+		$$flower_keys{$scientific_name}	= $self -> db -> insert
 		(
 			$table_name,
 			{
@@ -604,7 +604,7 @@ sub populate_gardens_table
 			}
 		}
 
-		$$garden_keys{$$item{garden_name} } = $self -> db -> insert_hashref
+		$$garden_keys{$$item{garden_name} } = $self -> db -> insert
 		(
 			$table_name,
 			{
@@ -657,7 +657,7 @@ sub populate_images_table
 			next;
 		}
 
-		$self -> db -> insert_hashref
+		$self -> db -> insert
 		(
 			$table_name,
 			{
@@ -715,7 +715,7 @@ sub populate_notes_table
 			next; # Note: Does not execute the last line in the loop!
 		}
 
-		$self -> db -> insert_hashref
+		$self -> db -> insert
 		(
 			$table_name,
 			{
@@ -764,7 +764,7 @@ sub populate_properties_table
 			}
 		}
 
-		$$property_keys{$$item{name} } = $self -> db -> insert_hashref
+		$$property_keys{$$item{name} } = $self -> db -> insert
 		(
 			$table_name,
 			{
@@ -816,7 +816,7 @@ sub populate_urls_table
 			next;
 		}
 
-		$self -> db -> insert_hashref
+		$self -> db -> insert
 		(
 			$table_name,
 			{

@@ -205,12 +205,73 @@ sub add_flower
 		}
 	}
 
-	# 4: Tables used:
+	# 4: Reformat urls prior to saving.
+
+	my(@urls);
+
+	for my $item (sort keys %$params)
+	{
+		next if ( ($item eq 'url_list') || ($item !~ /^url/) );
+
+		(undef, $key) = split(/_/, $item);
+
+		push @urls, $key;
+	}
+
+	# 5: Tables used:
 	# o attributes.
 	# o flowers.
 	# o images.
 	# o notes.
 	# o urls.
+
+	$self -> logger -> info('attributes: ' . Dumper(\%attribute_values) );
+	$self -> logger -> info('flowers: ' . Dumper($$params{flowers}) );
+	$self -> logger -> info('images: ' . Dumper(\@images) );
+	$self -> logger -> info('notes: ' . Dumper($$params{notes}) );
+	$self -> logger -> info('urls: ' . Dumper(\@urls) );
+
+	if ($flower_id)
+	{
+		$self -> logger -> info("Updating flower. id: $flower_id");
+
+		# It's an update.
+
+		eval
+		{
+			my($db)				= $self -> db;
+			my($transaction)	= $db -> begin;
+
+#			$self -> update('attributes', {}, {id => $flower_id});
+#			$self -> update('flowers', {}, {id => $flower_id});
+#			$self -> update('images', {}, {id => $flower_id});
+#			$self -> update('notes', {}, {id => $flower_id});
+#			$self -> update('urls', {}, {id => $flower_id});
+
+			$transaction -> commit;
+		};
+	}
+	else
+	{
+		$self -> logger -> info('Adding flower.');
+
+		# It's an add.
+
+		eval
+		{
+			my($db)				= $self -> db;
+			my($transaction)	= $db -> begin;
+#			$flower_id			= $self -> insert('flowers', {});
+#			$self -> insert('attributes', {});
+#			$self -> insert('images', {});
+#			$self -> insert('notes', {});
+#			$self -> insert('urls', {});
+
+			$transaction -> commit;
+		};
+	}
+
+	$self -> logger -> info('Insert/Update flower');
 
 	return '';
 

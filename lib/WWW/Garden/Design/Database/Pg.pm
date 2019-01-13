@@ -225,7 +225,7 @@ sub get_flower_by_both_names
 
 # -----------------------------------------------
 
-sub insert_hashref
+sub insert
 {
 	my($self, $table_name, $hashref) = @_;
 
@@ -234,7 +234,7 @@ sub insert_hashref
 		$table_name, {map{($_ => $$hashref{$_})} keys %$hashref}, {returning => ['id']}
 	) -> hash}{id};
 
-} # End of insert_hashref.
+} # End of insert.
 
 # --------------------------------------------------
 
@@ -283,6 +283,19 @@ sub read_table
 	return [$self -> db -> query("select * from $table_name") -> hashes -> each];
 
 } # End of read_table.
+
+# -----------------------------------------------
+
+sub update
+{
+	my($self, $table_name, $id, $hashref) = @_;
+
+	return ${$self -> db -> insert
+	(
+		$table_name, {map{($_ => $$hashref{$_})} keys %$hashref}, {id => $id}
+	)};
+
+} # End of update.
 
 # --------------------------------------------------
 

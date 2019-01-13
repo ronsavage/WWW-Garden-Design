@@ -201,7 +201,7 @@ sub autocomplete_list
 
 # -----------------------------------------------
 
-sub insert_hashref
+sub insert
 {
 	my($self, $table_name, $hashref) = @_;
 
@@ -210,7 +210,7 @@ sub insert_hashref
 
 	return $self -> db -> last_insert_id(undef, undef, $table_name, undef);
 
-} # End of insert_hashref.
+} # End of insert.
 
 # --------------------------------------------------
 
