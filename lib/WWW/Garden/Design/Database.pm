@@ -1683,6 +1683,10 @@ sub read_flowers_table
 			}
 		}
 
+		# Sort image file names to make the output on the Details/Images tab pretty.
+
+		@{$$record{images} } = sort{$$a{file_name} cmp $$b{file_name} } @{$$record{images} };
+
 		# Fix the urls.
 
 		for my $i (0 .. $#{$$record{images} })
