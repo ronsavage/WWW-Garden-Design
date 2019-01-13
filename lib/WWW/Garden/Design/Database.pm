@@ -138,6 +138,8 @@ sub activity
 sub add_flower
 {
 	my($self, $defaults, $params) = @_;
+	my(@flower_columns)	= (qw/aliases common_name height notes publish scientific_name width/);
+	my($flower)			= {map{($_ => $$params{$_})} @flower_columns};
 
 	$self -> logger -> debug('Database.add_flower()');
 
@@ -153,6 +155,20 @@ sub add_flower
 
 	$self -> logger -> debug('Database.add_flower(). scientific_name: ', Dumper($result) );
 
+	# Retrieve record ids from other tables for this flower.
+
+	my(%attribute2id);
+
+	if ($flower_id)
+	{
+		for my $attribute (@{$$defaults{attributes_table} })
+		{
+			next if ($$attribute{flower_id} != $flower_id);
+
+			$attribute2id{$$attribute{attribute_type_id} } = $$attribute{id};
+		}
+	}
+
 	# 2: Reformat attributes prior to saving.
 
 	my(%attribute_name2id);
@@ -162,26 +178,27 @@ sub add_flower
 		$attribute_name2id{$$item{name} } = $$item{id};
 	}
 
-	my($attribute_id, %attribute_values);
+	my($attribute_id, %attributes);
 	my($value);
 
 	for my $item (keys %$params)
 	{
 		next if ( ($item eq 'attribute_list') || ($item !~ /^attribute/) );
 
-		(undef, $key, $value)	= split(/_/, $item);
-		$attribute_id			= $attribute_name2id{$key}; # TODO.
-		$attribute_values{$key}	= [] if (! defined $attribute_values{$key});
+		(undef, $key, $value)		= split(/_/, $item);
+		$attribute_id				= $attribute_name2id{$key}; # TODO.
+		$attribute_id				= $attribute2id{$attribute_id};
+		$attributes{$attribute_id}	= [] if (! defined $attributes{$attribute_id});
 
-		push @{$attribute_values{$key} }, $value;
+		push @{$attributes{$attribute_id} }, $value;
 	}
 
 	# $key takes values like 'Edible', 'Native'.
-	# $attribute_values{$key} takes values like 'Yes', 'Full sun, Part shade'.
+	# $attributes{$key} takes values like 'Yes', 'Full sun, Part shade'.
 
-	for $key (keys %attribute_values)
+	for $key (keys %attributes)
 	{
-		$attribute_values{$key} = join(', ', @{$attribute_values{$key} });
+		$attributes{$key} = join(', ', @{$attributes{$key} });
 	}
 
 	# 3: Reformat images prior to saving.
@@ -225,8 +242,8 @@ sub add_flower
 	# o notes.
 	# o urls.
 
-	$self -> logger -> info('attributes: ' . Dumper(\%attribute_values) );
-	$self -> logger -> info('flowers: ' . Dumper($$params{flowers}) );
+	$self -> logger -> info('attributes: ' . Dumper(\%attributes) );
+	$self -> logger -> info('flower: ' . Dumper($flower) );
 	$self -> logger -> info('images: ' . Dumper(\@images) );
 	$self -> logger -> info('notes: ' . Dumper($$params{notes}) );
 	$self -> logger -> info('urls: ' . Dumper(\@urls) );
@@ -242,7 +259,11 @@ sub add_flower
 			my($db)				= $self -> db;
 			my($transaction)	= $db -> begin;
 
-#			$self -> update('attributes', {}, {id => $flower_id});
+			for $key (sort keys %attributes)
+			{
+#				$self -> update('attributes', {attribute_type_id => $key, flower_id => $flower_id, range => $attributes{$key}}, {id => $flower_id});
+			}
+
 #			$self -> update('flowers', {}, {id => $flower_id});
 #			$self -> update('images', {}, {id => $flower_id});
 #			$self -> update('notes', {}, {id => $flower_id});
