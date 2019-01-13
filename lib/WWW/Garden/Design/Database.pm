@@ -142,14 +142,14 @@ sub add_flower
 	$self -> logger -> debug('Database.add_flower()');
 
 	# 1: Is this plant on file?
-	# Result:
-	# o Hashref: on file. E.g.: {id => 106, scientific_name => "Kennedia beckxiana"}.
-	# o undef => Not on file.
+	# Value of $flower_id:
+	# o Hashref: on file. E.g.: {id => 106, scientific_name => "Kennedia beckxiana"}. So: Update.
+	# o undef => Not on file. So: Add.
 
 	my($key)		= "\U$$params{scientific_name}"; # \U => Convert to upper-case.
 	my($sql)		= 'select id, scientific_name from flowers where upper(scientific_name) like ?';
 	my($result)		= $self -> db -> query($sql, $key) -> hash;
-	my($id)			= defined($result) ? $$result{id} : 0;
+	my($flower_id)	= defined($result) ? $$result{id} : 0;
 
 	$self -> logger -> debug('Database.add_flower(). scientific_name: ', Dumper($result) );
 
@@ -204,6 +204,13 @@ sub add_flower
 			$images[$#images][2] = $$params{$item};
 		}
 	}
+
+	# 4: Tables used:
+	# o attributes.
+	# o flowers.
+	# o images.
+	# o notes.
+	# o urls.
 
 	return '';
 
