@@ -141,7 +141,7 @@ sub add_flower
 	my(@flower_columns)	= (qw/aliases common_name height notes publish scientific_name width/);
 	my($flower)			= {map{($_ => $$params{$_})} @flower_columns};
 
-	$self -> logger -> debug('Database.add_flower()');
+	$self -> logger -> debug('Database.add_flower(). Entered');
 
 	# 1: Is this plant on file?
 	# Value of $flower_id:
@@ -153,7 +153,7 @@ sub add_flower
 	my($result)		= $self -> db -> query($sql, $key) -> hash;
 	my($flower_id)	= defined($result) ? $$result{id} : 0;
 
-	$self -> logger -> debug('Database.add_flower(). scientific_name: ', Dumper($result) );
+	$self -> logger -> debug('Database.add_flower(). On file: ' . ($flower_id ? "Yes (id: $flower_id)" : 'No') );
 
 	# Retrieve record ids from other tables for this flower.
 
@@ -185,7 +185,7 @@ sub add_flower
 	{
 		next if ( ($item eq 'attribute_list') || ($item !~ /^attribute/) );
 
-		(undef, $key, $value)		= split(/_/, $item);
+		(undef, $key, $value)		= split(/_/, $item); # undef correcponds to 'attribute'.
 		$attribute_id				= $attribute_name2id{$key}; # TODO.
 		$attribute_id				= $attribute2id{$attribute_id};
 		$attributes{$attribute_id}	= [] if (! defined $attributes{$attribute_id});
@@ -210,7 +210,7 @@ sub add_flower
 	{
 		next if ( ($item eq 'image_list') || ($item !~ /^image/) );
 
-		(undef, $key, $value) = split(/_/, $item);
+		(undef, $key, $value) = split(/_/, $item); # undef correcponds to 'image'.
 
 		if ($value eq 'file')
 		{
@@ -222,6 +222,20 @@ sub add_flower
 		}
 	}
 
+	my(%image_file_name2id, $image_file_name, $image_description);
+
+	for my $item (@images)
+	{
+		$image_description						= $$item[2];
+		$image_file_name						= $$item[1];
+		$sql									= 'select id from images where file_name = ? and description = ?';
+		$result									= $self -> db -> query($sql, $image_file_name, $image_description) -> hash;
+		$image_file_name2id{$image_file_name}	= defined($result) ? $$result{id} : 0;
+
+		$self -> logger -> info("Image id: $image_file_name2id{$image_file_name}. File name: $image_file_name. "
+			. "Description: $image_description");
+	}
+
 	# 4: Reformat urls prior to saving.
 
 	my(@urls);
@@ -230,9 +244,9 @@ sub add_flower
 	{
 		next if ( ($item eq 'url_list') || ($item !~ /^url/) );
 
-		(undef, $key) = split(/_/, $item);
+		(undef, $key) = split(/_/, $item); # undef correcponds to 'url'.
 
-		push @urls, $key;
+		push @urls, $$params{"url_$key"};
 	}
 
 	# 5: Tables used:
@@ -242,10 +256,9 @@ sub add_flower
 	# o notes.
 	# o urls.
 
-	$self -> logger -> info('attributes: ' . Dumper(\%attributes) );
 	$self -> logger -> info('flower: ' . Dumper($flower) );
+	$self -> logger -> info('attributes: ' . Dumper(\%attributes) );
 	$self -> logger -> info('images: ' . Dumper(\@images) );
-	$self -> logger -> info('notes: ' . Dumper($$params{notes}) );
 	$self -> logger -> info('urls: ' . Dumper(\@urls) );
 
 	if ($flower_id)
@@ -292,7 +305,7 @@ sub add_flower
 		};
 	}
 
-	$self -> logger -> info('Insert/Update flower');
+	$self -> logger -> debug('Database.add_flower(). Leaving');
 
 	return '';
 
