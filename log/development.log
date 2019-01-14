@@ -1,0 +1,153 @@
+[2019-01-15 10:13:14.42573] [17757] [info] ------------------------------
+[2019-01-15 10:13:14.42597] [17757] [debug] POST "/Flower" (9bde81bc)
+[2019-01-15 10:13:14.42627] [17757] [debug] Routing to controller "WWW::Garden::Design::Controller::Flower" and action "process"
+[2019-01-15 10:13:14.42634] [17757] [debug] Flower.process()
+[2019-01-15 10:13:14.42745] [17757] [debug] flower_details: aliases => Coleus canina, Dogsbane
+[2019-01-15 10:13:14.42754] [17757] [debug] flower_details: attribute_list => Edible«»No«»Habit«»Shrub«»Native«»No«»Sun_tolerance«»Full sun«»Sun_tolerance«»Part shade
+[2019-01-15 10:13:14.42758] [17757] [debug] flower_details: common_name => Plectranthus caninus
+[2019-01-15 10:13:14.42761] [17757] [debug] flower_details: csrf_token => 
+[2019-01-15 10:13:14.42765] [17757] [debug] flower_details: errors => HASH(0x464f778)
+[2019-01-15 10:13:14.42768] [17757] [debug] flower_details: height => 
+[2019-01-15 10:13:14.42771] [17757] [debug] flower_details: image_list => image_1«»Plectranthus.caninus.1.jpg«»Flowers, from a garden down the road.<br>My plant was too shaded to flower«»image_2«»Plectranthus.caninus.2.jpg«»Leaves«»image_3«»Plectranthus.caninus.3.jpg«»New bud«»image_4«»Plectranthus.caninus.4.jpg«»New bud, again, slowly opening«»image_5«»«»«»image_6«»«»«»image_7«»«»«»image_8«»«»«»image_9«»«»«»image_10«»«»«»image_11«»«»«»image_12«»«»«»image_13«»«»«»image_14«»«»«»image_15«»«»«»image_16«»«»«»image_17«»«»«»image_18«»«»«»image_19«»«»«»image_20«»«»
+[2019-01-15 10:13:14.42774] [17757] [debug] flower_details: message => 
+[2019-01-15 10:13:14.42778] [17757] [debug] flower_details: notes => This is an attractive member of the mint family originates from South Africa and is particulary hardy.
+Lovely long-lasting purple flower spikes year round.
+40cm x 40cm.
+Supplier: Rippon Lea Estate.
+[2019-01-15 10:13:14.42781] [17757] [debug] flower_details: publish => Yes
+[2019-01-15 10:13:14.42784] [17757] [debug] flower_details: scientific_name => Plectranthus caninus
+[2019-01-15 10:13:14.42787] [17757] [debug] flower_details: success => No
+[2019-01-15 10:13:14.42790] [17757] [debug] flower_details: url_list => url_1«»https://en.wikipedia.org/wiki/Plectranthus_caninus«»url_2«»«»url_3«»«»url_4«»«»url_5«»«»url_6«»«»url_7«»«»url_8«»«»url_9«»«»url_10«»
+[2019-01-15 10:13:14.42793] [17757] [debug] flower_details: width => 
+[2019-01-15 10:13:14.42809] [17757] [debug] ValidateForm.process_flower_attributes(...)
+[2019-01-15 10:13:14.42836] [17757] [debug] ValidateForm.process_flower_dimensions(height: , width: )
+[2019-01-15 10:13:14.42849] [17757] [debug] ValidateForm.process_flower_images(...)
+[2019-01-15 10:13:14.42866] [17757] [debug] ValidateForm.process_flower_urls(...)
+[2019-01-15 10:13:14.42903] [17757] [debug] Validation result: Yes
+[2019-01-15 10:13:14.43002] [17757] [debug] Validated params: {
+  aliases => "Coleus canina, Dogsbane",
+  attribute_Edible_No => "No",
+  attribute_Habit_Shrub => "Shrub",
+  attribute_Native_No => "No",
+  "attribute_Sun tolerance_Full sun" => "Full sun",
+  "attribute_Sun tolerance_Part shade" => "Part shade",
+  attribute_list => "Edible\x{ab}\x{bb}No\x{ab}\x{bb}Habit\x{ab}\x{bb}Shrub\x{ab}\x{bb}Native\x{ab}\x{bb}No\x{ab}\x{bb}Sun_tolerance\x{ab}\x{bb}Full sun\x{ab}\x{bb}Sun_tolerance\x{ab}\x{bb}Part shade",
+  common_name => "Plectranthus caninus",
+  csrf_token => "",
+  errors => {},
+  height => "",
+  image_1_file => "Plectranthus.caninus.1.jpg",
+  image_1_text => "Flowers, from a garden down the road.<br>My plant was too shaded to flower",
+  image_2_file => "Plectranthus.caninus.2.jpg",
+  image_2_text => "Leaves",
+  image_3_file => "Plectranthus.caninus.3.jpg",
+  image_3_text => "New bud",
+  image_4_file => "Plectranthus.caninus.4.jpg",
+  image_4_text => "New bud, again, slowly opening",
+  image_list => "image_1\x{ab}\x{bb}Plectranthus.caninus.1.jpg\x{ab}\x{bb}Flowers, from a garden down the road.<br>My plant was too shaded to flower\x{ab}\x{bb}image_2\x{ab}\x{bb}Plectranthus.caninus.2.jpg\x{ab}\x{bb}Leaves\x{ab}\x{bb}image_3\x{ab}\x{bb}Plectranthus.caninus.3.jpg\x{ab}\x{bb}New bud\x{ab}\x{bb}image_4\x{ab}\x{bb}Plectranthus.caninus.4.jpg\x{ab}\x{bb}New bud, again, slowly opening\x{ab}\x{bb}image_5\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_6\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_7\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_8\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_9\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_10\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_11\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_12\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_13\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_14\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_15\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_16\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_17\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_18\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_19\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_20\x{ab}\x{bb}\x{ab}\x{bb}",
+  message => "All fields were validated successfully",
+  notes => "This is an attractive member of the mint family originates from South Africa and is particulary hardy.\nLovely long-lasting purple flower spikes year round.\n40cm x 40cm.\nSupplier: Rippon Lea Estate.",
+  publish => "Yes",
+  scientific_name => "Plectranthus caninus",
+  success => "Yes",
+  url_1 => "https://en.wikipedia.org/wiki/Plectranthus_caninus",
+  url_list => "url_1\x{ab}\x{bb}https://en.wikipedia.org/wiki/Plectranthus_caninus\x{ab}\x{bb}url_2\x{ab}\x{bb}\x{ab}\x{bb}url_3\x{ab}\x{bb}\x{ab}\x{bb}url_4\x{ab}\x{bb}\x{ab}\x{bb}url_5\x{ab}\x{bb}\x{ab}\x{bb}url_6\x{ab}\x{bb}\x{ab}\x{bb}url_7\x{ab}\x{bb}\x{ab}\x{bb}url_8\x{ab}\x{bb}\x{ab}\x{bb}url_9\x{ab}\x{bb}\x{ab}\x{bb}url_10\x{ab}\x{bb}",
+  width => "",
+}
+
+[2019-01-15 10:13:14.43009] [17757] [debug] Validate: success
+[2019-01-15 10:13:14.43014] [17757] [debug] Database.add_flower(). Entered
+[2019-01-15 10:13:14.43107] [17757] [debug] Database.add_flower(). On file: Yes (id: 163)
+[2019-01-15 10:13:14.43160] [17757] [info] Image id: 435. File name: Plectranthus.caninus.1.jpg. Description: Flowers, from a garden down the road.<br>My plant was too shaded to flower
+[2019-01-15 10:13:14.43200] [17757] [info] Image id: 436. File name: Plectranthus.caninus.2.jpg. Description: Leaves
+[2019-01-15 10:13:14.43239] [17757] [info] Image id: 437. File name: Plectranthus.caninus.3.jpg. Description: New bud
+[2019-01-15 10:13:14.43275] [17757] [info] Image id: 438. File name: Plectranthus.caninus.4.jpg. Description: New bud, again, slowly opening
+[2019-01-15 10:13:14.43313] [17757] [info] flower: {
+  aliases => "Coleus canina, Dogsbane",
+  common_name => "Plectranthus caninus",
+  height => "",
+  notes => "This is an attractive member of the mint family originates from South Africa and is particulary hardy.\nLovely long-lasting purple flower spikes year round.\n40cm x 40cm.\nSupplier: Rippon Lea Estate.",
+  publish => "Yes",
+  scientific_name => "Plectranthus caninus",
+  width => "",
+}
+
+[2019-01-15 10:13:14.43334] [17757] [info] attributes: {
+  Edible => "No",
+  Habit => "Shrub",
+  Kind => "Plant",
+  Native => "No",
+  "Sun tolerance" => "Full sun, Part shade",
+}
+
+[2019-01-15 10:13:14.43359] [17757] [info] images: [
+  [
+    1,
+    "Plectranthus.caninus.1.jpg",
+    "Flowers, from a garden down the road.<br>My plant was too shaded to flower",
+  ],
+  [
+    2,
+    "Plectranthus.caninus.2.jpg",
+    "Leaves",
+  ],
+  [
+    3,
+    "Plectranthus.caninus.3.jpg",
+    "New bud",
+  ],
+  [
+    4,
+    "Plectranthus.caninus.4.jpg",
+    "New bud, again, slowly opening",
+  ],
+]
+
+[2019-01-15 10:13:14.43368] [17757] [info] urls: [
+  "https://en.wikipedia.org/wiki/Plectranthus_caninus",
+]
+
+[2019-01-15 10:13:14.43372] [17757] [info] Updating flower. id: 163
+[2019-01-15 10:13:14.43461] [17757] [debug] update_attribute(). status: 1. keys: [
+  {
+    attribute_type_id => 1,
+    id => 811,
+  },
+  {
+    attribute_type_id => 2,
+    id => 812,
+  },
+  {
+    attribute_type_id => 3,
+    id => 813,
+  },
+  {
+    attribute_type_id => 4,
+    id => 814,
+  },
+  {
+    attribute_type_id => 5,
+    id => 815,
+  },
+]
+
+[2019-01-15 10:13:14.43479] [17757] [debug] attribute_type2id: {
+  Edible => 1,
+  Habit => 2,
+  Kind => 3,
+  Native => 4,
+  "Sun tolerance" => 5,
+}
+
+[2019-01-15 10:13:14.43498] [17757] [debug] attributes: {
+  Edible => "No",
+  Habit => "Shrub",
+  Kind => "Plant",
+  Native => "No",
+  "Sun tolerance" => "Full sun, Part shade",
+}
+
+[2019-01-15 10:13:14.43504] [17757] [debug] Database.add_flower(). Leaving
+[2019-01-15 10:13:14.43509] [17757] [debug] Flower.format_details(...)
+[2019-01-15 10:13:14.43524] [17757] [debug] Rendering cached template "flower/process.html.ep"
+[2019-01-15 10:13:14.43546] [17757] [debug] 200 OK (0.009481s, 105.474/s)

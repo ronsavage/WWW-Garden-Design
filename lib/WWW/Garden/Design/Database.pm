@@ -275,26 +275,22 @@ sub add_flower
 
 	if ($flower_id)
 	{
-		$self -> logger -> info("Updating flower. id: $flower_id");
-
 		# It's an update.
+
+		$self -> logger -> info("Updating flower. id: $flower_id");
 
 		eval
 		{
 			my($db)				= $self -> db;
-			my($transaction)	= $db -> begin;
-
-			for $key (sort keys %attributes)
-			{
-#				$self -> update('attributes', {flower_id => $flower_id, range => $attributes{$key} }, {id => $attribute_id});
-			}
+#			my($transaction)	= $db -> begin;
+			my($result)			= $self -> update_attribute({%attribute_type2id}, {%attributes}, $db, $flower_id);
 
 #			$self -> update('flowers', {}, {id => $flower_id});
 #			$self -> update('images', {}, {id => $flower_id});
 #			$self -> update('notes', {}, {id => $flower_id});
 #			$self -> update('urls', {}, {id => $flower_id});
 
-			$transaction -> commit;
+#			$transaction -> commit;
 		};
 	}
 	else
@@ -305,15 +301,15 @@ sub add_flower
 
 		eval
 		{
-			my($db)				= $self -> db;
-			my($transaction)	= $db -> begin;
+#			my($db)				= $self -> db;
+#			my($transaction)	= $db -> begin;
 #			$flower_id			= $self -> insert('flowers', {});
 #			$self -> insert('attributes', {});
 #			$self -> insert('images', {});
 #			$self -> insert('notes', {});
 #			$self -> insert('urls', {});
 
-			$transaction -> commit;
+#			$transaction -> commit;
 		};
 	}
 
@@ -2177,6 +2173,37 @@ sub trim
 	return $value;
 
 } # End of trim.
+
+# -----------------------------------------------
+
+sub update_attribute
+{
+	my($self, $attribute_type2id, $attributes, $db, $flower_id) = @_;
+	my($sql)	= 'select id, attribute_type_id from attributes where flower_id = ?';
+	my($keys)	= [$db -> query($sql, $flower_id) -> hashes -> each];
+	my($status)	= defined($keys) ? true : false;
+
+	$self -> logger -> debug("update_attribute(). status: $status. keys: " . Dumper($keys) );
+	$self -> logger -> debug('attribute_type2id: ' . Dumper($attribute_type2id) );
+	$self -> logger -> debug('attributes: ' . Dumper($attributes) );
+
+	my($attribute_id, $attribute_type_id);
+
+	for my $item (@$keys)
+	{
+#		$hashref =
+#		{
+#			attribute_type_id	=> $attribute_type2id{$key},
+#			flower_id			=> $flower_id,
+#			range				=> $attributes{$key}
+#		};
+
+#		$self -> update('attributes', $hashref, {id => $attribute_id});
+	}
+
+	return $status;
+
+} # End of update_attribute.
 
 # --------------------------------------------------
 
