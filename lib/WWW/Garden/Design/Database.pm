@@ -156,52 +156,45 @@ sub add_flower
 	$self -> logger -> debug('Database.add_flower(). On file: ' . ($flower_id ? "Yes (id: $flower_id)" : 'No') );
 
 	# Retrieve record ids from other tables for this flower.
-	# Start with the existing attributes for this flower.
+	# a: Get the attribute type names and their ids.
 
-	my(%attribute2id);
-	my(%existing_attributes);
-
-	if ($flower_id)
-	{
-		for my $attribute (@{$$defaults{attributes_table} })
-		{
-			next if ($$attribute{flower_id} != $flower_id);
-
-			$attribute2id{$$attribute{attribute_type_id} }	= $$attribute{id};
-			$existing_attributes{$$attribute{id} }			= $$attribute{attribute_type_id};
-		}
-	}
-
-	$self -> logger -> info('attribute2id: ' . Dumper(\%attribute2id) );
-	$self -> logger -> info('existing_attributes: ' . Dumper(\%existing_attributes) );
-
-	# Next the attributes types for all flowers.
-
-	my(%attribute_name2id);
+	my(%attribute_type2id);
 
 	for my $item (@{$$defaults{attribute_types_table} })
 	{
-		$attribute_name2id{$$item{name} } = $$item{id};
+		$attribute_type2id{$$item{name} } = $$item{id};
 	}
 
-	$self -> logger -> info('attribute_name2id: ' . Dumper(\%attribute_name2id) );
+	# b: Get the user's input.
 
-	my($attribute_id, %attributes);
+	my(%attributes, %attribute2id);
 	my($value);
 
 	for my $item (keys %$params)
 	{
 		next if ( ($item eq 'attribute_list') || ($item !~ /^attribute/) );
 
-		(undef, $key, $value)		= split(/_/, $item); # undef correcponds to 'attribute'.
-		$attribute_id				= $attribute_name2id{$key}; # TODO.
-		$attribute_id				= $attribute2id{$attribute_id};
-		$attributes{$attribute_id}	= [] if (! defined $attributes{$attribute_id});
+		# Tokens:
+		# o undef	=> 'attribute'.
+		# o key		=> 'Edible', etc.
+		# o value	=> 'Yes', etc.
 
-		push @{$attributes{$attribute_id} }, $value;
+		(undef, $key, $value)	= split(/_/, $item);
+		$attributes{$key}		= [] if (! defined $attributes{$key});
+
+		push @{$attributes{$key} }, $value;
 	}
 
-	my(%defaults) =
+	# c: Convert the user's input from array ref to string.
+
+	for $key (keys %attributes)
+	{
+		$attributes{$key} = join(', ', @{$attributes{$key} });
+	}
+
+	# d: Add defaults where user turned off all options.
+
+	my(%attribute_defaults) =
 	(
 		Edible			=> 'Unknown',
 		Habit			=> 'Unknown',
@@ -210,22 +203,14 @@ sub add_flower
 		'Sun tolerance'	=> 'Unknown',
 	);
 
-	for my $item (keys %existing_attributes)
+	for my $item (keys %attribute_type2id)
 	{
-		$key = $existing_attributes{$item};
-
-		if (! exists($attributes{$key}) )
+		if (! $attributes{$item})
 		{
-			$attributes{$key} = $existing_attributes{$item};
+			# User submitted nothing, so default.
+
+			$attributes{$item} = $attribute_defaults{$item};
 		}
-	}
-
-	# $key takes values like 99.
-	# $attributes{$key} takes values like 'Yes', 'Full sun, Part shade'.
-
-	for $key (keys %attributes)
-	{
-		$attributes{$key} = join(', ', @{$attributes{$key} });
 	}
 
 	# Reformat images prior to saving.
@@ -237,7 +222,7 @@ sub add_flower
 	{
 		next if ( ($item eq 'image_list') || ($item !~ /^image/) );
 
-		(undef, $key, $value) = split(/_/, $item); # undef correcponds to 'image'.
+		(undef, $key, $value) = split(/_/, $item); # undef corresponds to 'image'.
 
 		if ($value eq 'file')
 		{
@@ -271,7 +256,7 @@ sub add_flower
 	{
 		next if ( ($item eq 'url_list') || ($item !~ /^url/) );
 
-		(undef, $key) = split(/_/, $item); # undef correcponds to 'url'.
+		(undef, $key) = split(/_/, $item); # undef corresponds to 'url'.
 
 		push @urls, $$params{"url_$key"};
 	}
@@ -299,7 +284,7 @@ sub add_flower
 			my($db)				= $self -> db;
 			my($transaction)	= $db -> begin;
 
-			for $attribute_id (sort keys %attributes)
+			for $key (sort keys %attributes)
 			{
 #				$self -> update('attributes', {flower_id => $flower_id, range => $attributes{$key} }, {id => $attribute_id});
 			}
