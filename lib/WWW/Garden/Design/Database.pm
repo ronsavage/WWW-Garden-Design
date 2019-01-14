@@ -143,7 +143,7 @@ sub add_flower
 
 	$self -> logger -> debug('Database.add_flower(). Entered');
 
-	# 1: Is this plant on file?
+	# Is this plant on file?
 	# Value of $flower_id:
 	# o Hashref: on file. E.g.: {id => 106, scientific_name => "Kennedia beckxiana"}. So: Update.
 	# o undef => Not on file. So: Add.
@@ -156,8 +156,10 @@ sub add_flower
 	$self -> logger -> debug('Database.add_flower(). On file: ' . ($flower_id ? "Yes (id: $flower_id)" : 'No') );
 
 	# Retrieve record ids from other tables for this flower.
+	# Start with the existing attributes for this flower.
 
 	my(%attribute2id);
+	my(%existing_attributes);
 
 	if ($flower_id)
 	{
@@ -165,11 +167,15 @@ sub add_flower
 		{
 			next if ($$attribute{flower_id} != $flower_id);
 
-			$attribute2id{$$attribute{attribute_type_id} } = $$attribute{id};
+			$attribute2id{$$attribute{attribute_type_id} }	= $$attribute{id};
+			$existing_attributes{$$attribute{id} }			= $$attribute{attribute_type_id};
 		}
 	}
 
-	# 2: Reformat attributes prior to saving.
+	$self -> logger -> info('attribute2id: ' . Dumper(\%attribute2id) );
+	$self -> logger -> info('existing_attributes: ' . Dumper(\%existing_attributes) );
+
+	# Next the attributes types for all flowers.
 
 	my(%attribute_name2id);
 
@@ -177,6 +183,8 @@ sub add_flower
 	{
 		$attribute_name2id{$$item{name} } = $$item{id};
 	}
+
+	$self -> logger -> info('attribute_name2id: ' . Dumper(\%attribute_name2id) );
 
 	my($attribute_id, %attributes);
 	my($value);
@@ -193,7 +201,26 @@ sub add_flower
 		push @{$attributes{$attribute_id} }, $value;
 	}
 
-	# $key takes values like 'Edible', 'Native'.
+	my(%defaults) =
+	(
+		Edible			=> 'Unknown',
+		Habit			=> 'Unknown',
+		Kind			=> 'Plant',
+		Native			=> 'Unknown',
+		'Sun tolerance'	=> 'Unknown',
+	);
+
+	for my $item (keys %existing_attributes)
+	{
+		$key = $existing_attributes{$item};
+
+		if (! exists($attributes{$key}) )
+		{
+			$attributes{$key} = $existing_attributes{$item};
+		}
+	}
+
+	# $key takes values like 99.
 	# $attributes{$key} takes values like 'Yes', 'Full sun, Part shade'.
 
 	for $key (keys %attributes)
@@ -201,7 +228,7 @@ sub add_flower
 		$attributes{$key} = join(', ', @{$attributes{$key} });
 	}
 
-	# 3: Reformat images prior to saving.
+	# Reformat images prior to saving.
 	# Warning: The sort is necessary to force image_1_file to appear before image_1_text.
 
 	my(@images);
@@ -236,7 +263,7 @@ sub add_flower
 			. "Description: $image_description");
 	}
 
-	# 4: Reformat urls prior to saving.
+	# Reformat urls prior to saving.
 
 	my(@urls);
 
@@ -249,7 +276,7 @@ sub add_flower
 		push @urls, $$params{"url_$key"};
 	}
 
-	# 5: Tables used:
+	# Tables used:
 	# o attributes.
 	# o flowers.
 	# o images.
@@ -272,9 +299,9 @@ sub add_flower
 			my($db)				= $self -> db;
 			my($transaction)	= $db -> begin;
 
-			for $key (sort keys %attributes)
+			for $attribute_id (sort keys %attributes)
 			{
-#				$self -> update('attributes', {attribute_type_id => $key, flower_id => $flower_id, range => $attributes{$key}}, {id => $flower_id});
+#				$self -> update('attributes', {flower_id => $flower_id, range => $attributes{$key} }, {id => $attribute_id});
 			}
 
 #			$self -> update('flowers', {}, {id => $flower_id});
