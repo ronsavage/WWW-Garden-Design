@@ -154,9 +154,10 @@ sub add_flower
 	my($flower_id)	= defined($result) ? $$result{id} : 0;
 
 	$self -> logger -> debug('Database.add_flower(). On file: ' . ($flower_id ? "Yes (id: $flower_id)" : 'No') );
+	$self -> logger -> info('flower: ' . Dumper($flower) );
 
-	# Retrieve record ids from other tables for this flower.
-	# a: Get the attribute type names and their ids.
+	# Handle attributes.
+	# a: Retrieve the attribute types (for any flower actually).
 
 	my(%attribute_type2id);
 
@@ -165,7 +166,9 @@ sub add_flower
 		$attribute_type2id{$$item{name} } = $$item{id};
 	}
 
-	# b: Get the user's input.
+	$self -> logger -> debug('attribute_type2id: ' . Dumper(\%attribute_type2id) );
+
+	# b: Get the user's attribute input.
 
 	my(%attributes, %attribute2id);
 	my($value);
@@ -212,6 +215,16 @@ sub add_flower
 			$attributes{$item} = $attribute_defaults{$item};
 		}
 	}
+
+	$self -> logger -> debug('user attributes (wih defaults): ' . Dumper(\%attributes) );
+
+	# e: Get all the attributes for this flower.
+
+	$sql					= 'select id, attribute_type_id from attributes where flower_id = ?';
+	my($current_attributes)	= [$self -> db -> query($sql, $flower_id) -> hashes -> each];
+	my($status)				= defined($current_attributes) ? 'OK' : 'Fail';
+
+	$self -> logger -> debug("Read attributes. status: $status. current_attributes: " . Dumper($current_attributes) );
 
 	# Reformat images prior to saving.
 	# Warning: The sort is necessary to force image_1_file to appear before image_1_text.
@@ -268,8 +281,6 @@ sub add_flower
 	# o notes.
 	# o urls.
 
-	$self -> logger -> info('flower: ' . Dumper($flower) );
-	$self -> logger -> info('attributes: ' . Dumper(\%attributes) );
 	$self -> logger -> info('images: ' . Dumper(\@images) );
 	$self -> logger -> info('urls: ' . Dumper(\@urls) );
 
@@ -283,7 +294,7 @@ sub add_flower
 		{
 			my($db)				= $self -> db;
 #			my($transaction)	= $db -> begin;
-			my($result)			= $self -> update_attribute({%attribute_type2id}, {%attributes}, $db, $flower_id);
+			my($result)			= $self -> update_attribute({%attribute_type2id}, {%attributes}, $current_attributes, $db, $flower_id);
 
 #			$self -> update('flowers', {}, {id => $flower_id});
 #			$self -> update('images', {}, {id => $flower_id});
@@ -2178,18 +2189,12 @@ sub trim
 
 sub update_attribute
 {
-	my($self, $attribute_type2id, $attributes, $db, $flower_id) = @_;
-	my($sql)	= 'select id, attribute_type_id from attributes where flower_id = ?';
-	my($keys)	= [$db -> query($sql, $flower_id) -> hashes -> each];
-	my($status)	= defined($keys) ? true : false;
-
-	$self -> logger -> debug("update_attribute(). status: $status. keys: " . Dumper($keys) );
-	$self -> logger -> debug('attribute_type2id: ' . Dumper($attribute_type2id) );
-	$self -> logger -> debug('attributes: ' . Dumper($attributes) );
+	my($self, $attribute_type2id, $attributes, $current_attributes, $db, $flower_id) = @_;
+	my($status) = 'OK';
 
 	my($attribute_id, $attribute_type_id);
 
-	for my $item (@$keys)
+	for my $item (@$current_attributes)
 	{
 #		$hashref =
 #		{
