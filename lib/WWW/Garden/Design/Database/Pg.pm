@@ -290,7 +290,7 @@ sub update
 {
 	my($self, $table_name, $id, $hashref) = @_;
 
-	return ${$self -> db -> insert
+	${$self -> db -> update
 	(
 		$table_name, {map{($_ => $$hashref{$_})} keys %$hashref}, {id => $id}
 	)};

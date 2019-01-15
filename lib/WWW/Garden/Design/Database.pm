@@ -166,7 +166,7 @@ sub add_flower
 		$attribute_type2id{$$item{name} } = $$item{id};
 	}
 
-	$self -> logger -> debug('attribute_type2id: ' . Dumper(\%attribute_type2id) );
+	#$self -> logger -> debug('attribute_type2id: ' . Dumper(\%attribute_type2id) );
 
 	# b: Get the user's attribute input.
 
@@ -216,7 +216,7 @@ sub add_flower
 		}
 	}
 
-	$self -> logger -> debug('user attributes (wih defaults): ' . Dumper(\%attributes) );
+	#$self -> logger -> debug('user attributes (wih defaults): ' . Dumper(\%attributes) );
 
 	# e: Get all the existing attributes for this flower.
 
@@ -224,10 +224,12 @@ sub add_flower
 	my($current_attributes)	= [$self -> db -> query($sql, $flower_id) -> hashes -> each];
 	my($status)				= defined($current_attributes) ? 'OK' : 'Fail';
 
-	$self -> logger -> debug("Read attributes. status: $status. current_attributes: " . Dumper($current_attributes) );
+	#$self -> logger -> debug("status: $status. current_attributes: " . Dumper($current_attributes) );
 
 	# Reformat images prior to saving.
-	# Warning: The sort is necessary to force image_1_file to appear before image_1_text.
+	# Warning: The sort is necessary to force image_1_file to appear before image_1_text,
+	# because the code checks for 'file' and then assumes it was found then 'text' is processed.
+	# a: Get the user's image data.
 
 	my(@images);
 
@@ -247,19 +249,13 @@ sub add_flower
 		}
 	}
 
-	my(%image_file_name2id, $image_file_name, $image_description);
+	# e: Get all the existing images for this flower.
 
-	for my $item (@images)
-	{
-		$image_description						= $$item[2];
-		$image_file_name						= $$item[1];
-		$sql									= 'select id from images where file_name = ? and description = ?';
-		$result									= $self -> db -> query($sql, $image_file_name, $image_description) -> hash;
-		$image_file_name2id{$image_file_name}	= defined($result) ? $$result{id} : 0;
+	$sql				= 'select id from images where flower_id = ?';
+	my($current_images)	= [$self -> db -> query($sql, $flower_id) -> hashes -> each];
+	$status				= defined($current_images) ? 'OK' : 'Fail';
 
-		$self -> logger -> info("Image id: $image_file_name2id{$image_file_name}. File name: $image_file_name. "
-			. "Description: $image_description");
-	}
+	$self -> logger -> debug("status: $status. current_images: " . Dumper($current_images) );
 
 	# Reformat urls prior to saving.
 
@@ -294,12 +290,8 @@ sub add_flower
 		{
 			my($db)				= $self -> db;
 #			my($transaction)	= $db -> begin;
-			my($result)			= $self -> update_attribute({%attribute_type2id}, {%attributes}, $current_attributes, $db, $flower_id);
 
-#			$self -> update('flowers', {}, {id => $flower_id});
-#			$self -> update('images', {}, {id => $flower_id});
-#			$self -> update('notes', {}, {id => $flower_id});
-#			$self -> update('urls', {}, {id => $flower_id});
+			$self -> update_attribute({%attribute_type2id}, {%attributes}, $current_attributes, $flower_id);
 
 #			$transaction -> commit;
 		};
@@ -2189,8 +2181,7 @@ sub trim
 
 sub update_attribute
 {
-	my($self, $attribute_type2id, $attributes, $current_attributes, $db, $flower_id) = @_;
-	my($status) = 'OK';
+	my($self, $attribute_type2id, $attributes, $current_attributes, $flower_id) = @_;
 
 	my($attribute_id, $attribute_type_id);
 	my($hashref);
@@ -2215,10 +2206,8 @@ sub update_attribute
 
 		$self -> logger -> debug("attribute_id: $attribute_id. hashref: " . Dumper($hashref) );
 
-#		$self -> update('attributes', $hashref, {id => $attribute_id});
+		$self -> update('attributes', $attribute_id, $hashref);
 	}
-
-	return $status;
 
 } # End of update_attribute.
 
