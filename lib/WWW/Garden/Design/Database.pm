@@ -156,106 +156,8 @@ sub add_flower
 	$self -> logger -> debug('Database.add_flower(). On file: ' . ($flower_id ? "Yes (id: $flower_id)" : 'No') );
 	$self -> logger -> info('flower: ' . Dumper($flower) );
 
-	# Handle attributes.
-	# a: Retrieve the attribute types (for any flower actually).
-
-	my(%attribute_type2id);
-
-	for my $item (@{$$defaults{attribute_types_table} })
-	{
-		$attribute_type2id{$$item{name} } = $$item{id};
-	}
-
-	#$self -> logger -> debug('attribute_type2id: ' . Dumper(\%attribute_type2id) );
-
-	# b: Get the user's attribute input.
-
-	my(%attributes, %attribute2id);
-	my($value);
-
-	for my $item (keys %$params)
-	{
-		next if ( ($item eq 'attribute_list') || ($item !~ /^attribute/) );
-
-		# Tokens:
-		# o undef	=> 'attribute'.
-		# o key		=> 'Edible', etc.
-		# o value	=> 'Yes', etc.
-
-		(undef, $key, $value)	= split(/_/, $item);
-		$attributes{$key}		= [] if (! defined $attributes{$key});
-
-		push @{$attributes{$key} }, $value;
-	}
-
-	# c: Convert the user's input from array ref to string.
-
-	for $key (keys %attributes)
-	{
-		$attributes{$key} = join(', ', @{$attributes{$key} });
-	}
-
-	# d: Add defaults where user turned off all options.
-
-	my(%attribute_defaults) =
-	(
-		Edible			=> 'Unknown',
-		Habit			=> 'Unknown',
-		Kind			=> 'Plant',
-		Native			=> 'Unknown',
-		'Sun tolerance'	=> 'Unknown',
-	);
-
-	for my $item (keys %attribute_type2id)
-	{
-		if (! $attributes{$item})
-		{
-			# User submitted nothing, so default.
-
-			$attributes{$item} = $attribute_defaults{$item};
-		}
-	}
-
-	#$self -> logger -> debug('user attributes (wih defaults): ' . Dumper(\%attributes) );
-
-	# e: Get all the existing attributes for this flower.
-
-	$sql					= 'select id, attribute_type_id from attributes where flower_id = ?';
-	my($current_attributes)	= [$self -> db -> query($sql, $flower_id) -> hashes -> each];
-	my($status)				= defined($current_attributes) ? 'OK' : 'Fail';
-
-	#$self -> logger -> debug("status: $status. current_attributes: " . Dumper($current_attributes) );
-
-	# Reformat images prior to saving.
-	# Warning: The sort is necessary to force image_1_file to appear before image_1_text,
-	# because the code checks for 'file' and then assumes it was found then 'text' is processed.
-	# a: Get the user's image data.
-
-	my(@images);
-
-	for my $item (sort keys %$params)
-	{
-		next if ( ($item eq 'image_list') || ($item !~ /^image/) );
-
-		(undef, $key, $value) = split(/_/, $item); # undef corresponds to 'image'.
-
-		if ($value eq 'file')
-		{
-			push @images, [$key, $$params{$item}, 'Placeholder'];
-		}
-		else
-		{
-			$images[$#images][2] = $$params{$item};
-		}
-	}
-
-	# e: Get all the existing images for this flower.
-
-	$sql				= 'select id from images where flower_id = ?';
-	my($current_images)	= [$self -> db -> query($sql, $flower_id) -> hashes -> each];
-	$status				= defined($current_images) ? 'OK' : 'Fail';
-
-	$self -> logger -> debug("status: $status. current_images: " . Dumper($current_images) );
+	my($attribute_type2id, $attributes, $current_attributes)	= $self -> prepare_attributes($defaults, $flower_id, $params);
+	my($images, $current_images)								= $self -> prepare_images($defaults, $flower_id, $params);
 
 	# Reformat urls prior to saving.
 
@@ -277,7 +179,7 @@ sub add_flower
 	# o notes.
 	# o urls.
 
-	$self -> logger -> info('images: ' . Dumper(\@images) );
+	$self -> logger -> info('images: ' . Dumper($images) );
 	$self -> logger -> info('urls: ' . Dumper(\@urls) );
 
 	if ($flower_id)
@@ -291,7 +193,7 @@ sub add_flower
 			my($db)				= $self -> db;
 #			my($transaction)	= $db -> begin;
 
-			$self -> update_attribute({%attribute_type2id}, {%attributes}, $current_attributes, $flower_id);
+			$self -> update_attribute($attribute_type2id, $attributes, $current_attributes, $flower_id);
 
 #			$transaction -> commit;
 		};
@@ -1167,6 +1069,128 @@ sub parse_search_text
 	return $request;
 
 } # End of parse_search_text.
+
+# --------------------------------------------------
+
+sub prepare_attributes
+{
+	my($self, $defaults, $flower_id, $params) = @_;
+
+	# Retrieve the attribute types (for any flower actually).
+
+	my(%attribute_type2id);
+
+	for my $item (@{$$defaults{attribute_types_table} })
+	{
+		$attribute_type2id{$$item{name} } = $$item{id};
+	}
+
+	#$self -> logger -> debug('attribute_type2id: ' . Dumper(\%attribute_type2id) );
+
+	# Get the user's attribute input.
+
+	my(%attributes);
+	my($key);
+	my($value);
+
+	for my $item (keys %$params)
+	{
+		next if ( ($item eq 'attribute_list') || ($item !~ /^attribute/) );
+
+		# Tokens:
+		# o undef	=> 'attribute'.
+		# o key		=> 'Edible', etc.
+		# o value	=> 'Yes', etc.
+
+		(undef, $key, $value)	= split(/_/, $item);
+		$attributes{$key}		= [] if (! defined $attributes{$key});
+
+		push @{$attributes{$key} }, $value;
+	}
+
+	# Convert the user's input from array ref to string.
+
+	for $key (keys %attributes)
+	{
+		$attributes{$key} = join(', ', @{$attributes{$key} });
+	}
+
+	# Add defaults where user turned off all options.
+
+	my(%attribute_defaults) =
+	(
+		Edible			=> 'Unknown',
+		Habit			=> 'Unknown',
+		Kind			=> 'Plant',
+		Native			=> 'Unknown',
+		'Sun tolerance'	=> 'Unknown',
+	);
+
+	for my $item (keys %attribute_type2id)
+	{
+		if (! $attributes{$item})
+		{
+			# User submitted nothing, so default.
+
+			$attributes{$item} = $attribute_defaults{$item};
+		}
+	}
+
+	#$self -> logger -> debug('user attributes (wih defaults): ' . Dumper(\%attributes) );
+
+	# Get all the existing attributes for this flower.
+
+	my($sql)				= 'select id, attribute_type_id from attributes where flower_id = ?';
+	my($current_attributes)	= [$self -> db -> query($sql, $flower_id) -> hashes -> each];
+	my($status)				= defined($current_attributes) ? 'OK' : 'Fail';
+
+	#$self -> logger -> debug("status: $status. current_attributes: " . Dumper($current_attributes) );
+
+	return ({%attribute_type2id}, {%attributes}, $current_attributes);
+
+} # End of prepare_attributes.
+
+# --------------------------------------------------
+
+sub prepare_images
+{
+	my($self, $defaults, $flower_id, $params) = @_;
+
+	# Warning: The sort is necessary to force image_1_file to appear before image_1_text,
+	# because the code checks for 'file' and then assumes it was found then 'text' is processed.
+	# Get the user's image data.
+
+	my(@images);
+	my($key);
+	my($value);
+
+	for my $item (sort keys %$params)
+	{
+		next if ( ($item eq 'image_list') || ($item !~ /^image/) );
+
+		(undef, $key, $value) = split(/_/, $item); # undef corresponds to 'image'.
+
+		if ($value eq 'file')
+		{
+			push @images, [$key, $$params{$item}, 'Placeholder'];
+		}
+		else
+		{
+			$images[$#images][2] = $$params{$item};
+		}
+	}
+
+	# Get all the existing images for this flower.
+
+	my($sql)			= 'select id from images where flower_id = ?';
+	my($current_images)	= [$self -> db -> query($sql, $flower_id) -> hashes -> each];
+	my($status)			= defined($current_images) ? 'OK' : 'Fail';
+
+	$self -> logger -> debug("status: $status. current_images: " . Dumper($current_images) );
+
+	return ({@images}, $current_images);
+
+} # End of prepare_images.
 
 # --------------------------------------------------
 
