@@ -218,7 +218,7 @@ sub add_flower
 
 	$self -> logger -> debug('user attributes (wih defaults): ' . Dumper(\%attributes) );
 
-	# e: Get all the attributes for this flower.
+	# e: Get all the existing attributes for this flower.
 
 	$sql					= 'select id, attribute_type_id from attributes where flower_id = ?';
 	my($current_attributes)	= [$self -> db -> query($sql, $flower_id) -> hashes -> each];
@@ -2193,15 +2193,27 @@ sub update_attribute
 	my($status) = 'OK';
 
 	my($attribute_id, $attribute_type_id);
+	my($hashref);
 
-	for my $item (@$current_attributes)
+	for my $name (keys %$attributes)
 	{
-#		$hashref =
-#		{
-#			attribute_type_id	=> $attribute_type2id{$key},
-#			flower_id			=> $flower_id,
-#			range				=> $attributes{$key}
-#		};
+		$attribute_type_id = $$attribute_type2id{$name};
+
+		for my $current (@$current_attributes)
+		{
+			next if ($$current{attribute_type_id} != $attribute_type_id);
+
+			$attribute_id = $$current{id};
+		}
+
+		$hashref =
+		{
+			attribute_type_id	=> $attribute_type_id,
+			flower_id			=> $flower_id,
+			range				=> $$attributes{$name}
+		};
+
+		$self -> logger -> debug("attribute_id: $attribute_id. hashref: " . Dumper($hashref) );
 
 #		$self -> update('attributes', $hashref, {id => $attribute_id});
 	}
