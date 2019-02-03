@@ -2114,12 +2114,13 @@ sub update_images
 {
 	my($self, $flower_id, $updated_images) = @_;
 
-	$self -> logger -> debug('updated_images: ' . Dumper($updated_images) );
+	$self -> logger -> debug('1 updated_images: ' . Dumper($updated_images) );
 
 	# To start, if the flower is already in the db, find it.
 
-	my($flowers)		= $self -> read_flowers_table;
-	my($flower_index)	= -1;
+	my($flowers) = $self -> read_flowers_table;
+
+	my($flower_index);
 
 	if ($flower_id > 0)
 	{
@@ -2138,40 +2139,27 @@ sub update_images
 	# If the image was current but is no longer used, remove it from the db, and from RAM.
 	# RAM here means Perl only, since the images are not stored in JS-managed RAM.
 
-	my($file_name);
-	my($offset2go);
+	my(@offset2go);
 	my($temp_name, $temp_image);
 
-	for my $image (@$updated_images)
+	for my $offset (0 .. $#{$$flowers[$flower_index]{images} })
 	{
-		$file_name	= $$image{file_name};
-		$offset2go	= undef;
+		$temp_image	= $$flowers[$flower_index]{images}[$offset];
+		$temp_name	= $$temp_image{file_name} =~ s/.+\///r; # Zap https://domain/.../.
 
-		for my $offset (0 .. $#{$$flowers[$flower_index]{images} })
+		if ($$updated_images{$temp_name})
 		{
-			$temp_image	= $$flowers[$flower_index]{images}[$offset];
-			$temp_name	= $$image{file_name} =~ s/.+\///r;
-
-			if ($temp_name eq $file_name)
-			{
-				$offset2go = $offset;
-
-				$self -> logger -> debug("Zap $offset2go due to match on $file_name");
-			}
+			$$updated_images{$temp_name}{id} = $$temp_image{id}; # But new images won't have ids.
 		}
-
-		if ($offset2go)
+		else
 		{
-			splice(@{$$flowers[$flower_index]{images} }, $offset2go, 1);
-
-			$self -> logger -> debug("Zap $offset2go. Now images: " . Dumper($$flowers[$flower_index]{images}) );
+			push @offset2go, $offset;
 		}
 	}
 
-	$self -> logger -> debug('Existing images: ' . Dumper($$flowers[$flower_index]{images}) );
+	$self -> logger -> debug('2 updated_images: ' . Dumper($updated_images) );
 
 =pod
-
 
 		$hashref =
 		{
