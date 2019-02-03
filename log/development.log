@@ -1,0 +1,288 @@
+[2019-02-03 15:08:13.77126] [20252] [info] ------------------------------
+[2019-02-03 15:08:13.77169] [20252] [debug] POST "/Search" (20fe7cba)
+[2019-02-03 15:08:13.93555] [20252] [debug] Routing to controller "WWW::Garden::Design::Controller::Search" and action "display"
+[2019-02-03 15:08:13.93991] [20252] [debug] Database.search()
+[2019-02-03 15:08:14.55798] [20252] [info] Match count: 4
+[2019-02-03 15:08:14.56153] [20252] [debug] Rendering template "search/display.html.ep"
+[2019-02-03 15:08:14.56496] [20252] [debug] 200 OK (0.793249s, 1.261/s)
+[2019-02-03 15:08:14.56676] [20252] [info] ------------------------------
+[2019-02-03 15:08:14.56713] [20252] [debug] GET "/AutoComplete" (ecc875f0)
+[2019-02-03 15:08:14.56855] [20252] [debug] Routing to controller "WWW::Garden::Design::Controller::AutoComplete" and action "display"
+[2019-02-03 15:08:14.56889] [20252] [debug] AutoComplete.display(key: plect, type: search)
+[2019-02-03 15:08:14.56899] [20252] [debug] Database.Pg.autocomplete_list(... key: PLECT. type: search). Entered
+[2019-02-03 15:08:14.57239] [20252] [debug] 200 OK (0.005243s, 190.730/s)
+[2019-02-03 15:08:16.03047] [20252] [info] ------------------------------
+[2019-02-03 15:08:16.03098] [20252] [debug] POST "/GetFlowerDetails" (1a00f0a3)
+[2019-02-03 15:08:16.03376] [20252] [debug] Routing to controller "WWW::Garden::Design::Controller::GetFlowerDetails" and action "display"
+[2019-02-03 15:08:16.03436] [20252] [debug] GetFlowerDetails.display(flower_id => 163)
+[2019-02-03 15:08:16.05517] [20252] [debug] 200 OK (0.024156s, 41.398/s)
+[2019-02-03 15:08:27.00062] [20252] [info] ------------------------------
+[2019-02-03 15:08:27.00104] [20252] [debug] POST "/Flower" (41b0861f)
+[2019-02-03 15:08:27.02531] [20252] [debug] Routing to controller "WWW::Garden::Design::Controller::Flower" and action "process"
+[2019-02-03 15:08:27.02544] [20252] [debug] Flower.process()
+[2019-02-03 15:08:27.02803] [20252] [debug] flower_details: aliases => Coleus canina, Dogsbane
+[2019-02-03 15:08:27.02809] [20252] [debug] flower_details: attribute_list => Edible«»No«»Habit«»Shrub«»Kind«»Plant«»Native«»No«»Sun_tolerance«»Full sun«»Sun_tolerance«»Part shade
+[2019-02-03 15:08:27.02813] [20252] [debug] flower_details: common_name => Plectranthus caninus
+[2019-02-03 15:08:27.02816] [20252] [debug] flower_details: csrf_token => b5302cfa802b73b192cec5626d5d085ef523ae32
+[2019-02-03 15:08:27.02819] [20252] [debug] flower_details: errors => HASH(0x600d580)
+[2019-02-03 15:08:27.02822] [20252] [debug] flower_details: height => 
+[2019-02-03 15:08:27.02825] [20252] [debug] flower_details: image_list => image_1«»Plectranthus.caninus.1.jpg«»Flowers, from a garden down the road.<br>My plant was too shaded to flower«»image_2«»«»«»image_3«»«»«»image_4«»Plectranthus.caninus.4.jpg«»New bud, again, slowly opening«»image_5«»«»«»image_6«»«»«»image_7«»«»«»image_8«»«»«»image_9«»«»«»image_10«»«»«»image_11«»«»«»image_12«»«»«»image_13«»«»«»image_14«»«»«»image_15«»«»«»image_16«»«»«»image_17«»«»«»image_18«»«»«»image_19«»«»«»image_20«»«»
+[2019-02-03 15:08:27.02828] [20252] [debug] flower_details: message => 
+[2019-02-03 15:08:27.02831] [20252] [debug] flower_details: notes => This is an attractive member of the mint family originates from South Africa and is particulary hardy.
+Lovely long-lasting purple flower spikes year round.
+40cm x 40cm.
+Supplier: Rippon Lea Estate.
+[2019-02-03 15:08:27.02834] [20252] [debug] flower_details: publish => Yes
+[2019-02-03 15:08:27.02837] [20252] [debug] flower_details: scientific_name => Plectranthus caninus
+[2019-02-03 15:08:27.02840] [20252] [debug] flower_details: success => No
+[2019-02-03 15:08:27.02843] [20252] [debug] flower_details: url_list => url_1«»https://en.wikipedia.org/wiki/Plectranthus_caninus«»url_2«»«»url_3«»«»url_4«»«»url_5«»«»url_6«»«»url_7«»«»url_8«»«»url_9«»«»url_10«»
+[2019-02-03 15:08:27.02846] [20252] [debug] flower_details: width => 
+[2019-02-03 15:08:27.02863] [20252] [debug] ValidateForm.process_flower_attributes(...)
+[2019-02-03 15:08:27.02896] [20252] [debug] ValidateForm.process_flower_dimensions(height: , width: )
+[2019-02-03 15:08:27.02909] [20252] [debug] ValidateForm.process_flower_images(...)
+[2019-02-03 15:08:27.02924] [20252] [debug] ValidateForm.process_flower_urls(...)
+[2019-02-03 15:08:27.03571] [20252] [debug] Validation result: Yes
+[2019-02-03 15:08:27.03676] [20252] [debug] Validated params: {
+  aliases => "Coleus canina, Dogsbane",
+  attribute_Edible_No => "No",
+  attribute_Habit_Shrub => "Shrub",
+  attribute_Kind_Plant => "Plant",
+  attribute_Native_No => "No",
+  "attribute_Sun tolerance_Full sun" => "Full sun",
+  "attribute_Sun tolerance_Part shade" => "Part shade",
+  attribute_list => "Edible\x{ab}\x{bb}No\x{ab}\x{bb}Habit\x{ab}\x{bb}Shrub\x{ab}\x{bb}Kind\x{ab}\x{bb}Plant\x{ab}\x{bb}Native\x{ab}\x{bb}No\x{ab}\x{bb}Sun_tolerance\x{ab}\x{bb}Full sun\x{ab}\x{bb}Sun_tolerance\x{ab}\x{bb}Part shade",
+  common_name => "Plectranthus caninus",
+  csrf_token => "b5302cfa802b73b192cec5626d5d085ef523ae32",
+  errors => {},
+  height => "",
+  image_1_file => "Plectranthus.caninus.1.jpg",
+  image_1_text => "Flowers, from a garden down the road.<br>My plant was too shaded to flower",
+  image_4_file => "Plectranthus.caninus.4.jpg",
+  image_4_text => "New bud, again, slowly opening",
+  image_list => "image_1\x{ab}\x{bb}Plectranthus.caninus.1.jpg\x{ab}\x{bb}Flowers, from a garden down the road.<br>My plant was too shaded to flower\x{ab}\x{bb}image_2\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_3\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_4\x{ab}\x{bb}Plectranthus.caninus.4.jpg\x{ab}\x{bb}New bud, again, slowly opening\x{ab}\x{bb}image_5\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_6\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_7\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_8\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_9\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_10\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_11\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_12\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_13\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_14\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_15\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_16\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_17\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_18\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_19\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_20\x{ab}\x{bb}\x{ab}\x{bb}",
+  message => "All fields were validated successfully",
+  notes => "This is an attractive member of the mint family originates from South Africa and is particulary hardy.\nLovely long-lasting purple flower spikes year round.\n40cm x 40cm.\nSupplier: Rippon Lea Estate.",
+  publish => "Yes",
+  scientific_name => "Plectranthus caninus",
+  success => "Yes",
+  url_1 => "https://en.wikipedia.org/wiki/Plectranthus_caninus",
+  url_list => "url_1\x{ab}\x{bb}https://en.wikipedia.org/wiki/Plectranthus_caninus\x{ab}\x{bb}url_2\x{ab}\x{bb}\x{ab}\x{bb}url_3\x{ab}\x{bb}\x{ab}\x{bb}url_4\x{ab}\x{bb}\x{ab}\x{bb}url_5\x{ab}\x{bb}\x{ab}\x{bb}url_6\x{ab}\x{bb}\x{ab}\x{bb}url_7\x{ab}\x{bb}\x{ab}\x{bb}url_8\x{ab}\x{bb}\x{ab}\x{bb}url_9\x{ab}\x{bb}\x{ab}\x{bb}url_10\x{ab}\x{bb}",
+  width => "",
+}
+
+[2019-02-03 15:08:27.03683] [20252] [debug] Validate: success
+[2019-02-03 15:08:27.03689] [20252] [debug] Database.update_flower(). Entered
+[2019-02-03 15:08:27.03790] [20252] [debug] Database.add_flower(). On file: Yes (id: 163)
+[2019-02-03 15:08:27.03823] [20252] [info] flower: {
+  aliases => "Coleus canina, Dogsbane",
+  common_name => "Plectranthus caninus",
+  height => "",
+  notes => "This is an attractive member of the mint family originates from South Africa and is particulary hardy.\nLovely long-lasting purple flower spikes year round.\n40cm x 40cm.\nSupplier: Rippon Lea Estate.",
+  publish => "Yes",
+  scientific_name => "Plectranthus caninus",
+  width => "",
+}
+
+[2019-02-03 15:08:27.03935] [20252] [info] user images: {
+  "Plectranthus.caninus.1.jpg" => {
+    description => "Flowers, from a garden down the road.<br>My plant was too shaded to flower",
+    order => 1,
+  },
+  "Plectranthus.caninus.4.jpg" => {
+    description => "New bud, again, slowly opening",
+    order => 4,
+  },
+}
+
+[2019-02-03 15:08:27.04039] [20252] [debug] status: OK. current_images: [
+  {
+    description => "Flowers, from a garden down the road.<br>My plant was too shaded to flower",
+    file_name => "Plectranthus.caninus.1.jpg",
+    id => 435,
+  },
+  {
+    description => "Leaves",
+    file_name => "Plectranthus.caninus.2.jpg",
+    id => 436,
+  },
+  {
+    description => "New bud",
+    file_name => "Plectranthus.caninus.3.jpg",
+    id => 437,
+  },
+  {
+    description => "New bud, again, slowly opening",
+    file_name => "Plectranthus.caninus.4.jpg",
+    id => 438,
+  },
+]
+
+[2019-02-03 15:08:27.04054] [20252] [info] urls: [
+  "https://en.wikipedia.org/wiki/Plectranthus_caninus",
+]
+
+[2019-02-03 15:08:27.04061] [20252] [info] Updating flower. id: 163
+[2019-02-03 15:08:27.04095] [20252] [debug] attribute_id: 811. hashref: {
+  attribute_type_id => 1,
+  flower_id => 163,
+  range => "No",
+}
+
+[2019-02-03 15:08:27.05743] [20252] [debug] attribute_id: 812. hashref: {
+  attribute_type_id => 2,
+  flower_id => 163,
+  range => "Shrub",
+}
+
+[2019-02-03 15:08:27.06764] [20252] [debug] attribute_id: 813. hashref: {
+  attribute_type_id => 3,
+  flower_id => 163,
+  range => "Plant",
+}
+
+[2019-02-03 15:08:27.07734] [20252] [debug] attribute_id: 814. hashref: {
+  attribute_type_id => 4,
+  flower_id => 163,
+  range => "No",
+}
+
+[2019-02-03 15:08:27.08844] [20252] [debug] attribute_id: 815. hashref: {
+  attribute_type_id => 5,
+  flower_id => 163,
+  range => "Part shade, Full sun",
+}
+
+[2019-02-03 15:08:27.09971] [20252] [debug] current_images: [
+  {
+    description => "Flowers, from a garden down the road.<br>My plant was too shaded to flower",
+    file_name => "Plectranthus.caninus.1.jpg",
+    id => 435,
+  },
+  {
+    description => "Leaves",
+    file_name => "Plectranthus.caninus.2.jpg",
+    id => 436,
+  },
+  {
+    description => "New bud",
+    file_name => "Plectranthus.caninus.3.jpg",
+    id => 437,
+  },
+  {
+    description => "New bud, again, slowly opening",
+    file_name => "Plectranthus.caninus.4.jpg",
+    id => 438,
+  },
+]
+
+[2019-02-03 15:08:27.09998] [20252] [debug] updated_images: {
+  "Plectranthus.caninus.1.jpg" => {
+    description => "Flowers, from a garden down the road.<br>My plant was too shaded to flower",
+    order => 1,
+  },
+  "Plectranthus.caninus.4.jpg" => {
+    description => "New bud, again, slowly opening",
+    order => 4,
+  },
+}
+
+[2019-02-03 15:08:27.59187] [20252] [debug] Existing images: [
+  {
+    description => "Flowers, from a garden down the road.<br>My plant was too shaded to flower",
+    file_name => "http://savage.net.au/Flowers/images/Plectranthus.caninus.1.jpg",
+    flower_id => 163,
+    id => 435,
+    raw_name => "Plectranthus.caninus.1.jpg",
+  },
+  {
+    description => "Leaves",
+    file_name => "http://savage.net.au/Flowers/images/Plectranthus.caninus.2.jpg",
+    flower_id => 163,
+    id => 436,
+    raw_name => "Plectranthus.caninus.2.jpg",
+  },
+  {
+    description => "New bud",
+    file_name => "http://savage.net.au/Flowers/images/Plectranthus.caninus.3.jpg",
+    flower_id => 163,
+    id => 437,
+    raw_name => "Plectranthus.caninus.3.jpg",
+  },
+  {
+    description => "New bud, again, slowly opening",
+    file_name => "http://savage.net.au/Flowers/images/Plectranthus.caninus.4.jpg",
+    flower_id => 163,
+    id => 438,
+    raw_name => "Plectranthus.caninus.4.jpg",
+  },
+]
+
+[2019-02-03 15:08:27.59201] [20252] [debug] Zap 0 due to match on Plectranthus.caninus.2.jpg
+[2019-02-03 15:08:27.59207] [20252] [debug] Zap 1 due to match on Plectranthus.caninus.2.jpg
+[2019-02-03 15:08:27.59212] [20252] [debug] Zap 2 due to match on Plectranthus.caninus.2.jpg
+[2019-02-03 15:08:27.59217] [20252] [debug] Zap 3 due to match on Plectranthus.caninus.2.jpg
+[2019-02-03 15:08:27.59277] [20252] [debug] Zap 3. Now images: [
+  {
+    description => "Flowers, from a garden down the road.<br>My plant was too shaded to flower",
+    file_name => "http://savage.net.au/Flowers/images/Plectranthus.caninus.1.jpg",
+    flower_id => 163,
+    id => 435,
+    raw_name => "Plectranthus.caninus.1.jpg",
+  },
+  {
+    description => "Leaves",
+    file_name => "http://savage.net.au/Flowers/images/Plectranthus.caninus.2.jpg",
+    flower_id => 163,
+    id => 436,
+    raw_name => "Plectranthus.caninus.2.jpg",
+  },
+  {
+    description => "New bud",
+    file_name => "http://savage.net.au/Flowers/images/Plectranthus.caninus.3.jpg",
+    flower_id => 163,
+    id => 437,
+    raw_name => "Plectranthus.caninus.3.jpg",
+  },
+]
+
+[2019-02-03 15:08:27.59285] [20252] [debug] Zap 0 due to match on Plectranthus.caninus.3.jpg
+[2019-02-03 15:08:27.59290] [20252] [debug] Zap 1 due to match on Plectranthus.caninus.3.jpg
+[2019-02-03 15:08:27.59295] [20252] [debug] Zap 2 due to match on Plectranthus.caninus.3.jpg
+[2019-02-03 15:08:27.59337] [20252] [debug] Zap 2. Now images: [
+  {
+    description => "Flowers, from a garden down the road.<br>My plant was too shaded to flower",
+    file_name => "http://savage.net.au/Flowers/images/Plectranthus.caninus.1.jpg",
+    flower_id => 163,
+    id => 435,
+    raw_name => "Plectranthus.caninus.1.jpg",
+  },
+  {
+    description => "Leaves",
+    file_name => "http://savage.net.au/Flowers/images/Plectranthus.caninus.2.jpg",
+    flower_id => 163,
+    id => 436,
+    raw_name => "Plectranthus.caninus.2.jpg",
+  },
+]
+
+[2019-02-03 15:08:27.59379] [20252] [debug] Existing images: [
+  {
+    description => "Flowers, from a garden down the road.<br>My plant was too shaded to flower",
+    file_name => "http://savage.net.au/Flowers/images/Plectranthus.caninus.1.jpg",
+    flower_id => 163,
+    id => 435,
+    raw_name => "Plectranthus.caninus.1.jpg",
+  },
+  {
+    description => "Leaves",
+    file_name => "http://savage.net.au/Flowers/images/Plectranthus.caninus.2.jpg",
+    flower_id => 163,
+    id => 436,
+    raw_name => "Plectranthus.caninus.2.jpg",
+  },
+]
+
+[2019-02-03 15:08:27.60342] [20252] [debug] Database.add_flower(). Leaving
+[2019-02-03 15:08:27.60360] [20252] [debug] Flower.format_details(...)
+[2019-02-03 15:08:27.60399] [20252] [debug] Rendering template "flower/process.html.ep"
+[2019-02-03 15:08:27.60644] [20252] [debug] 200 OK (0.605401s, 1.652/s)

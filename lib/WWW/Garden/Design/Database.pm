@@ -1030,8 +1030,9 @@ sub prepare_images
 	# because the code checks for 'file' and then assumes it was found then 'text' is processed.
 	# Get the user's image data.
 
-	my(@images);
-	my($key);
+	my($file_name);
+	my(%images);
+	my($sequence);
 	my($value);
 
 	for my $item (sort keys %$params)
@@ -1039,33 +1040,24 @@ sub prepare_images
 		next if ( ($item eq 'image_list') || ($item !~ /^image/) );
 
 		# Tokens:
-		# o undef	=> 'image'.
-		# o key		=> '1', etc.
-		# o value	=> 'file' or 'text'.
+		# o undef		=> 'image'.
+		# o sequence	=> '1', etc.
+		# o value		=> 'file' or 'text'.
 
-		(undef, $key, $value) = split(/_/, $item);
+		(undef, $sequence, $value) = split(/_/, $item);
 
 		if ($value eq 'file')
 		{
-			push @images, [$key, $$params{$item}, 'Placeholder'];
+			$file_name			= $$params{$item};
+			$images{$file_name}	= {description => 'Placeholder', order => $sequence};
 		}
 		else
 		{
-			$images[$#images][2] = $$params{$item};
+			$images{$file_name}{description} = $$params{$item};
 		}
 	}
 
-	$self -> logger -> info('user images: ' . Dumper(\@images) );
-
-	# Get all the existing images for this flower.
-
-	my($sql)			= 'select id, description, file_name from images where flower_id = ?';
-	my($current_images)	= [$self -> db -> query($sql, $flower_id) -> hashes -> each];
-	my($status)			= defined($current_images) ? 'OK' : 'Fail';
-
-	$self -> logger -> debug("status: $status. current_images: " . Dumper($current_images) );
-
-	return ([@images], $current_images);
+	return \%images;
 
 } # End of prepare_images.
 
@@ -2120,45 +2112,66 @@ sub update_attributes
 
 sub update_images
 {
-	my($self, $current_images, $flower_id, $images) = @_;
+	my($self, $flower_id, $updated_images) = @_;
 
-	$self -> logger -> debug('current_images: ' . Dumper($current_images) );
-	$self -> logger -> debug('user images: ' . Dumper($images) );
+	$self -> logger -> debug('updated_images: ' . Dumper($updated_images) );
 
-	# Reformat current images because we want to only retain images seen in the user's input.
+	# To start, if the flower is already in the db, find it.
 
-	my(%current_images);
+	my($flowers)		= $self -> read_flowers_table;
+	my($flower_index)	= -1;
+
+	if ($flower_id > 0)
+	{
+		for my $offset (0 .. $#$flowers)
+		{
+			if ($$flowers[$offset]{id} == $flower_id)
+			{
+				$flower_index = $offset;
+			}
+		}
+	}
+
+	$self -> logger -> debug('Existing images: ' . Dumper($$flowers[$flower_index]{images}) );
+
+	# Now to process the image list.
+	# If the image was current but is no longer used, remove it from the db, and from RAM.
+	# RAM here means Perl only, since the images are not stored in JS-managed RAM.
+
 	my($file_name);
+	my($offset2go);
+	my($temp_name, $temp_image);
 
-	for my $image (@$current_images)
+	for my $image (@$updated_images)
 	{
-		$current_images{$$image{file_name} } = $image;
+		$file_name	= $$image{file_name};
+		$offset2go	= undef;
+
+		for my $offset (0 .. $#{$$flowers[$flower_index]{images} })
+		{
+			$temp_image	= $$flowers[$flower_index]{images}[$offset];
+			$temp_name	= $$image{file_name} =~ s/.+\///r;
+
+			if ($temp_name eq $file_name)
+			{
+				$offset2go = $offset;
+
+				$self -> logger -> debug("Zap $offset2go due to match on $file_name");
+			}
+		}
+
+		if ($offset2go)
+		{
+			splice(@{$$flowers[$flower_index]{images} }, $offset2go, 1);
+
+			$self -> logger -> debug("Zap $offset2go. Now images: " . Dumper($$flowers[$flower_index]{images}) );
+		}
 	}
 
-	# Initialize %new_images with the user's input.
-	# This does mean that for new images, will not be an id.
-
-	my($hashref);
-	my(@new_images);
-
-	for my $image (sort{$$a[0] <=> $$b[0]} @$images)
-	{
-		push @new_images, {description => $$image[2], file_name => $$image[1]};
-	}
-
-	$self -> logger -> debug('new_images: ' . Dumper(@new_images) );
+	$self -> logger -> debug('Existing images: ' . Dumper($$flowers[$flower_index]{images}) );
 
 =pod
 
-		for my $current (@$current_images)
-		{
-			if ($$current{attribute_type_id} == $attribute_type_id)
-			{
-				$attribute_id = $$current{id};
-
-				last;
-			}
-		}
 
 		$hashref =
 		{
@@ -2237,7 +2250,7 @@ sub update_flower
 	$self -> logger -> info('flower: ' . Dumper($flower) );
 
 	my($attribute_type2id, $attributes, $current_attributes)	= $self -> prepare_attributes($defaults, $flower_id, $params);
-	my($images, $current_images)								= $self -> prepare_images($defaults, $flower_id, $params);
+	my($images)													= $self -> prepare_images($defaults, $flower_id, $params);
 
 	#$self -> logger -> debug('2: user attributes (with defaults): ' . Dumper($attributes) );
 
@@ -2275,7 +2288,7 @@ sub update_flower
 			my($transaction)	= $db -> begin;
 
 			$self -> update_attributes($attribute_type2id, $attributes, $current_attributes, $flower_id);
-			$self -> update_images($current_images, $flower_id, $images);
+			$self -> update_images($flower_id, $images);
 
 			$transaction -> commit;
 		};
