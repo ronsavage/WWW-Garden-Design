@@ -94,136 +94,6 @@ sub activity
 
 } # End of activity.
 
-# --------------------------------------------------
-#[2019-01-09 15:23:50.50007] [21870] [debug] Validated params: {
-#  aliases => "Black Coral Pea",
-#  attribute_Edible_No => "No",
-#  attribute_Habit_Vine => "Vine",
-#  attribute_Kind_Plant => "Plant",
-#  attribute_Native_Yes => "Yes",
-#  "attribute_Sun tolerance_Full sun" => "Full sun",
-#  "attribute_Sun tolerance_Part shade" => "Part shade",
-#  "attribute_Sun tolerance_Shade" => "Shade",
-#  attribute_list => "Edible\x{ab}\x{bb}No\x{ab}\x{bb}Habit\x{ab}\x{bb}Vine\x{ab}\x{bb}Kind\x{ab}\x{bb}Plant\x{ab}\x{bb}Native\x{ab}\x{bb}Yes\x{ab}\x{bb}Sun_tolerance\x{ab}\x{bb}Full sun\x{ab}\x{bb}Sun_tolerance\x{ab}\x{bb}Part shade\x{ab}\x{bb}Sun_tolerance\x{ab}\x{bb}Shade",
-#  common_name => "Kennedia nigricans",
-#  csrf_token => "f8efd6b6728302552ad9146fc381b100edebae92",
-#  errors => {},
-#  height => "",
-#  image_1_file => "Kennedia.nigricans.1.jpg",
-#  image_1_text => "Not quite open - no yellow",
-#  image_2_file => "Kennedia.nigricans.2.jpg",
-#  image_2_text => "Just open",
-#  image_3_file => "Kennedia.nigricans.3.jpg",
-#  image_3_text => "Flowers - black and yellow!",
-#  image_4_file => "Kennedia.nigricans.4.jpg",
-#  image_4_text => "Flowers",
-#  image_5_file => "Kennedia.nigricans.5.jpg",
-#  image_5_text => "Leaf",
-#  image_6_file => "Kennedia.nigricans.6.jpg",
-#  image_6_text => "Pod",
-#  image_7_file => "Kennedia.nigricans.7.jpg",
-#  image_7_text => "Leaf, about 7 years old.<br>Length: 18 cm (7 in)",
-#  image_list => "image_1\x{ab}\x{bb}Kennedia.nigricans.1.jpg\x{ab}\x{bb}Not quite open - no yellow\x{ab}\x{bb}image_2\x{ab}\x{bb}Kennedia.nigricans.2.jpg\x{ab}\x{bb}Just open\x{ab}\x{bb}image_3\x{ab}\x{bb}Kennedia.nigricans.3.jpg\x{ab}\x{bb}Flowers - black and yellow!\x{ab}\x{bb}image_4\x{ab}\x{bb}Kennedia.nigricans.4.jpg\x{ab}\x{bb}Flowers\x{ab}\x{bb}image_5\x{ab}\x{bb}Kennedia.nigricans.5.jpg\x{ab}\x{bb}Leaf\x{ab}\x{bb}image_6\x{ab}\x{bb}Kennedia.nigricans.6.jpg\x{ab}\x{bb}Pod\x{ab}\x{bb}image_7\x{ab}\x{bb}Kennedia.nigricans.7.jpg\x{ab}\x{bb}Leaf, about 7 years old.<br>Length: 18 cm (7 in)\x{ab}\x{bb}image_8\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_9\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_10\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_11\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_12\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_13\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_14\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_15\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_16\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_17\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_18\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_19\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_20\x{ab}\x{bb}\x{ab}\x{bb}",
-#  message => "All fields were validated successfully",
-#  notes => "A vigorous climber with twining stems carrying striking pea-flowers from Winter to Summer.\nThe violet-purple or black flowers have a greenish-yellow blotch.\nA hardy climber suitable for screening large areas.\nNot recommended for small areas or weak supporting frames.\nUseful groundcover for embankments.\nAttracts nectar feeding birds.\nBest grown in a sunny to partly shaded position in well-drained soil.\nTolerates periods of drought, light frost and poor soils.\nPrune after flowering to maintain compact growth.\nCultivate soil before planting.\nDig hole twice the width of the container.\nRemove plant from container and place into the hole so the soil level is the same as the surrounding ground.\nFill hole firmly and water in well even if the soil is moist.\nGood for coastal conditions.\nSupplier: <a href = 'http://www.kuranga.com.au/'>Kuranga Native Nursery</a>.",
-#  publish => "Yes",
-#  scientific_name => "Kennedia nigricans",
-#  success => "Yes",
-#  url_1 => "https://en.wikipedia.org/wiki/Kennedia_nigricans",
-#  url_2 => "https://en.wikipedia.org/wiki/Kennedia_rubicunda",
-#  url_list => "url_1\x{ab}\x{bb}https://en.wikipedia.org/wiki/Kennedia_nigricans\x{ab}\x{bb}url_2\x{ab}\x{bb}https://en.wikipedia.org/wiki/Kennedia_rubicunda\x{ab}\x{bb}url_3\x{ab}\x{bb}\x{ab}\x{bb}url_4\x{ab}\x{bb}\x{ab}\x{bb}url_5\x{ab}\x{bb}\x{ab}\x{bb}url_6\x{ab}\x{bb}\x{ab}\x{bb}url_7\x{ab}\x{bb}\x{ab}\x{bb}url_8\x{ab}\x{bb}\x{ab}\x{bb}url_9\x{ab}\x{bb}\x{ab}\x{bb}url_10\x{ab}\x{bb}",
-#  width => "",
-#}
-
-sub add_flower
-{
-	my($self, $defaults, $params) = @_;
-	my(@flower_columns)	= (qw/aliases common_name height notes publish scientific_name width/);
-	my($flower)			= {map{($_ => $$params{$_})} @flower_columns};
-
-	$self -> logger -> debug('Database.add_flower(). Entered');
-
-	# Is this plant on file?
-	# Value of $flower_id:
-	# o Hashref: on file. E.g.: {id => 106, scientific_name => "Kennedia beckxiana"}. So: Update.
-	# o undef => Not on file. So: Add.
-
-	my($key)		= "\U$$params{scientific_name}"; # \U => Convert to upper-case.
-	my($sql)		= 'select id, scientific_name from flowers where upper(scientific_name) like ?';
-	my($result)		= $self -> db -> query($sql, $key) -> hash;
-	my($flower_id)	= defined($result) ? $$result{id} : 0;
-
-	$self -> logger -> debug('Database.add_flower(). On file: ' . ($flower_id ? "Yes (id: $flower_id)" : 'No') );
-	$self -> logger -> info('flower: ' . Dumper($flower) );
-
-	my($attribute_type2id, $attributes, $current_attributes)	= $self -> prepare_attributes($defaults, $flower_id, $params);
-	my($images, $current_images)								= $self -> prepare_images($defaults, $flower_id, $params);
-
-	# Reformat urls prior to saving.
-
-	my(@urls);
-
-	for my $item (sort keys %$params)
-	{
-		next if ( ($item eq 'url_list') || ($item !~ /^url/) );
-
-		(undef, $key) = split(/_/, $item); # undef corresponds to 'url'.
-
-		push @urls, $$params{"url_$key"};
-	}
-
-	# Tables used:
-	# o attributes.
-	# o flowers.
-	# o images.
-	# o notes.
-	# o urls.
-
-	$self -> logger -> info('images: ' . Dumper($images) );
-	$self -> logger -> info('urls: ' . Dumper(\@urls) );
-
-	if ($flower_id)
-	{
-		# It's an update.
-
-		$self -> logger -> info("Updating flower. id: $flower_id");
-
-		eval
-		{
-			my($db)				= $self -> db;
-#			my($transaction)	= $db -> begin;
-
-			$self -> update_attribute($attribute_type2id, $attributes, $current_attributes, $flower_id);
-
-#			$transaction -> commit;
-		};
-	}
-	else
-	{
-		$self -> logger -> info('Adding flower.');
-
-		# It's an add.
-
-		eval
-		{
-#			my($db)				= $self -> db;
-#			my($transaction)	= $db -> begin;
-#			$flower_id			= $self -> insert('flowers', {});
-#			$self -> insert('attributes', {});
-#			$self -> insert('images', {});
-#			$self -> insert('notes', {});
-#			$self -> insert('urls', {});
-
-#			$transaction -> commit;
-		};
-	}
-
-	$self -> logger -> debug('Database.add_flower(). Leaving');
-
-	return '';
-
-} # End of add_flower.
-
 # -----------------------------------------------
 
 sub analyze_gardens_property_menu
@@ -1136,7 +1006,7 @@ sub prepare_attributes
 		}
 	}
 
-	#$self -> logger -> debug('user attributes (wih defaults): ' . Dumper(\%attributes) );
+	#$self -> logger -> debug('1: user attributes (with defaults): ' . Dumper(\%attributes) );
 
 	# Get all the existing attributes for this flower.
 
@@ -1168,7 +1038,12 @@ sub prepare_images
 	{
 		next if ( ($item eq 'image_list') || ($item !~ /^image/) );
 
-		(undef, $key, $value) = split(/_/, $item); # undef corresponds to 'image'.
+		# Tokens:
+		# o undef	=> 'image'.
+		# o key		=> '1', etc.
+		# o value	=> 'file' or 'text'.
+
+		(undef, $key, $value) = split(/_/, $item);
 
 		if ($value eq 'file')
 		{
@@ -1180,15 +1055,17 @@ sub prepare_images
 		}
 	}
 
+	$self -> logger -> info('user images: ' . Dumper(\@images) );
+
 	# Get all the existing images for this flower.
 
-	my($sql)			= 'select id from images where flower_id = ?';
+	my($sql)			= 'select id, description, file_name from images where flower_id = ?';
 	my($current_images)	= [$self -> db -> query($sql, $flower_id) -> hashes -> each];
 	my($status)			= defined($current_images) ? 'OK' : 'Fail';
 
 	$self -> logger -> debug("status: $status. current_images: " . Dumper($current_images) );
 
-	return ({@images}, $current_images);
+	return ([@images], $current_images);
 
 } # End of prepare_images.
 
@@ -2203,9 +2080,11 @@ sub trim
 
 # -----------------------------------------------
 
-sub update_attribute
+sub update_attributes
 {
 	my($self, $attribute_type2id, $attributes, $current_attributes, $flower_id) = @_;
+
+	#$self -> logger -> debug('3: user attributes (with defaults): ' . Dumper($attributes) );
 
 	my($attribute_id, $attribute_type_id);
 	my($hashref);
@@ -2216,9 +2095,12 @@ sub update_attribute
 
 		for my $current (@$current_attributes)
 		{
-			next if ($$current{attribute_type_id} != $attribute_type_id);
+			if ($$current{attribute_type_id} == $attribute_type_id)
+			{
+				$attribute_id = $$current{id};
 
-			$attribute_id = $$current{id};
+				last;
+			}
 		}
 
 		$hashref =
@@ -2229,11 +2111,205 @@ sub update_attribute
 		};
 
 		$self -> logger -> debug("attribute_id: $attribute_id. hashref: " . Dumper($hashref) );
-
 		$self -> update('attributes', $attribute_id, $hashref);
 	}
 
-} # End of update_attribute.
+} # End of update_attributes.
+
+# -----------------------------------------------
+
+sub update_images
+{
+	my($self, $current_images, $flower_id, $images) = @_;
+
+	$self -> logger -> debug('current_images: ' . Dumper($current_images) );
+	$self -> logger -> debug('user images: ' . Dumper($images) );
+
+	# Reformat current images because we want to only retain images seen in the user's input.
+
+	my(%current_images);
+	my($file_name);
+
+	for my $image (@$current_images)
+	{
+		$current_images{$$image{file_name} } = $image;
+	}
+
+	# Initialize %new_images with the user's input.
+	# This does mean that for new images, will not be an id.
+
+	my($hashref);
+	my(@new_images);
+
+	for my $image (sort{$$a[0] <=> $$b[0]} @$images)
+	{
+		push @new_images, {description => $$image[2], file_name => $$image[1]};
+	}
+
+	$self -> logger -> debug('new_images: ' . Dumper(@new_images) );
+
+=pod
+
+		for my $current (@$current_images)
+		{
+			if ($$current{attribute_type_id} == $attribute_type_id)
+			{
+				$attribute_id = $$current{id};
+
+				last;
+			}
+		}
+
+		$hashref =
+		{
+			attribute_type_id	=> $attribute_type_id,
+			flower_id			=> $flower_id,
+			range				=> $$attributes{$name}
+		};
+
+		$self -> logger -> debug("attribute_id: $attribute_id. hashref: " . Dumper($hashref) );
+		$self -> update('attributes', $attribute_id, $hashref);
+
+=cut
+
+} # End of update_images.
+
+# --------------------------------------------------
+#[2019-01-09 15:23:50.50007] [21870] [debug] Validated params: {
+#  aliases => "Black Coral Pea",
+#  attribute_Edible_No => "No",
+#  attribute_Habit_Vine => "Vine",
+#  attribute_Kind_Plant => "Plant",
+#  attribute_Native_Yes => "Yes",
+#  "attribute_Sun tolerance_Full sun" => "Full sun",
+#  "attribute_Sun tolerance_Part shade" => "Part shade",
+#  "attribute_Sun tolerance_Shade" => "Shade",
+#  attribute_list => "Edible\x{ab}\x{bb}No\x{ab}\x{bb}Habit\x{ab}\x{bb}Vine\x{ab}\x{bb}Kind\x{ab}\x{bb}Plant\x{ab}\x{bb}Native\x{ab}\x{bb}Yes\x{ab}\x{bb}Sun_tolerance\x{ab}\x{bb}Full sun\x{ab}\x{bb}Sun_tolerance\x{ab}\x{bb}Part shade\x{ab}\x{bb}Sun_tolerance\x{ab}\x{bb}Shade",
+#  common_name => "Kennedia nigricans",
+#  csrf_token => "f8efd6b6728302552ad9146fc381b100edebae92",
+#  errors => {},
+#  height => "",
+#  image_1_file => "Kennedia.nigricans.1.jpg",
+#  image_1_text => "Not quite open - no yellow",
+#  image_2_file => "Kennedia.nigricans.2.jpg",
+#  image_2_text => "Just open",
+#  image_3_file => "Kennedia.nigricans.3.jpg",
+#  image_3_text => "Flowers - black and yellow!",
+#  image_4_file => "Kennedia.nigricans.4.jpg",
+#  image_4_text => "Flowers",
+#  image_5_file => "Kennedia.nigricans.5.jpg",
+#  image_5_text => "Leaf",
+#  image_6_file => "Kennedia.nigricans.6.jpg",
+#  image_6_text => "Pod",
+#  image_7_file => "Kennedia.nigricans.7.jpg",
+#  image_7_text => "Leaf, about 7 years old.<br>Length: 18 cm (7 in)",
+#  image_list => "image_1\x{ab}\x{bb}Kennedia.nigricans.1.jpg\x{ab}\x{bb}Not quite open - no yellow\x{ab}\x{bb}image_2\x{ab}\x{bb}Kennedia.nigricans.2.jpg\x{ab}\x{bb}Just open\x{ab}\x{bb}image_3\x{ab}\x{bb}Kennedia.nigricans.3.jpg\x{ab}\x{bb}Flowers - black and yellow!\x{ab}\x{bb}image_4\x{ab}\x{bb}Kennedia.nigricans.4.jpg\x{ab}\x{bb}Flowers\x{ab}\x{bb}image_5\x{ab}\x{bb}Kennedia.nigricans.5.jpg\x{ab}\x{bb}Leaf\x{ab}\x{bb}image_6\x{ab}\x{bb}Kennedia.nigricans.6.jpg\x{ab}\x{bb}Pod\x{ab}\x{bb}image_7\x{ab}\x{bb}Kennedia.nigricans.7.jpg\x{ab}\x{bb}Leaf, about 7 years old.<br>Length: 18 cm (7 in)\x{ab}\x{bb}image_8\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_9\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_10\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_11\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_12\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_13\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_14\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_15\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_16\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_17\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_18\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_19\x{ab}\x{bb}\x{ab}\x{bb}\x{ab}\x{bb}image_20\x{ab}\x{bb}\x{ab}\x{bb}",
+#  message => "All fields were validated successfully",
+#  notes => "A vigorous climber with twining stems carrying striking pea-flowers from Winter to Summer.\nThe violet-purple or black flowers have a greenish-yellow blotch.\nA hardy climber suitable for screening large areas.\nNot recommended for small areas or weak supporting frames.\nUseful groundcover for embankments.\nAttracts nectar feeding birds.\nBest grown in a sunny to partly shaded position in well-drained soil.\nTolerates periods of drought, light frost and poor soils.\nPrune after flowering to maintain compact growth.\nCultivate soil before planting.\nDig hole twice the width of the container.\nRemove plant from container and place into the hole so the soil level is the same as the surrounding ground.\nFill hole firmly and water in well even if the soil is moist.\nGood for coastal conditions.\nSupplier: <a href = 'http://www.kuranga.com.au/'>Kuranga Native Nursery</a>.",
+#  publish => "Yes",
+#  scientific_name => "Kennedia nigricans",
+#  success => "Yes",
+#  url_1 => "https://en.wikipedia.org/wiki/Kennedia_nigricans",
+#  url_2 => "https://en.wikipedia.org/wiki/Kennedia_rubicunda",
+#  url_list => "url_1\x{ab}\x{bb}https://en.wikipedia.org/wiki/Kennedia_nigricans\x{ab}\x{bb}url_2\x{ab}\x{bb}https://en.wikipedia.org/wiki/Kennedia_rubicunda\x{ab}\x{bb}url_3\x{ab}\x{bb}\x{ab}\x{bb}url_4\x{ab}\x{bb}\x{ab}\x{bb}url_5\x{ab}\x{bb}\x{ab}\x{bb}url_6\x{ab}\x{bb}\x{ab}\x{bb}url_7\x{ab}\x{bb}\x{ab}\x{bb}url_8\x{ab}\x{bb}\x{ab}\x{bb}url_9\x{ab}\x{bb}\x{ab}\x{bb}url_10\x{ab}\x{bb}",
+#  width => "",
+#}
+
+sub update_flower
+{
+	my($self, $defaults, $params) = @_;
+	my(@flower_columns)	= (qw/aliases common_name height notes publish scientific_name width/);
+	my($flower)			= {map{($_ => $$params{$_})} @flower_columns};
+
+	$self -> logger -> debug('Database.update_flower(). Entered');
+
+	# Is this plant on file?
+	# Value of $flower_id:
+	# o Hashref: on file. E.g.: {id => 106, scientific_name => "Kennedia beckxiana"}. So: Update.
+	# o undef => Not on file. So: Add.
+
+	my($key)		= "\U$$params{scientific_name}"; # \U => Convert to upper-case.
+	my($sql)		= 'select id, scientific_name from flowers where upper(scientific_name) like ?';
+	my($result)		= $self -> db -> query($sql, $key) -> hash;
+	my($flower_id)	= defined($result) ? $$result{id} : 0;
+
+	$self -> logger -> debug('Database.add_flower(). On file: ' . ($flower_id ? "Yes (id: $flower_id)" : 'No') );
+	$self -> logger -> info('flower: ' . Dumper($flower) );
+
+	my($attribute_type2id, $attributes, $current_attributes)	= $self -> prepare_attributes($defaults, $flower_id, $params);
+	my($images, $current_images)								= $self -> prepare_images($defaults, $flower_id, $params);
+
+	#$self -> logger -> debug('2: user attributes (with defaults): ' . Dumper($attributes) );
+
+	# Reformat urls prior to saving.
+
+	my(@urls);
+
+	for my $item (sort keys %$params)
+	{
+		next if ( ($item eq 'url_list') || ($item !~ /^url/) );
+
+		(undef, $key) = split(/_/, $item); # undef corresponds to 'url'.
+
+		push @urls, $$params{"url_$key"};
+	}
+
+	# Tables used:
+	# o attributes.
+	# o flowers.
+	# o images.
+	# o notes.
+	# o urls.
+
+	$self -> logger -> info('urls: ' . Dumper(\@urls) );
+
+	if ($flower_id)
+	{
+		# It's an update.
+
+		$self -> logger -> info("Updating flower. id: $flower_id");
+
+		eval
+		{
+			my($db)				= $self -> db;
+			my($transaction)	= $db -> begin;
+
+			$self -> update_attributes($attribute_type2id, $attributes, $current_attributes, $flower_id);
+			$self -> update_images($current_images, $flower_id, $images);
+
+			$transaction -> commit;
+		};
+
+		if ($@)
+		{
+			$self -> logger -> info("Updating flower. id: $flower_id. Error: $@");
+		}
+	}
+	else
+	{
+		$self -> logger -> info('Adding flower.');
+
+		# It's an add.
+
+		eval
+		{
+#			my($db)				= $self -> db;
+#			my($transaction)	= $db -> begin;
+#			$flower_id			= $self -> insert('flowers', {});
+#			$self -> insert('attributes', {});
+#			$self -> insert('images', {});
+#			$self -> insert('notes', {});
+#			$self -> insert('urls', {});
+
+#			$transaction -> commit;
+		};
+	}
+
+	$self -> logger -> debug('Database.add_flower(). Leaving');
+
+	return '';
+
+} # End of update_flower.
 
 # --------------------------------------------------
 

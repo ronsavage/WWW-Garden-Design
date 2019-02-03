@@ -290,10 +290,10 @@ sub update
 {
 	my($self, $table_name, $id, $hashref) = @_;
 
-	${$self -> db -> update
+	$self -> db -> update
 	(
 		$table_name, {map{($_ => $$hashref{$_})} keys %$hashref}, {id => $id}
-	)};
+	);
 
 } # End of update.
 
