@@ -686,7 +686,7 @@ sub get_flower_by_id
 		# Return an arrayref of hashrefs.
 		# Note: $$flower{'notes'} is an array only ever containing 1 element.
 		# See also Export.notes2csv() around line 1398.
-		# See also JS function populate_details(flower_id) around line 1405.
+		# See also JS function populate_details(flower_id) around line 1280.
 		# In the JS search for the string 'array only ever'.
 
 		$$flower{$table_name} = $self -> read_flower_dependencies($table_name, $$flower{id});
@@ -2071,6 +2071,7 @@ sub trim
 } # End of trim.
 
 # -----------------------------------------------
+# Warning: This sub is called as part of a transaction.
 
 sub update_attributes
 {
@@ -2109,6 +2110,7 @@ sub update_attributes
 } # End of update_attributes.
 
 # -----------------------------------------------
+# Warning: This sub is called as part of a transaction.
 
 sub update_images
 {
@@ -2160,84 +2162,73 @@ sub update_images
 
 	$self -> logger -> debug('2 updated_images: ' . Dumper($updated_images) );
 
-	eval
+	my($image_table)	= 'images';
+	my($tx)				= $self -> db -> begin;
+
+	# 1: Delete obsolete images.
+
+	for $id (@id2delete)
 	{
-		my($image_table) = 'images';
+		$self -> logger -> debug("Delete. id: $$id[1]. offset: $$id[0]");
 
-		my($tx) = $self -> db -> begin;
+#		$self -> db -> delete($image_table, {id => $$id[1]});
+	}
 
-		# 1: Delete obsolete images.
+	# 2: Add new images.
 
-		for $id (@id2delete)
+	my($description);
+	my($fields);
+	my($image_id);
+	my($offset);
+
+	for $file_name (sort keys %$updated_images)
+	{
+		$description	= $$updated_images{$file_name}{description};
+		$id				= $$updated_images{$file_name}{id};		# But new images won't have ids.
+		$offset			= $$updated_images{$file_name}{offset};	# But new images won't have offsets.
+
+		if ($id)
 		{
-			$self -> logger -> debug("Delete. id: $$id[1]. offset: $$id[0]");
+			# if the description changed, save it.
 
-#			$self -> db -> delete($image_table, {id => $$id[1]});
-		}
-
-		# 2: Add new images.
-
-		my($description);
-		my($fields);
-		my($image_id);
-		my($offset);
-
-		for $file_name (sort keys %$updated_images)
-		{
-			$description	= $$updated_images{$file_name}{description};
-			$id				= $$updated_images{$file_name}{id};		# But new images won't have ids.
-			$offset			= $$updated_images{$file_name}{offset};	# But new images won't have offsets.
-
-			if ($id)
-			{
-				# if the description changed, save it.
-
-				if ($description ne $$flowers[$flower_index]{images}[$offset]{description})
-				{
-					$fields =
-					{
-						description	=> $description,
-					};
-
-					$self -> logger -> debug("Update. id: $id. description: $description");
-
-#					$image_id = $self -> db -> update
-#					(
-#						$image_table,
-#						$fields,
-#						{id => $id}
-#					);
-				}
-			}
-			else
+			if ($description ne $$flowers[$flower_index]{images}[$offset]{description})
 			{
 				$fields =
 				{
 					description	=> $description,
-					file_name	=> $file_name,
-					flower_id	=> $flower_id,
 				};
 
-				$self -> logger -> debug("Insert. file_name: $file_name. flower_id: $flower_id. "
-					. "description: $description");
+				$self -> logger -> debug("Update. id: $id. description: $description");
 
-#				$image_id = $self -> db -> insert
+#				$image_id = $self -> db -> update
 #				(
 #					$image_table,
 #					$fields,
-#					{returning => 'id'}
-#				) -> hash -> {id};
-#
-#				$self -> logger -> debug("Insert. New image id: $image_id");
+#					{id => $id}
+#				);
 			}
 		}
+		else
+		{
+			$fields =
+			{
+				description	=> $description,
+				file_name	=> $file_name,
+				flower_id	=> $flower_id,
+			};
 
-		$tx -> commit;
-	};
+			$self -> logger -> debug("Insert. file_name: $file_name. flower_id: $flower_id. "
+			. "description: $description");
 
-	if ($@)
-	{
-		$self -> logger -> debug("update_images(). Transaction failed. \@\$: $@");
+#			$image_id = $self -> db -> insert
+#			(
+#				$image_table,
+#				$fields,
+#				{returning => 'id'}
+#			) -> hash -> {id};
+#
+#			$self -> logger -> debug("Insert. New image id: $image_id");
+		}
 	}
 
 } # End of update_images.
@@ -2331,11 +2322,15 @@ sub update_flower
 
 	$self -> logger -> info('urls: ' . Dumper(\@urls) );
 
+	my($packet) = {};
+
 	if ($flower_id)
 	{
 		# It's an update.
 
 		$self -> logger -> info("Updating flower. id: $flower_id");
+
+		$packet{action} = 'Update';
 
 		eval
 		{
@@ -2350,14 +2345,22 @@ sub update_flower
 
 		if ($@)
 		{
-			$self -> logger -> info("Updating flower. id: $flower_id. Error: $@");
+			$packet{message} = $@;
+
+			$self -> logger -> info("Error updating flower. id: $flower_id. Message: $@");
+		}
+		else
+		{
+			$packet{message} = 'Success';
 		}
 	}
 	else
 	{
+		# It's an insert.
+
 		$self -> logger -> info('Adding flower.');
 
-		# It's an add.
+		$packet{action} = 'Insert';
 
 		eval
 		{
@@ -2370,12 +2373,23 @@ sub update_flower
 #			$self -> insert('urls', {});
 
 #			$transaction -> commit;
+
 		};
+		if ($@)
+		{
+			$packet{message} = $@;
+
+			$self -> logger -> info("Error inserting flower. Message: $@");
+		}
+		else
+		{
+			$packet{message} = 'Success';
+		}
 	}
 
 	$self -> logger -> debug('Database.add_flower(). Leaving');
 
-	return '';
+	return $packet;
 
 } # End of update_flower.
 

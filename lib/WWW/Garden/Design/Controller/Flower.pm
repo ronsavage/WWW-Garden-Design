@@ -80,20 +80,16 @@ sub process
 
 	if ($$params{success} eq 'Yes')
 	{
-		$self -> app -> log -> debug('Validate: success');
+		my($packet) = $$defaults{db} -> update_flower($defaults, $params);
 
-		$$defaults{db} -> update_flower($defaults, $params);
-
-		$self -> stash(error	=> undef);
 		$self -> stash(details	=> $self -> format_details($params) );
+		$self -> stash(error	=> undef);
 		$self -> stash(message	=> $$params{message});
 	}
 	else
 	{
-		$self -> app -> log -> debug('Validate: failure');
-
-		$self -> stash(error	=> $self -> format_errors($params) );
 		$self -> stash(details	=> '');
+		$self -> stash(error	=> $self -> format_errors($params) );
 		$self -> stash(message	=> $$params{message});
 		$self -> app -> log -> error($$params{message});
 	}
