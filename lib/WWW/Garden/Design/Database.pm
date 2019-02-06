@@ -2114,8 +2114,6 @@ sub update_images
 {
 	my($self, $flower_id, $updated_images) = @_;
 
-	$self -> logger -> debug('1 updated_images: ' . Dumper($updated_images) );
-
 	# To start, if the flower is already in the db, find it.
 
 	my($flowers) = $self -> read_flowers_table;
@@ -2134,44 +2132,113 @@ sub update_images
 	}
 
 	$self -> logger -> debug('Existing images: ' . Dumper($$flowers[$flower_index]{images}) );
+	$self -> logger -> debug('1 updated_images: ' . Dumper($updated_images) );
 
 	# Now to process the image list.
 	# If the image was current but is no longer used, remove it from the db, and from RAM.
 	# RAM here means Perl only, since the images are not stored in JS-managed RAM.
 
-	my(@offset2go);
-	my($temp_name, $temp_image);
+	my($file_name);
+	my($image_hash, $id, @id2delete);
 
 	for my $offset (0 .. $#{$$flowers[$flower_index]{images} })
 	{
-		$temp_image	= $$flowers[$flower_index]{images}[$offset];
-		$temp_name	= $$temp_image{file_name} =~ s/.+\///r; # Zap https://domain/.../.
+		$image_hash	= $$flowers[$flower_index]{images}[$offset];
+		$file_name	= $$image_hash{file_name} =~ s/.+\///r; # Zap https://domain/.../.
+		$id			= $$image_hash{id};	# But new images won't have ids.
 
-		if ($$updated_images{$temp_name})
+		if ($$updated_images{$file_name})
 		{
-			$$updated_images{$temp_name}{id} = $$temp_image{id}; # But new images won't have ids.
+			$$updated_images{$file_name}{id}		= $id;		# But new images won't have ids.
+			$$updated_images{$file_name}{offset}	= $offset;	# But new images won't have offsets.
 		}
 		else
 		{
-			push @offset2go, $offset;
+			push @id2delete, [$offset, $id];
 		}
 	}
 
 	$self -> logger -> debug('2 updated_images: ' . Dumper($updated_images) );
 
-=pod
+	eval
+	{
+		my($image_table) = 'images';
 
-		$hashref =
+		my($tx) = $self -> db -> begin;
+
+		# 1: Delete obsolete images.
+
+		for $id (@id2delete)
 		{
-			attribute_type_id	=> $attribute_type_id,
-			flower_id			=> $flower_id,
-			range				=> $$attributes{$name}
-		};
+			$self -> logger -> debug("Delete. id: $$id[1]. offset: $$id[0]");
 
-		$self -> logger -> debug("attribute_id: $attribute_id. hashref: " . Dumper($hashref) );
-		$self -> update('attributes', $attribute_id, $hashref);
+#			$self -> db -> delete($image_table, {id => $$id[1]});
+		}
 
-=cut
+		# 2: Add new images.
+
+		my($description);
+		my($fields);
+		my($image_id);
+		my($offset);
+
+		for $file_name (sort keys %$updated_images)
+		{
+			$description	= $$updated_images{$file_name}{description};
+			$id				= $$updated_images{$file_name}{id};		# But new images won't have ids.
+			$offset			= $$updated_images{$file_name}{offset};	# But new images won't have offsets.
+
+			if ($id)
+			{
+				# if the description changed, save it.
+
+				if ($description ne $$flowers[$flower_index]{images}[$offset]{description})
+				{
+					$fields =
+					{
+						description	=> $description,
+					};
+
+					$self -> logger -> debug("Update. id: $id. description: $description");
+
+#					$image_id = $self -> db -> update
+#					(
+#						$image_table,
+#						$fields,
+#						{id => $id}
+#					);
+				}
+			}
+			else
+			{
+				$fields =
+				{
+					description	=> $description,
+					file_name	=> $file_name,
+					flower_id	=> $flower_id,
+				};
+
+				$self -> logger -> debug("Insert. file_name: $file_name. flower_id: $flower_id. "
+					. "description: $description");
+
+#				$image_id = $self -> db -> insert
+#				(
+#					$image_table,
+#					$fields,
+#					{returning => 'id'}
+#				) -> hash -> {id};
+#
+#				$self -> logger -> debug("Insert. New image id: $image_id");
+			}
+		}
+
+		$tx -> commit;
+	};
+
+	if ($@)
+	{
+		$self -> logger -> debug("update_images(). Transaction failed. \@\$: $@");
+	}
 
 } # End of update_images.
 
