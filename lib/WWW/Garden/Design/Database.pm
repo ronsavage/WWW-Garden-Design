@@ -2189,7 +2189,7 @@ sub update_images
 
 		if ($id)
 		{
-			# if the description changed, save it.
+			# Update description, if changed.
 
 			if ($description ne $$flowers[$flower_index]{images}[$offset]{description})
 			{
@@ -2210,6 +2210,8 @@ sub update_images
 		}
 		else
 		{
+			# Insert image and its description.
+
 			$fields =
 			{
 				description	=> $description,
