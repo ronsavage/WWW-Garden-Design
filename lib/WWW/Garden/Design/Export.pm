@@ -774,7 +774,6 @@ sub export_garden_layout
 				href	=> $$flower{web_page_url},
 				image	=> $$flower{thumbnail_url},
 				show	=> 'new', # Converted into -show by SVG::Grid.
-				target	=> '_blank',
 				title	=> "$$flower{scientific_name} / $$flower{common_name}",
 				x		=> $$location{x}, # Cell co-ord.
 				y		=> $$location{y}, # Cell co-ord.
@@ -843,7 +842,7 @@ EOS
 		next if ($garden_name eq $$garden{name});
 
 		push @garden_index, <<EOS;
-			<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/$$garden{name}.garden.layout.html'>The '$property_name - $$garden{name} Garden' Layout</a></td></tr>
+			<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/$$garden{name}.garden.layout.html' target => '_blank'>The '$property_name - $$garden{name} Garden' Layout</a></td></tr>
 EOS
 	}
 
