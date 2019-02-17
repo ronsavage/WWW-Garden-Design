@@ -983,7 +983,7 @@ EOS
 		next if ( ($$garden{property_name} ne $property_name) || ($$garden{property_publish} eq 'No') || ($$garden{publish} eq 'No') );
 
 		$html .= <<EOS;
-	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/$$garden{name}.garden.layout.html'>The '$property_name - $$garden{name} Garden' Layout, with clickable flower thumbnails in situ</a></td></tr>
+	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/$$garden{name}.garden.layout.html' target => '_blank'>The '$property_name - $$garden{name} Garden' Layout, with clickable flower thumbnails in situ</a></td></tr>
 EOS
 	}
 
