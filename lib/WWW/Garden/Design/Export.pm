@@ -774,7 +774,7 @@ sub export_garden_layout
 				href	=> $$flower{web_page_url},
 				image	=> $$flower{thumbnail_url},
 				show	=> 'new', # Converted into -show by SVG::Grid.
-				target	= '_blank',
+				target	=> '_blank',
 				title	=> "$$flower{scientific_name} / $$flower{common_name}",
 				x		=> $$location{x}, # Cell co-ord.
 				y		=> $$location{y}, # Cell co-ord.
