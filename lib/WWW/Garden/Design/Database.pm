@@ -2180,6 +2180,7 @@ sub update_images
 	my($fields);
 	my($image_id);
 	my($offset);
+	my($update_id);
 
 	for $file_name (sort keys %$updated_images)
 	{
@@ -2200,12 +2201,15 @@ sub update_images
 
 				$self -> logger -> debug("Update. id: $id. description: $description");
 
-#				$image_id = $self -> db -> update
-#				(
-#					$image_table,
-#					$fields,
-#					{id => $id}
-#				);
+				$update_id = $self -> db -> update
+				(
+					$image_table,
+					$fields,
+					{id => $id},
+					{returning => 'id'}
+				);
+
+				$self -> logger -> debug("Update. id: $id: returned id: " . Dumper($update_id) );
 			}
 		}
 		else
