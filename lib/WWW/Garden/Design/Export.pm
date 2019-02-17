@@ -969,9 +969,9 @@ sub export_layout_guide
 </table>
 <table align = 'center' summary = 'Table for a list of articles'>
 	<tr><td align='center'><br><span class = '$$constants{css_class4headings}' id = 'articles'>Articles</span></td></tr>
-	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/Garden.Design.Software.html'>2016-12-29: Garden Design Software</a></td></tr>
-	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/How.To.Net.Dwarf.Apples.html'>2016-01-03: How To Net Dwarf Apples</a></td></tr>
-	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/Protecting.Apples.From.Possums.html'>2013-12-08: Protecting Apples From Possums</a></td></tr>
+	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/Garden.Design.Software.html' target = '_blank'>2016-12-29: Garden Design Software</a></td></tr>
+	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/How.To.Net.Dwarf.Apples.html' target = '_blank'>2016-01-03: How To Net Dwarf Apples</a></td></tr>
+	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/html/Protecting.Apples.From.Possums.html' target = '_blank'>2013-12-08: Protecting Apples From Possums</a></td></tr>
 </table>
 <br>
 <table align = 'center' summary = 'Table for a list of garden layouts'>
@@ -991,15 +991,15 @@ EOS
 </table>
 <table align = 'center' summary = 'Table for a list of URLs'>
 	<tr><td align = 'center'><br><span class = '$$constants{css_class4headings}' id = 'various_urls'>Various Links</span></td></tr>
-	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/flowers.schema.svg'>The database schema</a></td></tr>
-	<tr><td><a href = 'https://datatables.net/'>The URL</a> of the free Javascript package which manages the HTML table below</td></tr>
-	<tr><td><a href = 'https://github.com/bgrins/spectrum'>The github repo</a> of the free Javascript package which provides a color spectrum...</td></tr>
-	<tr><td>... and the corresponding <a href = 'https://bgrins.github.io/spectrum/'>on-line docs</a></td></tr>
-	<tr><td><a href = 'http://nurseriesonline.com.au'>Nurseries OnLine - A great Australian website</a></td></tr>
-	<tr><td><a href = 'http://www.flowersforums.com/forums/'>Flower Forums - A great place to ask for help</a></td></tr>
-	<tr><td><a href = 'http://www.LabourofLoveLandscaping.com'>Some identification assistance kindly provided by Kate Kennedy Butler</a></td></tr>
-	<tr><td><a href = 'http://www.theplantlist.org/'>The Plant List - A working list of all plant species</a></td></tr>
-	<tr><td><a href = 'http://www.plantnet.org/'>PlantNet - Identify plants via pix</a></td></tr>
+	<tr><td><a href = '$$constants{homepage_url}$$constants{flower_url}/flowers.schema.svg' target = '_blank'>The database schema</a></td></tr>
+	<tr><td><a href = 'https://datatables.net/' target = '_blank'>The URL</a> of the free Javascript package which manages the HTML table below</td></tr>
+	<tr><td><a href = 'https://github.com/bgrins/spectrum' target = '_blank'>The github repo</a> of the free Javascript package which provides a color spectrum...</td></tr>
+	<tr><td>... and the corresponding <a href = 'https://bgrins.github.io/spectrum/' target = '_blank'>on-line docs</a></td></tr>
+	<tr><td><a href = 'http://nurseriesonline.com.au' target = '_blank'>Nurseries OnLine - A great Australian website</a></td></tr>
+	<tr><td><a href = 'http://www.flowersforums.com/forums/' target = '_blank'>Flower Forums - A great place to ask for help</a></td></tr>
+	<tr><td><a href = 'http://www.LabourofLoveLandscaping.com' target = '_blank'>Some identification assistance kindly provided by Kate Kennedy Butler</a></td></tr>
+	<tr><td><a href = 'http://www.theplantlist.org/' target = '_blank'>The Plant List - A working list of all plant species</a></td></tr>
+	<tr><td><a href = 'http://www.plantnet.org/' target = '_blank'>PlantNet - Identify plants via pix</a></td></tr>
 </table>
 EOS
 
