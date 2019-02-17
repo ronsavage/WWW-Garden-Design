@@ -2330,7 +2330,7 @@ sub update_flower
 
 		$self -> logger -> info("Updating flower. id: $flower_id");
 
-		$packet{action} = 'Update';
+		$$packet{action} = 'Update';
 
 		eval
 		{
@@ -2345,13 +2345,13 @@ sub update_flower
 
 		if ($@)
 		{
-			$packet{message} = $@;
+			$$packet{message} = $@;
 
 			$self -> logger -> info("Error updating flower. id: $flower_id. Message: $@");
 		}
 		else
 		{
-			$packet{message} = 'Success';
+			$$packet{message} = 'Success';
 		}
 	}
 	else
@@ -2360,7 +2360,7 @@ sub update_flower
 
 		$self -> logger -> info('Adding flower.');
 
-		$packet{action} = 'Insert';
+		$$packet{action} = 'Insert';
 
 		eval
 		{
@@ -2377,13 +2377,13 @@ sub update_flower
 		};
 		if ($@)
 		{
-			$packet{message} = $@;
+			$$packet{message} = $@;
 
 			$self -> logger -> info("Error inserting flower. Message: $@");
 		}
 		else
 		{
-			$packet{message} = 'Success';
+			$$packet{message} = 'Success';
 		}
 	}
 
