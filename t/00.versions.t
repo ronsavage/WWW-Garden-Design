@@ -84,7 +84,6 @@ my(@modules) = qw
 	Mojo::Pg
 	MojoX::Validate::Util
 	Moo
-	Moo::Role
 	Params::Classify
 	Path::Tiny
 	Pod::Usage
