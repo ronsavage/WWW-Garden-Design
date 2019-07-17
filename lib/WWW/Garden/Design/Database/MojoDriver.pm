@@ -1,21 +1,33 @@
-package WWW::Garden::Design::Database::Mojo;
+package WWW::Garden::Design::Database::MojoDriver;
 
 use Moo;
 
+use feature 'say';
 use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use Data::Dumper::Concise; # For Dumper().
 
-use Mojo::Collection;
+use DBI;
 
-use Types::Standard qw/Any/;
+use WWW::Garden::Design::Database::Mojo;
+use WWW::Garden::Design::Util::Config;
 
-has collection =>
+use Types::Standard qw/Any HashRef Object/;
+
+has config =>
+(
+	default		=> sub{WWW::Garden::Design::Util::Config -> new -> config},
+	is			=> 'rw',
+	isa			=> HashRef,
+	required	=> 0,
+);
+
+has db =>
 (
 	is			=> 'rw',
-	isa			=> Any,
+	isa			=> Object,
 	required	=> 0,
 );
 
@@ -32,9 +44,18 @@ our $VERSION = '0.96';
 
 sub BUILD
 {
-	my($self, $options)	= @_;
+	my($self)	= @_;
+	my($config)	= $self -> config;
+	my($attr)	=
+	{
+		AutoCommit 			=> $$config{AutoCommit},
+		mysql_enable_utf8	=> $$config{mysql_enable_utf8},	#Ignored if not using MySQL.
+		RaiseError 			=> $$config{RaiseError},
+		sqlite_unicode		=> $$config{sqlite_unicode},	#Ignored if not using SQLite.
+	};
 
-	$self -> dbh($$options{dbh});
+	$self -> dbh(DBI -> connect($$config{dsn}, $$config{username}, $$config{password}, $attr) );
+	$self -> db(WWW::Garden::Design::Database::Mojo -> new({dbh => $self -> dbh}) );
 
 } # End of BUILD;
 
@@ -42,9 +63,10 @@ sub BUILD
 
 sub arrays
 {
-	my($self, $sql) = @_;
+	my($self, $sql)	= @_;
+	my($collection)	= $self -> db -> arrays($sql);
 
-	return $self -> collection(Mojo::Collection -> new($self -> dbh -> selectall_array($sql) ) );
+	say Dumper(@$collection);
 
 } # End of arrays.
 
@@ -52,9 +74,10 @@ sub arrays
 
 sub hashes
 {
-	my($self, $sql, $key) = @_;
+	my($self, $sql, $key)	= @_;
+	my($collection)	= $self -> db -> hashes($sql, $key);
 
-	return $self -> collection(Mojo::Collection -> new($self -> dbh -> selectall_hashref($sql, $key) ) );
+	say Dumper(@$collection);
 
 } # End of hashes.
 
