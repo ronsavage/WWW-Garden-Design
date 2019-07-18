@@ -2,7 +2,7 @@ package WWW::Garden::Design::Database::MojoDriver;
 
 use Moo;
 
-use feature 'say';
+use feature ':5.10';
 use strict;
 use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
@@ -64,9 +64,8 @@ sub BUILD
 sub arrays
 {
 	my($self, $sql)	= @_;
-	my($collection)	= $self -> db -> arrays($sql);
 
-	say Dumper(@$collection);
+	return $self -> db -> arrays($sql);
 
 } # End of arrays.
 
@@ -75,9 +74,8 @@ sub arrays
 sub hashes
 {
 	my($self, $sql, $key)	= @_;
-	my($collection)	= $self -> db -> hashes($sql, $key);
 
-	say Dumper(@$collection);
+	return $self -> db -> hashes($sql, $key);
 
 } # End of hashes.
 
