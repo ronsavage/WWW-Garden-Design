@@ -22,18 +22,8 @@ sub BUILD
 {
 	my($self)	= @_;
 	my($config)	= $self -> config;
-	my($attr)	=
-	{
-		AutoCommit 			=> $$config{AutoCommit},
-		mysql_enable_utf8	=> $$config{mysql_enable_utf8},	#Ignored if not using MySQL.
-		RaiseError 			=> $$config{RaiseError},
-		sqlite_unicode		=> $$config{sqlite_unicode},	#Ignored if not using SQLite.
-	};
 
-	$self -> dbh(DBI -> connect($$config{dsn}, $$config{username}, $$config{password}, $attr) );
-	$self -> db(WWW::Garden::Design::Database::Mojo -> new($self -> dbh) );
-
-#	$self -> db(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
+	$self -> db(Mojo::Pg -> new("postgres://$$config{username}:$$config{password}\@localhost/flowers") -> db);
 	$self -> init_title_font($config); # Uses db()!
 
 } # End of BUILD;
