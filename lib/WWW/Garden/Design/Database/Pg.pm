@@ -14,8 +14,6 @@ use Imager;
 
 use Mojo::Pg;
 
-use Types::Standard qw/HashRef/;
-
 our $VERSION = '0.96';
 
 # -----------------------------------------------
