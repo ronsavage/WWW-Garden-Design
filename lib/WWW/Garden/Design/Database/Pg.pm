@@ -14,16 +14,7 @@ use Imager;
 
 use Mojo::Pg;
 
-use WWW::Garden::Design::Database::Mojo;
-
-use Types::Standard qw/Any/;
-
-has dbh =>
-(
-	is			=> 'rw',
-	isa			=> Any,
-	required	=> 0,
-);
+use Types::Standard qw/HashRef/;
 
 our $VERSION = '0.96';
 

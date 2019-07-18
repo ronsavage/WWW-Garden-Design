@@ -23,7 +23,7 @@
 "max_url_count","10"
 "search_thumbnail_size","120"
 "template_path","/home/ron/perl.modules/WWW-Garden-Design/public/assets/templates/www/garden/design"
-"tile_font_file","/usr/share/fonts/opentype/linux-libertine/LinLibertine_R.otf"
+"tile_font_file","/usr/share/fonts/truetype/freefont/FreeMono.ttf"
 "tile_font_size","16"
 "tile_hatch_pattern","dots16"
 "virtual_cell_count","99"
