@@ -21,8 +21,8 @@ use DBIx::Simple;
 use Encode;
 use File::Copy;
 use File::HomeDir;
-use File::Spec;
 use File::Slurper;
+use File::Spec;
 use FindBin;
 use Getopt::Long;
 use Imager;
@@ -31,6 +31,7 @@ use lib;
 use Lingua::EN::Inflect;
 use Mojolicious;
 use Mojo::Base;
+use Mojo::Collection;
 use Mojo::Log;
 use Mojo::Pg;
 use MojoX::Validate::Util;
@@ -70,8 +71,8 @@ my(@modules) = qw
 	Encode
 	File::Copy
 	File::HomeDir
-	File::Spec
 	File::Slurper
+	File::Spec
 	FindBin
 	Getopt::Long
 	Imager
@@ -80,6 +81,7 @@ my(@modules) = qw
 	Lingua::EN::Inflect
 	Mojolicious
 	Mojo::Base
+	Mojo::Collection
 	Mojo::Log
 	Mojo::Pg
 	MojoX::Validate::Util
