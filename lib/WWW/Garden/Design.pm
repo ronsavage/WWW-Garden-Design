@@ -1,6 +1,6 @@
 package WWW::Garden::Design;
 
-use utf8;
+use utf8; # See $$defaults{joiner} below.
 
 use Mojo::Base 'Mojolicious';
 

@@ -5,16 +5,15 @@ use Moo;
 use feature ':5.10';
 use strict;
 use warnings;
-use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use Data::Dumper::Concise; # For Dumper().
 
 use DBI;
 
+use Types::Standard qw/Any HashRef Object/;
+
 use WWW::Garden::Design::Database::Mojo;
 use WWW::Garden::Design::Util::Config;
-
-use Types::Standard qw/Any HashRef Object/;
 
 has config =>
 (

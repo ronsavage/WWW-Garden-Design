@@ -6,7 +6,6 @@ with 'WWW::Garden::Design::Database';
 
 use strict;
 use warnings;
-use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use Data::Dumper::Concise; # For Dumper().
 

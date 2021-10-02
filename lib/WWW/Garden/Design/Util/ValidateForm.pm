@@ -2,7 +2,6 @@ package WWW::Garden::Design::Util::ValidateForm;
 
 use strict;
 use warnings;
-use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use boolean;
 

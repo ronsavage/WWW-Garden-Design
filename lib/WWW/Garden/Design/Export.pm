@@ -5,16 +5,12 @@ use Moo::Role;
 use strict;
 use utf8;
 use warnings;
-use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 
 use boolean;
 
 use Encode 'encode';
 
 use File::Spec;
-
-use WWW::Garden::Design::Database;
-use WWW::Garden::Design::Util::Config;
 
 use Mojo::Log;
 
@@ -27,6 +23,7 @@ use Text::Xslate 'mark_raw';
 
 use Types::Standard qw/Any Int HashRef Str/;
 
+use WWW::Garden::Design::Database;
 use WWW::Garden::Design::Util::Config;
 
 has all =>
