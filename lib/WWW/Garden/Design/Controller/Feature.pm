@@ -6,7 +6,7 @@ use Data::Dumper::Concise; # For Dumper().
 
 use Moo;
 
-our $VERSION = '0.96';
+our $VERSION = '0.97';
 
 # -----------------------------------------------
 

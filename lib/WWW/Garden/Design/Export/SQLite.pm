@@ -11,7 +11,7 @@ use Mojo::Log;
 
 use WWW::Garden::Design::Database::SQLite;
 
-our $VERSION = '0.96';
+our $VERSION = '0.97';
 
 # -----------------------------------------------
 

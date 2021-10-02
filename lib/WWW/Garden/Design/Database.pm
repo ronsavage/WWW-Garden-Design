@@ -67,7 +67,7 @@ has title_font =>
 	required	=> 0,
 );
 
-our $VERSION = '0.96';
+our $VERSION = '0.97';
 
 # -----------------------------------------------
 
