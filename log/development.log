@@ -1,0 +1,25 @@
+[2021-10-05 18:46:37.37809] [26949] [info] Writing to data/flowers.csv
+[2021-10-05 18:46:37.38439] [26949] [info] Wrote data/flowers.csv
+[2021-10-05 18:46:37.38474] [26949] [info] Writing to data/attribute_types.csv
+[2021-10-05 18:46:37.38504] [26949] [info] Wrote data/attribute_types.csv
+[2021-10-05 18:46:37.38510] [26949] [info] Writing to data/attributes.csv
+[2021-10-05 18:46:37.40033] [26949] [info] Wrote data/attributes.csv
+[2021-10-05 18:46:37.40041] [26949] [info] Writing to data/constants.csv
+[2021-10-05 18:46:37.40113] [26949] [info] Wrote data/constants.csv
+[2021-10-05 18:46:37.40119] [26949] [info] Writing to data/images.csv
+[2021-10-05 18:46:37.41297] [26949] [info] Wrote data/images.csv
+[2021-10-05 18:46:37.41303] [26949] [info] Writing to data/notes.csv
+[2021-10-05 18:46:37.42857] [26949] [info] Wrote data/notes.csv
+[2021-10-05 18:46:37.42865] [26949] [info] Writing to data/urls.csv
+[2021-10-05 18:46:37.43339] [26949] [info] Wrote data/urls.csv
+[2021-10-05 18:46:37.45645] [26949] [info] Writing to data/features.csv
+[2021-10-05 18:46:37.45843] [26949] [info] Wrote data/features.csv
+[2021-10-05 18:46:37.45912] [26949] [info] Writing to data/properties.csv
+[2021-10-05 18:46:37.45973] [26949] [info] Wrote data/properties.csv
+[2021-10-05 18:46:37.46041] [26949] [info] Writing to data/gardens.csv
+[2021-10-05 18:46:37.46099] [26949] [info] Wrote data/gardens.csv
+[2021-10-05 18:46:37.46108] [26949] [info] Writing to data/flower_locations.csv
+[2021-10-05 18:46:37.46832] [26949] [info] Wrote data/flower_locations.csv
+[2021-10-05 18:46:37.46846] [26949] [info] Writing to data/feature_locations.csv
+[2021-10-05 18:46:37.47455] [26949] [info] Wrote data/feature_locations.csv
+[2021-10-05 18:46:37.47466] [26949] [info] Finished exporting all CSV files
