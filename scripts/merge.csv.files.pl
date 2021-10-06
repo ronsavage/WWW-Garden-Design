@@ -16,13 +16,12 @@ use Text::CSV;
 
 sub read_file
 {
-	my($path)	= @_;
-	my($count)	= 0;
-	my($csv)	= Text::CSV -> new;
+	my($path, $set)	= @_;
+	my($count)		= 0;
+	my($csv)		= Text::CSV -> new;
 
 	my($column_names);
 	my($row);
-	my(@set);
 
 	open(my $fh_in, '<:encoding(UTF-8)', $path) || die "Can't open($path): $!\n";
 
@@ -45,20 +44,21 @@ sub read_file
 			$$row{common_name}				= Encode::encode('UTF-8', $$row{common_name}, DIE_ON_ERR | LEAVE_SRC);
 			$$row{scientific_name}			= Encode::encode('UTF-8', $$row{scientific_name}, DIE_ON_ERR | LEAVE_SRC);
 
-			push @set, {%$row};
+			push @$set, {%$row};
 		}
 	}
 
 	close $fh_in;
 
-	return [@set];
-
 }	# End of read_file.
 
 # -----------------------------------------------
 
-my($garden)	= read_file('data/flowers.garden.csv');
-my($web)	= read_file('data/flowers.web.csv');
+my($garden)	= [];
+my($web)	= [];
+
+read_file('data/flowers.garden.csv', $garden);
+read_file('data/flowers.web.csv', $web);
 
 say 'Record counts: ', @{[$#$garden + 1]}, '. ', @{[$#$web + 1]};
 say "$_: " . Dumper($$garden[$_])	for (0 .. 1);
