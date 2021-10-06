@@ -107,10 +107,11 @@ say 'Record counts: ', @{[$#$garden + 1]}, '. ', @{[$#$pipe + 1]}, '. ', @{[$#$w
 #say "$_: " . Dumper($$pipe[$_])	for (0 .. 1);
 #say "$_: " . Dumper($$web[$_])		for (0 .. 1);
 
-my(%garden);
-my($common_name);
+my(@garden_names) = qw/common_name scientific_name aliases height width publish/;
 
-# "common_name","scientific_name","aliases","height","width","publish"
+my($common_name);
+my(%garden);
+my(%record);
 
 for (@$garden)
 {
@@ -121,20 +122,19 @@ for (@$garden)
 		say "Garden. Duplicate name: $common_name";
 	}
 
-	$garden{$common_name} =
+	%record = ();
+
+	for my $name (@garden_names)
 	{
-		aliases			=> $$_{aliases},
-		common_name		=> $common_name,
-		height			=> $$_{height},
-		publish			=> $$_{publish},
-		scientific_name	=> $$_{scientific_name},
-		width			=> $$_{width},
-	};
+		$record{$name} = $$_{$name};
+	}
+
+	$garden{$common_name} = {%record};
 }
 
 say 'Key counts: ', @{[scalar keys %garden]}, '. ';
 
-# id,aliases,common_name,height,max_height,max_width,min_height,min_width,pig_latin,publish,scientific_name,width
+my(@pipe_names) = qw/id aliases common_name height max_height max_width min_height min_width pig_latin publish scientific_name width/;
 
 my(%pipe);
 
@@ -147,25 +147,19 @@ for (@$pipe)
 		say "Pipe. Duplicate name: $common_name";
 	}
 
-	$pipe{$common_name} =
+	%record = ();
+
+	for my $name (@pipe_names)
 	{
-		aliases			=> $$_{aliases},
-		common_name		=> $common_name,
-		height			=> $$_{height},
-		max_height		=> $$_{max_height},
-		max_width		=> $$_{max_width},
-		min_height		=> $$_{min_height},
-		min_width		=> $$_{min_width},
-		pig_latin		=> $$_{pig_latin},
-		publish			=> $$_{publish},
-		scientific_name	=> $$_{scientific_name},
-		width			=> $$_{width},
-	};
+		$record{$name} = $$_{$name};
+	}
+
+	$pipe{$common_name} = {%record};
 }
 
 say 'Key counts: ', @{[scalar keys %pipe]}, '. ';
 
-# kind,scientific_name,common_name,aliases,planted,thumbnail
+my(@web_names) = qw/kind scientific_name common_name aliases planted thumbnail/;
 
 my(%web);
 
@@ -178,15 +172,14 @@ for (@$web)
 		say "Web. Duplicate name: $common_name";
 	}
 
-	$web{$common_name} =
+	%record = ();
+
+	for my $name (@web_names)
 	{
-		aliases			=> $$_{aliases},
-		common_name		=> $common_name,
-		kind			=> $$_{kind},
-		planted			=> $$_{planted},
-		scientific_name	=> $$_{scientific_name},
-		thumbnail		=> $$_{thumbnail},
-	};
+		$record{$name} = $$_{$name};
+	}
+
+	$web{$common_name} = {%record};
 }
 
 say 'Key counts: ', @{[scalar keys %web]}, '. ';
