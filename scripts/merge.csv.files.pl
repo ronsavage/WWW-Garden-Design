@@ -200,13 +200,13 @@ for my $key (keys %pipe)
 
 say 'Flowers key counts: ', @{[scalar keys %flowers]}, '. ';
 
-for my $key (keys %garden)
+for my $key (sort keys %garden)
 {
 	$common_name = $garden{$key}{common_name};
 
 	if (! defined $flowers{$common_name})
 	{
-		say "1 New common name: $common_name";
+		say "1 New common name: $common_name. $garden{$key}{scientific_name}";
 
 		$flowers{$common_name} = {};
 	}
@@ -220,13 +220,13 @@ for my $key (keys %garden)
 
 say 'Flowers key counts: ', @{[scalar keys %flowers]}, '. ';
 
-for my $key (keys %web)
+for my $key (sort keys %web)
 {
 	$common_name = $web{$key}{common_name};
 
 	if (! defined $flowers{$common_name})
 	{
-		say "2 New common name: $common_name";
+		say "2 New common name: $common_name. $web{$key}{scientific_name}";
 
 		$flowers{$common_name} = {};
 	}
