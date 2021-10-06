@@ -132,9 +132,9 @@ for (@$garden)
 	$garden{$common_name} = {%record};
 }
 
-say 'Key counts: ', @{[scalar keys %garden]}, '. ';
+say 'Garden key counts: ', @{[scalar keys %garden]}, '. ';
 
-my(@pipe_names) = qw/id aliases common_name height max_height max_width min_height min_width pig_latin publish scientific_name width/;
+my(@pipe_names) = qw/aliases common_name height max_height max_width min_height min_width pig_latin publish scientific_name width/;
 
 my(%pipe);
 
@@ -157,7 +157,7 @@ for (@$pipe)
 	$pipe{$common_name} = {%record};
 }
 
-say 'Key counts: ', @{[scalar keys %pipe]}, '. ';
+say 'Pipe key counts: ', @{[scalar keys %pipe]}, '. ';
 
 my(@web_names) = qw/kind scientific_name common_name aliases planted thumbnail/;
 
@@ -182,5 +182,60 @@ for (@$web)
 	$web{$common_name} = {%record};
 }
 
-say 'Key counts: ', @{[scalar keys %web]}, '. ';
+say 'Web key counts: ', @{[scalar keys %web]}, '. ';
 
+my(%flowers);
+
+for my $key (keys %pipe)
+{
+	$common_name			= $pipe{$key}{common_name};
+	$flowers{$common_name}	= {};
+
+	for my $name (@pipe_names)
+	{
+		$flowers{$common_name}{$name} = $$_{$name};
+	}
+
+}
+
+say 'Flowers key counts: ', @{[scalar keys %flowers]}, '. ';
+
+for my $key (keys %garden)
+{
+	$common_name = $garden{$key}{common_name};
+
+	if (! defined $flowers{$common_name})
+	{
+		say "1 New common name: $common_name";
+
+		$flowers{$common_name} = {};
+	}
+
+	for my $name (@garden_names)
+	{
+		$flowers{$common_name}{$name} = $$_{$name} if (! $flowers{$common_name}{$name});
+	}
+
+}
+
+say 'Flowers key counts: ', @{[scalar keys %flowers]}, '. ';
+
+for my $key (keys %web)
+{
+	$common_name = $web{$key}{common_name};
+
+	if (! defined $flowers{$common_name})
+	{
+		say "2 New common name: $common_name";
+
+		$flowers{$common_name} = {};
+	}
+
+	for my $name (@web_names)
+	{
+		$flowers{$common_name}{$name} = $$_{$name} if (! $flowers{$common_name}{$name});
+	}
+
+}
+
+say 'Flowers key counts: ', @{[scalar keys %flowers]}, '. ';

@@ -5,14 +5,14 @@ id,aliases,common_name,height,max_height,max_width,min_height,min_width,pig_lati
 4,'Angela',"Alstroemeria 1",,,,,,Alstroemeria.1,Yes,Alstroemeria
 5,"'Princess Lily Louise'","Alstroemeria 2",,,,,,Alstroemeria.2,Yes,Alstroemeria
 6,"Peruvian Lily","Alstroemeria 3",30cm,30,30,30,30,Alstroemeria.pulchella,Yes,"Alstroemeria pulchella",30cm
-7,"Pine Golden Pippin","Apple 1 - Pine Golden Pippin",,,,,,Malus.domestica.pine.golden.pippin,Yes,"Malus domestica 'Pine Golden Pippin'"
-8,"Pitmaston Pine","Apple 2 - Pitmaston Pine",,,,,,Malus.domestica.pitmaston.pine,Yes,"Malus domestica 'Pitmaston Pine'"
-9,,"Apple 3",8m,800,700,800,700,Malus.domestica.3,Yes,"Malus domestica 3",7m
-10,,"Apple 4 - Pinkabelle®",2m,200,100,200,100,Malus.domestica.pinkabelle,Yes,"Malus domestica Pinkabelle®",1m
-11,,"Apple 5 - Leprechaun",2m,200,100,200,100,Malus.domestica.leprechaun,Yes,"Malus domestica Leprechaun",1m
-12,,"Apple 6 - Pompink",3m,300,60,300,60,Malus.domestica.pompink,Yes,"Malus domestica Pompink",60cm
-13,,"Apple 7 - Harmony",3m,300,60,300,60,Malus.domestica.harmony,Yes,"Malus domestica Harmony",60cm
-14,,"Apple 8 - Pom-for-You",3m,300,60,300,60,Malus.domestica.pom-for-you,Yes,"Malus domestica Pom-for-You",60cm
+7,,"Pine Golden Pippin",,,,,,Malus.domestica.pine.golden.pippin,Yes,"Malus domestica 'Pine Golden Pippin'"
+8,,"Pitmaston Pine",,,,,,Malus.domestica.pitmaston.pine,Yes,"Malus domestica 'Pitmaston Pine'"
+9,,"Malus domestica 3",8m,800,700,800,700,Malus.domestica.3,Yes,"Malus domestica 3",7m
+10,,"Pinkabelle®",2m,200,100,200,100,Malus.domestica.pinkabelle,Yes,"Malus domestica Pinkabelle®",1m
+11,,"Leprechaun",2m,200,100,200,100,Malus.domestica.leprechaun,Yes,"Malus domestica Leprechaun",1m
+12,,"Pompink",3m,300,60,300,60,Malus.domestica.pompink,Yes,"Malus domestica Pompink",60cm
+13,,"Harmony",3m,300,60,300,60,Malus.domestica.harmony,Yes,"Malus domestica Harmony",60cm
+14,,"Pom-for-You",3m,300,60,300,60,Malus.domestica.pom-for-you,Yes,"Malus domestica Pom-for-You",60cm
 15,Columbine,"Aquilegia 1",,,,,,Aquilegia.mckana,Yes,"Aquilegia McKana"
 16,"Columbine, Granny's Bonnet","Aquilegia 2",,,,,,Aquilegia.flabellata.var.pumila.alba,Yes,"Aquilegia flabellata var. pumila alba"
 17,"Italian arum, Italian lords-and-ladies","Arum italicum",46cm,46,46,46,46,Arum.italicum,Yes,"Arum italicum",46cm
