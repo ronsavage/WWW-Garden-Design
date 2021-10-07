@@ -16,7 +16,7 @@ fi
 
 echo Checked ENV in populate.db.sh.
 
-perl -Ilib scripts/drop.tables.pl
+#perl -Ilib scripts/drop.tables.pl
 perl -Ilib scripts/create.tables.pl
 
 if [ "$FLOWER_DB" == "Pg" ]; then

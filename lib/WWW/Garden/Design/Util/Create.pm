@@ -158,7 +158,7 @@ create table $table_name
 id					$primary_key,
 attribute_type_id	int references attribute_types(id),
 flower_id			int references flowers(id),
-range				varchar(255) not null
+range				text not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);
@@ -177,8 +177,8 @@ sub create_attribute_types_table
 create table $table_name
 (
 id			$primary_key,
-name		varchar(255) not null,
-range		varchar(255) not null,
+name		text not null,
+range		text not null,
 sequence	integer not null
 ) $engine
 SQL
@@ -198,8 +198,8 @@ sub create_constants_table
 create table $table_name
 (
 id		$primary_key,
-name	varchar(255) not null,
-value	varchar(255) not null
+name	text not null,
+value	text not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);
@@ -241,9 +241,9 @@ sub create_features_table
 create table $table_name
 (
 id			$primary_key,
-hex_color	varchar(255) not null,
-name		varchar(255) not null,
-publish		varchar(255) not null
+hex_color	text not null,
+name		text not null,
+publish		text not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);
@@ -285,17 +285,20 @@ sub create_flowers_table
 create table $table_name
 (
 id				$primary_key,
-aliases			varchar(255) not null,
-common_name		varchar(255) not null,
-height			varchar(255) not null,
-max_height		varchar(255) not null,
-max_width		varchar(255) not null,
-min_height		varchar(255) not null,
-min_width		varchar(255) not null,
-pig_latin		varchar(255) not null,
-publish			varchar(255) not null,
-scientific_name	varchar(255) not null,
-width			varchar(255) not null
+aliases			text not null,
+common_name		text not null,
+height			text not null,
+kind			text not null,
+max_height		text not null,
+max_width		text not null,
+min_height		text not null,
+min_width		text not null,
+pig_latin		text not null,
+planted			text not null,
+publish			text not null,
+scientific_name	text not null,
+thumbnail		text not null,
+width			text not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);
@@ -315,9 +318,9 @@ create table $table_name
 (
 id			$primary_key,
 property_id	int references properties(id),
-description	varchar(255) not null,
-name		varchar(255) not null,
-publish		varchar(255) not null
+description	text not null,
+name		text not null,
+publish		text not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);
@@ -337,8 +340,8 @@ create table $table_name
 (
 id			$primary_key,
 flower_id	int references flowers(id),
-description	varchar(255) not null,
-file_name	varchar(255) not null
+description	text not null,
+file_name	text not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);
@@ -365,13 +368,13 @@ sub create_log_table
 create table $table_name
 (
 id			$primary_key,
-action		varchar(255) not null,
-context		varchar(255) not null,
-file_name	varchar(255) not null,
+action		text not null,
+context		text not null,
+file_name	text not null,
 key			integer not null,
-name		varchar(255) not null,
+name		text not null,
 note		text not null,
-outcome		varchar(255) not null,
+outcome		text not null,
 timestamp	timestamp $time_option not null default current_timestamp
 ) $engine
 SQL
@@ -411,9 +414,9 @@ sub create_properties_table
 create table $table_name
 (
 id			$primary_key,
-description	varchar(255) not null,
-name		varchar(255) not null,
-publish		varchar(255) not null
+description	text not null,
+name		text not null,
+publish		text not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);
@@ -433,7 +436,7 @@ create table $table_name
 (
 id			$primary_key,
 flower_id	int references flowers(id),
-url			varchar(255) not null
+url			text not null
 ) $engine
 SQL
 	$self -> report($table_name, 'Created', $result);

@@ -239,3 +239,30 @@ for my $key (sort keys %web)
 }
 
 say 'Flowers key counts: ', @{[scalar keys %flowers]}, '. ';
+
+my($item);
+my(%seen);
+
+for my $key (%flowers)
+{
+	$item = $flowers{$key};
+
+	for my $attr (keys %$item)
+	{
+		$$item{$attr}	= ''	if (! defined $$item{attr});
+		$seen{$attr}	= 0		if (! defined $seen{$attr});
+
+		$seen{$attr}++;
+	}
+
+	$flowers{$key} = $item;
+}
+
+say 'Flower attributes: ';
+
+my(@attr) = sort keys %seen;
+
+for my $key (@attr)
+{
+	say "$key: $seen{$key}";
+}
