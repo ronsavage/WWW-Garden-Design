@@ -25,7 +25,7 @@ sub read_csv_file
 	my($column_names);
 	my($item);
 
-	open(my $fh_in, '<:encoding(UTF-8)', $path) || die "Can't open($path): $!\n";
+	open(my $fh_in, '<', $path) || die "Can't open($path): $!\n";
 
 	while (my $line = $csv -> getline($fh_in) )
 	{
@@ -47,9 +47,9 @@ sub read_csv_file
 				say "$count: Reading $path. $$item{common_name}. $$item{scientific_name}";
 			}
 
-			$$item{aliases}			= Encode::encode('UTF-8', $$item{aliases}, DIE_ON_ERR | LEAVE_SRC);
-			$$item{common_name}		= Encode::encode('UTF-8', $$item{common_name}, DIE_ON_ERR | LEAVE_SRC);
-			$$item{scientific_name}	= Encode::encode('UTF-8', $$item{scientific_name}, DIE_ON_ERR | LEAVE_SRC);
+			#$$item{aliases}			= Encode::encode('UTF-8', $$item{aliases}, DIE_ON_ERR | LEAVE_SRC);
+			#$$item{common_name}		= Encode::encode('UTF-8', $$item{common_name}, DIE_ON_ERR | LEAVE_SRC);
+			#$$item{scientific_name}	= Encode::encode('UTF-8', $$item{scientific_name}, DIE_ON_ERR | LEAVE_SRC);
 
 			push @$set, {%$item};
 		}
@@ -112,7 +112,9 @@ sub write_csv_file
 
 	open(my $fh_out, ">:encoding(UTF_8)", $path);
 
-	$csv->say($fh_out, $column_names);
+	my($status) = $csv->say($fh_out, $column_names);
+
+	say "$count. status: $status";
 
 	for my $key (sort keys %$flowers)
 	{
@@ -121,23 +123,33 @@ sub write_csv_file
 		$item	= $$flowers{$key};
 		$row	= [map{$$item{$_} } @$column_names];
 
+		if ($$item{common_name} =~ /Pinkabelle/)
+		{
+			say "$count: Writing $path. $$item{common_name}. $$item{scientific_name}";
+		}
+
 		if (! defined $$row[4])
 		{
 			say "$count. Missing kind: ", join(', ', Dumper($item) );
 		}
+
+		# Encode aliases, common_name and scientific_name.
+
+		#$$row[0]	= Encode::encode('UTF-8', $$row[0], DIE_ON_ERR | LEAVE_SRC);
+		#$$row[1]	= Encode::encode('UTF-8', $$row[1], DIE_ON_ERR | LEAVE_SRC);
+		#$$row[11]	= Encode::encode('UTF-8', $$row[11], DIE_ON_ERR | LEAVE_SRC);
 
 		if ($$item{common_name} =~ /Pinkabelle/)
 		{
 			say "$count: Writing $path. $$item{common_name}. $$item{scientific_name}";
 		}
 
-		# Encode aliases, common_name and scientific_name.
+		$status = $csv->say($fh_out, $row);
 
-		$$row[0]	= Encode::encode('UTF-8', $$row[0], DIE_ON_ERR | LEAVE_SRC);
-		$$row[1]	= Encode::encode('UTF-8', $$row[1], DIE_ON_ERR | LEAVE_SRC);
-		$$row[11]	= Encode::encode('UTF-8', $$row[11], DIE_ON_ERR | LEAVE_SRC);
-
-		$csv->say($fh_out, $row);
+		if (! $status)
+		{
+			say "$count: Failed to write $$row[1]. $$row[11]";
+		}
 	}
 
 	close $fh_out;
