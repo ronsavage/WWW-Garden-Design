@@ -23,7 +23,7 @@ sub read_csv_file
 	my($csv)		= Text::CSV -> new;
 
 	my($column_names);
-	my($row);
+	my($item);
 
 	open(my $fh_in, '<:encoding(UTF-8)', $path) || die "Can't open($path): $!\n";
 
@@ -39,14 +39,19 @@ sub read_csv_file
 		{
 			for my $i (0 .. $#$column_names)
 			{
-				$$row{$$column_names[$i]} = $$line[$i];
+				$$item{$$column_names[$i]} = $$line[$i];
 			}
 
-			$$row{aliases}			= Encode::encode('UTF-8', $$row{aliases}, DIE_ON_ERR | LEAVE_SRC);
-			$$row{common_name}		= Encode::encode('UTF-8', $$row{common_name}, DIE_ON_ERR | LEAVE_SRC);
-			$$row{scientific_name}	= Encode::encode('UTF-8', $$row{scientific_name}, DIE_ON_ERR | LEAVE_SRC);
+			if ($$item{common_name} =~ /Pinkabelle/)
+			{
+				say "$count: Reading $path. $$item{common_name}. $$item{scientific_name}";
+			}
 
-			push @$set, {%$row};
+			$$item{aliases}			= Encode::encode('UTF-8', $$item{aliases}, DIE_ON_ERR | LEAVE_SRC);
+			$$item{common_name}		= Encode::encode('UTF-8', $$item{common_name}, DIE_ON_ERR | LEAVE_SRC);
+			$$item{scientific_name}	= Encode::encode('UTF-8', $$item{scientific_name}, DIE_ON_ERR | LEAVE_SRC);
+
+			push @$set, {%$item};
 		}
 	}
 
@@ -109,8 +114,6 @@ sub write_csv_file
 
 	$csv->say($fh_out, $column_names);
 
-	say "$count: ", join(', ', @$column_names);
-
 	for my $key (sort keys %$flowers)
 	{
 		$count++;
@@ -121,6 +124,11 @@ sub write_csv_file
 		if (! defined $$row[4])
 		{
 			say "$count. Missing kind: ", join(', ', Dumper($item) );
+		}
+
+		if ($$item{common_name} =~ /Pinkabelle/)
+		{
+			say "$count: Writing $path. $$item{common_name}. $$item{scientific_name}";
 		}
 
 		# Encode aliases, common_name and scientific_name.
@@ -295,6 +303,11 @@ for my $key (keys %flowers)
 	$count++;
 
 	$item = $flowers{$key};
+
+	if ($$item{common_name} =~ /Pinkabelle/)
+	{
+		say "$count: Flowers. $$item{common_name}. $$item{scientific_name}";
+	}
 
 	for my $attr (@attr)
 	{

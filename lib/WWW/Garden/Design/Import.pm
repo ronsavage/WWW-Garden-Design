@@ -485,8 +485,6 @@ sub populate_flowers_table
 	my($self, $path, $csv, $flower_keys) = @_;
 	my($table_name) = 'flowers';
 
-	say "Start populating the $table_name table";
-
 	open(my $io, '<', $path) || die "Can't open($path): $!\n";
 
 	$csv -> column_names($csv -> getline($io) );
@@ -525,7 +523,7 @@ sub populate_flowers_table
 
 		if ($scientific_name{$scientific_name})
 		{
-			$self -> db -> logger -> info("$table_name. Row: $count. Duplicate scientific_name: $scientific_name");
+			$self -> db -> logger -> warning("$table_name. Row: $count. Duplicate scientific_name: $scientific_name");
 		}
 
 		$common_name{$common_name}			= 0 if (! $common_name{$common_name});
@@ -562,6 +560,7 @@ sub populate_flowers_table
 				planted			=> $$item{planted},
 				publish			=> $$item{publish},
 				scientific_name	=> $scientific_name,
+				thumbnail		=> $$item{thumbnail},
 				width			=> $$item{width},
 			}
 		);
@@ -570,8 +569,6 @@ sub populate_flowers_table
 	close $io;
 
 	$self -> db -> logger -> info("Read $count records into '$table_name'");
-
-	say"Finish populating the $table_name table";
 
 }	# End of populate_flowers_table.
 
