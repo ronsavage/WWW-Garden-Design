@@ -2,6 +2,7 @@ package WWW::Garden::Design::Import;
 
 use Moo::Role;
 
+use 5.30.0;
 use strict;
 use warnings;
 
@@ -484,6 +485,8 @@ sub populate_flowers_table
 	my($self, $path, $csv, $flower_keys) = @_;
 	my($table_name) = 'flowers';
 
+	say "Start populating the $table_name table";
+
 	open(my $io, '<', $path) || die "Can't open($path): $!\n";
 
 	$csv -> column_names($csv -> getline($io) );
@@ -504,7 +507,7 @@ sub populate_flowers_table
 
 		# Column names are tested in alphabetical order.
 
-		for my $column (qw/aliases common_name height publish scientific_name width/)
+		for my $column (qw/aliases common_name height kind max_height max_width min_height min_width pig_latin planted publish scientific_name thumbnail width/)
 		{
 			if (! defined $$item{$column})
 			{
@@ -540,20 +543,25 @@ sub populate_flowers_table
 		$pig_latin					= $self -> db -> scientific_name2pig_latin($lines, $scientific_name, $common_name);
 		($max_height, $min_height)	= $self -> validate_size($table_name, $count, lc $self -> db -> trim($$item{height}), lc $self -> db -> trim($$item{height}) );
 		($max_width, $min_width)	= $self -> validate_size($table_name, $count, lc $self -> db -> trim($$item{width}), lc $self -> db -> trim($$item{width}) );
+
+#	qw/aliases common_name height kind max_height max_width min_height min_width pig_latin planted publish scientific_name thumbnail width/;
+
 		$$flower_keys{$common_name}	= $self -> db -> insert_hashref
 		(
 			$table_name,
 			{
 				aliases			=> $$item{aliases},
 				common_name		=> $common_name,
-				pig_latin		=> $pig_latin,
-				scientific_name	=> $scientific_name,
 				height			=> $$item{height},
+				kind			=> $$item{kind},
 				max_height		=> $max_height,
 				min_height		=> $min_height,
 				max_width		=> $max_width,
 				min_width		=> $min_width,
+				pig_latin		=> $pig_latin,
+				planted			=> $$item{planted},
 				publish			=> $$item{publish},
+				scientific_name	=> $scientific_name,
 				width			=> $$item{width},
 			}
 		);
@@ -562,6 +570,8 @@ sub populate_flowers_table
 	close $io;
 
 	$self -> db -> logger -> info("Read $count records into '$table_name'");
+
+	say"Finish populating the $table_name table";
 
 }	# End of populate_flowers_table.
 

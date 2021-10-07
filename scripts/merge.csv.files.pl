@@ -94,6 +94,50 @@ sub read_pipe_file
 
 # -----------------------------------------------
 
+sub write_csv_file
+{
+	my($path, $flowers, $column_names)	= @_;
+	my($count)	= 0;
+	my($csv)	= Text::CSV -> new;
+
+	say "Writing $path";
+
+	my($item);
+	my($row);
+
+	open(my $fh_out, ">:encoding(UTF_8)", $path);
+
+	$csv->say($fh_out, $column_names);
+
+	say "$count: ", join(', ', @$column_names);
+
+	for my $key (sort keys %$flowers)
+	{
+		$count++;
+
+		$item	= $$flowers{$key};
+		$row	= [map{$$item{$_} } @$column_names];
+
+		if (! defined $$row[4])
+		{
+			say "$count. Missing kind: ", join(', ', Dumper($item) );
+		}
+
+		# Encode aliases, common_name and scientific_name.
+
+		$$row[0]	= Encode::encode('UTF-8', $$row[0], DIE_ON_ERR | LEAVE_SRC);
+		$$row[1]	= Encode::encode('UTF-8', $$row[1], DIE_ON_ERR | LEAVE_SRC);
+		$$row[11]	= Encode::encode('UTF-8', $$row[11], DIE_ON_ERR | LEAVE_SRC);
+
+		$csv->say($fh_out, $row);
+	}
+
+	close $fh_out;
+
+}	# End of write_csv_file.
+
+# -----------------------------------------------
+
 my($garden)	= [];
 my($pipe)	= [];
 my($web)	= [];
@@ -193,7 +237,7 @@ for my $key (keys %pipe)
 
 	for my $name (@pipe_names)
 	{
-		$flowers{$common_name}{$name} = $$_{$name};
+		$flowers{$common_name}{$name} = $pipe{$key}{$name};
 	}
 
 }
@@ -213,7 +257,7 @@ for my $key (sort keys %garden)
 
 	for my $name (@garden_names)
 	{
-		$flowers{$common_name}{$name} = $$_{$name} if (! $flowers{$common_name}{$name});
+		$flowers{$common_name}{$name} = $garden{$key}{$name} if (! $flowers{$common_name}{$name});
 	}
 
 }
@@ -233,23 +277,28 @@ for my $key (sort keys %web)
 
 	for my $name (@web_names)
 	{
-		$flowers{$common_name}{$name} = $$_{$name} if (! $flowers{$common_name}{$name});
+		$flowers{$common_name}{$name} = $web{$key}{$name} if (! $flowers{$common_name}{$name});
 	}
 
 }
 
 say 'Flowers key counts: ', @{[scalar keys %flowers]}, '. ';
 
+my(@attr)	= qw/aliases common_name height kind max_height max_width min_height min_width pig_latin planted publish scientific_name thumbnail width/;
+my($count)	= 0;
+
 my($item);
 my(%seen);
 
-for my $key (%flowers)
+for my $key (keys %flowers)
 {
+	$count++;
+
 	$item = $flowers{$key};
 
-	for my $attr (keys %$item)
+	for my $attr (@attr)
 	{
-		$$item{$attr}	= ''	if (! defined $$item{attr});
+		$$item{$attr}	= ''	if (! defined $$item{$attr});
 		$seen{$attr}	= 0		if (! defined $seen{$attr});
 
 		$seen{$attr}++;
@@ -260,9 +309,9 @@ for my $key (%flowers)
 
 say 'Flower attributes: ';
 
-my(@attr) = sort keys %seen;
-
 for my $key (@attr)
 {
 	say "$key: $seen{$key}";
 }
+
+write_csv_file('data/flowers.csv', \%flowers, \@attr);

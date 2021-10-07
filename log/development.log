@@ -1,72 +1,44 @@
-[2021-10-05 18:46:37.37809] [26949] [info] Writing to data/flowers.csv
-[2021-10-05 18:46:37.38439] [26949] [info] Wrote data/flowers.csv
-[2021-10-05 18:46:37.38474] [26949] [info] Writing to data/attribute_types.csv
-[2021-10-05 18:46:37.38504] [26949] [info] Wrote data/attribute_types.csv
-[2021-10-05 18:46:37.38510] [26949] [info] Writing to data/attributes.csv
-[2021-10-05 18:46:37.40033] [26949] [info] Wrote data/attributes.csv
-[2021-10-05 18:46:37.40041] [26949] [info] Writing to data/constants.csv
-[2021-10-05 18:46:37.40113] [26949] [info] Wrote data/constants.csv
-[2021-10-05 18:46:37.40119] [26949] [info] Writing to data/images.csv
-[2021-10-05 18:46:37.41297] [26949] [info] Wrote data/images.csv
-[2021-10-05 18:46:37.41303] [26949] [info] Writing to data/notes.csv
-[2021-10-05 18:46:37.42857] [26949] [info] Wrote data/notes.csv
-[2021-10-05 18:46:37.42865] [26949] [info] Writing to data/urls.csv
-[2021-10-05 18:46:37.43339] [26949] [info] Wrote data/urls.csv
-[2021-10-05 18:46:37.45645] [26949] [info] Writing to data/features.csv
-[2021-10-05 18:46:37.45843] [26949] [info] Wrote data/features.csv
-[2021-10-05 18:46:37.45912] [26949] [info] Writing to data/properties.csv
-[2021-10-05 18:46:37.45973] [26949] [info] Wrote data/properties.csv
-[2021-10-05 18:46:37.46041] [26949] [info] Writing to data/gardens.csv
-[2021-10-05 18:46:37.46099] [26949] [info] Wrote data/gardens.csv
-[2021-10-05 18:46:37.46108] [26949] [info] Writing to data/flower_locations.csv
-[2021-10-05 18:46:37.46832] [26949] [info] Wrote data/flower_locations.csv
-[2021-10-05 18:46:37.46846] [26949] [info] Writing to data/feature_locations.csv
-[2021-10-05 18:46:37.47455] [26949] [info] Wrote data/feature_locations.csv
-[2021-10-05 18:46:37.47466] [26949] [info] Finished exporting all CSV files
-[2021-10-07 11:39:38.90214] [789] [debug] Dropped table 'urls'
-[2021-10-07 11:39:38.95925] [789] [debug] Dropped table 'images'
-[2021-10-07 11:39:39.01585] [789] [debug] Dropped table 'notes'
-[2021-10-07 11:39:39.08428] [789] [debug] Dropped table 'feature_locations'
-[2021-10-07 11:39:39.14729] [789] [debug] Dropped table 'features'
-[2021-10-07 11:39:39.21093] [789] [debug] Dropped table 'flower_locations'
-[2021-10-07 11:39:39.27438] [789] [debug] Dropped table 'gardens'
-[2021-10-07 11:39:39.34093] [789] [debug] Dropped table 'properties'
-[2021-10-07 11:39:39.41155] [789] [debug] Dropped table 'attributes'
-[2021-10-07 11:39:39.47454] [789] [debug] Dropped table 'attribute_types'
-[2021-10-07 11:39:39.54699] [789] [debug] Dropped table 'flowers'
-[2021-10-07 11:39:39.61821] [789] [debug] Dropped table 'constants'
-[2021-10-07 11:39:39.61867] [789] [debug] Dropped table 'log'
-[2021-10-07 11:39:39.93665] [790] [debug] Created table 'log'
-[2021-10-07 11:39:40.01397] [790] [debug] Created table 'constants'
-[2021-10-07 11:39:40.33525] [791] [debug] Populating all tables
-[2021-10-07 11:41:33.45606] [842] [debug] Created table 'log'
-[2021-10-07 11:41:33.51778] [842] [debug] Created table 'constants'
-[2021-10-07 11:41:33.57979] [842] [debug] Created table 'flowers'
-[2021-10-07 11:41:33.63654] [842] [debug] Created table 'attribute_types'
-[2021-10-07 11:41:33.70042] [842] [debug] Created table 'attributes'
-[2021-10-07 11:41:33.76006] [842] [debug] Created table 'properties'
-[2021-10-07 11:41:33.81812] [842] [debug] Created table 'gardens'
-[2021-10-07 11:41:33.88214] [842] [debug] Created table 'flower_locations'
-[2021-10-07 11:41:33.94007] [842] [debug] Created table 'features'
-[2021-10-07 11:41:34.00061] [842] [debug] Created table 'feature_locations'
-[2021-10-07 11:41:34.06211] [842] [debug] Created table 'notes'
-[2021-10-07 11:41:34.11712] [842] [debug] Created table 'images'
-[2021-10-07 11:41:34.17826] [842] [debug] Created table 'urls'
-[2021-10-07 11:41:34.48825] [843] [debug] Populating all tables
-[2021-10-07 11:41:34.74226] [843] [info] Read 4 records into 'attribute_types'
-[2021-10-07 11:41:36.69597] [843] [info] Read 32 records into 'constants'
-[2021-10-07 11:41:36.72996] [843] [info] flowers. Row: 3. Duplicate scientific_name: Mandevilla hybrid
-[2021-10-07 11:41:36.73004] [843] [info] flowers. Row: 5. Duplicate scientific_name: Alstroemeria
-[2021-10-07 11:41:36.73012] [843] [info] flowers. Row: 20. Duplicate scientific_name: Azalea
-[2021-10-07 11:41:36.73016] [843] [info] flowers. Row: 21. Duplicate scientific_name: Azalea
-[2021-10-07 11:41:36.73032] [843] [info] flowers. Row: 79. Duplicate scientific_name: Fuchsia
-[2021-10-07 11:41:36.73037] [843] [info] flowers. Row: 87. Duplicate scientific_name: Grevillea
-[2021-10-07 11:41:36.73041] [843] [info] flowers. Row: 88. Duplicate scientific_name: Grevillea
-[2021-10-07 11:41:36.73044] [843] [info] flowers. Row: 89. Duplicate scientific_name: Grevillea
-[2021-10-07 11:41:36.73049] [843] [info] flowers. Row: 95. Duplicate scientific_name: Heuchera
-[2021-10-07 11:41:36.73053] [843] [info] flowers. Row: 99. Duplicate scientific_name: Alyogyne huegelii
-[2021-10-07 11:41:36.73064] [843] [info] flowers. Row: 141. Duplicate scientific_name: Plectranthus ecklonii
-[2021-10-07 11:41:36.73069] [843] [info] flowers. Row: 148. Duplicate scientific_name: Rosa
-[2021-10-07 11:41:36.73073] [843] [info] flowers. Row: 149. Duplicate scientific_name: Rosa
-[2021-10-07 11:41:36.73076] [843] [info] flowers. Row: 150. Duplicate scientific_name: Rosa
-[2021-10-07 11:41:36.73080] [843] [info] flowers. Row: 154. Duplicate scientific_name: Salvia involucrata
+[2021-10-07 13:41:07.94099] [1876] [debug] Dropped table 'urls'
+[2021-10-07 13:41:08.01878] [1876] [debug] Dropped table 'images'
+[2021-10-07 13:41:08.09534] [1876] [debug] Dropped table 'notes'
+[2021-10-07 13:41:08.17165] [1876] [debug] Dropped table 'feature_locations'
+[2021-10-07 13:41:08.24799] [1876] [debug] Dropped table 'features'
+[2021-10-07 13:41:08.32536] [1876] [debug] Dropped table 'flower_locations'
+[2021-10-07 13:41:08.40443] [1876] [debug] Dropped table 'gardens'
+[2021-10-07 13:41:08.48348] [1876] [debug] Dropped table 'properties'
+[2021-10-07 13:41:08.56258] [1876] [debug] Dropped table 'attributes'
+[2021-10-07 13:41:08.64139] [1876] [debug] Dropped table 'attribute_types'
+[2021-10-07 13:41:08.72049] [1876] [debug] Dropped table 'flowers'
+[2021-10-07 13:41:08.79959] [1876] [debug] Dropped table 'constants'
+[2021-10-07 13:41:08.87824] [1876] [debug] Dropped table 'log'
+[2021-10-07 13:41:09.20084] [1877] [debug] Created table 'log'
+[2021-10-07 13:41:09.27861] [1877] [debug] Created table 'constants'
+[2021-10-07 13:41:09.35779] [1877] [debug] Created table 'flowers'
+[2021-10-07 13:41:09.43650] [1877] [debug] Created table 'attribute_types'
+[2021-10-07 13:41:09.51376] [1877] [debug] Created table 'attributes'
+[2021-10-07 13:41:09.59103] [1877] [debug] Created table 'properties'
+[2021-10-07 13:41:09.66811] [1877] [debug] Created table 'gardens'
+[2021-10-07 13:41:09.74574] [1877] [debug] Created table 'flower_locations'
+[2021-10-07 13:41:09.82453] [1877] [debug] Created table 'features'
+[2021-10-07 13:41:09.90316] [1877] [debug] Created table 'feature_locations'
+[2021-10-07 13:41:09.98228] [1877] [debug] Created table 'notes'
+[2021-10-07 13:41:10.06101] [1877] [debug] Created table 'images'
+[2021-10-07 13:41:10.14016] [1877] [debug] Created table 'urls'
+[2021-10-07 13:41:10.45125] [1878] [debug] Populating all tables
+[2021-10-07 13:41:10.78090] [1878] [info] Read 4 records into 'attribute_types'
+[2021-10-07 13:41:13.33045] [1878] [info] Read 32 records into 'constants'
+[2021-10-07 13:41:13.38446] [1878] [info] flowers. Row: 3. Duplicate scientific_name: Mandevilla hybrid
+[2021-10-07 13:41:13.38457] [1878] [info] flowers. Row: 5. Duplicate scientific_name: Alstroemeria
+[2021-10-07 13:41:13.38463] [1878] [info] flowers. Row: 12. Duplicate scientific_name: Azalea
+[2021-10-07 13:41:13.38467] [1878] [info] flowers. Row: 13. Duplicate scientific_name: Azalea
+[2021-10-07 13:41:13.38488] [1878] [info] flowers. Row: 73. Duplicate scientific_name: Fuchsia
+[2021-10-07 13:41:13.38494] [1878] [info] flowers. Row: 82. Duplicate scientific_name: Grevillea
+[2021-10-07 13:41:13.38497] [1878] [info] flowers. Row: 83. Duplicate scientific_name: Grevillea
+[2021-10-07 13:41:13.38501] [1878] [info] flowers. Row: 84. Duplicate scientific_name: Grevillea
+[2021-10-07 13:41:13.38507] [1878] [info] flowers. Row: 94. Duplicate scientific_name: Alyogyne huegelii
+[2021-10-07 13:41:13.38524] [1878] [info] flowers. Row: 148. Duplicate scientific_name: Plectranthus ecklonii
+[2021-10-07 13:41:13.38531] [1878] [info] flowers. Row: 161. Duplicate scientific_name: Rosa
+[2021-10-07 13:41:13.38534] [1878] [info] flowers. Row: 162. Duplicate scientific_name: Rosa
+[2021-10-07 13:41:13.38538] [1878] [info] flowers. Row: 163. Duplicate scientific_name: Rosa
+[2021-10-07 13:41:13.38542] [1878] [info] flowers. Row: 168. Duplicate scientific_name: Salvia involucrata
+[2021-10-07 13:41:13.38549] [1878] [info] flowers. Row: 179. Duplicate scientific_name: Citrus x latifolia

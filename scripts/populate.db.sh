@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo Entered populate.db.sh.
-
 if [ "$FLOWER_DB" == "Pg" ]; then
 	echo Deleting, creating and populating the Pg flowers database
 else
@@ -14,9 +12,9 @@ else
 	fi
 fi
 
-echo Checked ENV in populate.db.sh.
+cp /dev/null log/development.log
 
-#perl -Ilib scripts/drop.tables.pl
+perl -Ilib scripts/drop.tables.pl
 perl -Ilib scripts/create.tables.pl
 
 if [ "$FLOWER_DB" == "Pg" ]; then
