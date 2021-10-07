@@ -1,338 +1,84 @@
-[2021-10-07 15:37:31.62425] [2346] [debug] Dropped table 'urls'
-[2021-10-07 15:37:31.70481] [2346] [debug] Dropped table 'images'
-[2021-10-07 15:37:31.78437] [2346] [debug] Dropped table 'notes'
-[2021-10-07 15:37:31.86412] [2346] [debug] Dropped table 'feature_locations'
-[2021-10-07 15:37:31.94331] [2346] [debug] Dropped table 'features'
-[2021-10-07 15:37:32.02329] [2346] [debug] Dropped table 'flower_locations'
-[2021-10-07 15:37:32.10328] [2346] [debug] Dropped table 'gardens'
-[2021-10-07 15:37:32.18238] [2346] [debug] Dropped table 'properties'
-[2021-10-07 15:37:32.28646] [2346] [debug] Dropped table 'attributes'
-[2021-10-07 15:37:32.36671] [2346] [debug] Dropped table 'attribute_types'
-[2021-10-07 15:37:32.44525] [2346] [debug] Dropped table 'flowers'
-[2021-10-07 15:37:32.52517] [2346] [debug] Dropped table 'constants'
-[2021-10-07 15:37:32.60451] [2346] [debug] Dropped table 'log'
-[2021-10-07 15:37:32.93317] [2347] [debug] Created table 'log'
-[2021-10-07 15:37:33.01306] [2347] [debug] Created table 'constants'
-[2021-10-07 15:37:33.09041] [2347] [debug] Created table 'flowers'
-[2021-10-07 15:37:33.16820] [2347] [debug] Created table 'attribute_types'
-[2021-10-07 15:37:33.24620] [2347] [debug] Created table 'attributes'
-[2021-10-07 15:37:33.32509] [2347] [debug] Created table 'properties'
-[2021-10-07 15:37:33.40324] [2347] [debug] Created table 'gardens'
-[2021-10-07 15:37:33.48150] [2347] [debug] Created table 'flower_locations'
-[2021-10-07 15:37:33.55915] [2347] [debug] Created table 'features'
-[2021-10-07 15:37:33.63713] [2347] [debug] Created table 'feature_locations'
-[2021-10-07 15:37:33.71505] [2347] [debug] Created table 'notes'
-[2021-10-07 15:37:33.79315] [2347] [debug] Created table 'images'
-[2021-10-07 15:37:33.87160] [2347] [debug] Created table 'urls'
-[2021-10-07 15:37:34.19368] [2348] [debug] Populating all tables
-[2021-10-07 15:37:34.52610] [2348] [info] Read 4 records into 'attribute_types'
-[2021-10-07 15:37:37.10861] [2348] [info] Read 32 records into 'constants'
-[2021-10-07 15:37:37.16180] [2348] [info] flowers. Row: 3. Duplicate scientific_name: Mandevilla hybrid
-[2021-10-07 15:37:37.16192] [2348] [info] flowers. Row: 5. Duplicate scientific_name: Alstroemeria
-[2021-10-07 15:37:37.16199] [2348] [info] flowers. Row: 12. Duplicate scientific_name: Azalea
-[2021-10-07 15:37:37.16204] [2348] [info] flowers. Row: 13. Duplicate scientific_name: Azalea
-[2021-10-07 15:37:37.16230] [2348] [info] flowers. Row: 73. Duplicate scientific_name: Fuchsia
-[2021-10-07 15:37:37.16237] [2348] [info] flowers. Row: 82. Duplicate scientific_name: Grevillea
-[2021-10-07 15:37:37.16241] [2348] [info] flowers. Row: 83. Duplicate scientific_name: Grevillea
-[2021-10-07 15:37:37.16244] [2348] [info] flowers. Row: 84. Duplicate scientific_name: Grevillea
-[2021-10-07 15:37:37.16251] [2348] [info] flowers. Row: 94. Duplicate scientific_name: Alyogyne huegelii
-[2021-10-07 15:37:37.16270] [2348] [info] flowers. Row: 148. Duplicate scientific_name: Plectranthus ecklonii
-[2021-10-07 15:37:37.16277] [2348] [info] flowers. Row: 161. Duplicate scientific_name: Rosa
-[2021-10-07 15:37:37.16281] [2348] [info] flowers. Row: 162. Duplicate scientific_name: Rosa
-[2021-10-07 15:37:37.16284] [2348] [info] flowers. Row: 163. Duplicate scientific_name: Rosa
-[2021-10-07 15:37:37.16289] [2348] [info] flowers. Row: 168. Duplicate scientific_name: Salvia involucrata
-[2021-10-07 15:37:37.16296] [2348] [info] flowers. Row: 179. Duplicate scientific_name: Citrus x latifolia
-[2021-10-07 15:37:54.02119] [2348] [info] Read 201 records into 'flowers'
-[2021-10-07 15:37:54.18181] [2348] [info] Read 2 records into 'properties'
-[2021-10-07 15:37:54.34338] [2348] [info] Read 2 records into 'gardens'
-[2021-10-07 15:37:54.86440] [2348] [error] flower_locations. Row: 7. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:37:54.86468] [2348] [error] flower_locations. Row: 8. Common name 'Apple 2 - Pitmaston Pine' undefined
-[2021-10-07 15:37:54.86486] [2348] [error] flower_locations. Row: 9. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:37:54.86499] [2348] [error] flower_locations. Row: 10. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:37:54.86511] [2348] [error] flower_locations. Row: 11. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:37:54.86520] [2348] [error] flower_locations. Row: 12. Common name 'Apple 7 - Harmony' undefined
-[2021-10-07 15:37:54.86529] [2348] [error] flower_locations. Row: 13. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:37:58.05030] [2348] [error] flower_locations. Row: 40. Common name 'Citrus 1 - Cumquat' undefined
-[2021-10-07 15:37:58.05050] [2348] [error] flower_locations. Row: 41. Common name 'Citrus 3 - Meyer lemon' undefined
-[2021-10-07 15:37:58.13021] [2348] [error] flower_locations. Row: 43. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:38:07.44049] [2348] [error] flower_locations. Row: 80. Common name 'Heuchera 2' undefined
-[2021-10-07 15:38:07.84025] [2348] [error] flower_locations. Row: 86. Common name 'Hymenosporum' undefined
-[2021-10-07 15:38:08.07538] [2348] [error] flower_locations. Row: 90. Common name 'Japanese maple' undefined
-[2021-10-07 15:38:13.02108] [2348] [info] Max (x, y) = (29, 67)
-[2021-10-07 15:38:13.02132] [2348] [info] Read 137 records into 'flower_locations'
-[2021-10-07 15:38:15.82023] [2348] [info] Read 35 records into 'features'
-[2021-10-07 15:38:29.18171] [2348] [error] feature_locations. Row: 8. Property name: Ron. Garden name: Front. Feature 'Brick path'. Feature location '15,16' is already in use by 'Thelionema caespitosum'
-[2021-10-07 15:38:29.76097] [2348] [error] feature_locations. Row: 8. Property name: Ron. Garden name: Front. Feature 'Brick path'. Feature location '16,17' is already in use by 'Thelionema caespitosum'
-[2021-10-07 15:38:36.40290] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '9,64' is already in use by 'Parsley'
-[2021-10-07 15:38:36.49138] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '9,66' is already in use by 'Carnation'
-[2021-10-07 15:38:36.75984] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,63' is already in use by 'Basil 1'
-[2021-10-07 15:38:36.84682] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,64' is already in use by 'Coriander'
-[2021-10-07 15:38:36.93549] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,65' is already in use by 'Banksia 2'
-[2021-10-07 15:38:37.02640] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,66' is already in use by 'Turmeric'
-[2021-10-07 15:38:37.11329] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,67' is already in use by 'Spearmint'
-[2021-10-07 15:38:37.28940] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,63' is already in use by 'Basil 1'
-[2021-10-07 15:38:37.37956] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,64' is already in use by 'Land cress'
-[2021-10-07 15:38:37.46702] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,65' is already in use by 'Grevillea 2'
-[2021-10-07 15:38:37.55218] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,67' is already in use by 'Pennywort'
-[2021-10-07 15:38:37.72410] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '12,63' is already in use by 'Chives 2'
-[2021-10-07 15:38:37.81099] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '12,64' is already in use by 'Grevillea 5'
-[2021-10-07 15:38:37.90022] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '12,67' is already in use by 'Mugwort'
-[2021-10-07 15:38:38.07739] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,63' is already in use by 'Basil 2'
-[2021-10-07 15:38:38.16748] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,64' is already in use by 'Kangaroo Paw 2 - Red'
-[2021-10-07 15:38:38.25843] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,65' is already in use by 'Nasturtium'
-[2021-10-07 15:38:38.34740] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,66' is already in use by 'Yarrow'
-[2021-10-07 15:38:38.43607] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,67' is already in use by 'Sage 1'
-[2021-10-07 15:38:38.61603] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '14,63' is already in use by 'Kangaroo Paw 3 - White-pink'
-[2021-10-07 15:38:38.70802] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '14,64' is already in use by 'Kangaroo Paw 4 - Pink'
-[2021-10-07 15:38:38.80073] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '14,65' is already in use by 'Chives 1'
-[2021-10-07 15:38:39.19989] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '15,64' is already in use by 'Spinach Beet'
-[2021-10-07 15:38:39.27875] [2348] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '15,65' is already in use by 'Oregano'
-[2021-10-07 15:39:12.74275] [2348] [info] Max (x, y) = (30, 69)
-[2021-10-07 15:39:12.74296] [2348] [info] Read 29 records into 'feature_locations'
-[2021-10-07 15:39:14.69892] [2348] [error] attributes. Row: 25. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:39:14.77887] [2348] [error] attributes. Row: 26. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:39:14.85707] [2348] [error] attributes. Row: 27. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:39:14.94254] [2348] [error] attributes. Row: 28. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:39:15.02220] [2348] [error] attributes. Row: 29. Common name 'Apple 2 - Pitmaston Pine' undefined
-[2021-10-07 15:39:15.10167] [2348] [error] attributes. Row: 30. Common name 'Apple 2 - Pitmaston Pine' undefined
-[2021-10-07 15:39:15.18064] [2348] [error] attributes. Row: 31. Common name 'Apple 2 - Pitmaston Pine' undefined
-[2021-10-07 15:39:15.25927] [2348] [error] attributes. Row: 32. Common name 'Apple 2 - Pitmaston Pine' undefined
-[2021-10-07 15:39:15.33838] [2348] [error] attributes. Row: 33. Common name 'Apple 3' undefined
-[2021-10-07 15:39:15.41574] [2348] [error] attributes. Row: 34. Common name 'Apple 3' undefined
-[2021-10-07 15:39:15.49480] [2348] [error] attributes. Row: 35. Common name 'Apple 3' undefined
-[2021-10-07 15:39:15.57478] [2348] [error] attributes. Row: 36. Common name 'Apple 3' undefined
-[2021-10-07 15:39:15.65202] [2348] [error] attributes. Row: 37. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:39:15.73002] [2348] [error] attributes. Row: 38. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:39:15.80793] [2348] [error] attributes. Row: 39. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:39:15.88715] [2348] [error] attributes. Row: 40. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:39:15.96564] [2348] [error] attributes. Row: 41. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:39:16.04454] [2348] [error] attributes. Row: 42. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:39:16.12323] [2348] [error] attributes. Row: 43. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:39:16.20255] [2348] [error] attributes. Row: 44. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:39:16.28211] [2348] [error] attributes. Row: 45. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:39:16.36085] [2348] [error] attributes. Row: 46. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:39:16.43981] [2348] [error] attributes. Row: 47. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:39:16.52014] [2348] [error] attributes. Row: 48. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:39:16.60032] [2348] [error] attributes. Row: 49. Common name 'Apple 7 - Harmony' undefined
-[2021-10-07 15:39:16.68095] [2348] [error] attributes. Row: 50. Common name 'Apple 7 - Harmony' undefined
-[2021-10-07 15:39:16.76153] [2348] [error] attributes. Row: 51. Common name 'Apple 7 - Harmony' undefined
-[2021-10-07 15:39:16.84175] [2348] [error] attributes. Row: 52. Common name 'Apple 7 - Harmony' undefined
-[2021-10-07 15:39:16.92181] [2348] [error] attributes. Row: 53. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:39:17.00192] [2348] [error] attributes. Row: 54. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:39:17.08157] [2348] [error] attributes. Row: 55. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:39:17.16136] [2348] [error] attributes. Row: 56. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:39:28.06033] [2348] [error] attributes. Row: 185. Common name 'Citrus 1 - Cumquat' undefined
-[2021-10-07 15:39:28.13987] [2348] [error] attributes. Row: 186. Common name 'Citrus 1 - Cumquat' undefined
-[2021-10-07 15:39:28.21788] [2348] [error] attributes. Row: 187. Common name 'Citrus 1 - Cumquat' undefined
-[2021-10-07 15:39:28.29773] [2348] [error] attributes. Row: 188. Common name 'Citrus 1 - Cumquat' undefined
-[2021-10-07 15:39:28.37712] [2348] [error] attributes. Row: 189. Common name 'Citrus 2 - Lisbon' undefined
-[2021-10-07 15:39:28.45561] [2348] [error] attributes. Row: 190. Common name 'Citrus 2 - Lisbon' undefined
-[2021-10-07 15:39:28.53471] [2348] [error] attributes. Row: 191. Common name 'Citrus 2 - Lisbon' undefined
-[2021-10-07 15:39:28.61674] [2348] [error] attributes. Row: 192. Common name 'Citrus 2 - Lisbon' undefined
-[2021-10-07 15:39:28.69633] [2348] [error] attributes. Row: 193. Common name 'Citrus 3 - Meyer lemon' undefined
-[2021-10-07 15:39:28.77489] [2348] [error] attributes. Row: 194. Common name 'Citrus 3 - Meyer lemon' undefined
-[2021-10-07 15:39:28.85434] [2348] [error] attributes. Row: 195. Common name 'Citrus 3 - Meyer lemon' undefined
-[2021-10-07 15:39:28.93330] [2348] [error] attributes. Row: 196. Common name 'Citrus 3 - Meyer lemon' undefined
-[2021-10-07 15:39:29.33789] [2348] [error] attributes. Row: 201. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:39:29.41638] [2348] [error] attributes. Row: 202. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:39:29.49622] [2348] [error] attributes. Row: 203. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:39:29.57583] [2348] [error] attributes. Row: 204. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:39:30.61571] [2348] [error] attributes. Row: 217. Common name 'Corn Salad' undefined
-[2021-10-07 15:39:30.69511] [2348] [error] attributes. Row: 218. Common name 'Corn Salad' undefined
-[2021-10-07 15:39:30.77419] [2348] [error] attributes. Row: 219. Common name 'Corn Salad' undefined
-[2021-10-07 15:39:30.85307] [2348] [error] attributes. Row: 220. Common name 'Corn Salad' undefined
-[2021-10-07 15:39:43.04512] [2348] [error] attributes. Row: 369. Common name 'Heuchera 2' undefined
-[2021-10-07 15:39:43.12415] [2348] [error] attributes. Row: 370. Common name 'Heuchera 2' undefined
-[2021-10-07 15:39:43.20477] [2348] [error] attributes. Row: 371. Common name 'Heuchera 2' undefined
-[2021-10-07 15:39:43.28508] [2348] [error] attributes. Row: 372. Common name 'Heuchera 2' undefined
-[2021-10-07 15:39:46.79217] [2348] [error] attributes. Row: 413. Common name 'Hymenosporum' undefined
-[2021-10-07 15:39:46.88077] [2348] [error] attributes. Row: 414. Common name 'Hymenosporum' undefined
-[2021-10-07 15:39:46.97149] [2348] [error] attributes. Row: 415. Common name 'Hymenosporum' undefined
-[2021-10-07 15:39:47.06006] [2348] [error] attributes. Row: 416. Common name 'Hymenosporum' undefined
-[2021-10-07 15:39:48.73653] [2348] [error] attributes. Row: 437. Common name 'Japanese maple' undefined
-[2021-10-07 15:39:48.81743] [2348] [error] attributes. Row: 438. Common name 'Japanese maple' undefined
-[2021-10-07 15:39:48.89864] [2348] [error] attributes. Row: 439. Common name 'Japanese maple' undefined
-[2021-10-07 15:39:48.98009] [2348] [error] attributes. Row: 440. Common name 'Japanese maple' undefined
-[2021-10-07 15:40:10.81088] [2348] [info] Read 712 records into 'attributes'
-[2021-10-07 15:40:11.21424] [2348] [error] notes. Row: 5. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:40:11.21443] [2348] [error] notes. Row: 6. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:40:11.21452] [2348] [error] notes. Row: 7. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:40:11.21461] [2348] [error] notes. Row: 8. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:40:11.21470] [2348] [error] notes. Row: 9. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:40:11.21479] [2348] [error] notes. Row: 10. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:40:11.21488] [2348] [error] notes. Row: 11. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:40:11.21496] [2348] [error] notes. Row: 12. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:40:11.21505] [2348] [error] notes. Row: 13. Common name 'Apple 2 - Pitmaston Pine' undefined
-[2021-10-07 15:40:11.21513] [2348] [error] notes. Row: 14. Common name 'Apple 2 - Pitmaston Pine' undefined
-[2021-10-07 15:40:11.21522] [2348] [error] notes. Row: 15. Common name 'Apple 2 - Pitmaston Pine' undefined
-[2021-10-07 15:40:11.21530] [2348] [error] notes. Row: 16. Common name 'Apple 2 - Pitmaston Pine' undefined
-[2021-10-07 15:40:11.21539] [2348] [error] notes. Row: 17. Common name 'Apple 2 - Pitmaston Pine' undefined
-[2021-10-07 15:40:11.21547] [2348] [error] notes. Row: 18. Common name 'Apple 2 - Pitmaston Pine' undefined
-[2021-10-07 15:40:11.21556] [2348] [error] notes. Row: 19. Common name 'Apple 2 - Pitmaston Pine' undefined
-[2021-10-07 15:40:11.21564] [2348] [error] notes. Row: 20. Common name 'Apple 3' undefined
-[2021-10-07 15:40:11.21573] [2348] [error] notes. Row: 21. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:40:11.21582] [2348] [error] notes. Row: 22. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:40:11.21595] [2348] [error] notes. Row: 23. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:40:11.21604] [2348] [error] notes. Row: 24. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:40:11.21613] [2348] [error] notes. Row: 25. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:40:11.21622] [2348] [error] notes. Row: 26. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:40:11.21630] [2348] [error] notes. Row: 27. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:40:11.21639] [2348] [error] notes. Row: 28. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:40:11.21648] [2348] [error] notes. Row: 29. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:40:11.21656] [2348] [error] notes. Row: 30. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:40:11.21665] [2348] [error] notes. Row: 31. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:40:11.21675] [2348] [error] notes. Row: 32. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:40:11.21684] [2348] [error] notes. Row: 33. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:40:11.21693] [2348] [error] notes. Row: 34. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:40:11.21701] [2348] [error] notes. Row: 35. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:40:11.21710] [2348] [error] notes. Row: 36. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:40:11.21718] [2348] [error] notes. Row: 37. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:40:11.21727] [2348] [error] notes. Row: 38. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:40:11.21735] [2348] [error] notes. Row: 39. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:40:11.21744] [2348] [error] notes. Row: 40. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:40:11.21752] [2348] [error] notes. Row: 41. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:40:11.21760] [2348] [error] notes. Row: 42. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:40:11.21769] [2348] [error] notes. Row: 43. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:40:11.21777] [2348] [error] notes. Row: 44. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:40:11.21786] [2348] [error] notes. Row: 45. Common name 'Apple 7 - Harmony' undefined
-[2021-10-07 15:40:11.21794] [2348] [error] notes. Row: 46. Common name 'Apple 7 - Harmony' undefined
-[2021-10-07 15:40:11.21803] [2348] [error] notes. Row: 47. Common name 'Apple 7 - Harmony' undefined
-[2021-10-07 15:40:11.21814] [2348] [error] notes. Row: 48. Common name 'Apple 7 - Harmony' undefined
-[2021-10-07 15:40:11.21824] [2348] [error] notes. Row: 49. Common name 'Apple 7 - Harmony' undefined
-[2021-10-07 15:40:11.21832] [2348] [error] notes. Row: 50. Common name 'Apple 7 - Harmony' undefined
-[2021-10-07 15:40:11.21841] [2348] [error] notes. Row: 51. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:40:11.21849] [2348] [error] notes. Row: 52. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:40:11.21858] [2348] [error] notes. Row: 53. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:40:11.21866] [2348] [error] notes. Row: 54. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:40:11.21875] [2348] [error] notes. Row: 55. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:40:11.21883] [2348] [error] notes. Row: 56. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:40:11.21892] [2348] [error] notes. Row: 57. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:40:20.66880] [2348] [error] notes. Row: 175. Common name 'Citrus 2 - Lisbon' undefined
-[2021-10-07 15:40:20.66904] [2348] [error] notes. Row: 176. Common name 'Citrus 2 - Lisbon' undefined
-[2021-10-07 15:40:20.66914] [2348] [error] notes. Row: 177. Common name 'Citrus 2 - Lisbon' undefined
-[2021-10-07 15:40:20.66923] [2348] [error] notes. Row: 178. Common name 'Citrus 2 - Lisbon' undefined
-[2021-10-07 15:40:20.66931] [2348] [error] notes. Row: 179. Common name 'Citrus 2 - Lisbon' undefined
-[2021-10-07 15:40:20.66939] [2348] [error] notes. Row: 180. Common name 'Citrus 3 - Meyer lemon' undefined
-[2021-10-07 15:40:20.66948] [2348] [error] notes. Row: 181. Common name 'Citrus 3 - Meyer lemon' undefined
-[2021-10-07 15:40:20.66956] [2348] [error] notes. Row: 182. Common name 'Citrus 3 - Meyer lemon' undefined
-[2021-10-07 15:40:20.66964] [2348] [error] notes. Row: 183. Common name 'Citrus 3 - Meyer lemon' undefined
-[2021-10-07 15:40:20.66972] [2348] [error] notes. Row: 184. Common name 'Citrus 3 - Meyer lemon' undefined
-[2021-10-07 15:40:21.13705] [2348] [error] notes. Row: 191. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:40:21.13714] [2348] [error] notes. Row: 192. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:40:21.13719] [2348] [error] notes. Row: 193. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:40:21.13722] [2348] [error] notes. Row: 194. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:40:21.13727] [2348] [error] notes. Row: 195. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:40:21.13731] [2348] [error] notes. Row: 196. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:40:21.13734] [2348] [error] notes. Row: 197. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:40:21.13738] [2348] [error] notes. Row: 198. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:40:21.13741] [2348] [error] notes. Row: 199. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:40:22.07312] [2348] [error] notes. Row: 212. Common name 'Corn Salad' undefined
-[2021-10-07 15:40:22.07325] [2348] [error] notes. Row: 213. Common name 'Corn Salad' undefined
-[2021-10-07 15:40:22.07333] [2348] [error] notes. Row: 214. Common name 'Corn Salad' undefined
-[2021-10-07 15:40:22.07340] [2348] [error] notes. Row: 215. Common name 'Corn Salad' undefined
-[2021-10-07 15:40:22.07348] [2348] [error] notes. Row: 216. Common name 'Corn Salad' undefined
-[2021-10-07 15:40:22.07354] [2348] [error] notes. Row: 217. Common name 'Corn Salad' undefined
-[2021-10-07 15:40:22.07362] [2348] [error] notes. Row: 218. Common name 'Corn Salad' undefined
-[2021-10-07 15:40:35.86791] [2348] [error] notes. Row: 391. Common name 'Heuchera 2' undefined
-[2021-10-07 15:40:39.43299] [2348] [error] notes. Row: 437. Common name 'Hymenosporum' undefined
-[2021-10-07 15:40:39.43325] [2348] [error] notes. Row: 438. Common name 'Hymenosporum' undefined
-[2021-10-07 15:40:39.43337] [2348] [error] notes. Row: 439. Common name 'Hymenosporum' undefined
-[2021-10-07 15:40:39.43346] [2348] [error] notes. Row: 440. Common name 'Hymenosporum' undefined
-[2021-10-07 15:41:06.34873] [2348] [info] Read 777 records into 'notes'
-[2021-10-07 15:41:08.36271] [2348] [error] images. Row: 23. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:41:08.36294] [2348] [error] images. Row: 24. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:41:08.36309] [2348] [error] images. Row: 25. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:41:08.36324] [2348] [error] images. Row: 26. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:41:08.36337] [2348] [error] images. Row: 27. Common name 'Apple 2 - Pitmaston Pine' undefined
-[2021-10-07 15:41:08.36351] [2348] [error] images. Row: 28. Common name 'Apple 3' undefined
-[2021-10-07 15:41:08.36365] [2348] [error] images. Row: 29. Common name 'Apple 3' undefined
-[2021-10-07 15:41:08.36377] [2348] [error] images. Row: 30. Common name 'Apple 3' undefined
-[2021-10-07 15:41:08.36387] [2348] [error] images. Row: 31. Common name 'Apple 3' undefined
-[2021-10-07 15:41:08.36398] [2348] [error] images. Row: 32. Common name 'Apple 3' undefined
-[2021-10-07 15:41:08.36406] [2348] [error] images. Row: 33. Common name 'Apple 3' undefined
-[2021-10-07 15:41:08.36415] [2348] [error] images. Row: 34. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:41:08.36423] [2348] [error] images. Row: 35. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:41:08.36431] [2348] [error] images. Row: 36. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:41:08.36439] [2348] [error] images. Row: 37. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:41:08.36448] [2348] [error] images. Row: 38. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:41:08.36456] [2348] [error] images. Row: 39. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:41:08.36464] [2348] [error] images. Row: 40. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:41:08.36472] [2348] [error] images. Row: 41. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:41:08.36480] [2348] [error] images. Row: 42. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:41:08.36488] [2348] [error] images. Row: 43. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:41:08.36498] [2348] [error] images. Row: 44. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:41:08.36507] [2348] [error] images. Row: 45. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:41:08.36515] [2348] [error] images. Row: 46. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:41:08.36523] [2348] [error] images. Row: 47. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:41:08.36530] [2348] [error] images. Row: 48. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:41:08.36538] [2348] [error] images. Row: 49. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:41:08.36546] [2348] [error] images. Row: 50. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:41:08.36554] [2348] [error] images. Row: 51. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:41:08.36562] [2348] [error] images. Row: 52. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:41:08.36570] [2348] [error] images. Row: 53. Common name 'Apple 7 - Harmony' undefined
-[2021-10-07 15:41:08.36581] [2348] [error] images. Row: 54. Common name 'Apple 7 - Harmony' undefined
-[2021-10-07 15:41:08.36589] [2348] [error] images. Row: 55. Common name 'Apple 7 - Harmony' undefined
-[2021-10-07 15:41:08.36597] [2348] [error] images. Row: 56. Common name 'Apple 7 - Harmony' undefined
-[2021-10-07 15:41:08.36605] [2348] [error] images. Row: 57. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:41:08.36614] [2348] [error] images. Row: 58. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:41:08.36626] [2348] [error] images. Row: 59. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:41:08.36636] [2348] [error] images. Row: 60. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:41:08.36644] [2348] [error] images. Row: 61. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:41:08.36652] [2348] [error] images. Row: 62. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:41:08.36660] [2348] [error] images. Row: 63. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:41:08.36667] [2348] [error] images. Row: 64. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:41:15.64774] [2348] [error] images. Row: 158. Common name 'Citrus 1 - Cumquat' undefined
-[2021-10-07 15:41:15.64795] [2348] [error] images. Row: 159. Common name 'Citrus 1 - Cumquat' undefined
-[2021-10-07 15:41:15.64805] [2348] [error] images. Row: 160. Common name 'Citrus 2 - Lisbon' undefined
-[2021-10-07 15:41:15.64813] [2348] [error] images. Row: 161. Common name 'Citrus 2 - Lisbon' undefined
-[2021-10-07 15:41:15.64822] [2348] [error] images. Row: 162. Common name 'Citrus 3 - Meyer lemon' undefined
-[2021-10-07 15:41:15.64830] [2348] [error] images. Row: 163. Common name 'Citrus 3 - Meyer lemon' undefined
-[2021-10-07 15:41:15.64838] [2348] [error] images. Row: 164. Common name 'Citrus 3 - Meyer lemon' undefined
-[2021-10-07 15:41:15.64845] [2348] [error] images. Row: 165. Common name 'Citrus 3 - Meyer lemon' undefined
-[2021-10-07 15:41:15.88347] [2348] [error] images. Row: 169. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:41:15.88366] [2348] [error] images. Row: 170. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:41:15.88376] [2348] [error] images. Row: 171. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:41:15.88388] [2348] [error] images. Row: 172. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:41:15.88401] [2348] [error] images. Row: 173. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:41:16.35612] [2348] [error] images. Row: 180. Common name 'Corn Salad' undefined
-[2021-10-07 15:41:24.33564] [2348] [error] images. Row: 279. Common name 'Heuchera 2' undefined
-[2021-10-07 15:41:24.33595] [2348] [error] images. Row: 280. Common name 'Heuchera 2' undefined
-[2021-10-07 15:41:26.70571] [2348] [error] images. Row: 311. Common name 'Hymenosporum' undefined
-[2021-10-07 15:41:26.70590] [2348] [error] images. Row: 312. Common name 'Hymenosporum' undefined
-[2021-10-07 15:41:27.57345] [2348] [error] images. Row: 324. Common name 'Japanese maple' undefined
-[2021-10-07 15:41:27.57373] [2348] [error] images. Row: 325. Common name 'Japanese maple' undefined
-[2021-10-07 15:41:27.57391] [2348] [error] images. Row: 326. Common name 'Japanese maple' undefined
-[2021-10-07 15:41:27.57402] [2348] [error] images. Row: 327. Common name 'Japanese maple' undefined
-[2021-10-07 15:41:42.27523] [2348] [info] Read 511 records into 'images'
-[2021-10-07 15:41:42.85103] [2348] [error] urls. Row: 8. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:41:42.85122] [2348] [error] urls. Row: 9. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:41:42.85132] [2348] [error] urls. Row: 10. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:41:42.85141] [2348] [error] urls. Row: 11. Common name 'Apple 1 - Pine Golden Pippin' undefined
-[2021-10-07 15:41:42.85150] [2348] [error] urls. Row: 12. Common name 'Apple 2 - Pitmaston Pine' undefined
-[2021-10-07 15:41:42.85159] [2348] [error] urls. Row: 13. Common name 'Apple 2 - Pitmaston Pine' undefined
-[2021-10-07 15:41:42.85168] [2348] [error] urls. Row: 14. Common name 'Apple 2 - Pitmaston Pine' undefined
-[2021-10-07 15:41:42.85177] [2348] [error] urls. Row: 15. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:41:42.85189] [2348] [error] urls. Row: 16. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:41:42.85199] [2348] [error] urls. Row: 17. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:41:42.85208] [2348] [error] urls. Row: 18. Common name 'Apple 4 - PinkabelleÂ®' undefined
-[2021-10-07 15:41:42.85217] [2348] [error] urls. Row: 19. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:41:42.85226] [2348] [error] urls. Row: 20. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:41:42.85234] [2348] [error] urls. Row: 21. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:41:42.85243] [2348] [error] urls. Row: 22. Common name 'Apple 5 - Leprechaun' undefined
-[2021-10-07 15:41:42.85251] [2348] [error] urls. Row: 23. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:41:42.85260] [2348] [error] urls. Row: 24. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:41:42.85268] [2348] [error] urls. Row: 25. Common name 'Apple 6 - Pompink' undefined
-[2021-10-07 15:41:42.85277] [2348] [error] urls. Row: 26. Common name 'Apple 7 - Harmony' undefined
-[2021-10-07 15:41:42.85285] [2348] [error] urls. Row: 27. Common name 'Apple 7 - Harmony' undefined
-[2021-10-07 15:41:42.85294] [2348] [error] urls. Row: 28. Common name 'Apple 7 - Harmony' undefined
-[2021-10-07 15:41:42.85303] [2348] [error] urls. Row: 29. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:41:42.85311] [2348] [error] urls. Row: 30. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:41:42.85320] [2348] [error] urls. Row: 31. Common name 'Apple 8 - Pom-for-You' undefined
-[2021-10-07 15:41:46.07882] [2348] [error] urls. Row: 72. Common name 'Citrus 2 - Lisbon' undefined
-[2021-10-07 15:41:46.07906] [2348] [error] urls. Row: 73. Common name 'Citrus 3 - Meyer lemon' undefined
-[2021-10-07 15:41:46.23716] [2348] [error] urls. Row: 76. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:41:46.23740] [2348] [error] urls. Row: 77. Common name 'Citrus 5 - Washington Navel Orange' undefined
-[2021-10-07 15:41:46.39354] [2348] [error] urls. Row: 80. Common name 'Corn Salad' undefined
-[2021-10-07 15:41:50.04022] [2348] [error] urls. Row: 122. Common name 'Heuchera 2' undefined
-[2021-10-07 15:41:51.26839] [2348] [error] urls. Row: 137. Common name 'Japanese maple' undefined
-[2021-10-07 15:41:57.54532] [2348] [info] Read 217 records into 'urls'
+[2021-10-07 18:13:05.89927] [3405] [debug] Dropped table 'urls'
+[2021-10-07 18:13:05.95437] [3405] [debug] Dropped table 'images'
+[2021-10-07 18:13:06.01730] [3405] [debug] Dropped table 'notes'
+[2021-10-07 18:13:06.07750] [3405] [debug] Dropped table 'feature_locations'
+[2021-10-07 18:13:06.13583] [3405] [debug] Dropped table 'features'
+[2021-10-07 18:13:06.20073] [3405] [debug] Dropped table 'flower_locations'
+[2021-10-07 18:13:06.25931] [3405] [debug] Dropped table 'gardens'
+[2021-10-07 18:13:06.32079] [3405] [debug] Dropped table 'properties'
+[2021-10-07 18:13:06.38410] [3405] [debug] Dropped table 'attributes'
+[2021-10-07 18:13:06.44132] [3405] [debug] Dropped table 'attribute_types'
+[2021-10-07 18:13:06.50464] [3405] [debug] Dropped table 'flowers'
+[2021-10-07 18:13:06.56584] [3405] [debug] Dropped table 'constants'
+[2021-10-07 18:13:06.62358] [3405] [debug] Dropped table 'log'
+[2021-10-07 18:13:06.93045] [3406] [debug] Created table 'log'
+[2021-10-07 18:13:06.98807] [3406] [debug] Created table 'constants'
+[2021-10-07 18:13:07.04796] [3406] [debug] Created table 'flowers'
+[2021-10-07 18:13:07.10834] [3406] [debug] Created table 'attribute_types'
+[2021-10-07 18:13:07.16381] [3406] [debug] Created table 'attributes'
+[2021-10-07 18:13:07.22621] [3406] [debug] Created table 'properties'
+[2021-10-07 18:13:07.28629] [3406] [debug] Created table 'gardens'
+[2021-10-07 18:13:07.34453] [3406] [debug] Created table 'flower_locations'
+[2021-10-07 18:13:07.40864] [3406] [debug] Created table 'features'
+[2021-10-07 18:13:07.46683] [3406] [debug] Created table 'feature_locations'
+[2021-10-07 18:13:07.52806] [3406] [debug] Created table 'notes'
+[2021-10-07 18:13:07.59087] [3406] [debug] Created table 'images'
+[2021-10-07 18:13:07.64774] [3406] [debug] Created table 'urls'
+[2021-10-07 18:13:07.95898] [3407] [debug] Populating all tables
+[2021-10-07 18:13:08.22008] [3407] [info] Read 4 records into 'attribute_types'
+[2021-10-07 18:13:10.18062] [3407] [info] Read 32 records into 'constants'
+[2021-10-07 18:13:10.23737] [3407] [warn] flowers. Row: 3. Duplicate scientific_name: Mandevilla hybrid
+[2021-10-07 18:13:10.23747] [3407] [warn] flowers. Row: 5. Duplicate scientific_name: Alstroemeria
+[2021-10-07 18:13:10.23753] [3407] [warn] flowers. Row: 12. Duplicate scientific_name: Azalea
+[2021-10-07 18:13:10.23758] [3407] [warn] flowers. Row: 13. Duplicate scientific_name: Azalea
+[2021-10-07 18:13:10.23780] [3407] [warn] flowers. Row: 74. Duplicate scientific_name: Fuchsia
+[2021-10-07 18:13:10.23787] [3407] [warn] flowers. Row: 83. Duplicate scientific_name: Grevillea
+[2021-10-07 18:13:10.23790] [3407] [warn] flowers. Row: 84. Duplicate scientific_name: Grevillea
+[2021-10-07 18:13:10.23794] [3407] [warn] flowers. Row: 85. Duplicate scientific_name: Grevillea
+[2021-10-07 18:13:10.23799] [3407] [warn] flowers. Row: 92. Duplicate scientific_name: Heuchera
+[2021-10-07 18:13:10.23804] [3407] [warn] flowers. Row: 96. Duplicate scientific_name: Alyogyne huegelii
+[2021-10-07 18:13:10.23822] [3407] [warn] flowers. Row: 152. Duplicate scientific_name: Plectranthus ecklonii
+[2021-10-07 18:13:10.23829] [3407] [warn] flowers. Row: 165. Duplicate scientific_name: Rosa
+[2021-10-07 18:13:10.23833] [3407] [warn] flowers. Row: 166. Duplicate scientific_name: Rosa
+[2021-10-07 18:13:10.23836] [3407] [warn] flowers. Row: 167. Duplicate scientific_name: Rosa
+[2021-10-07 18:13:10.23841] [3407] [warn] flowers. Row: 172. Duplicate scientific_name: Salvia involucrata
+[2021-10-07 18:13:10.23848] [3407] [warn] flowers. Row: 184. Duplicate scientific_name: Citrus x latifolia
+[2021-10-07 18:13:24.86701] [3407] [info] Read 207 records into 'flowers'
+[2021-10-07 18:13:24.99275] [3407] [info] Read 2 records into 'properties'
+[2021-10-07 18:13:25.11597] [3407] [info] Read 2 records into 'gardens'
+[2021-10-07 18:13:40.87141] [3407] [info] Max (x, y) = (29, 67)
+[2021-10-07 18:13:40.87169] [3407] [info] Read 137 records into 'flower_locations'
+[2021-10-07 18:13:43.08002] [3407] [info] Read 35 records into 'features'
+[2021-10-07 18:13:54.13514] [3407] [error] feature_locations. Row: 8. Property name: Ron. Garden name: Front. Feature 'Brick path'. Feature location '15,16' is already in use by 'Thelionema caespitosum'
+[2021-10-07 18:13:54.58170] [3407] [error] feature_locations. Row: 8. Property name: Ron. Garden name: Front. Feature 'Brick path'. Feature location '16,17' is already in use by 'Thelionema caespitosum'
+[2021-10-07 18:13:59.69240] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '9,64' is already in use by 'Parsley'
+[2021-10-07 18:13:59.75968] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '9,66' is already in use by 'Carnation'
+[2021-10-07 18:13:59.94910] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,63' is already in use by 'Basil 1'
+[2021-10-07 18:14:00.00852] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,64' is already in use by 'Coriander'
+[2021-10-07 18:14:00.07202] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,65' is already in use by 'Banksia 2'
+[2021-10-07 18:14:00.13830] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,66' is already in use by 'Turmeric'
+[2021-10-07 18:14:00.19636] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,67' is already in use by 'Spearmint'
+[2021-10-07 18:14:00.32202] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,63' is already in use by 'Basil 1'
+[2021-10-07 18:14:00.38186] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,64' is already in use by 'Land cress'
+[2021-10-07 18:14:00.44591] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,65' is already in use by 'Grevillea 2'
+[2021-10-07 18:14:00.53142] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,67' is already in use by 'Pennywort'
+[2021-10-07 18:14:00.67632] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '12,63' is already in use by 'Chives 2'
+[2021-10-07 18:14:00.75077] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '12,64' is already in use by 'Grevillea 5'
+[2021-10-07 18:14:00.82634] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '12,67' is already in use by 'Mugwort'
+[2021-10-07 18:14:00.98096] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,63' is already in use by 'Basil 2'
+[2021-10-07 18:14:01.05298] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,64' is already in use by 'Kangaroo Paw 2 - Red'
+[2021-10-07 18:14:01.12960] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,65' is already in use by 'Nasturtium'
+[2021-10-07 18:14:01.20477] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,66' is already in use by 'Yarrow'
+[2021-10-07 18:14:01.27802] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,67' is already in use by 'Sage 1'
+[2021-10-07 18:14:01.43227] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '14,63' is already in use by 'Kangaroo Paw 3 - White-pink'
+[2021-10-07 18:14:01.50563] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '14,64' is already in use by 'Kangaroo Paw 4 - Pink'
+[2021-10-07 18:14:01.58242] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '14,65' is already in use by 'Chives 1'
+[2021-10-07 18:14:01.94860] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '15,64' is already in use by 'Spinach Beet'
+[2021-10-07 18:14:02.01674] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '15,65' is already in use by 'Oregano'
+[2021-10-07 18:14:29.29883] [3407] [info] Max (x, y) = (30, 69)
+[2021-10-07 18:14:29.29908] [3407] [info] Read 29 records into 'feature_locations'
+[2021-10-07 18:14:31.38956] [3407] [error] attributes. Row: 33. Common name 'Malus domestica 33' undefined
+[2021-10-07 18:15:16.02003] [3407] [info] Read 712 records into 'attributes'
+[2021-10-07 18:16:06.22816] [3407] [info] Read 777 records into 'notes'
+[2021-10-07 18:16:39.59578] [3407] [info] Read 511 records into 'images'
+[2021-10-07 18:16:54.02055] [3407] [info] Read 217 records into 'urls'

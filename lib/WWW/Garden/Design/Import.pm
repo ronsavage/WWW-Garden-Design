@@ -523,7 +523,7 @@ sub populate_flowers_table
 
 		if ($scientific_name{$scientific_name})
 		{
-			$self -> db -> logger -> warning("$table_name. Row: $count. Duplicate scientific_name: $scientific_name");
+			$self -> db -> logger -> warn("$table_name. Row: $count. Duplicate scientific_name: $scientific_name");
 		}
 
 		$common_name{$common_name}			= 0 if (! $common_name{$common_name});
