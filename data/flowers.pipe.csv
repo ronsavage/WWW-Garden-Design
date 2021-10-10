@@ -1,10 +1,10 @@
 id,aliases,common_name,height,max_height,max_width,min_height,min_width,pig_latin,publish,scientific_name,width
 1,"Ashleaf maple, Ash-leaved maple, Box elder, Boxelder maple, Maple ash, 'Variegatum'","Acer negundo",,,,,,Acer.negundo,Yes,"Acer negundo"
-2,"'Aloha Dark Red'","Aloha Dark Red 1",,,,,,Mandevilla.hybrid.1,Yes,"Mandevilla hybrid"
-3,"'Aloha Regal Ruby'","Aloha Regal Ruby 2",,,,,,Mandevilla.hybrid.2,Yes,"Mandevilla hybrid"
-4,'Angela',"Alstroemeria 1",,,,,,Alstroemeria.1,Yes,Alstroemeria
-5,"'Princess Lily Louise'","Alstroemeria 2",,,,,,Alstroemeria.2,Yes,Alstroemeria
-6,"Peruvian Lily","Alstroemeria 3",30cm,30,30,30,30,Alstroemeria.pulchella,Yes,"Alstroemeria pulchella",30cm
+2,-,"Aloha Dark Red",,,,,,Mandevilla.hybrid,Yes,"Mandevilla hybrid"
+3,-,"Aloha Regal Ruby",,,,,,Mandevilla.hybrid,Yes,"Mandevilla hybrid"
+4,-,"Angela",,,,,,Alstroemeria,Yes,Alstroemeria
+5,-,"Princess Lily Louise",,,,,,Alstroemeria,Yes,Alstroemeria
+6,-,"Peruvian Lily",30cm,30,30,30,30,Alstroemeria.pulchella,Yes,"Alstroemeria pulchella",30cm
 7,,"Pine Golden Pippin",,,,,,Malus.domestica.pine.golden.pippin,Yes,"Malus domestica 'Pine Golden Pippin'"
 8,,"Pitmaston Pine",,,,,,Malus.domestica.pitmaston.pine,Yes,"Malus domestica 'Pitmaston Pine'"
 9,,"Malus domestica 3",8m,800,700,800,700,Malus.domestica.3,Yes,"Malus domestica 3",7m
@@ -17,7 +17,7 @@ id,aliases,common_name,height,max_height,max_width,min_height,min_width,pig_lati
 16,"Columbine, Granny's Bonnet","Aquilegia 2",,,,,,Aquilegia.flabellata.var.pumila.alba,Yes,"Aquilegia flabellata var. pumila alba"
 17,"Italian arum, Italian lords-and-ladies","Arum italicum",46cm,46,46,46,46,Arum.italicum,Yes,"Arum italicum",46cm
 18,"Common Asparagus Fern, Climbing Asparagus, Ferny Asparagus, Lace Fern","Asparagus Fern",,,,,,Asparagus.setaceus,Yes,"Asparagus setaceus"
-19,"Rosa Belton","Azalea 1",,,,,,Azalea.1,Yes,Azalea
+19,-,"Rosa Belton",,,,,,Azalea.1,Yes,Azalea
 20,,"Azalea 2",,,,,,Azalea.2,Yes,Azalea
 21,,"Azalea 3",,,,,,Azalea.3,Yes,Azalea
 22,"Cherry Candles","Banksia 1",,,,,,Banksia.spinulosa,Yes,"Banksia spinulosa"
@@ -49,7 +49,7 @@ id,aliases,common_name,height,max_height,max_width,min_height,min_width,pig_lati
 48,,"Cumquat",,,,,,Citrus.japonica,Yes,"Citrus japonica"
 49,,"Lisbon lemon",,,,,,Citrus.limon,Yes,"Citrus limon"
 50,"Meyer 'Improved'","Meyer lemon",,,,,,Citrus.x.meyeri,Yes,"Citrus x meyeri"
-51,"Bearss lime, seedless lime","Citrus 4 - Tahiti Lime",,,,,,Citrus.x.latifolia,Yes,"Citrus x latifolia"
+51,"Bearss lime, seedless lime","Tahiti Lime",,,,,,Citrus.x.latifolia,Yes,"Citrus x latifolia"
 52,,"Washington Navel Orange",,,,,,Citrus.x.sinensis,Yes,"Citrus x sinensis"
 53,"Silver Bush","Convolvulus 1",40cm,40,40,40,40,Convolvulus.cneorum,Yes,"Convolvulus cneorum",40cm
 54,"Trailing Convolvulus","Convolvulus 2",10cm,10,120,10,120,Convolvulus.sabatius,Yes,"Convolvulus sabatius",1.2m
@@ -92,13 +92,13 @@ id,aliases,common_name,height,max_height,max_width,min_height,min_width,pig_lati
 91,"Nandina, Sacred bamboo","Heavenly Bamboo",,,,,,Nandina.domestica,Yes,"Nandina domestica"
 92,"H. corsicus, Christmas rose, Lenten rose, Winter Rose","Hellebore 1",,,,,,Helleborus.argutifolius,Yes,"Helleborus argutifolius"
 93,"Bear's foot, dungwort, setterwort, Stinking Hellebore","Hellebore 2",60cm,60,60,60,60,Helleborus.foetidus,Yes,"Helleborus foetidus",60cm
-94,"Alumroot, 'Obsidian'","Heuchera 1",,,,,,Heuchera.1,Yes,Heuchera
-95,"Alumroot, Coral bells, 'Peach Flambé'","Heuchera 2",,,,,,Heuchera.2,Yes,Heuchera
+94,"Alumroot","Obsidian",,,,,,Heuchera.1,Yes,Heuchera
+95,"Alumroot, 'Peach Flambé'","Coral bells",,,,,,Heuchera.2,Yes,Heuchera
 96,"Climbing Guinea Flower, Golden Guinea Vine, Snake Vine","Hibbertia 1",,,,,,Hibbertia.scandens,Yes,"Hibbertia scandens"
 97,"Hoary Guinea Flower","Hibbertia 2",,,,,,Hibbertia.obtusifolia,Yes,"Hibbertia obtusifolia"
 98,,"Hibiscus 1",,,,,,Alyogyne.huegelii.1,Yes,"Alyogyne huegelii"
-99,"West Coast Gem","Hibiscus 2",,,,,,Alyogyne.huegelii.2,Yes,"Alyogyne huegelii"
-100,"Rose mallow","Hibiscus 3",,,,,,Hibiscus,Yes,Hibiscus
+99,"","West Coast Gem",,,,,,Alyogyne.huegelii.2,Yes,"Alyogyne huegelii"
+100,"","Rose mallow",,,,,,Hibiscus,Yes,Hibiscus
 101,,"Himalayan Knotweed",,,,,,Persicaria.affinis,Yes,"Persicaria affinis"
 102,"Annual honesty",Honesty,,,,,,Lunaria.annua,Yes,"Lunaria annua"
 103,"Common honeysuckle, European honeysuckle, Woodbine",Honeysuckle,,,,,,Lonicera.periclymenum,Yes,"Lonicera periclymenum"
@@ -150,8 +150,8 @@ id,aliases,common_name,height,max_height,max_width,min_height,min_width,pig_lati
 149,Rose,"Rose 3",1.2m,120,100,120,100,Rosa.3,Yes,Rosa,1m
 150,Rose,"Rose 4",,,,,,Rosa.4,Yes,Rosa
 151,Anthos,Rosemary,,,,,,Rosmarinus.officinalis,Yes,"Rosmarinus officinalis"
-152,"Common sage and garden sage","Sage 1",20cm,20,20,20,20,Salvia.officinalis,Yes,"Salvia officinalis",20cm
-153,"'Bethellii', rosy-leaf","Sage 2",1m,100,100,100,100,Salvia.involucrata.2,Yes,"Salvia involucrata",1m
+152,"Garden sage","Common sage",20cm,20,20,20,20,Salvia.officinalis,Yes,"Salvia officinalis",20cm
+153,"Rosy-leaf","Bethellii",1m,100,100,100,100,Salvia.involucrata.2,Yes,"Salvia involucrata",1m
 154,,"Sage 3",1m,100,100,100,100,Salvia.involucrata.3,Yes,"Salvia involucrata",1m
 155,"Bee sage, sacred sage, white sage","Sage 4",1m,100,100,100,100,Salvia.apiana,Yes,"Salvia apiana",1m
 156,,"Siegfredia darwinioides",,,,,,Siegfredia.darwinioides,Yes,"Siegfredia darwinioides"

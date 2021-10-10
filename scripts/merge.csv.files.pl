@@ -42,11 +42,6 @@ sub read_csv_file
 				$$item{$$column_names[$i]} = $$line[$i];
 			}
 
-			if ($$item{common_name} =~ /Pinkabelle/)
-			{
-				say "$count: Reading $path. $$item{common_name}. $$item{scientific_name}";
-			}
-
 			#$$item{aliases}			= Encode::encode('UTF-8', $$item{aliases}, DIE_ON_ERR | LEAVE_SRC);
 			#$$item{common_name}		= Encode::encode('UTF-8', $$item{common_name}, DIE_ON_ERR | LEAVE_SRC);
 			#$$item{scientific_name}	= Encode::encode('UTF-8', $$item{scientific_name}, DIE_ON_ERR | LEAVE_SRC);
@@ -114,7 +109,10 @@ sub write_csv_file
 
 	my($status) = $csv->say($fh_out, $column_names);
 
-	say "$count. status: $status";
+	if (! $status)
+	{
+		say "$count: Failed to write header";
+	}
 
 	for my $key (sort keys %$flowers)
 	{
@@ -122,11 +120,6 @@ sub write_csv_file
 
 		$item	= $$flowers{$key};
 		$row	= [map{$$item{$_} } @$column_names];
-
-		if ($$item{common_name} =~ /Pinkabelle/)
-		{
-			say "$count: Writing $path. $$item{common_name}. $$item{scientific_name}";
-		}
 
 		if (! defined $$row[4])
 		{
@@ -138,11 +131,6 @@ sub write_csv_file
 		#$$row[0]	= Encode::encode('UTF-8', $$row[0], DIE_ON_ERR | LEAVE_SRC);
 		#$$row[1]	= Encode::encode('UTF-8', $$row[1], DIE_ON_ERR | LEAVE_SRC);
 		#$$row[11]	= Encode::encode('UTF-8', $$row[11], DIE_ON_ERR | LEAVE_SRC);
-
-		if ($$item{common_name} =~ /Pinkabelle/)
-		{
-			say "$count: Writing $path. $$item{common_name}. $$item{scientific_name}";
-		}
 
 		$status = $csv->say($fh_out, $row);
 
@@ -183,7 +171,7 @@ for (@$garden)
 
 	if (defined $garden{$common_name})
 	{
-		say "Garden. Duplicate name: $common_name";
+		say "Garden. Duplicate common name: $common_name";
 	}
 
 	%record = ();
@@ -208,7 +196,7 @@ for (@$pipe)
 
 	if (defined $pipe{$common_name})
 	{
-		say "Pipe. Duplicate name: $common_name";
+		say "Pipe. Duplicate common name: $common_name";
 	}
 
 	%record = ();
@@ -233,7 +221,7 @@ for (@$web)
 
 	if (defined $web{$common_name})
 	{
-		say "Web. Duplicate name: $common_name";
+		say "Web. Duplicate common name: $common_name";
 	}
 
 	%record = ();
@@ -249,15 +237,19 @@ for (@$web)
 say 'Web key counts: ', @{[scalar keys %web]}, '. ';
 
 my(%flowers);
+my($id);
+my($scientific_name);
 
 for my $key (keys %pipe)
 {
 	$common_name			= $pipe{$key}{common_name};
-	$flowers{$common_name}	= {};
+	$scientific_name		= $pipe{$key}{scientific_name};
+	$id						= "$scientific_name$;$common_name";
+	$flowers{$id}			= {};
 
 	for my $name (@pipe_names)
 	{
-		$flowers{$common_name}{$name} = $pipe{$key}{$name};
+		$flowers{$id}{$name} = $pipe{$key}{$name};
 	}
 
 }
@@ -266,18 +258,20 @@ say 'Flowers key counts: ', @{[scalar keys %flowers]}, '. ';
 
 for my $key (sort keys %garden)
 {
-	$common_name = $garden{$key}{common_name};
+	$common_name			= $garden{$key}{common_name};
+	$scientific_name		= $garden{$key}{scientific_name};
+	$id						= "$scientific_name$;$common_name";
 
-	if (! defined $flowers{$common_name})
+	if (! defined $flowers{$id})
 	{
 		say "1 New common name: $common_name. $garden{$key}{scientific_name}";
 
-		$flowers{$common_name} = {};
+		$flowers{$id} = {};
 	}
 
 	for my $name (@garden_names)
 	{
-		$flowers{$common_name}{$name} = $garden{$key}{$name} if (! $flowers{$common_name}{$name});
+		$flowers{$id}{$name} = $garden{$key}{$name} if (! $flowers{$id}{$name});
 	}
 
 }
@@ -286,18 +280,20 @@ say 'Flowers key counts: ', @{[scalar keys %flowers]}, '. ';
 
 for my $key (sort keys %web)
 {
-	$common_name = $web{$key}{common_name};
+	$common_name			= $web{$key}{common_name};
+	$scientific_name		= $web{$key}{scientific_name};
+	$id						= "$scientific_name$;$common_name";
 
-	if (! defined $flowers{$common_name})
+	if (! defined $flowers{$id})
 	{
 		say "2 New common name: $common_name. $web{$key}{scientific_name}";
 
-		$flowers{$common_name} = {};
+		$flowers{$id} = {};
 	}
 
 	for my $name (@web_names)
 	{
-		$flowers{$common_name}{$name} = $web{$key}{$name} if (! $flowers{$common_name}{$name});
+		$flowers{$id}{$name} = $web{$key}{$name} if (! $flowers{$id}{$name});
 	}
 
 }
@@ -315,11 +311,6 @@ for my $key (keys %flowers)
 	$count++;
 
 	$item = $flowers{$key};
-
-	if ($$item{common_name} =~ /Pinkabelle/)
-	{
-		say "$count: Flowers. $$item{common_name}. $$item{scientific_name}";
-	}
 
 	for my $attr (@attr)
 	{

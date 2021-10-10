@@ -1,84 +1,83 @@
-[2021-10-07 18:13:05.89927] [3405] [debug] Dropped table 'urls'
-[2021-10-07 18:13:05.95437] [3405] [debug] Dropped table 'images'
-[2021-10-07 18:13:06.01730] [3405] [debug] Dropped table 'notes'
-[2021-10-07 18:13:06.07750] [3405] [debug] Dropped table 'feature_locations'
-[2021-10-07 18:13:06.13583] [3405] [debug] Dropped table 'features'
-[2021-10-07 18:13:06.20073] [3405] [debug] Dropped table 'flower_locations'
-[2021-10-07 18:13:06.25931] [3405] [debug] Dropped table 'gardens'
-[2021-10-07 18:13:06.32079] [3405] [debug] Dropped table 'properties'
-[2021-10-07 18:13:06.38410] [3405] [debug] Dropped table 'attributes'
-[2021-10-07 18:13:06.44132] [3405] [debug] Dropped table 'attribute_types'
-[2021-10-07 18:13:06.50464] [3405] [debug] Dropped table 'flowers'
-[2021-10-07 18:13:06.56584] [3405] [debug] Dropped table 'constants'
-[2021-10-07 18:13:06.62358] [3405] [debug] Dropped table 'log'
-[2021-10-07 18:13:06.93045] [3406] [debug] Created table 'log'
-[2021-10-07 18:13:06.98807] [3406] [debug] Created table 'constants'
-[2021-10-07 18:13:07.04796] [3406] [debug] Created table 'flowers'
-[2021-10-07 18:13:07.10834] [3406] [debug] Created table 'attribute_types'
-[2021-10-07 18:13:07.16381] [3406] [debug] Created table 'attributes'
-[2021-10-07 18:13:07.22621] [3406] [debug] Created table 'properties'
-[2021-10-07 18:13:07.28629] [3406] [debug] Created table 'gardens'
-[2021-10-07 18:13:07.34453] [3406] [debug] Created table 'flower_locations'
-[2021-10-07 18:13:07.40864] [3406] [debug] Created table 'features'
-[2021-10-07 18:13:07.46683] [3406] [debug] Created table 'feature_locations'
-[2021-10-07 18:13:07.52806] [3406] [debug] Created table 'notes'
-[2021-10-07 18:13:07.59087] [3406] [debug] Created table 'images'
-[2021-10-07 18:13:07.64774] [3406] [debug] Created table 'urls'
-[2021-10-07 18:13:07.95898] [3407] [debug] Populating all tables
-[2021-10-07 18:13:08.22008] [3407] [info] Read 4 records into 'attribute_types'
-[2021-10-07 18:13:10.18062] [3407] [info] Read 32 records into 'constants'
-[2021-10-07 18:13:10.23737] [3407] [warn] flowers. Row: 3. Duplicate scientific_name: Mandevilla hybrid
-[2021-10-07 18:13:10.23747] [3407] [warn] flowers. Row: 5. Duplicate scientific_name: Alstroemeria
-[2021-10-07 18:13:10.23753] [3407] [warn] flowers. Row: 12. Duplicate scientific_name: Azalea
-[2021-10-07 18:13:10.23758] [3407] [warn] flowers. Row: 13. Duplicate scientific_name: Azalea
-[2021-10-07 18:13:10.23780] [3407] [warn] flowers. Row: 74. Duplicate scientific_name: Fuchsia
-[2021-10-07 18:13:10.23787] [3407] [warn] flowers. Row: 83. Duplicate scientific_name: Grevillea
-[2021-10-07 18:13:10.23790] [3407] [warn] flowers. Row: 84. Duplicate scientific_name: Grevillea
-[2021-10-07 18:13:10.23794] [3407] [warn] flowers. Row: 85. Duplicate scientific_name: Grevillea
-[2021-10-07 18:13:10.23799] [3407] [warn] flowers. Row: 92. Duplicate scientific_name: Heuchera
-[2021-10-07 18:13:10.23804] [3407] [warn] flowers. Row: 96. Duplicate scientific_name: Alyogyne huegelii
-[2021-10-07 18:13:10.23822] [3407] [warn] flowers. Row: 152. Duplicate scientific_name: Plectranthus ecklonii
-[2021-10-07 18:13:10.23829] [3407] [warn] flowers. Row: 165. Duplicate scientific_name: Rosa
-[2021-10-07 18:13:10.23833] [3407] [warn] flowers. Row: 166. Duplicate scientific_name: Rosa
-[2021-10-07 18:13:10.23836] [3407] [warn] flowers. Row: 167. Duplicate scientific_name: Rosa
-[2021-10-07 18:13:10.23841] [3407] [warn] flowers. Row: 172. Duplicate scientific_name: Salvia involucrata
-[2021-10-07 18:13:10.23848] [3407] [warn] flowers. Row: 184. Duplicate scientific_name: Citrus x latifolia
-[2021-10-07 18:13:24.86701] [3407] [info] Read 207 records into 'flowers'
-[2021-10-07 18:13:24.99275] [3407] [info] Read 2 records into 'properties'
-[2021-10-07 18:13:25.11597] [3407] [info] Read 2 records into 'gardens'
-[2021-10-07 18:13:40.87141] [3407] [info] Max (x, y) = (29, 67)
-[2021-10-07 18:13:40.87169] [3407] [info] Read 137 records into 'flower_locations'
-[2021-10-07 18:13:43.08002] [3407] [info] Read 35 records into 'features'
-[2021-10-07 18:13:54.13514] [3407] [error] feature_locations. Row: 8. Property name: Ron. Garden name: Front. Feature 'Brick path'. Feature location '15,16' is already in use by 'Thelionema caespitosum'
-[2021-10-07 18:13:54.58170] [3407] [error] feature_locations. Row: 8. Property name: Ron. Garden name: Front. Feature 'Brick path'. Feature location '16,17' is already in use by 'Thelionema caespitosum'
-[2021-10-07 18:13:59.69240] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '9,64' is already in use by 'Parsley'
-[2021-10-07 18:13:59.75968] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '9,66' is already in use by 'Carnation'
-[2021-10-07 18:13:59.94910] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,63' is already in use by 'Basil 1'
-[2021-10-07 18:14:00.00852] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,64' is already in use by 'Coriander'
-[2021-10-07 18:14:00.07202] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,65' is already in use by 'Banksia 2'
-[2021-10-07 18:14:00.13830] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,66' is already in use by 'Turmeric'
-[2021-10-07 18:14:00.19636] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,67' is already in use by 'Spearmint'
-[2021-10-07 18:14:00.32202] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,63' is already in use by 'Basil 1'
-[2021-10-07 18:14:00.38186] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,64' is already in use by 'Land cress'
-[2021-10-07 18:14:00.44591] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,65' is already in use by 'Grevillea 2'
-[2021-10-07 18:14:00.53142] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,67' is already in use by 'Pennywort'
-[2021-10-07 18:14:00.67632] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '12,63' is already in use by 'Chives 2'
-[2021-10-07 18:14:00.75077] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '12,64' is already in use by 'Grevillea 5'
-[2021-10-07 18:14:00.82634] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '12,67' is already in use by 'Mugwort'
-[2021-10-07 18:14:00.98096] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,63' is already in use by 'Basil 2'
-[2021-10-07 18:14:01.05298] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,64' is already in use by 'Kangaroo Paw 2 - Red'
-[2021-10-07 18:14:01.12960] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,65' is already in use by 'Nasturtium'
-[2021-10-07 18:14:01.20477] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,66' is already in use by 'Yarrow'
-[2021-10-07 18:14:01.27802] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,67' is already in use by 'Sage 1'
-[2021-10-07 18:14:01.43227] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '14,63' is already in use by 'Kangaroo Paw 3 - White-pink'
-[2021-10-07 18:14:01.50563] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '14,64' is already in use by 'Kangaroo Paw 4 - Pink'
-[2021-10-07 18:14:01.58242] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '14,65' is already in use by 'Chives 1'
-[2021-10-07 18:14:01.94860] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '15,64' is already in use by 'Spinach Beet'
-[2021-10-07 18:14:02.01674] [3407] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '15,65' is already in use by 'Oregano'
-[2021-10-07 18:14:29.29883] [3407] [info] Max (x, y) = (30, 69)
-[2021-10-07 18:14:29.29908] [3407] [info] Read 29 records into 'feature_locations'
-[2021-10-07 18:14:31.38956] [3407] [error] attributes. Row: 33. Common name 'Malus domestica 33' undefined
-[2021-10-07 18:15:16.02003] [3407] [info] Read 712 records into 'attributes'
-[2021-10-07 18:16:06.22816] [3407] [info] Read 777 records into 'notes'
-[2021-10-07 18:16:39.59578] [3407] [info] Read 511 records into 'images'
-[2021-10-07 18:16:54.02055] [3407] [info] Read 217 records into 'urls'
+[2021-10-07 18:28:08.66798] [3547] [debug] Dropped table 'urls'
+[2021-10-07 18:28:08.72582] [3547] [debug] Dropped table 'images'
+[2021-10-07 18:28:08.78888] [3547] [debug] Dropped table 'notes'
+[2021-10-07 18:28:08.84863] [3547] [debug] Dropped table 'feature_locations'
+[2021-10-07 18:28:08.91004] [3547] [debug] Dropped table 'features'
+[2021-10-07 18:28:08.97221] [3547] [debug] Dropped table 'flower_locations'
+[2021-10-07 18:28:09.02842] [3547] [debug] Dropped table 'gardens'
+[2021-10-07 18:28:09.09125] [3547] [debug] Dropped table 'properties'
+[2021-10-07 18:28:09.15050] [3547] [debug] Dropped table 'attributes'
+[2021-10-07 18:28:09.20799] [3547] [debug] Dropped table 'attribute_types'
+[2021-10-07 18:28:09.27306] [3547] [debug] Dropped table 'flowers'
+[2021-10-07 18:28:09.33140] [3547] [debug] Dropped table 'constants'
+[2021-10-07 18:28:09.39201] [3547] [debug] Dropped table 'log'
+[2021-10-07 18:28:09.70305] [3548] [debug] Created table 'log'
+[2021-10-07 18:28:09.76062] [3548] [debug] Created table 'constants'
+[2021-10-07 18:28:09.82396] [3548] [debug] Created table 'flowers'
+[2021-10-07 18:28:09.88450] [3548] [debug] Created table 'attribute_types'
+[2021-10-07 18:28:09.94285] [3548] [debug] Created table 'attributes'
+[2021-10-07 18:28:10.00683] [3548] [debug] Created table 'properties'
+[2021-10-07 18:28:10.06457] [3548] [debug] Created table 'gardens'
+[2021-10-07 18:28:10.12423] [3548] [debug] Created table 'flower_locations'
+[2021-10-07 18:28:10.18602] [3548] [debug] Created table 'features'
+[2021-10-07 18:28:10.24222] [3548] [debug] Created table 'feature_locations'
+[2021-10-07 18:28:10.30915] [3548] [debug] Created table 'notes'
+[2021-10-07 18:28:10.38852] [3548] [debug] Created table 'images'
+[2021-10-07 18:28:10.45059] [3548] [debug] Created table 'urls'
+[2021-10-07 18:28:10.77090] [3549] [debug] Populating all tables
+[2021-10-07 18:28:11.02795] [3549] [info] Read 4 records into 'attribute_types'
+[2021-10-07 18:28:12.99859] [3549] [info] Read 32 records into 'constants'
+[2021-10-07 18:28:13.05859] [3549] [warn] flowers. Row: 3. Duplicate scientific_name: Mandevilla hybrid
+[2021-10-07 18:28:13.05870] [3549] [warn] flowers. Row: 5. Duplicate scientific_name: Alstroemeria
+[2021-10-07 18:28:13.05878] [3549] [warn] flowers. Row: 12. Duplicate scientific_name: Azalea
+[2021-10-07 18:28:13.05882] [3549] [warn] flowers. Row: 13. Duplicate scientific_name: Azalea
+[2021-10-07 18:28:13.05906] [3549] [warn] flowers. Row: 74. Duplicate scientific_name: Fuchsia
+[2021-10-07 18:28:13.05913] [3549] [warn] flowers. Row: 83. Duplicate scientific_name: Grevillea
+[2021-10-07 18:28:13.05917] [3549] [warn] flowers. Row: 84. Duplicate scientific_name: Grevillea
+[2021-10-07 18:28:13.05921] [3549] [warn] flowers. Row: 85. Duplicate scientific_name: Grevillea
+[2021-10-07 18:28:13.05927] [3549] [warn] flowers. Row: 92. Duplicate scientific_name: Heuchera
+[2021-10-07 18:28:13.05932] [3549] [warn] flowers. Row: 96. Duplicate scientific_name: Alyogyne huegelii
+[2021-10-07 18:28:13.05953] [3549] [warn] flowers. Row: 152. Duplicate scientific_name: Plectranthus ecklonii
+[2021-10-07 18:28:13.05962] [3549] [warn] flowers. Row: 165. Duplicate scientific_name: Rosa
+[2021-10-07 18:28:13.05966] [3549] [warn] flowers. Row: 166. Duplicate scientific_name: Rosa
+[2021-10-07 18:28:13.05970] [3549] [warn] flowers. Row: 167. Duplicate scientific_name: Rosa
+[2021-10-07 18:28:13.05975] [3549] [warn] flowers. Row: 172. Duplicate scientific_name: Salvia involucrata
+[2021-10-07 18:28:13.05982] [3549] [warn] flowers. Row: 184. Duplicate scientific_name: Citrus x latifolia
+[2021-10-07 18:28:26.73570] [3549] [info] Read 207 records into 'flowers'
+[2021-10-07 18:28:26.86270] [3549] [info] Read 2 records into 'properties'
+[2021-10-07 18:28:26.98612] [3549] [info] Read 2 records into 'gardens'
+[2021-10-07 18:28:42.89993] [3549] [info] Max (x, y) = (29, 67)
+[2021-10-07 18:28:42.90015] [3549] [info] Read 137 records into 'flower_locations'
+[2021-10-07 18:28:45.06751] [3549] [info] Read 35 records into 'features'
+[2021-10-07 18:28:55.72860] [3549] [error] feature_locations. Row: 8. Property name: Ron. Garden name: Front. Feature 'Brick path'. Feature location '15,16' is already in use by 'Thelionema caespitosum'
+[2021-10-07 18:28:56.16149] [3549] [error] feature_locations. Row: 8. Property name: Ron. Garden name: Front. Feature 'Brick path'. Feature location '16,17' is already in use by 'Thelionema caespitosum'
+[2021-10-07 18:29:01.19699] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '9,64' is already in use by 'Parsley'
+[2021-10-07 18:29:01.25464] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '9,66' is already in use by 'Carnation'
+[2021-10-07 18:29:01.43836] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,63' is already in use by 'Basil 1'
+[2021-10-07 18:29:01.50488] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,64' is already in use by 'Coriander'
+[2021-10-07 18:29:01.56408] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,65' is already in use by 'Banksia 2'
+[2021-10-07 18:29:01.62457] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,66' is already in use by 'Turmeric'
+[2021-10-07 18:29:01.69016] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,67' is already in use by 'Spearmint'
+[2021-10-07 18:29:01.81179] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,63' is already in use by 'Basil 1'
+[2021-10-07 18:29:01.87468] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,64' is already in use by 'Land cress'
+[2021-10-07 18:29:01.93350] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,65' is already in use by 'Grevillea 2'
+[2021-10-07 18:29:01.99912] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,67' is already in use by 'Pennywort'
+[2021-10-07 18:29:02.11813] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '12,63' is already in use by 'Chives 2'
+[2021-10-07 18:29:02.18141] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '12,64' is already in use by 'Grevillea 5'
+[2021-10-07 18:29:02.23917] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '12,67' is already in use by 'Mugwort'
+[2021-10-07 18:29:02.36492] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,63' is already in use by 'Basil 2'
+[2021-10-07 18:29:02.42341] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,64' is already in use by 'Kangaroo Paw 2 - Red'
+[2021-10-07 18:29:02.48294] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,65' is already in use by 'Nasturtium'
+[2021-10-07 18:29:02.56377] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,66' is already in use by 'Yarrow'
+[2021-10-07 18:29:02.63994] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,67' is already in use by 'Sage 1'
+[2021-10-07 18:29:02.79403] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '14,63' is already in use by 'Kangaroo Paw 3 - White-pink'
+[2021-10-07 18:29:02.89125] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '14,64' is already in use by 'Kangaroo Paw 4 - Pink'
+[2021-10-07 18:29:02.97652] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '14,65' is already in use by 'Chives 1'
+[2021-10-07 18:29:03.38420] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '15,64' is already in use by 'Spinach Beet'
+[2021-10-07 18:29:03.45902] [3549] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '15,65' is already in use by 'Oregano'
+[2021-10-07 18:29:30.25898] [3549] [info] Max (x, y) = (30, 69)
+[2021-10-07 18:29:30.25923] [3549] [info] Read 29 records into 'feature_locations'
+[2021-10-07 18:30:16.48580] [3549] [info] Read 712 records into 'attributes'
+[2021-10-07 18:31:06.30537] [3549] [info] Read 777 records into 'notes'
+[2021-10-07 18:31:39.88470] [3549] [info] Read 511 records into 'images'
+[2021-10-07 18:31:54.04797] [3549] [info] Read 217 records into 'urls'
