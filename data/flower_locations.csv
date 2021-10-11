@@ -1,10 +1,10 @@
 "common_name","property_name","garden_name","xy"
 "Acer negundo","Ron","Back","9,24"
-"Aloha Dark Red 1","Ron","Front","29,1"
-"Aloha Regal Ruby 2","Ron","Front","29,3"
-"Alstroemeria 1","Ron","Front","9,30"
-"Alstroemeria 2","Ron","Front","7,30"
-"Alstroemeria 3","Ron","Back","23,17"
+"Aloha Dark Red","Ron","Front","29,1"
+"Aloha Regal Ruby","Ron","Front","29,3"
+"Angela","Ron","Front","9,30"
+"Princess Lily Louise","Ron","Front","7,30"
+"Peruvian Lily","Ron","Back","23,17"
 "Pine Golden Pippin","Ron","Front","16,28"
 "Pitmaston Pine","Ron","Front","12,28"
 "Pinkabelle®","Ron","Back","23,38"
@@ -12,10 +12,10 @@
 "Pompink","Ron","Back","11,20"
 "Harmony","Ron","Back","10,17"
 "Pom-for-You","Ron","Back","24,43"
-"Aquilegia 1","Ron","Front","16,26"
-"Aquilegia 2","Ron","Back","23,16"
+"Columbine","Ron","Front","16,26"
+"Granny's Bonnet","Ron","Back","23,16"
 "Asparagus Fern","Ron","Back","24,14"
-"Azalea 1","Ron","Front","29,7 25,18"
+"Rosa Belton","Ron","Front","29,7 25,18"
 "Azalea 2","Ron","Front","19,15"
 "Azalea 3","Ron","Front","29,9 5,11"
 "Banksia 2","Ron","Back","10,65"
@@ -136,3 +136,10 @@
 "Wulfen Spurge","Ron","Back","2,8 7,3"
 "Yarrow","Ron","Back","13,66"
 "Zion Red","Ron","Front","24,20"
+
+
+
+
+
+
+

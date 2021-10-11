@@ -13,8 +13,8 @@ id,aliases,common_name,height,max_height,max_width,min_height,min_width,pig_lati
 12,,"Pompink",3m,300,60,300,60,Malus.domestica.pompink,Yes,"Malus domestica Pompink",60cm
 13,,"Harmony",3m,300,60,300,60,Malus.domestica.harmony,Yes,"Malus domestica Harmony",60cm
 14,,"Pom-for-You",3m,300,60,300,60,Malus.domestica.pom-for-you,Yes,"Malus domestica Pom-for-You",60cm
-15,Columbine,"Aquilegia 1",,,,,,Aquilegia.mckana,Yes,"Aquilegia McKana"
-16,"Columbine, Granny's Bonnet","Aquilegia 2",,,,,,Aquilegia.flabellata.var.pumila.alba,Yes,"Aquilegia flabellata var. pumila alba"
+15,Columbine,"Columbine",,,,,,Aquilegia.mckana,Yes,"Aquilegia McKana"
+16,"Columbine, Granny's Bonnet","Granny's Bonnet",,,,,,Aquilegia.flabellata.var.pumila.alba,Yes,"Aquilegia flabellata var. pumila alba"
 17,"Italian arum, Italian lords-and-ladies","Arum italicum",46cm,46,46,46,46,Arum.italicum,Yes,"Arum italicum",46cm
 18,"Common Asparagus Fern, Climbing Asparagus, Ferny Asparagus, Lace Fern","Asparagus Fern",,,,,,Asparagus.setaceus,Yes,"Asparagus setaceus"
 19,-,"Rosa Belton",,,,,,Azalea.1,Yes,Azalea

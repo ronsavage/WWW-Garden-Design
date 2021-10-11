@@ -132,6 +132,11 @@ sub write_csv_file
 		#$$row[1]	= Encode::encode('UTF-8', $$row[1], DIE_ON_ERR | LEAVE_SRC);
 		#$$row[11]	= Encode::encode('UTF-8', $$row[11], DIE_ON_ERR | LEAVE_SRC);
 
+		if ($$row[0] eq $$row[1])
+		{
+			say "$count. Aliases == Common name. $$row[1]";
+		}
+
 		$status = $csv->say($fh_out, $row);
 
 		if (! $status)

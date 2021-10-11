@@ -13,8 +13,8 @@
 "Pompink","Malus domestica Pompink","","3m","60cm","Yes"
 "Harmony","Malus domestica Harmony","","3m","60cm","Yes"
 "Pom-for-You","Malus domestica Pom-for-You","","3m","60cm","Yes"
-"Aquilegia 1","Aquilegia McKana","Columbine","","","Yes"
-"Aquilegia 2","Aquilegia flabellata var. pumila alba","Columbine, Granny's Bonnet","","","Yes"
+"Columbine","Aquilegia McKana","Columbine","","","Yes"
+"Granny's Bonnet","Aquilegia flabellata var. pumila alba","Columbine, Granny's Bonnet","","","Yes"
 "Arum italicum","Arum italicum","Italian arum, Italian lords-and-ladies","46cm","46cm","Yes"
 "Asparagus Fern","Asparagus setaceus","Common Asparagus Fern, Climbing Asparagus, Ferny Asparagus, Lace Fern","","","Yes"
 "Rosa Belton","Azalea","-","","","Yes"
@@ -196,3 +196,5 @@
 "Wulfen Spurge","Euphorbia characias subsp. wulfenii","Albanian spurge, Mediterranean Spurge","1m","1m","Yes"
 "Yarrow","Archillea millifolium","Common yarrow","0.6m","0.6m","Yes"
 "Zion Red","Osteospermum ecklonis","Blue-and-white daisy bush, Cape marguerite, Star of the veldt, Sundays river daisy, Van Staden's river daisy, White daisy bush","","","Yes"
+
+
