@@ -84,11 +84,11 @@ id,aliases,common_name,height,max_height,max_width,min_height,min_width,pig_lati
 83,,"Goji Berry Plant",3m,300,100,300,100,Lycium.barbarum,Yes,"Lycium barbarum",1m
 84,"Calla Lily","Golden arum lily",,,,,,Zantedeschia.elliottiana,Yes,"Zantedeschia elliottiana"
 85,,Goldfussia,,,,,,Strobilanthes.anisophyllus,Yes,"Strobilanthes anisophyllus"
-86,'Goldfever',"Grevillea 1",,,,,,Grevillea.1,Yes,Grevillea
-87,"Lady 'O'","Grevillea 2",1-1.5m,150,200,100,150,Grevillea.2,Yes,Grevillea,1.5-2m
-88,"'Lemon Daze'","Grevillea 3",,,,,,Grevillea.3,Yes,Grevillea
-89,'Fireworks',"Grevillea 4",1m,100,75,100,75,Grevillea.4,Yes,Grevillea,75cm
-90,"Honeyeater Heaven","Grevillea 5",,,,,,Grevillea.lanigera,Yes,"Grevillea lanigera"
+86,,"Goldfever",,,,,,Grevillea.1,Yes,Grevillea
+87,,"Lady 'O'",1-1.5m,150,200,100,150,Grevillea.2,Yes,Grevillea,1.5-2m
+88,,"Lemon Daze",,,,,,Grevillea.3,Yes,Grevillea
+89,,"Fireworks",1m,100,75,100,75,Grevillea.4,Yes,Grevillea,75cm
+90,"","Honeyeater Heaven",,,,,,Grevillea.lanigera,Yes,"Grevillea lanigera"
 91,"Nandina, Sacred bamboo","Heavenly Bamboo",,,,,,Nandina.domestica,Yes,"Nandina domestica"
 92,"H. corsicus, Christmas rose, Lenten rose, Winter Rose","Hellebore 1",,,,,,Helleborus.argutifolius,Yes,"Helleborus argutifolius"
 93,"Bear's foot, dungwort, setterwort, Stinking Hellebore","Hellebore 2",60cm,60,60,60,60,Helleborus.foetidus,Yes,"Helleborus foetidus",60cm
@@ -112,10 +112,10 @@ id,aliases,common_name,height,max_height,max_width,min_height,min_width,pig_lati
 111,,Jacaranda,,,,,,Jacaranda.mimosifolia,Yes,"Jacaranda mimosifolia"
 112,"Smooth Japanese maple, irohamomiji (イロハモミジ), or momiji (栴)","Japanese maple",,,,,,Acer.palmatum,Yes,"Acer palmatum"
 113,"Japanese meadowsweet","Japanese Spiraea",,,,,,Spiraea.japonica,Yes,"Spiraea japonica"
-114,"Bush Bonanza","Kangaroo Paw 1 - Yellow",,,,,,Anigozanthos.hybrid.syn.rambubona.kangaroo.paw,Yes,"Anigozanthos hybrid syn. Rambubona Kangaroo Paw"
-115,"Bush Crystal","Kangaroo Paw 2 - Red",60cm,60,45,60,45,Anigozanthos.hybrid.kangaroo.paw,Yes,"Anigozanthos hybrid Kangaroo Paw",45cm
-116,"Bush Perl","Kangaroo Paw 3 - White-pink",,,,,,Anigozanthos.hybrid,Yes,"Anigozanthos hybrid"
-117,"Bush Diamond","Kangaroo Paw 4 - Pink",,,,,,Anigozanthos.hybrid.syn.rambodiam,Yes,"Anigozanthos hybrid syn. Rambodiam"
+114,"","Bush Bonanza",,,,,,Anigozanthos.hybrid.syn.rambubona.kangaroo.paw,Yes,"Anigozanthos hybrid syn. Rambubona Kangaroo Paw"
+115,"","Bush Crystald",60cm,60,45,60,45,Anigozanthos.hybrid.kangaroo.paw,Yes,"Anigozanthos hybrid Kangaroo Paw",45cm
+116,"","Bush Pearl",,,,,,Anigozanthos.hybrid,Yes,"Anigozanthos hybrid"
+117,"","Bush Diamond",,,,,,Anigozanthos.hybrid.syn.rambodiam,Yes,"Anigozanthos hybrid syn. Rambodiam"
 118,,"Kangaroo Paw 5 - Green",,,,,,Anigozanthos.viridis,Yes,"Anigozanthos viridis"
 119,"'Mandy's Surprise'",Kunzea,,,,,,Kunzea.baxterii.nana,Yes,"Kunzea baxterii nana"
 120,"American cress, bank cress, black wood cress, Belle Isle cress, Bermuda cress, creasy greens, early wintercress, early yellowrocket, scurvy cress and upland cress","Land cress",20cm,20,20,20,20,Barbarea.verna,Yes,"Barbarea verna",20cm
@@ -153,7 +153,7 @@ id,aliases,common_name,height,max_height,max_width,min_height,min_width,pig_lati
 152,"Garden sage","Common sage",20cm,20,20,20,20,Salvia.officinalis,Yes,"Salvia officinalis",20cm
 153,"Rosy-leaf","Bethellii",1m,100,100,100,100,Salvia.involucrata.2,Yes,"Salvia involucrata",1m
 154,,"Sage 3",1m,100,100,100,100,Salvia.involucrata.3,Yes,"Salvia involucrata",1m
-155,"Bee sage, sacred sage, white sage","Sage 4",1m,100,100,100,100,Salvia.apiana,Yes,"Salvia apiana",1m
+155,"Sacred sage, white sage","Bee sage",1m,100,100,100,100,Salvia.apiana,Yes,"Salvia apiana",1m
 156,,"Siegfredia darwinioides",,,,,,Siegfredia.darwinioides,Yes,"Siegfredia darwinioides"
 157,"Silver lace bush","Silver lace bush",1m,100,50,100,50,Tanacetum.ptarmiciflorum,Yes,"Tanacetum ptarmiciflorum",50cm
 158,"Smoke bush","Smoke Tree",,,,,,Cotinus.coggygria,Yes,"Cotinus coggygria"

@@ -102,9 +102,6 @@ sub write_csv_file
 
 	say "Writing $path";
 
-	my($item);
-	my($row);
-
 	open(my $fh_out, ">:encoding(UTF_8)", $path);
 
 	my($status) = $csv->say($fh_out, $column_names);
@@ -113,6 +110,9 @@ sub write_csv_file
 	{
 		say "$count: Failed to write header";
 	}
+
+	my($item);
+	my($row);
 
 	for my $key (sort keys %$flowers)
 	{
@@ -310,11 +310,18 @@ for my $key (keys %flowers)
 {
 	$count++;
 
-	$item = $flowers{$key};
+	$item				= $flowers{$key};
+	$common_name		= $$item{common_name};
+	$scientific_name	= $$item{scientific_name};
+
+	if ($common_name eq $scientific_name)
+	{
+		say "$count. $common_name. $$item{aliases}";
+	}
 
 	for my $attr (@attr)
 	{
-		$$item{$attr}	= ''	if (! defined $$item{$attr});
+		$$item{$attr}	= ''	if ( (! defined $$item{$attr}) || ($$item{$attr} eq '-') );
 		$seen{$attr}	= 0		if (! defined $seen{$attr});
 
 		$seen{$attr}++;
