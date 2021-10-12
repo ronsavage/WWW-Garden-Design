@@ -1,23 +1,23 @@
 id|aliases|common_name|height|max_height|max_width|min_height|min_width|pig_latin|publish|scientific_name|width
 1|Ashleaf maple, Ash-leaved maple, Box elder, Boxelder maple, Maple ash, 'Variegatum'|Acer negundo||||||Acer.negundo|Yes|Acer negundo|
-2|'Aloha Dark Red'|Aloha Dark Red||||||Mandevilla.hybrid.1|Yes|Mandevilla hybrid 1|
-3|'Aloha Regal Ruby'|Aloha Regal Ruby||||||Mandevilla.hybrid.2|Yes|Mandevilla hybrid 2|
-4|'Angela'|Angela||||||Alstroemeria.1|Yes|Alstroemeria|
-5|'Princess Lily Louise'|Princess Lily Louise||||||Alstroemeria.2|Yes|Alstroemeria|
-6|Peruvian Lily|Peruvian Lily|30cm|30|30|30|30|Alstroemeria.pulchella|Yes|Alstroemeria pulchella|30cm
+2|'Aloha Dark Red'|Aloha Dark Red 1||||||Mandevilla.hybrid.1|Yes|Mandevilla hybrid|
+3|'Aloha Regal Ruby'|Aloha Regal Ruby 2||||||Mandevilla.hybrid.2|Yes|Mandevilla hybrid|
+4|'Angela'|Alstroemeria 1||||||Alstroemeria.1|Yes|Alstroemeria|
+5|'Princess Lily Louise'|Alstroemeria 2||||||Alstroemeria.2|Yes|Alstroemeria|
+6|Peruvian Lily|Alstroemeria 3|30cm|30|30|30|30|Alstroemeria.pulchella|Yes|Alstroemeria pulchella|30cm
 7|Pine Golden Pippin|Apple 1 - Pine Golden Pippin||||||Malus.domestica.pine.golden.pippin|Yes|Malus domestica 'Pine Golden Pippin'|
 8|Pitmaston Pine|Apple 2 - Pitmaston Pine||||||Malus.domestica.pitmaston.pine|Yes|Malus domestica 'Pitmaston Pine'|
 9||Apple 3|8m|800|700|800|700|Malus.domestica.3|Yes|Malus domestica 3|7m
-10||Pinkabelle®|2m|200|100|200|100|Malus.domestica.pinkabelle|Yes|Malus domestica Pinkabelle®|1m
-11||Leprechaun|2m|200|100|200|100|Malus.domestica.leprechaun|Yes|Malus domestica Leprechaun|1m
-12||Pompink|3m|300|60|300|60|Malus.domestica.pompink|Yes|Malus domestica Pompink|60cm
-13||Harmony|3m|300|60|300|60|Malus.domestica.harmony|Yes|Malus domestica Harmony|60cm
-14||Pom-for-You|3m|300|60|300|60|Malus.domestica.pom-for-you|Yes|Malus domestica Pom-for-You|60cm
-15|Columbine|Columbine||||||Aquilegia.mckana|Yes|Aquilegia McKana|
-16|Columbine, Granny's Bonnet|Granny's Bonnet||||||Aquilegia.flabellata.var.pumila.alba|Yes|Aquilegia flabellata var. pumila alba|
+10||Apple 4 - Pinkabelle®|2m|200|100|200|100|Malus.domestica.pinkabelle|Yes|Malus domestica Pinkabelle®|1m
+11||Apple 5 - Leprechaun|2m|200|100|200|100|Malus.domestica.leprechaun|Yes|Malus domestica Leprechaun|1m
+12||Apple 6 - Pompink|3m|300|60|300|60|Malus.domestica.pompink|Yes|Malus domestica Pompink|60cm
+13||Apple 7 - Harmony|3m|300|60|300|60|Malus.domestica.harmony|Yes|Malus domestica Harmony|60cm
+14||Apple 8 - Pom-for-You|3m|300|60|300|60|Malus.domestica.pom-for-you|Yes|Malus domestica Pom-for-You|60cm
+15|Columbine|Aquilegia 1||||||Aquilegia.mckana|Yes|Aquilegia McKana|
+16|Columbine, Granny's Bonnet|Aquilegia 2||||||Aquilegia.flabellata.var.pumila.alba|Yes|Aquilegia flabellata var. pumila alba|
 17|Italian arum, Italian lords-and-ladies|Arum italicum|46cm|46|46|46|46|Arum.italicum|Yes|Arum italicum|46cm
 18|Common Asparagus Fern, Climbing Asparagus, Ferny Asparagus, Lace Fern|Asparagus Fern||||||Asparagus.setaceus|Yes|Asparagus setaceus|
-19|Rosa Belton|Rosa Belton||||||Azalea.1|Yes|Azalea|
+19|Rosa Belton|Azalea 1||||||Azalea.1|Yes|Azalea|
 20||Azalea 2||||||Azalea.2|Yes|Azalea|
 21||Azalea 3||||||Azalea.3|Yes|Azalea|
 22|Cherry Candles|Banksia 1||||||Banksia.spinulosa|Yes|Banksia spinulosa|
@@ -110,11 +110,11 @@ id|aliases|common_name|height|max_height|max_width|min_height|min_width|pig_lati
 109|Pink Coneflower|Isopogon latifolius|1-2m|200|50|100|50|Isopogon.latifolius|Yes|Isopogon latifolius|50cm
 110||Ivy||||||Hedera|Yes|Hedera|
 111||Jacaranda||||||Jacaranda.mimosifolia|Yes|Jacaranda mimosifolia|
-112|Smooth Japanese maple, irohamomiji (イロハモミジ), or momiji (栴)|Japanese maple||||||Acer.palmatum|Yes|Acer palmatum|
+112|Smooth Japanese maple, irohamomiji (イロハモミジ), or momiji (紅葉)|Japanese maple||||||Acer.palmatum|Yes|Acer palmatum|
 113|Japanese meadowsweet|Japanese Spiraea||||||Spiraea.japonica|Yes|Spiraea japonica|
 114|Bush Bonanza|Kangaroo Paw 1 - Yellow||||||Anigozanthos.hybrid.syn.rambubona.kangaroo.paw|Yes|Anigozanthos hybrid syn. Rambubona Kangaroo Paw|
 115|Bush Crystal|Kangaroo Paw 2 - Red|60cm|60|45|60|45|Anigozanthos.hybrid.kangaroo.paw|Yes|Anigozanthos hybrid Kangaroo Paw|45cm
-116|Bush Perl|Kangaroo Paw 3 - White-pink||||||Anigozanthos.hybrid|Yes|Anigozanthos hybrid|
+116|Bush Pearl|Kangaroo Paw 3 - White-pink||||||Anigozanthos.hybrid|Yes|Anigozanthos hybrid|
 117|Bush Diamond|Kangaroo Paw 4 - Pink||||||Anigozanthos.hybrid.syn.rambodiam|Yes|Anigozanthos hybrid syn. Rambodiam|
 118||Kangaroo Paw 5 - Green||||||Anigozanthos.viridis|Yes|Anigozanthos viridis|
 119|'Mandy's Surprise'|Kunzea||||||Kunzea.baxterii.nana|Yes|Kunzea baxterii nana|
