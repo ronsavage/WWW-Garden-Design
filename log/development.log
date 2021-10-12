@@ -1,349 +1,301 @@
-[2021-10-11 15:27:21.19866] [12511] [debug] Dropped table 'urls'
-[2021-10-11 15:27:21.25859] [12511] [debug] Dropped table 'images'
-[2021-10-11 15:27:21.31783] [12511] [debug] Dropped table 'notes'
-[2021-10-11 15:27:21.38086] [12511] [debug] Dropped table 'feature_locations'
-[2021-10-11 15:27:21.43750] [12511] [debug] Dropped table 'features'
-[2021-10-11 15:27:21.50068] [12511] [debug] Dropped table 'flower_locations'
-[2021-10-11 15:27:21.56146] [12511] [debug] Dropped table 'gardens'
-[2021-10-11 15:27:21.61813] [12511] [debug] Dropped table 'properties'
-[2021-10-11 15:27:21.68230] [12511] [debug] Dropped table 'attributes'
-[2021-10-11 15:27:21.74065] [12511] [debug] Dropped table 'attribute_types'
-[2021-10-11 15:27:21.79981] [12511] [debug] Dropped table 'flowers'
-[2021-10-11 15:27:21.86350] [12511] [debug] Dropped table 'constants'
-[2021-10-11 15:27:21.92071] [12511] [debug] Dropped table 'log'
-[2021-10-11 15:27:22.24862] [12512] [debug] Created table 'log'
-[2021-10-11 15:27:22.31090] [12512] [debug] Created table 'constants'
-[2021-10-11 15:27:22.36706] [12512] [debug] Created table 'flowers'
-[2021-10-11 15:27:22.43096] [12512] [debug] Created table 'attribute_types'
-[2021-10-11 15:27:22.49031] [12512] [debug] Created table 'attributes'
-[2021-10-11 15:27:22.54929] [12512] [debug] Created table 'properties'
-[2021-10-11 15:27:22.61185] [12512] [debug] Created table 'gardens'
-[2021-10-11 15:27:22.66774] [12512] [debug] Created table 'flower_locations'
-[2021-10-11 15:27:22.72994] [12512] [debug] Created table 'features'
-[2021-10-11 15:27:22.79107] [12512] [debug] Created table 'feature_locations'
-[2021-10-11 15:27:22.84701] [12512] [debug] Created table 'notes'
-[2021-10-11 15:27:22.91146] [12512] [debug] Created table 'images'
-[2021-10-11 15:27:22.97063] [12512] [debug] Created table 'urls'
-[2021-10-11 15:27:23.31667] [12513] [debug] Populating all tables
-[2021-10-11 15:27:23.57219] [12513] [info] Read 4 records into 'attribute_types'
-[2021-10-11 15:27:25.51185] [12513] [info] Read 32 records into 'constants'
-[2021-10-11 15:27:25.57095] [12513] [warn] flowers. Row: 10. Duplicate scientific_name: Alstroemeria
-[2021-10-11 15:27:25.57106] [12513] [warn] flowers. Row: 13. Duplicate scientific_name: Alyogyne huegelii
-[2021-10-11 15:27:25.57111] [12513] [warn] flowers. Row: 16. Duplicate scientific_name: Anigozanthos hybrid Kangaroo Paw
-[2021-10-11 15:27:25.57119] [12513] [warn] flowers. Row: 28. Duplicate scientific_name: Azalea
-[2021-10-11 15:27:25.57124] [12513] [warn] flowers. Row: 29. Duplicate scientific_name: Azalea
-[2021-10-11 15:27:25.57132] [12513] [info] flowers. Row: 36. Duplicate common_name: Spinach Beet
-[2021-10-11 15:27:25.57166] [12513] [warn] flowers. Row: 83. Duplicate scientific_name: Fuchsia
-[2021-10-11 15:27:25.57173] [12513] [warn] flowers. Row: 84. Duplicate scientific_name: Fuchsia
-[2021-10-11 15:27:25.57181] [12513] [warn] flowers. Row: 88. Duplicate scientific_name: Grevillea
-[2021-10-11 15:27:25.57187] [12513] [warn] flowers. Row: 89. Duplicate scientific_name: Grevillea
-[2021-10-11 15:27:25.57193] [12513] [warn] flowers. Row: 90. Duplicate scientific_name: Grevillea
-[2021-10-11 15:27:25.57204] [12513] [warn] flowers. Row: 98. Duplicate scientific_name: Heuchera
-[2021-10-11 15:27:25.57210] [12513] [warn] flowers. Row: 100. Duplicate scientific_name: Hibbertia obtusifolia
-[2021-10-11 15:27:25.57214] [12513] [warn] flowers. Row: 102. Duplicate scientific_name: Hibbertia scandens
-[2021-10-11 15:27:25.57219] [12513] [info] flowers. Row: 106. Duplicate common_name: Golden Nugget
-[2021-10-11 15:27:25.57237] [12513] [warn] flowers. Row: 146. Duplicate scientific_name: Mandevilla hybrid
-[2021-10-11 15:27:25.57248] [12513] [warn] flowers. Row: 170. Duplicate scientific_name: Plectranthus caninus
-[2021-10-11 15:27:25.57253] [12513] [warn] flowers. Row: 172. Duplicate scientific_name: Plectranthus ecklonii
-[2021-10-11 15:27:25.57262] [12513] [warn] flowers. Row: 181. Duplicate scientific_name: Rosa
-[2021-10-11 15:27:25.57266] [12513] [warn] flowers. Row: 182. Duplicate scientific_name: Rosa
-[2021-10-11 15:27:25.57270] [12513] [warn] flowers. Row: 183. Duplicate scientific_name: Rosa
-[2021-10-11 15:27:25.57277] [12513] [warn] flowers. Row: 188. Duplicate scientific_name: Salvia involucrata
-[2021-10-11 15:27:39.19382] [12513] [info] Read 210 records into 'flowers'
-[2021-10-11 15:27:39.32303] [12513] [info] Read 2 records into 'properties'
-[2021-10-11 15:27:39.44819] [12513] [info] Read 2 records into 'gardens'
-[2021-10-11 15:27:39.53387] [12513] [error] flower_locations. Row: 2. Common name 'Aloha Dark Red 1' undefined
-[2021-10-11 15:27:39.53415] [12513] [error] flower_locations. Row: 3. Common name 'Aloha Regal Ruby 2' undefined
-[2021-10-11 15:27:39.53431] [12513] [error] flower_locations. Row: 4. Common name 'Alstroemeria 1' undefined
-[2021-10-11 15:27:39.53440] [12513] [error] flower_locations. Row: 5. Common name 'Alstroemeria 2' undefined
-[2021-10-11 15:27:39.53450] [12513] [error] flower_locations. Row: 6. Common name 'Alstroemeria 3' undefined
-[2021-10-11 15:27:40.14844] [12513] [error] flower_locations. Row: 17. Common name 'Azalea 1' undefined
-[2021-10-11 15:27:47.39544] [12513] [error] flower_locations. Row: 72. Common name 'Grevillea 1' undefined
-[2021-10-11 15:27:47.39571] [12513] [error] flower_locations. Row: 73. Common name 'Grevillea 2' undefined
-[2021-10-11 15:27:47.39591] [12513] [error] flower_locations. Row: 74. Common name 'Grevillea 3' undefined
-[2021-10-11 15:27:47.39614] [12513] [error] flower_locations. Row: 75. Common name 'Grevillea 5' undefined
-[2021-10-11 15:27:49.76634] [12513] [error] flower_locations. Row: 79. Common name 'Heuchera 1' undefined
-[2021-10-11 15:27:49.76650] [12513] [error] flower_locations. Row: 80. Common name 'Heuchera 2' undefined
-[2021-10-11 15:27:49.82516] [12513] [error] flower_locations. Row: 82. Common name 'Hibiscus 2' undefined
-[2021-10-11 15:27:49.82533] [12513] [error] flower_locations. Row: 83. Common name 'Hibiscus 3' undefined
-[2021-10-11 15:27:49.94530] [12513] [error] flower_locations. Row: 86. Common name 'Native frangipani' undefined
-[2021-10-11 15:27:50.24594] [12513] [error] flower_locations. Row: 91. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:27:50.24604] [12513] [error] flower_locations. Row: 92. Common name 'Kangaroo Paw 3 - White-pink' undefined
-[2021-10-11 15:27:50.24608] [12513] [error] flower_locations. Row: 93. Common name 'Kangaroo Paw 4 - Pink' undefined
-[2021-10-11 15:27:51.91158] [12513] [error] flower_locations. Row: 117. Common name 'Sage 1' undefined
-[2021-10-11 15:27:51.91178] [12513] [error] flower_locations. Row: 118. Common name 'Sage 2' undefined
-[2021-10-11 15:27:53.69535] [12513] [info] Max (x, y) = (29, 67)
-[2021-10-11 15:27:53.69549] [12513] [info] Read 137 records into 'flower_locations'
-[2021-10-11 15:27:56.00361] [12513] [info] Read 35 records into 'features'
-[2021-10-11 15:28:06.60598] [12513] [error] feature_locations. Row: 8. Property name: Ron. Garden name: Front. Feature 'Brick path'. Feature location '15,16' is already in use by 'Thelionema caespitosum'
-[2021-10-11 15:28:07.03024] [12513] [error] feature_locations. Row: 8. Property name: Ron. Garden name: Front. Feature 'Brick path'. Feature location '16,17' is already in use by 'Thelionema caespitosum'
-[2021-10-11 15:28:11.96949] [12513] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '9,64' is already in use by 'Parsley'
-[2021-10-11 15:28:12.03195] [12513] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '9,66' is already in use by 'Carnation'
-[2021-10-11 15:28:12.21464] [12513] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,63' is already in use by 'Basil 1'
-[2021-10-11 15:28:12.27537] [12513] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,64' is already in use by 'Coriander'
-[2021-10-11 15:28:12.34092] [12513] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,65' is already in use by 'Banksia 2'
-[2021-10-11 15:28:12.39990] [12513] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,66' is already in use by 'Turmeric'
-[2021-10-11 15:28:12.46346] [12513] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,67' is already in use by 'Spearmint'
-[2021-10-11 15:28:12.58261] [12513] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,63' is already in use by 'Basil 1'
-[2021-10-11 15:28:12.64757] [12513] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,64' is already in use by 'Land cress'
-[2021-10-11 15:28:12.76813] [12513] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,67' is already in use by 'Pennywort'
-[2021-10-11 15:28:12.88882] [12513] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '12,63' is already in use by 'Chives 2'
-[2021-10-11 15:28:13.01283] [12513] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '12,67' is already in use by 'Mugwort'
-[2021-10-11 15:28:13.13365] [12513] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,63' is already in use by 'Basil 2'
-[2021-10-11 15:28:13.25163] [12513] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,65' is already in use by 'Nasturtium'
-[2021-10-11 15:28:13.31548] [12513] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,66' is already in use by 'Yarrow'
-[2021-10-11 15:28:13.61971] [12513] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '14,65' is already in use by 'Chives 1'
-[2021-10-11 15:28:13.92100] [12513] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '15,64' is already in use by 'Spinach Beet'
-[2021-10-11 15:28:13.98312] [12513] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '15,65' is already in use by 'Oregano'
-[2021-10-11 15:28:42.31850] [12513] [info] Max (x, y) = (30, 69)
-[2021-10-11 15:28:42.31868] [12513] [info] Read 29 records into 'feature_locations'
-[2021-10-11 15:28:42.65207] [12513] [error] attributes. Row: 5. Common name 'Aloha Dark Red 1' undefined
-[2021-10-11 15:28:42.70981] [12513] [error] attributes. Row: 6. Common name 'Aloha Dark Red 1' undefined
-[2021-10-11 15:28:42.77467] [12513] [error] attributes. Row: 7. Common name 'Aloha Dark Red 1' undefined
-[2021-10-11 15:28:42.83864] [12513] [error] attributes. Row: 8. Common name 'Aloha Dark Red 1' undefined
-[2021-10-11 15:28:42.89906] [12513] [error] attributes. Row: 9. Common name 'Aloha Regal Ruby 2' undefined
-[2021-10-11 15:28:42.96480] [12513] [error] attributes. Row: 10. Common name 'Aloha Regal Ruby 2' undefined
-[2021-10-11 15:28:43.02647] [12513] [error] attributes. Row: 11. Common name 'Aloha Regal Ruby 2' undefined
-[2021-10-11 15:28:43.08893] [12513] [error] attributes. Row: 12. Common name 'Aloha Regal Ruby 2' undefined
-[2021-10-11 15:28:43.15609] [12513] [error] attributes. Row: 13. Common name 'Alstroemeria 1' undefined
-[2021-10-11 15:28:43.21633] [12513] [error] attributes. Row: 14. Common name 'Alstroemeria 1' undefined
-[2021-10-11 15:28:43.28189] [12513] [error] attributes. Row: 15. Common name 'Alstroemeria 1' undefined
-[2021-10-11 15:28:43.34540] [12513] [error] attributes. Row: 16. Common name 'Alstroemeria 1' undefined
-[2021-10-11 15:28:43.40620] [12513] [error] attributes. Row: 17. Common name 'Alstroemeria 2' undefined
-[2021-10-11 15:28:43.47292] [12513] [error] attributes. Row: 18. Common name 'Alstroemeria 2' undefined
-[2021-10-11 15:28:43.53570] [12513] [error] attributes. Row: 19. Common name 'Alstroemeria 2' undefined
-[2021-10-11 15:28:43.59803] [12513] [error] attributes. Row: 20. Common name 'Alstroemeria 2' undefined
-[2021-10-11 15:28:43.66405] [12513] [error] attributes. Row: 21. Common name 'Alstroemeria 3' undefined
-[2021-10-11 15:28:43.72382] [12513] [error] attributes. Row: 22. Common name 'Alstroemeria 3' undefined
-[2021-10-11 15:28:43.78890] [12513] [error] attributes. Row: 23. Common name 'Alstroemeria 3' undefined
-[2021-10-11 15:28:43.85153] [12513] [error] attributes. Row: 24. Common name 'Alstroemeria 3' undefined
-[2021-10-11 15:28:46.66970] [12513] [error] attributes. Row: 69. Common name 'Azalea 1' undefined
-[2021-10-11 15:28:46.72908] [12513] [error] attributes. Row: 70. Common name 'Azalea 1' undefined
-[2021-10-11 15:28:46.79542] [12513] [error] attributes. Row: 71. Common name 'Azalea 1' undefined
-[2021-10-11 15:28:46.85801] [12513] [error] attributes. Row: 72. Common name 'Azalea 1' undefined
-[2021-10-11 15:29:03.80536] [12513] [error] attributes. Row: 333. Common name 'Grevillea 1' undefined
-[2021-10-11 15:29:03.87105] [12513] [error] attributes. Row: 334. Common name 'Grevillea 1' undefined
-[2021-10-11 15:29:03.93010] [12513] [error] attributes. Row: 335. Common name 'Grevillea 1' undefined
-[2021-10-11 15:29:03.99474] [12513] [error] attributes. Row: 336. Common name 'Grevillea 1' undefined
-[2021-10-11 15:29:04.05586] [12513] [error] attributes. Row: 337. Common name 'Grevillea 2' undefined
-[2021-10-11 15:29:04.11553] [12513] [error] attributes. Row: 338. Common name 'Grevillea 2' undefined
-[2021-10-11 15:29:04.18129] [12513] [error] attributes. Row: 339. Common name 'Grevillea 2' undefined
-[2021-10-11 15:29:04.23982] [12513] [error] attributes. Row: 340. Common name 'Grevillea 2' undefined
-[2021-10-11 15:29:04.30659] [12513] [error] attributes. Row: 341. Common name 'Grevillea 3' undefined
-[2021-10-11 15:29:04.37157] [12513] [error] attributes. Row: 342. Common name 'Grevillea 3' undefined
-[2021-10-11 15:29:04.43040] [12513] [error] attributes. Row: 343. Common name 'Grevillea 3' undefined
-[2021-10-11 15:29:04.49458] [12513] [error] attributes. Row: 344. Common name 'Grevillea 3' undefined
-[2021-10-11 15:29:04.55578] [12513] [error] attributes. Row: 345. Common name 'Grevillea 4' undefined
-[2021-10-11 15:29:04.61598] [12513] [error] attributes. Row: 346. Common name 'Grevillea 4' undefined
-[2021-10-11 15:29:04.68101] [12513] [error] attributes. Row: 347. Common name 'Grevillea 4' undefined
-[2021-10-11 15:29:04.74094] [12513] [error] attributes. Row: 348. Common name 'Grevillea 4' undefined
-[2021-10-11 15:29:04.80284] [12513] [error] attributes. Row: 349. Common name 'Grevillea 5' undefined
-[2021-10-11 15:29:04.86571] [12513] [error] attributes. Row: 350. Common name 'Grevillea 5' undefined
-[2021-10-11 15:29:04.92325] [12513] [error] attributes. Row: 351. Common name 'Grevillea 5' undefined
-[2021-10-11 15:29:04.98920] [12513] [error] attributes. Row: 352. Common name 'Grevillea 5' undefined
-[2021-10-11 15:29:05.80395] [12513] [error] attributes. Row: 365. Common name 'Heuchera 1' undefined
-[2021-10-11 15:29:05.86901] [12513] [error] attributes. Row: 366. Common name 'Heuchera 1' undefined
-[2021-10-11 15:29:05.92913] [12513] [error] attributes. Row: 367. Common name 'Heuchera 1' undefined
-[2021-10-11 15:29:05.99522] [12513] [error] attributes. Row: 368. Common name 'Heuchera 1' undefined
-[2021-10-11 15:29:06.05679] [12513] [error] attributes. Row: 369. Common name 'Heuchera 2' undefined
-[2021-10-11 15:29:06.11772] [12513] [error] attributes. Row: 370. Common name 'Heuchera 2' undefined
-[2021-10-11 15:29:06.18384] [12513] [error] attributes. Row: 371. Common name 'Heuchera 2' undefined
-[2021-10-11 15:29:06.24314] [12513] [error] attributes. Row: 372. Common name 'Heuchera 2' undefined
-[2021-10-11 15:29:07.05206] [12513] [error] attributes. Row: 385. Common name 'Hibiscus 2' undefined
-[2021-10-11 15:29:07.11225] [12513] [error] attributes. Row: 386. Common name 'Hibiscus 2' undefined
-[2021-10-11 15:29:07.17947] [12513] [error] attributes. Row: 387. Common name 'Hibiscus 2' undefined
-[2021-10-11 15:29:07.23995] [12513] [error] attributes. Row: 388. Common name 'Hibiscus 2' undefined
-[2021-10-11 15:29:07.30206] [12513] [error] attributes. Row: 389. Common name 'Hibiscus 3' undefined
-[2021-10-11 15:29:07.36540] [12513] [error] attributes. Row: 390. Common name 'Hibiscus 3' undefined
-[2021-10-11 15:29:07.42437] [12513] [error] attributes. Row: 391. Common name 'Hibiscus 3' undefined
-[2021-10-11 15:29:07.48998] [12513] [error] attributes. Row: 392. Common name 'Hibiscus 3' undefined
-[2021-10-11 15:29:08.80449] [12513] [error] attributes. Row: 413. Common name 'Native frangipani' undefined
-[2021-10-11 15:29:08.87046] [12513] [error] attributes. Row: 414. Common name 'Native frangipani' undefined
-[2021-10-11 15:29:08.93111] [12513] [error] attributes. Row: 415. Common name 'Native frangipani' undefined
-[2021-10-11 15:29:08.99743] [12513] [error] attributes. Row: 416. Common name 'Native frangipani' undefined
-[2021-10-11 15:29:10.97269] [12513] [error] attributes. Row: 445. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:29:11.04009] [12513] [error] attributes. Row: 446. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:29:11.11644] [12513] [error] attributes. Row: 447. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:29:11.19000] [12513] [error] attributes. Row: 448. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:29:11.26282] [12513] [error] attributes. Row: 449. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:29:11.34351] [12513] [error] attributes. Row: 450. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:29:11.41327] [12513] [error] attributes. Row: 451. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:29:11.49217] [12513] [error] attributes. Row: 452. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:29:11.56690] [12513] [error] attributes. Row: 453. Common name 'Kangaroo Paw 3 - White-pink' undefined
-[2021-10-11 15:29:11.63937] [12513] [error] attributes. Row: 454. Common name 'Kangaroo Paw 3 - White-pink' undefined
-[2021-10-11 15:29:11.71912] [12513] [error] attributes. Row: 455. Common name 'Kangaroo Paw 3 - White-pink' undefined
-[2021-10-11 15:29:11.79208] [12513] [error] attributes. Row: 456. Common name 'Kangaroo Paw 3 - White-pink' undefined
-[2021-10-11 15:29:11.86370] [12513] [error] attributes. Row: 457. Common name 'Kangaroo Paw 4 - Pink' undefined
-[2021-10-11 15:29:11.94093] [12513] [error] attributes. Row: 458. Common name 'Kangaroo Paw 4 - Pink' undefined
-[2021-10-11 15:29:12.01775] [12513] [error] attributes. Row: 459. Common name 'Kangaroo Paw 4 - Pink' undefined
-[2021-10-11 15:29:12.08704] [12513] [error] attributes. Row: 460. Common name 'Kangaroo Paw 4 - Pink' undefined
-[2021-10-11 15:29:20.53969] [12513] [error] attributes. Row: 593. Common name 'Sage 1' undefined
-[2021-10-11 15:29:20.59799] [12513] [error] attributes. Row: 594. Common name 'Sage 1' undefined
-[2021-10-11 15:29:20.66946] [12513] [error] attributes. Row: 595. Common name 'Sage 1' undefined
-[2021-10-11 15:29:20.73051] [12513] [error] attributes. Row: 596. Common name 'Sage 1' undefined
-[2021-10-11 15:29:20.79151] [12513] [error] attributes. Row: 597. Common name 'Sage 2' undefined
-[2021-10-11 15:29:20.85777] [12513] [error] attributes. Row: 598. Common name 'Sage 2' undefined
-[2021-10-11 15:29:20.91793] [12513] [error] attributes. Row: 599. Common name 'Sage 2' undefined
-[2021-10-11 15:29:20.97614] [12513] [error] attributes. Row: 600. Common name 'Sage 2' undefined
-[2021-10-11 15:29:21.33947] [12513] [error] attributes. Row: 605. Common name 'Sage 4' undefined
-[2021-10-11 15:29:21.41502] [12513] [error] attributes. Row: 606. Common name 'Sage 4' undefined
-[2021-10-11 15:29:21.48552] [12513] [error] attributes. Row: 607. Common name 'Sage 4' undefined
-[2021-10-11 15:29:21.56220] [12513] [error] attributes. Row: 608. Common name 'Sage 4' undefined
-[2021-10-11 15:29:28.47713] [12513] [info] Read 712 records into 'attributes'
-[2021-10-11 15:29:28.57020] [12513] [error] notes. Row: 1. Common name 'Alstroemeria 2' undefined
-[2021-10-11 15:29:28.57031] [12513] [error] notes. Row: 2. Common name 'Alstroemeria 3' undefined
-[2021-10-11 15:29:28.57034] [12513] [error] notes. Row: 3. Common name 'Alstroemeria 3' undefined
-[2021-10-11 15:29:28.57038] [12513] [error] notes. Row: 4. Common name 'Alstroemeria 3' undefined
-[2021-10-11 15:29:51.74791] [12513] [error] notes. Row: 362. Common name 'Grevillea 2' undefined
-[2021-10-11 15:29:51.74807] [12513] [error] notes. Row: 363. Common name 'Grevillea 2' undefined
-[2021-10-11 15:29:51.74815] [12513] [error] notes. Row: 364. Common name 'Grevillea 2' undefined
-[2021-10-11 15:29:51.74822] [12513] [error] notes. Row: 365. Common name 'Grevillea 2' undefined
-[2021-10-11 15:29:51.74829] [12513] [error] notes. Row: 366. Common name 'Grevillea 2' undefined
-[2021-10-11 15:29:51.74835] [12513] [error] notes. Row: 367. Common name 'Grevillea 2' undefined
-[2021-10-11 15:29:51.74842] [12513] [error] notes. Row: 368. Common name 'Grevillea 4' undefined
-[2021-10-11 15:29:51.74849] [12513] [error] notes. Row: 369. Common name 'Grevillea 4' undefined
-[2021-10-11 15:29:51.74856] [12513] [error] notes. Row: 370. Common name 'Grevillea 4' undefined
-[2021-10-11 15:29:51.74867] [12513] [error] notes. Row: 371. Common name 'Grevillea 4' undefined
-[2021-10-11 15:29:51.74874] [12513] [error] notes. Row: 372. Common name 'Grevillea 4' undefined
-[2021-10-11 15:29:51.74885] [12513] [error] notes. Row: 373. Common name 'Grevillea 4' undefined
-[2021-10-11 15:29:51.74893] [12513] [error] notes. Row: 374. Common name 'Grevillea 5' undefined
-[2021-10-11 15:29:51.74900] [12513] [error] notes. Row: 375. Common name 'Grevillea 5' undefined
-[2021-10-11 15:29:51.74907] [12513] [error] notes. Row: 376. Common name 'Grevillea 5' undefined
-[2021-10-11 15:29:51.74914] [12513] [error] notes. Row: 377. Common name 'Grevillea 5' undefined
-[2021-10-11 15:29:51.74921] [12513] [error] notes. Row: 378. Common name 'Grevillea 5' undefined
-[2021-10-11 15:29:52.50322] [12513] [error] notes. Row: 391. Common name 'Heuchera 2' undefined
-[2021-10-11 15:29:54.28162] [12513] [error] notes. Row: 420. Common name 'Hibiscus 2' undefined
-[2021-10-11 15:29:54.28182] [12513] [error] notes. Row: 421. Common name 'Hibiscus 2' undefined
-[2021-10-11 15:29:54.28192] [12513] [error] notes. Row: 422. Common name 'Hibiscus 3' undefined
-[2021-10-11 15:29:54.28201] [12513] [error] notes. Row: 423. Common name 'Hibiscus 3' undefined
-[2021-10-11 15:29:54.28210] [12513] [error] notes. Row: 424. Common name 'Hibiscus 3' undefined
-[2021-10-11 15:29:54.28219] [12513] [error] notes. Row: 425. Common name 'Hibiscus 3' undefined
-[2021-10-11 15:29:55.16106] [12513] [error] notes. Row: 437. Common name 'Native frangipani' undefined
-[2021-10-11 15:29:55.16117] [12513] [error] notes. Row: 438. Common name 'Native frangipani' undefined
-[2021-10-11 15:29:55.16121] [12513] [error] notes. Row: 439. Common name 'Native frangipani' undefined
-[2021-10-11 15:29:55.16125] [12513] [error] notes. Row: 440. Common name 'Native frangipani' undefined
-[2021-10-11 15:29:56.81947] [12513] [error] notes. Row: 465. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:29:56.81965] [12513] [error] notes. Row: 466. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:29:56.81975] [12513] [error] notes. Row: 467. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:29:56.81984] [12513] [error] notes. Row: 468. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:29:56.81992] [12513] [error] notes. Row: 469. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:29:56.82000] [12513] [error] notes. Row: 470. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:29:56.82009] [12513] [error] notes. Row: 471. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:29:56.82017] [12513] [error] notes. Row: 472. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:29:56.82026] [12513] [error] notes. Row: 473. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:29:56.82036] [12513] [error] notes. Row: 474. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:29:56.82044] [12513] [error] notes. Row: 475. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:29:56.82052] [12513] [error] notes. Row: 476. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:29:56.82064] [12513] [error] notes. Row: 477. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:29:56.82073] [12513] [error] notes. Row: 478. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:29:56.82081] [12513] [error] notes. Row: 479. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:29:56.82089] [12513] [error] notes. Row: 480. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:29:56.82097] [12513] [error] notes. Row: 481. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:29:56.82105] [12513] [error] notes. Row: 482. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:29:56.82119] [12513] [error] notes. Row: 483. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:29:56.82131] [12513] [error] notes. Row: 484. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:29:56.82136] [12513] [error] notes. Row: 485. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:29:56.82140] [12513] [error] notes. Row: 486. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:30:06.12766] [12513] [error] notes. Row: 629. Common name 'Sage 1' undefined
-[2021-10-11 15:30:06.12781] [12513] [error] notes. Row: 630. Common name 'Sage 1' undefined
-[2021-10-11 15:30:06.12788] [12513] [error] notes. Row: 631. Common name 'Sage 2' undefined
-[2021-10-11 15:30:06.12794] [12513] [error] notes. Row: 632. Common name 'Sage 2' undefined
-[2021-10-11 15:30:06.38038] [12513] [error] notes. Row: 636. Common name 'Sage 4' undefined
-[2021-10-11 15:30:06.38051] [12513] [error] notes. Row: 637. Common name 'Sage 4' undefined
-[2021-10-11 15:30:06.38059] [12513] [error] notes. Row: 638. Common name 'Sage 4' undefined
-[2021-10-11 15:30:06.38068] [12513] [error] notes. Row: 639. Common name 'Sage 4' undefined
-[2021-10-11 15:30:06.38073] [12513] [error] notes. Row: 640. Common name 'Sage 4' undefined
-[2021-10-11 15:30:15.26828] [12513] [info] Read 777 records into 'notes'
-[2021-10-11 15:30:15.50738] [12513] [error] images. Row: 4. Common name 'Aloha Dark Red 1' undefined
-[2021-10-11 15:30:15.50753] [12513] [error] images. Row: 5. Common name 'Aloha Dark Red 1' undefined
-[2021-10-11 15:30:15.50761] [12513] [error] images. Row: 6. Common name 'Aloha Regal Ruby 2' undefined
-[2021-10-11 15:30:15.50769] [12513] [error] images. Row: 7. Common name 'Aloha Regal Ruby 2' undefined
-[2021-10-11 15:30:15.50775] [12513] [error] images. Row: 8. Common name 'Aloha Regal Ruby 2' undefined
-[2021-10-11 15:30:15.50782] [12513] [error] images. Row: 9. Common name 'Alstroemeria 1' undefined
-[2021-10-11 15:30:15.50788] [12513] [error] images. Row: 10. Common name 'Alstroemeria 1' undefined
-[2021-10-11 15:30:15.50793] [12513] [error] images. Row: 11. Common name 'Alstroemeria 1' undefined
-[2021-10-11 15:30:15.50799] [12513] [error] images. Row: 12. Common name 'Alstroemeria 1' undefined
-[2021-10-11 15:30:15.50805] [12513] [error] images. Row: 13. Common name 'Alstroemeria 1' undefined
-[2021-10-11 15:30:15.50810] [12513] [error] images. Row: 14. Common name 'Alstroemeria 2' undefined
-[2021-10-11 15:30:15.50816] [12513] [error] images. Row: 15. Common name 'Alstroemeria 2' undefined
-[2021-10-11 15:30:15.50821] [12513] [error] images. Row: 16. Common name 'Alstroemeria 2' undefined
-[2021-10-11 15:30:15.50827] [12513] [error] images. Row: 17. Common name 'Alstroemeria 2' undefined
-[2021-10-11 15:30:15.50832] [12513] [error] images. Row: 18. Common name 'Alstroemeria 2' undefined
-[2021-10-11 15:30:15.50838] [12513] [error] images. Row: 19. Common name 'Alstroemeria 3' undefined
-[2021-10-11 15:30:15.50843] [12513] [error] images. Row: 20. Common name 'Alstroemeria 3' undefined
-[2021-10-11 15:30:15.50853] [12513] [error] images. Row: 21. Common name 'Alstroemeria 3' undefined
-[2021-10-11 15:30:15.50863] [12513] [error] images. Row: 22. Common name 'Alstroemeria 3' undefined
-[2021-10-11 15:30:19.45181] [12513] [error] images. Row: 79. Common name 'Azalea 1' undefined
-[2021-10-11 15:30:19.45199] [12513] [error] images. Row: 80. Common name 'Azalea 1' undefined
-[2021-10-11 15:30:19.45209] [12513] [error] images. Row: 81. Common name 'Azalea 1' undefined
-[2021-10-11 15:30:19.45217] [12513] [error] images. Row: 82. Common name 'Azalea 1' undefined
-[2021-10-11 15:30:30.94959] [12513] [error] images. Row: 257. Common name 'Grevillea 1' undefined
-[2021-10-11 15:30:30.94996] [12513] [error] images. Row: 258. Common name 'Grevillea 1' undefined
-[2021-10-11 15:30:30.95017] [12513] [error] images. Row: 259. Common name 'Grevillea 2' undefined
-[2021-10-11 15:30:30.95028] [12513] [error] images. Row: 260. Common name 'Grevillea 3' undefined
-[2021-10-11 15:30:30.95037] [12513] [error] images. Row: 261. Common name 'Grevillea 3' undefined
-[2021-10-11 15:30:30.95047] [12513] [error] images. Row: 262. Common name 'Grevillea 4' undefined
-[2021-10-11 15:30:30.95056] [12513] [error] images. Row: 263. Common name 'Grevillea 4' undefined
-[2021-10-11 15:30:30.95065] [12513] [error] images. Row: 264. Common name 'Grevillea 4' undefined
-[2021-10-11 15:30:30.95074] [12513] [error] images. Row: 265. Common name 'Grevillea 5' undefined
-[2021-10-11 15:30:30.95082] [12513] [error] images. Row: 266. Common name 'Grevillea 5' undefined
-[2021-10-11 15:30:31.45249] [12513] [error] images. Row: 275. Common name 'Heuchera 1' undefined
-[2021-10-11 15:30:31.45272] [12513] [error] images. Row: 276. Common name 'Heuchera 1' undefined
-[2021-10-11 15:30:31.45283] [12513] [error] images. Row: 277. Common name 'Heuchera 1' undefined
-[2021-10-11 15:30:31.45292] [12513] [error] images. Row: 278. Common name 'Heuchera 1' undefined
-[2021-10-11 15:30:31.45301] [12513] [error] images. Row: 279. Common name 'Heuchera 2' undefined
-[2021-10-11 15:30:31.45310] [12513] [error] images. Row: 280. Common name 'Heuchera 2' undefined
-[2021-10-11 15:30:32.02990] [12513] [error] images. Row: 290. Common name 'Hibiscus 2' undefined
-[2021-10-11 15:30:32.03020] [12513] [error] images. Row: 291. Common name 'Hibiscus 2' undefined
-[2021-10-11 15:30:32.03036] [12513] [error] images. Row: 292. Common name 'Hibiscus 2' undefined
-[2021-10-11 15:30:32.03051] [12513] [error] images. Row: 293. Common name 'Hibiscus 2' undefined
-[2021-10-11 15:30:32.03064] [12513] [error] images. Row: 294. Common name 'Hibiscus 2' undefined
-[2021-10-11 15:30:32.03073] [12513] [error] images. Row: 295. Common name 'Hibiscus 2' undefined
-[2021-10-11 15:30:32.03082] [12513] [error] images. Row: 296. Common name 'Hibiscus 3' undefined
-[2021-10-11 15:30:32.03091] [12513] [error] images. Row: 297. Common name 'Hibiscus 3' undefined
-[2021-10-11 15:30:32.03100] [12513] [error] images. Row: 298. Common name 'Hibiscus 3' undefined
-[2021-10-11 15:30:32.79748] [12513] [error] images. Row: 311. Common name 'Native frangipani' undefined
-[2021-10-11 15:30:32.79774] [12513] [error] images. Row: 312. Common name 'Native frangipani' undefined
-[2021-10-11 15:30:33.96318] [12513] [error] images. Row: 331. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:30:33.96346] [12513] [error] images. Row: 332. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:30:33.96364] [12513] [error] images. Row: 333. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:30:33.96375] [12513] [error] images. Row: 334. Common name 'Kangaroo Paw 3 - White-pink' undefined
-[2021-10-11 15:30:33.96384] [12513] [error] images. Row: 335. Common name 'Kangaroo Paw 4 - Pink' undefined
-[2021-10-11 15:30:40.36919] [12513] [error] images. Row: 430. Common name 'Sage 1' undefined
-[2021-10-11 15:30:40.36936] [12513] [error] images. Row: 431. Common name 'Sage 1' undefined
-[2021-10-11 15:30:40.36944] [12513] [error] images. Row: 432. Common name 'Sage 2' undefined
-[2021-10-11 15:30:40.36952] [12513] [error] images. Row: 433. Common name 'Sage 2' undefined
-[2021-10-11 15:30:40.36961] [12513] [error] images. Row: 434. Common name 'Sage 2' undefined
-[2021-10-11 15:30:40.63062] [12513] [error] images. Row: 439. Common name 'Sage 4' undefined
-[2021-10-11 15:30:45.06904] [12513] [info] Read 511 records into 'images'
-[2021-10-11 15:30:45.14769] [12513] [error] urls. Row: 2. Common name 'Aloha Dark Red 1' undefined
-[2021-10-11 15:30:45.14785] [12513] [error] urls. Row: 3. Common name 'Aloha Dark Red 1' undefined
-[2021-10-11 15:30:45.14793] [12513] [error] urls. Row: 4. Common name 'Aloha Regal Ruby 2' undefined
-[2021-10-11 15:30:45.14800] [12513] [error] urls. Row: 5. Common name 'Aloha Regal Ruby 2' undefined
-[2021-10-11 15:30:45.14807] [12513] [error] urls. Row: 6. Common name 'Alstroemeria 1' undefined
-[2021-10-11 15:30:45.14814] [12513] [error] urls. Row: 7. Common name 'Alstroemeria 2' undefined
-[2021-10-11 15:30:46.93517] [12513] [error] urls. Row: 37. Common name 'Azalea 1' undefined
-[2021-10-11 15:30:51.67846] [12513] [error] urls. Row: 110. Common name 'Grevillea 1' undefined
-[2021-10-11 15:30:51.67856] [12513] [error] urls. Row: 111. Common name 'Grevillea 1' undefined
-[2021-10-11 15:30:51.67860] [12513] [error] urls. Row: 112. Common name 'Grevillea 2' undefined
-[2021-10-11 15:30:51.67864] [12513] [error] urls. Row: 113. Common name 'Grevillea 3' undefined
-[2021-10-11 15:30:51.67867] [12513] [error] urls. Row: 114. Common name 'Grevillea 3' undefined
-[2021-10-11 15:30:51.67871] [12513] [error] urls. Row: 115. Common name 'Grevillea 4' undefined
-[2021-10-11 15:30:51.67875] [12513] [error] urls. Row: 116. Common name 'Grevillea 4' undefined
-[2021-10-11 15:30:51.67878] [12513] [error] urls. Row: 117. Common name 'Grevillea 5' undefined
-[2021-10-11 15:30:51.86345] [12513] [error] urls. Row: 121. Common name 'Heuchera 1' undefined
-[2021-10-11 15:30:51.86362] [12513] [error] urls. Row: 122. Common name 'Heuchera 2' undefined
-[2021-10-11 15:30:52.04608] [12513] [error] urls. Row: 126. Common name 'Hibiscus 2' undefined
-[2021-10-11 15:30:52.78787] [12513] [error] urls. Row: 139. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:30:52.78805] [12513] [error] urls. Row: 140. Common name 'Kangaroo Paw 1 - Yellow' undefined
-[2021-10-11 15:30:52.78823] [12513] [error] urls. Row: 141. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:30:52.78830] [12513] [error] urls. Row: 142. Common name 'Kangaroo Paw 2 - Red' undefined
-[2021-10-11 15:30:52.78836] [12513] [error] urls. Row: 143. Common name 'Kangaroo Paw 3 - White-pink' undefined
-[2021-10-11 15:30:52.78842] [12513] [error] urls. Row: 144. Common name 'Kangaroo Paw 3 - White-pink' undefined
-[2021-10-11 15:30:52.78848] [12513] [error] urls. Row: 145. Common name 'Kangaroo Paw 4 - Pink' undefined
-[2021-10-11 15:30:52.78853] [12513] [error] urls. Row: 146. Common name 'Kangaroo Paw 4 - Pink' undefined
-[2021-10-11 15:30:54.70557] [12513] [error] urls. Row: 178. Common name 'Sage 1' undefined
-[2021-10-11 15:30:54.70569] [12513] [error] urls. Row: 179. Common name 'Sage 2' undefined
-[2021-10-11 15:30:54.70574] [12513] [error] urls. Row: 180. Common name 'Sage 2' undefined
-[2021-10-11 15:30:54.82988] [12513] [error] urls. Row: 183. Common name 'Sage 4' undefined
-[2021-10-11 15:30:56.91855] [12513] [info] Read 217 records into 'urls'
+[2021-10-11 19:10:30.79729] [14719] [debug] Dropped table 'urls'
+[2021-10-11 19:10:30.85445] [14719] [debug] Dropped table 'images'
+[2021-10-11 19:10:30.91609] [14719] [debug] Dropped table 'notes'
+[2021-10-11 19:10:30.97687] [14719] [debug] Dropped table 'feature_locations'
+[2021-10-11 19:10:31.03372] [14719] [debug] Dropped table 'features'
+[2021-10-11 19:10:31.09831] [14719] [debug] Dropped table 'flower_locations'
+[2021-10-11 19:10:31.15704] [14719] [debug] Dropped table 'gardens'
+[2021-10-11 19:10:31.21603] [14719] [debug] Dropped table 'properties'
+[2021-10-11 19:10:31.28002] [14719] [debug] Dropped table 'attributes'
+[2021-10-11 19:10:31.33761] [14719] [debug] Dropped table 'attribute_types'
+[2021-10-11 19:10:31.40075] [14719] [debug] Dropped table 'flowers'
+[2021-10-11 19:10:31.46336] [14719] [debug] Dropped table 'constants'
+[2021-10-11 19:10:31.52053] [14719] [debug] Dropped table 'log'
+[2021-10-11 19:10:31.83038] [14720] [debug] Created table 'log'
+[2021-10-11 19:10:31.89030] [14720] [debug] Created table 'constants'
+[2021-10-11 19:10:31.95147] [14720] [debug] Created table 'flowers'
+[2021-10-11 19:10:32.01557] [14720] [debug] Created table 'attribute_types'
+[2021-10-11 19:10:32.07380] [14720] [debug] Created table 'attributes'
+[2021-10-11 19:10:32.13733] [14720] [debug] Created table 'properties'
+[2021-10-11 19:10:32.19865] [14720] [debug] Created table 'gardens'
+[2021-10-11 19:10:32.25622] [14720] [debug] Created table 'flower_locations'
+[2021-10-11 19:10:32.32177] [14720] [debug] Created table 'features'
+[2021-10-11 19:10:32.38105] [14720] [debug] Created table 'feature_locations'
+[2021-10-11 19:10:32.44116] [14720] [debug] Created table 'notes'
+[2021-10-11 19:10:32.50588] [14720] [debug] Created table 'images'
+[2021-10-11 19:10:32.56330] [14720] [debug] Created table 'urls'
+[2021-10-11 19:10:32.89654] [14721] [debug] Populating all tables
+[2021-10-11 19:10:33.15504] [14721] [info] Read 4 records into 'attribute_types'
+[2021-10-11 19:10:35.64447] [14721] [info] Read 32 records into 'constants'
+[2021-10-11 19:10:35.70035] [14721] [warn] flowers. Row: 10. Duplicate scientific_name: Alstroemeria
+[2021-10-11 19:10:35.70046] [14721] [warn] flowers. Row: 13. Duplicate scientific_name: Alyogyne huegelii
+[2021-10-11 19:10:35.70053] [14721] [info] flowers. Row: 16. Duplicate common_name: Bush Pearl
+[2021-10-11 19:10:35.70057] [14721] [warn] flowers. Row: 16. Duplicate scientific_name: Anigozanthos hybrid Kangaroo Paw
+[2021-10-11 19:10:35.70064] [14721] [warn] flowers. Row: 28. Duplicate scientific_name: Azalea
+[2021-10-11 19:10:35.70069] [14721] [warn] flowers. Row: 29. Duplicate scientific_name: Azalea
+[2021-10-11 19:10:35.70074] [14721] [info] flowers. Row: 36. Duplicate common_name: Spinach Beet
+[2021-10-11 19:10:35.70094] [14721] [warn] flowers. Row: 83. Duplicate scientific_name: Fuchsia
+[2021-10-11 19:10:35.70098] [14721] [warn] flowers. Row: 84. Duplicate scientific_name: Fuchsia
+[2021-10-11 19:10:35.70103] [14721] [warn] flowers. Row: 88. Duplicate scientific_name: Grevillea
+[2021-10-11 19:10:35.70106] [14721] [warn] flowers. Row: 89. Duplicate scientific_name: Grevillea
+[2021-10-11 19:10:35.70110] [14721] [warn] flowers. Row: 90. Duplicate scientific_name: Grevillea
+[2021-10-11 19:10:35.70116] [14721] [warn] flowers. Row: 98. Duplicate scientific_name: Heuchera
+[2021-10-11 19:10:35.70121] [14721] [warn] flowers. Row: 100. Duplicate scientific_name: Hibbertia obtusifolia
+[2021-10-11 19:10:35.70125] [14721] [warn] flowers. Row: 102. Duplicate scientific_name: Hibbertia scandens
+[2021-10-11 19:10:35.70129] [14721] [info] flowers. Row: 106. Duplicate common_name: Golden Nugget
+[2021-10-11 19:10:35.70143] [14721] [warn] flowers. Row: 146. Duplicate scientific_name: Mandevilla hybrid
+[2021-10-11 19:10:35.70156] [14721] [warn] flowers. Row: 170. Duplicate scientific_name: Plectranthus caninus
+[2021-10-11 19:10:35.70160] [14721] [warn] flowers. Row: 172. Duplicate scientific_name: Plectranthus ecklonii
+[2021-10-11 19:10:35.70167] [14721] [warn] flowers. Row: 181. Duplicate scientific_name: Rosa
+[2021-10-11 19:10:35.70170] [14721] [warn] flowers. Row: 182. Duplicate scientific_name: Rosa
+[2021-10-11 19:10:35.70175] [14721] [warn] flowers. Row: 183. Duplicate scientific_name: Rosa
+[2021-10-11 19:10:35.70180] [14721] [warn] flowers. Row: 188. Duplicate scientific_name: Salvia involucrata
+[2021-10-11 19:10:49.24550] [14721] [info] Read 210 records into 'flowers'
+[2021-10-11 19:10:49.36519] [14721] [info] Read 2 records into 'properties'
+[2021-10-11 19:10:49.49097] [14721] [info] Read 2 records into 'gardens'
+[2021-10-11 19:11:01.01452] [14721] [error] flower_locations. Row: 83. Common name 'Hibiscus 3' undefined
+[2021-10-11 19:11:01.13383] [14721] [error] flower_locations. Row: 86. Common name 'Native frangipani' undefined
+[2021-10-11 19:11:05.11588] [14721] [error] flower_locations. Row: 138. Column property_name undefined
+[2021-10-11 19:11:05.11609] [14721] [error] flower_locations. Row: 138. Column garden_name undefined
+[2021-10-11 19:11:05.11620] [14721] [error] flower_locations. Row: 138. Column xy undefined
+[2021-10-11 19:11:05.11633] [14721] [error] flower_locations. Row: 139. Column property_name undefined
+[2021-10-11 19:11:05.11642] [14721] [error] flower_locations. Row: 139. Column garden_name undefined
+[2021-10-11 19:11:05.11651] [14721] [error] flower_locations. Row: 139. Column xy undefined
+[2021-10-11 19:11:05.11659] [14721] [error] flower_locations. Row: 140. Column property_name undefined
+[2021-10-11 19:11:05.11668] [14721] [error] flower_locations. Row: 140. Column garden_name undefined
+[2021-10-11 19:11:05.11676] [14721] [error] flower_locations. Row: 140. Column xy undefined
+[2021-10-11 19:11:05.11684] [14721] [error] flower_locations. Row: 141. Column property_name undefined
+[2021-10-11 19:11:05.11692] [14721] [error] flower_locations. Row: 141. Column garden_name undefined
+[2021-10-11 19:11:05.11700] [14721] [error] flower_locations. Row: 141. Column xy undefined
+[2021-10-11 19:11:05.11708] [14721] [error] flower_locations. Row: 142. Column property_name undefined
+[2021-10-11 19:11:05.11716] [14721] [error] flower_locations. Row: 142. Column garden_name undefined
+[2021-10-11 19:11:05.11724] [14721] [error] flower_locations. Row: 142. Column xy undefined
+[2021-10-11 19:11:05.11732] [14721] [error] flower_locations. Row: 143. Column property_name undefined
+[2021-10-11 19:11:05.11740] [14721] [error] flower_locations. Row: 143. Column garden_name undefined
+[2021-10-11 19:11:05.11748] [14721] [error] flower_locations. Row: 143. Column xy undefined
+[2021-10-11 19:11:05.11760] [14721] [error] flower_locations. Row: 144. Column property_name undefined
+[2021-10-11 19:11:05.11768] [14721] [error] flower_locations. Row: 144. Column garden_name undefined
+[2021-10-11 19:11:05.11775] [14721] [error] flower_locations. Row: 144. Column xy undefined
+[2021-10-11 19:11:05.11801] [14721] [info] Max (x, y) = (29, 67)
+[2021-10-11 19:11:05.11810] [14721] [info] Read 144 records into 'flower_locations'
+[2021-10-11 19:11:07.39445] [14721] [info] Read 35 records into 'features'
+[2021-10-11 19:11:18.08265] [14721] [error] feature_locations. Row: 8. Property name: Ron. Garden name: Front. Feature 'Brick path'. Feature location '15,16' is already in use by 'Thelionema caespitosum'
+[2021-10-11 19:11:18.56529] [14721] [error] feature_locations. Row: 8. Property name: Ron. Garden name: Front. Feature 'Brick path'. Feature location '16,17' is already in use by 'Thelionema caespitosum'
+[2021-10-11 19:11:23.80340] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '9,64' is already in use by 'Parsley'
+[2021-10-11 19:11:23.86476] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '9,66' is already in use by 'Carnation'
+[2021-10-11 19:11:24.04731] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,63' is already in use by 'Basil 1'
+[2021-10-11 19:11:24.10807] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,64' is already in use by 'Coriander'
+[2021-10-11 19:11:24.16613] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,65' is already in use by 'Banksia 2'
+[2021-10-11 19:11:24.23156] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,66' is already in use by 'Turmeric'
+[2021-10-11 19:11:24.28859] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '10,67' is already in use by 'Spearmint'
+[2021-10-11 19:11:24.41263] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,63' is already in use by 'Basil 1'
+[2021-10-11 19:11:24.47008] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,64' is already in use by 'Land cress'
+[2021-10-11 19:11:24.53444] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,65' is already in use by 'Lady 'O''
+[2021-10-11 19:11:24.59600] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '11,67' is already in use by 'Pennywort'
+[2021-10-11 19:11:24.71950] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '12,63' is already in use by 'Chives 2'
+[2021-10-11 19:11:24.77801] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '12,64' is already in use by 'Honeyeater Heaven'
+[2021-10-11 19:11:24.83981] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '12,67' is already in use by 'Mugwort'
+[2021-10-11 19:11:24.95849] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,63' is already in use by 'Basil 2'
+[2021-10-11 19:11:25.02199] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,64' is already in use by 'Bush Crystal'
+[2021-10-11 19:11:25.08268] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,65' is already in use by 'Nasturtium'
+[2021-10-11 19:11:25.14116] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,66' is already in use by 'Yarrow'
+[2021-10-11 19:11:25.20526] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '13,67' is already in use by 'Bee sage'
+[2021-10-11 19:11:25.33021] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '14,63' is already in use by 'Bush Diamond'
+[2021-10-11 19:11:25.39350] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '14,64' is already in use by 'Bush Bonanza'
+[2021-10-11 19:11:25.45212] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '14,65' is already in use by 'Chives 1'
+[2021-10-11 19:11:25.75867] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '15,64' is already in use by 'Spinach Beet'
+[2021-10-11 19:11:25.81969] [14721] [error] feature_locations. Row: 9. Property name: Ron. Garden name: Back. Feature 'Brick patio'. Feature location '15,65' is already in use by 'Oregano'
+[2021-10-11 19:11:52.74307] [14721] [info] Max (x, y) = (30, 69)
+[2021-10-11 19:11:52.74337] [14721] [info] Read 29 records into 'feature_locations'
+[2021-10-11 19:12:13.80484] [14721] [error] attributes. Row: 333. Common name 'Grevillea 1' undefined
+[2021-10-11 19:12:13.86957] [14721] [error] attributes. Row: 334. Common name 'Grevillea 1' undefined
+[2021-10-11 19:12:13.93227] [14721] [error] attributes. Row: 335. Common name 'Grevillea 1' undefined
+[2021-10-11 19:12:13.99056] [14721] [error] attributes. Row: 336. Common name 'Grevillea 1' undefined
+[2021-10-11 19:12:14.05564] [14721] [error] attributes. Row: 337. Common name 'Grevillea 2' undefined
+[2021-10-11 19:12:14.11505] [14721] [error] attributes. Row: 338. Common name 'Grevillea 2' undefined
+[2021-10-11 19:12:14.17420] [14721] [error] attributes. Row: 339. Common name 'Grevillea 2' undefined
+[2021-10-11 19:12:14.24316] [14721] [error] attributes. Row: 340. Common name 'Grevillea 2' undefined
+[2021-10-11 19:12:14.30143] [14721] [error] attributes. Row: 341. Common name 'Grevillea 3' undefined
+[2021-10-11 19:12:14.36535] [14721] [error] attributes. Row: 342. Common name 'Grevillea 3' undefined
+[2021-10-11 19:12:14.42813] [14721] [error] attributes. Row: 343. Common name 'Grevillea 3' undefined
+[2021-10-11 19:12:14.48672] [14721] [error] attributes. Row: 344. Common name 'Grevillea 3' undefined
+[2021-10-11 19:12:14.55266] [14721] [error] attributes. Row: 345. Common name 'Grevillea 4' undefined
+[2021-10-11 19:12:14.61362] [14721] [error] attributes. Row: 346. Common name 'Grevillea 4' undefined
+[2021-10-11 19:12:14.67582] [14721] [error] attributes. Row: 347. Common name 'Grevillea 4' undefined
+[2021-10-11 19:12:14.74118] [14721] [error] attributes. Row: 348. Common name 'Grevillea 4' undefined
+[2021-10-11 19:12:14.80055] [14721] [error] attributes. Row: 349. Common name 'Grevillea 5' undefined
+[2021-10-11 19:12:14.86503] [14721] [error] attributes. Row: 350. Common name 'Grevillea 5' undefined
+[2021-10-11 19:12:14.92704] [14721] [error] attributes. Row: 351. Common name 'Grevillea 5' undefined
+[2021-10-11 19:12:14.98402] [14721] [error] attributes. Row: 352. Common name 'Grevillea 5' undefined
+[2021-10-11 19:12:15.78579] [14721] [error] attributes. Row: 365. Common name 'Heuchera 1' undefined
+[2021-10-11 19:12:15.85058] [14721] [error] attributes. Row: 366. Common name 'Heuchera 1' undefined
+[2021-10-11 19:12:15.91336] [14721] [error] attributes. Row: 367. Common name 'Heuchera 1' undefined
+[2021-10-11 19:12:15.97237] [14721] [error] attributes. Row: 368. Common name 'Heuchera 1' undefined
+[2021-10-11 19:12:16.03803] [14721] [error] attributes. Row: 369. Common name 'Heuchera 2' undefined
+[2021-10-11 19:12:16.09765] [14721] [error] attributes. Row: 370. Common name 'Heuchera 2' undefined
+[2021-10-11 19:12:16.15782] [14721] [error] attributes. Row: 371. Common name 'Heuchera 2' undefined
+[2021-10-11 19:12:16.22295] [14721] [error] attributes. Row: 372. Common name 'Heuchera 2' undefined
+[2021-10-11 19:12:17.03891] [14721] [error] attributes. Row: 385. Common name 'Hibiscus 2' undefined
+[2021-10-11 19:12:17.09811] [14721] [error] attributes. Row: 386. Common name 'Hibiscus 2' undefined
+[2021-10-11 19:12:17.15978] [14721] [error] attributes. Row: 387. Common name 'Hibiscus 2' undefined
+[2021-10-11 19:12:17.22544] [14721] [error] attributes. Row: 388. Common name 'Hibiscus 2' undefined
+[2021-10-11 19:12:17.28405] [14721] [error] attributes. Row: 389. Common name 'Hibiscus 3' undefined
+[2021-10-11 19:12:17.34835] [14721] [error] attributes. Row: 390. Common name 'Hibiscus 3' undefined
+[2021-10-11 19:12:17.41089] [14721] [error] attributes. Row: 391. Common name 'Hibiscus 3' undefined
+[2021-10-11 19:12:17.46949] [14721] [error] attributes. Row: 392. Common name 'Hibiscus 3' undefined
+[2021-10-11 19:12:18.76465] [14721] [error] attributes. Row: 413. Common name 'Native frangipani' undefined
+[2021-10-11 19:12:18.82865] [14721] [error] attributes. Row: 414. Common name 'Native frangipani' undefined
+[2021-10-11 19:12:18.89041] [14721] [error] attributes. Row: 415. Common name 'Native frangipani' undefined
+[2021-10-11 19:12:18.94701] [14721] [error] attributes. Row: 416. Common name 'Native frangipani' undefined
+[2021-10-11 19:12:20.75113] [14721] [error] attributes. Row: 445. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:12:20.81645] [14721] [error] attributes. Row: 446. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:12:20.87938] [14721] [error] attributes. Row: 447. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:12:20.93816] [14721] [error] attributes. Row: 448. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:12:21.00292] [14721] [error] attributes. Row: 449. Common name 'Kangaroo Paw 2 - Red' undefined
+[2021-10-11 19:12:21.06269] [14721] [error] attributes. Row: 450. Common name 'Kangaroo Paw 2 - Red' undefined
+[2021-10-11 19:12:21.12406] [14721] [error] attributes. Row: 451. Common name 'Kangaroo Paw 2 - Red' undefined
+[2021-10-11 19:12:21.18599] [14721] [error] attributes. Row: 452. Common name 'Kangaroo Paw 2 - Red' undefined
+[2021-10-11 19:12:21.24291] [14721] [error] attributes. Row: 453. Common name 'Kangaroo Paw 3 - White-pink' undefined
+[2021-10-11 19:12:21.30753] [14721] [error] attributes. Row: 454. Common name 'Kangaroo Paw 3 - White-pink' undefined
+[2021-10-11 19:12:21.36775] [14721] [error] attributes. Row: 455. Common name 'Kangaroo Paw 3 - White-pink' undefined
+[2021-10-11 19:12:21.42620] [14721] [error] attributes. Row: 456. Common name 'Kangaroo Paw 3 - White-pink' undefined
+[2021-10-11 19:12:21.49182] [14721] [error] attributes. Row: 457. Common name 'Kangaroo Paw 4 - Pink' undefined
+[2021-10-11 19:12:21.55239] [14721] [error] attributes. Row: 458. Common name 'Kangaroo Paw 4 - Pink' undefined
+[2021-10-11 19:12:21.61494] [14721] [error] attributes. Row: 459. Common name 'Kangaroo Paw 4 - Pink' undefined
+[2021-10-11 19:12:21.67894] [14721] [error] attributes. Row: 460. Common name 'Kangaroo Paw 4 - Pink' undefined
+[2021-10-11 19:12:30.23392] [14721] [error] attributes. Row: 593. Common name 'Sage 1' undefined
+[2021-10-11 19:12:30.29451] [14721] [error] attributes. Row: 594. Common name 'Sage 1' undefined
+[2021-10-11 19:12:30.36005] [14721] [error] attributes. Row: 595. Common name 'Sage 1' undefined
+[2021-10-11 19:12:30.41969] [14721] [error] attributes. Row: 596. Common name 'Sage 1' undefined
+[2021-10-11 19:12:30.48437] [14721] [error] attributes. Row: 597. Common name 'Sage 2' undefined
+[2021-10-11 19:12:30.54677] [14721] [error] attributes. Row: 598. Common name 'Sage 2' undefined
+[2021-10-11 19:12:30.60539] [14721] [error] attributes. Row: 599. Common name 'Sage 2' undefined
+[2021-10-11 19:12:30.67234] [14721] [error] attributes. Row: 600. Common name 'Sage 2' undefined
+[2021-10-11 19:12:30.98437] [14721] [error] attributes. Row: 605. Common name 'Sage 4' undefined
+[2021-10-11 19:12:31.04768] [14721] [error] attributes. Row: 606. Common name 'Sage 4' undefined
+[2021-10-11 19:12:31.10629] [14721] [error] attributes. Row: 607. Common name 'Sage 4' undefined
+[2021-10-11 19:12:31.17158] [14721] [error] attributes. Row: 608. Common name 'Sage 4' undefined
+[2021-10-11 19:12:38.80557] [14721] [info] Read 712 records into 'attributes'
+[2021-10-11 19:13:02.02811] [14721] [error] notes. Row: 362. Common name 'Grevillea 2' undefined
+[2021-10-11 19:13:02.02823] [14721] [error] notes. Row: 363. Common name 'Grevillea 2' undefined
+[2021-10-11 19:13:02.02829] [14721] [error] notes. Row: 364. Common name 'Grevillea 2' undefined
+[2021-10-11 19:13:02.02834] [14721] [error] notes. Row: 365. Common name 'Grevillea 2' undefined
+[2021-10-11 19:13:02.02838] [14721] [error] notes. Row: 366. Common name 'Grevillea 2' undefined
+[2021-10-11 19:13:02.02843] [14721] [error] notes. Row: 367. Common name 'Grevillea 2' undefined
+[2021-10-11 19:13:02.02847] [14721] [error] notes. Row: 368. Common name 'Grevillea 4' undefined
+[2021-10-11 19:13:02.02852] [14721] [error] notes. Row: 369. Common name 'Grevillea 4' undefined
+[2021-10-11 19:13:02.02856] [14721] [error] notes. Row: 370. Common name 'Grevillea 4' undefined
+[2021-10-11 19:13:02.02861] [14721] [error] notes. Row: 371. Common name 'Grevillea 4' undefined
+[2021-10-11 19:13:02.02865] [14721] [error] notes. Row: 372. Common name 'Grevillea 4' undefined
+[2021-10-11 19:13:02.02870] [14721] [error] notes. Row: 373. Common name 'Grevillea 4' undefined
+[2021-10-11 19:13:02.02875] [14721] [error] notes. Row: 374. Common name 'Grevillea 5' undefined
+[2021-10-11 19:13:02.02880] [14721] [error] notes. Row: 375. Common name 'Grevillea 5' undefined
+[2021-10-11 19:13:02.02884] [14721] [error] notes. Row: 376. Common name 'Grevillea 5' undefined
+[2021-10-11 19:13:02.02889] [14721] [error] notes. Row: 377. Common name 'Grevillea 5' undefined
+[2021-10-11 19:13:02.02893] [14721] [error] notes. Row: 378. Common name 'Grevillea 5' undefined
+[2021-10-11 19:13:02.76352] [14721] [error] notes. Row: 391. Common name 'Heuchera 2' undefined
+[2021-10-11 19:13:04.49879] [14721] [error] notes. Row: 420. Common name 'Hibiscus 2' undefined
+[2021-10-11 19:13:04.49906] [14721] [error] notes. Row: 421. Common name 'Hibiscus 2' undefined
+[2021-10-11 19:13:04.49924] [14721] [error] notes. Row: 422. Common name 'Hibiscus 3' undefined
+[2021-10-11 19:13:04.49936] [14721] [error] notes. Row: 423. Common name 'Hibiscus 3' undefined
+[2021-10-11 19:13:04.49945] [14721] [error] notes. Row: 424. Common name 'Hibiscus 3' undefined
+[2021-10-11 19:13:04.49954] [14721] [error] notes. Row: 425. Common name 'Hibiscus 3' undefined
+[2021-10-11 19:13:05.17662] [14721] [error] notes. Row: 437. Common name 'Native frangipani' undefined
+[2021-10-11 19:13:05.17684] [14721] [error] notes. Row: 438. Common name 'Native frangipani' undefined
+[2021-10-11 19:13:05.17696] [14721] [error] notes. Row: 439. Common name 'Native frangipani' undefined
+[2021-10-11 19:13:05.17714] [14721] [error] notes. Row: 440. Common name 'Native frangipani' undefined
+[2021-10-11 19:13:06.67042] [14721] [error] notes. Row: 465. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:13:06.67070] [14721] [error] notes. Row: 466. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:13:06.67088] [14721] [error] notes. Row: 467. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:13:06.67098] [14721] [error] notes. Row: 468. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:13:06.67108] [14721] [error] notes. Row: 469. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:13:06.67116] [14721] [error] notes. Row: 470. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:13:06.67125] [14721] [error] notes. Row: 471. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:13:06.67134] [14721] [error] notes. Row: 472. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:13:06.67142] [14721] [error] notes. Row: 473. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:13:06.67151] [14721] [error] notes. Row: 474. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:13:06.67160] [14721] [error] notes. Row: 475. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:13:06.67168] [14721] [error] notes. Row: 476. Common name 'Kangaroo Paw 2 - Red' undefined
+[2021-10-11 19:13:06.67177] [14721] [error] notes. Row: 477. Common name 'Kangaroo Paw 2 - Red' undefined
+[2021-10-11 19:13:06.67186] [14721] [error] notes. Row: 478. Common name 'Kangaroo Paw 2 - Red' undefined
+[2021-10-11 19:13:06.67194] [14721] [error] notes. Row: 479. Common name 'Kangaroo Paw 2 - Red' undefined
+[2021-10-11 19:13:06.67203] [14721] [error] notes. Row: 480. Common name 'Kangaroo Paw 2 - Red' undefined
+[2021-10-11 19:13:06.67212] [14721] [error] notes. Row: 481. Common name 'Kangaroo Paw 2 - Red' undefined
+[2021-10-11 19:13:06.67220] [14721] [error] notes. Row: 482. Common name 'Kangaroo Paw 2 - Red' undefined
+[2021-10-11 19:13:06.67229] [14721] [error] notes. Row: 483. Common name 'Kangaroo Paw 2 - Red' undefined
+[2021-10-11 19:13:06.67237] [14721] [error] notes. Row: 484. Common name 'Kangaroo Paw 2 - Red' undefined
+[2021-10-11 19:13:06.67246] [14721] [error] notes. Row: 485. Common name 'Kangaroo Paw 2 - Red' undefined
+[2021-10-11 19:13:06.67255] [14721] [error] notes. Row: 486. Common name 'Kangaroo Paw 2 - Red' undefined
+[2021-10-11 19:13:15.72770] [14721] [error] notes. Row: 629. Common name 'Sage 1' undefined
+[2021-10-11 19:13:15.72789] [14721] [error] notes. Row: 630. Common name 'Sage 1' undefined
+[2021-10-11 19:13:15.72798] [14721] [error] notes. Row: 631. Common name 'Sage 2' undefined
+[2021-10-11 19:13:15.72806] [14721] [error] notes. Row: 632. Common name 'Sage 2' undefined
+[2021-10-11 19:13:15.90913] [14721] [error] notes. Row: 636. Common name 'Sage 4' undefined
+[2021-10-11 19:13:15.90931] [14721] [error] notes. Row: 637. Common name 'Sage 4' undefined
+[2021-10-11 19:13:15.90940] [14721] [error] notes. Row: 638. Common name 'Sage 4' undefined
+[2021-10-11 19:13:15.90948] [14721] [error] notes. Row: 639. Common name 'Sage 4' undefined
+[2021-10-11 19:13:15.90963] [14721] [error] notes. Row: 640. Common name 'Sage 4' undefined
+[2021-10-11 19:13:24.79666] [14721] [info] Read 777 records into 'notes'
+[2021-10-11 19:13:41.83796] [14721] [error] images. Row: 257. Common name 'Grevillea 1' undefined
+[2021-10-11 19:13:41.83823] [14721] [error] images. Row: 258. Common name 'Grevillea 1' undefined
+[2021-10-11 19:13:41.83836] [14721] [error] images. Row: 259. Common name 'Grevillea 2' undefined
+[2021-10-11 19:13:41.83845] [14721] [error] images. Row: 260. Common name 'Grevillea 3' undefined
+[2021-10-11 19:13:41.83853] [14721] [error] images. Row: 261. Common name 'Grevillea 3' undefined
+[2021-10-11 19:13:41.83862] [14721] [error] images. Row: 262. Common name 'Grevillea 4' undefined
+[2021-10-11 19:13:41.83870] [14721] [error] images. Row: 263. Common name 'Grevillea 4' undefined
+[2021-10-11 19:13:41.83878] [14721] [error] images. Row: 264. Common name 'Grevillea 4' undefined
+[2021-10-11 19:13:41.83887] [14721] [error] images. Row: 265. Common name 'Grevillea 5' undefined
+[2021-10-11 19:13:41.83895] [14721] [error] images. Row: 266. Common name 'Grevillea 5' undefined
+[2021-10-11 19:13:42.36365] [14721] [error] images. Row: 275. Common name 'Heuchera 1' undefined
+[2021-10-11 19:13:42.36384] [14721] [error] images. Row: 276. Common name 'Heuchera 1' undefined
+[2021-10-11 19:13:42.36393] [14721] [error] images. Row: 277. Common name 'Heuchera 1' undefined
+[2021-10-11 19:13:42.36398] [14721] [error] images. Row: 278. Common name 'Heuchera 1' undefined
+[2021-10-11 19:13:42.36404] [14721] [error] images. Row: 279. Common name 'Heuchera 2' undefined
+[2021-10-11 19:13:42.36409] [14721] [error] images. Row: 280. Common name 'Heuchera 2' undefined
+[2021-10-11 19:13:42.94076] [14721] [error] images. Row: 290. Common name 'Hibiscus 2' undefined
+[2021-10-11 19:13:42.94104] [14721] [error] images. Row: 291. Common name 'Hibiscus 2' undefined
+[2021-10-11 19:13:42.94124] [14721] [error] images. Row: 292. Common name 'Hibiscus 2' undefined
+[2021-10-11 19:13:42.94136] [14721] [error] images. Row: 293. Common name 'Hibiscus 2' undefined
+[2021-10-11 19:13:42.94145] [14721] [error] images. Row: 294. Common name 'Hibiscus 2' undefined
+[2021-10-11 19:13:42.94162] [14721] [error] images. Row: 295. Common name 'Hibiscus 2' undefined
+[2021-10-11 19:13:42.94172] [14721] [error] images. Row: 296. Common name 'Hibiscus 3' undefined
+[2021-10-11 19:13:42.94181] [14721] [error] images. Row: 297. Common name 'Hibiscus 3' undefined
+[2021-10-11 19:13:42.94190] [14721] [error] images. Row: 298. Common name 'Hibiscus 3' undefined
+[2021-10-11 19:13:43.71554] [14721] [error] images. Row: 311. Common name 'Native frangipani' undefined
+[2021-10-11 19:13:43.71581] [14721] [error] images. Row: 312. Common name 'Native frangipani' undefined
+[2021-10-11 19:13:44.85168] [14721] [error] images. Row: 331. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:13:44.85184] [14721] [error] images. Row: 332. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:13:44.85193] [14721] [error] images. Row: 333. Common name 'Kangaroo Paw 2 - Red' undefined
+[2021-10-11 19:13:44.85200] [14721] [error] images. Row: 334. Common name 'Kangaroo Paw 3 - White-pink' undefined
+[2021-10-11 19:13:44.85208] [14721] [error] images. Row: 335. Common name 'Kangaroo Paw 4 - Pink' undefined
+[2021-10-11 19:13:50.80438] [14721] [error] images. Row: 430. Common name 'Sage 1' undefined
+[2021-10-11 19:13:50.80458] [14721] [error] images. Row: 431. Common name 'Sage 1' undefined
+[2021-10-11 19:13:50.80467] [14721] [error] images. Row: 432. Common name 'Sage 2' undefined
+[2021-10-11 19:13:50.80475] [14721] [error] images. Row: 433. Common name 'Sage 2' undefined
+[2021-10-11 19:13:50.80483] [14721] [error] images. Row: 434. Common name 'Sage 2' undefined
+[2021-10-11 19:13:51.13856] [14721] [error] images. Row: 439. Common name 'Sage 4' undefined
+[2021-10-11 19:13:56.38021] [14721] [info] Read 511 records into 'images'
+[2021-10-11 19:14:03.58069] [14721] [error] urls. Row: 110. Common name 'Grevillea 1' undefined
+[2021-10-11 19:14:03.58092] [14721] [error] urls. Row: 111. Common name 'Grevillea 1' undefined
+[2021-10-11 19:14:03.58106] [14721] [error] urls. Row: 112. Common name 'Grevillea 2' undefined
+[2021-10-11 19:14:03.58120] [14721] [error] urls. Row: 113. Common name 'Grevillea 3' undefined
+[2021-10-11 19:14:03.58133] [14721] [error] urls. Row: 114. Common name 'Grevillea 3' undefined
+[2021-10-11 19:14:03.58146] [14721] [error] urls. Row: 115. Common name 'Grevillea 4' undefined
+[2021-10-11 19:14:03.58162] [14721] [error] urls. Row: 116. Common name 'Grevillea 4' undefined
+[2021-10-11 19:14:03.58174] [14721] [error] urls. Row: 117. Common name 'Grevillea 5' undefined
+[2021-10-11 19:14:03.83797] [14721] [error] urls. Row: 121. Common name 'Heuchera 1' undefined
+[2021-10-11 19:14:03.83817] [14721] [error] urls. Row: 122. Common name 'Heuchera 2' undefined
+[2021-10-11 19:14:04.08519] [14721] [error] urls. Row: 126. Common name 'Hibiscus 2' undefined
+[2021-10-11 19:14:04.89197] [14721] [error] urls. Row: 139. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:14:04.89210] [14721] [error] urls. Row: 140. Common name 'Kangaroo Paw 1 - Yellow' undefined
+[2021-10-11 19:14:04.89216] [14721] [error] urls. Row: 141. Common name 'Kangaroo Paw 2 - Red' undefined
+[2021-10-11 19:14:04.89222] [14721] [error] urls. Row: 142. Common name 'Kangaroo Paw 2 - Red' undefined
+[2021-10-11 19:14:04.89227] [14721] [error] urls. Row: 143. Common name 'Kangaroo Paw 3 - White-pink' undefined
+[2021-10-11 19:14:04.89232] [14721] [error] urls. Row: 144. Common name 'Kangaroo Paw 3 - White-pink' undefined
+[2021-10-11 19:14:04.89238] [14721] [error] urls. Row: 145. Common name 'Kangaroo Paw 4 - Pink' undefined
+[2021-10-11 19:14:04.89243] [14721] [error] urls. Row: 146. Common name 'Kangaroo Paw 4 - Pink' undefined
+[2021-10-11 19:14:06.84255] [14721] [error] urls. Row: 178. Common name 'Sage 1' undefined
+[2021-10-11 19:14:06.84274] [14721] [error] urls. Row: 179. Common name 'Sage 2' undefined
+[2021-10-11 19:14:06.84287] [14721] [error] urls. Row: 180. Common name 'Sage 2' undefined
+[2021-10-11 19:14:06.96729] [14721] [error] urls. Row: 183. Common name 'Sage 4' undefined
+[2021-10-11 19:14:09.09931] [14721] [info] Read 217 records into 'urls'

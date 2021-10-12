@@ -396,7 +396,7 @@ sub populate_flower_locations_table
 			}
 		}
 
-		next if (length($$item{xy}) == 0);
+		next if ( (! defined($$item{xy}) ) || (length($$item{xy}) == 0 ));
 
 		$common_name	= $$item{common_name};
 		$garden_name	= $$item{garden_name};
