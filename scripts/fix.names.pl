@@ -16,6 +16,14 @@ use Text::CSV;
 
 # -----------------------------------------------
 
+sub process
+{
+	my($file_name, $fix_list) = @_;
+
+} # End of process.
+
+# -----------------------------------------------
+
 sub read_csv_file
 {
 	my($path, $set)	= @_;
@@ -25,7 +33,7 @@ sub read_csv_file
 	my($column_names);
 	my($item);
 
-	open(my $fh_in, '<', $path) || die "Can't open($path): $!\n";
+	open(my $fh_in, '<', "data/$path") || die "Can't open($path): $!\n";
 
 	while (my $line = $csv -> getline($fh_in) )
 	{
@@ -41,10 +49,6 @@ sub read_csv_file
 			{
 				$$item{$$column_names[$i]} = $$line[$i];
 			}
-
-			#$$item{aliases}			= Encode::encode('UTF-8', $$item{aliases}, DIE_ON_ERR | LEAVE_SRC);
-			#$$item{common_name}		= Encode::encode('UTF-8', $$item{common_name}, DIE_ON_ERR | LEAVE_SRC);
-			#$$item{scientific_name}	= Encode::encode('UTF-8', $$item{scientific_name}, DIE_ON_ERR | LEAVE_SRC);
 
 			push @$set, {%$item};
 		}
@@ -94,38 +98,16 @@ sub write_csv_file
 
 # -----------------------------------------------
 
-my($attributes)		= [];
-my(@column_names)	= qw/common_name attribute_name range/;
-my($count)			= 0;
-my($flowers)		= [];
+my(@csv_file_names)		= qw/attributes flowers.garden flower_locations flowers
+							flowers.pipe flowers.web images notes urls/;
+my(%fix_file_names)		= (aliases => 'rename.aliases.csv', common_names => 'rename.common_names.csv');
+my(%fix_lists)			= (aliases => [], common_names => []);
 
-read_csv_file('data/attributes.csv', $attributes);
-read_csv_file('data/flowers.csv', $flowers);
-
-my($common_name);
-
-for my $attr (@$attributes)
+for my $type (keys %fix_file_names)
 {
-	$count++;
+	read_csv_file($fix_file_names{$type}, $fix_lists{$type});
 
-	$common_name = $$attr{common_name};
-
-	for my $flower (@$flowers)
-	{
-		if ($common_name =~ /$$flower{common_name} \d/)
-		{
-			$$attr{common_name} = $$flower{common_name};
-
-			say "$count. Match. $common_name";
-		}
-
-#		if ($common_name =~ /$$flower{scientific_name} \d/)
-#		{
-#			$$attr{common_name} = $$flower{common_name};
-#
-#			say "$count. Match. $common_name";
-#		}
-	}
+	say "$type. fix file: $fix_file_names{$type}. ";
+	say "$$_{old_text} => $$_{new_text}" for @{$fix_lists{$type} };
+	say '';
 }
-
-write_csv_file('data/attributes.1.csv', $attributes, \@column_names);
