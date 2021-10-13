@@ -16,14 +16,6 @@ use Text::CSV;
 
 # -----------------------------------------------
 
-sub process
-{
-	my($file_name, $fix_list) = @_;
-
-} # End of process.
-
-# -----------------------------------------------
-
 sub read_csv_file
 {
 	my($path, $set)	= @_;
@@ -160,20 +152,49 @@ my(%fix_files) =
 	}
 );
 
-for my $type (sort keys %fix_files)
+for my $kind (sort keys %fix_files)
 {
-	read_csv_file($fix_files{$type}{name}, $fix_files{$type}{set});
+	read_csv_file($fix_files{$kind}{name}, $fix_files{$kind}{set});
 
-	say "$type. fix file: $fix_files{$type}{name}. ";
-	say "$$_{old_text} => $$_{new_text}" for @{$fix_files{$type}{set} };
+	say "$kind. fix file: $fix_files{$kind}{name}. ",
+		"$kind. record count: @{[$#{$fix_files{$kind}{set} } + 1]}. ";
+	#say "$$_{old_text} => $$_{new_text}" for @{$fix_files{$kind}{set} };
 	say '';
 }
+
+my($count) = 0;
+
+my(@fix_set);
 
 for my $type (sort keys %csv_files)
 {
 	read_csv_file($csv_files{$type}{name}, $csv_files{$type}{set});
 
-	say "$type. csv file: $csv_files{$type}{name}. ";
+	next if ($type ne 'attributes');
+
+	say "$type. csv file: $csv_files{$type}{name}. ",
+		"$type. record count: @{[$#{$csv_files{$type}{set} } + 1]}. ";
 	#say "$$_{old_text} => $$_{new_text}" for @{$csv_files{$type}{set} };
 	say '';
+
+	@fix_set = @{$fix_files{common_names}{set} };
+
+	say "$type. Processing @{[$#fix_set + 1]} patches for $type";
+
+	for my $item (@{$csv_files{$type}{set} })
+	{
+		#say "$type. Testing $$item{common_name}";
+
+		for my $string (@fix_set)
+		{
+			#say "\t$type. Checking $$string{old_text}";
+
+			if ($$string{old_text} eq $$item{common_name})
+			{
+				$count++;
+
+				say "$type. Match $$string{old_text}";
+			}
+		}
+	}
 }
