@@ -33,7 +33,7 @@ sub read_csv_file
 	my($column_names);
 	my($item);
 
-	open(my $fh_in, '<', "data/$path") || die "Can't open($path): $!\n";
+	open(my $fh_in, '<', "data/$path.csv") || die "Can't open($path): $!\n";
 
 	while (my $line = $csv -> getline($fh_in) )
 	{
@@ -98,16 +98,82 @@ sub write_csv_file
 
 # -----------------------------------------------
 
-my(@csv_file_names)		= qw/attributes flowers.garden flower_locations flowers
-							flowers.pipe flowers.web images notes urls/;
-my(%fix_file_names)		= (aliases => 'rename.aliases.csv', common_names => 'rename.common_names.csv');
-my(%fix_lists)			= (aliases => [], common_names => []);
+my(%csv_files) =
+(
+	attributes =>
+	{
+		name	=> 'attributes',
+		set		=> [],
+	},
+	flower_locations =>
+	{
+		name	=> 'flower_locations',
+		set		=> [],
+	},
+	flower_garden =>
+	{
+		name	=> 'flowers.garden',
+		set		=> [],
+	},
+	flower_pipe =>
+	{
+		name	=> 'flowers.pipe',
+		set		=> [],
+	},
+	flower_web =>
+	{
+		name	=> 'flowers.web',
+		set		=> [],
+	},
+	flowers =>
+	{
+		name	=> 'flowers',
+		set		=> [],
+	},
+	images =>
+	{
+		name	=> 'images',
+		set		=> [],
+	},
+	notes =>
+	{
+		name	=> 'notes',
+		set		=> [],
+	},
+	urls =>
+	{
+		name	=> 'urls',
+		set		=> [],
+	},
+);
+my(%fix_files) =
+(
+	aliases =>
+	{
+		name	=> 'rename.aliases',
+		set		=> [],
+	},
+	common_names =>
+	{
+		name	=> 'rename.common_names',
+		set		=> [],
+	}
+);
 
-for my $type (keys %fix_file_names)
+for my $type (sort keys %fix_files)
 {
-	read_csv_file($fix_file_names{$type}, $fix_lists{$type});
+	read_csv_file($fix_files{$type}{name}, $fix_files{$type}{set});
 
-	say "$type. fix file: $fix_file_names{$type}. ";
-	say "$$_{old_text} => $$_{new_text}" for @{$fix_lists{$type} };
+	say "$type. fix file: $fix_files{$type}{name}. ";
+	say "$$_{old_text} => $$_{new_text}" for @{$fix_files{$type}{set} };
+	say '';
+}
+
+for my $type (sort keys %csv_files)
+{
+	read_csv_file($csv_files{$type}{name}, $csv_files{$type}{set});
+
+	say "$type. csv file: $csv_files{$type}{name}. ";
+	#say "$$_{old_text} => $$_{new_text}" for @{$csv_files{$type}{set} };
 	say '';
 }
