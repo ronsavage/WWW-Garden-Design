@@ -6,6 +6,8 @@ use warnings;
 use warnings  qw(FATAL utf8); # Fatalize encoding glitches.
 use open      qw(:std :utf8); # Undeclared streams in UTF-8.
 
+use boolean ':all';
+
 use Data::Dumper::Concise; # For Dumper.
 
 use File::Slurper 'read_lines';
@@ -48,13 +50,15 @@ sub read_csv_file
 
 	close $fh_in;
 
+	return $column_names;
+
 }	# End of read_csv_file.
 
 # -----------------------------------------------
 
 sub write_csv_file
 {
-	my($path, $attributes, $column_names)	= @_;
+	my($path, $set, $column_names)	= @_;
 	my($count)	= 0;
 	my($csv)	= Text::CSV -> new;
 
@@ -71,16 +75,16 @@ sub write_csv_file
 
 	my($row);
 
-	for my $attr (@$attributes)
+	for my $item (@$set)
 	{
 		$count++;
 
-		$row	= [map{$$attr{$_} } @$column_names];
+		$row	= [map{$$item{$_} } @$column_names];
 		$status = $csv->say($fh_out, $row);
 
 		if (! $status)
 		{
-			say "$count: Failed to write $$attr{common_name}";
+			say "$count: Failed to write $$item{common_name}";
 		}
 	}
 
@@ -94,48 +98,66 @@ my(%csv_files) =
 (
 	attributes =>
 	{
-		name	=> 'attributes',
-		set		=> [],
+		aliases			=> false,
+		column_names	=> [],
+		name			=> 'attributes',
+		set				=> [],
 	},
 	flower_locations =>
 	{
-		name	=> 'flower_locations',
-		set		=> [],
+		aliases			=> false,
+		column_names	=> [],
+		name			=> 'flower_locations',
+		set				=> [],
 	},
 	flower_garden =>
 	{
-		name	=> 'flowers.garden',
-		set		=> [],
+		aliases			=> true,
+		column_names	=> [],
+		name			=> 'flowers.garden',
+		set				=> [],
 	},
 	flower_pipe =>
 	{
-		name	=> 'flowers.pipe',
-		set		=> [],
+		aliases			=> true,
+		column_names	=> [],
+		name			=> 'flowers.pipe',
+		set				=> [],
 	},
 	flower_web =>
 	{
-		name	=> 'flowers.web',
-		set		=> [],
+		aliases			=> true,
+		column_names	=> [],
+		name			=> 'flowers.web',
+		set				=> [],
 	},
 	flowers =>
 	{
-		name	=> 'flowers',
-		set		=> [],
+		aliases			=> true,
+		column_names	=> [],
+		name			=> 'flowers',
+		set				=> [],
 	},
 	images =>
 	{
-		name	=> 'images',
-		set		=> [],
+		aliases			=> false,
+		column_names	=> [],
+		name			=> 'images',
+		set				=> [],
 	},
 	notes =>
 	{
-		name	=> 'notes',
-		set		=> [],
+		aliases			=> false,
+		column_names	=> [],
+		name			=> 'notes',
+		set				=> [],
 	},
 	urls =>
 	{
-		name	=> 'urls',
-		set		=> [],
+		aliases			=> false,
+		column_names	=> [],
+		name			=> 'urls',
+		set				=> [],
 	},
 );
 my(%fix_files) =
@@ -165,36 +187,43 @@ for my $kind (sort keys %fix_files)
 my($count) = 0;
 
 my(@fix_set);
+my($item);
 
 for my $type (sort keys %csv_files)
 {
-	read_csv_file($csv_files{$type}{name}, $csv_files{$type}{set});
+	next if (isFalse($csv_files{$type}{aliases}) );
 
-	next if ($type ne 'attributes');
+	$csv_files{$type}{column_names} = read_csv_file($csv_files{$type}{name}, $csv_files{$type}{set});
 
 	say "$type. csv file: $csv_files{$type}{name}. ",
 		"$type. record count: @{[$#{$csv_files{$type}{set} } + 1]}. ";
 	#say "$$_{old_text} => $$_{new_text}" for @{$csv_files{$type}{set} };
 	say '';
 
-	@fix_set = @{$fix_files{common_names}{set} };
+	@fix_set = @{$fix_files{aliases}{set} };
 
 	say "$type. Processing @{[$#fix_set + 1]} patches for $type";
 
-	for my $item (@{$csv_files{$type}{set} })
+	for my $index (0 .. $#{$csv_files{$type}{set} })
 	{
-		#say "$type. Testing $$item{common_name}";
+		$item = $csv_files{$type}{set}[$index];
+
+		#say "$type. Testing <$$item{aliases}>";
 
 		for my $string (@fix_set)
 		{
-			#say "\t$type. Checking $$string{old_text}";
+			#say "\t$type. Checking <$$string{old_text}>";
 
-			if ($$string{old_text} eq $$item{common_name})
+			if ($$string{old_text} eq $$item{aliases})
 			{
 				$count++;
 
-				say "$type. Match $$string{old_text}";
+				$csv_files{$type}{set}[$index]{aliases} = $$string{new_text};
+
+				say "$type. Match $$string{old_text} => $$string{new_text}";
 			}
 		}
 	}
+
+	write_csv_file("data/$csv_files{$type}{name}.1.csv", $csv_files{$type}{set}, $csv_files{$type}{column_names});
 }
