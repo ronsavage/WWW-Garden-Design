@@ -185,7 +185,7 @@ for my $kind (sort keys %fix_files)
 }
 
 my($count)	= 0;
-my($target)	= 'common_name'; # 'common_name' or 'aliases'.
+my($target)	= 'aliases'; # 'common_name' or 'aliases'.
 
 my(@fix_set);
 my($item);
