@@ -184,14 +184,15 @@ for my $kind (sort keys %fix_files)
 	say '';
 }
 
-my($count) = 0;
+my($count)	= 0;
+my($target)	= 'common_name'; # 'common_name' or 'aliases'.
 
 my(@fix_set);
 my($item);
 
 for my $type (sort keys %csv_files)
 {
-	next if (isFalse($csv_files{$type}{aliases}) );
+	next if ( ($target eq 'aliases') && isFalse($csv_files{$type}{aliases}) );
 
 	$csv_files{$type}{column_names} = read_csv_file($csv_files{$type}{name}, $csv_files{$type}{set});
 
@@ -200,7 +201,7 @@ for my $type (sort keys %csv_files)
 	#say "$$_{old_text} => $$_{new_text}" for @{$csv_files{$type}{set} };
 	say '';
 
-	@fix_set = @{$fix_files{aliases}{set} };
+	@fix_set = @{$fix_files{$target}{set} };
 
 	say "$type. Processing @{[$#fix_set + 1]} patches for $type";
 
@@ -208,17 +209,17 @@ for my $type (sort keys %csv_files)
 	{
 		$item = $csv_files{$type}{set}[$index];
 
-		#say "$type. Testing <$$item{aliases}>";
+		#say "$type. Testing <$$item{$target}>";
 
 		for my $string (@fix_set)
 		{
 			#say "\t$type. Checking <$$string{old_text}>";
 
-			if ($$string{old_text} eq $$item{aliases})
+			if ($$string{old_text} eq $$item{$target})
 			{
 				$count++;
 
-				$csv_files{$type}{set}[$index]{aliases} = $$string{new_text};
+				$csv_files{$type}{set}[$index]{$target} = $$string{new_text};
 
 				say "$type. Match $$string{old_text} => $$string{new_text}";
 			}
