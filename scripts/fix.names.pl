@@ -167,7 +167,7 @@ my(%fix_files) =
 		name	=> 'rename.aliases',
 		set		=> [],
 	},
-	common_names =>
+	common_name =>
 	{
 		name	=> 'rename.common_names',
 		set		=> [],
