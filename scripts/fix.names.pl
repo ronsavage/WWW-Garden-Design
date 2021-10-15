@@ -12,8 +12,6 @@ use Data::Dumper::Concise; # For Dumper.
 
 use File::Slurper 'read_lines';
 
-use Encode ':fallback_all';
-
 use Text::CSV;
 
 # -----------------------------------------------
