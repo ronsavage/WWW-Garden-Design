@@ -46,8 +46,8 @@ id|aliases|common_name|height|max_height|max_width|min_height|min_width|pig_lati
 45||Chives 1||||||Allium.schoenoprasum|Yes|Allium schoenoprasum|
 46|Asian chives, Chinese chives, Chinese leek, garlic chives, oriental garlic|Chives 2|60cm|60||60||Allium.tuberosum|Yes|Allium tuberosum|
 47|Arthropodium strictum, Chocolate lily|Chocolate Lily||||||Dichopogon.strictus|Yes|Dichopogon strictus|
-48||Citrus 1 - Cumquat||||||Citrus.japonica|Yes|Citrus japonica|
-49||Citrus 2 - Lisbon||||||Citrus.limon|Yes|Citrus limon|
+48||Cumquat||||||Citrus.japonica|Yes|Citrus japonica|
+49||"Lisbon lemon"||||||Citrus.limon|Yes|Citrus limon|
 50|Meyer 'Improved'|Citrus 3 - Meyer lemon||||||Citrus.x.meyeri|Yes|Citrus x meyeri|
 51|Bearss lime, seedless lime|Citrus 4 - Tahiti Lime||||||Citrus.x.latifolia|Yes|Citrus x latifolia|
 52||Citrus 5 - Washington Navel Orange||||||Citrus.x.sinensis|Yes|Citrus x sinensis|

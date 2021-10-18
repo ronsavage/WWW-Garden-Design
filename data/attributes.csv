@@ -187,10 +187,10 @@ Cumquat,Edible,Fruit
 Cumquat,Habit,Tree
 Cumquat,Native,No
 Cumquat,"Sun tolerance","Full sun"
-Lisbon,Edible,Fruit
-Lisbon,Habit,Tree
-Lisbon,Native,No
-Lisbon,"Sun tolerance","Full sun"
+"Lisbon lemon",Edible,Fruit
+"Lisbon lemon",Habit,Tree
+"Lisbon lemon",Native,No
+"Lisbon lemon","Sun tolerance","Full sun"
 "Meyer lemon",Edible,Fruit
 "Meyer lemon",Habit,Tree
 "Meyer lemon",Native,No
@@ -347,10 +347,10 @@ Goldfussia,"Sun tolerance",Unknown
 'Fireworks',Habit,Unknown
 'Fireworks',Native,Yes
 'Fireworks',"Sun tolerance",Unknown
-"Honeyeater Heaven",Edible,No
-"Honeyeater Heaven",Habit,Unknown
-"Honeyeater Heaven",Native,Yes
-"Honeyeater Heaven","Sun tolerance",Unknown
+"'Honeyeater Heaven'",Edible,No
+"'Honeyeater Heaven'",Habit,Unknown
+"'Honeyeater Heaven'",Native,Yes
+"'Honeyeater Heaven'","Sun tolerance",Unknown
 "Heavenly Bamboo",Edible,No
 "Heavenly Bamboo",Habit,Unknown
 "Heavenly Bamboo",Native,No
@@ -411,10 +411,10 @@ Hydrangea,Edible,No
 Hydrangea,Habit,Unknown
 Hydrangea,Native,No
 Hydrangea,"Sun tolerance",Unknown
-Hymenosporum,Edible,No
-Hymenosporum,Habit,Dwarf
-Hymenosporum,Native,Yes
-Hymenosporum,"Sun tolerance","Full sun, Part shade, Shade"
+"'Golden Nugget'",Edible,No
+"'Golden Nugget'",Habit,Dwarf
+"'Golden Nugget'",Native,Yes
+"'Golden Nugget'","Sun tolerance","Full sun, Part shade, Shade"
 "Algerian Iris",Edible,No
 "Algerian Iris",Habit,Unknown
 "Algerian Iris",Native,No

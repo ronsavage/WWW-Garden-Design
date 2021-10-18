@@ -47,7 +47,7 @@ id,aliases,common_name,height,max_height,max_width,min_height,min_width,pig_lati
 46,"Asian chives, Chinese chives, Chinese leek, garlic chives, oriental garlic","Chives 2",60cm,60,,60,,Allium.tuberosum,Yes,"Allium tuberosum",
 47,"Arthropodium strictum, Chocolate lily","Chocolate Lily",,,,,,Dichopogon.strictus,Yes,"Dichopogon strictus",
 48,,Cumquat,,,,,,Citrus.japonica,Yes,"Citrus japonica",
-49,,Lisbon,,,,,,Citrus.limon,Yes,"Citrus limon",
+49,,"Lisbon lemon",,,,,,Citrus.limon,Yes,"Citrus limon",
 50,"Meyer 'Improved'","Meyer lemon",,,,,,Citrus.x.meyeri,Yes,"Citrus x meyeri",
 51,"Bearss lime, seedless lime","Tahiti Lime",,,,,,Citrus.x.latifolia,Yes,"Citrus x latifolia",
 52,,"Washington Navel Orange",,,,,,Citrus.x.sinensis,Yes,"Citrus x sinensis",
@@ -88,7 +88,7 @@ id,aliases,common_name,height,max_height,max_width,min_height,min_width,pig_lati
 87,,"Lady 'O'",1-1.5m,150,200,100,150,Grevillea.2,Yes,Grevillea,1.5-2m
 88,,"'Lemon Daze'",,,,,,Grevillea.3,Yes,Grevillea,
 89,,'Fireworks',1m,100,75,100,75,Grevillea.4,Yes,Grevillea,75cm
-90,,"Honeyeater Heaven",,,,,,Grevillea.lanigera,Yes,"Grevillea lanigera",
+90,,"'Honeyeater Heaven'",,,,,,Grevillea.lanigera,Yes,"Grevillea lanigera",
 91,"Nandina, Sacred bamboo","Heavenly Bamboo",,,,,,Nandina.domestica,Yes,"Nandina domestica",
 92,"H. corsicus, Lenten rose, Winter Rose","Christmas rose",,,,,,Helleborus.argutifolius,Yes,"Helleborus argutifolius",
 93,"Bear's foot, dungwort, setterwort","Hellebore 2",60cm,60,60,60,60,Helleborus.foetidus,Yes,"Helleborus foetidus",60cm
