@@ -22,7 +22,7 @@ id|aliases|common_name|height|max_height|max_width|min_height|min_width|pig_lati
 21||Azalea 3||||||Azalea.3|Yes|Azalea|
 22|Cherry Candles|Banksia 1||||||Banksia.spinulosa|Yes|Banksia spinulosa|
 23|Prostrate Banksia|Banksia 2|50cm|50|50|50|50|Banksia.blechnifolia|Yes|Banksia blechnifolia|50cm
-24|Genovese basil, great basil, king of herbs, royal herb, Saint-Joseph's-wort, Sweet Scented Basil|Basil 1|45cm|45|20|45|20|Ocimum.basilicum|Yes|Ocimum basilicum|20cm
+24|Genovese Basil, great basil, king of herbs, royal herb, Saint-Joseph's-wort, Sweet Scented Basil|Basil 1|45cm|45|20|45|20|Ocimum.basilicum|Yes|Ocimum basilicum|20cm
 25|African Basil, holy basil, Ocimum sp., perennial basil, tulasi, thulasi, tulsi|Basil 2|1m|100|30|100|30|Ocimum.kilimandscharicum.x.basilicum.dark.opal|Yes|Ocimum kilimandscharicum x basilicum 'Dark Opal'|30cm
 26|Dead-nettles|Beacon Silver||||||Lamium|Yes|Lamium|
 27|Bearsfoot, Oyster plant, Sea dock|Bears breeches||||||Acanthus.mollis|Yes|Acanthus mollis|

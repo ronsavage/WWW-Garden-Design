@@ -511,7 +511,7 @@ sub populate_flowers_table
 			{
 				$self -> db -> logger -> error("$table_name. Row: $count. Column $column undefined");
 			}
-			elsif (! length $$item{$column})
+			elsif ( ($column !~ /height|width/) && (length $$item{$column} == 0) )
 			{
 				$$item{$column} = '-';
 			}
