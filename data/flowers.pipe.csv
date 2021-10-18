@@ -1,10 +1,10 @@
 id,aliases,common_name,height,max_height,max_width,min_height,min_width,pig_latin,publish,scientific_name,width
 1,"Ashleaf maple, Ash-leaved maple, Box elder, Boxelder maple, Maple ash, 'Variegatum'","Acer negundo",,,,,,Acer.negundo,Yes,"Acer negundo",
-2,"'Aloha Dark Red'","Aloha Dark Red 1",,,,,,Mandevilla.hybrid.1,Yes,"Mandevilla hybrid",
-3,"'Aloha Regal Ruby'","Aloha Regal Ruby 2",,,,,,Mandevilla.hybrid.2,Yes,"Mandevilla hybrid",
-4,'Angela',"Alstroemeria 1",,,,,,Alstroemeria.1,Yes,Alstroemeria,
-5,"'Princess Lily Louise'","Alstroemeria 2",,,,,,Alstroemeria.2,Yes,Alstroemeria,
-6,"Peruvian Lily","Alstroemeria 3",30cm,30,30,30,30,Alstroemeria.pulchella,Yes,"Alstroemeria pulchella",30cm
+2,"'Aloha Dark Red'","Aloha Dark Red",,,,,,Mandevilla.hybrid.1,Yes,"Mandevilla hybrid",
+3,"'Aloha Regal Ruby'","Aloha Regal Ruby",,,,,,Mandevilla.hybrid.2,Yes,"Mandevilla hybrid",
+4,'Angela',Angela,,,,,,Alstroemeria.1,Yes,Alstroemeria,
+5,"'Princess Lily Louise'","Princess Lily Louise",,,,,,Alstroemeria.2,Yes,Alstroemeria,
+6,"Peruvian Lily","Peruvian Lily",30cm,30,30,30,30,Alstroemeria.pulchella,Yes,"Alstroemeria pulchella",30cm
 7,"Pine Golden Pippin","Pine Golden Pippin",,,,,,Malus.domestica.pine.golden.pippin,Yes,"Malus domestica 'Pine Golden Pippin'",
 8,"Pitmaston Pine","Pitmaston Pine",,,,,,Malus.domestica.pitmaston.pine,Yes,"Malus domestica 'Pitmaston Pine'",
 9,,"Apple 3",8m,800,700,800,700,Malus.domestica.3,Yes,"Malus domestica 3",7m

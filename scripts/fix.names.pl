@@ -183,7 +183,9 @@ for my $kind (sort keys %fix_files)
 }
 
 my($count)	= 0;
-my($target)	= 'aliases'; # 'common_name' or 'aliases'.
+my($target)	= 'common_name'; # 'common_name' or 'aliases'.
+
+say "=> Using target: $target. Choices: 'common_name' or 'aliases' <=";
 
 my(@fix_set);
 my($item);
@@ -211,7 +213,7 @@ for my $type (sort keys %csv_files)
 
 		for my $string (@fix_set)
 		{
-			#say "\t$type. Checking <$$string{old_text}>";
+			say "\t$type. Checking <$$string{old_text}>" if ($$string{old_text} =~ /^Flame pea/);
 
 			if ($$string{old_text} eq $$item{$target})
 			{

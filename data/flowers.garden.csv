@@ -1,10 +1,10 @@
 common_name,scientific_name,aliases,height,width,publish
 "Acer negundo","Acer negundo","Ashleaf maple, Ash-leaved maple, Box elder, Boxelder maple, Maple ash, 'Variegatum'",,,Yes
-"Aloha Dark Red 1","Mandevilla hybrid","'Aloha Dark Red'",,,Yes
-"Aloha Regal Ruby 2","Mandevilla hybrid","'Aloha Regal Ruby'",,,Yes
-"Alstroemeria 1",Alstroemeria,'Angela',,,Yes
-"Alstroemeria 2",Alstroemeria,"'Princess Lily Louise'",,,Yes
-"Alstroemeria 3","Alstroemeria pulchella","Peruvian Lily",30cm,30cm,Yes
+"Aloha Dark Red","Mandevilla hybrid","'Aloha Dark Red'",,,Yes
+"Aloha Regal Ruby","Mandevilla hybrid","'Aloha Regal Ruby'",,,Yes
+Angela,Alstroemeria,'Angela',,,Yes
+"Princess Lily Louise",Alstroemeria,"'Princess Lily Louise'",,,Yes
+"Peruvian Lily","Alstroemeria pulchella","Peruvian Lily",30cm,30cm,Yes
 "Pine Golden Pippin","Malus domestica 'Pine Golden Pippin'","Pine Golden Pippin",,,Yes
 "Pitmaston Pine","Malus domestica 'Pitmaston Pine'","Pitmaston Pine",,,Yes
 "Apple 3","Malus domestica 3",,8m,7m,Yes
