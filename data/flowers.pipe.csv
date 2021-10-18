@@ -4,30 +4,30 @@ id,aliases,common_name,height,max_height,max_width,min_height,min_width,pig_lati
 3,"'Aloha Regal Ruby'","Aloha Regal Ruby",,,,,,Mandevilla.hybrid.2,Yes,"Mandevilla hybrid",
 4,'Angela',Angela,,,,,,Alstroemeria.1,Yes,Alstroemeria,
 5,"'Princess Lily Louise'","Princess Lily Louise",,,,,,Alstroemeria.2,Yes,Alstroemeria,
-6,"Peruvian Lily","Peruvian Lily",30cm,30,30,30,30,Alstroemeria.pulchella,Yes,"Alstroemeria pulchella",30cm
-7,"Pine Golden Pippin","Pine Golden Pippin",,,,,,Malus.domestica.pine.golden.pippin,Yes,"Malus domestica 'Pine Golden Pippin'",
-8,"Pitmaston Pine","Pitmaston Pine",,,,,,Malus.domestica.pitmaston.pine,Yes,"Malus domestica 'Pitmaston Pine'",
+6,,"Peruvian Lily",30cm,30,30,30,30,Alstroemeria.pulchella,Yes,"Alstroemeria pulchella",30cm
+7,,"Pine Golden Pippin",,,,,,Malus.domestica.pine.golden.pippin,Yes,"Malus domestica 'Pine Golden Pippin'",
+8,,"Pitmaston Pine",,,,,,Malus.domestica.pitmaston.pine,Yes,"Malus domestica 'Pitmaston Pine'",
 9,,"Apple 3",8m,800,700,800,700,Malus.domestica.3,Yes,"Malus domestica 3",7m
 10,,Pinkabelle®,2m,200,100,200,100,Malus.domestica.pinkabelle,Yes,"Malus domestica Pinkabelle®",1m
 11,,Leprechaun,2m,200,100,200,100,Malus.domestica.leprechaun,Yes,"Malus domestica Leprechaun",1m
 12,,Pompink,3m,300,60,300,60,Malus.domestica.pompink,Yes,"Malus domestica Pompink",60cm
 13,,Harmony,3m,300,60,300,60,Malus.domestica.harmony,Yes,"Malus domestica Harmony",60cm
 14,,Pom-for-You,3m,300,60,300,60,Malus.domestica.pom-for-you,Yes,"Malus domestica Pom-for-You",60cm
-15,Columbine,Columbine,,,,,,Aquilegia.mckana,Yes,"Aquilegia McKana",
+15,,Columbine,,,,,,Aquilegia.mckana,Yes,"Aquilegia McKana",
 16,"Columbine, Granny's Bonnet","Granny's Bonnet",,,,,,Aquilegia.flabellata.var.pumila.alba,Yes,"Aquilegia flabellata var. pumila alba",
 17,"Italian arum, Italian lords-and-ladies","Arum italicum",46cm,46,46,46,46,Arum.italicum,Yes,"Arum italicum",46cm
 18,"Common Asparagus Fern, Climbing Asparagus, Ferny Asparagus, Lace Fern","Asparagus Fern",,,,,,Asparagus.setaceus,Yes,"Asparagus setaceus",
-19,"Rosa Belton","Rosa Belton",,,,,,Azalea.1,Yes,Azalea,
+19,,"Rosa Belton",,,,,,Azalea.1,Yes,Azalea,
 20,,"Azalea 2",,,,,,Azalea.2,Yes,Azalea,
 21,,"Azalea 3",,,,,,Azalea.3,Yes,Azalea,
-22,"Cherry Candles","Cherry Candles",,,,,,Banksia.spinulosa,Yes,"Banksia spinulosa",
-23,"Prostrate Banksia","Prostrate Banksia",50cm,50,50,50,50,Banksia.blechnifolia,Yes,"Banksia blechnifolia",50cm
+22,,"Cherry Candles",,,,,,Banksia.spinulosa,Yes,"Banksia spinulosa",
+23,,"Prostrate Banksia",50cm,50,50,50,50,Banksia.blechnifolia,Yes,"Banksia blechnifolia",50cm
 24,"Great basil, king of herbs, royal herb, Saint-Joseph's-wort, Sweet Scented Basil","Genovese basil",45cm,45,20,45,20,Ocimum.basilicum,Yes,"Ocimum basilicum",20cm
 25,"Holy basil, Ocimum sp., perennial basil, tulasi, thulasi, tulsi","African basil",1m,100,30,100,30,Ocimum.kilimandscharicum.x.basilicum.dark.opal,Yes,"Ocimum kilimandscharicum x basilicum 'Dark Opal'",30cm
 26,Dead-nettles,"Beacon Silver",,,,,,Lamium,Yes,Lamium,
 27,"Bearsfoot, Oyster plant, Sea dock","Bears breeches",,,,,,Acanthus.mollis,Yes,"Acanthus mollis",
-28,"Adriatic bellflower","Adriatic bellflower",,,,,,Campanula.garganica,Yes,"Campanula garganica",
-29,"Serbian bellflower","Serbian bellflower",25cm,25,100,25,100,Campanula.poscharskyana,Yes,"Campanula poscharskyana",100cm
+28,,"Adriatic bellflower",,,,,,Campanula.garganica,Yes,"Campanula garganica",
+29,,"Serbian bellflower",25cm,25,100,25,100,Campanula.poscharskyana,Yes,"Campanula poscharskyana",100cm
 30,,"Big Blue Lilyturf",,,,,,Liriope.muscari,Yes,"Liriope muscari",
 31,,"Black Coral Pea",,,,,,Kennedia.nigricans,Yes,"Kennedia nigricans",
 32,"'Prima Donna'","Blueberry Ash",5m,500,200,500,200,Elaeocarpus.reticulatus,Yes,"Elaeocarpus reticulatus",2m
@@ -72,23 +72,23 @@ id,aliases,common_name,height,max_height,max_width,min_height,min_width,pig_lati
 71,"Happy wanderer, Lilac vine, 'Mini Haha', Native lilac, Purple coral pea, Vine lilac, Waraburra","False sarsaparilla",,,,,,Hardenbergia.violacea,Yes,"Hardenbergia violacea",
 72,"Common Fig",Fig,,,,,,Ficus.carica,Yes,"Ficus carica",
 73,Beardtongues,Firebird,60cm,60,40,60,40,Penstemon.cv,Yes,"Penstemon cv",40cm
-74,"Heart-Leaf Flame Pea","Heart-Leaf Flame Pea",1-2m,200,200,100,100,Chorizema.cordatum,Yes,"Chorizema cordatum",1-2m
-75,"Flame Pea","Flame Pea",75cm,75,100,75,100,Chorizema.varium,Yes,"Chorizema varium",1m
+74,,"Heart-Leaf Flame Pea",1-2m,200,200,100,100,Chorizema.cordatum,Yes,"Chorizema cordatum",1-2m
+75,,"Flame Pea",75cm,75,100,75,100,Chorizema.varium,Yes,"Chorizema varium",1m
 76,"Eastern redbud","Forest Pansy",,,,,,Cercis.canadensis,Yes,"Cercis canadensis",
 77,"Crimson fountaingrass","Fountain Grass",,,,,,Pennisetum.setaceum,Yes,"Pennisetum setaceum",
 78,,Fuchsia,60cm,60,30,60,30,Fuchsia.1,Yes,Fuchsia,30cm
-79,'Coralle','Coralle',1m,100,,100,,Fuchsia.2,Yes,Fuchsia,
+79,,'Coralle',1m,100,,100,,Fuchsia.2,Yes,Fuchsia,
 80,"Cherry pie, Common heliotrope, 'Lord Roberts'","Garden heliotrope",50cm,50,90,50,90,Heliotropium.arborescens,Yes,"Heliotropium arborescens",90cm
 81,"'Sunseeker Mix'",Gazania,,,,,,Gazania,Yes,Gazania,
 82,"Glory trees","Glory Bush",,,,,,Tibouchina.urvilleana,Yes,"Tibouchina urvilleana",
 83,,"Goji Berry Plant",3m,300,100,300,100,Lycium.barbarum,Yes,"Lycium barbarum",1m
 84,"Calla Lily","Golden arum lily",,,,,,Zantedeschia.elliottiana,Yes,"Zantedeschia elliottiana",
 85,,Goldfussia,,,,,,Strobilanthes.anisophyllus,Yes,"Strobilanthes anisophyllus",
-86,'Goldfever','Goldfever',,,,,,Grevillea.1,Yes,Grevillea,
-87,"Lady 'O'","Lady 'O'",1-1.5m,150,200,100,150,Grevillea.2,Yes,Grevillea,1.5-2m
-88,"'Lemon Daze'","'Lemon Daze'",,,,,,Grevillea.3,Yes,Grevillea,
-89,'Fireworks','Fireworks',1m,100,75,100,75,Grevillea.4,Yes,Grevillea,75cm
-90,"Honeyeater Heaven","Honeyeater Heaven",,,,,,Grevillea.lanigera,Yes,"Grevillea lanigera",
+86,,'Goldfever',,,,,,Grevillea.1,Yes,Grevillea,
+87,,"Lady 'O'",1-1.5m,150,200,100,150,Grevillea.2,Yes,Grevillea,1.5-2m
+88,,"'Lemon Daze'",,,,,,Grevillea.3,Yes,Grevillea,
+89,,'Fireworks',1m,100,75,100,75,Grevillea.4,Yes,Grevillea,75cm
+90,,"Honeyeater Heaven",,,,,,Grevillea.lanigera,Yes,"Grevillea lanigera",
 91,"Nandina, Sacred bamboo","Heavenly Bamboo",,,,,,Nandina.domestica,Yes,"Nandina domestica",
 92,"H. corsicus, Lenten rose, Winter Rose","Christmas rose",,,,,,Helleborus.argutifolius,Yes,"Helleborus argutifolius",
 93,"Bear's foot, dungwort, setterwort","Hellebore 2",60cm,60,60,60,60,Helleborus.foetidus,Yes,"Helleborus foetidus",60cm
@@ -105,7 +105,7 @@ id,aliases,common_name,height,max_height,max_width,min_height,min_width,pig_lati
 104,"Uruguayan Firecracker Plant","Hummingbird Plant",50cm,50,50,50,50,Dicliptera.suberecta,Yes,"Dicliptera suberecta",50cm
 105,,Hydrangea,,,,,,Hydrangea,Yes,Hydrangea,
 106,"'Golden Nugget', Native frangipani",Hymenosporum,,,,,,Hymenosporum,Yes,Hymenosporum,
-107,"Algerian Iris","Algerian Iris",,,,,,Iris.unguicularis,Yes,"Iris unguicularis",
+107,,"Algerian Iris",,,,,,Iris.unguicularis,Yes,"Iris unguicularis",
 108,,Iris,,,,,,Iris.unknown,Yes,"Iris unknown",
 109,"Pink Coneflower","Isopogon latifolius",1-2m,200,50,100,50,Isopogon.latifolius,Yes,"Isopogon latifolius",50cm
 110,,Ivy,,,,,,Hedera,Yes,Hedera,
@@ -155,7 +155,7 @@ id,aliases,common_name,height,max_height,max_width,min_height,min_width,pig_lati
 154,,Sage,1m,100,100,100,100,Salvia.involucrata.3,Yes,"Salvia involucrata",1m
 155,"Sacred sage, white sage","Bee sage",1m,100,100,100,100,Salvia.apiana,Yes,"Salvia apiana",1m
 156,,"Siegfredia darwinioides",,,,,,Siegfredia.darwinioides,Yes,"Siegfredia darwinioides",
-157,"Silver lace bush","Silver lace bush",1m,100,50,100,50,Tanacetum.ptarmiciflorum,Yes,"Tanacetum ptarmiciflorum",50cm
+157,,"Silver lace bush",1m,100,50,100,50,Tanacetum.ptarmiciflorum,Yes,"Tanacetum ptarmiciflorum",50cm
 158,"Smoke bush","Smoke Tree",,,,,,Cotinus.coggygria,Yes,"Cotinus coggygria",
 159,"Asparagus bean, bodi, bora, Chinese long bean, long-podded cowpea, pea bean, yardlong bean","Snake bean",46cm,46,10,46,10,Vigna.unguiculata.subsp.sesquipedalis,Yes,"Vigna unguiculata subsp. sesquipedalis",10cm
 160,"Common mint, garden mint, lamb mint, mackerel mint, Mentha spicata 'Moroccan', Mentha spicata 'Nana', Mentha viridis",Spearmint,45cm,45,100,45,100,Mentha.spicata,Yes,"Mentha spicata",1m

@@ -77,6 +77,11 @@ sub write_csv_file
 	{
 		$count++;
 
+		if (exists($$item{aliases}) && exists($$item{common_name}) && ($$item{aliases} eq $$item{common_name}) )
+		{
+			$$item{aliases} = '';
+		}
+
 		$row	= [map{$$item{$_} } @$column_names];
 		$status = $csv->say($fh_out, $row);
 
