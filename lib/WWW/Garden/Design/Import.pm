@@ -857,7 +857,7 @@ sub validate_size
 		}
 		else
 		{
-			$self -> db -> logger -> info("$table_name. Row: $count. Cannot interpret height or width");
+			$self -> db -> logger -> info("$table_name. Row: $count. Cannot interpret <$value> as height or width");
 		}
 
 		if ($unit eq 'm')
