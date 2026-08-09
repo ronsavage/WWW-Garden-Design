@@ -96,6 +96,10 @@ sub process
 
 =pod
 
+=head1 NAME
+
+C<WWW::Garden::Design::Controller::Design> - Manage the 'flowers' database
+
 =head1 Machine-Readable Change Log
 
 The file Changes was converted into Changelog.ini by L<Module::Metadata::Changes>.
