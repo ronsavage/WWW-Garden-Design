@@ -1906,6 +1906,10 @@ sub trim
 
 =pod
 
+=head1 NAME
+
+C<WWW::Garden::Design::Database> - Manage the 'novels' database
+
 =head1 Machine-Readable Change Log
 
 The file Changes was converted into Changelog.ini by L<Module::Metadata::Changes>.

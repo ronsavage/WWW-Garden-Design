@@ -63,7 +63,11 @@ sub hashes
 
 =pod
 
-=head1 Machine-Readable Change Log
+=head1 NAME
+
+C<WWW::Garden::Design::Database::Mojo> - Manage the 'flowers' database
+
+head1 Machine-Readable Change Log
 
 The file Changes was converted into Changelog.ini by L<Module::Metadata::Changes>.
 

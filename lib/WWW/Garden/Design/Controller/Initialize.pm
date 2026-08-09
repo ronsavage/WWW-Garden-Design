@@ -6,6 +6,8 @@ use Moo;
 
 use Data::Dumper::Concise; # For Dumper().
 
+use utf8;
+
 our $VERSION = '0.97';
 
 # -----------------------------------------------
@@ -60,6 +62,7 @@ sub homepage
 
 	$self -> render
 	(
+		features_current_feature_id		=> $$defaults{features_current_feature_id},
 		attribute_elements				=> $$defaults{attribute_elements},
 		constants						=> $$defaults{constants_table},
 		design_garden_menu				=> $$defaults{design_garden_menu},
@@ -72,7 +75,7 @@ sub homepage
 		gardens_garden_menu				=> $$defaults{gardens_garden_menu},
 		gardens_property_menu_1			=> $$defaults{gardens_property_menu_1},
 		gardens_property_menu_2			=> $$defaults{gardens_property_menu_2},
-		joiner							=> '«»',
+		joiner							=> '><',
 		properties_current_property_id	=> $$defaults{properties_current_property_id},
 		properties_property_menu		=> $$defaults{properties_property_menu},
 		version							=> $VERSION,

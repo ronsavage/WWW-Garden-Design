@@ -80,7 +80,7 @@ sub _init_config
 
 =head1 NAME
 
-WWW::Garden::Design::Util::Config - Manage the flowers database
+C<WWW::Garden::Design::Util::Config> - Manage the flowers database
 
 =head1 Synopsis
 
