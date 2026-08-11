@@ -881,7 +881,7 @@ sub validate_size
 
 =head1 NAME
 
-C<WWW::Garden::Design::Import> - Manage the 'flowers' database
+WWW::Garden::Design::Import - Manage the 'flowers' database
 
 =head1 Machine-Readable Change Log
 

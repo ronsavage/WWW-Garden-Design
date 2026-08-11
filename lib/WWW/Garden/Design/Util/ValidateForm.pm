@@ -422,7 +422,7 @@ sub process_flower_urls
 
 =head1 NAME
 
-C<WWW::Garden::Design::Util::ValidateForm> - Manage the 'flowers' database
+WWW::Garden::Design::Util::ValidateForm - Manage the 'flowers' database
 
 =head1 Machine-Readable Change Log
 

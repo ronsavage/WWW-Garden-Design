@@ -1505,7 +1505,7 @@ sub urls2csv
 
 =head1 NAME
 
-C<WWW::Garden::Design::Export> - Manage the 'flowers' database
+WWW::Garden::Design::Export - Manage the 'flowers' database
 
 =head1 Machine-Readable Change Log
 

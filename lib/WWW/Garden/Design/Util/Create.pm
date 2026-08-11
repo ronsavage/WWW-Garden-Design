@@ -514,7 +514,7 @@ sub report
 
 =head1 NAME
 
-C<WWW::Garden::Design::Util::Create> - Manage the 'flowers' database
+WWW::Garden::Design::Util::Create - Manage the 'flowers' database
 
 =head1 Machine-Readable Change Log
 

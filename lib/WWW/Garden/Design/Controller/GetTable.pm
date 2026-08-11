@@ -126,7 +126,7 @@ sub properties
 
 =head1 NAME
 
-C<WWW::Garden::Design::Controller::GetTable> - Manage the 'flowers' database
+WWW::Garden::Design::Controller::GetTable - Manage the 'flowers' database
 
 =head1 Machine-Readable Change Log
 

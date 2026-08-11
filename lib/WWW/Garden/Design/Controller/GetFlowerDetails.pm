@@ -44,7 +44,7 @@ sub display
 
 =head1 NAME
 
-C<WWW::Garden::Design::Controller::GetFlowerDetails> - Manage the 'flowers' database
+WWW::Garden::Design::Controller::GetFlowerDetails - Manage the 'flowers' database
 
 =head1 Machine-Readable Change Log
 

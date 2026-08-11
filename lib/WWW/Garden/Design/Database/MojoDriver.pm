@@ -86,7 +86,7 @@ sub hashes
 
 =head1 NAME
 
-C<WWW::Garden::Design::Database::MojoDriver> - Manage the 'flowers' database
+WWW::Garden::Design::Database::MojoDriver - Manage the 'flowers' database
 
 =head1 Machine-Readable Change Log
 

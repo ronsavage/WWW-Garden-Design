@@ -51,7 +51,7 @@ sub BUILD
 
 =head1 NAME
 
-C<WWW::Garden::Design::Import::SQLite> - Manage the 'flowers' database
+WWW::Garden::Design::Import::SQLite - Manage the 'flowers' database
 
 =head1 Machine-Readable Change Log
 

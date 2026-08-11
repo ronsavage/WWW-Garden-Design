@@ -38,7 +38,7 @@ sub read_csv_file
 
 =head1 NAME
 
-C<WWW::Garden::Design::Util::Filer> - Some file helpers
+WWW::Garden::Design::Util::Filer - Some file helpers
 
 =head1 Synopsis
 

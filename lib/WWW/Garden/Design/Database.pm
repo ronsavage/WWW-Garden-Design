@@ -1908,7 +1908,7 @@ sub trim
 
 =head1 NAME
 
-C<WWW::Garden::Design::Database> - Manage the 'novels' database
+WWW::Garden::Design::Database - Manage the 'novels' database
 
 =head1 Machine-Readable Change Log
 

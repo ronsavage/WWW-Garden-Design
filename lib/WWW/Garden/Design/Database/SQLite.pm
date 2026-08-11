@@ -262,7 +262,7 @@ sub read_table
 
 =head1 NAME
 
-C<WWW::Garden::Design::Database::SQLite> - Manage the 'flowers' database
+WWW::Garden::Design::Database::SQLite - Manage the 'flowers' database
 
 =head1 Machine-Readable Change Log
 

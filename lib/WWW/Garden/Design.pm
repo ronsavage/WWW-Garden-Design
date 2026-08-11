@@ -229,7 +229,7 @@ sub startup
 
 =head1 NAME
 
-C<WWW::Garden::Design> - Flower Database, Search Engine and Garden Design
+WWW::Garden::Design - Flower Database, Search Engine and Garden Design
 
 =head1 Synopsis
 
