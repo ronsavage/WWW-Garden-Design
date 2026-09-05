@@ -5,6 +5,7 @@ Revision history for Perl extension WWW::Garden::Design.
 	- Fix if test in Makefile.PL: 'ge' should be '>=' in case $] ever gets to 10
 	- Change (Unix) mode of scripts/*.pl & *.sh from 100644 to 100755
 	- Fix various test files
+	- Abandon trying to update this module. I used Text::Xslate & Hypnotoad & these seem to be obsolete
 
 0.97  2021-10-02T17:17:00
 	- Remove all usages of warnings.FATAL
