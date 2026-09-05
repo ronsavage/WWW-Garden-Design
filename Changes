@@ -1,12 +1,17 @@
 Revision history for Perl extension WWW::Garden::Design.
 
+0.98  2026-09-05
+	- Fix URL of HumaneJS in POD
+	- Fix if test in Makefile.PL: 'ge' should be '>=' in case $] ever gets to 10
+	- Change (Unix) mode of scripts/*.pl & *.sh from 100644 to 100755
+
 0.97  2021-10-02T17:17:00
-	- Remove all usages of warnings.FATAL.
-	- Minor cleanup of Makefile.PL.
+	- Remove all usages of warnings.FATAL
+	- Minor cleanup of Makefile.PL
 
 0.96  2018-05-03T15:00:00
-	- Many patches to interaction between menus on different tabs.
-	- Move tile generating code from Export.pm to Database.pm so it's available on-line.
+	- Many patches to interaction between menus on different tabs
+	- Move tile generating code from Export.pm to Database.pm so it's available on-line
 
 0.95  2016-12-20T12:00:00
 	- Original version

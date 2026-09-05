@@ -12,7 +12,7 @@ use ExtUtils::MakeMaker;
 
 my(%params) =
 (
-	($] ge '5.005') ?
+	($] >= '5.005') ?
 	(
 		AUTHOR   => 'Ron Savage (ron@savage.net.au)',
 		ABSTRACT => 'Flower Database, Search Engine and Garden Design',

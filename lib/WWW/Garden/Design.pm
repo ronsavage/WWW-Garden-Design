@@ -385,7 +385,7 @@ or run:
 
 =head1 References
 
-L<HumaneJS|http://wavded.github.com/humane-js/> - A simple, modern, browser notification system.
+L<HumaneJS|https://wavded.github.io/humane-js/> - A simple, modern, browser notification system.
 
 =head1 Machine-Readable Change Log
 
