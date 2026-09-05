@@ -30,7 +30,7 @@ has config_path =>
 	required => 0,
 );
 
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 
 # -----------------------------------------------
 

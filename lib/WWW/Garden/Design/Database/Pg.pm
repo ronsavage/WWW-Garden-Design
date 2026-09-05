@@ -13,7 +13,7 @@ use Imager;
 
 use Mojo::Pg;
 
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 
 # -----------------------------------------------
 

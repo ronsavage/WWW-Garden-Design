@@ -8,7 +8,7 @@ use Data::Dumper::Concise; # For Dumper().
 
 use utf8;
 
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 
 # -----------------------------------------------
 

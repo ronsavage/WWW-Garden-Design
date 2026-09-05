@@ -6,7 +6,7 @@ use Moo;
 
 use WWW::Garden::Design::Util::ValidateForm
 
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 
 # -----------------------------------------------
 

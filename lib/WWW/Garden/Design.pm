@@ -10,7 +10,7 @@ use Moo;
 
 use WWW::Garden::Design::Database::Pg;
 
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 
 # -----------------------------------------------
 

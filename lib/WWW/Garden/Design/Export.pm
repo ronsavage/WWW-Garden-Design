@@ -89,7 +89,7 @@ has standalone_page =>
 	required	=> 0,
 );
 
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 
 # -----------------------------------------------
 
