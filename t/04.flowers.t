@@ -24,7 +24,7 @@ sub test_flowers
 	# 1: Validate the headings in properties.csv.
 	# The headings must be listed here in the same order as in the file.
 
-	my(@expected_headings)	= sort (qw/aliases,common_name,height,kind,max_height,max_width,min_height,min_width,pig_latin,planted,publish,scientific_name,thumbnail,width/);
+	my(@expected_headings)	= sort (qw/aliases common_name height kind max_height max_width min_height min_width pig_latin planted publish scientific_name thumbnail width/);
 	my(@got_headings)		= sort keys %{$$flowers[0]};
 
 	my($result);
