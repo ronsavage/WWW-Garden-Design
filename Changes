@@ -4,6 +4,7 @@ Revision history for Perl extension WWW::Garden::Design.
 	- Fix URL of HumaneJS in POD
 	- Fix if test in Makefile.PL: 'ge' should be '>=' in case $] ever gets to 10
 	- Change (Unix) mode of scripts/*.pl & *.sh from 100644 to 100755
+	- Fix various test files
 
 0.97  2021-10-02T17:17:00
 	- Remove all usages of warnings.FATAL
